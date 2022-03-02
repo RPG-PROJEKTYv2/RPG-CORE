@@ -6,7 +6,7 @@ public final class RPGCORE extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+s
     }
 
     @Override
