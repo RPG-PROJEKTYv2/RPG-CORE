@@ -1,4 +1,6 @@
-package rpg.rpgcore;
+package rpg.rpgcore.utils;
+
+import rpg.rpgcore.RPGCORE;
 
 public class Config {
 

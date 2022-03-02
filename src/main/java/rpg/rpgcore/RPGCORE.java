@@ -2,6 +2,7 @@ package rpg.rpgcore;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.database.SQLManager;
+import rpg.rpgcore.utils.Config;
 
 public final class RPGCORE extends JavaPlugin {
 
