@@ -4,7 +4,7 @@ import rpg.rpgcore.RPGCORE;
 
 public class Config {
 
-    private RPGCORE rpgcore;
+    private final RPGCORE rpgcore;
 
     public Config(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
