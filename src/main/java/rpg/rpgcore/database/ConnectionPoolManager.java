@@ -14,12 +14,18 @@ public class ConnectionPoolManager {
     private final HikariDataSource dataSource;
 
     public ConnectionPoolManager(final RPGCORE rpgcore) {
+        final String HOST = rpgcore.getConfig().getString("hostname");
+        final int PORT = rpgcore.getConfig().getInt("port");
+        final String DATABASE = rpgcore.getConfig().getString("database");
+        final String USER = rpgcore.getConfig().getString("username");
+        final String PASSWORD = rpgcore.getConfig().getString("password");
+
         final int threads = Runtime.getRuntime().availableProcessors() * 2 + 1;
         final HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://" + rpgcore.getConfig().getString("hostname") + ":" + rpgcore.getConfig().getString("port") + "/" + rpgcore.getConfig().getString("database") + "?useSSL=false");
+        config.setJdbcUrl("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false");
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setUsername(rpgcore.getConfig().getString("username"));
-        config.setPassword(rpgcore.getConfig().getString("password"));
+        config.setUsername(USER);
+        config.setPassword(PASSWORD);
         config.setMinimumIdle(threads);
         config.setMaximumPoolSize(threads);
         config.setConnectionTimeout(300000);

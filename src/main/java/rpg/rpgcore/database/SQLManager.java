@@ -107,5 +107,4 @@ public class SQLManager {
     public void onDisable() {
         pool.closePool();
     }
-
 }
