@@ -3,3 +3,4 @@ version: '${project.version}'
 main: rpg.rpgcore.RPGCORE
 authors: [ Caufland, MiresPL ]
 description: RPG-CORE
+commands:
