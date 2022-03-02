@@ -1,0 +1,6 @@
+name: RPG-CORE
+version: '${project.version}'
+main: rpg.rpgcore.RPGCORE
+api-version: 1.18
+authors: [ Caufland, MiresPL ]
+description: RPG-CORE
