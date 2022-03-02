@@ -9,7 +9,6 @@ public final class RPGCORE extends JavaPlugin {
     private SQLManager sql;
 
     public void onEnable() {
-
         config.createConfig();
 
         initDatabase();
