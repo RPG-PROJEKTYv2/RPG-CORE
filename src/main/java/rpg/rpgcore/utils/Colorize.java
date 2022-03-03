@@ -5,11 +5,11 @@ import org.bukkit.command.CommandSender;
 
 public class Colorize {
 
-    public static String format(String str) {
-        return ChatColor.translateAlternateColorCodes('&',str);
+    public String format(String str) {
+        return ChatColor.translateAlternateColorCodes('&',str.replace(">>", "»").replace("<<", "«"));
     }
 
-    public static void sendMessage(CommandSender sender, String msg) {
+    public void sendMessage(CommandSender sender, String msg) {
         sender.sendMessage(format(msg));
     }
 
