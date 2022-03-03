@@ -1,5 +1,7 @@
 package rpg.rpgcore.database;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
 
 import java.sql.Connection;
@@ -9,10 +11,12 @@ import java.sql.SQLException;
 
 public class SQLManager {
 
+    private final RPGCORE rpgcore;
     private final ConnectionPoolManager pool;
 
     public SQLManager(final RPGCORE rpgcore) {
-        pool = new ConnectionPoolManager(rpgcore);
+        this.pool = new ConnectionPoolManager(rpgcore);
+        this.rpgcore = rpgcore;
     }
 
     public void loadAll(){
@@ -21,12 +25,12 @@ public class SQLManager {
         ResultSet rs;
         try {
             conn = pool.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM cos");
+            ps = conn.prepareStatement("SELECT * FROM spawn");
             rs = ps.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
 
-                //Ladowanie czegos
+                rpgcore.setSpawn(new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")));
 
             }
 
@@ -38,70 +42,71 @@ public class SQLManager {
         }
     }
 
-    public void createTables() {
+    public void firstLocationSpawn(final Location spawn){
+
+        final String w = spawn.getWorld().getName();
+        final double x = spawn.getX();
+        final double y = spawn.getY();
+        final double z = spawn.getZ();
+        final float yaw = spawn.getYaw();
+        final float pitch = spawn.getPitch();
+
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs;
 
         try {
+
             conn = pool.getConnection();
-            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS banned_users(\n" +
-                    "    ID INT AUTO_INCREMENT,\n" +
-                    "    NICK TEXT NOT NULL,\n" +
-                    "    UUID VARCHAR(36) NOT NULL,\n" +
-                    "    SILENT BOOLEAN NOT NULL,\n" +
-                    "    BAN_DATE TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                    "    BAN_EXPIRE_DATE TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                    "    ADMIN_NICK TEXT NOT NULL,\n" +
-                    "    REASON TEXT NOT NULL,\n" +
-                    "    PRIMARY KEY(ID)\n" +
-                    ");");
+            ps = conn.prepareStatement("INSERT INTO `spawn` VALUES (?,?,?,?,?,?)");
+
+            ps.setString(1, w);
+            ps.setDouble(2, x);
+            ps.setDouble(3, y);
+            ps.setDouble(4, z);
+            ps.setFloat(5, yaw);
+            ps.setFloat(6, pitch);
+
+        ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void setSpawn(final Location spawn){
+
+        final String w = spawn.getWorld().getName();
+        final double x = spawn.getX();
+        final double y = spawn.getY();
+        final double z = spawn.getZ();
+        final float yaw = spawn.getYaw();
+        final float pitch = spawn.getPitch();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `spawn` set x= ?, y = ?, z=?, yaw=?, pitch=? WHERE world=?");
+
+            ps.setDouble(1, x);
+            ps.setDouble(2, y);
+            ps.setDouble(3, z);
+            ps.setFloat(4, yaw);
+            ps.setFloat(5, pitch);
+            ps.setString(6, w);
+
+
             ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
         }
-
-        try {
-            conn = pool.getConnection();
-            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS muted_users(\n" +
-                    "    ID INT AUTO_INCREMENT,\n" +
-                    "    NICK TEXT NOT NULL,\n" +
-                    "    UUID VARCHAR(36) NOT NULL,\n" +
-                    "    MUTE_DATE TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                    "    MUTE_EXPIRE_DATE TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                    "    ADMIN_NICK TEXT NOT NULL,\n" +
-                    "    REASON TEXT NOT NULL,\n" +
-                    "    PRIMARY KEY(ID)\n" +
-                    ");");
-            ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.close(conn, ps, null);
-        }
-
-        try {
-            conn = pool.getConnection();
-            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS player_data(\n" +
-                    "    ID INT AUTO_INCREMENT,\n" +
-                    "    NICK TEXT NOT NULL,\n" +
-                    "    UUID VARCHAR(36) NOT NULL,\n" +
-                    "    RANK TEXT NOT NULL,\n" +
-                    "    IP VARCHAR(16) NOT NULL ,\n" +
-                    "    LVL INT NOT NULL,\n" +
-                    "    DOSWIADCZENIE FLOAT NOT NULL,\n" +
-                    "    MONEY FLOAT NOT NULL,\n" +
-                    "    RANK_POINTS FLOAT NOT NULL,\n" +
-                    "    PRIMARY KEY(ID)\n" +
-                    ");");
-            ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.close(conn, ps, null);
-        }
-
     }
 
     public void onDisable() {
