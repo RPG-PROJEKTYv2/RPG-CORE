@@ -4,3 +4,4 @@ main: rpg.rpgcore.RPGCORE
 authors: [ Caufland, MiresPL ]
 description: RPG-CORE
 commands:
+  spawn:

@@ -3,6 +3,7 @@ package rpg.rpgcore;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.commands.Spawn;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.utils.Config;
@@ -25,6 +26,8 @@ public final class RPGCORE extends JavaPlugin {
             final Location locSpawn = Bukkit.getWorld("world").getSpawnLocation();
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().firstLocationSpawn(locSpawn));
         }
+
+        this.getCommand("spawn").setExecutor(new Spawn(this));
 
     }
 

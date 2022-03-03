@@ -67,6 +67,9 @@ public class SQLManager {
             ps.setFloat(5, yaw);
             ps.setFloat(6, pitch);
 
+            final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
+            rpgcore.setSpawn(newLocspawn);
+
         ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,6 +103,8 @@ public class SQLManager {
             ps.setFloat(5, pitch);
             ps.setString(6, w);
 
+            final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
+            rpgcore.setSpawn(newLocspawn);
 
             ps.executeQuery();
         } catch (SQLException e) {
