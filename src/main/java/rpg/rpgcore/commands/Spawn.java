@@ -60,6 +60,8 @@ public class Spawn implements CommandExecutor {
             return false;
         }
 
+        //test dla mamacry
+
         p.teleport(rpgcore.getSpawn());
         p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
         colorize.sendMessage(p,"&aPrzeteleportowana na spawna!!");
