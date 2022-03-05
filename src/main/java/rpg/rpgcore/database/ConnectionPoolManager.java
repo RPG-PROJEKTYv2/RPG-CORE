@@ -16,8 +16,8 @@ public class ConnectionPoolManager {
     public ConnectionPoolManager(final RPGCORE rpgcore) {
         final int threads = Runtime.getRuntime().availableProcessors() * 2 + 1;
         final HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://" + rpgcore.getConfig().getString("hostname") + ":" + rpgcore.getConfig().getString("port") + "/" + rpgcore.getConfig().getString("database") + "?useSSL=false");
-        config.setDriverClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+        config.setJdbcUrl("jdbc:mysql://" + rpgcore.getConfig().getString("hostname") + ":" + rpgcore.getConfig().getString("port") + "/" + rpgcore.getConfig().getString("database") + "?useSSL=false&allowPublicKeyRetrieval=true");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setUsername(rpgcore.getConfig().getString("username"));
         config.setPassword(rpgcore.getConfig().getString("password"));
         config.setMinimumIdle(threads);

@@ -17,25 +17,37 @@ import java.text.DecimalFormat;
 public class Spawn implements CommandExecutor {
 
     private final RPGCORE rpgcore;
-    private final Alerts alerts = new Alerts();
-    private final Colorize colorize = new Colorize();
+    private final Colorize colorize;
+    private final Alerts alerts;
 
     public Spawn(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.colorize = rpgcore.getColorize();
+        this.alerts = rpgcore.getAlerts();
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        alerts.nieGracz(sender,"&c");
+        if(!(sender instanceof Player)){
+            colorize.sendMessage(sender, alerts.nieGracz());
+            return false;
+        }
 
         final Player p = (Player) sender;
 
-        alerts.permisje(p,"rpg.spawn");
+        if (!(p.hasPermission("rpg.spawn"))) {
+            colorize.sendMessage(p, alerts.permisje("rpg.spawn"));
+            return false;
+        }
 
         if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("set")){
 
-                alerts.permisje(p,"rpg.spawn.set");
+            if (!(p.hasPermission("rpg.spawn.set"))) {
+                colorize.sendMessage(p, alerts.permisje("rpg.spawn.set"));
+                return false;
+            }
+
+            if (args[0].equalsIgnoreCase("set")){
 
                 final Location loc = p.getLocation();
 
@@ -57,12 +69,12 @@ public class Spawn implements CommandExecutor {
                 return false;
             }
 
+
+
             return false;
         }
 
-        //test dla mamacry
-
-        p.teleport(rpgcore.getSpawn());
+        p.teleport(rpgcore.getSpawnManager().getSpawn());
         p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
         colorize.sendMessage(p,"&aPrzeteleportowana na spawna!!");
 

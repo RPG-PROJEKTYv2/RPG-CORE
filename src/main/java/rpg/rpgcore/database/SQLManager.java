@@ -19,30 +19,7 @@ public class SQLManager {
         this.rpgcore = rpgcore;
     }
 
-    public void loadAll(){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            conn = pool.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM spawn");
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-
-                rpgcore.setSpawn(new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")));
-
-            }
-
-            ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.close(conn, ps, null);
-        }
-    }
-
-    public void firstLocationSpawn(final Location spawn){
+    private void setFirstSpawn(final Location spawn){
 
         final String w = spawn.getWorld().getName();
         final double x = spawn.getX();
@@ -53,7 +30,6 @@ public class SQLManager {
 
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs;
 
         try {
 
@@ -68,9 +44,33 @@ public class SQLManager {
             ps.setFloat(6, pitch);
 
             final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
-            rpgcore.setSpawn(newLocspawn);
+            rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
-        ps.executeUpdate();
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void loadAll(){
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM spawn");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                this.setSpawn(new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getFloat("yaw"), rs.getFloat("pitch")));
+            }else {
+                this.setFirstSpawn(Bukkit.getWorld("world").getSpawnLocation());
+            }
+
+            ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -89,7 +89,6 @@ public class SQLManager {
 
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs;
 
         try {
 
@@ -104,9 +103,9 @@ public class SQLManager {
             ps.setString(6, w);
 
             final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
-            rpgcore.setSpawn(newLocspawn);
+            rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -1,55 +1,63 @@
 package rpg.rpgcore;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.Spawn;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
+import rpg.rpgcore.managers.SpawnManager;
+import rpg.rpgcore.utils.Alerts;
+import rpg.rpgcore.utils.Colorize;
 import rpg.rpgcore.utils.Config;
 
 public final class RPGCORE extends JavaPlugin {
 
-    private Location spawn;
+    private SpawnManager spawn;
     private final Config config = new Config(this);
     private SQLManager sql;
     private CreateTables createTables;
+    private Colorize colorize;
+    private Alerts alerts;
 
     public void onEnable() {
-        config.createConfig();
+        this.config.createConfig();
+        this.initDatabase();
+        this.initManagers();
 
-        initDatabase();
-        createTables.createTables();
-        sql.loadAll();
-
-        if (spawn == null) {
-            final Location locSpawn = Bukkit.getWorld("world").getSpawnLocation();
-            Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().firstLocationSpawn(locSpawn));
-        }
-
+        this.createTables.createTables();
+        this.sql.loadAll();
         this.getCommand("spawn").setExecutor(new Spawn(this));
 
     }
 
     public void onDisable() {
-        sql.onDisable();
+        this.sql.onDisable();
+        this.spawn.setSpawn(null);
     }
 
     private void initDatabase() {
-        sql = new SQLManager(this);
-        createTables = new CreateTables(this);
+        this.sql = new SQLManager(this);
+        this.createTables = new CreateTables(this);
+    }
+
+    private void initManagers(){
+        this.colorize = new Colorize();
+        this.alerts = new Alerts(this.colorize);
+        this.spawn = new SpawnManager();
     }
 
     public SQLManager getSQLManager() {
         return sql;
     }
 
-    public Location getSpawn() {
+    public SpawnManager getSpawnManager(){
         return spawn;
     }
 
-    public void setSpawn(Location spawn) {
-        this.spawn = spawn;
+    public Colorize getColorize() {
+        return this.colorize;
     }
 
+    public Alerts getAlerts() {
+        return this.alerts;
+    }
 }

@@ -1,39 +1,33 @@
 package rpg.rpgcore.utils;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Alerts {
 
-    private final Colorize colorize = new Colorize();
+    private final Colorize colorize;
 
-    public boolean nieGracz(final CommandSender sender,final String color){
-        if (!(sender instanceof Player)) {
-            colorize.sendMessage(sender, color + "Nie jesteś graczem!");
-            return false;
-        }
-        return true;
+    public Alerts(Colorize colorize) {
+        this.colorize = colorize;
     }
 
-    public boolean permisje(final Player p,final String perm){
-        if (!(p.hasPermission(perm))) {
-            colorize.sendMessage(p,  "Nie masz permisji!");
-            return false;
-        }
-        return true;
+    public String nieGracz(){
+        return "Nie jesteś graczem!";
+    }
+
+    public String permisje(final String perm){
+        return "&cNie masz permisji &7" + perm + "&c!";
     }
 
     public void poprawneUzycie(final Player p, final String cmd) {
         colorize.sendMessage(p,"&7>> Poprawne użycie: &e" + cmd);
     }
 
-    public boolean offline(final Player p, final Player target){
-        final String targetNick = target.getName();
-        if (target == null){
-            colorize.sendMessage(p,"&cGracz " + targetNick + " jest aktualnie offline!" );
-            return false;
-        }
-        return true;
+    public String offline(final String targetName){
+        return "&cGracz " + targetName + " jest aktualnie offline!";
+    }
+
+    public String serverName(){
+        return "";
     }
 
 }
