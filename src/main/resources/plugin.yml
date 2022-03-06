@@ -5,39 +5,12 @@ authors: [ Caufland, MiresPL ]
 description: RPG-CORE
 commands:
   spawn:
-    permission: rpg-core.spawn
     description: Komenda przeteleportowuje na spawna
   teleport:
-    permission: rpg-core.tp
     description: Komenda przeteleportowuje gracza do wybranego gacza
     aliases: tp
   teleportcoords:
-    permission: rpg-core.tpcoords
     description: Komenda pozwala przeteleportowac na wybrane koordynaty
     aliases: tpcoords
   ban:
-    permission: rpg-core.ban
     description: Komenda pozwala zablokowac podanego uzytkownika na ZAWSZE na serwerze
-
-permissions:
-  rpg-core.spawn:
-    description: Komenda przeteleportowuje na spawna
-    default: false
-  rpg-core.spawn.set:
-    description: Pozwala na ustawienie spawnu
-    default: false
-  rpg-core.tp:
-    description: Komenda przeteleportowuje gracza do wybranego gacza
-    default: false
-  rpg-core.tp.player-to-player:
-    description: Pozwala przeteleportowanie gracza do gracza
-    default: false
-  rpg-core.tpcoords:
-    description: Komenda pozwala przeteleportowac na wybrane koordynaty
-    default: false
-  rpg-core.tpcoords.to-other-world:
-    description: Pozwala przeteleportowanie się gracza na koordynaty w innym swiecie
-    default: false
-  rpg-core.ban:
-    description: Pozwala zablokowac podanego gracza na zawsze na serwerze
-    default: false

@@ -38,7 +38,7 @@ public class TeleportCoords implements CommandExecutor {
             final String z = args[2];
 
             if (x == null || y == null || z == null) {
-                p.sendMessage(Utils.poprawneUzycie("/tpcoords [x] [y] [z] [swiat / puste]"));
+                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
                 return false;
             }
             rpgcore.getTeleportManager().teleportToLocation(p, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z));
@@ -59,7 +59,7 @@ public class TeleportCoords implements CommandExecutor {
             final World world = Bukkit.getWorld(args[3]);
 
             if (x == null || y == null || z == null || world == null) {
-                p.sendMessage(Utils.poprawneUzycie("/tpcoords [x] [y] [z] [swiat / puste]"));
+                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
                 return false;
             }
             rpgcore.getTeleportManager().teleportToLocation(p, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z), world);
@@ -67,7 +67,7 @@ public class TeleportCoords implements CommandExecutor {
             return true;
         }
 
-        p.sendMessage(Utils.poprawneUzycie("/tpcoords [x] [y] [z] [swiat / puste]"));
+        p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
 
         return false;
     }

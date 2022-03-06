@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 public class Utils {
 
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
-    public static final String SERVERNAME = format("&cNie jesteś graczem!");
+    public static final String SERVERNAME = format("&a&lRPG-CORE ");
 
     public static String format(String str) {
         return ChatColor.translateAlternateColorCodes('&', str.replace(">>", "»").replace("<<", "«"));
