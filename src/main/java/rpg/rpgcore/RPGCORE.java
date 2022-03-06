@@ -5,9 +5,11 @@ import rpg.rpgcore.commands.Spawn;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.managers.SpawnManager;
+import rpg.rpgcore.managers.TeleportManager;
 import rpg.rpgcore.utils.Alerts;
 import rpg.rpgcore.utils.Colorize;
 import rpg.rpgcore.utils.Config;
+import rpg.rpgcore.commands.BanCommand;
 
 public final class RPGCORE extends JavaPlugin {
 
@@ -17,6 +19,7 @@ public final class RPGCORE extends JavaPlugin {
     private CreateTables createTables;
     private Colorize colorize;
     private Alerts alerts;
+    private TeleportManager teleportManager;
 
     public String nazwaserwera;
 
@@ -29,6 +32,7 @@ public final class RPGCORE extends JavaPlugin {
         this.sql.loadAll();
         this.nazwaserwera = getAlerts().serverName();
         this.getCommand("spawn").setExecutor(new Spawn(this));
+        this.getCommand("ban").setExecutor(new BanCommand(this));
 
     }
 
@@ -62,5 +66,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public Alerts getAlerts() {
         return this.alerts;
+    }
+    public TeleportManager getTeleportManager(){
+        return teleportManager;
     }
 }

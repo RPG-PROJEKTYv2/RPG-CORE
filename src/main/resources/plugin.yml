@@ -15,6 +15,9 @@ commands:
     permission: rpg-core.tpcoords
     description: Komenda pozwala przeteleportowac na wybrane koordynaty
     aliases: tpcoords
+  ban:
+    permission: rpg-core.ban
+    description: Komenda pozwala zablokowac podanego uzytkownika na ZAWSZE na serwerze
 
 permissions:
   rpg-core.spawn:
@@ -34,4 +37,7 @@ permissions:
     default: false
   rpg-core.tpcoords.to-other-world:
     description: Pozwala przeteleportowanie się gracza na koordynaty w innym swiecie
+    default: false
+  rpg-core.ban:
+    description: Pozwala zablokowac podanego gracza na zawsze na serwerze
     default: false
