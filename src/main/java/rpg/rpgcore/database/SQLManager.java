@@ -19,7 +19,7 @@ public class SQLManager {
         this.rpgcore = rpgcore;
     }
 
-    private void setFirstSpawn(final Location spawn){
+    private void setFirstSpawn(final Location spawn) {
 
         final String w = spawn.getWorld().getName();
         final double x = spawn.getX();
@@ -43,7 +43,7 @@ public class SQLManager {
             ps.setFloat(5, yaw);
             ps.setFloat(6, pitch);
 
-            final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
+            final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
             rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
             ps.executeUpdate();
@@ -54,7 +54,7 @@ public class SQLManager {
         }
     }
 
-    public void loadAll(){
+    public void loadAll() {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -66,7 +66,7 @@ public class SQLManager {
 
             if (rs.next()) {
                 this.setSpawn(new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getFloat("yaw"), rs.getFloat("pitch")));
-            }else {
+            } else {
                 this.setFirstSpawn(Bukkit.getWorld("world").getSpawnLocation());
             }
 
@@ -78,7 +78,7 @@ public class SQLManager {
         }
     }
 
-    public void setSpawn(final Location spawn){
+    public void setSpawn(final Location spawn) {
 
         final String w = spawn.getWorld().getName();
         final double x = spawn.getX();
@@ -102,7 +102,7 @@ public class SQLManager {
             ps.setFloat(5, pitch);
             ps.setString(6, w);
 
-            final Location newLocspawn = new Location(Bukkit.getWorld(w),x,y,z,yaw,pitch);
+            final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
             rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
             ps.executeUpdate();

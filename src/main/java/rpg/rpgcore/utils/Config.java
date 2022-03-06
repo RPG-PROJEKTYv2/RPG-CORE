@@ -10,7 +10,7 @@ public class Config {
         this.rpgcore = rpgcore;
     }
 
-    public void createConfig(){
+    public void createConfig() {
         rpgcore.getConfig().addDefault("hostname", "hostname.pl");
         rpgcore.getConfig().addDefault("port", "3306");
         rpgcore.getConfig().addDefault("database", "minecraft");
