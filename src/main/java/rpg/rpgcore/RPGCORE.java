@@ -18,8 +18,6 @@ public final class RPGCORE extends JavaPlugin {
     private Colorize colorize;
     private Alerts alerts;
 
-    public String nazwaserwera;
-
     public void onEnable() {
         this.config.createConfig();
         this.initDatabase();
@@ -27,7 +25,6 @@ public final class RPGCORE extends JavaPlugin {
 
         this.createTables.createTables();
         this.sql.loadAll();
-        nazwaserwera = this.getAlerts().serverName();
         this.getCommand("spawn").setExecutor(new Spawn(this));
 
     }
@@ -44,7 +41,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initManagers(){
         this.colorize = new Colorize();
-        this.alerts = new Alerts(this, this.colorize);
+        this.alerts = new Alerts(this.colorize);
         this.spawn = new SpawnManager();
     }
 
