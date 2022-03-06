@@ -42,12 +42,13 @@ public class Spawn implements CommandExecutor {
 
         if (args.length == 1) {
 
-            if (!(p.hasPermission("rpg.spawn.set"))) {
-                colorize.sendMessage(p, alerts.permisje("rpg.spawn.set"));
-                return false;
-            }
 
             if (args[0].equalsIgnoreCase("set")){
+
+                if (!(p.hasPermission("rpg.spawn.set"))) {
+                    colorize.sendMessage(p, alerts.permisje("rpg.spawn.set"));
+                    return false;
+                }
 
                 final Location loc = p.getLocation();
 
@@ -64,19 +65,31 @@ public class Spawn implements CommandExecutor {
 
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(locSpawn));
 
-                colorize.sendMessage(p,"&aUstawiono spawna! Na kordach: " + " &7x: " + df.format(x) + " &7y: " + df.format(y) + " &7z: " + df.format(z) + " &7w świecie " + w.getName());
+                colorize.sendMessage(p, rpgcore.nazwaserwera + "&aPomyslnie ustawiono nowego spawna! Na kordach: " + " &7x: " + df.format(x) + " &7y: " + df.format(y) + " &7z: " + df.format(z) + " &7w swiecie " + w.getName());
 
                 return false;
+            } else if (Bukkit.getPlayer(args[0]) != null){
+                if (!(p.hasPermission("rpg.spawn.otherplayer"))){
+                    colorize.sendMessage(p, alerts.permisje("rpg.spawn.otherplayer"));
+                    return false;
+                }
+
+                Player target = Bukkit.getPlayer(args[0]);
+                target.teleport(rpgcore.getSpawnManager().getSpawn());
+                target.playSound(target.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                colorize.sendMessage(p, rpgcore.nazwaserwera + "&aZostales przeteleportowany na spawna przez administratora &7" + p.getName());
             }
 
 
 
             return false;
+        } else if (args.length != 0){
+            alerts.poprawneUzycie(p, "spawn");
         }
 
         p.teleport(rpgcore.getSpawnManager().getSpawn());
         p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-        colorize.sendMessage(p,"&aPrzeteleportowana na spawna!!");
+        colorize.sendMessage(p, rpgcore.nazwaserwera + "&aPrzeteleportowano na spawna!");
 
         return false;
     }
