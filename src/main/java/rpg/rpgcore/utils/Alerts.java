@@ -1,33 +1,40 @@
 package rpg.rpgcore.utils;
 
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
 
 public class Alerts {
 
     private final Colorize colorize;
+    private final RPGCORE rpgcore;
 
-    public Alerts(Colorize colorize) {
+    public Alerts(RPGCORE rpgcore, Colorize colorize) {
+        this.rpgcore = rpgcore;
         this.colorize = colorize;
     }
 
     public String nieGracz(){
-        return "Nie jesteś graczem!";
+        return colorize.format("[rpg.core] &cNie jesteś graczem!");
     }
 
     public String permisje(final String perm){
-        return "&cNie masz permisji &7" + perm + "&c!";
+        return colorize.format(rpgcore.nazwaserwera + "&6Nie masz wystarczajacych permisji &8(&6" + perm + "&8)");
     }
 
     public void poprawneUzycie(final Player p, final String cmd) {
-        colorize.sendMessage(p,"&7>> Poprawne użycie: &e" + cmd);
+        colorize.sendMessage(p, rpgcore.nazwaserwera + "&7Poprawne uzycie to &c/" + cmd + " &chelp");
     }
 
     public String offline(final String targetName){
-        return "&cGracz " + targetName + " jest aktualnie offline!";
+        return colorize.format(rpgcore.nazwaserwera + "&7Gracz &c" + targetName + " &7jest aktualnie &coffline!");
     }
 
     public String serverName(){
-        return "";
+        if (rpgcore.getConfig().getString("nazwa_serwera") != null){
+            return rpgcore.getConfig().getString("nazwa_serwera");
+        } else {
+            return "Brak Nazwy";
+        }
     }
 
 }
