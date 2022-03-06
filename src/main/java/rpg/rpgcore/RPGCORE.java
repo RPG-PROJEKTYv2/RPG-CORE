@@ -1,27 +1,23 @@
 package rpg.rpgcore;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.commands.BanCommand;
 import rpg.rpgcore.commands.Spawn;
+import rpg.rpgcore.commands.Teleport;
+import rpg.rpgcore.commands.TeleportOnCoords;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.managers.SpawnManager;
 import rpg.rpgcore.managers.TeleportManager;
-import rpg.rpgcore.utils.Alerts;
-import rpg.rpgcore.utils.Colorize;
 import rpg.rpgcore.utils.Config;
-import rpg.rpgcore.commands.BanCommand;
 
 public final class RPGCORE extends JavaPlugin {
 
-    private SpawnManager spawn;
     private final Config config = new Config(this);
+    private SpawnManager spawn;
     private SQLManager sql;
     private CreateTables createTables;
-    private Colorize colorize;
-    private Alerts alerts;
     private TeleportManager teleportManager;
-
-    public String nazwaserwera;
 
     public void onEnable() {
         this.config.createConfig();
@@ -30,9 +26,11 @@ public final class RPGCORE extends JavaPlugin {
 
         this.createTables.createTables();
         this.sql.loadAll();
-        this.nazwaserwera = getAlerts().serverName();
+
+        this.getCommand("teleport").setExecutor(new Teleport(this));
+        this.getCommand("teleportcoords").setExecutor(new TeleportOnCoords(this));
         this.getCommand("spawn").setExecutor(new Spawn(this));
-        this.getCommand("ban").setExecutor(new BanCommand(this));
+        this.getCommand("ban").setExecutor(new BanCommand());
 
     }
 
@@ -46,28 +44,20 @@ public final class RPGCORE extends JavaPlugin {
         this.createTables = new CreateTables(this);
     }
 
-    private void initManagers(){
-        this.colorize = new Colorize();
-        this.alerts = new Alerts(this, this.colorize);
+    private void initManagers() {
         this.spawn = new SpawnManager();
+        this.teleportManager = new TeleportManager();
     }
 
     public SQLManager getSQLManager() {
         return sql;
     }
 
-    public SpawnManager getSpawnManager(){
+    public SpawnManager getSpawnManager() {
         return spawn;
     }
 
-    public Colorize getColorize() {
-        return this.colorize;
-    }
-
-    public Alerts getAlerts() {
-        return this.alerts;
-    }
-    public TeleportManager getTeleportManager(){
+    public TeleportManager getTeleportManager() {
         return teleportManager;
     }
 }

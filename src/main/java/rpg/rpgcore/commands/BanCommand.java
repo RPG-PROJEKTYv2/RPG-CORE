@@ -4,44 +4,41 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.Utils;
 
 public class BanCommand implements CommandExecutor {
 
-    private final RPGCORE rpgcore;
-
-    public BanCommand(RPGCORE rpgcore){
-        this.rpgcore = rpgcore;
+    private void help(final Player p) {
+        p.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
+        p.sendMessage(Utils.format("&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie"));
+        p.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
     }
 
-    @Override
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (!(sender instanceof Player)){
-            rpgcore.getAlerts().nieGracz();
+
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
-        final Player player = (Player) sender;
+        final Player p = (Player) sender;
 
-        if (!(player.hasPermission("rpg.ban"))){
-            rpgcore.getAlerts().permisje("rpg.ban");
+        if (!(p.hasPermission("rpg.ban"))) {
+            Utils.permisje("rpg.ban");
             return false;
         }
 
-        if (args.length == 0){
-            rpgcore.getAlerts().poprawneUzycie(player, "ban");
+        if (args.length == 0) {
+            p.sendMessage(Utils.poprawneUzycie("ban"));
             return false;
-        } else if (args.length == 1){
-            if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("pomoc")){
-                help(player);
+        }
+
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("help") ||
+                    args[0].equalsIgnoreCase("pomoc")) {
+                help(p);
             }
         }
 
         return false;
-    }
-
-    private void help(final Player player){
-        rpgcore.getColorize().sendMessage(player, "&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-");
-        rpgcore.getColorize().sendMessage(player, "&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie");
-        rpgcore.getColorize().sendMessage(player, "&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-");
     }
 }
