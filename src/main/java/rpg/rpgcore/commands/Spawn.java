@@ -74,6 +74,7 @@ public class Spawn implements CommandExecutor {
                     return false;
                 }
 
+                //eeeeeeeeeeeeeeee
                 target.teleport(rpgcore.getSpawnManager().getSpawn());
                 target.playSound(target.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales przeteleportowany na spawna przez administratora &7" + p.getName()));
