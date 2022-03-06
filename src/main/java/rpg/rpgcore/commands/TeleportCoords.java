@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-public class TeleportOnCoords implements CommandExecutor {
+public class TeleportCoords implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public TeleportOnCoords(RPGCORE rpgcore) {
+    public TeleportCoords(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 

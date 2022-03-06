@@ -11,7 +11,7 @@ commands:
     permission: rpg-core.tp
     description: Komenda przeteleportowuje gracza do wybranego gacza
     aliases: tp
-  teleportOnoCoords:
+  teleportcoords:
     permission: rpg-core.tpcoords
     description: Komenda pozwala przeteleportowac na wybrane koordynaty
     aliases: tpcoords

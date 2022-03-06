@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.BanCommand;
 import rpg.rpgcore.commands.Spawn;
 import rpg.rpgcore.commands.Teleport;
-import rpg.rpgcore.commands.TeleportOnCoords;
+import rpg.rpgcore.commands.TeleportCoords;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.managers.SpawnManager;
@@ -28,7 +28,7 @@ public final class RPGCORE extends JavaPlugin {
         this.sql.loadAll();
 
         this.getCommand("teleport").setExecutor(new Teleport(this));
-        this.getCommand("teleportcoords").setExecutor(new TeleportOnCoords(this));
+        this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
         this.getCommand("spawn").setExecutor(new Spawn(this));
         this.getCommand("ban").setExecutor(new BanCommand());
 
