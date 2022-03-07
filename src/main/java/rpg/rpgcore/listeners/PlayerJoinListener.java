@@ -10,11 +10,11 @@ import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
 
-public class PlayerJoin implements Listener {
+public class PlayerJoinListener implements Listener {
 
     private final RPGCORE rpgcore;
 
-    public PlayerJoin(final RPGCORE rpgcore) {
+    public PlayerJoinListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
@@ -25,6 +25,7 @@ public class PlayerJoin implements Listener {
         final UUID uuid = p.getUniqueId();
 
         if (!(p.hasPlayedBefore())) {
+            //TODO Naprawienie czy gracz istnieje w tabeli
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(nick, uuid));
             return;
         }
