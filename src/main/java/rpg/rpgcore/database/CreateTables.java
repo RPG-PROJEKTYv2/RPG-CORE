@@ -20,6 +20,11 @@ public class CreateTables {
 
         try {
             conn = pool.getConnection();
+            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `player` (" +
+                    " `uuid` VARCHAR(36) NOT NULL," +
+                    " `nick` VARCHAR(255) NOT NULL ), " +
+                    " PRIMARY KEY (`uuid`)");
+            ps.execute();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `spawn` (" +
                     " `world` VARCHAR(255) NULL DEFAULT NULL," +
                     " `x` DOUBLE NULL DEFAULT NULL," +
@@ -27,6 +32,7 @@ public class CreateTables {
                     " `z` DOUBLE NULL DEFAULT NULL," +
                     " `yaw` FLOAT NULL DEFAULT NULL," +
                     " `pitch` FLOAT NULL DEFAULT NULL);");
+            ps.execute();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `banned_users` ( " +
                     "`ID` INT NOT NULL AUTO_INCREMENT, " +
                     "`NICK` VARCHAR(255) NOT NULL, " +
@@ -37,6 +43,7 @@ public class CreateTables {
                     "`ADMIN_NICK` VARCHAR(255) NOT NULL, " +
                     "`REASON` TEXT NOT NULL, " +
                     "PRIMARY KEY (`ID`));");
+            ps.execute();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `muted_users` ( " +
                     "`ID` INT NOT NULL AUTO_INCREMENT, " +
                     "`NICK` VARCHAR(255) NOT NULL, " +
@@ -52,7 +59,6 @@ public class CreateTables {
         } finally {
             pool.close(conn, ps, null);
         }
-
 
     }
 
