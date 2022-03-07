@@ -11,6 +11,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 public class SQLManager {
 
@@ -119,7 +120,7 @@ public class SQLManager {
     public void banujGracza(final Player player, final Player targetDoBana, final boolean silent ,final String powodDone){
         Connection con = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             con = pool.getConnection();
             ps = con.prepareStatement("SELECT UUID FROM `banned_users` WHERE UUID = ?;");
@@ -163,7 +164,7 @@ public class SQLManager {
     public void banujGracza(final Player player, final OfflinePlayer targetDoBanaOffline,  final boolean silent, final String powodDone){
         Connection con = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             con = pool.getConnection();
             ps = con.prepareStatement("SELECT UUID FROM `baned_users` WHERE UUID = ?;");
@@ -207,25 +208,60 @@ public class SQLManager {
     public void unBanPlayer(final Player player, final OfflinePlayer target){
         Connection con = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        try{
+        ResultSet rs;
+        try {
             con = pool.getConnection();
             ps = con.prepareStatement("SELECT UUID FROM `banned_users` WHERE UUID = ?;");
             ps.setString(1, target.getUniqueId().toString());
-            rs = ps.executeQuery();
-            if (!rs.next()){
-                player.sendMessage(Utils.format(Utils.UNBANPREFIX + "&cGracz &6" + target.getName() + " &cnie jest zbanowany"));
-            } else {
-                ps = con.prepareStatement("DELETE FROM `banned_users` WHERE UUID = ?;");
-                ps.setString(1, target.getUniqueId().toString());
-                ps.executeUpdate();
-                player.sendMessage(Utils.format(Utils.UNBANPREFIX + "&aPomyslnie odblokowano gracza &6" + target.getName()));
-                Bukkit.broadcastMessage(Utils.format(Utils.UNBANPREFIX + "&7Gracz &c" + target.getName() + " &7zostal odblokowany przez &c" + player.getName()));
-            }
-        } catch (SQLException e){
+
+            ps.executeQuery();
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            pool.close(con, ps , null);
+            pool.close(con, ps, null);
+        }
+    }
+
+    public void createPlayer(final String nick, final UUID uuid) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?)");
+
+            ps.setString(0, uuid.toString());
+            ps.setString(1, nick);
+            rpgcore.getPlayerManager().createPlayer(nick, uuid);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void getPlayer(final UUID uuidPlayer) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM 'player' WHERE uuid = ?;");
+            rs = ps.executeQuery();
+
+            ps.setString(0, uuidPlayer.toString());
+
+            while (rs.next()) {
+                rpgcore.getPlayerManager().createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")));
+            }
+
+            ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
         }
     }
 
