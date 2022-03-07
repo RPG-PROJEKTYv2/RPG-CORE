@@ -230,8 +230,8 @@ public class SQLManager {
             conn = pool.getConnection();
             ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?)");
 
-            ps.setString(0, uuid.toString());
-            ps.setString(1, nick);
+            ps.setString(1, uuid.toString());
+            ps.setString(2, nick);
             rpgcore.getPlayerManager().createPlayer(nick, uuid);
 
             ps.executeUpdate();

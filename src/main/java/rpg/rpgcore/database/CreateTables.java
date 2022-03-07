@@ -22,9 +22,16 @@ public class CreateTables {
             conn = pool.getConnection();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `player` (" +
                     " `uuid` VARCHAR(36) NOT NULL," +
-                    " `nick` VARCHAR(255) NOT NULL ), " +
-                    " PRIMARY KEY (`uuid`)");
+                    " `nick` VARCHAR(255) NOT NULL, " +
+                    " PRIMARY KEY (`uuid`))");
             ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+        try {
+            conn = pool.getConnection();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `spawn` (" +
                     " `world` VARCHAR(255) NULL DEFAULT NULL," +
                     " `x` DOUBLE NULL DEFAULT NULL," +
@@ -33,6 +40,13 @@ public class CreateTables {
                     " `yaw` FLOAT NULL DEFAULT NULL," +
                     " `pitch` FLOAT NULL DEFAULT NULL);");
             ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+        try {
+            conn = pool.getConnection();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `banned_users` ( " +
                     "`ID` INT NOT NULL AUTO_INCREMENT, " +
                     "`NICK` VARCHAR(255) NOT NULL, " +
@@ -44,6 +58,14 @@ public class CreateTables {
                     "`REASON` TEXT NOT NULL, " +
                     "PRIMARY KEY (`ID`));");
             ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+
+        try {
+            conn = pool.getConnection();
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `muted_users` ( " +
                     "`ID` INT NOT NULL AUTO_INCREMENT, " +
                     "`NICK` VARCHAR(255) NOT NULL, " +

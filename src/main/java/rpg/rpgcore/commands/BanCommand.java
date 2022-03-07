@@ -1,13 +1,14 @@
 package rpg.rpgcore.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
+
+import java.util.UUID;
 
 
 public class BanCommand implements CommandExecutor {
@@ -54,11 +55,16 @@ public class BanCommand implements CommandExecutor {
             powod.append("Brak Powodu");
 
             if (target == null) {
-                target = (Player) Bukkit.getOfflinePlayer(rpgcore.getPlayerManager().getPlayerUUID(args[0]));
-                if (target == null) {
-                    p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                    return true;
+                final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+                if (uuidTarget != null) {
+                    target = (Player) Bukkit.getOfflinePlayer(uuidTarget);
+                    if (target == null) {
+                        p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+                        return true;
+                    }
+                    return false;
                 }
+                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
                 return false;
             }
             final Player finalTarget = target;
@@ -83,14 +89,17 @@ public class BanCommand implements CommandExecutor {
             Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null) {
-                target = (Player) Bukkit.getOfflinePlayer(rpgcore.getPlayerManager().getPlayerUUID(args[0]));
-                if (target != null) {
-                    final Player finalTarget = target;
-                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, true, powod.toString()));
-                    return true;
+                final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+                if (uuidTarget != null) {
+                    target = (Player) Bukkit.getOfflinePlayer(uuidTarget);
+                    if (target == null) {
+                        p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+                        return true;
+                    }
+                    return false;
                 }
                 p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                return true;
+                return false;
             }
 
             final Player finalTarget = target;
