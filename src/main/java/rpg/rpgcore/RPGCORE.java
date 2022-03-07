@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
+import rpg.rpgcore.managers.PlayerManager;
 import rpg.rpgcore.managers.SpawnManager;
 import rpg.rpgcore.managers.TeleportManager;
 import rpg.rpgcore.utils.Config;
@@ -15,6 +16,7 @@ public final class RPGCORE extends JavaPlugin {
     private SQLManager sql;
     private CreateTables createTables;
     private TeleportManager teleportManager;
+    private PlayerManager playerManager;
 
     public void onEnable() {
         this.config.createConfig();
@@ -45,6 +47,7 @@ public final class RPGCORE extends JavaPlugin {
     private void initManagers() {
         this.spawn = new SpawnManager();
         this.teleportManager = new TeleportManager();
+        this.playerManager = new PlayerManager();
     }
 
     public SQLManager getSQLManager() {
@@ -57,5 +60,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public TeleportManager getTeleportManager() {
         return teleportManager;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 }
