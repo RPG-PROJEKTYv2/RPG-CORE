@@ -14,7 +14,7 @@ public class BanCommand implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public BanCommand (RPGCORE rpgcore){
+    public BanCommand(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
@@ -24,13 +24,13 @@ public class BanCommand implements CommandExecutor {
         p.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
     }
 
-    @Deprecated
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
+
         final Player p = (Player) sender;
 
         if (!(p.hasPermission("rpg.ban"))) {
@@ -38,80 +38,71 @@ public class BanCommand implements CommandExecutor {
             return false;
         }
 
-        if (args.length == 0) {
-            p.sendMessage(Utils.poprawneUzycie("ban"));
-            return false;
-        }
-        StringBuilder powod = new StringBuilder();
+        final StringBuilder powod = new StringBuilder();
         powod.setLength(0);
+
         if (args.length == 1) {
+
+            Player target = Bukkit.getPlayer(args[0]);
+
             if (args[0].equalsIgnoreCase("help") ||
                     args[0].equalsIgnoreCase("pomoc")) {
                 help(p);
                 return false;
             }
+
             powod.append("Brak Powodu");
-            if (Bukkit.getPlayer(args[0]) == null){
-                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+
+            if (target == null) {
+                target = (Player) Bukkit.getOfflinePlayer(rpgcore.getPlayerManager().getPlayerUUID(args[0]));
+                if (target == null) {
+                    p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+                    return true;
+                }
                 return false;
             }
-            if (Bukkit.getPlayer(args[0]) != null && !(Bukkit.getPlayer(args[0]).isOnline())){
-                OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(args[0]);
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, targetOffline, false, powod.toString()));
-                return false;
-            }
-            Player target = Bukkit.getPlayer(args[0]);
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, target, false, powod.toString()));
+            final Player finalTarget = target;
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, false, powod.toString()));
             return false;
-
         }
-        if (args.length >= 2){
 
-            for (int i = 1; i < args.length; i++){
-                if (!(args[1].equalsIgnoreCase("[-s]"))){
+        if (args.length >= 2) {
+
+            for (int i = 1; i < args.length; i++) {
+                if (!(args[1].equalsIgnoreCase("[-s]"))) {
                     powod.append(args[i]);
                 }
-                if (!(i > args.length +1)){
+                if (!(i > args.length + 1)) {
                     powod.append(" ");
                 }
             }
-            if (powod.length() == 0){
+            if (powod.length() == 0) {
                 powod.append("Brak Powodu");
-            }
-            if (args[1].equalsIgnoreCase("[-s]")){
-                if (Bukkit.getPlayer(args[0]) == null){
-                    p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                    return false;
-                }
-
-                if (Bukkit.getPlayer(args[0]) != null && !(Bukkit.getPlayer(args[0]).isOnline())){
-                    OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(args[0]);
-                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, targetOffline, true, powod.toString()));
-                    return false;
-                }
-
-                Player target = Bukkit.getPlayer(args[0]);
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, target, true, powod.toString()));
-                return false;
-            }
-
-            if (Bukkit.getPlayer(args[0]) == null){
-                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                return false;
-            }
-
-            if (Bukkit.getPlayer(args[0]) != null && !(Bukkit.getPlayer(args[0]).isOnline())){
-                OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(args[0]);
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, targetOffline, false, powod.toString()));
-
-                return false;
             }
 
             Player target = Bukkit.getPlayer(args[0]);
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, target, false, powod.toString()));
-            return false;
 
+            if (target == null) {
+                target = (Player) Bukkit.getOfflinePlayer(rpgcore.getPlayerManager().getPlayerUUID(args[0]));
+                if (target != null) {
+                    final Player finalTarget = target;
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, true, powod.toString()));
+                    return true;
+                }
+                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+                return true;
+            }
 
+            final Player finalTarget = target;
+
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, true, powod.toString()));
+
+            if (!(args[1].equalsIgnoreCase("[-s]"))) {
+                Bukkit.broadcastMessage("Zbanowano gracza");
+                return true;
+            }
+
+            return true;
         }
         help(p);
         return false;

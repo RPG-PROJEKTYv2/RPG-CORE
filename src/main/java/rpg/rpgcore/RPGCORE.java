@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
+import rpg.rpgcore.listeners.PlayerJoin;
 import rpg.rpgcore.managers.PlayerManager;
 import rpg.rpgcore.managers.SpawnManager;
 import rpg.rpgcore.managers.TeleportManager;
@@ -31,6 +32,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("spawn").setExecutor(new Spawn(this));
         this.getCommand("ban").setExecutor(new BanCommand(this));
         this.getCommand("unban").setExecutor(new UnBanCommand(this));
+
+        getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
     }
 
