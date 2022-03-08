@@ -1,8 +1,6 @@
 package rpg.rpgcore.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 public class Utils {
 
@@ -27,4 +25,11 @@ public class Utils {
         return format(SERVERNAME + "&7Gracz &c" + targetName + " &7jest aktualnie &coffline!");
     }
 
+    public static String joinMessage(final String name) {
+        return format("&7" + name + " &8[&a+&8]");
+    }
+
+    public static String quitMessage(final String name) {
+        return format("&7" + name + " &8[&c-&8]");
+    }
 }
