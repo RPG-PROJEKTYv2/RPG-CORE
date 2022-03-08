@@ -80,6 +80,24 @@ public class SQLManager {
         } finally {
             pool.close(conn, ps, null);
         }
+
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM player;");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                rpgcore.getPlayerManager().createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")));
+            }
+
+            ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+
     }
 
     public void setSpawn(final Location spawn) {
@@ -225,7 +243,6 @@ public class SQLManager {
     public void createPlayer(final String nick, final UUID uuid) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs;
         try {
             conn = pool.getConnection();
             ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?)");
@@ -235,29 +252,6 @@ public class SQLManager {
             rpgcore.getPlayerManager().createPlayer(nick, uuid);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.close(conn, ps, null);
-        }
-    }
-
-    public void getPlayer(final UUID uuidPlayer) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            conn = pool.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM 'player' WHERE uuid = ?;");
-            rs = ps.executeQuery();
-
-            ps.setString(0, uuidPlayer.toString());
-
-            while (rs.next()) {
-                rpgcore.getPlayerManager().createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")));
-            }
-
-            ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
