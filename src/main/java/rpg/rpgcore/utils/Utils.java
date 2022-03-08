@@ -18,7 +18,7 @@ public class Utils {
     }
 
     public static String poprawneUzycie(final String cmd) {
-        return format(SERVERNAME + "&7Poprawne uzycie to &c/" + cmd + " &chelp");
+        return format(SERVERNAME + "&7Poprawne uzycie to &c/" + cmd);
     }
 
     public static String offline(final String targetName) {
