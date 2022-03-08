@@ -16,3 +16,5 @@ commands:
     description: Komenda pozwala zablokowac podanego uzytkownika na ZAWSZE na serwerze
   unban:
     description: Pozwala odblokowac podanego gracza
+  kick:
+    description: Kikuje gracza z serwera
