@@ -11,11 +11,11 @@ import rpg.rpgcore.utils.Utils;
 import java.util.UUID;
 
 
-public class BanCommand implements CommandExecutor {
+public class Ban implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public BanCommand(RPGCORE rpgcore) {
+    public Ban(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
