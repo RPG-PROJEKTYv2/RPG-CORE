@@ -42,6 +42,7 @@ public final class RPGCORE extends JavaPlugin {
     public void onDisable() {
         this.sql.onDisable();
         this.spawn.setSpawn(null);
+        this.playerManager.removeAllPlayers();
     }
 
     private void initDatabase() {

@@ -32,8 +32,14 @@ public class Teleport implements CommandExecutor {
 
         if (args.length == 1) {
             final Player target = Bukkit.getPlayer(args[0]);
+
             if (target == null) {
                 p.sendMessage(Utils.offline(args[0]));
+                return false;
+            }
+
+            if (p == target) {
+                p.sendMessage(Utils.SERVERNAME + Utils.format("&cNie mozesz sie przeteleportowac do samego siebie!"));
                 return false;
             }
 

@@ -27,4 +27,10 @@ public class PlayerManager {
         this.playerUUID.put(playerName, playerUUID);
         this.playerName.put(playerUUID, playerName);
     }
+
+    public void removeAllPlayers() {
+        this.playerName.clear();
+        this.playerUUID.clear();
+        this.players.clear();
+    }
 }
