@@ -6,10 +6,7 @@ import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.listeners.PlayerJoinListener;
 import rpg.rpgcore.listeners.PlayerQuitListener;
-import rpg.rpgcore.managers.BanManager;
-import rpg.rpgcore.managers.PlayerManager;
-import rpg.rpgcore.managers.SpawnManager;
-import rpg.rpgcore.managers.TeleportManager;
+import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
 
 public final class RPGCORE extends JavaPlugin {
@@ -21,6 +18,8 @@ public final class RPGCORE extends JavaPlugin {
     private TeleportManager teleportManager;
     private PlayerManager playerManager;
     private BanManager banManager;
+    private VanishManager vanishManager;
+    private NMSManager nmsManager;
 
     public void onEnable() {
         this.config.createConfig();
@@ -36,9 +35,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("ban").setExecutor(new Ban(this));
         this.getCommand("unban").setExecutor(new UnBan(this));
         this.getCommand("kick").setExecutor(new Kick(this));
+        this.getCommand("vanish").setExecutor(new Vanish(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
 
     }
 
@@ -58,6 +58,8 @@ public final class RPGCORE extends JavaPlugin {
         this.teleportManager = new TeleportManager();
         this.playerManager = new PlayerManager();
         this.banManager = new BanManager();
+        this.vanishManager = new VanishManager();
+        this.nmsManager = new NMSManager(this);
     }
 
     public SQLManager getSQLManager() {
@@ -79,4 +81,8 @@ public final class RPGCORE extends JavaPlugin {
     public BanManager getBanManager() {
         return this.banManager;
     }
+
+    public VanishManager getVanishManager() {return vanishManager;}
+
+    public NMSManager getNmsManager() {return nmsManager;}
 }

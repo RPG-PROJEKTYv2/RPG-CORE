@@ -157,7 +157,7 @@ public class SQLManager {
 
                 String wygasa = sdf.format(cal.getTime());
 
-                ps = con.prepareStatement("INSERT INTO `banned_users` (NICK, UUID, SILENT, DATA_BANA, DATA_WYGASNIECIA_BANA, ADMIN_NICK, REASON) VALUES (?,?,?,?,?,?,?);");
+                ps = con.prepareStatement("INSERT INTO `banned_users` (NICK, UUID, SILENT, DATA_BANA, DATA_WYGASNIECIA_BANA, ADMIN_NICK, REASON, IS_PERMAMENT) VALUES (?,?,?,?,?,?,?,?);");
                 ps.setString(1, targetDoBana.getName());
                 ps.setString(2, targetDoBana.getUniqueId().toString());
                 ps.setBoolean(3, silent);
@@ -165,9 +165,11 @@ public class SQLManager {
                 ps.setString(5, wygasa);
                 ps.setString(6, player.getName());
                 ps.setString(7, powodDone);
+                ps.setBoolean(8, true);
 
                 ps.executeUpdate();
                 player.sendMessage(Utils.format(Utils.BANPREFIX + "&aPomyslnie zablokowano gracza &6" + targetDoBana.getName() + " &ana &6zawsze"));
+                rpgcore.getBanManager().kickPlayerForPemr(player.getName(), targetDoBana, powodDone);
                 if (!silent) {
                     Bukkit.broadcastMessage(Utils.format(Utils.BANPREFIX + "Gracz &c" + targetDoBana.getName() + " &7zostal &cpermamentnie &7zablokowany przez &c" + player.getName() + " &7za &c" + powodDone));
                 }

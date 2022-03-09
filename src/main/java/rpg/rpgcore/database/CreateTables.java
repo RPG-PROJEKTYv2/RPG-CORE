@@ -56,6 +56,7 @@ public class CreateTables {
                     "`DATA_WYGASNIECIA_BANA` DATETIME NOT NULL, " +
                     "`ADMIN_NICK` VARCHAR(255) NOT NULL, " +
                     "`REASON` TEXT NOT NULL, " +
+                    "`IS_PERMAMENT` TINYINT(1) NOT NULL" +
                     "PRIMARY KEY (`ID`));");
             ps.execute();
         } catch (SQLException e) {

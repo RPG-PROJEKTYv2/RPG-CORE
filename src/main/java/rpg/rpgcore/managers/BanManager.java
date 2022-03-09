@@ -35,4 +35,14 @@ public class BanManager {
 
     }
 
+    public void kickPlayerForPemr(final String adminName, final Player target, final String reason){
+        String kickMessgae = Utils.format(
+                Utils.BANPREFIX +
+                        "\n&7Zostales permamentnie zablokowany na tym serwerze\n"+
+                        "&7Przez: &c" + adminName + "\n"+
+                        "&7Powod: &c" + reason + "\n"+
+                        "&8Jezeli uwazasz, ze to blad, skontaktuj sie z\n" +
+                        "&cadministracja &8 tego serwera");
+        target.kickPlayer(kickMessgae);
+    }
 }

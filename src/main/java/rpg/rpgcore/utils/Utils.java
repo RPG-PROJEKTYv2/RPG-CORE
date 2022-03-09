@@ -26,10 +26,10 @@ public class Utils {
     }
 
     public static String joinMessage(final String name) {
-        return format("&7" + name + " &8[&a+&8]");
+        return format(" &8[&a+&8] &7"+ name);
     }
 
     public static String quitMessage(final String name) {
-        return format("&7" + name + " &8[&c-&8]");
+        return format(" &8[&c-&8]" + name);
     }
 }
