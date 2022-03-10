@@ -20,67 +20,72 @@ public class Kick implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Utils.NIEGRACZ);
+        if (!(sender.hasPermission("rpg.kick"))) {
+            sender.sendMessage(Utils.permisje("rpg.kick"));
             return false;
         }
 
-        final Player p = (Player) sender;
-        final String playerName = p.getName();
-        if (!(p.hasPermission("rpg.kick"))) {
-            p.sendMessage(Utils.permisje("rpg.kick"));
-            return false;
-        }
+        final String senderName = sender.getName();
+        final StringBuilder reason = new StringBuilder();
 
         if (args.length == 1) {
 
-            final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidTarget = rpgcore.getPlayerUUID(args[0]);
             if (uuidTarget != null) {
                 final Player target = Bukkit.getPlayer(uuidTarget);
 
                 if (target == null) {
-                    p.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
+                    sender.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
                     return true;
                 }
 
-                //TODO do dodania sprawdzanie czy zawiera -s
+                boolean silent = false;
+                int i = 0;
+                for (String test : args) {
+                    if (test.equalsIgnoreCase("-s")) {
+                        silent = true;
+                        args[i] = "";
+                        break;
+                    }
+                    i += 1;
+                }
 
-                rpgcore.getBanManager().kickPlayer(playerName, target, false);
+                reason.append("Brak powodu");
+
+                rpgcore.getBanManager().kickPlayer(senderName, target, String.valueOf(reason), silent, "&a&lGracz&7 " + target.getName() + "&a&lzostal wyrzucony z serwera przez&7 " + senderName);
+
                 return true;
             }
-            p.sendMessage(Utils.SERVERNAME + Utils.format("&cNie znaleziono podanego gracz"));
+            sender.sendMessage(Utils.SERVERNAME + Utils.GRACZOFFLINE);
             return true;
         }
 
         if (args.length >= 2) {
 
-            final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidTarget = rpgcore.getPlayerUUID(args[0]);
             if (uuidTarget != null) {
                 final Player target = Bukkit.getPlayer(uuidTarget);
 
                 if (target == null) {
-                    p.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
+                    sender.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
                     return true;
                 }
 
-                //TODO do dodania sprawdzanie czy zawiera -s
-
-                final StringBuilder reason = new StringBuilder();
-
                 for (String arg : args) {
-                    if ((!(arg.equalsIgnoreCase(args[0])))) {
+                    if (((!(arg.equalsIgnoreCase(args[0]))))) {
                         reason.append(" ").append(arg);
                     }
                 }
+                final String fianlReason = String.valueOf(reason).replace("-s", "");
 
-                rpgcore.getBanManager().kickPlayer(playerName, target, reason, false);
+                rpgcore.getBanManager().kickPlayer(senderName, target, String.valueOf(reason), fianlReason.contains("-s"), "&a&lGracz&7 " + target.getName() + "&a&lzostal wyrzucony z serwera przez&7 " + senderName);
                 return true;
             }
-            p.sendMessage(Utils.SERVERNAME + Utils.format("&cNie znaleziono podanego gracz"));
+            sender.sendMessage(Utils.SERVERNAME + Utils.format("&cNie znaleziono podanego gracz"));
             return true;
         }
 
-        p.sendMessage(Utils.SERVERNAME + Utils.poprawneUzycie("kick [gracz] [powod] "));
+        sender.sendMessage(Utils.poprawneUzycie("kick [gracz] [powod] "));
 
         return false;
     }

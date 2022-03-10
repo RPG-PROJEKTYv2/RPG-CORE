@@ -18,24 +18,24 @@ public class Vanish implements CommandExecutor {
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
         final Player player = (Player) sender;
 
 
-        if (args.length == 0){
+        if (args.length == 0) {
             int task = 0;
-            if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())){
+            if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())) {
                 rpgcore.getVanishManager().getVanishList().remove(player.getUniqueId());
                 rpgcore.getVanishManager().revealPlayer(player);
                 Bukkit.getScheduler().cancelTask(task);
             } else {
                 rpgcore.getVanishManager().getVanishList().add(player.getUniqueId());
                 rpgcore.getVanishManager().hidePlayer(player);
-                task = Bukkit.getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
-                    if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())){
+                rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
+                    if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())) {
                         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(rpgcore.getNmsManager().makeActionBar("&3&lVanish"));
                     }
                 }, 5L, 5L);

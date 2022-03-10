@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,24 +21,18 @@ public class PlayerJoinListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onAsyncPlayerPreLoginListener(AsyncPlayerPreLoginEvent e) {
+    public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
 
         final UUID playerUUID = e.getUniqueId();
         final String playerName = e.getName();
 
-        if (playerName == null || playerUUID == null) {
-            System.out.println("Blad ktos mial pusty nick albo uuid!");
-            return;
-        }
-        if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
-            rpgcore.getSQLManager().createPlayer(playerName, playerUUID);
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID));
 
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerJoinListener(PlayerJoinEvent e) {
-        e.setJoinMessage(null);
+    public void onPlayerJoinListener(final PlayerJoinEvent e) {
+
         final Player p = e.getPlayer();
         final String name = p.getName();
 

@@ -2,15 +2,13 @@ package rpg.rpgcore.database;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.managers.SpawnManager;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class SQLManager {
@@ -23,14 +21,12 @@ public class SQLManager {
         this.rpgcore = rpgcore;
     }
 
-    private void setFirstSpawn(final Location spawn) {
+    private void setFirstSpawn() {
 
-        final String w = spawn.getWorld().getName();
-        final double x = spawn.getX();
-        final double y = spawn.getY();
-        final double z = spawn.getZ();
-        final float yaw = spawn.getYaw();
-        final float pitch = spawn.getPitch();
+        final String w = "world";
+        final double x = SpawnManager.defaultSpawnX;
+        final double y = SpawnManager.defaultSpawnY;
+        final double z = SpawnManager.defaultSpawnZ;
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -44,10 +40,10 @@ public class SQLManager {
             ps.setDouble(2, x);
             ps.setDouble(3, y);
             ps.setDouble(4, z);
-            ps.setFloat(5, yaw);
-            ps.setFloat(6, pitch);
+            ps.setFloat(5, 0.0F);
+            ps.setFloat(6, 0.0F);
 
-            final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
+            final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, 0.0F, 0.0F);
             rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
             ps.executeUpdate();
@@ -71,7 +67,7 @@ public class SQLManager {
             if (rs.next()) {
                 this.setSpawn(new Location(Bukkit.getWorld(rs.getString("world")), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getFloat("yaw"), rs.getFloat("pitch")));
             } else {
-                this.setFirstSpawn(Bukkit.getWorld("world").getSpawnLocation());
+                this.setFirstSpawn();
             }
 
             ps.executeQuery();
@@ -88,7 +84,7 @@ public class SQLManager {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                rpgcore.getPlayerManager().createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")));
+                rpgcore.createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")), rs.getString("banInfo"));
             }
 
             ps.executeQuery();
@@ -135,113 +131,6 @@ public class SQLManager {
         }
     }
 
-    public void banujGracza(final Player player, final Player targetDoBana, final boolean silent ,final String powodDone){
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            con = pool.getConnection();
-            ps = con.prepareStatement("SELECT UUID FROM `banned_users` WHERE UUID = ?;");
-            ps.setString(1, targetDoBana.getUniqueId().toString());
-            rs = ps.executeQuery();
-            if (rs.next()){
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cGracz &6" + targetDoBana.getName() + " &cjest juz zbanowany"));
-            } else {
-                Date now = new Date();
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String nowDone = sdf.format(now);
-
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 999);
-
-                String wygasa = sdf.format(cal.getTime());
-
-                ps = con.prepareStatement("INSERT INTO `banned_users` (NICK, UUID, SILENT, DATA_BANA, DATA_WYGASNIECIA_BANA, ADMIN_NICK, REASON, IS_PERMAMENT) VALUES (?,?,?,?,?,?,?,?);");
-                ps.setString(1, targetDoBana.getName());
-                ps.setString(2, targetDoBana.getUniqueId().toString());
-                ps.setBoolean(3, silent);
-                ps.setString(4, nowDone);
-                ps.setString(5, wygasa);
-                ps.setString(6, player.getName());
-                ps.setString(7, powodDone);
-                ps.setBoolean(8, true);
-
-                ps.executeUpdate();
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&aPomyslnie zablokowano gracza &6" + targetDoBana.getName() + " &ana &6zawsze"));
-                rpgcore.getBanManager().kickPlayerForPemr(player.getName(), targetDoBana, powodDone);
-                if (!silent) {
-                    Bukkit.broadcastMessage(Utils.format(Utils.BANPREFIX + "Gracz &c" + targetDoBana.getName() + " &7zostal &cpermamentnie &7zablokowany przez &c" + player.getName() + " &7za &c" + powodDone));
-                }
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            pool.close(con, ps, null);
-        }
-    }
-
-    public void banujGracza(final Player player, final OfflinePlayer targetDoBanaOffline,  final boolean silent, final String powodDone){
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            con = pool.getConnection();
-            ps = con.prepareStatement("SELECT UUID FROM `baned_users` WHERE UUID = ?;");
-            ps.setString(1, targetDoBanaOffline.getUniqueId().toString());
-            rs = ps.executeQuery();
-            if (rs.next()){
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cGracz &6" + targetDoBanaOffline.getName() + " &cjest juz zbanowany"));
-            } else {
-                Date now = new Date();
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String nowDone = sdf.format(now);
-
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 999);
-
-                String wygasa = sdf.format(cal.getTime());
-
-                ps = con.prepareStatement("INSERT INTO `banned_users` (NICK, UUID, SILENT, DATA_BANA, DATA_WYGASNIECIA_BANA, ADMIN_NICK, REASON) VALUES (?,?,?,?,?,?,?);");
-                ps.setString(1, targetDoBanaOffline.getName());
-                ps.setString(2, targetDoBanaOffline.getUniqueId().toString());
-                ps.setBoolean(3, silent);
-                ps.setString(4, nowDone);
-                ps.setString(5, wygasa);
-                ps.setString(6, player.getName());
-                ps.setString(7, powodDone);
-
-                ps.executeUpdate();
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&aPomyslnie zablokowano gracza &6" + targetDoBanaOffline.getName() + " &ana &6zawsze"));
-                if (!silent) {
-                    Bukkit.broadcastMessage(Utils.format(Utils.BANPREFIX + "Gracz &c" + targetDoBanaOffline.getName() + " &7zostal &cpermamentnie &7zablokowany przez &c" + player.getName() + " &7za &c" + powodDone));
-                }
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            pool.close(con, ps, null);
-        }
-    }
-
-    public void unBanPlayer(final Player player, final OfflinePlayer target){
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            con = pool.getConnection();
-            ps = con.prepareStatement("SELECT UUID FROM `banned_users` WHERE UUID = ?;");
-            ps.setString(1, target.getUniqueId().toString());
-
-            ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.close(con, ps, null);
-        }
-    }
-
     public void createPlayer(final String nick, final UUID uuid) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -249,9 +138,9 @@ public class SQLManager {
             conn = pool.getConnection();
             ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?)");
 
-            ps.setString(1, uuid.toString());
+            ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
-            rpgcore.getPlayerManager().createPlayer(nick, uuid);
+            rpgcore.createPlayer(nick, uuid, "false");
 
             ps.executeUpdate();
         } catch (SQLException e) {

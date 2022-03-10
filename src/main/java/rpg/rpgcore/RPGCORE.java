@@ -9,6 +9,10 @@ import rpg.rpgcore.listeners.PlayerQuitListener;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
 public final class RPGCORE extends JavaPlugin {
 
     private final Config config = new Config(this);
@@ -16,10 +20,14 @@ public final class RPGCORE extends JavaPlugin {
     private SQLManager sql;
     private CreateTables createTables;
     private TeleportManager teleportManager;
-    private PlayerManager playerManager;
     private BanManager banManager;
     private VanishManager vanishManager;
     private NMSManager nmsManager;
+
+
+    private final ArrayList<UUID> players = new ArrayList<>();
+    private final HashMap<String, UUID> playerUUID = new HashMap<>();
+    private final HashMap<UUID, String> playerName = new HashMap<>();
 
     public void onEnable() {
         this.config.createConfig();
@@ -45,7 +53,7 @@ public final class RPGCORE extends JavaPlugin {
     public void onDisable() {
         this.sql.onDisable();
         this.spawn.setSpawn(null);
-        this.playerManager.removeAllPlayers();
+        this.removeAllPlayers();
     }
 
     private void initDatabase() {
@@ -56,10 +64,9 @@ public final class RPGCORE extends JavaPlugin {
     private void initManagers() {
         this.spawn = new SpawnManager();
         this.teleportManager = new TeleportManager();
-        this.playerManager = new PlayerManager();
         this.banManager = new BanManager();
         this.vanishManager = new VanishManager();
-        this.nmsManager = new NMSManager(this);
+        this.nmsManager = new NMSManager();
     }
 
     public SQLManager getSQLManager() {
@@ -74,15 +81,40 @@ public final class RPGCORE extends JavaPlugin {
         return teleportManager;
     }
 
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
-
     public BanManager getBanManager() {
         return this.banManager;
     }
 
-    public VanishManager getVanishManager() {return vanishManager;}
+    public VanishManager getVanishManager() {
+        return vanishManager;
+    }
 
-    public NMSManager getNmsManager() {return nmsManager;}
+    public NMSManager getNmsManager() {
+        return nmsManager;
+    }
+
+    public UUID getPlayerUUID(final String playerName) {
+        return this.playerUUID.get(playerName);
+    }
+
+    public String getPlayerName(final UUID uuid) {
+        return this.playerName.get(uuid);
+    }
+
+    public ArrayList<UUID> getPlayers() {
+        return this.players;
+    }
+
+    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo) {
+        this.players.add(playerUUID);
+        this.playerUUID.put(playerName, playerUUID);
+        this.playerName.put(playerUUID, playerName);
+        this.getBanManager().setBanInfo(playerUUID, banInfo);
+    }
+
+    public void removeAllPlayers() {
+        this.playerName.clear();
+        this.playerUUID.clear();
+        this.players.clear();
+    }
 }

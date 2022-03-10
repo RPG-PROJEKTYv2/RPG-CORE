@@ -11,8 +11,6 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.text.DecimalFormat;
-
 public class Spawn implements CommandExecutor {
 
     private final RPGCORE rpgcore;
@@ -44,22 +42,16 @@ public class Spawn implements CommandExecutor {
                     return false;
                 }
 
-                final Location loc = p.getLocation();
+                final Location newLocationSpawn = p.getLocation();
 
-                final DecimalFormat df = new DecimalFormat(".00");
+                final double x = newLocationSpawn.getX();
+                final double y = newLocationSpawn.getY();
+                final double z = newLocationSpawn.getZ();
+                final World w = newLocationSpawn.getWorld();
 
-                final double x = loc.getX();
-                final double y = loc.getY();
-                final double z = loc.getZ();
-                final World w = loc.getWorld();
-                final float pitch = loc.getPitch();
-                final float yaw = loc.getYaw();
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(newLocationSpawn));
 
-                final Location locSpawn = new Location(w, x, y, z, yaw, pitch);
-
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(locSpawn));
-
-                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie ustawiono nowego spawna! Na kordach: " + " &7x: " + df.format(x) + " &7y: " + df.format(y) + " &7z: " + df.format(z) + " &7w swiecie " + w.getName()));
+                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie ustawiono nowego spawna! Na kordach: " + " &7x: " + Utils.df.format(x) + " &7y: " + Utils.df.format(y) + " &7z: " + Utils.df.format(z) + " &7w swiecie " + w.getName()));
 
                 return false;
 
@@ -74,7 +66,6 @@ public class Spawn implements CommandExecutor {
                     return false;
                 }
 
-                //eeeeeeeeeeeeeeee
                 target.teleport(rpgcore.getSpawnManager().getSpawn());
                 target.playSound(target.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales przeteleportowany na spawna przez administratora &7" + p.getName()));

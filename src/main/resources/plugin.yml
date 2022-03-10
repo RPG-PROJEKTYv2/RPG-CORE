@@ -18,3 +18,5 @@ commands:
     description: Pozwala odblokowac podanego gracza
   kick:
     description: Kikuje gracza z serwera
+  vanish:
+    description: Vanish

@@ -6,22 +6,18 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.utils.Utils;
 
-import java.text.DecimalFormat;
-
 public class TeleportManager {
 
     public void teleportToLocation(final Player p, final Double x, final Double y, final Double z, final World world) {
-        final DecimalFormat df = new DecimalFormat(".00");
         p.teleport(new Location(world, x, y, z));
         p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-        p.sendMessage(Utils.format("&aPrzeteleportowałęś się do świata:&7 " + world.getName() + " &a na kordy: &7x: " + df.format(x) + " &7y: " + df.format(y) + " &7z: " + df.format(z)));
+        p.sendMessage(Utils.format("&aPrzeteleportowałęś się do świata:&7 " + world.getName() + " &a na kordy: &7x: " + Utils.df.format(x) + " &7y: " + Utils.df.format(y) + " &7z: " + Utils.df.format(z)));
     }
 
     public void teleportToLocation(final Player p, final Double x, final Double y, final Double z) {
-        final DecimalFormat df = new DecimalFormat(".00");
         p.teleport(new Location(p.getWorld(), x, y, z));
         p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-        p.sendMessage(Utils.format("&aPrzeteleportowałęś się na kody: &7x: " + df.format(x) + " &7y: " + df.format(y) + " &7z: " + df.format(z)));
+        p.sendMessage(Utils.format("&aPrzeteleportowałęś się na kody: &7x: " + Utils.df.format(x) + " &7y: " + Utils.df.format(y) + " &7z: " + Utils.df.format(z)));
     }
 
     public void teleportToTarget(final Player p, final Player target) {

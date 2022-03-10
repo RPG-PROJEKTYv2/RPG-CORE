@@ -16,7 +16,7 @@ public class Teleport implements CommandExecutor {
         this.rpgcore = rpgcore;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);

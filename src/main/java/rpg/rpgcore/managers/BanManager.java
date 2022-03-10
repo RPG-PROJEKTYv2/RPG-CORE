@@ -1,48 +1,49 @@
 package rpg.rpgcore.managers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class BanManager {
 
-    //TODO dodanie funkcji odpowiadających za banowanie i mutowanie i warnowanie
+    private final HashMap<UUID, String> banInfo = new HashMap<>();
 
-    public void kickPlayer(final String sederName, final Player p, final StringBuilder reason, final boolean silent) {
-
-        final String kickMessage =
-                Utils.SERVERNAME + Utils.format(
-                        "\n&7Zostales wyrzucony z serwera\n" +
-                                "&7Przez: &c" + sederName +
-                                "\n&7Za:&c" + reason +
-                                "\n\n&8Jezeli chcesz zglosic skarge na administratora, ktory wyrzucil Cie z" +
-                                " serwera\n" +
-                                "&8zglos sie na przykladowyts3.pl lub przykladowydc z ss tego kicka!");
-        p.kickPlayer(kickMessage);
-
-        //TODO do dodania sprawdzanie czy wysłać wiadomość
+    public void unBanPlayer(final Player playerToUnBan) {
+        System.out.println("UNBAM");
     }
 
-    public void kickPlayer(final String sederName, final Player p, final boolean silent) {
+    public void banPlayer(final String sederName, final UUID uuidPlayerToBan, final String reason, final boolean silent, final String date, final String broadcast) {
 
-        final String kickMessage =
-                Utils.SERVERNAME + Utils.format(
-                        "\n&7Zostales wyrzucony z serwera\n&7Przez: &c" + sederName +
-                                "\n&7Za:&c Brak powodu \n\n&8Jezeli chcesz zglosic skarge na administratora, ktory wyrzucil Cie z serwera\n" +
-                                "&8zglos sie na przykladowyts3.pl lub przykladowydc z ss tego kicka!");
-        p.kickPlayer(kickMessage);
+        final Player playerToBan = Bukkit.getPlayer(uuidPlayerToBan);
 
-        //TODO do dodania sprawdzanie czy wysłać wiadomość
-
+        if (playerToBan != null) {
+            playerToBan.kickPlayer(Utils.banMessage(sederName, reason, date));
+        }
+        if (silent) {
+            Bukkit.getServer().broadcastMessage(broadcast);
+        }
     }
 
-    public void kickPlayerForPemr(final String adminName, final Player target, final String reason){
-        String kickMessgae = Utils.format(
-                Utils.BANPREFIX +
-                        "\n&7Zostales permamentnie zablokowany na tym serwerze\n"+
-                        "&7Przez: &c" + adminName + "\n"+
-                        "&7Powod: &c" + reason + "\n"+
-                        "&8Jezeli uwazasz, ze to blad, skontaktuj sie z\n" +
-                        "&cadministracja &8 tego serwera");
-        target.kickPlayer(kickMessgae);
+    public void kickPlayer(final String sederName, final Player playerToKick, final String reason, final boolean silent, final String broadcast) {
+
+        if (playerToKick != null) {
+            playerToKick.kickPlayer(Utils.kickMessage(sederName, reason));
+        }
+
+        if (silent) {
+            Bukkit.getServer().broadcastMessage(broadcast);
+        }
     }
+
+    public void setBanInfo(final UUID uuid, final String banInfo) {
+        this.banInfo.put(uuid, banInfo);
+    }
+
+    public String getBanInfo(final UUID uuid) {
+        return this.banInfo.get(uuid);
+    }
+
 }

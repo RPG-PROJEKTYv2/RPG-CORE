@@ -19,101 +19,87 @@ public class Ban implements CommandExecutor {
         this.rpgcore = rpgcore;
     }
 
-    private void help(final Player p) {
-        p.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
-        p.sendMessage(Utils.format("&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie"));
-        p.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
+    private void sendHelp(final CommandSender sender) {
+        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
+        sender.sendMessage(Utils.format("&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie"));
+        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Utils.NIEGRACZ);
+        if (!(sender.hasPermission("rpg.ban"))) {
+            sender.sendMessage(Utils.permisje("rpg.ban"));
             return false;
         }
 
-        final Player p = (Player) sender;
+        final StringBuilder reason = new StringBuilder();
+        final String senderName = sender.getName();
 
-        if (!(p.hasPermission("rpg.ban"))) {
-            Utils.permisje("rpg.ban");
-            return false;
-        }
-
-        final StringBuilder powod = new StringBuilder();
-        powod.setLength(0);
 
         if (args.length == 1) {
 
-            Player target = Bukkit.getPlayer(args[0]);
-
             if (args[0].equalsIgnoreCase("help") ||
                     args[0].equalsIgnoreCase("pomoc")) {
-                help(p);
+                sendHelp(sender);
                 return false;
             }
 
-            powod.append("Brak Powodu");
+            reason.append("Brak Powodu");
 
-            if (target == null) {
-                final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
-                if (uuidTarget != null) {
-                    target = (Player) Bukkit.getOfflinePlayer(uuidTarget);
-                    if (target == null) {
-                        p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                        return true;
-                    }
-                    return false;
+            final UUID uuidplayerToBan = rpgcore.getPlayerUUID(args[0]);
+
+            if (uuidplayerToBan == null) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
+            boolean silent = false;
+            int i = 0;
+            for (String test : args) {
+                if (test.equalsIgnoreCase("-s")) {
+                    silent = true;
+                    args[i] = "";
+                    break;
                 }
-                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                return false;
+                i += 1;
             }
-            final Player finalTarget = target;
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, false, powod.toString()));
+
+            final String playerToBanName = rpgcore.getPlayerName(uuidplayerToBan);
+            final String date = "data";
+
+            rpgcore.getBanManager().banPlayer(senderName, uuidplayerToBan, String.valueOf(reason), silent, date, "Gracz &c" + playerToBanName + " &7zostal zablokowany na serwerze przez &c" + senderName + ". &7Wygasa: &4Nigdy&7. Powod: &c" + reason);
+
+
             return false;
         }
 
         if (args.length >= 2) {
 
-            for (int i = 1; i < args.length; i++) {
-                if (!(args[1].equalsIgnoreCase("[-s]"))) {
-                    powod.append(args[i]);
-                }
-                if (!(i > args.length + 1)) {
-                    powod.append(" ");
-                }
-            }
-            if (powod.length() == 0) {
-                powod.append("Brak Powodu");
-            }
+            final UUID uuidplayerToBan = rpgcore.getPlayerUUID(args[0]);
 
-            Player target = Bukkit.getPlayer(args[0]);
-
-            if (target == null) {
-                final UUID uuidTarget = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
-                if (uuidTarget != null) {
-                    target = (Player) Bukkit.getOfflinePlayer(uuidTarget);
-                    if (target == null) {
-                        p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
-                        return true;
-                    }
-                    return false;
-                }
-                p.sendMessage(Utils.format(Utils.BANPREFIX + "&cNie znaleziono podanego gracz"));
+            if (uuidplayerToBan == null) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
-            final Player finalTarget = target;
-
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banujGracza(p, finalTarget, true, powod.toString()));
-
-            if (!(args[1].equalsIgnoreCase("[-s]"))) {
-                Bukkit.broadcastMessage("Zbanowano gracza");
-                return true;
+            for (String arg : args) {
+                if (((!(arg.equalsIgnoreCase(args[0]))))) {
+                    reason.append(" ").append(arg);
+                }
             }
+
+            final String playerToBanName = rpgcore.getPlayerName(uuidplayerToBan);
+            String fianlReason = String.valueOf(reason);
+            final boolean silent = fianlReason.contains("-s");
+            fianlReason = fianlReason.replace("-s", "");
+
+            final String date = "data";
+
+            rpgcore.getBanManager().banPlayer(senderName, uuidplayerToBan, fianlReason, silent, date, "Gracz &c" + playerToBanName + " &7zostal zablokowany na serwerze przez &c" + senderName + ". &7Wygasa: &4Nigdy&7. Powod: &c" + fianlReason);
 
             return true;
         }
-        help(p);
+        sendHelp(sender);
         return false;
     }
 }

@@ -10,19 +10,24 @@ import java.util.UUID;
 public class VanishManager {
     private final ArrayList<UUID> vanishList = new ArrayList<>();
 
-    public ArrayList<UUID> getVanishList() {return vanishList;}
-    public boolean containsPlayer(final UUID uuid){return vanishList.contains(uuid);}
+    public ArrayList<UUID> getVanishList() {
+        return vanishList;
+    }
 
-    public void revealPlayer(final Player target){
-        for (Player restOfTheServer : Bukkit.getOnlinePlayers()){
+    public boolean containsPlayer(final UUID uuid) {
+        return vanishList.contains(uuid);
+    }
+
+    public void revealPlayer(final Player target) {
+        for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             restOfTheServer.showPlayer(target);
         }
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha"));
     }
 
-    public void hidePlayer(final Player target){
-        for (Player restOfTheServer : Bukkit.getOnlinePlayers()){
-            if (!(restOfTheServer.hasPermission("rpg.vanish.see_hidden_players"))){
+    public void hidePlayer(final Player target) {
+        for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
+            if (!(restOfTheServer.hasPermission("rpg.vanish.see_hidden_players"))) {
                 restOfTheServer.hidePlayer(target);
             }
         }
