@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.UUID;
+
 public class Vanish implements CommandExecutor {
 
     private final RPGCORE rpgcore;
@@ -24,22 +26,33 @@ public class Vanish implements CommandExecutor {
         }
         final Player player = (Player) sender;
 
+        if (!(player.hasPermission("rpg.vanish"))){
+            player.sendMessage(Utils.permisje("rpg.vanish"));
+            return false;
+        }
 
         if (args.length == 0) {
-            int task = 0;
             if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())) {
                 rpgcore.getVanishManager().getVanishList().remove(player.getUniqueId());
                 rpgcore.getVanishManager().revealPlayer(player);
-                Bukkit.getScheduler().cancelTask(task);
-            } else {
-                rpgcore.getVanishManager().getVanishList().add(player.getUniqueId());
-                rpgcore.getVanishManager().hidePlayer(player);
-                rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
-                    if (rpgcore.getVanishManager().containsPlayer(player.getUniqueId())) {
-                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(rpgcore.getNmsManager().makeActionBar("&3&lVanish"));
-                    }
-                }, 5L, 5L);
+                return false;
             }
+            rpgcore.getVanishManager().getVanishList().add(player.getUniqueId());
+            rpgcore.getVanishManager().hidePlayer(player);
+            return false;
+        }
+        if (args.length == 1){
+
+            Player target = Bukkit.getPlayer(args[0]);
+
+
+            if (rpgcore.getVanishManager().containsPlayer(target.getUniqueId())){
+                rpgcore.getVanishManager().getVanishList().remove(target.getUniqueId());
+                rpgcore.getVanishManager().revealPlayer(target);
+                return false;
+            }
+            rpgcore.getVanishManager().getVanishList().add(target.getUniqueId());
+            rpgcore.getVanishManager().hidePlayer(target);
         }
 
         return false;

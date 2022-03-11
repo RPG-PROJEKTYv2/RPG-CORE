@@ -1,5 +1,7 @@
 package rpg.rpgcore;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -8,6 +10,7 @@ import rpg.rpgcore.listeners.PlayerJoinListener;
 import rpg.rpgcore.listeners.PlayerQuitListener;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +26,8 @@ public final class RPGCORE extends JavaPlugin {
     private BanManager banManager;
     private VanishManager vanishManager;
     private NMSManager nmsManager;
+    private GodManager godManager;
+    private ListaNPCManager listaNPCManager;
 
 
     private final ArrayList<UUID> players = new ArrayList<>();
@@ -38,6 +43,8 @@ public final class RPGCORE extends JavaPlugin {
         this.createTables.createTables();
         this.sql.loadAll();
 
+        this.sendActionBar();
+
         this.getCommand("teleport").setExecutor(new Teleport(this));
         this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
         this.getCommand("spawn").setExecutor(new Spawn(this));
@@ -45,6 +52,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("unban").setExecutor(new UnBan(this));
         this.getCommand("kick").setExecutor(new Kick(this));
         this.getCommand("vanish").setExecutor(new Vanish(this));
+        this.getCommand("god").setExecutor(new God(this));
+        this.getCommand("speed").setExecutor(new Speed(this));
+        this.getCommand("listanpc").setExecutor(new ListaNPC(this));
+        this.getCommand("fly").setExecutor(new Fly(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -68,6 +79,24 @@ public final class RPGCORE extends JavaPlugin {
         this.banManager = new BanManager(this);
         this.vanishManager = new VanishManager();
         this.nmsManager = new NMSManager();
+        this.godManager = new GodManager();
+        this.listaNPCManager = new ListaNPCManager();
+    }
+
+    private void sendActionBar(){
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            for (Player target : Bukkit.getOnlinePlayers()){
+                if (this.godManager.containsPlayer(target.getUniqueId()) && this.vanishManager.containsPlayer(target.getUniqueId())){
+                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&3&lVanish &8| &5&lGOD"));
+                } else
+                if (this.godManager.containsPlayer(target.getUniqueId())){
+                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&5&lGOD"));
+                } else
+                if (this.vanishManager.containsPlayer(target.getUniqueId())){
+                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&3&lVanish"));
+                }
+            }
+        }, 150L, 50L);
     }
 
     public SQLManager getSQLManager() {
@@ -90,9 +119,11 @@ public final class RPGCORE extends JavaPlugin {
         return vanishManager;
     }
 
-    public NMSManager getNmsManager() {
-        return nmsManager;
-    }
+    public NMSManager getNmsManager() {return nmsManager;}
+
+    public GodManager getGodManager() {return godManager;}
+
+    public ListaNPCManager getListaNPCManager() {return listaNPCManager;}
 
     public UUID getPlayerUUID(final String playerName) {
         return this.playerUUID.get(playerName);

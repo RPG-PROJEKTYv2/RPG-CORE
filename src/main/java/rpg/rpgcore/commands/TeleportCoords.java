@@ -26,8 +26,8 @@ public class TeleportCoords implements CommandExecutor {
 
         final Player p = (Player) sender;
 
-        if (!(p.hasPermission("rpg-core.tpcoords"))) {
-            p.sendMessage(Utils.permisje("rpg-core.tpcoords"));
+        if (!(p.hasPermission("rpg.tpcoords"))) {
+            p.sendMessage(Utils.permisje("rpg.tpcoords"));
             return false;
         }
 
@@ -48,8 +48,8 @@ public class TeleportCoords implements CommandExecutor {
 
         if (args.length == 4) {
 
-            if (!(p.hasPermission("rpg-core.tpcoords.to-other-world"))) {
-                p.sendMessage(Utils.permisje("rpg-core.tpcoords.to-other-world"));
+            if (!(p.hasPermission("rpg.tpcoords.to-other-world"))) {
+                p.sendMessage(Utils.permisje("rpg.tpcoords.to-other-world"));
                 return false;
             }
             //TODO przerobić to w try catch

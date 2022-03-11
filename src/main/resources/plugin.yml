@@ -17,3 +17,12 @@ commands:
   kick:
 
   vanish:
+    aliases: v
+
+  god:
+
+  speed:
+
+  listanpc:
+
+  fly:

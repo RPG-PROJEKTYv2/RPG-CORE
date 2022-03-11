@@ -25,8 +25,8 @@ public class Teleport implements CommandExecutor {
 
         final Player p = (Player) sender;
 
-        if (!(p.hasPermission("rpg-core.tp"))) {
-            p.sendMessage(Utils.permisje("rpg-core.tp"));
+        if (!(p.hasPermission("rpg.tp"))) {
+            p.sendMessage(Utils.permisje("rpg.tp"));
             return false;
         }
 
@@ -48,8 +48,8 @@ public class Teleport implements CommandExecutor {
         }
 
         if (args.length == 2) {
-            if (!(p.hasPermission("rpg-core.tp.player-to-player"))) {
-                p.sendMessage(Utils.permisje("rpg-core.tp.player-to-player"));
+            if (!(p.hasPermission("rpg.tp.player-to-player"))) {
+                p.sendMessage(Utils.permisje("rpg.tp.player-to-player"));
                 return false;
             }
 
