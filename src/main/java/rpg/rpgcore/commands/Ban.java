@@ -32,72 +32,73 @@ public class Ban implements CommandExecutor {
 
         final StringBuilder reason = new StringBuilder();
         final String senderName = sender.getName();
-
+        final String banExpiry = "Pernamentny";
 
         if (args.length == 1) {
 
-            if (args[0].equalsIgnoreCase("help") ||
-                    args[0].equalsIgnoreCase("pomoc")) {
-                sendHelp(sender);
-                return false;
-            }
+            final UUID uuidPlayerToBan = rpgcore.getPlayerUUID(args[0]);
 
-            reason.append("Brak Powodu");
-
-            final UUID uuidplayerToBan = rpgcore.getPlayerUUID(args[0]);
-
-            if (uuidplayerToBan == null) {
+            if (uuidPlayerToBan == null) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
-            boolean silent = false;
-            int i = 0;
-            for (String test : args) {
-                if (test.equalsIgnoreCase("-s")) {
-                    silent = true;
-                    args[i] = "";
-                    break;
-                }
-                i += 1;
+            if (args[0].equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
             }
 
-            final String playerToBanName = rpgcore.getPlayerName(uuidplayerToBan);
-            final String date = "data";
+            if (rpgcore.isBanned(uuidPlayerToBan)) {
+                sender.sendMessage(Utils.ALREADYBANNED);
+                return false;
+            }
 
-            rpgcore.getBanManager().banPlayer(senderName, uuidplayerToBan, String.valueOf(reason), silent, date, "Gracz &c" + playerToBanName + " &7zostal zablokowany na serwerze przez &c" + senderName + ". &7Wygasa: &4Nigdy&7. Powod: &c" + reason);
-
+            rpgcore.getBanManager().banPlayer(senderName, uuidPlayerToBan, " Brak powodu", false, banExpiry);
 
             return false;
         }
 
         if (args.length >= 2) {
 
-            final UUID uuidplayerToBan = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidPlayerToBan = rpgcore.getPlayerUUID(args[0]);
+            args[0] = "";
 
-            if (uuidplayerToBan == null) {
+            if (uuidPlayerToBan == null) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
-            for (String arg : args) {
-                if (((!(arg.equalsIgnoreCase(args[0]))))) {
+            if (args[0].equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
+            }
+
+            if (rpgcore.isBanned(uuidPlayerToBan)) {
+                sender.sendMessage(Utils.ALREADYBANNED);
+                return false;
+            }
+
+            boolean silent = false;
+            if (args[1].equalsIgnoreCase("-s")) {
+                silent = true;
+                args[1] = "";
+            }
+
+            for (final String arg : args) {
+                if (!(arg.equalsIgnoreCase(""))) {
                     reason.append(" ").append(arg);
                 }
             }
 
-            final String playerToBanName = rpgcore.getPlayerName(uuidplayerToBan);
-            String fianlReason = String.valueOf(reason);
-            final boolean silent = fianlReason.contains("-s");
-            fianlReason = fianlReason.replace("-s", "");
+            final String finalReason = String.valueOf(reason);
 
-            final String date = "data";
+            rpgcore.getBanManager().banPlayer(senderName, uuidPlayerToBan, finalReason, silent, banExpiry);
 
-            rpgcore.getBanManager().banPlayer(senderName, uuidplayerToBan, fianlReason, silent, date, "Gracz &c" + playerToBanName + " &7zostal zablokowany na serwerze przez &c" + senderName + ". &7Wygasa: &4Nigdy&7. Powod: &c" + fianlReason);
-
-            return true;
+            return false;
         }
+
         sendHelp(sender);
+
         return false;
     }
 }

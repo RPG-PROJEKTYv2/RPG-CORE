@@ -1,10 +1,8 @@
 package rpg.rpgcore.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -20,18 +18,58 @@ public class UnBan implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
+        final String senderName = sender.getName();
+
         if (args.length == 1) {
 
-            final UUID uuidTarget = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidToUnBan = rpgcore.getPlayerUUID(args[0]);
 
-            if (uuidTarget == null) {
+            if (uuidToUnBan == null) {
                 sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
                 return false;
             }
 
-            final Player playerToUnBan = Bukkit.getPlayer(uuidTarget);
+            if (args[0].equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
+            }
 
-            rpgcore.getBanManager().unBanPlayer(playerToUnBan);
+            if (!(rpgcore.isBanned(uuidToUnBan))) {
+                sender.sendMessage(Utils.NOALREADYBANNED);
+                return false;
+            }
+
+            rpgcore.getBanManager().unBanPlayer(senderName, uuidToUnBan, false);
+
+            return false;
+        }
+
+        if (args.length == 2) {
+
+            final UUID uuidToUnBan = rpgcore.getPlayerUUID(args[0]);
+
+            if (uuidToUnBan == null) {
+                sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
+                return false;
+            }
+
+            if (args[0].equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
+            }
+
+            if (!(rpgcore.isBanned(uuidToUnBan))) {
+                sender.sendMessage(Utils.NOALREADYBANNED);
+                return false;
+            }
+
+            boolean silent = false;
+            if (args[1].equalsIgnoreCase("-s")) {
+                silent = true;
+                args[1] = "";
+            }
+
+            rpgcore.getBanManager().unBanPlayer(senderName, uuidToUnBan, silent);
 
             return false;
         }

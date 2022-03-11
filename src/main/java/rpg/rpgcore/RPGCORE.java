@@ -28,6 +28,7 @@ public final class RPGCORE extends JavaPlugin {
     private final ArrayList<UUID> players = new ArrayList<>();
     private final HashMap<String, UUID> playerUUID = new HashMap<>();
     private final HashMap<UUID, String> playerName = new HashMap<>();
+    private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
 
     public void onEnable() {
         this.config.createConfig();
@@ -64,7 +65,7 @@ public final class RPGCORE extends JavaPlugin {
     private void initManagers() {
         this.spawn = new SpawnManager();
         this.teleportManager = new TeleportManager();
-        this.banManager = new BanManager();
+        this.banManager = new BanManager(this);
         this.vanishManager = new VanishManager();
         this.nmsManager = new NMSManager();
     }
@@ -109,12 +110,29 @@ public final class RPGCORE extends JavaPlugin {
         this.players.add(playerUUID);
         this.playerUUID.put(playerName, playerUUID);
         this.playerName.put(playerUUID, playerName);
-        this.getBanManager().setBanInfo(playerUUID, banInfo);
+        this.setPlayerBanInfo(playerUUID, banInfo);
     }
 
     public void removeAllPlayers() {
         this.playerName.clear();
         this.playerUUID.clear();
         this.players.clear();
+        this.playerBanInfo.clear();
+    }
+
+    public void setPlayerBanInfo(final UUID uuid, final String banInfo) {
+        this.playerBanInfo.put(uuid, banInfo);
+    }
+
+    public void updatePlayerBanInfo(final UUID uuid, final String banInfo) {
+        this.playerBanInfo.replace(uuid, banInfo);
+    }
+
+    public String getPlayerBanInfo(final UUID uuid) {
+        return this.playerBanInfo.get(uuid);
+    }
+
+    public boolean isBanned(final UUID uuid) {
+        return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
     }
 }
