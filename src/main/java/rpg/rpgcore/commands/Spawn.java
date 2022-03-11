@@ -37,6 +37,8 @@ public class Spawn implements CommandExecutor {
 
             if (args[0].equalsIgnoreCase("set")) {
 
+                //TODO wywalic tworzenie nowej lokacji po prostu przetransportowac lokacje pleyera
+
                 if (!(p.hasPermission("rpg.spawn.set"))) {
                     p.sendMessage(Utils.permisje("rpg.spawn.set"));
                     return false;

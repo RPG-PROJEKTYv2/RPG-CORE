@@ -47,7 +47,7 @@ public class SQLManager {
             rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
@@ -71,7 +71,7 @@ public class SQLManager {
             }
 
             ps.executeQuery();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
@@ -88,7 +88,7 @@ public class SQLManager {
             }
 
             ps.executeQuery();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
@@ -121,17 +121,18 @@ public class SQLManager {
             ps.setString(6, w);
 
             final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
-            rpgcore.getSpawnManager().setSpawn(newLocspawn);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
+
+            rpgcore.getSpawnManager().setSpawn(newLocspawn);
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
         }
     }
 
-    public void createPlayer(final String nick, final UUID uuid) {
+    public void createPlayer(final String nick, final UUID uuid, final String banInfo) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -140,10 +141,54 @@ public class SQLManager {
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
-            rpgcore.createPlayer(nick, uuid, "false");
+            ps.setString(3, banInfo);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
+
+            rpgcore.createPlayer(nick, uuid, "false");
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void banPlayer(final UUID uuid, final String banInfo) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set banInfo=? WHERE uuid=?");
+
+            ps.setString(1, banInfo);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+
+            rpgcore.updatePlayerBanInfo(uuid, banInfo);
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void unBanPlayer(final UUID uuid) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set banInfo=? WHERE uuid=?");
+
+            ps.setString(1, "false");
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+
+            rpgcore.updatePlayerBanInfo(uuid, "false");
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);

@@ -35,21 +35,21 @@ public class ConnectionPoolManager {
         if (conn != null) {
             try {
                 conn.close();
-            } catch (SQLException e) {
+            } catch (final SQLException e) {
                 e.printStackTrace();
             }
         }
         if (ps != null) {
             try {
                 ps.close();
-            } catch (SQLException e) {
+            } catch (final SQLException e) {
                 e.printStackTrace();
             }
         }
         if (res != null) {
             try {
                 res.close();
-            } catch (SQLException e) {
+            } catch (final SQLException e) {
                 e.printStackTrace();
             }
         }

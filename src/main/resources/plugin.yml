@@ -5,18 +5,15 @@ authors: [ Caufland, MiresPL ]
 description: RPG-CORE
 commands:
   spawn:
-    description: Komenda przeteleportowuje na spawna
+
   teleport:
-    description: Komenda przeteleportowuje gracza do wybranego gacza
     aliases: tp
   teleportcoords:
-    description: Komenda pozwala przeteleportowac na wybrane koordynaty
     aliases: tpcoords
   ban:
-    description: Komenda pozwala zablokowac podanego uzytkownika na ZAWSZE na serwerze
+
   unban:
-    description: Pozwala odblokowac podanego gracza
+
   kick:
-    description: Kikuje gracza z serwera
+
   vanish:
-    description: Vanish

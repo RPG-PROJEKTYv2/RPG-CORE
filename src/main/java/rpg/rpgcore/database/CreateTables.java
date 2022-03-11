@@ -25,7 +25,7 @@ public class CreateTables {
                     " `banInfo` TEXT NOT NULL, " +
                     " PRIMARY KEY (`uuid`))");
             ps.execute();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
@@ -40,7 +40,7 @@ public class CreateTables {
                     " `yaw` FLOAT NULL DEFAULT NULL," +
                     " `pitch` FLOAT NULL DEFAULT NULL);");
             ps.execute();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);

@@ -52,7 +52,7 @@ public class TeleportCoords implements CommandExecutor {
                 p.sendMessage(Utils.permisje("rpg-core.tpcoords.to-other-world"));
                 return false;
             }
-
+            //TODO przerobić to w try catch
             final String x = args[0];
             final String y = args[1];
             final String z = args[2];
