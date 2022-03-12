@@ -30,13 +30,12 @@ public class Ban implements CommandExecutor {
             return false;
         }
 
-        final StringBuilder reason = new StringBuilder();
         final String senderName = sender.getName();
         final String banExpiry = "Pernamentny";
 
         if (args.length == 1) {
 
-            final UUID uuidPlayerToBan = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
             if (uuidPlayerToBan == null) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
@@ -48,7 +47,7 @@ public class Ban implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.isBanned(uuidPlayerToBan)) {
+            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }
@@ -60,7 +59,7 @@ public class Ban implements CommandExecutor {
 
         if (args.length >= 2) {
 
-            final UUID uuidPlayerToBan = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
             args[0] = "";
 
             if (uuidPlayerToBan == null) {
@@ -73,7 +72,7 @@ public class Ban implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.isBanned(uuidPlayerToBan)) {
+            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }
@@ -83,6 +82,8 @@ public class Ban implements CommandExecutor {
                 silent = true;
                 args[1] = "";
             }
+
+            final StringBuilder reason = new StringBuilder();
 
             for (final String arg : args) {
                 if (!(arg.equalsIgnoreCase(""))) {

@@ -22,7 +22,7 @@ public class UnBan implements CommandExecutor {
 
         if (args.length == 1) {
 
-            final UUID uuidToUnBan = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidToUnBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
             if (uuidToUnBan == null) {
                 sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
@@ -34,7 +34,7 @@ public class UnBan implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.isBanned(uuidToUnBan))) {
+            if (!(rpgcore.getPlayerManager().isBanned(uuidToUnBan))) {
                 sender.sendMessage(Utils.NOALREADYBANNED);
                 return false;
             }
@@ -46,7 +46,7 @@ public class UnBan implements CommandExecutor {
 
         if (args.length == 2) {
 
-            final UUID uuidToUnBan = rpgcore.getPlayerUUID(args[0]);
+            final UUID uuidToUnBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
             if (uuidToUnBan == null) {
                 sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
@@ -58,7 +58,7 @@ public class UnBan implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.isBanned(uuidToUnBan))) {
+            if (!(rpgcore.getPlayerManager().isBanned(uuidToUnBan))) {
                 sender.sendMessage(Utils.NOALREADYBANNED);
                 return false;
             }

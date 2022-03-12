@@ -28,63 +28,75 @@ public class Kick implements CommandExecutor {
         //TODO do przerobienia
 
         final String senderName = sender.getName();
-        final StringBuilder reason = new StringBuilder();
-
         if (args.length == 1) {
 
-            final UUID uuidTarget = rpgcore.getPlayerUUID(args[0]);
-            if (uuidTarget != null) {
-                final Player target = Bukkit.getPlayer(uuidTarget);
+            final UUID uuidPlayerToKick = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
-                if (target == null) {
-                    sender.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
-                    return true;
-                }
-
-                boolean silent = false;
-                int i = 0;
-                for (String test : args) {
-                    if (test.equalsIgnoreCase("-s")) {
-                        silent = true;
-                        args[i] = "";
-                        break;
-                    }
-                    i += 1;
-                }
-
-                reason.append("Brak powodu");
-
-                rpgcore.getBanManager().kickPlayer(senderName, target, String.valueOf(reason), silent, "&a&lGracz&7 " + target.getName() + "&a&lzostal wyrzucony z serwera przez&7 " + senderName);
-
-                return true;
+            if (!(rpgcore.getPlayerManager().getPlayers().contains(uuidPlayerToKick))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
             }
-            sender.sendMessage(Utils.SERVERNAME + Utils.GRACZOFFLINE);
-            return true;
+
+            final Player playerToKick = Bukkit.getPlayer(uuidPlayerToKick);
+
+            if (playerToKick == null) {
+                sender.sendMessage(Utils.offline(args[0]));
+                return false;
+            }
+
+            if (args[0].equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("wyrzucic"));
+                return false;
+            }
+
+            rpgcore.getBanManager().kickPlayer(senderName, playerToKick, " Brak powodu", false);
+
+            return false;
         }
 
         if (args.length >= 2) {
 
-            final UUID uuidTarget = rpgcore.getPlayerUUID(args[0]);
-            if (uuidTarget != null) {
-                final Player target = Bukkit.getPlayer(uuidTarget);
+            final String playerToKickName = args[0];
+            args[0] = "";
 
-                if (target == null) {
-                    sender.sendMessage(Utils.SERVERNAME + Utils.offline(args[0]));
-                    return true;
-                }
+            final UUID uuidPlayerToKick = rpgcore.getPlayerManager().getPlayerUUID(playerToKickName);
 
-                for (String arg : args) {
-                    if (((!(arg.equalsIgnoreCase(args[0]))))) {
-                        reason.append(" ").append(arg);
-                    }
-                }
-                final String fianlReason = String.valueOf(reason).replace("-s", "");
-
-                rpgcore.getBanManager().kickPlayer(senderName, target, String.valueOf(reason), fianlReason.contains("-s"), "&a&lGracz&7 " + target.getName() + "&a&lzostal wyrzucony z serwera przez&7 " + senderName);
-                return true;
+            if (!(rpgcore.getPlayerManager().getPlayers().contains(uuidPlayerToKick))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
             }
-            sender.sendMessage(Utils.SERVERNAME + Utils.format("&cNie znaleziono podanego gracz"));
-            return true;
+
+            final Player playerToKick = Bukkit.getPlayer(uuidPlayerToKick);
+
+            if (playerToKick == null) {
+                sender.sendMessage(Utils.offline(args[0]));
+                return false;
+            }
+
+            if (playerToKickName.equalsIgnoreCase(senderName)) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("z kickowac"));
+                return false;
+            }
+
+            boolean silent = false;
+            if (args[1].equalsIgnoreCase("-s")) {
+                silent = true;
+                args[1] = "";
+            }
+
+            final StringBuilder reason = new StringBuilder();
+
+            for (final String arg : args) {
+                if (!(arg.equalsIgnoreCase(""))) {
+                    reason.append(" ").append(arg);
+                }
+            }
+
+            final String finalReason = String.valueOf(reason);
+
+            rpgcore.getBanManager().kickPlayer(senderName, playerToKick, finalReason, silent);
+
+            return false;
         }
 
         sender.sendMessage(Utils.poprawneUzycie("kick [gracz] [powod] "));
