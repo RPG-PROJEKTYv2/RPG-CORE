@@ -2,13 +2,14 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.ChatColor;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 public class Utils {
 
     public static DecimalFormat df;
-    public static SimpleDateFormat sdf;
+    public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
 
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
@@ -48,7 +49,7 @@ public class Utils {
     }
 
     public static String kickMessage(final String senderName, final String reason) {
-        return (SERVERNAME + format("\n" +
+        return format(SERVERNAME + format("\n" +
                 "&7Zostales wyrzucony z serwera\n" +
                 "&7Przez: &c" + senderName +
                 "\n&7Za:&c" + reason +
@@ -65,6 +66,10 @@ public class Utils {
                 "\n&7Przez:&c " + senderName +
                 "\n\n&3&lJezeli uwazasz ze to blad, skontaktuj sie" +
                 "\n&3&lz &f&lAdministracja &3&ltego serwera. ts3: przykladowyts3.pl"));
+    }
+
+    public static String kickBroadcast(final String namePlayerToBan, final String senderName, final String reason) {
+        return (BANPREFIX + format("&7Gracz&c " + namePlayerToBan + " &7zostal wyrzucony z serwera przez&c " + senderName + ". &7Powod:&c" + reason));
     }
 
     public static String banBroadcast(final String namePlayerToBan, final String senderName, final String reason, final String banExpiry) {
