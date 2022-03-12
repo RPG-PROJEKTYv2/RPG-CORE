@@ -84,7 +84,11 @@ public class SQLManager {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                rpgcore.createPlayer(rs.getString("nick"), UUID.fromString(rs.getString("uuid")), rs.getString("banInfo"));
+                rpgcore.getPlayerManager().createPlayer(
+                        rs.getString("nick"),
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getString("banInfo"),
+                        rs.getString("punishmentHistory"));
             }
 
             ps.executeQuery();
@@ -145,7 +149,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.createPlayer(nick, uuid, "false");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "");
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
@@ -166,7 +170,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.updatePlayerBanInfo(uuid, banInfo);
+            rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, banInfo);
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
@@ -187,7 +191,28 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.updatePlayerBanInfo(uuid, "false");
+            rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, "false");
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void setPunishmentHistory(final UUID uuid, final String punishmentHistory) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set punishmentHistory=? WHERE uuid=?");
+
+            ps.setString(1, String.valueOf(punishmentHistory));
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+
+            rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, punishmentHistory);
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {

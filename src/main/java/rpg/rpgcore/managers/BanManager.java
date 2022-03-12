@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class BanManager {
@@ -15,11 +16,22 @@ public class BanManager {
         this.rpgcore = rpgcore;
     }
 
-    //TODO dodanie funkcji na rozczytywanie banInfo oraz jego tworzenie
+    private void addToPunishmentHistory(final UUID uuid, final String punishment) {
+
+        final StringBuilder newPunishment = new StringBuilder();
+
+        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        newPunishment.append(punishment).append(",");
+
+        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
+
+    }
 
     public void unBanPlayer(final String senderName, final UUID uuidToUnBan, final boolean silent) {
 
-        final String nameOfPlayerToBan = rpgcore.getPlayerName(uuidToUnBan);
+        final String nameOfPlayerToBan = rpgcore.getPlayerManager().getPlayerName(uuidToUnBan);
 
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.unBanBroadcast(nameOfPlayerToBan, senderName));
@@ -28,35 +40,41 @@ public class BanManager {
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unBanPlayer(uuidToUnBan));
     }
 
-    public void banPlayer(final String sederName, final UUID uuidPlayerToBan, final String reason, final boolean silent, final String banExpiry) {
+    public void banPlayer(final String banSender, final UUID uuidPlayerToBan, final String reason, final boolean silent, final String banExpiry) {
+
+        final String dateOfBan = Utils.dateFormat.format(new Date());
 
         final Player playerToBan = Bukkit.getPlayer(uuidPlayerToBan);
-        final String nameOfPlayerToBan = rpgcore.getPlayerName(uuidPlayerToBan);
+        final String nameOfPlayerToBan = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToBan);
 
         if (playerToBan != null) {
-            //TODO dodanie pobierania aktualniej godziny i daty
-            playerToBan.kickPlayer(Utils.banMessage(sederName, reason, banExpiry, "do dodania"));
+            playerToBan.kickPlayer(Utils.banMessage(banSender, reason, banExpiry, dateOfBan));
         }
         if (!(silent)) {
-            Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfPlayerToBan, sederName, String.valueOf(reason), banExpiry));
+            Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfPlayerToBan, banSender, String.valueOf(reason), banExpiry));
         }
 
-        final String banInfo = "true";
-
+        final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToBan, banInfo));
+
+        this.addToPunishmentHistory(uuidPlayerToBan, "Ban;" + banInfo);
     }
 
-    public void kickPlayer(final String sederName, final Player playerToKick, final String reason, final boolean silent, final String broadcast) {
+    public void kickPlayer(final String sederName, final Player playerToKick, final String reason, final boolean silent) {
 
-        //TODO do przerobienia
+        final String dateOfBan = Utils.dateFormat.format(new Date());
 
-        if (playerToKick != null) {
-            playerToKick.kickPlayer(Utils.kickMessage(sederName, reason));
-        }
+        final String playerName = playerToKick.getName();
+        final UUID playerUUID = playerToKick.getUniqueId();
+
+        playerToKick.kickPlayer(Utils.kickMessage(sederName, reason));
 
         if (!(silent)) {
-            Bukkit.getServer().broadcastMessage(broadcast);
+            Bukkit.getServer().broadcastMessage(Utils.kickBroadcast(playerName, sederName, reason));
         }
+
+        final String kick = sederName + ";" + reason + ";" + dateOfBan;
+        this.addToPunishmentHistory(playerUUID, "Kick;" + kick);
     }
 
 }

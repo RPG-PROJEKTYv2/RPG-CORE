@@ -18,7 +18,6 @@ commands:
 
   vanish:
     aliases: v
-
   god:
 
   speed:
@@ -26,3 +25,6 @@ commands:
   listanpc:
 
   fly:
+
+  history:
+

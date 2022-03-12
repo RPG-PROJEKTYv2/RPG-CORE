@@ -11,11 +11,6 @@ import rpg.rpgcore.listeners.PlayerQuitListener;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-
 public final class RPGCORE extends JavaPlugin {
 
     private final Config config = new Config(this);
@@ -28,12 +23,8 @@ public final class RPGCORE extends JavaPlugin {
     private NMSManager nmsManager;
     private GodManager godManager;
     private ListaNPCManager listaNPCManager;
+    private PlayerManager playerManager;
 
-
-    private final ArrayList<UUID> players = new ArrayList<>();
-    private final HashMap<String, UUID> playerUUID = new HashMap<>();
-    private final HashMap<UUID, String> playerName = new HashMap<>();
-    private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
 
     public void onEnable() {
         this.config.createConfig();
@@ -56,6 +47,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("speed").setExecutor(new Speed(this));
         this.getCommand("listanpc").setExecutor(new ListaNPC(this));
         this.getCommand("fly").setExecutor(new Fly(this));
+        this.getCommand("history").setExecutor(new History(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -65,7 +57,7 @@ public final class RPGCORE extends JavaPlugin {
     public void onDisable() {
         this.sql.onDisable();
         this.spawn.setSpawn(null);
-        this.removeAllPlayers();
+        this.playerManager.removeAllPlayers();
     }
 
     private void initDatabase() {
@@ -81,6 +73,7 @@ public final class RPGCORE extends JavaPlugin {
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager();
         this.listaNPCManager = new ListaNPCManager();
+        this.playerManager = new PlayerManager();
     }
 
     private void sendActionBar(){
@@ -119,51 +112,20 @@ public final class RPGCORE extends JavaPlugin {
         return vanishManager;
     }
 
-    public NMSManager getNmsManager() {return nmsManager;}
-
-    public GodManager getGodManager() {return godManager;}
-
-    public ListaNPCManager getListaNPCManager() {return listaNPCManager;}
-
-    public UUID getPlayerUUID(final String playerName) {
-        return this.playerUUID.get(playerName);
+    public NMSManager getNmsManager() {
+        return nmsManager;
     }
 
-    public String getPlayerName(final UUID uuid) {
-        return this.playerName.get(uuid);
+    public GodManager getGodManager() {
+        return godManager;
     }
 
-    public ArrayList<UUID> getPlayers() {
-        return this.players;
+    public ListaNPCManager getListaNPCManager() {
+        return listaNPCManager;
     }
 
-    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo) {
-        this.players.add(playerUUID);
-        this.playerUUID.put(playerName, playerUUID);
-        this.playerName.put(playerUUID, playerName);
-        this.setPlayerBanInfo(playerUUID, banInfo);
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
-    public void removeAllPlayers() {
-        this.playerName.clear();
-        this.playerUUID.clear();
-        this.players.clear();
-        this.playerBanInfo.clear();
-    }
-
-    public void setPlayerBanInfo(final UUID uuid, final String banInfo) {
-        this.playerBanInfo.put(uuid, banInfo);
-    }
-
-    public void updatePlayerBanInfo(final UUID uuid, final String banInfo) {
-        this.playerBanInfo.replace(uuid, banInfo);
-    }
-
-    public String getPlayerBanInfo(final UUID uuid) {
-        return this.playerBanInfo.get(uuid);
-    }
-
-    public boolean isBanned(final UUID uuid) {
-        return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
-    }
 }

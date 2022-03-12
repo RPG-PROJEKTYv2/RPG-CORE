@@ -23,7 +23,8 @@ public class CreateTables {
                     " `uuid` VARCHAR(36) NOT NULL," +
                     " `nick` TEXT NOT NULL, " +
                     " `banInfo` TEXT NOT NULL, " +
-                    " PRIMARY KEY (`uuid`))");
+                    " `punishmentHistory` TEXT NULL DEFAULT NULL," +
+                    "  PRIMARY KEY (`uuid`))");
             ps.execute();
         } catch (final SQLException e) {
             e.printStackTrace();
