@@ -48,6 +48,8 @@ public class BanManager {
 
     public void kickPlayer(final String sederName, final Player playerToKick, final String reason, final boolean silent, final String broadcast) {
 
+        //TODO do przerobienia
+
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(sederName, reason));
         }
