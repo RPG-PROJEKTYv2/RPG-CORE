@@ -39,8 +39,10 @@ public class PlayerJoinListener implements Listener {
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
 
-        if (rpgcore.isBanned(uuid)) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "nie ma tak");
+        if (rpgcore.getPlayers().contains(uuid)) {
+            if (rpgcore.isBanned(uuid)) {
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "nie ma tak");
+            }
         }
 
     }
