@@ -80,14 +80,12 @@ public final class RPGCORE extends JavaPlugin {
     private void sendActionBar(){
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player target : Bukkit.getOnlinePlayers()){
-                if (this.godManager.containsPlayer(target.getUniqueId()) && this.vanishManager.containsPlayer(target.getUniqueId())){
-                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&3&lVanish &8| &5&lGOD"));
-                } else
-                if (this.godManager.containsPlayer(target.getUniqueId())){
-                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&5&lGOD"));
-                } else
-                if (this.vanishManager.containsPlayer(target.getUniqueId())){
-                    this.nmsManager.sendPacket(target, this.nmsManager.makeActionBar("&3&lVanish"));
+                if (getGodManager().containsPlayer(target.getUniqueId()) && this.vanishManager.containsPlayer(target.getUniqueId())) {
+                    getNmsManager().sendPacket(target, getNmsManager().makeActionBar("&3&lVanish &8| &5&lGOD"));
+                } else if (getGodManager().containsPlayer(target.getUniqueId())) {
+                    getNmsManager().sendPacket(target, getNmsManager().makeActionBar("&5&lGOD"));
+                } else if (getVanishManager().containsPlayer(target.getUniqueId())) {
+                    getNmsManager().sendPacket(target, getNmsManager().makeActionBar("&3&lVanish"));
                 }
             }
         }, 150L, 50L);
