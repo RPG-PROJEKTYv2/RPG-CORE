@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class TeleportManager {
 
-    private HashMap<UUID, Location> beforeTeleportLocation = new HashMap<>();
+    private final HashMap<UUID, Location> beforeTeleportLocation = new HashMap<>();
 
     public HashMap<UUID, Location> getBeforeTeleportLocation() {return beforeTeleportLocation;}
 
