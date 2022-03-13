@@ -52,17 +52,22 @@ public class TeleportCoords implements CommandExecutor {
                 p.sendMessage(Utils.permisje("rpg.tpcoords.to-other-world"));
                 return false;
             }
-            //TODO przerobić to w try catch
-            final String x = args[0];
-            final String y = args[1];
-            final String z = args[2];
-            final World world = Bukkit.getWorld(args[3]);
 
-            if (x == null || y == null || z == null || world == null) {
+            try {
+
+                final double x = Double.parseDouble(args[0]);
+                final double y = Double.parseDouble(args[1]);
+                final double z = Double.parseDouble(args[2]);
+                final World world = Bukkit.getWorld(args[3]);
+
+                rpgcore.getTeleportManager().teleportToLocation(p, x, y, z, world);
+
+            } catch (final NumberFormatException e) {
+
                 p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
-                return false;
+
             }
-            rpgcore.getTeleportManager().teleportToLocation(p, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z), world);
+
 
             return true;
         }
