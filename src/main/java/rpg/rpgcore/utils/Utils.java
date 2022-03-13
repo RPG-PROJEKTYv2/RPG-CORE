@@ -15,7 +15,6 @@ public class Utils {
     public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
     public static final String BANPREFIX = format("&f&lTEST&3&lBANS&7 ");
     public static final String NIEMATAKIEGOGRACZA = (BANPREFIX + format("&cNie znaleziono podanego gracza"));
-    public static final String GRACZOFFLINE = format("&cTen gracz jest offline");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
 

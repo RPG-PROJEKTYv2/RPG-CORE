@@ -48,7 +48,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("vanish").setExecutor(new Vanish(this));
         this.getCommand("god").setExecutor(new God(this));
         this.getCommand("speed").setExecutor(new Speed());
-        this.getCommand("fly").setExecutor(new Fly(this));
+        this.getCommand("fly").setExecutor(new Fly());
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
 
@@ -99,14 +99,11 @@ public final class RPGCORE extends JavaPlugin {
             int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
             int time = getConfig().getInt("auto_message_time");
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                if (i <= sciezki) {
-                    Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
-                    i++;
-                } else {
+                if (i > sciezki) {
                     i = 1;
-                    Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
-                    i++;
                 }
+                Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
+                i++;
             }, 1L, time);
         } else {
             System.out.println("[rpg.core] Automessage jest aktualnie wylaczany. Zmien opcje auto_message na true w pliku config.yml i przeladuj serwer zeby ja wlaczyc!");
