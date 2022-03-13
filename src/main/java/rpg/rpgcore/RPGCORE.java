@@ -24,6 +24,7 @@ public final class RPGCORE extends JavaPlugin {
     private NMSManager nmsManager;
     private GodManager godManager;
     private PlayerManager playerManager;
+    private LvlManager lvlManager;
 
 
     private int i=1;
@@ -36,8 +37,10 @@ public final class RPGCORE extends JavaPlugin {
         this.createTables.createTables();
         this.sql.loadAll();
 
+        this.getLvlManager().putAllInHashMap();
         this.autoMessage();
         this.sendActionBar();
+
 
         this.getCommand("teleport").setExecutor(new Teleport(this));
         this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
@@ -75,6 +78,7 @@ public final class RPGCORE extends JavaPlugin {
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager();
         this.playerManager = new PlayerManager();
+        this.lvlManager = new LvlManager(this);
     }
 
     private void sendActionBar(){
@@ -136,8 +140,9 @@ public final class RPGCORE extends JavaPlugin {
         return godManager;
     }
 
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
+    public PlayerManager getPlayerManager() {return playerManager;}
 
+    public LvlManager getLvlManager() {
+        return lvlManager;
+    }
 }

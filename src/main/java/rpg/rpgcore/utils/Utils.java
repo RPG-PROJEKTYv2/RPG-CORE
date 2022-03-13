@@ -17,6 +17,7 @@ public class Utils {
     public static final String NIEMATAKIEGOGRACZA = (BANPREFIX + format("&cNie znaleziono podanego gracza"));
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
+    public static int MAXLVL = 130;
 
     public static String format(String str) {
         return ChatColor.translateAlternateColorCodes('&', str.replace(">>", "»").replace("<<", "«"));
