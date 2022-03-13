@@ -4,16 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 public class Speed implements CommandExecutor {
-
-    private final RPGCORE rpgcore;
-
-    public Speed(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
-    }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)){
@@ -28,7 +21,7 @@ public class Speed implements CommandExecutor {
             return false;
         }
 
-        if (args.length >= 0 && args.length != 1){
+        if (args.length != 1) {
             player.sendMessage(Utils.poprawneUzycie("speed <1-5>"));
             return false;
         }
@@ -37,15 +30,15 @@ public class Speed implements CommandExecutor {
             if (!(speed >= 1 && speed <=5)){
                 player.sendMessage(Utils.poprawneUzycie("speed <1-5>"));
             }
-            if (player.isFlying()){
-                player.setFlySpeed(speed/10);
+            if (player.isFlying()) {
+                player.setFlySpeed(speed / 10);
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ustawiono &cFLY &7speed na &c" + speed));
                 return false;
             }
-            player.setWalkSpeed(speed/10);
+            player.setWalkSpeed(speed / 10);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ustawiono &cWALK &7speed na &c" + speed));
             return false;
-        } catch (NumberFormatException e){
+        } catch (final NumberFormatException e) {
             player.sendMessage(Utils.poprawneUzycie("speed <1-5>"));
             return false;
         }

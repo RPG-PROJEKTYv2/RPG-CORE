@@ -25,8 +25,6 @@ public class Kick implements CommandExecutor {
             return false;
         }
 
-        //TODO do przerobienia
-
         final String senderName = sender.getName();
         if (args.length == 1) {
 

@@ -12,10 +12,6 @@ import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-
 public final class RPGCORE extends JavaPlugin {
 
     private final Config config = new Config(this);
@@ -27,14 +23,9 @@ public final class RPGCORE extends JavaPlugin {
     private VanishManager vanishManager;
     private NMSManager nmsManager;
     private GodManager godManager;
-    private ListaNPCManager listaNPCManager;
     private PlayerManager playerManager;
 
 
-    private final ArrayList<UUID> players = new ArrayList<>();
-    private final HashMap<String, UUID> playerUUID = new HashMap<>();
-    private final HashMap<UUID, String> playerName = new HashMap<>();
-    private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
     private int i=1;
 
     public void onEnable() {
@@ -56,8 +47,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("kick").setExecutor(new Kick(this));
         this.getCommand("vanish").setExecutor(new Vanish(this));
         this.getCommand("god").setExecutor(new God(this));
-        this.getCommand("speed").setExecutor(new Speed(this));
-        this.getCommand("listanpc").setExecutor(new ListaNPC(this));
+        this.getCommand("speed").setExecutor(new Speed());
         this.getCommand("fly").setExecutor(new Fly(this));
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
@@ -84,7 +74,6 @@ public final class RPGCORE extends JavaPlugin {
         this.vanishManager = new VanishManager();
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager();
-        this.listaNPCManager = new ListaNPCManager();
         this.playerManager = new PlayerManager();
     }
 
@@ -106,10 +95,10 @@ public final class RPGCORE extends JavaPlugin {
 
     private void autoMessage(){
 
-        if (getConfig().getBoolean("auto_message") == true) {
+        if (getConfig().getBoolean("auto_message")) {
             int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
             int time = getConfig().getInt("auto_message_time");
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
                 if (i <= sciezki) {
                     Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
                     i++;
@@ -150,10 +139,6 @@ public final class RPGCORE extends JavaPlugin {
 
     public GodManager getGodManager() {
         return godManager;
-    }
-
-    public ListaNPCManager getListaNPCManager() {
-        return listaNPCManager;
     }
 
     public PlayerManager getPlayerManager() {

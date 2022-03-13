@@ -1,7 +1,6 @@
 package rpg.rpgcore.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -37,21 +36,17 @@ public class Spawn implements CommandExecutor {
 
             if (args[0].equalsIgnoreCase("set")) {
 
-                //TODO wywalic tworzenie nowej lokacji po prostu przetransportowac lokacje pleyera
-
                 if (!(p.hasPermission("rpg.spawn.set"))) {
                     p.sendMessage(Utils.permisje("rpg.spawn.set"));
                     return false;
                 }
 
-                final Location newLocationSpawn = p.getLocation();
+                final double x = p.getLocation().getX();
+                final double y = p.getLocation().getY();
+                final double z = p.getLocation().getZ();
+                final World w = p.getLocation().getWorld();
 
-                final double x = newLocationSpawn.getX();
-                final double y = newLocationSpawn.getY();
-                final double z = newLocationSpawn.getZ();
-                final World w = newLocationSpawn.getWorld();
-
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(newLocationSpawn));
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(p.getLocation()));
 
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie ustawiono nowego spawna! Na kordach: " + " &7x: " + Utils.df.format(x) + " &7y: " + Utils.df.format(y) + " &7z: " + Utils.df.format(z) + " &7w swiecie " + w.getName()));
 
