@@ -141,11 +141,12 @@ public class SQLManager {
         PreparedStatement ps = null;
         try {
             conn = pool.getConnection();
-            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
             ps.setString(3, banInfo);
+            ps.setString(4, "");
 
             ps.executeUpdate();
 
