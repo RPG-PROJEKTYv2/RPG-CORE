@@ -74,7 +74,7 @@ public class Kick implements CommandExecutor {
             }
 
             if (playerToKickName.equalsIgnoreCase(senderName)) {
-                sender.sendMessage(Utils.theSenderCannotBeTarget("z kickowac"));
+                sender.sendMessage(Utils.theSenderCannotBeTarget("wyrzucic"));
                 return false;
             }
 

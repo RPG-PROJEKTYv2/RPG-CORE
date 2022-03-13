@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 
 public class Utils {
 
-    public static DecimalFormat df;
+    public static DecimalFormat df = new DecimalFormat("##.#");
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
 
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");

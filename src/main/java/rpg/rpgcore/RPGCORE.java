@@ -10,6 +10,11 @@ import rpg.rpgcore.listeners.PlayerJoinListener;
 import rpg.rpgcore.listeners.PlayerQuitListener;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
+import rpg.rpgcore.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public final class RPGCORE extends JavaPlugin {
 
@@ -26,6 +31,12 @@ public final class RPGCORE extends JavaPlugin {
     private PlayerManager playerManager;
 
 
+    private final ArrayList<UUID> players = new ArrayList<>();
+    private final HashMap<String, UUID> playerUUID = new HashMap<>();
+    private final HashMap<UUID, String> playerName = new HashMap<>();
+    private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
+    private int i=1;
+
     public void onEnable() {
         this.config.createConfig();
         this.initDatabase();
@@ -34,6 +45,7 @@ public final class RPGCORE extends JavaPlugin {
         this.createTables.createTables();
         this.sql.loadAll();
 
+        this.autoMessage();
         this.sendActionBar();
 
         this.getCommand("teleport").setExecutor(new Teleport(this));
@@ -48,10 +60,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("listanpc").setExecutor(new ListaNPC(this));
         this.getCommand("fly").setExecutor(new Fly(this));
         this.getCommand("history").setExecutor(new History(this));
+        this.getCommand("back").setExecutor(new Back(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
-
     }
 
     public void onDisable() {
@@ -90,6 +102,26 @@ public final class RPGCORE extends JavaPlugin {
                 }
             }
         }, 150L, 50L);
+    }
+
+    private void autoMessage(){
+
+        if (getConfig().getBoolean("auto_message") == true) {
+            int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
+            int time = getConfig().getInt("auto_message_time");
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+                if (i <= sciezki) {
+                    Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
+                    i++;
+                } else {
+                    i = 1;
+                    Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
+                    i++;
+                }
+            }, 1L, time);
+        } else {
+            System.out.println("[rpg.core] Automessage jest aktualnie wylaczany. Zmien opcje auto_message na true w pliku config.yml i przeladuj serwer zeby ja wlaczyc!");
+        }
     }
 
     public SQLManager getSQLManager() {
