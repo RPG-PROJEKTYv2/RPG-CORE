@@ -22,6 +22,8 @@ public class CreateTables {
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `player` (" +
                     " `uuid` VARCHAR(36) NOT NULL," +
                     " `nick` TEXT NOT NULL, " +
+                    " `lvl` INT NOT NULL" +
+                    " `exp` DOUBLE NOT NULL" +
                     " `banInfo` TEXT NOT NULL, " +
                     " `punishmentHistory` TEXT NULL DEFAULT NULL," +
                     "  PRIMARY KEY (`uuid`))");

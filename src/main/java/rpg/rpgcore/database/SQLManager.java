@@ -88,7 +88,9 @@ public class SQLManager {
                         rs.getString("nick"),
                         UUID.fromString(rs.getString("uuid")),
                         rs.getString("banInfo"),
-                        rs.getString("punishmentHistory"));
+                        rs.getString("punishmentHistory"),
+                        rs.getInt("lvl"),
+                        rs.getDouble("exp"));
             }
 
             ps.executeQuery();
@@ -141,16 +143,18 @@ public class SQLManager {
         PreparedStatement ps = null;
         try {
             conn = pool.getConnection();
-            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
-            ps.setString(3, banInfo);
-            ps.setString(4, "");
+            ps.setInt(3,1);
+            ps.setDouble(4, 0.0);
+            ps.setString(5, banInfo);
+            ps.setString(6, "");
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0);
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
