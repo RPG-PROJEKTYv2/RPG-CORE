@@ -17,7 +17,9 @@ public class Utils {
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
     public static final String BANPREFIX = format("&f&lTEST&3&lBANS&7 ");
-    public static final String NIEMATAKIEGOGRACZA = (BANPREFIX + format("&cNie znaleziono podanego gracza"));
+    public static final String LVLPREFIX = format("&f&lTEST&6&lLVL&7 ");
+    public static final String KICKPREFIX = format("&f&lTEST&3&lKICK&7 ");
+    public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
     public static int MAXLVL = 130;
@@ -69,6 +71,10 @@ public class Utils {
                 "\n&7Przez:&c " + senderName +
                 "\n\n&3&lJezeli uwazasz ze to blad, skontaktuj sie" +
                 "\n&3&lz &f&lAdministracja &3&ltego serwera. ts3: przykladowyts3.pl"));
+    }
+
+    public static String normalKickBroadcast(final String playerToKick, final String adminName, final String reason) {
+        return (KICKPREFIX + format("&7Gracz &c" + playerToKick + " &7zostal wyrzucony z serwera przez &c" + adminName + ". &7Powod: &c" + reason));
     }
 
     public static String kickBroadcast(final String namePlayerToBan, final String senderName, final String reason) {

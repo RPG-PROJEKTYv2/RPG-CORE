@@ -136,8 +136,61 @@ public class LvlManager {
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, 0);
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
+        if (nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) {
+            Bukkit.broadcastMessage(Utils.format(Utils.LVLPREFIX + "&fGracz &3" + killer.getName() + " &fosiagnal &3" + nextLvlGracza + " &fpoziom. Gratulacje!"));
+        }
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
-        PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &b" + nextLvlGracza + " &fpoziom", 5, 25, 5);
+        PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
         Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
+    }
+
+    public void getPlayerLvl(final Player sender, final UUID uuid) {
+        final String playerName = rpgcore.getPlayerManager().getPlayerName(uuid);
+        final int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(uuid);
+        final double aktualnyExpGracza = rpgcore.getPlayerManager().getPlayerExp(uuid);
+        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-"));
+        sender.sendMessage(Utils.format("&bInformacje odnoscie gracza &f" + playerName));
+        sender.sendMessage(Utils.format("&bPoziom: &f" + aktualnyLvlGracza));
+        if (aktualnyLvlGracza < Utils.MAXLVL) {
+            final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
+            sender.sendMessage(Utils.format("&bDoswiadczenie: &f" + aktualnyExpGracza + " &bexp / &f" + expNaNextLvl + " &bexp (&f" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&b)"));
+            sender.sendMessage(Utils.format("&bExp potrzebny do nastepnego poziomu: &f" + (expNaNextLvl - aktualnyExpGracza) + "&bexp"));
+        } else {
+            sender.sendMessage(Utils.format("&bDoswiadczenie: &f" + aktualnyExpGracza + " &bexp / &4&lMAX LVL (&4&lMAX LVL&b)"));
+            sender.sendMessage(Utils.format("&bExp potrzebny do nastepnego poziomu: &4&lMAX LVL"));
+        }
+        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-"));
+    }
+
+    public void setPlayerLvl(final String adminName, final UUID uuid, final int nowyLvl) {
+        rpgcore.getPlayerManager().getPlayerLvl().replace(uuid, nowyLvl);
+        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, 0.0);
+        final Player playerToKick = Bukkit.getPlayer(uuid);
+        if (playerToKick != null){
+            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana lvla"));
+        }
+    }
+
+    public void setPlayerExp(final String adminName, final UUID uuid, double nowyExp) {
+        if(nowyExp > rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) +1)) {
+            nowyExp = rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) +1);
+        }
+        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExp);
+        final Player playerToKick = Bukkit.getPlayer(uuid);
+        if (playerToKick != null){
+            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana ilosci expa"));
+        }
+    }
+
+    public void setPlayerProcent(final String adminName, final UUID uuid, final double procent) {
+        final int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(uuid);
+        final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
+        final double nowyExpGracza = (procent * expNaNextLvl) / 100;
+
+        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExpGracza);
+        final Player playerToKick = Bukkit.getPlayer(uuid);
+        if (playerToKick != null){
+            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana postepu do nastepnego lvla"));
+        }
     }
 }

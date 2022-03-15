@@ -38,7 +38,7 @@ public class Ban implements CommandExecutor {
             final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
             if (uuidPlayerToBan == null) {
-                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
@@ -63,7 +63,7 @@ public class Ban implements CommandExecutor {
             args[0] = "";
 
             if (uuidPlayerToBan == null) {
-                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 

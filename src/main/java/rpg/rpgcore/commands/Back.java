@@ -23,6 +23,11 @@ public class Back implements CommandExecutor {
 
         final Player player = (Player) sender;
 
+        if (!(player.hasPermission("rpg.back"))){
+            player.sendMessage(Utils.permisje("rpg.back"));
+            return false;
+        }
+
         if (args.length > 0){
             player.sendMessage(Utils.poprawneUzycie("back"));
             return false;

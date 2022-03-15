@@ -60,6 +60,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("fly").setExecutor(new Fly());
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
+        this.getCommand("lvl").setExecutor(new Lvl(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -102,7 +103,7 @@ public final class RPGCORE extends JavaPlugin {
             }
             System.out.println("[rpg.core] Pomyslnie zapisano dane wszytskich graczy!!!");
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
-        }, 6000L, 200L);
+        }, 200L, 6000L);
     }
 
     private void sendActionBar(){
