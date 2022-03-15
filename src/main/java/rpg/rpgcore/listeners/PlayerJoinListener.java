@@ -31,7 +31,8 @@ public class PlayerJoinListener implements Listener {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false"));
             e.setJoinMessage(Utils.firstJoinMessage(playerName));
         }
-
+        p.setLevel(rpgcore.getPlayerManager().getPlayerLvl(playerUUID));
+        p.setExp((float) (rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(p.getLevel())));
         e.setJoinMessage(Utils.joinMessage(playerName));
     }
 

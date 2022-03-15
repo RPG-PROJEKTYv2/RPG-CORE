@@ -24,12 +24,18 @@ public class Config {
         autoCfg.put("auto_message_1", "&7To jest podstawowa wiadomosc. Edytuj Plik config.yml, zeby ja zmienic!");
         rpgcore.getConfig().createSection("auto_messages", autoCfg);
         rpgcore.getConfig().addDefault("max_lvl", 130);
-        rpgcore.getConfig().createSection("wymaganyexp_na_lvl");
-        double value = 500.0;
-        for (int i=1; i<=Utils.MAXLVL;i++){
-            rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").addDefault("wymaganyexp_lvl_"+i, value);
-            value = value + 5000.0;
+        if (rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl") == null) {
+            rpgcore.getConfig().createSection("wymaganyexp_na_lvl");
+            double value = 500.0;
+            for (int i = 1; i <= Utils.MAXLVL; i++) {
+                if (!(rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").contains("wymaganyexp_lvl_" + i))) {
+                    rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").addDefault("wymaganyexp_lvl_" + i, value);
+                    value = value + 5000.0;
+                }
+            }
         }
+        rpgcore.getConfig().createSection("exp_za_moby");
+        rpgcore.getConfig().getConfigurationSection("exp_za_moby").addDefault("[Lvl. 1] Podwladny Wody", 20.0);
         rpgcore.getConfig().options().copyDefaults(true);
         rpgcore.saveConfig();
 

@@ -21,7 +21,12 @@ public class NMSManager {
         return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), fadeIn, last, fadeOut);
     }
 
-    public void sendPacket(final Player player, final PacketPlayOutChat packet){
+    public void sendActionBar(final Player player, final PacketPlayOutChat packet){
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    public void sendTitleAndSubTitle(final Player player, final PacketPlayOutTitle title, final PacketPlayOutTitle subtitle) {
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subtitle);
     }
 }

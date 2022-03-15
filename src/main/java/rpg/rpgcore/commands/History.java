@@ -35,7 +35,7 @@ public class History implements CommandExecutor {
             final String punishmentsHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(targetUUID));
 
             if (punishmentsHistory.equalsIgnoreCase("")) {
-                sender.sendMessage(Utils.format("&cTen gracz nie ma rzadnych kar!"));
+                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma zadnych kar!"));
                 return false;
             }
 

@@ -1,10 +1,21 @@
 package rpg.rpgcore.managers;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerManager {
+
+    private final RPGCORE rpgcore;
+
+    public PlayerManager(RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
 
     private final ArrayList<UUID> players = new ArrayList<>();
 
@@ -74,5 +85,9 @@ public class PlayerManager {
     public double getPlayerExp(final UUID uuid) {return this.playerExp.get(uuid);}
 
     public void updatePlayerExp(final UUID uuid, final double exp) {this.playerExp.replace(uuid, exp);}
+
+    public HashMap<UUID, Integer> getPlayerLvl() {return playerLvl;}
+
+    public HashMap<UUID, Double> getPlayerExp() {return playerExp;}
 
 }

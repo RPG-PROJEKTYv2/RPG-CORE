@@ -5,10 +5,13 @@ import org.bukkit.ChatColor;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utils {
 
     public static DecimalFormat df = new DecimalFormat("##.#");
+    public static DecimalFormat procentFormat = new DecimalFormat("##.##");
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
 
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
@@ -84,4 +87,21 @@ public class Utils {
         return (BANPREFIX + format("&cNie możesz " + type + " samego siebie!"));
     }
 
+    public static String removeColor(String toRemove) {
+        char znakToLook;
+        if (toRemove.contains("§")) {
+            znakToLook = '§';
+        } else {
+            znakToLook = '&';
+        }
+        int index = toRemove.indexOf(znakToLook);
+        while (index >= 0) {
+            String znak = String.valueOf(toRemove.charAt(index));
+            String kolor = String.valueOf(toRemove.charAt(index+1));
+
+            toRemove = toRemove.replaceFirst(kolor, "").replaceFirst(znak, "");
+            index = toRemove.indexOf(znakToLook, index + 1);
+        }
+        return toRemove;
+    }
 }

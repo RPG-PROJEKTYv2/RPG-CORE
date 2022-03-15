@@ -47,9 +47,10 @@ public class Fly implements CommandExecutor {
             p.setAllowFlight(true);
             p.setFlying(true);
             p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczano &7fly"));
+        } else {
+            p.setAllowFlight(false);
+            p.setFlying(false);
+            p.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7fly"));
         }
-        p.setAllowFlight(false);
-        p.setFlying(false);
-        p.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7fly"));
     }
 }

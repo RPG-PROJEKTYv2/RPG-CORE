@@ -225,6 +225,42 @@ public class SQLManager {
         }
     }
 
+    public void updatePlayerLvl(final UUID uuid, final int lvl){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set lvl=? WHERE uuid=?");
+
+            ps.setInt(1, lvl);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e){
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps , null);
+        }
+    }
+
+    public void updatePlayerExp(final UUID uuid, final double exp){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set exp=? WHERE uuid=?");
+
+            ps.setFloat(1, (float) exp);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e){
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps , null);
+        }
+    }
+
     public void onDisable() {
         pool.closePool();
     }
