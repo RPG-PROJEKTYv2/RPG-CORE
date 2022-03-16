@@ -3,6 +3,7 @@ version: '${project.version}'
 main: rpg.rpgcore.RPGCORE
 depend:
   - MythicMobs
+  - PlaceHolderAPI
 authors: [ Caufland, MiresPL ]
 description: RPG-CORE
 commands:
@@ -33,4 +34,6 @@ commands:
   history:
 
   lvl:
+
+  gm:
 

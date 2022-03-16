@@ -167,8 +167,9 @@ public class LvlManager {
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, 0.0);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         if (playerToKick != null){
-            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana lvla"));
+            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana lvla"));
         }
+        Bukkit.broadcastMessage(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana lvla"));
     }
 
     public void setPlayerExp(final String adminName, final UUID uuid, double nowyExp) {
@@ -178,8 +179,9 @@ public class LvlManager {
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExp);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         if (playerToKick != null){
-            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana ilosci expa"));
+            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana ilosci expa"));
         }
+        Bukkit.broadcastMessage(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana ilosci expa"));
     }
 
     public void setPlayerProcent(final String adminName, final UUID uuid, final double procent) {
@@ -190,7 +192,8 @@ public class LvlManager {
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExpGracza);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         if (playerToKick != null){
-            playerToKick.kickPlayer(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana postepu do nastepnego lvla"));
+            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
         }
+        Bukkit.broadcastMessage(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana postepu do nastepnego lvla"));
     }
 }

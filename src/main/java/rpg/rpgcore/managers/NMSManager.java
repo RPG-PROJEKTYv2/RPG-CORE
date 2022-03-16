@@ -1,8 +1,8 @@
 package rpg.rpgcore.managers;
 
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.utils.Utils;
@@ -19,6 +19,21 @@ public class NMSManager {
 
     public PacketPlayOutTitle makeSubTitle(final String str, final int fadeIn, final int last, final int fadeOut){
         return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), fadeIn, last, fadeOut);
+    }
+
+    public PacketPlayOutSpawnEntityLiving makeDamageDisplay(final Location loc, final String str){
+        WorldServer s = ((CraftWorld)loc.getWorld()).getHandle();
+        EntityArmorStand stand = new EntityArmorStand(s);
+
+        loc.add(0,5,0.5);
+        stand.setLocation(loc.getX(), loc.getY(), loc.getZ(), 0, 0);
+        stand.setCustomName(Utils.format(str));
+        stand.setCustomNameVisible(true);
+        stand.setGravity(true);
+        stand.setInvisible(true);
+        //and so on
+
+        return new PacketPlayOutSpawnEntityLiving(stand);
     }
 
     public void sendActionBar(final Player player, final PacketPlayOutChat packet){

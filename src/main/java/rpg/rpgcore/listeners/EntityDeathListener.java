@@ -8,8 +8,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-
-
 public class EntityDeathListener implements Listener {
 
     private final RPGCORE rpgcore;

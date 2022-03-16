@@ -7,9 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
-import rpg.rpgcore.listeners.EntityDeathListener;
-import rpg.rpgcore.listeners.PlayerJoinListener;
-import rpg.rpgcore.listeners.PlayerQuitListener;
+import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
@@ -30,6 +28,7 @@ public final class RPGCORE extends JavaPlugin {
     private GodManager godManager;
     private PlayerManager playerManager;
     private LvlManager lvlManager;
+    private DamageManager damageManager;
 
 
     private int i=1;
@@ -61,10 +60,13 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
+        this.getCommand("gm").setExecutor(new GameMode(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
 
         this.updateAllPlayerInfo();
     }
@@ -90,6 +92,7 @@ public final class RPGCORE extends JavaPlugin {
         this.godManager = new GodManager();
         this.playerManager = new PlayerManager(this);
         this.lvlManager = new LvlManager(this);
+        this.damageManager = new DamageManager(this);
     }
 
     private void updateAllPlayerInfo(){
@@ -165,9 +168,11 @@ public final class RPGCORE extends JavaPlugin {
         return godManager;
     }
 
-    public PlayerManager getPlayerManager() {return playerManager;}
+    public PlayerManager getPlayerManager() { return playerManager; }
 
     public LvlManager getLvlManager() {
         return lvlManager;
     }
+
+    public DamageManager getDamageManager() { return damageManager; }
 }

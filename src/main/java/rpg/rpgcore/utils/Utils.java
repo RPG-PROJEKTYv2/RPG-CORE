@@ -57,7 +57,7 @@ public class Utils {
         return format(SERVERNAME + format("\n" +
                 "&7Zostales wyrzucony z serwera\n" +
                 "&7Przez: &c" + senderName +
-                "\n&7Za:&c" + reason +
+                "\n&7Za: &c" + reason +
                 "\n\n&8Jezeli chcesz zglosic skarge na administratora, ktory wyrzucil Cie z" +
                 " serwera\n" +
                 "&8zglos sie na przykladowyts3.pl lub przykladowydc z ss tego kicka!"));
