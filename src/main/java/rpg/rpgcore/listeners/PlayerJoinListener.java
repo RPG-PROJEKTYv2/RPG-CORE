@@ -50,6 +50,9 @@ public class PlayerJoinListener implements Listener {
             if (rpgcore.getPlayerManager().isBanned(uuid)) {
 
                 final String[] banInfo = rpgcore.getPlayerManager().getPlayerBanInfo(uuid).split(";");
+                for (String s : banInfo){
+                    System.out.println(s);
+                }
 
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
             }

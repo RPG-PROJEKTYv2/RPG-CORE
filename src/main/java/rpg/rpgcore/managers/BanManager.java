@@ -56,7 +56,7 @@ public class BanManager {
         }
 
         final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToBan, "true"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToBan, banInfo));
 
         this.addToPunishmentHistory(uuidPlayerToBan, "Ban;" + banInfo);
     }
@@ -116,7 +116,7 @@ public class BanManager {
         }
 
         final String tempBanInfo = adminName + ";" + reason + ";" + tempBanExpireDate + ";" + tempBanDate;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToTempBan, "true"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToTempBan, tempBanInfo));
 
         this.addToPunishmentHistory(uuidPlayerToTempBan, "TempBan;" + tempBanInfo);
     }
