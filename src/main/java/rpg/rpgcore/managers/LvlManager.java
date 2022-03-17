@@ -5,6 +5,10 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -142,6 +146,9 @@ public class LvlManager {
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
         Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
+        for (Player p : Bukkit.getOnlinePlayers()){
+            this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
+        }
     }
 
     public void getPlayerLvl(final Player sender, final UUID uuid) {
@@ -198,5 +205,16 @@ public class LvlManager {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
         }
         Bukkit.broadcastMessage(Utils.normalKickBroadcast(playerToKick.getName(), adminName, "Zmiana postepu do nastepnego lvla"));
+    }
+
+    public void updateLvlBelowName(final Player p, final String name1, final int lvl) {
+        final Scoreboard sb = p.getScoreboard();
+        Objective ob = sb.getObjective(Utils.format("&7Lvl &6"));
+        if (ob == null) {
+            ob = sb.registerNewObjective(Utils.format("&7Lvl &6"), "dummy");
+            ob.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        }
+        final Score score = ob.getScore(name1);
+        score.setScore(lvl);
     }
 }
