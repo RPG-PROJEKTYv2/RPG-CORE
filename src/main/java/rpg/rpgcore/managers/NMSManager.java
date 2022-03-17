@@ -25,13 +25,10 @@ public class NMSManager {
         WorldServer s = ((CraftWorld)loc.getWorld()).getHandle();
         EntityArmorStand stand = new EntityArmorStand(s);
 
-        loc.add(0,5,0.5);
         stand.setLocation(loc.getX(), loc.getY(), loc.getZ(), 0, 0);
         stand.setCustomName(Utils.format(str));
         stand.setCustomNameVisible(true);
-        stand.setGravity(true);
-        stand.setInvisible(true);
-        //and so on
+        stand.setGravity(false);
 
         return new PacketPlayOutSpawnEntityLiving(stand);
     }

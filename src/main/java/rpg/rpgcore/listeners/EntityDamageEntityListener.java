@@ -1,5 +1,7 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,8 +22,9 @@ public class EntityDamageEntityListener implements Listener {
         //TODO zrobic wyswietlanie dmg po uderzeniu moba, obstawiam ze na armorstandach!
         if (e.getDamager() instanceof Player){
             final Player damager = (Player) e.getDamager();
+            final Entity mob = e.getEntity();
             damager.sendMessage("DMG - " + e.getDamage());
-            rpgcore.getDamageManager().sendDamagePacket(damager, e.getDamage());
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), mob.getLocation()));
         }
     }
 

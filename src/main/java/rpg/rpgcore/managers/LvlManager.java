@@ -162,7 +162,10 @@ public class LvlManager {
         sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-"));
     }
 
-    public void setPlayerLvl(final String adminName, final UUID uuid, final int nowyLvl) {
+    public void setPlayerLvl(final String adminName, final UUID uuid, int nowyLvl) {
+        if (nowyLvl > Utils.MAXLVL){
+            nowyLvl = Utils.MAXLVL;
+        }
         rpgcore.getPlayerManager().getPlayerLvl().replace(uuid, nowyLvl);
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, 0.0);
         final Player playerToKick = Bukkit.getPlayer(uuid);

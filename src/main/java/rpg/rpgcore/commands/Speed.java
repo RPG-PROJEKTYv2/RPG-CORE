@@ -29,6 +29,7 @@ public class Speed implements CommandExecutor {
             float speed = Integer.parseInt(args[0]);
             if (!(speed >= 1 && speed <=5)){
                 player.sendMessage(Utils.poprawneUzycie("speed <1-5>"));
+                return false;
             }
             if (player.isFlying()) {
                 player.setFlySpeed(speed / 10);
