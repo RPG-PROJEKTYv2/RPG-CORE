@@ -30,7 +30,7 @@ public class UnBan implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase(senderName)) {
-                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                sender.sendMessage(Utils.theSenderCannotBeTarget("odbanowac"));
                 return false;
             }
 
@@ -54,7 +54,7 @@ public class UnBan implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase(senderName)) {
-                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                sender.sendMessage(Utils.theSenderCannotBeTarget("odbanowac"));
                 return false;
             }
 

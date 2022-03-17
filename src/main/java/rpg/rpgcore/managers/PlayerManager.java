@@ -1,21 +1,12 @@
 package rpg.rpgcore.managers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class PlayerManager {
 
-    private final RPGCORE rpgcore;
-
-    public PlayerManager(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
-    }
 
     private final ArrayList<UUID> players = new ArrayList<>();
 

@@ -68,7 +68,7 @@ public class Lvl implements CommandExecutor {
         if (args.length == 3) {
 
             final UUID uuidPlayerToSet = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
-            player.sendMessage(uuidPlayerToSet.toString());
+
 
             if (uuidPlayerToSet == null) {
                 player.sendMessage(Utils.LVLPREFIX + Utils.NIEMATAKIEGOGRACZA);

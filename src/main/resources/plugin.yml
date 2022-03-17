@@ -13,26 +13,18 @@ commands:
   teleportcoords:
     aliases: tpcoords
   ban:
-
   unban:
-
   kick:
-
   vanish:
     aliases: v
   god:
-
   speed:
-
   listanpc:
-
   fly:
-
   back:
-
   history:
-
   lvl:
-
   gm:
+  heal:
+  tempban:
 

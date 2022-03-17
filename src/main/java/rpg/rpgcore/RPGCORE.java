@@ -61,6 +61,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
         this.getCommand("gm").setExecutor(new GameMode(this));
+        this.getCommand("heal").setExecutor(new Heal(this));
+        this.getCommand("tempban").setExecutor(new TempBan(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -90,7 +92,7 @@ public final class RPGCORE extends JavaPlugin {
         this.vanishManager = new VanishManager();
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager();
-        this.playerManager = new PlayerManager(this);
+        this.playerManager = new PlayerManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
     }

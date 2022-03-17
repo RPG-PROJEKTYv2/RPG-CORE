@@ -6,7 +6,9 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
@@ -90,7 +92,7 @@ public class Utils {
     }
 
     public static String theSenderCannotBeTarget(final String type) {
-        return (BANPREFIX + format("&cNie możesz " + type + " samego siebie!"));
+        return (BANPREFIX + format("&cNie mozesz " + type + " samego siebie!"));
     }
 
     public static String removeColor(String toRemove) {
@@ -109,5 +111,16 @@ public class Utils {
             index = toRemove.indexOf(znakToLook, index + 1);
         }
         return toRemove;
+    }
+
+    public static String convertDatesToTimeLeft(final Date dateGive, final Date dateExpire) {
+        final long diff = Math.abs(dateGive.getTime() - dateExpire.getTime());
+        final String wygasa = String.format("%d d %d h %d min %d sec",
+                TimeUnit.MILLISECONDS.toDays(diff),
+                TimeUnit.MILLISECONDS.toHours(diff) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(diff)),
+                TimeUnit.MILLISECONDS.toMinutes(diff) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(diff)),
+                TimeUnit.MILLISECONDS.toSeconds(diff) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
+        );
+        return wygasa;
     }
 }

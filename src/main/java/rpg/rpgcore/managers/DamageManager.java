@@ -4,7 +4,6 @@ import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.WorldServer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -34,15 +33,15 @@ public class DamageManager {
         stand.setInvisible(true);
 
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(stand);
-        for (Player p : Bukkit.getOnlinePlayers()){
+        for (Player p : rpgcore.getServer().getOnlinePlayers()){
             ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask(rpgcore, () -> {destroySendHologram(stand);}, 20L);
+        rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> this.destroySendHologram(stand), 20L);
     }
 
     public void destroySendHologram(final EntityArmorStand stand){
         PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(stand.getId());
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             ((CraftPlayer) p).getHandle().playerConnection.sendPacket(destroyPacket);
         }
     }
