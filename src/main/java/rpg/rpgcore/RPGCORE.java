@@ -29,6 +29,7 @@ public final class RPGCORE extends JavaPlugin {
     private PlayerManager playerManager;
     private LvlManager lvlManager;
     private DamageManager damageManager;
+    private ChatManager chatManager;
 
 
     private int i=1;
@@ -95,6 +96,7 @@ public final class RPGCORE extends JavaPlugin {
         this.playerManager = new PlayerManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
+        this.chatManager = new ChatManager(this);
     }
 
     private void updateAllPlayerInfo(){
@@ -177,4 +179,6 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     public DamageManager getDamageManager() { return damageManager; }
+
+    public ChatManager getChatManager() { return chatManager; }
 }

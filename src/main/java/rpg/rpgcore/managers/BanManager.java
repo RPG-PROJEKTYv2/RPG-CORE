@@ -109,13 +109,13 @@ public class BanManager {
         final String nameOfThePlayerToTempBan = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToTempBan);
 
         if (playerToTempBan != null) {
-            playerToTempBan.kickPlayer(Utils.banMessage(adminName, reason, String.valueOf(tempBanExpireDate), String.valueOf(tempBanDate)));
+            playerToTempBan.kickPlayer(Utils.banMessage(adminName, reason, Utils.dateFormat.format(tempBanExpireDate), Utils.dateFormat.format(tempBanDate)));
         }
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfThePlayerToTempBan, adminName, String.valueOf(reason), Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate)));
         }
 
-        final String tempBanInfo = adminName + ";" + reason + ";" + tempBanExpireDate + ";" + tempBanDate;
+        final String tempBanInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempBanExpireDate) + ";" + Utils.dateFormat.format(tempBanDate);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToTempBan, tempBanInfo));
 
         this.addToPunishmentHistory(uuidPlayerToTempBan, "TempBan;" + tempBanInfo);
