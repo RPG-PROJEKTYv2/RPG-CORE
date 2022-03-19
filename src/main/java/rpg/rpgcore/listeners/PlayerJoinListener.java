@@ -26,16 +26,25 @@ public class PlayerJoinListener implements Listener {
         final Player p = e.getPlayer();
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
-        final int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
-        final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl +1);
 
         if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false"));
             e.setJoinMessage(Utils.firstJoinMessage(playerName));
         }
+
+        if (
+                (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID))) ||
+                        (!(rpgcore.getPlayerManager().getPlayerExp().containsKey(playerUUID)))) {
+
+            return;
+        }
+
+        final int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
+        final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
+
         p.setLevel(playerLvl);
         p.setExp((float) playerExp);
-        for (Player rest : Bukkit.getOnlinePlayers()){
+        for (Player rest : Bukkit.getOnlinePlayers()) {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
         e.setJoinMessage(Utils.joinMessage(playerName));
@@ -54,7 +63,6 @@ public class PlayerJoinListener implements Listener {
                 for (String s : banInfo){
                     System.out.println(s);
                 }
-
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
             }
         }
