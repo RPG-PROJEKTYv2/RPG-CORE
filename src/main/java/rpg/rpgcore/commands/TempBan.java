@@ -49,7 +49,7 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
             int time = 0;
-            try{
+            try {
                 time = Integer.parseInt(args[1]);
             } catch (final NumberFormatException e){
                 player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));

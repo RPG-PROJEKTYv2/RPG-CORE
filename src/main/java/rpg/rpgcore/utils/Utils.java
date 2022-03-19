@@ -108,7 +108,7 @@ public class Utils {
             String kolor = String.valueOf(toRemove.charAt(index+1));
 
             toRemove = toRemove.replaceFirst(kolor, "").replaceFirst(znak, "");
-            index = toRemove.indexOf(znakToLook, index + 1);
+            index = toRemove.indexOf(znakToLook);
         }
         return toRemove;
     }

@@ -70,6 +70,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
+        this.getServer().getPluginManager().registerEvents(chatManager, this);
 
         this.updateAllPlayerInfo();
     }
@@ -100,6 +101,7 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void updateAllPlayerInfo(){
+        //TODO poprawic by Caufland
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&6Rozpoczeto update do bazy daynch..."));
             for (Map.Entry<UUID, Integer> entry : this.getPlayerManager().getPlayerLvl().entrySet()) {
@@ -110,7 +112,7 @@ public final class RPGCORE extends JavaPlugin {
             }
             System.out.println("[rpg.core] Pomyslnie zapisano dane wszytskich graczy!!!");
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
-        }, 200L, 6000L);
+        }, 200L, 36000L);
     }
 
     private void sendActionBar(){

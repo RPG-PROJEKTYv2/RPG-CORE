@@ -30,7 +30,6 @@ public class PlayerJoinListener implements Listener {
         final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl +1);
 
         if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
-            p.sendMessage("zrobiono");
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false"));
             e.setJoinMessage(Utils.firstJoinMessage(playerName));
         }
@@ -42,6 +41,8 @@ public class PlayerJoinListener implements Listener {
         e.setJoinMessage(Utils.joinMessage(playerName));
     }
 
+
+    //TODO Dokonczyc dla TempBana by Caufland
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
