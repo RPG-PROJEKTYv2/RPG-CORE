@@ -8,6 +8,7 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -162,25 +163,29 @@ public class ChatManager implements Listener {
         return eqGUI;
     }
 
+    public String getEnchantemntLvlForEQ (final Player player) {
+        return " &8[&3&lP: &b" + player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
+                "&b/" + player.getInventory().getChestplate().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
+                "&b/" + player.getInventory().getLeggings().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
+                "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
+                " &3&lT: &b " + player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.THORNS) +
+                "&b/" + player.getInventory().getChestplate().getEnchantmentLevel(Enchantment.THORNS) +
+                "&b/" + player.getInventory().getLeggings().getEnchantmentLevel(Enchantment.THORNS) +
+                "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.THORNS) +
+                "&8]&7";
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
 
         //TODO poprawic z Cauflandem
-        System.out.println(e.getInventory().getName());
         if (e.getInventory().getName() == null){
             e.getWhoClicked().closeInventory();
             return;
         }
         if (e.getClickedInventory().getName().equals(Utils.format("&4&lEQ GUI"))) {
-            if (e.getCurrentItem() == null) {
-                e.getWhoClicked().closeInventory();
-                return;
-            }
             if (e.getCurrentItem().getType() == Material.AIR) {
-                e.getWhoClicked().closeInventory();
-                return;
-            }
-            if (e.getCurrentItem().getItemMeta() == null) {
+                e.setCancelled(true);
                 e.getWhoClicked().closeInventory();
                 return;
             }
@@ -242,20 +247,25 @@ public class ChatManager implements Listener {
                     Bukkit.spigot().broadcast(befoerMessage);
                     break;
                 case 1:
+                    if (player.getInventory().getHelmet() == null || player.getInventory().getChestplate() == null || player.getInventory().getLeggings() == null || player.getInventory().getBoots() == null){
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz miec zalozone wszystkie czesci zbroji zeby tego uzyc!"));
+                        player.closeInventory();
+                        return;
+                    }
                     if (!(msg.isEmpty())){
                         if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
-                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&3&lP: &b0/0/0/0 &3&lT: &b 0/0/0/0&8]&7");
+                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format(this.getEnchantemntLvlForEQ(player));
                             for (int i = 1; i < msg.size(); i++){
                                 finalMessage = finalMessage + " " + msg.get(i);
                             }
                         } else {
-                            finalMessage = msg.get(0) + Utils.format(" &8[&3&lP: &b0/0/0/0 &3&lT: &b 0/0/0/0&8]&7");
+                            finalMessage = msg.get(0) + Utils.format(this.getEnchantemntLvlForEQ(player));
                             for (int i = 1; i < msg.size(); i++){
                                 finalMessage = Utils.format(finalMessage + " " + color + msg.get(i));
                             }
                         }
                     } else {
-                        finalMessage = Utils.format("&8[&3&lP: &b0/0/0/0 &3&lT: &b 0/0/0/0&8]");
+                        finalMessage = Utils.format(this.getEnchantemntLvlForEQ(player));
                     }
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;
@@ -269,18 +279,18 @@ public class ChatManager implements Listener {
 
                     if (!(msg.isEmpty())) {
                         if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
-                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format("&8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage = finalMessage + " " + msg.get(i);
                             }
                         } else {
-                            finalMessage = msg.get(0) + Utils.format("&8[&f " + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                            finalMessage = msg.get(0) + Utils.format(" &8[&f " + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage = Utils.format(finalMessage + " " + color + msg.get(i));
                             }
                         }
                     } else {
-                        finalMessage = Utils.format("&8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                        finalMessage = Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
                     }
 
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);

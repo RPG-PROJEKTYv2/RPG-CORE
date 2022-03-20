@@ -19,7 +19,6 @@ public class EntityDamageEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent e){
-        //TODO zrobic wyswietlanie dmg po uderzeniu moba, obstawiam ze na armorstandach!
         if (e.getDamager() instanceof Player){
             final Player damager = (Player) e.getDamager();
             final Entity mob = e.getEntity();

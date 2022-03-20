@@ -95,7 +95,6 @@ public class LvlManager {
 
     public void updateExp(final Player killer, final String mob) {
         if (!(this.getExpZaMoby().containsKey(mob))){
-            killer.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono expa dla tego moba"));
             return;
         }
 

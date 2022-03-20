@@ -23,7 +23,6 @@ public class EntityDeathListener implements Listener {
         final Player killer = e.getEntity().getKiller();
 
         if (e.getEntity().getCustomName() == null){
-            killer.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen mobek nie dal ci zadnego expa"));
             return;
         }
 
