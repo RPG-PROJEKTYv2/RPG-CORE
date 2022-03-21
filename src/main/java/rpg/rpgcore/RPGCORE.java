@@ -3,6 +3,7 @@ package rpg.rpgcore;
 import io.lumine.xikage.mythicmobs.io.MythicConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -30,6 +31,7 @@ public final class RPGCORE extends JavaPlugin {
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
+    private BAOManager baoManager;
 
 
     private int i=1;
@@ -71,6 +73,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(chatManager, this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 
         this.updateAllPlayerInfo();
     }
@@ -98,6 +101,7 @@ public final class RPGCORE extends JavaPlugin {
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
+        this.baoManager = new BAOManager(this);
     }
 
     private void updateAllPlayerInfo(){
