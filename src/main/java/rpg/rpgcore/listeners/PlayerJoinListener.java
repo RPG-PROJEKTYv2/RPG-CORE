@@ -39,9 +39,12 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        final int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
+        int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
         final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
 
+        if (playerLvl == 0){
+            playerLvl = 1;
+        }
         p.setLevel(playerLvl);
         p.setExp((float) playerExp);
         for (Player rest : Bukkit.getOnlinePlayers()) {

@@ -74,6 +74,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(chatManager, this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
 
         this.updateAllPlayerInfo();
     }
@@ -114,9 +115,15 @@ public final class RPGCORE extends JavaPlugin {
             for (Map.Entry<UUID, Double> entry : this.getPlayerManager().getPlayerExp().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerExp(entry.getKey(), entry.getValue()));
             }
+            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyMap().entrySet()){
+                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoBonusy(entry.getKey(), entry.getValue()));
+            }
+            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyWartosciMap().entrySet()){
+                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoWartosci(entry.getKey(), entry.getValue()));
+            }
             System.out.println("[rpg.core] Pomyslnie zapisano dane wszytskich graczy!!!");
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
-        }, 200L, 36000L);
+        }, 200L, 5000L);
     }
 
     private void sendActionBar(){
@@ -187,4 +194,8 @@ public final class RPGCORE extends JavaPlugin {
     public DamageManager getDamageManager() { return damageManager; }
 
     public ChatManager getChatManager() { return chatManager; }
+
+    public BAOManager getBaoManager() {
+        return baoManager;
+    }
 }

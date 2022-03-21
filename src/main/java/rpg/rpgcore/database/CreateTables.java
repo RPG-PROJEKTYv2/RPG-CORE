@@ -48,7 +48,19 @@ public class CreateTables {
         } finally {
             pool.close(conn, ps, null);
         }
-
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `npc` (" +
+                    " `uuid` VARCHAR(36) NOT NULL," +
+                    " `BAO_BONUSY` TEXT NOT NULL, " +
+                    " `BAO_WARTOSCI` TEXT NOT NULL," +
+                    "  PRIMARY KEY (`uuid`))");
+            ps.execute();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
     }
 
 }

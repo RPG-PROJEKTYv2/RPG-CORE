@@ -100,6 +100,27 @@ public class SQLManager {
             pool.close(conn, ps, null);
         }
 
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM npc");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                rpgcore.getBaoManager().updateBaoBonusy(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getString("BAO_BONUSY"));
+
+                rpgcore.getBaoManager().updateBaoBonusyWartosci(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getString("BAO_WARTOSCI"));
+            }
+
+            ps.executeQuery();
+        } catch (final SQLException e){
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
     }
 
     public void setSpawn(final Location spawn) {
@@ -155,6 +176,17 @@ public class SQLManager {
             ps.executeUpdate();
 
             rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0);
+
+            ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
+
+            ps.setString(1, String.valueOf(uuid));
+            ps.setString(2, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+            ps.setString(3, "0,0,0,0");
+
+            ps.executeUpdate();
+
+            rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0");
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
@@ -251,6 +283,42 @@ public class SQLManager {
             ps = conn.prepareStatement("UPDATE `player` set exp=? WHERE uuid=?");
 
             ps.setFloat(1, (float) exp);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e){
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps , null);
+        }
+    }
+
+    public void updatePlayerBaoBonusy(final UUID uuid, final String baoBonusy) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `npc` SET BAO_BONUSY=? WHERE uuid=?");
+
+            ps.setString(1, baoBonusy);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e){
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps , null);
+        }
+    }
+
+    public void updatePlayerBaoWartosci(final UUID uuid, final String baoWartosci) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `npc` SET BAO_WARTOSCI=? WHERE uuid=?");
+
+            ps.setString(1, baoWartosci);
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();
