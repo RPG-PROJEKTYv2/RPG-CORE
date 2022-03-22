@@ -2,7 +2,9 @@ package rpg.rpgcore.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
@@ -77,12 +79,15 @@ public class BAOManager {
         final ItemStack item = new ItemStack(Material.BOOK_AND_QUILL);
         final ItemStack background = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
         final ItemStack rollItem = new ItemStack(Material.NETHER_STAR);
+        final ItemStack maxValuesItem = new ItemStack(Material.BOOK);
 
         final ItemMeta itemMeta = item.getItemMeta();
         final ItemMeta backgroudItemMeta = background.getItemMeta();
         final ItemMeta rollItemMeta = rollItem.getItemMeta();
+        final ItemMeta maxValuesItemMeta = maxValuesItem.getItemMeta();
 
         final ArrayList<String> rollItemLore = new ArrayList<>();
+        final ArrayList<String> maxValuesItemLore = new ArrayList<>();
 
         backgroudItemMeta.setDisplayName("");
         background.setItemMeta(backgroudItemMeta);
@@ -97,6 +102,33 @@ public class BAOManager {
         rollItemMeta.setLore(rollItemLore);
         rollItem.setItemMeta(rollItemMeta);
 
+        maxValuesItemMeta.setDisplayName(Utils.format("&c&lMax wartosci poszczegolnych bonusow"));
+        maxValuesItemMeta.addEnchant(Enchantment.DURABILITY, 4)
+        maxValuesItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        maxValuesItemLore.add("");
+        maxValuesItemLore.add(Utils.format("&8Bonus 1:"));
+        maxValuesItemLore.add(Utils.format("&6&lSrednie obrazenia: &c&l50%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSrednie obrazenia przeciwko Ludziom: &c&l75%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSrednie obrazenia przeciwko Potworom: &c&l75%"));
+        maxValuesItemLore.add(Utils.format("&8Bonus 2:"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSrednia defensywa: &c&l50%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSrednia defensywa przeciwko Ludziom: &c&l75%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSrednia defensywa przeciwko Potworom: &c&l75%"));
+        maxValuesItemLore.add(Utils.format("&8Bonus 3:"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lPrzeszycie Bloku Ciosu: &c&l20%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lSzansa na Cios Krytyczny: &c&l25%"));
+        maxValuesItemLore.add(Utils.format("&8Bonus 4:"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lBlok Ciosu: &c&l15%"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowe Obrazenia: &c&l5000 DMG"));
+        maxValuesItemLore.add(Utils.format("&8Bonus 5:"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowe HP: &c&l10 HP"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowy EXP: &c&l15%"));
+
+        maxValuesItemMeta.setLore(maxValuesItemLore);
+
+        maxValuesItem.setItemMeta(maxValuesItemMeta);
+
         String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
         String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
 
@@ -108,13 +140,17 @@ public class BAOManager {
             if (baoBonusy[i].equalsIgnoreCase("brak bonusu")){
                 itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[i]));
             } else {
-                if (i == 3){
-                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe hp")){
-                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + " HP"));
-                    } else if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")){
+                if (i == 3) {
+                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")){
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + " DMG"));
                     } else {
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + "%"));
+                    }
+                } else if (i == 4){
+                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")){
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + " HP"));
+                    } else {
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + "%"));
                     }
                 } else {
                     itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[i] + ":&c&l " + baoBonusyWartosci[i] + "%"));
@@ -128,6 +164,9 @@ public class BAOManager {
 
         //                  ROLL ITEM                 \\
         baoGUI.setItem(16, rollItem);
+
+        //                  MAX VALUES ITEM                \\
+        baoGUI.setItem(17, maxValuesItem);
         return baoGUI;
     }
 
@@ -180,20 +219,15 @@ public class BAOManager {
 
         //                  LOSOWANIE 3 BONUSU BAO                  \\
 
-        final int nowyBaoBonus3 = random.nextInt(3) + 1;
+        final int nowyBaoBonus3 = random.nextInt(2) + 1;
         switch (nowyBaoBonus3) {
             case 1:
-                baoBonusy[2] = "Dodatkowy EXP";
-                nowaWartoscBonusu = random.nextInt(15) +1;
-                baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
-                break;
-            case 2:
-                baoBonusy[2] = "Przeszycie bloku ciosu";
+                baoBonusy[2] = "Przeszycie Bloku Ciosu";
                 nowaWartoscBonusu = random.nextInt(20) +1;
                 baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
                 break;
-            case 3:
-                baoBonusy[2] = "Szansa na cios krytyczny";
+            case 2:
+                baoBonusy[2] = "Szansa na Cios Krytyczny";
                 nowaWartoscBonusu = random.nextInt(25) +1;
                 baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
                 break;
@@ -201,26 +235,39 @@ public class BAOManager {
 
         //                  LOSOWANIE 4 BONUSU BAO                  \\
 
-        final int nowyBaoBonus4 = random.nextInt(3) + 1;
+        final int nowyBaoBonus4 = random.nextInt(2) + 1;
         switch (nowyBaoBonus4) {
             case 1:
-                baoBonusy[3] = "Dodatkowe HP";
-                nowaWartoscBonusu = random.nextInt(10) +1;
-                baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
-                break;
-            case 2:
-                baoBonusy[3] = "Blok ciosu";
+                baoBonusy[3] = "Blok Ciosu";
                 nowaWartoscBonusu = random.nextInt(15) +1;
                 baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
                 break;
-            case 3:
-                baoBonusy[3] = "Dodatkowe obrazenia";
+            case 2:
+                baoBonusy[3] = "Dodatkowe Obrazenia";
                 nowaWartoscBonusu = random.nextInt(5000) +1;
                 baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
-        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3];
-        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3];
+
+        //                  LOSOWANIE 5 BONUSU BAO                  \\
+
+        final int nowyBaoBonus5 = random.nextInt(2) + 1;
+        switch (nowyBaoBonus5) {
+            case 1:
+                baoBonusy[4] = "Dodatkowe HP";
+                nowaWartoscBonusu = random.nextInt(10) +1;
+                baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
+                break;
+            case 2:
+                baoBonusy[4] = "Dodatkowy EXP";
+                nowaWartoscBonusu = random.nextInt(15) +1;
+                baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
+                break;
+        }
+
+
+        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
+        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
         this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
         this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
