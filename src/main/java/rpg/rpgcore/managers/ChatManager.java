@@ -84,7 +84,7 @@ public class ChatManager implements Listener {
         if (playerRank.equals("Gracz")){
             return PlaceholderAPI.setPlaceholders(player, format.replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-group>", "").replace("<player-name>", playerName).replace("<message>", message));
         }
-        return PlaceholderAPI.setPlaceholders(player, format.replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-group>", "%uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));
+        return PlaceholderAPI.setPlaceholders(player, format.replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));
     }
 
 
@@ -212,8 +212,6 @@ public class ChatManager implements Listener {
                     }
                     TextComponent befoerMessage = new TextComponent(formatPrzedWiadomoscia);
 
-                    System.out.println(msg);
-
                     TextComponent item;
                     if (e.getWhoClicked().getItemInHand().getItemMeta().getDisplayName() != null) {
                         item = new TextComponent(" §8[" + e.getWhoClicked().getItemInHand().getItemMeta().getDisplayName() + "§8]");
@@ -289,9 +287,9 @@ public class ChatManager implements Listener {
                         finalMessage = finalMessage + Utils.format(baoBonusy[3] + ": &c" + baoWartosci[3] + " % &8| &6");
                     }
                     if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")){
-                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " HP &8]");
+                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " HP&8]");
                     } else {
-                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " % &8]");
+                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " %&8]");
                     }
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;

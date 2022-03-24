@@ -26,7 +26,7 @@ public class PlayerChatListener implements Listener {
             rpgcore.getChatManager().formatujChatEQ(player);
             e.setCancelled(true);
         }
-        final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8] <player-group> &7<player-name>&7: <message>");
+        final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>&7: <message>");
         final String poFormacie = rpgcore.getChatManager().formatujChat(player, przedFormatem, message);
         e.setFormat(poFormacie);
     }

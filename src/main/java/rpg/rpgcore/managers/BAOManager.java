@@ -14,6 +14,7 @@ import java.util.*;
 
 public class BAOManager {
 
+
     private final RPGCORE rpgcore;
 
     public BAOManager(RPGCORE rpgcore) {
@@ -56,7 +57,7 @@ public class BAOManager {
     }
 
     public ItemStack getItemDoLosowania() {
-        final ItemStack itemDoLosowania = new ItemStack(Material.COAL, 1, (short) 1);
+        final ItemStack itemDoLosowania = new ItemStack(Material.COAL, (short) 1);
         final ItemMeta itemDoLosowaniaMeta = itemDoLosowania.getItemMeta();
         final ArrayList<String> itemDoLosowaniaLore = new ArrayList<>();
 
@@ -72,6 +73,25 @@ public class BAOManager {
 
         return itemDoLosowania;
     }
+
+    public ItemStack getItemDoZmianki() {
+        final ItemStack itemDoZmianki = new ItemStack(Material.ENCHANTED_BOOK, 1);
+        final ItemMeta itemDoZmiankiMeta = itemDoZmianki.getItemMeta();
+        final ArrayList<String> itemDoZmiankiLore = new ArrayList<>();
+
+        itemDoZmiankiLore.add(Utils.format("&8Ta magiczna ksiega pozwoli Ci"));
+        itemDoZmiankiLore.add(Utils.format("&8zmienic jeden bonus w &6Stole Magii"));
+        itemDoZmiankiLore.add(Utils.format("&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"));
+
+        itemDoZmiankiMeta.setDisplayName(Utils.format("&4&lKsiega Magii"));
+        itemDoZmiankiMeta.setLore(itemDoZmiankiLore);
+
+        itemDoZmianki.setItemMeta(itemDoZmiankiMeta);
+
+
+        return itemDoZmianki;
+    }
+
 
     public Inventory baoGUI(final UUID uuid) {
         Inventory baoGUI = Bukkit.createInventory(null, 3*9, Utils.format("&6&lSTOL MAGII"));

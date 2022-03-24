@@ -22,10 +22,21 @@ public class PlayerInteractListener implements Listener {
     public void onPlayerInteract(final PlayerInteractEvent e){
         final Player player = e.getPlayer();
 
-        if (e.getClickedBlock().getType().equals(Material.ENCHANTMENT_TABLE) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (e.getClickedBlock().getType() == null){
+
+        //TODO poprawic bo kurwa nie dziala jebane gowno
+        if (e.getItem() == rpgcore.getBaoManager().getItemDoZmianki() && e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
+                e.setCancelled(true);
                 return;
             }
+            e.setCancelled(true);
+            player.openInventory(rpgcore.getBaoManager().baoGUI(player.getUniqueId()));
+
+        }
+
+
+        if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 74) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGI"));
                 e.setCancelled(true);
