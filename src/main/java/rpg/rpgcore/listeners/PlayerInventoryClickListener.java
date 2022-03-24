@@ -25,6 +25,7 @@ public class PlayerInventoryClickListener implements Listener {
         if (e.getClickedInventory().getName().equals(Utils.format("&6&lSTOL MAGII"))) {
 
             if (e.getSlot() == 16) {
+                System.out.println(player.getInventory().contains(rpgcore.getBaoManager().getItemDoLosowania()));
                 if (!(player.getInventory().contains(rpgcore.getBaoManager().getItemDoLosowania()))) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz &3&lKamien Bao&c!"));
                     player.closeInventory();
@@ -38,7 +39,8 @@ public class PlayerInventoryClickListener implements Listener {
 
                 e.setCancelled(true);
             }
-
+            e.setCancelled(true);
+            player.closeInventory();
         }
     }
 }

@@ -270,7 +270,30 @@ public class ChatManager implements Listener {
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;
                 case 2:
-                    Bukkit.broadcastMessage("bao");
+                    if (rpgcore.getPlayerManager().getPlayerLvl(playerUUID) < 74) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c75 &7poziom, zeby pokazac bao na chacie"));
+                        player.closeInventory();
+                        break;
+                    }
+                    final String [] baoBonusy = rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",");
+                    final String [] baoWartosci = rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",");
+                    if (baoBonusy[0].equalsIgnoreCase("brak bonusu")) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz jeszcze zrobionego bao!"));
+                        player.closeInventory();
+                        break;
+                    }
+                    finalMessage = Utils.format("&8[&6" + baoBonusy[0] + ": &c" + baoWartosci[0] + " % &8| &6" + baoBonusy[1] + ": &c" + baoWartosci[1] + " % &8| &6" + baoBonusy[2] + ": &c" + baoWartosci[2] + " % &8| &6");
+                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")){
+                        finalMessage = finalMessage + Utils.format(baoBonusy[3] + ": &c" + baoWartosci[3] + " DMG &8| &6");
+                    } else {
+                        finalMessage = finalMessage + Utils.format(baoBonusy[3] + ": &c" + baoWartosci[3] + " % &8| &6");
+                    }
+                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")){
+                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " HP &8]");
+                    } else {
+                        finalMessage = finalMessage + Utils.format(baoBonusy[4] + ": &c" + baoWartosci[4] + " % &8]");
+                    }
+                    Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;
                 case 3:
                     final int lvlGracza = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);

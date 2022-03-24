@@ -20,8 +20,8 @@ public class BAOManager {
         this.rpgcore = rpgcore;
     }
 
-    private HashMap<UUID, String> baoBonusy = new HashMap<>();
-    private HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
+    private final HashMap<UUID, String> baoBonusy = new HashMap<>();
+    private final HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
 
     public HashMap<UUID, String> getBaoBonusyMap() {
         return this.baoBonusy;
@@ -89,7 +89,7 @@ public class BAOManager {
         final ArrayList<String> rollItemLore = new ArrayList<>();
         final ArrayList<String> maxValuesItemLore = new ArrayList<>();
 
-        backgroudItemMeta.setDisplayName("");
+        backgroudItemMeta.setDisplayName(" ");
         background.setItemMeta(backgroudItemMeta);
 
 
@@ -103,7 +103,7 @@ public class BAOManager {
         rollItem.setItemMeta(rollItemMeta);
 
         maxValuesItemMeta.setDisplayName(Utils.format("&c&lMax wartosci poszczegolnych bonusow"));
-        maxValuesItemMeta.addEnchant(Enchantment.DURABILITY, 4)
+        maxValuesItemMeta.addEnchant(Enchantment.DURABILITY, 3, true);
         maxValuesItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         maxValuesItemLore.add("");
