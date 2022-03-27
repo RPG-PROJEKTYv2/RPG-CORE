@@ -22,7 +22,7 @@ public class EntityDeathListener implements Listener {
         e.getDrops().clear();
         final Player killer = e.getEntity().getKiller();
 
-        if (e.getEntity().getCustomName() == null){
+        if (e.getEntity().getCustomName() == null) {
             return;
         }
 

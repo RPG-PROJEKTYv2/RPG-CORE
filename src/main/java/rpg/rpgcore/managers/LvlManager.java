@@ -12,13 +12,18 @@ import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class LvlManager {
 
     private final RPGCORE rpgcore;
 
-    public LvlManager(RPGCORE rpgcore) {this.rpgcore = rpgcore;}
+    public LvlManager(RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
 
 
     public HashMap<Integer, Double> getWymaganyExpDlaLvli() {
@@ -29,8 +34,9 @@ public class LvlManager {
     private final HashMap<String, Double> expZaMoby = new HashMap<>();
 
 
-
-    public HashMap<String, Double> getExpZaMoby() {return expZaMoby;}
+    public HashMap<String, Double> getExpZaMoby() {
+        return expZaMoby;
+    }
 
     public void loadAllReqExp() {
         try {
@@ -39,7 +45,7 @@ public class LvlManager {
                 this.wymaganyExpDlaLvli.put(i, rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").getDouble("wymaganyexp_lvl_" + i));
             }
             System.out.println("[rpg.core]" + ChatColor.GREEN + "Pomyslnie wczytano wymagane doswiadczenia dla kazdego poziomu");
-        }catch (final Exception e){
+        } catch (final Exception e) {
             e.printStackTrace();
             System.out.println(Utils.format("&8[&crpg.core&8] &cCos poszlo nie tak podczas wczytywania wymaganego doswiadczenia dla kazdego poziomu"));
         }
@@ -61,7 +67,7 @@ public class LvlManager {
             }
             allMobsToArray.clear();
             System.out.println("[rpg.core] Pomyslnie zaladowano exp za moby");
-        } catch (final Exception e){
+        } catch (final Exception e) {
             e.printStackTrace();
             System.out.println(Utils.format("&8[&crpg.core&8] &cCos poszlo nie tak podczas wczytywania expa za moby"));
         }
@@ -76,17 +82,17 @@ public class LvlManager {
     public double getExpForLvl(final int lvl) {
         double exp = 0;
 
-        if (this.wymaganyExpDlaLvli.containsKey(lvl)){
+        if (this.wymaganyExpDlaLvli.containsKey(lvl)) {
             exp = this.wymaganyExpDlaLvli.get(lvl);
         }
 
         return exp;
     }
 
-    public double getExp(final String mob){
+    public double getExp(final String mob) {
         double exp = 0;
 
-        if (this.expZaMoby.containsKey(mob)){
+        if (this.expZaMoby.containsKey(mob)) {
             exp = this.expZaMoby.get(mob);
         }
 
@@ -94,13 +100,13 @@ public class LvlManager {
     }
 
     public void updateExp(final Player killer, final String mob) {
-        if (!(this.getExpZaMoby().containsKey(mob))){
+        if (!(this.getExpZaMoby().containsKey(mob))) {
             return;
         }
 
         final UUID killerUUID = killer.getUniqueId();
 
-        if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130){
+        if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+0 exp &b(&4&lMAX LVL%&b) [EXP]")));
             return;
         }
@@ -118,7 +124,7 @@ public class LvlManager {
         killer.sendMessage("Exp na next lvl - " + expNaNextLvlGracza);
         killer.sendMessage("Exp za moba - " + expDoDodania);
 
-        if (aktualnyExpGracza >= expNaNextLvlGracza){
+        if (aktualnyExpGracza >= expNaNextLvlGracza) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer, killerUUID));
             return;
         }
@@ -128,7 +134,7 @@ public class LvlManager {
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
         killer.sendMessage("Ustawiono exp gracza - " + rpgcore.getPlayerManager().getPlayerExp(killerUUID));
         final double expForLambda = aktualnyExpGracza;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza)*100) + "%&b) [EXP]")));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza) * 100) + "%&b) [EXP]")));
     }
 
     public void updateLVL(final Player killer, final UUID killerUUID) {
@@ -145,7 +151,7 @@ public class LvlManager {
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
-        for (Player p : rpgcore.getServer().getOnlinePlayers()){
+        for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
         }
     }
@@ -169,27 +175,27 @@ public class LvlManager {
     }
 
     public void setPlayerLvl(final String adminName, final UUID uuid, int nowyLvl) {
-        if (nowyLvl > Utils.MAXLVL){
+        if (nowyLvl > Utils.MAXLVL) {
             nowyLvl = Utils.MAXLVL;
         }
         rpgcore.getPlayerManager().getPlayerLvl().replace(uuid, nowyLvl);
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, 0.0);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
-        if (playerToKick != null){
+        if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana lvla"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana lvla"));
     }
 
     public void setPlayerExp(final String adminName, final UUID uuid, double nowyExp) {
-        if(nowyExp > rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) +1)) {
-            nowyExp = rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) +1);
+        if (nowyExp > rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)) {
+            nowyExp = rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1);
         }
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExp);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
-        if (playerToKick != null){
+        if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana ilosci expa"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana ilosci expa"));
@@ -203,7 +209,7 @@ public class LvlManager {
         rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExpGracza);
         final Player playerToKick = Bukkit.getPlayer(uuid);
         final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
-        if (playerToKick != null){
+        if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana postepu do nastepnego lvla"));

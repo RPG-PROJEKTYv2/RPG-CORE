@@ -10,7 +10,6 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class PlayerInventoryClickListener implements Listener {
 

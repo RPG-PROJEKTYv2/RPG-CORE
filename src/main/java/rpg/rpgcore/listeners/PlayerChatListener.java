@@ -17,11 +17,11 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler
-    public void onChat(final AsyncPlayerChatEvent e){
+    public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
         //TODO zrobic klany xd
         final String message = e.getMessage();
-        if (message.contains("[eq]")){
+        if (message.contains("[eq]")) {
             rpgcore.getChatManager().updateMessageWithEQ(player.getUniqueId(), message);
             rpgcore.getChatManager().formatujChatEQ(player);
             e.setCancelled(true);

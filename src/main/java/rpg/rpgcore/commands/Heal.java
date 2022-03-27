@@ -18,17 +18,17 @@ public class Heal implements CommandExecutor {
         this.rpgcore = rpgcore;
     }
 
-    public boolean onCommand (final CommandSender sender, final Command cmd, final String label, final String[] args){
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
 
         final Player player = (Player) sender;
 
-        if (args.length == 0){
-            if (player.getHealth() == player.getMaxHealth() && player.getFoodLevel() == 20){
+        if (args.length == 0) {
+            if (player.getHealth() == player.getMaxHealth() && player.getFoodLevel() == 20) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Jestes juz uleczony"));
                 return false;
             }
@@ -38,7 +38,7 @@ public class Heal implements CommandExecutor {
             return false;
         }
 
-        if (args.length == 1){
+        if (args.length == 1) {
 
             final UUID uuidPlayerToHeal = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
@@ -50,12 +50,12 @@ public class Heal implements CommandExecutor {
 
             final Player target = Bukkit.getPlayer(uuidPlayerToHeal);
 
-            if (!(target.isOnline())){
+            if (!(target.isOnline())) {
                 player.sendMessage(Utils.offline(target.getName()));
                 return false;
             }
 
-            if (target.getHealth() == target.getMaxHealth() && target.getFoodLevel() == 20){
+            if (target.getHealth() == target.getMaxHealth() && target.getFoodLevel() == 20) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&c" + target.getName() + " &7jest juz uleczony"));
                 return false;
             }

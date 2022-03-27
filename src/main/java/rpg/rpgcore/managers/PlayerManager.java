@@ -69,16 +69,28 @@ public class PlayerManager {
         return this.playerPunishmentHistory.get(uuid);
     }
 
-    public int getPlayerLvl(final UUID uuid) {return this.playerLvl.get(uuid);}
+    public int getPlayerLvl(final UUID uuid) {
+        return this.playerLvl.get(uuid);
+    }
 
-    public void updatePlayerLvl(final UUID uuid, final int lvl) {this.playerLvl.replace(uuid, lvl);}
+    public void updatePlayerLvl(final UUID uuid, final int lvl) {
+        this.playerLvl.replace(uuid, lvl);
+    }
 
-    public double getPlayerExp(final UUID uuid) {return this.playerExp.get(uuid);}
+    public double getPlayerExp(final UUID uuid) {
+        return this.playerExp.get(uuid);
+    }
 
-    public void updatePlayerExp(final UUID uuid, final double exp) {this.playerExp.replace(uuid, exp);}
+    public void updatePlayerExp(final UUID uuid, final double exp) {
+        this.playerExp.replace(uuid, exp);
+    }
 
-    public HashMap<UUID, Integer> getPlayerLvl() {return playerLvl;}
+    public HashMap<UUID, Integer> getPlayerLvl() {
+        return playerLvl;
+    }
 
-    public HashMap<UUID, Double> getPlayerExp() {return playerExp;}
+    public HashMap<UUID, Double> getPlayerExp() {
+        return playerExp;
+    }
 
 }

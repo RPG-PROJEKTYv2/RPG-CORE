@@ -13,7 +13,7 @@ public class Fly implements CommandExecutor {
     @Override
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
@@ -42,8 +42,8 @@ public class Fly implements CommandExecutor {
     }
 
 
-    private void fly(Player p){
-        if (!(p.isFlying())){
+    private void fly(Player p) {
+        if (!(p.isFlying())) {
             p.setAllowFlight(true);
             p.setFlying(true);
             p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczano &7fly"));

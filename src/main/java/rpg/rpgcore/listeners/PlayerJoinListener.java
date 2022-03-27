@@ -42,7 +42,7 @@ public class PlayerJoinListener implements Listener {
         int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
         final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
 
-        if (playerLvl == 0){
+        if (playerLvl == 0) {
             playerLvl = 1;
         }
         p.setLevel(playerLvl);
@@ -63,7 +63,7 @@ public class PlayerJoinListener implements Listener {
             if (rpgcore.getPlayerManager().isBanned(uuid)) {
 
                 final String[] banInfo = rpgcore.getPlayerManager().getPlayerBanInfo(uuid).split(";");
-                for (String s : banInfo){
+                for (String s : banInfo) {
                     System.out.println(s);
                 }
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));

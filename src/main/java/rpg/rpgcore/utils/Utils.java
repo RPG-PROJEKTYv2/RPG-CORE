@@ -105,7 +105,7 @@ public class Utils {
         int index = toRemove.indexOf(znakToLook);
         while (index >= 0) {
             String znak = String.valueOf(toRemove.charAt(index));
-            String kolor = String.valueOf(toRemove.charAt(index+1));
+            String kolor = String.valueOf(toRemove.charAt(index + 1));
 
             toRemove = toRemove.replaceFirst(kolor, "").replaceFirst(znak, "");
             index = toRemove.indexOf(znakToLook);

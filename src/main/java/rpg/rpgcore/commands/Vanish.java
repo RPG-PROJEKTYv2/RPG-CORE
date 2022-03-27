@@ -23,7 +23,7 @@ public class Vanish implements CommandExecutor {
         }
         final Player player = (Player) sender;
 
-        if (!(player.hasPermission("rpg.vanish"))){
+        if (!(player.hasPermission("rpg.vanish"))) {
             player.sendMessage(Utils.permisje("rpg.vanish"));
             return false;
         }
@@ -38,12 +38,12 @@ public class Vanish implements CommandExecutor {
             rpgcore.getVanishManager().hidePlayer(player);
             return false;
         }
-        if (args.length == 1){
+        if (args.length == 1) {
 
             Player target = Bukkit.getPlayer(args[0]);
 
 
-            if (rpgcore.getVanishManager().containsPlayer(target.getUniqueId())){
+            if (rpgcore.getVanishManager().containsPlayer(target.getUniqueId())) {
                 rpgcore.getVanishManager().getVanishList().remove(target.getUniqueId());
                 rpgcore.getVanishManager().revealPlayer(target);
                 return false;

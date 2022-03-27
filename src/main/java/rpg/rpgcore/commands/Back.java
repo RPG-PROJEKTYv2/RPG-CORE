@@ -13,7 +13,9 @@ public class Back implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public Back(RPGCORE rpgcore) {this.rpgcore = rpgcore;}
+    public Back(RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
 
     @Override
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {

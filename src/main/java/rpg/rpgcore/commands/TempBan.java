@@ -17,17 +17,17 @@ public class TempBan implements CommandExecutor {
         this.rpgcore = rpgcore;
     }
 
-    public boolean onCommand (final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (!(sender instanceof Player)){
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
 
         final Player player = (Player) sender;
 
-        if (args.length == 3){
+        if (args.length == 3) {
 
-            if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))){
+            if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
                 player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
                 return false;
             }
@@ -51,7 +51,7 @@ public class TempBan implements CommandExecutor {
             int time = 0;
             try {
                 time = Integer.parseInt(args[1]);
-            } catch (final NumberFormatException e){
+            } catch (final NumberFormatException e) {
                 player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
             }
             rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, args[2], false, "Brak Powodu!");

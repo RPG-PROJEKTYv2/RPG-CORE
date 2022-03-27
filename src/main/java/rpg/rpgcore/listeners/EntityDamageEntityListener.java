@@ -18,7 +18,7 @@ public class EntityDamageEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamage(EntityDamageByEntityEvent e){
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
 
         if (!(e.getDamager() instanceof Player)) {
             return;

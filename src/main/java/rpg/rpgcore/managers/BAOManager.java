@@ -148,20 +148,20 @@ public class BAOManager {
 
 
         for (int i = 0; i < baoGUI.getSize(); i++) {
-            baoGUI.setItem(i ,background);
+            baoGUI.setItem(i, background);
         }
-        for (int i = 0; i < baoBonusy.length; i++){
-            if (baoBonusy[i].equalsIgnoreCase("brak bonusu")){
+        for (int i = 0; i < baoBonusy.length; i++) {
+            if (baoBonusy[i].equalsIgnoreCase("brak bonusu")) {
                 itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[i]));
             } else {
                 if (i == 3) {
-                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")){
+                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")) {
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + " DMG"));
                     } else {
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + "%"));
                     }
-                } else if (i == 4){
-                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")){
+                } else if (i == 4) {
+                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")) {
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + " HP"));
                     } else {
                         itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + "%"));
@@ -195,17 +195,17 @@ public class BAOManager {
         switch (nowyBaoBonus1) {
             case 1:
                 baoBonusy[0] = "Srednie obrazenia";
-                nowaWartoscBonusu = random.nextInt(50) +1;
+                nowaWartoscBonusu = random.nextInt(50) + 1;
                 baoBonusyWartosci[0] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 2:
                 baoBonusy[0] = "Srednie obrazenie przeciwko ludziom";
-                nowaWartoscBonusu = random.nextInt(75) +1;
+                nowaWartoscBonusu = random.nextInt(75) + 1;
                 baoBonusyWartosci[0] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 3:
                 baoBonusy[0] = "Srednie obrazenie przeciwko potworom";
-                nowaWartoscBonusu = random.nextInt(75) +1;
+                nowaWartoscBonusu = random.nextInt(75) + 1;
                 baoBonusyWartosci[0] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
@@ -216,17 +216,17 @@ public class BAOManager {
         switch (nowyBaoBonus2) {
             case 1:
                 baoBonusy[1] = "Srednia defensywa";
-                nowaWartoscBonusu = random.nextInt(50) +1;
+                nowaWartoscBonusu = random.nextInt(50) + 1;
                 baoBonusyWartosci[1] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 2:
                 baoBonusy[1] = "Srednia defensywa przeciwko ludziom";
-                nowaWartoscBonusu = random.nextInt(75) +1;
+                nowaWartoscBonusu = random.nextInt(75) + 1;
                 baoBonusyWartosci[1] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 3:
                 baoBonusy[1] = "Srednia defensywa przeciwko potworom";
-                nowaWartoscBonusu = random.nextInt(75) +1;
+                nowaWartoscBonusu = random.nextInt(75) + 1;
                 baoBonusyWartosci[1] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
@@ -237,12 +237,12 @@ public class BAOManager {
         switch (nowyBaoBonus3) {
             case 1:
                 baoBonusy[2] = "Przeszycie Bloku Ciosu";
-                nowaWartoscBonusu = random.nextInt(20) +1;
+                nowaWartoscBonusu = random.nextInt(20) + 1;
                 baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 2:
                 baoBonusy[2] = "Szansa na Cios Krytyczny";
-                nowaWartoscBonusu = random.nextInt(25) +1;
+                nowaWartoscBonusu = random.nextInt(25) + 1;
                 baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
@@ -253,12 +253,12 @@ public class BAOManager {
         switch (nowyBaoBonus4) {
             case 1:
                 baoBonusy[3] = "Blok Ciosu";
-                nowaWartoscBonusu = random.nextInt(15) +1;
+                nowaWartoscBonusu = random.nextInt(15) + 1;
                 baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 2:
                 baoBonusy[3] = "Dodatkowe Obrazenia";
-                nowaWartoscBonusu = random.nextInt(5000) +1;
+                nowaWartoscBonusu = random.nextInt(5000) + 1;
                 baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
@@ -269,12 +269,12 @@ public class BAOManager {
         switch (nowyBaoBonus5) {
             case 1:
                 baoBonusy[4] = "Dodatkowe HP";
-                nowaWartoscBonusu = random.nextInt(10) +1;
+                nowaWartoscBonusu = random.nextInt(10) + 1;
                 baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
                 break;
             case 2:
                 baoBonusy[4] = "Dodatkowy EXP";
-                nowaWartoscBonusu = random.nextInt(15) +1;
+                nowaWartoscBonusu = random.nextInt(15) + 1;
                 baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
                 break;
         }

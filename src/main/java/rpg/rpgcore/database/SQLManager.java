@@ -116,7 +116,7 @@ public class SQLManager {
             }
 
             ps.executeQuery();
-        } catch (final SQLException e){
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
             pool.close(conn, ps, null);
@@ -168,7 +168,7 @@ public class SQLManager {
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
-            ps.setInt(3,1);
+            ps.setInt(3, 1);
             ps.setDouble(4, 0.0);
             ps.setString(5, banInfo);
             ps.setString(6, "");
@@ -257,10 +257,10 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerLvl(final UUID uuid, final int lvl){
+    public void updatePlayerLvl(final UUID uuid, final int lvl) {
         Connection conn = null;
         PreparedStatement ps = null;
-        try{
+        try {
             conn = pool.getConnection();
             ps = conn.prepareStatement("UPDATE `player` set lvl=? WHERE uuid=?");
 
@@ -268,17 +268,17 @@ public class SQLManager {
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();
-        } catch (final SQLException e){
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
-            pool.close(conn, ps , null);
+            pool.close(conn, ps, null);
         }
     }
 
-    public void updatePlayerExp(final UUID uuid, final double exp){
+    public void updatePlayerExp(final UUID uuid, final double exp) {
         Connection conn = null;
         PreparedStatement ps = null;
-        try{
+        try {
             conn = pool.getConnection();
             ps = conn.prepareStatement("UPDATE `player` set exp=? WHERE uuid=?");
 
@@ -286,10 +286,10 @@ public class SQLManager {
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();
-        } catch (final SQLException e){
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
-            pool.close(conn, ps , null);
+            pool.close(conn, ps, null);
         }
     }
 
@@ -304,10 +304,10 @@ public class SQLManager {
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();
-        } catch (final SQLException e){
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
-            pool.close(conn, ps , null);
+            pool.close(conn, ps, null);
         }
     }
 
@@ -322,10 +322,10 @@ public class SQLManager {
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();
-        } catch (final SQLException e){
+        } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
-            pool.close(conn, ps , null);
+            pool.close(conn, ps, null);
         }
     }
 

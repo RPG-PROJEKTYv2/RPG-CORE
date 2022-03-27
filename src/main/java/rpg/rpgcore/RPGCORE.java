@@ -32,7 +32,7 @@ public final class RPGCORE extends JavaPlugin {
     private BAOManager baoManager;
 
 
-    private int i=1;
+    private int i = 1;
 
     public void onEnable() {
         this.config.createConfig();
@@ -103,7 +103,7 @@ public final class RPGCORE extends JavaPlugin {
         this.baoManager = new BAOManager();
     }
 
-    private void updateAllPlayerInfo(){
+    private void updateAllPlayerInfo() {
         //TODO poprawic by Caufland
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&6Rozpoczeto update do bazy daynch..."));
@@ -113,10 +113,10 @@ public final class RPGCORE extends JavaPlugin {
             for (Map.Entry<UUID, Double> entry : this.getPlayerManager().getPlayerExp().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerExp(entry.getKey(), entry.getValue()));
             }
-            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyMap().entrySet()){
+            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyMap().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoBonusy(entry.getKey(), entry.getValue()));
             }
-            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyWartosciMap().entrySet()){
+            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyWartosciMap().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoWartosci(entry.getKey(), entry.getValue()));
             }
             System.out.println("[rpg.core] Pomyslnie zapisano dane wszytskich graczy!!!");
@@ -124,9 +124,9 @@ public final class RPGCORE extends JavaPlugin {
         }, 200L, 5000L);
     }
 
-    private void sendActionBar(){
+    private void sendActionBar() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Player target : Bukkit.getOnlinePlayers()){
+            for (Player target : Bukkit.getOnlinePlayers()) {
                 if (getGodManager().containsPlayer(target.getUniqueId()) && this.vanishManager.containsPlayer(target.getUniqueId())) {
                     getNmsManager().sendActionBar(target, getNmsManager().makeActionBar("&3&lVanish &8| &5&lGOD"));
                 } else if (getGodManager().containsPlayer(target.getUniqueId())) {
@@ -138,7 +138,7 @@ public final class RPGCORE extends JavaPlugin {
         }, 150L, 50L);
     }
 
-    private void autoMessage(){
+    private void autoMessage() {
 
         if (getConfig().getBoolean("auto_message")) {
             int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
@@ -183,15 +183,21 @@ public final class RPGCORE extends JavaPlugin {
         return godManager;
     }
 
-    public PlayerManager getPlayerManager() { return playerManager; }
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
 
     public LvlManager getLvlManager() {
         return lvlManager;
     }
 
-    public DamageManager getDamageManager() { return damageManager; }
+    public DamageManager getDamageManager() {
+        return damageManager;
+    }
 
-    public ChatManager getChatManager() { return chatManager; }
+    public ChatManager getChatManager() {
+        return chatManager;
+    }
 
     public BAOManager getBaoManager() {
         return baoManager;

@@ -38,7 +38,7 @@ public class Lvl implements CommandExecutor {
 
         if (args.length == 1) {
 
-            if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")){
+            if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")) {
                 player.sendMessage(Utils.poprawneUzycie("lvl [gracz]"));
                 return false;
             }
@@ -76,11 +76,11 @@ public class Lvl implements CommandExecutor {
             }
 
             if (args[1].equalsIgnoreCase("setlvl")) {
-                try{
-                    final int nowyLvl= Integer.parseInt(args[2]);
+                try {
+                    final int nowyLvl = Integer.parseInt(args[2]);
                     rpgcore.getLvlManager().setPlayerLvl(player.getName(), uuidPlayerToSet, nowyLvl);
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono poziom gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyLvl));
-                } catch (final NumberFormatException e){
+                } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe calkowita"));
                     return false;
                 }
@@ -90,17 +90,17 @@ public class Lvl implements CommandExecutor {
                     final double nowyExp = Double.parseDouble(args[2]);
                     rpgcore.getLvlManager().setPlayerExp(player.getName(), uuidPlayerToSet, nowyExp);
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono exp gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyExp + " &aexp"));
-                } catch (final NumberFormatException e){
+                } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe"));
                     return false;
                 }
             }
-            if (args[1].equalsIgnoreCase("setprocent")){
+            if (args[1].equalsIgnoreCase("setprocent")) {
                 try {
                     final double nowyProcent = Double.parseDouble(args[2]);
                     rpgcore.getLvlManager().setPlayerProcent(player.getName(), uuidPlayerToSet, nowyProcent);
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono postep gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyProcent + "&a%"));
-                } catch (final NumberFormatException e){
+                } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe"));
                     return false;
                 }

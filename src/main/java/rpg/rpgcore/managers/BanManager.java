@@ -84,7 +84,7 @@ public class BanManager {
 
         final Date tempBanDate = new Date();
         Calendar cal = Calendar.getInstance();
-        switch (jednostka){
+        switch (jednostka) {
             case "y":
                 cal.add(Calendar.YEAR, time);
                 break;

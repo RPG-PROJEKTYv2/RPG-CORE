@@ -19,12 +19,12 @@ public class PlayerInteractListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteract(final PlayerInteractEvent e){
+    public void onPlayerInteract(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
 
 
         //TODO poprawic bo kurwa nie dziala jebane gowno
-        if (e.getItem() == rpgcore.getBaoManager().getItemDoZmianki() && e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+        if (e.getItem() == rpgcore.getBaoManager().getItemDoZmianki() && e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
                 e.setCancelled(true);

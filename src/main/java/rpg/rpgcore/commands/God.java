@@ -11,24 +11,26 @@ public class God implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public God(RPGCORE rpgcore) {this.rpgcore = rpgcore;}
+    public God(RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Utils.NIEGRACZ);
             return false;
         }
 
         final Player player = (Player) sender;
 
-        if (!(player.hasPermission("rpg.god"))){
+        if (!(player.hasPermission("rpg.god"))) {
             player.sendMessage(Utils.permisje("rpg.god"));
             return false;
         }
 
-        if (args.length == 0){
-            if (rpgcore.getGodManager().containsPlayer(player.getUniqueId())){
+        if (args.length == 0) {
+            if (rpgcore.getGodManager().containsPlayer(player.getUniqueId())) {
                 rpgcore.getGodManager().getGodList().remove(player.getUniqueId());
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7goda"));
                 return false;
