@@ -1,5 +1,7 @@
 package rpg.rpgcore.managers;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -11,10 +13,12 @@ public class SpawnManager {
 
     private Location spawn;
 
+    @Getter
     public Location getSpawn() {
         return this.spawn;
     }
 
+    @Setter
     public void setSpawn(final Location spawn) {
         this.spawn = spawn;
     }

@@ -1,6 +1,10 @@
 package rpg.rpgcore.managers;
 
 
+import jdk.jfr.BooleanFlag;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -49,41 +53,51 @@ public class PlayerManager {
         this.playerPunishmentHistory.clear();
     }
 
+    @Setter
     public void updatePlayerBanInfo(final UUID uuid, final String banInfo) {
         this.playerBanInfo.replace(uuid, banInfo);
     }
 
+    @Getter
     public String getPlayerBanInfo(final UUID uuid) {
         return this.playerBanInfo.get(uuid);
     }
 
-    public boolean isBanned(final UUID uuid) {
-        return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
-    }
-
+    @Setter
     public void updatePlayerPunishmentHistory(final UUID uuid, final String punishmentHistory) {
         this.playerPunishmentHistory.replace(uuid, punishmentHistory);
     }
 
-    public String getPlayerPunishmentHistory(final UUID uuid) {
-        return this.playerPunishmentHistory.get(uuid);
-    }
-
-    public int getPlayerLvl(final UUID uuid) {
-        return this.playerLvl.get(uuid);
-    }
-
+    @Setter
     public void updatePlayerLvl(final UUID uuid, final int lvl) {
         this.playerLvl.replace(uuid, lvl);
     }
 
+    @Setter
+    public void updatePlayerExp(final UUID uuid, final double exp) {
+        this.playerExp.replace(uuid, exp);
+    }
+
+    @Getter
     public double getPlayerExp(final UUID uuid) {
         return this.playerExp.get(uuid);
     }
 
-    public void updatePlayerExp(final UUID uuid, final double exp) {
-        this.playerExp.replace(uuid, exp);
+    @Getter
+    public String getPlayerPunishmentHistory(final UUID uuid) {
+        return this.playerPunishmentHistory.get(uuid);
     }
+
+    @Getter
+    public int getPlayerLvl(final UUID uuid) {
+        return this.playerLvl.get(uuid);
+    }
+
+    @BooleanFlag
+    public boolean isBanned(final UUID uuid) {
+        return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
+    }
+
 
     public HashMap<UUID, Integer> getPlayerLvl() {
         return playerLvl;
