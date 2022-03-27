@@ -44,7 +44,7 @@ public class Back implements CommandExecutor {
         }
 
         player.teleport(rpgcore.getTeleportManager().getBeforeTeleportLocation(uuid));
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aTeleportowano do poprzedniej lokalizacji"));
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano do poprzedniej lokalizacji"));
 
         return false;
     }
