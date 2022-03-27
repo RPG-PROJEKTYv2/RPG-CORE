@@ -27,7 +27,7 @@ public class DamageManager {
         final WorldServer s = ((CraftWorld) entityLocation.getWorld()).getHandle();
         final EntityArmorStand stand = new EntityArmorStand(s);
 
-        stand.setLocation(entityLocation.getX() + random.nextDouble(), entityLocation.getY() + random.nextDouble(), entityLocation.getZ(), 0, 0);
+        stand.setLocation(entityLocation.getX() + random.nextDouble(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
         stand.setCustomName(ChatColor.DARK_RED + "- " + Utils.df.format(dmg));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
