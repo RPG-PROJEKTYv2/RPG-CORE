@@ -62,7 +62,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
         this.getCommand("gm").setExecutor(new GameMode(this));
-        this.getCommand("heal").setExecutor(new Heal(this));
+        this.getCommand("heal").setExecutor(new Heal());
         this.getCommand("tempban").setExecutor(new TempBan(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
@@ -104,9 +104,10 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void updateAllPlayerInfo() {
-        //TODO poprawic by Caufland
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&6Rozpoczeto update do bazy daynch..."));
+
             for (Map.Entry<UUID, Integer> entry : this.getPlayerManager().getPlayerLvl().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerLvl(entry.getKey(), entry.getValue()));
             }
@@ -119,7 +120,6 @@ public final class RPGCORE extends JavaPlugin {
             for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyWartosciMap().entrySet()) {
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoWartosci(entry.getKey(), entry.getValue()));
             }
-            System.out.println("[rpg.core] Pomyslnie zapisano dane wszytskich graczy!!!");
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
         }, 200L, 5000L);
     }

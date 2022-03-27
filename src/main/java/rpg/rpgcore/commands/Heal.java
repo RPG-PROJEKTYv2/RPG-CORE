@@ -5,18 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
-
 public class Heal implements CommandExecutor {
-
-    private final RPGCORE rpgcore;
-
-    public Heal(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
-    }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
@@ -25,48 +16,46 @@ public class Heal implements CommandExecutor {
             return false;
         }
 
-        final Player player = (Player) sender;
+        final Player p = (Player) sender;
+
+        if (!(p.hasPermission("rpg.heal"))) {
+            p.sendMessage(Utils.permisje("rpg.heal"));
+            return false;
+        }
 
         if (args.length == 0) {
-            if (player.getHealth() == player.getMaxHealth() && player.getFoodLevel() == 20) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Jestes juz uleczony"));
-                return false;
-            }
-            player.setHealth(player.getMaxHealth());
-            player.setFoodLevel(20);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie uleczono"));
+
+            p.setHealth(20.0);
+            p.setFoodLevel(20);
+            p.sendMessage(Utils.format("&aZostales uleczony!"));
+
             return false;
         }
 
         if (args.length == 1) {
 
-            final UUID uuidPlayerToHeal = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
-
-
-            if (uuidPlayerToHeal == null) {
-                player.sendMessage(Utils.LVLPREFIX + Utils.NIEMATAKIEGOGRACZA);
+            if (!(p.hasPermission("rpg.heal.others"))) {
+                p.sendMessage(Utils.permisje("rpg.heal.others"));
                 return false;
             }
 
-            final Player target = Bukkit.getPlayer(uuidPlayerToHeal);
+            final Player target = Bukkit.getPlayer(args[0]);
 
-            if (!(target.isOnline())) {
-                player.sendMessage(Utils.offline(target.getName()));
+            if (target == null) {
+                p.sendMessage(Utils.offline(args[0]));
                 return false;
             }
 
-            if (target.getHealth() == target.getMaxHealth() && target.getFoodLevel() == 20) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&c" + target.getName() + " &7jest juz uleczony"));
-                return false;
-            }
-            target.setHealth(target.getMaxHealth());
+            target.setHealth(20.0);
             target.setFoodLevel(20);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie uleczono &6" + target.getName()));
-            target.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales uleczony przez administratora &6" + player.getName()));
+            target.sendMessage(Utils.format("&aZostales uleczony przez dobrego czleka!"));
+            p.sendMessage(Utils.format("&aUleczono gracza " + p.getName()));
+
             return false;
         }
 
-        player.sendMessage(Utils.poprawneUzycie("heal [gracz]"));
+        p.sendMessage(Utils.poprawneUzycie("heal [gracz / puste]"));
+
         return false;
     }
 }
