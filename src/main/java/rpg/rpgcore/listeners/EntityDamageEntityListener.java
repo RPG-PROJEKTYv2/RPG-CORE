@@ -19,12 +19,16 @@ public class EntityDamageEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent e){
-        if (e.getDamager() instanceof Player){
-            final Player damager = (Player) e.getDamager();
-            final Entity mob = e.getEntity();
-            damager.sendMessage("DMG - " + e.getDamage());
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), mob.getLocation()));
+
+        if (!(e.getDamager() instanceof Player)) {
+            return;
         }
+
+        final Player damager = (Player) e.getDamager();
+        final Entity mob = e.getEntity();
+
+        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), mob.getLocation(), damager));
+
     }
 
 

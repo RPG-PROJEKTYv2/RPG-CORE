@@ -5,13 +5,13 @@ import org.bukkit.ChatColor;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
+    public static final Random random = new Random();
     public static DecimalFormat df = new DecimalFormat("##.#");
     public static DecimalFormat procentFormat = new DecimalFormat("##.##");
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
@@ -115,12 +115,11 @@ public class Utils {
 
     public static String convertDatesToTimeLeft(final Date dateGive, final Date dateExpire) {
         final long diff = Math.abs(dateGive.getTime() - dateExpire.getTime());
-        final String wygasa = String.format("%d d %d h %d min %d sec",
+        return String.format("%d d %d h %d min %d sec",
                 TimeUnit.MILLISECONDS.toDays(diff),
                 TimeUnit.MILLISECONDS.toHours(diff) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(diff)),
                 TimeUnit.MILLISECONDS.toMinutes(diff) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(diff)),
                 TimeUnit.MILLISECONDS.toSeconds(diff) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
         );
-        return wygasa;
     }
 }
