@@ -7,19 +7,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.UUID;
 
 public class BAOManager {
-
-
-    private final RPGCORE rpgcore;
-
-    public BAOManager(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
-    }
 
     private final HashMap<UUID, String> baoBonusy = new HashMap<>();
     private final HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
@@ -56,24 +51,6 @@ public class BAOManager {
         this.baoBonusyWartosci.replace(uuid, noweWartosci);
     }
 
-    public ItemStack getItemDoLosowania() {
-        final ItemStack itemDoLosowania = new ItemStack(Material.COAL, (short) 1);
-        final ItemMeta itemDoLosowaniaMeta = itemDoLosowania.getItemMeta();
-        final ArrayList<String> itemDoLosowaniaLore = new ArrayList<>();
-
-        itemDoLosowaniaLore.add(Utils.format("&8Ten magiczny kamien pozwala Ci"));
-        itemDoLosowaniaLore.add(Utils.format("&8zmienic swoje bonusy w &6Stole Magi"));
-        itemDoLosowaniaLore.add(Utils.format("&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"));
-
-        itemDoLosowaniaMeta.setDisplayName(Utils.format("&3&lKamien Bao"));
-        itemDoLosowaniaMeta.setLore(itemDoLosowaniaLore);
-
-        itemDoLosowania.setItemMeta(itemDoLosowaniaMeta);
-
-
-        return itemDoLosowania;
-    }
-
     public ItemStack getItemDoZmianki() {
         final ItemStack itemDoZmianki = new ItemStack(Material.ENCHANTED_BOOK, 1);
         final ItemMeta itemDoZmiankiMeta = itemDoZmianki.getItemMeta();
@@ -92,9 +69,26 @@ public class BAOManager {
         return itemDoZmianki;
     }
 
+    public ItemStack getItemDoLosowania() {
+        final ItemStack itemDoLosowania = new ItemStack(Material.COAL, 1, (short) 1);
+        final ItemMeta itemDoLosowaniaMeta = itemDoLosowania.getItemMeta();
+        final ArrayList<String> itemDoLosowaniaLore = new ArrayList<>();
+
+        itemDoLosowaniaLore.add(Utils.format("&8Ten magiczny kamien pozwala Ci"));
+        itemDoLosowaniaLore.add(Utils.format("&8zmienic swoje bonusy w &6Stole Magi"));
+        itemDoLosowaniaLore.add(Utils.format("&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"));
+
+        itemDoLosowaniaMeta.setDisplayName(Utils.format("&3&lKamien Bao"));
+        itemDoLosowaniaMeta.setLore(itemDoLosowaniaLore);
+
+        itemDoLosowania.setItemMeta(itemDoLosowaniaMeta);
+
+
+        return itemDoLosowania;
+    }
 
     public Inventory baoGUI(final UUID uuid) {
-        Inventory baoGUI = Bukkit.createInventory(null, 3*9, Utils.format("&6&lSTOL MAGII"));
+        Inventory baoGUI = Bukkit.createInventory(null, 3 * 9, Utils.format("&6&lSTOL MAGII"));
 
         final ItemStack item = new ItemStack(Material.BOOK_AND_QUILL);
         final ItemStack background = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
@@ -109,7 +103,7 @@ public class BAOManager {
         final ArrayList<String> rollItemLore = new ArrayList<>();
         final ArrayList<String> maxValuesItemLore = new ArrayList<>();
 
-        backgroudItemMeta.setDisplayName(" ");
+        backgroudItemMeta.setDisplayName("");
         background.setItemMeta(backgroudItemMeta);
 
 
@@ -123,7 +117,7 @@ public class BAOManager {
         rollItem.setItemMeta(rollItemMeta);
 
         maxValuesItemMeta.setDisplayName(Utils.format("&c&lMax wartosci poszczegolnych bonusow"));
-        maxValuesItemMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        maxValuesItemMeta.addEnchant(Enchantment.DURABILITY, 4, true);
         maxValuesItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         maxValuesItemLore.add("");

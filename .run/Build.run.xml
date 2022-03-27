@@ -10,9 +10,11 @@
           </option>
           <option name="goals">
             <list>
-              <option value="clean" />
-              <option value="compile" />
-              <option value="package" />
+              <option value="clean:clean"/>
+              <option value="compile"/>
+              <option value="package"/>
+              <option value="dependency:tree"/>
+              <option value="-Ddetail=true"/>
             </list>
           </option>
           <option name="pomFileName" />
