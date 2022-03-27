@@ -1,9 +1,7 @@
 package rpg.rpgcore;
 
-import io.lumine.xikage.mythicmobs.io.MythicConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -93,7 +91,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initManagers() {
         this.spawn = new SpawnManager();
-        this.teleportManager = new TeleportManager();
+        this.teleportManager = new TeleportManager(this);
         this.banManager = new BanManager(this);
         this.vanishManager = new VanishManager();
         this.nmsManager = new NMSManager();
@@ -102,7 +100,7 @@ public final class RPGCORE extends JavaPlugin {
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
-        this.baoManager = new BAOManager(this);
+        this.baoManager = new BAOManager();
     }
 
     private void updateAllPlayerInfo(){

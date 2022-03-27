@@ -33,17 +33,20 @@ public class TeleportCoords implements CommandExecutor {
 
         if (args.length == 3) {
 
-            final String x = args[0];
-            final String y = args[1];
-            final String z = args[2];
+            try {
 
-            if (x == null || y == null || z == null) {
-                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
-                return false;
+                final double x = Double.parseDouble(args[0]);
+                final double y = Double.parseDouble(args[1]);
+                final double z = Double.parseDouble(args[2]);
+
+                rpgcore.getTeleportManager().teleportToLocation(p, x, y, z);
+
+            } catch (final NumberFormatException e) {
+
+                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste] (używaj kropek nie przecinków!)"));
+
             }
-            rpgcore.getTeleportManager().teleportToLocation(p, Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z));
-
-            return true;
+            return false;
         }
 
         if (args.length == 4) {
@@ -64,10 +67,9 @@ public class TeleportCoords implements CommandExecutor {
 
             } catch (final NumberFormatException e) {
 
-                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste]"));
+                p.sendMessage(Utils.poprawneUzycie("tpcoords [x] [y] [z] [swiat / puste] (uzywaj kropek nie przecinkow!)"));
 
             }
-
 
             return true;
         }

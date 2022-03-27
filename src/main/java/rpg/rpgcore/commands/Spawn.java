@@ -1,7 +1,6 @@
 package rpg.rpgcore.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -63,9 +62,8 @@ public class Spawn implements CommandExecutor {
                     return false;
                 }
 
-                target.teleport(rpgcore.getSpawnManager().getSpawn());
-                target.playSound(target.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales przeteleportowany na spawna przez administratora &7" + p.getName()));
+                rpgcore.getTeleportManager().teleportToSpawn(target, Utils.SERVERNAME + "&aZostales przeteleportowany na spawna przez administratora &7" + p.getName());
+
             }
 
 
@@ -76,9 +74,7 @@ public class Spawn implements CommandExecutor {
             p.sendMessage(Utils.poprawneUzycie("spawn"));
         }
 
-        p.teleport(rpgcore.getSpawnManager().getSpawn());
-        p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-        p.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));
+        rpgcore.getTeleportManager().teleportToSpawn(p, Utils.SERVERNAME + "&aPrzeteleportowano na spawna!");
 
         return false;
     }
