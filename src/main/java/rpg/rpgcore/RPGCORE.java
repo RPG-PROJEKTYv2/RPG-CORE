@@ -1,7 +1,6 @@
 package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -45,7 +44,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
         this.autoMessage();
-        this.sendActionBar();
 
 
         this.getCommand("teleport").setExecutor(new Teleport(this));
@@ -71,6 +69,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(chatManager, this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
 //        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
 
@@ -93,9 +92,9 @@ public final class RPGCORE extends JavaPlugin {
         this.spawn = new SpawnManager();
         this.teleportManager = new TeleportManager(this);
         this.banManager = new BanManager(this);
-        this.vanishManager = new VanishManager();
+        this.vanishManager = new VanishManager(this);
         this.nmsManager = new NMSManager();
-        this.godManager = new GodManager();
+        this.godManager = new GodManager(this);
         this.playerManager = new PlayerManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
@@ -122,20 +121,6 @@ public final class RPGCORE extends JavaPlugin {
             }
             Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
         }, 200L, 5000L);
-    }
-
-    private void sendActionBar() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (Player target : Bukkit.getOnlinePlayers()) {
-                if (getGodManager().containsPlayer(target.getUniqueId()) && this.vanishManager.containsPlayer(target.getUniqueId())) {
-                    getNmsManager().sendActionBar(target, getNmsManager().makeActionBar("&3&lVanish &8| &5&lGOD"));
-                } else if (getGodManager().containsPlayer(target.getUniqueId())) {
-                    getNmsManager().sendActionBar(target, getNmsManager().makeActionBar("&5&lGOD"));
-                } else if (getVanishManager().containsPlayer(target.getUniqueId())) {
-                    getNmsManager().sendActionBar(target, getNmsManager().makeActionBar("&3&lVanish"));
-                }
-            }
-        }, 150L, 50L);
     }
 
     private void autoMessage() {

@@ -1,5 +1,6 @@
 package rpg.rpgcore.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,24 +23,40 @@ public class God implements CommandExecutor {
             return false;
         }
 
-        final Player player = (Player) sender;
+        final Player p = (Player) sender;
 
-        if (!(player.hasPermission("rpg.god"))) {
-            player.sendMessage(Utils.permisje("rpg.god"));
+        if (!(p.hasPermission("rpg.god"))) {
+            p.sendMessage(Utils.permisje("rpg.god"));
             return false;
         }
 
         if (args.length == 0) {
-            if (rpgcore.getGodManager().containsPlayer(player.getUniqueId())) {
-                rpgcore.getGodManager().getGodList().remove(player.getUniqueId());
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7goda"));
-                return false;
-            }
-            rpgcore.getGodManager().getGodList().add(player.getUniqueId());
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono &7goda"));
+
+            rpgcore.getGodManager().changeStatusGod(p);
 
             return false;
         }
+
+        if (args.length == 1) {
+
+            if (!(p.hasPermission("rpg.god.others"))) {
+                p.sendMessage(Utils.permisje("rpg.god.others"));
+                return false;
+            }
+
+            final Player target = Bukkit.getPlayer(args[0]);
+
+            if (target == null) {
+                p.sendMessage(Utils.offline(args[0]));
+                return false;
+            }
+
+            rpgcore.getGodManager().changeStatusGod(target);
+
+            return false;
+        }
+
+        p.sendMessage(Utils.poprawneUzycie("god [gracz / puste]"));
 
         return false;
     }

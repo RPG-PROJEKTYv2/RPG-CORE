@@ -20,6 +20,7 @@ public class EntityDeathListener implements Listener {
     public void onEntityDeath(EntityDeathEvent e) {
         e.setDroppedExp(0);
         e.getDrops().clear();
+
         final Player killer = e.getEntity().getKiller();
 
         if (e.getEntity().getCustomName() == null) {

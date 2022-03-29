@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import rpg.rpgcore.RPGCORE;
 
+import java.util.UUID;
+
 public class EntityDamageEntityListener implements Listener {
 
     private final RPGCORE rpgcore;
@@ -20,14 +22,31 @@ public class EntityDamageEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
 
-        if (!(e.getDamager() instanceof Player)) {
+        final Entity player = e.getDamager();
+        final Entity entity = e.getEntity();
+        final double dmg = e.getDamage();
+
+        if (!(entity instanceof Player)) {
+            System.out.println(2);
+            return;
+        }
+        System.out.println(3);
+        final Player p = (Player) entity;
+        final UUID uuid = p.getUniqueId();
+
+        if (rpgcore.getGodManager().containsPlayer(uuid)) {
+            System.out.println(4);
+            e.setCancelled(true);
             return;
         }
 
-        final Player damager = (Player) e.getDamager();
-        final Entity mob = e.getEntity();
+        if (!(player instanceof Player)) {
+            return;
+        }
 
-        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), mob.getLocation(), damager));
+        final Player dmgPlayer = (Player) player;
+
+        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(dmg, entity.getLocation(), dmgPlayer));
 
     }
 

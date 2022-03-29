@@ -107,7 +107,7 @@ public class LvlManager {
         final UUID killerUUID = killer.getUniqueId();
 
         if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130) {
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+0 exp &b(&4&lMAX LVL%&b) [EXP]")));
+//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+0 exp &b(&4&lMAX LVL%&b) [EXP]")));
             return;
         }
 
@@ -134,7 +134,7 @@ public class LvlManager {
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
         killer.sendMessage("Ustawiono exp gracza - " + rpgcore.getPlayerManager().getPlayerExp(killerUUID));
         final double expForLambda = aktualnyExpGracza;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza) * 100) + "%&b) [EXP]")));
+//        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza) * 100) + "%&b) [EXP]")));
     }
 
     public void updateLVL(final Player killer, final UUID killerUUID) {

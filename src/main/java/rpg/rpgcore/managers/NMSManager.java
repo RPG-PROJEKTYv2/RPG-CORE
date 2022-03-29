@@ -9,7 +9,7 @@ import rpg.rpgcore.utils.Utils;
 
 public class NMSManager {
 
-    public PacketPlayOutChat makeActionBar(final String str) {
+    private PacketPlayOutChat makeActionBar(final String str) {
         return new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), (byte) 2);
     }
 
@@ -21,8 +21,8 @@ public class NMSManager {
         return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), fadeIn, last, fadeOut);
     }
 
-    public void sendActionBar(final Player player, final PacketPlayOutChat packet) {
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    public void sendActionBar(final Player player, final String msg) {
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(makeActionBar(msg));
     }
 
     public void sendTitleAndSubTitle(final Player player, final PacketPlayOutTitle title, final PacketPlayOutTitle subtitle) {
