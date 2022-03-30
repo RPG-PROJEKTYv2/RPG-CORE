@@ -7,24 +7,34 @@ authors: [ Caufland, MiresPL ]
 description: RPG-CORE
 commands:
   spawn:
-
+  
   teleport:
     aliases: tp
   teleportcoords:
     aliases: tpcoords
   ban:
+  
   unban:
+  
   kick:
+  
   vanish:
     aliases: v
   god:
+  
   speed:
-  listanpc:
+  
   fly:
+  
   back:
+  
   history:
+  
   lvl:
+  
   gm:
+  
   heal:
+      
   tempban:
-
+    

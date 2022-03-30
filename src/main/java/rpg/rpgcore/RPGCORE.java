@@ -7,11 +7,10 @@ import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
+import rpg.rpgcore.managers.god.GodManager;
+import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
-
-import java.util.Map;
-import java.util.UUID;
 
 public final class RPGCORE extends JavaPlugin {
 
@@ -59,7 +58,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
-        this.getCommand("gm").setExecutor(new GameMode(this));
+        this.getCommand("gm").setExecutor(new Gm());
         this.getCommand("heal").setExecutor(new Heal());
         this.getCommand("tempban").setExecutor(new TempBan(this));
 
@@ -73,7 +72,8 @@ public final class RPGCORE extends JavaPlugin {
 //        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
 
-        this.updateAllPlayerInfo();
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 7200L, 72000L);
+
     }
 
     public void onDisable() {
@@ -100,27 +100,6 @@ public final class RPGCORE extends JavaPlugin {
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
         this.baoManager = new BAOManager();
-    }
-
-    private void updateAllPlayerInfo() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-
-            Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&6Rozpoczeto update do bazy daynch..."));
-
-            for (Map.Entry<UUID, Integer> entry : this.getPlayerManager().getPlayerLvl().entrySet()) {
-                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerLvl(entry.getKey(), entry.getValue()));
-            }
-            for (Map.Entry<UUID, Double> entry : this.getPlayerManager().getPlayerExp().entrySet()) {
-                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerExp(entry.getKey(), entry.getValue()));
-            }
-            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyMap().entrySet()) {
-                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoBonusy(entry.getKey(), entry.getValue()));
-            }
-            for (Map.Entry<UUID, String> entry : this.getBaoManager().getBaoBonusyWartosciMap().entrySet()) {
-                Bukkit.getScheduler().runTaskAsynchronously(this, () -> this.getSQLManager().updatePlayerBaoWartosci(entry.getKey(), entry.getValue()));
-            }
-            Bukkit.broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
-        }, 200L, 5000L);
     }
 
     private void autoMessage() {
