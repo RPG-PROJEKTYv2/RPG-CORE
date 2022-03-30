@@ -27,15 +27,12 @@ public class EntityDamageEntityListener implements Listener {
         final double dmg = e.getDamage();
 
         if (!(entity instanceof Player)) {
-            System.out.println(2);
             return;
         }
-        System.out.println(3);
         final Player p = (Player) entity;
         final UUID uuid = p.getUniqueId();
 
         if (rpgcore.getGodManager().containsPlayer(uuid)) {
-            System.out.println(4);
             e.setCancelled(true);
             return;
         }
