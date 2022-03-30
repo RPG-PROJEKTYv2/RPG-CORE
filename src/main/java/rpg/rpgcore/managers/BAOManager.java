@@ -19,14 +19,6 @@ public class BAOManager {
     private final HashMap<UUID, String> baoBonusy = new HashMap<>();
     private final HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
 
-    public HashMap<UUID, String> getBaoBonusyMap() {
-        return this.baoBonusy;
-    }
-
-    public HashMap<UUID, String> getBaoBonusyWartosciMap() {
-        return this.baoBonusyWartosci;
-    }
-
     public String getBaoBonusy(final UUID uuid) {
         return this.baoBonusy.get(uuid);
     }
