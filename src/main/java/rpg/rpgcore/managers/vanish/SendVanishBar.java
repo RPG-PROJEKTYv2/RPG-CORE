@@ -1,16 +1,16 @@
-package rpg.rpgcore.managers;
+package rpg.rpgcore.managers.vanish;
 
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
 
-public class SendGodBar implements Runnable {
+public class SendVanishBar implements Runnable {
 
     private final RPGCORE rpgcore;
     private final Player p;
 
-    public SendGodBar(final RPGCORE rpgcore, final Player p) {
+    public SendVanishBar(final RPGCORE rpgcore, final Player p) {
         this.rpgcore = rpgcore;
         this.p = p;
     }
@@ -19,10 +19,9 @@ public class SendGodBar implements Runnable {
     public void run() {
         final UUID uuid = p.getUniqueId();
         if (rpgcore.getGodManager().containsPlayer(uuid) && rpgcore.getVanishManager().isVisible(uuid)) {
-            rpgcore.getNmsManager().sendActionBar(p, "&3&lVANISH + GOD");
             return;
         }
-        rpgcore.getNmsManager().sendActionBar(p, "&3&lGOD");
+        rpgcore.getNmsManager().sendActionBar(p, "&3&lVanish");
     }
 
 }

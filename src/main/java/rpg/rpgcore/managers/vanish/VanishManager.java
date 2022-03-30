@@ -1,7 +1,8 @@
-package rpg.rpgcore.managers;
+package rpg.rpgcore.managers.vanish;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class VanishManager {
 
     private final RPGCORE rpgcore;
-    private int taskID;
+    private BukkitTask task;
     private final ArrayList<UUID> vanishList = new ArrayList<>();
 
     public VanishManager(final RPGCORE rpgcore) {
@@ -30,7 +31,7 @@ public class VanishManager {
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             restOfTheServer.showPlayer(target);
         }
-        rpgcore.getServer().getScheduler().cancelTask(taskID);
+        task.cancel();
         this.vanishList.remove(target.getUniqueId());
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha"));
     }
@@ -40,7 +41,7 @@ public class VanishManager {
             restOfTheServer.showPlayer(target);
         }
         this.vanishList.remove(target.getUniqueId());
-        rpgcore.getServer().getScheduler().cancelTask(taskID);
+        task.cancel();
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha dla gracza: " + target.getName()));
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha"));
     }
@@ -52,7 +53,7 @@ public class VanishManager {
             }
         }
         rpgcore.getNmsManager().sendActionBar(target, "&3&lVanish");
-        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(rpgcore, new SendVanishBar(rpgcore, target), 0L, 40L);
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(rpgcore, new SendVanishBar(rpgcore, target), 0L, 40L);
         this.vanishList.add(target.getUniqueId());
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono &7vanisha"));
     }
@@ -65,7 +66,7 @@ public class VanishManager {
         }
         this.vanishList.add(target.getUniqueId());
         rpgcore.getNmsManager().sendActionBar(target, "&3&lVanish");
-        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(rpgcore, new SendVanishBar(rpgcore, target), 0L, 40L);
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(rpgcore, new SendVanishBar(rpgcore, target), 0L, 40L);
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono &7vanisha"));
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono &7vanisha dla gracza: " + target.getName()));
     }
