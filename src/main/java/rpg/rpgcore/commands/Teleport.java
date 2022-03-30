@@ -31,6 +31,12 @@ public class Teleport implements CommandExecutor {
         }
 
         if (args.length == 1) {
+
+            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
             final Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null) {
@@ -52,6 +58,12 @@ public class Teleport implements CommandExecutor {
                 p.sendMessage(Utils.permisje("rpg.tp.player-to-player"));
                 return false;
             }
+
+            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0])) && !(rpgcore.getPlayerManager().getPlayersNames().contains(args[1]))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
 
             final Player playerToTeleport = Bukkit.getPlayer(args[0]);
             final Player target = Bukkit.getPlayer(args[1]);

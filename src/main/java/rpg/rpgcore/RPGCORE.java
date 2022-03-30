@@ -59,7 +59,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
         this.getCommand("gm").setExecutor(new Gm());
-        this.getCommand("heal").setExecutor(new Heal());
+        this.getCommand("heal").setExecutor(new Heal(this));
         this.getCommand("tempban").setExecutor(new TempBan(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);

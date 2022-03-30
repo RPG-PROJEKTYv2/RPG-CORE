@@ -47,6 +47,11 @@ public class Vanish implements CommandExecutor {
                 return false;
             }
 
+            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
             final Player target = Bukkit.getPlayer(args[0]);
 
             if (target == null) {

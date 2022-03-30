@@ -5,9 +5,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 public class Heal implements CommandExecutor {
+
+    private final RPGCORE rpgcore;
+
+    public Heal(final RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
@@ -36,6 +43,11 @@ public class Heal implements CommandExecutor {
 
             if (!(p.hasPermission("rpg.heal.others"))) {
                 p.sendMessage(Utils.permisje("rpg.heal.others"));
+                return false;
+            }
+
+            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+                sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
