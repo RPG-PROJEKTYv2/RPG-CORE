@@ -20,30 +20,30 @@ public class EntityDamageEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamage(EntityDamageByEntityEvent e) {
+    public void onEntityDamage(final EntityDamageByEntityEvent e) {
 
-        final Entity player = e.getDamager();
         final Entity entity = e.getEntity();
-        final double dmg = e.getDamage();
 
-        if (!(entity instanceof Player)) {
-            return;
-        }
-        final Player p = (Player) entity;
-        final UUID uuid = p.getUniqueId();
+        if (entity instanceof Player) {
+            final Player target = (Player) entity;
+            final UUID uuid = target.getUniqueId();
 
-        if (rpgcore.getGodManager().containsPlayer(uuid)) {
-            e.setCancelled(true);
-            return;
-        }
-
-        if (!(player instanceof Player)) {
+            if (rpgcore.getGodManager().containsPlayer(uuid)) {
+                e.setCancelled(true);
+                return;
+            }
             return;
         }
 
-        final Player dmgPlayer = (Player) player;
+        final Entity damager = e.getDamager();
 
-        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(dmg, entity.getLocation(), dmgPlayer));
+        if (damager instanceof Player) {
+            final Player p = (Player) damager;
+            final double dmg = e.getDamage();
+
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(dmg, entity.getLocation(), p));
+
+        }
 
     }
 

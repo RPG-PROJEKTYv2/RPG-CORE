@@ -4,7 +4,6 @@ import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.WorldServer;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -28,7 +27,7 @@ public class DamageManager {
         final EntityArmorStand stand = new EntityArmorStand(s);
 
         stand.setLocation(entityLocation.getX() + random.nextDouble(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
-        stand.setCustomName(ChatColor.DARK_RED + "- " + Utils.df.format(dmg));
+        stand.setCustomName(Utils.format("&c- " + Utils.df.format(dmg)));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
         stand.setInvisible(true);

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     public static final Random random = new Random();
-    public static DecimalFormat df = new DecimalFormat("##.#");
+    public static DecimalFormat df = new DecimalFormat("0.0");
     public static DecimalFormat procentFormat = new DecimalFormat("##.##");
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
 
