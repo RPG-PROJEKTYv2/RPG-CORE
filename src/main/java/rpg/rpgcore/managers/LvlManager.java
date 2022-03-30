@@ -20,19 +20,16 @@ import java.util.UUID;
 public class LvlManager {
 
     private final RPGCORE rpgcore;
+    private final HashMap<Integer, Double> wymaganyExpDlaLvli = new HashMap<>();
+    private final HashMap<String, Double> expZaMoby = new HashMap<>();
 
     public LvlManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
-
     public HashMap<Integer, Double> getWymaganyExpDlaLvli() {
         return wymaganyExpDlaLvli;
     }
-
-    private final HashMap<Integer, Double> wymaganyExpDlaLvli = new HashMap<>();
-    private final HashMap<String, Double> expZaMoby = new HashMap<>();
-
 
     public HashMap<String, Double> getExpZaMoby() {
         return expZaMoby;

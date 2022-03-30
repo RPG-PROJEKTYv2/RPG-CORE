@@ -12,13 +12,12 @@ import java.util.UUID;
 public class GodManager {
 
     private final RPGCORE rpgcore;
+    private final ArrayList<UUID> godList = new ArrayList<>();
+    private BukkitTask task;
 
     public GodManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
-
-    private final ArrayList<UUID> godList = new ArrayList<>();
-    private BukkitTask task;
 
     public boolean containsPlayer(final UUID uuid) {
         return godList.contains(uuid);

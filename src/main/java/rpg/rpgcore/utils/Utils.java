@@ -12,10 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     public static final Random random = new Random();
-    public static DecimalFormat df = new DecimalFormat("0.0");
-    public static DecimalFormat procentFormat = new DecimalFormat("##.##");
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
     public static final String BANPREFIX = format("&f&lTEST&3&lBANS&7 ");
@@ -24,6 +21,8 @@ public class Utils {
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
+    public static DecimalFormat df = new DecimalFormat("0.0");
+    public static DecimalFormat procentFormat = new DecimalFormat("##.##");
     public static int MAXLVL = 130;
 
     public static String format(String str) {

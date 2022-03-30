@@ -26,12 +26,11 @@ import java.util.*;
 public class ChatManager implements Listener {
 
     private final RPGCORE rpgcore;
+    private final HashMap<UUID, String> messageWithEQ = new HashMap<>();
 
     public ChatManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
-
-    private final HashMap<UUID, String> messageWithEQ = new HashMap<>();
 
     public String getMessageWithEQ(final UUID uuid) {
         return this.messageWithEQ.get(uuid);

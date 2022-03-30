@@ -12,8 +12,8 @@ import java.util.UUID;
 public class VanishManager {
 
     private final RPGCORE rpgcore;
-    private BukkitTask task;
     private final ArrayList<UUID> vanishList = new ArrayList<>();
+    private BukkitTask task;
 
     public VanishManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
