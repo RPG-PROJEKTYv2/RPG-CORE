@@ -13,6 +13,7 @@ public class PlayerManager {
 
 
     private final ArrayList<UUID> players = new ArrayList<>();
+    private final ArrayList<String> playersNames = new ArrayList<>();
 
     private final HashMap<String, UUID> playerUUID = new HashMap<>();
     private final HashMap<UUID, String> playerName = new HashMap<>();
@@ -33,8 +34,13 @@ public class PlayerManager {
         return this.players;
     }
 
+    public ArrayList<String> getPlayersNames() {
+        return this.playersNames;
+    }
+
     public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp) {
         this.players.add(playerUUID);
+        this.playersNames.add(playerName);
         this.playerUUID.put(playerName, playerUUID);
         this.playerName.put(playerUUID, playerName);
         this.playerLvl.put(playerUUID, playerLvl);
@@ -47,6 +53,7 @@ public class PlayerManager {
         this.playerName.clear();
         this.playerUUID.clear();
         this.players.clear();
+        this.playersNames.clear();
         this.playerLvl.clear();
         this.playerExp.clear();
         this.playerBanInfo.clear();
