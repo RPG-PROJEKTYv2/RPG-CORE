@@ -54,7 +54,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("vanish").setExecutor(new Vanish(this));
         this.getCommand("god").setExecutor(new God(this));
         this.getCommand("speed").setExecutor(new Speed());
-        this.getCommand("fly").setExecutor(new Fly());
+        this.getCommand("fly").setExecutor(new Fly(this));
         this.getCommand("history").setExecutor(new History(this));
         this.getCommand("back").setExecutor(new Back(this));
         this.getCommand("lvl").setExecutor(new Lvl(this));
