@@ -32,6 +32,7 @@ public class CreateTables {
                     " `osNiesy` INT NOT NULL DEFAULT 0," +
                     " `osRybak` INT NOT NULL DEFAULT 0," +
                     " `osDrwal` INT NOT NULL DEFAULT 0," +
+                    " `osGornik` INT NOT NULL DEFAULT 0," +
                     "  PRIMARY KEY (`uuid`))");
             ps.execute();
         } catch (final SQLException e) {

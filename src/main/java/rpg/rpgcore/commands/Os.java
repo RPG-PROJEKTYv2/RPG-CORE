@@ -24,11 +24,12 @@ public class Os implements CommandExecutor {
         }
 
         final Player player = (Player) sender;
+        if (args.length == 0) {
+            player.openInventory(rpgcore.getOsManager().osGuiMain());
+            return false;
+        }
 
-
-
-
-
+        player.sendMessage(Utils.poprawneUzycie("os"));
         return false;
     }
 }

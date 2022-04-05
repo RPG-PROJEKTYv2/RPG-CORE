@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +24,11 @@ public class PlayerInventoryClickListener implements Listener {
     public void onInventoryClick(final InventoryClickEvent e) {
         final Player player = (Player) e.getWhoClicked();
         final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
+
+        if (e.getClickedInventory() == null) {
+            player.closeInventory();
+            return;
+        }
         //                      GUI OD BAO                  \\
         if (e.getClickedInventory().getName().equals(Utils.format("&6&lSTOL MAGII"))) {
 
@@ -45,6 +51,13 @@ public class PlayerInventoryClickListener implements Listener {
             }
             e.setCancelled(true);
             player.closeInventory();
+        }
+
+        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osGuiMain().getName())) {
+            e.setCancelled(true);
+            if (e.getCurrentItem().getType() == Material.GOLD_SWORD){
+                player.openInventory(rpgcore.getOsManager().osMobyGui(player.getUniqueId()));
+            }
         }
     }
 }

@@ -43,6 +43,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
+        this.getOsManager().loadAllRequiredOs();
         this.autoMessage();
 
 

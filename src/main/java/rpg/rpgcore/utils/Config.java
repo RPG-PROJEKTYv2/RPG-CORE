@@ -35,7 +35,38 @@ public class Config {
             }
         }
         rpgcore.getConfig().createSection("exp_za_moby");
-        rpgcore.getConfig().getConfigurationSection("exp_za_moby").addDefault("[Lvl. 1] Podwladny Wody", 20.0);
+        rpgcore.getConfig().getConfigurationSection("exp_za_moby").addDefault("[Lvl\\.\\ 1] Podwladny Wody", 20.0);
+
+        if (rpgcore.getConfig().getConfigurationSection("Osiagniecia") == null) {
+            rpgcore.getConfig().createSection("Osiagniecia");
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Moby");
+            /*rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Gracze");
+            rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Sakwy");
+            rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Niesy");
+            rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Rybak");
+            rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Drwal");
+            rpgcore.saveConfig();
+            rpgcore.getConfig().createSection("Osiagniecia").createSection("Gornik");
+            rpgcore.saveConfig();*/
+
+
+            for (int i = 1; i <= 10; i++){
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").addDefault("Moby_" + i, 1);
+                /*rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").addDefault("Gracze_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").addDefault("Sakwy_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").addDefault("Niesy_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").addDefault("Rybak_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").addDefault("Drwal_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").addDefault("Gornik_" + i, 1);*/
+            }
+
+        }
+
         rpgcore.getConfig().options().copyDefaults(true);
         rpgcore.saveConfig();
 

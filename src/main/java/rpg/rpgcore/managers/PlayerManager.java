@@ -27,6 +27,8 @@ public class PlayerManager {
     private final HashMap<UUID, Integer> osNiesy = new HashMap<>();
     private final HashMap<UUID, Integer> osRybak = new HashMap<>();
     private final HashMap<UUID, Integer> osDrwal = new HashMap<>();
+    private final HashMap<UUID, Integer> osGornik = new HashMap<>();
+    private final HashMap<UUID, String> osMobyAccept = new HashMap<>();
 
     public UUID getPlayerUUID(final String playerName) {
         return this.playerUUID.get(playerName);
@@ -44,7 +46,7 @@ public class PlayerManager {
         return this.playersNames;
     }
 
-    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp, final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal) {
+    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp, final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik, final String osMobyAccpet) {
         this.players.add(playerUUID);
         this.playersNames.add(playerName);
         this.playerUUID.put(playerName, playerUUID);
@@ -59,6 +61,8 @@ public class PlayerManager {
         this.osNiesy.put(playerUUID, osNiesy);
         this.osRybak.put(playerUUID, osRybak);
         this.osDrwal.put(playerUUID, osDrwal);
+        this.osGornik.put(playerUUID, osGornik);
+        this.osMobyAccept.put(playerUUID, osMobyAccpet);
     }
 
     public void removeAllPlayers() {
@@ -76,6 +80,8 @@ public class PlayerManager {
         this.osNiesy.clear();
         this.osRybak.clear();
         this.osDrwal.clear();
+        this.osGornik.clear();
+        this.osMobyAccept.clear();
     }
 
     @Setter
@@ -162,6 +168,11 @@ public class PlayerManager {
         this.osDrwal.replace(uuid, noweOsDrwal);
     }
 
+    @Setter
+    public void updatePlayerOsGornik(final UUID uuid, final int noweOsGornik) {
+        this.osGornik.replace(uuid, noweOsGornik);
+    }
+
     @Getter
     public int getPlayerOsMoby(final UUID uuid) {
         return this.osMoby.get(uuid);
@@ -192,4 +203,12 @@ public class PlayerManager {
         return this.osDrwal.get(uuid);
     }
 
+    @Getter
+    public int getPlayerOsGornik(final UUID uuid) {
+        return this.osGornik.get(uuid);
+    }
+    @Getter
+    public String getOsMobyAccept(final UUID uuid) {
+        return this.osMobyAccept.get(uuid);
+    }
 }
