@@ -26,6 +26,12 @@ public class CreateTables {
                     " `exp` DOUBLE NOT NULL," +
                     " `banInfo` TEXT NOT NULL, " +
                     " `punishmentHistory` TEXT NULL DEFAULT NULL," +
+                    " `osMoby` INT NOT NULL DEFAULT 0," +
+                    " `osLudzie` INT NOT NULL DEFAULT 0," +
+                    " `osSakwy` INT NOT NULL DEFAULT 0," +
+                    " `osNiesy` INT NOT NULL DEFAULT 0," +
+                    " `osRybak` INT NOT NULL DEFAULT 0," +
+                    " `osDrwal` INT NOT NULL DEFAULT 0," +
                     "  PRIMARY KEY (`uuid`))");
             ps.execute();
         } catch (final SQLException e) {

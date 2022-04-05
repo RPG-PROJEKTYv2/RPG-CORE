@@ -28,6 +28,7 @@ public final class RPGCORE extends JavaPlugin {
     private DamageManager damageManager;
     private ChatManager chatManager;
     private BAOManager baoManager;
+    private OsManager osManager;
 
 
     private int i = 1;
@@ -61,6 +62,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("gm").setExecutor(new Gm());
         this.getCommand("heal").setExecutor(new Heal(this));
         this.getCommand("tempban").setExecutor(new TempBan(this));
+        this.getCommand("os").setExecutor(new Os(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -100,6 +102,7 @@ public final class RPGCORE extends JavaPlugin {
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
         this.baoManager = new BAOManager();
+        this.osManager = new OsManager(this);
     }
 
     private void autoMessage() {
@@ -165,5 +168,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public BAOManager getBaoManager() {
         return baoManager;
+    }
+
+    public OsManager getOsManager() {
+        return osManager;
     }
 }

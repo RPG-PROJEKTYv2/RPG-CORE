@@ -90,7 +90,13 @@ public class SQLManager {
                         rs.getString("banInfo"),
                         rs.getString("punishmentHistory"),
                         rs.getInt("lvl"),
-                        rs.getDouble("exp"));
+                        rs.getDouble("exp"),
+                        rs.getInt("osMoby"),
+                        rs.getInt("osLudzie"),
+                        rs.getInt("osSakwy"),
+                        rs.getInt("osNiesy"),
+                        rs.getInt("osRybak"),
+                        rs.getInt("osDrwal"));
             }
 
             ps.executeQuery();
@@ -175,7 +181,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0);
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0);
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 
