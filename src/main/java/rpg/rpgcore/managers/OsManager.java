@@ -42,7 +42,7 @@ public class OsManager {
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getKeys(false).size(); i++) {
             this.requiredForOsMoby.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getInt("Moby_" + i));
         }
-        /*for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getKeys(false).size(); i++) {
+        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getKeys(false).size(); i++) {
             this.requiredForOsMoby.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getInt("Gracze_" + i));
         }
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getKeys(false).size(); i++) {
@@ -59,7 +59,7 @@ public class OsManager {
         }
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getKeys(false).size(); i++) {
             this.requiredForOsMoby.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getInt("Gornik_" + i));
-        }*/
+        }
     }
 
 
@@ -272,4 +272,32 @@ public class OsManager {
         return this.gui;
     }
 
+
+    public HashMap<Integer, Integer> getRequiredForOsMoby() {
+        return requiredForOsMoby;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsLudzie() {
+        return requiredForOsLudzie;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsSakwy() {
+        return requiredForOsSakwy;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsNiesy() {
+        return requiredForOsNiesy;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsRybak() {
+        return requiredForOsRybak;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsDrwal() {
+        return requiredForOsDrwal;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsGornik() {
+        return requiredForOsGornik;
+    }
 }

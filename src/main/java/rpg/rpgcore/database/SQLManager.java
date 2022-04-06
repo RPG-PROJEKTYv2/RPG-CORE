@@ -337,6 +337,24 @@ public class SQLManager {
         }
     }
 
+    public void updatePlayerOsAccept(final UUID uuid, final String osMobyAccept) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` SET osMobyAccept=? WHERE uuid=?");
+
+            ps.setString(1, osMobyAccept);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
     public void onDisable() {
         pool.closePool();
     }

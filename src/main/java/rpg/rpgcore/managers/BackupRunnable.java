@@ -28,6 +28,7 @@ public class BackupRunnable implements Runnable {
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().updatePlayerBaoWartosci(uuid, rpgcore.getBaoManager().getBaoBonusyWartosci(uuid)));
 
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().updatePlayerOsAccept(uuid, rpgcore.getPlayerManager().getOsMobyAccept(uuid)));
         }
 
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));

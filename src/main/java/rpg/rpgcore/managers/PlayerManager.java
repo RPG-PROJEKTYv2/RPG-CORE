@@ -29,6 +29,12 @@ public class PlayerManager {
     private final HashMap<UUID, Integer> osDrwal = new HashMap<>();
     private final HashMap<UUID, Integer> osGornik = new HashMap<>();
     private final HashMap<UUID, String> osMobyAccept = new HashMap<>();
+    private final HashMap<UUID, String> osLudzieAccept = new HashMap<>();
+    private final HashMap<UUID, String> osSakwyAccept = new HashMap<>();
+    private final HashMap<UUID, String> osNiesyAccept = new HashMap<>();
+    private final HashMap<UUID, String> osRybakAccept = new HashMap<>();
+    private final HashMap<UUID, String> osDrwalAccept = new HashMap<>();
+    private final HashMap<UUID, String> osGornikAccept = new HashMap<>();
 
     public UUID getPlayerUUID(final String playerName) {
         return this.playerUUID.get(playerName);
@@ -46,7 +52,9 @@ public class PlayerManager {
         return this.playersNames;
     }
 
-    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp, final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik, final String osMobyAccpet) {
+    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp,
+                             final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
+                             final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept) {
         this.players.add(playerUUID);
         this.playersNames.add(playerName);
         this.playerUUID.put(playerName, playerUUID);
@@ -63,6 +71,12 @@ public class PlayerManager {
         this.osDrwal.put(playerUUID, osDrwal);
         this.osGornik.put(playerUUID, osGornik);
         this.osMobyAccept.put(playerUUID, osMobyAccpet);
+        this.osLudzieAccept.put(playerUUID, osSakwyAccept);
+        this.osSakwyAccept.put(playerUUID, osSakwyAccept);
+        this.osNiesyAccept.put(playerUUID, osNiesyAccept);
+        this.osRybakAccept.put(playerUUID, osRybakAccept);
+        this.osDrwalAccept.put(playerUUID, osDrwalAccept);
+        this.osGornikAccept.put(playerUUID, osGornikAccept);
     }
 
     public void removeAllPlayers() {
@@ -82,6 +96,12 @@ public class PlayerManager {
         this.osDrwal.clear();
         this.osGornik.clear();
         this.osMobyAccept.clear();
+        this.osLudzieAccept.clear();
+        this.osSakwyAccept.clear();
+        this.osNiesyAccept.clear();
+        this.osRybakAccept.clear();
+        this.osDrwalAccept.clear();
+        this.osGornikAccept.clear();
     }
 
     @Setter
@@ -173,6 +193,41 @@ public class PlayerManager {
         this.osGornik.replace(uuid, noweOsGornik);
     }
 
+    @Setter
+    public void updatePlayerOsMobyAccepted(final UUID uuid, final String noweOsMobyAccepted) {
+        this.osMobyAccept.replace(uuid, noweOsMobyAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsLudzieAccepted(final UUID uuid, final String noweOsLudzieAccepted) {
+        this.osLudzieAccept.replace(uuid, noweOsLudzieAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsSakwyAccepted(final UUID uuid, final String noweOsSakwyAccepted) {
+        this.osSakwyAccept.replace(uuid, noweOsSakwyAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsNiesyAccepted(final UUID uuid, final String noweOsNiesyAccepted) {
+        this.osNiesyAccept.replace(uuid, noweOsNiesyAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsRybakAccepted(final UUID uuid, final String noweOsRybakAccepted) {
+        this.osRybakAccept.replace(uuid, noweOsRybakAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsDrwalAccepted(final UUID uuid, final String noweOsDrwalAccepted) {
+        this.osDrwalAccept.replace(uuid, noweOsDrwalAccepted);
+    }
+
+    @Setter
+    public void updatePlayerOsGornikAccepted(final UUID uuid, final String noweOsGornikAccepted) {
+        this.osGornikAccept.replace(uuid, noweOsGornikAccepted);
+    }
+
     @Getter
     public int getPlayerOsMoby(final UUID uuid) {
         return this.osMoby.get(uuid);
@@ -207,8 +262,39 @@ public class PlayerManager {
     public int getPlayerOsGornik(final UUID uuid) {
         return this.osGornik.get(uuid);
     }
+
     @Getter
     public String getOsMobyAccept(final UUID uuid) {
         return this.osMobyAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsLudzieAccept(final UUID uuid) {
+        return this.osLudzieAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsSakwyAccept(final UUID uuid) {
+        return this.osSakwyAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsNiesyAccept(final UUID uuid) {
+        return this.osNiesyAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsRybakAccept(final UUID uuid) {
+        return this.osRybakAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsDrwalAccept(final UUID uuid) {
+        return this.osDrwalAccept.get(uuid);
+    }
+
+    @Getter
+    public String getOsGornikAccept(final UUID uuid) {
+        return this.osGornikAccept.get(uuid);
     }
 }
