@@ -98,7 +98,13 @@ public class SQLManager {
                         rs.getInt("osRybak"),
                         rs.getInt("osDrwal"),
                         rs.getInt("osDrwal"),
-                        rs.getString("osMobyAccept"));
+                        rs.getString("osMobyAccept"),
+                        rs.getString("osLudzieAccept"),
+                        rs.getString("osSakwyAccept"),
+                        rs.getString("osNiesyAccept"),
+                        rs.getString("osRybakAccept"),
+                        rs.getString("osDrwalAccept"),
+                        rs.getString("osGornikAccept"));
             }
 
             ps.executeQuery();
@@ -183,7 +189,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "", "", "", "", "", "", "");
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 

@@ -49,13 +49,84 @@ public class Config {
 
 
             for (int i = 1; i <= 10; i++){
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").addDefault("Moby_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").addDefault("Gracze_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").addDefault("Sakwy_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").addDefault("Niesy_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").addDefault("Rybak_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").addDefault("Drwal_" + i, 1);
-                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").addDefault("Gornik_" + i, 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").createSection("Moby_" + i);
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getConfigurationSection("Moby_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").createSection("Gracze_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getConfigurationSection("Gracze_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").createSection("Sakwy_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getConfigurationSection("Sakwy_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").createSection("Niesy_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getConfigurationSection("Niesy_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").createSection("Rybak_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getConfigurationSection("Rybak_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").createSection("Drwal_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getConfigurationSection("Drwal_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").createSection("Gornik_" + i);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).addDefault("Required", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).createSection("Reward");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").addDefault("Material", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").addDefault("Amount", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").addDefault("ItemName", "");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").addDefault("ItemLore", "- test lore \n - test lore");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").createSection("Enchants");
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").getConfigurationSection("Enchants").addDefault("DURABILITY", 1);
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getConfigurationSection("Gornik_" + i).getConfigurationSection("Reward").addDefault("ItemFlags", "HIDE_ENCHANTS");
+
             }
 
         }
