@@ -39,4 +39,6 @@ commands:
   tempban:
 
   os:
+
+  setdmg:
     

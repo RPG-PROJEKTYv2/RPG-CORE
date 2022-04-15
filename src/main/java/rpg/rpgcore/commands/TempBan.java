@@ -25,6 +25,11 @@ public class TempBan implements CommandExecutor {
 
         final Player player = (Player) sender;
 
+        if (!(player.hasPermission("rpg.tempban"))) {
+            player.sendMessage(Utils.permisje("rpg.tempban"));
+            return false;
+        }
+
         if (args.length == 3) {
 
             if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {

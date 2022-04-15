@@ -18,6 +18,11 @@ public class UnBan implements CommandExecutor {
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
+        if (!(sender.hasPermission("rpg.unban"))) {
+            sender.sendMessage(Utils.permisje("rpg.unban"));
+            return false;
+        }
+
         final String senderName = sender.getName();
 
         if (args.length == 1) {
@@ -45,6 +50,11 @@ public class UnBan implements CommandExecutor {
         }
 
         if (args.length == 2) {
+
+            if (!(sender.hasPermission("rpg.unban.silent"))) {
+                sender.sendMessage(Utils.permisje("rpg.unban.silent"));
+                return false;
+            }
 
             final UUID uuidToUnBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 

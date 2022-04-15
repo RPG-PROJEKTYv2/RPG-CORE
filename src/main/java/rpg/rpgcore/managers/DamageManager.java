@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.UUID;
+
 import static rpg.rpgcore.utils.Utils.random;
 
 public class DamageManager {
@@ -42,5 +44,32 @@ public class DamageManager {
         final PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(stand.getId());
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(destroyPacket);
 
+    }
+
+    public double calculateDamage(final UUID uuid, final double dmgZMiecza) {
+        double finalDamage = 0;
+        double finalDamageMultiplier = 1;
+
+        double srednieZBao;
+        if (rpgcore.getBaoManager().getBaoBonusy(uuid).split(",")[0].equalsIgnoreCase("srednie obrazenia")){
+            srednieZBao = Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",")[0]) / 1000;
+            finalDamageMultiplier += srednieZBao;
+        }
+
+
+        double baseDamage = 3.3;
+        finalDamage += baseDamage;
+        finalDamage += dmgZMiecza;
+
+        double dmgZBao;
+        if (rpgcore.getBaoManager().getBaoBonusy(uuid).split(",")[3].equalsIgnoreCase("dodatkowe obrazenia")) {
+            dmgZBao = Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",")[3]);
+            finalDamage += dmgZBao;
+        }
+
+        System.out.println(finalDamage + " - dmg przed mnoznikiem");
+        System.out.println(finalDamageMultiplier + " - mnoznikiem");
+
+        return finalDamage * finalDamageMultiplier;
     }
 }

@@ -93,7 +93,7 @@ public class ChatManager implements Listener {
     }
 
     public Inventory createEQGUI() {
-        final Inventory eqGUI = Bukkit.createInventory(null, 1 * 9, Utils.format("&4&lEQ GUI"));
+        final Inventory eqGUI = Bukkit.createInventory(null, 9, Utils.format("&4&lEQ GUI"));
 
         ItemStack item;
         ItemMeta itemMeta;
@@ -189,7 +189,7 @@ public class ChatManager implements Listener {
                 return;
             }
             final int clickedSlot = e.getSlot();
-            final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8] <player-group> &7<player-name>&7: <message>");
+            final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>&7: <message>");
             final Player player = (Player) e.getWhoClicked();
             final UUID playerUUID = player.getUniqueId();
             final String message = this.getMessageWithEQ(e.getWhoClicked().getUniqueId());
@@ -213,9 +213,9 @@ public class ChatManager implements Listener {
 
                     TextComponent item;
                     if (e.getWhoClicked().getItemInHand().getItemMeta().getDisplayName() != null) {
-                        item = new TextComponent(" §8[" + e.getWhoClicked().getItemInHand().getItemMeta().getDisplayName() + "§8]");
+                        item = new TextComponent(" §8[§6x" + e.getWhoClicked().getItemInHand().getAmount() + " " + e.getWhoClicked().getItemInHand().getItemMeta().getDisplayName() + "§8]");
                     } else {
-                        item = new TextComponent(" §8[" + e.getWhoClicked().getItemInHand().getType().toString() + "§8]");
+                        item = new TextComponent(" §8[§6x" + e.getWhoClicked().getItemInHand().getAmount() + " "  + e.getWhoClicked().getItemInHand().getType().toString() + "§8]");
                     }
                     item.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(e.getWhoClicked().getItemInHand()).save(new NBTTagCompound()).toString()).create()));
                     if (!(msg.isEmpty())) {

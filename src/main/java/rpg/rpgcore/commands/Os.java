@@ -24,6 +24,12 @@ public class Os implements CommandExecutor {
         }
 
         final Player player = (Player) sender;
+
+        if (!(player.hasPermission("rpg.os"))) {
+            player.sendMessage(Utils.permisje("rpg.os"));
+            return false;
+        }
+
         if (args.length == 0) {
             player.openInventory(rpgcore.getOsManager().osGuiMain());
             return false;

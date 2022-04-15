@@ -67,6 +67,11 @@ public class Lvl implements CommandExecutor {
         }
         if (args.length == 3) {
 
+            if (!(player.hasPermission("rpg.lvl.admin.set"))) {
+                player.sendMessage(Utils.permisje("rpg.lvl.admin.set"));
+                return false;
+            }
+
             final UUID uuidPlayerToSet = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
 
 

@@ -71,7 +71,7 @@ public class PlayerManager {
         this.osDrwal.put(playerUUID, osDrwal);
         this.osGornik.put(playerUUID, osGornik);
         this.osMobyAccept.put(playerUUID, osMobyAccpet);
-        this.osLudzieAccept.put(playerUUID, osSakwyAccept);
+        this.osLudzieAccept.put(playerUUID, osLudzieAccept);
         this.osSakwyAccept.put(playerUUID, osSakwyAccept);
         this.osNiesyAccept.put(playerUUID, osNiesyAccept);
         this.osRybakAccept.put(playerUUID, osRybakAccept);

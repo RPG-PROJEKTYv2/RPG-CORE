@@ -64,6 +64,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("heal").setExecutor(new Heal(this));
         this.getCommand("tempban").setExecutor(new TempBan(this));
         this.getCommand("os").setExecutor(new Os(this));
+        this.getCommand("setdmg").setExecutor(new SetDmg(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -72,7 +73,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(chatManager, this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
-//        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 7200L, 72000L);

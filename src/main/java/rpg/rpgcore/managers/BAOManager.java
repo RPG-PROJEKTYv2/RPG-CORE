@@ -19,6 +19,8 @@ public class BAOManager {
     private final HashMap<UUID, String> baoBonusy = new HashMap<>();
     private final HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
 
+    private final Random random = new Random();
+
     public String getBaoBonusy(final UUID uuid) {
         return this.baoBonusy.get(uuid);
     }
@@ -126,7 +128,7 @@ public class BAOManager {
         maxValuesItemLore.add(Utils.format("&8-&6&lSzansa na Cios Krytyczny: &c&l25%"));
         maxValuesItemLore.add(Utils.format("&8Bonus 4:"));
         maxValuesItemLore.add(Utils.format("&8-&6&lBlok Ciosu: &c&l15%"));
-        maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowe Obrazenia: &c&l5000 DMG"));
+        maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowe Obrazenia: &c&l750 DMG"));
         maxValuesItemLore.add(Utils.format("&8Bonus 5:"));
         maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowe HP: &c&l10 HP"));
         maxValuesItemLore.add(Utils.format("&8-&6&lDodatkowy EXP: &c&l15%"));
@@ -176,12 +178,57 @@ public class BAOManager {
         return baoGUI;
     }
 
-    public void losujNoweBonusy(final UUID uuid) {
-        final Random random = new Random();
+    public Inventory ksiegaMagiiGUI(final UUID uuid) {
+        Inventory baoGUI = Bukkit.createInventory(null, 3 * 9, Utils.format("&4&lKSIEGA MAGII"));
+
+        final ItemStack item = new ItemStack(Material.BOOK_AND_QUILL);
+        final ItemStack background = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
+
+        final ItemMeta itemMeta = item.getItemMeta();
+        final ItemMeta backgroudItemMeta = background.getItemMeta();
+
+        backgroudItemMeta.setDisplayName("");
+        background.setItemMeta(backgroudItemMeta);
+
         String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
         String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
 
-        //                  LOSOWANIE 1 BONUSU BAO                  \\
+
+        for (int i = 0; i < baoGUI.getSize(); i++) {
+            baoGUI.setItem(i, background);
+        }
+        for (int i = 0; i < baoBonusy.length; i++) {
+            if (baoBonusy[i].equalsIgnoreCase("brak bonusu")) {
+                itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[i]));
+            } else {
+                if (i == 3) {
+                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")) {
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + " DMG"));
+                    } else {
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[3] + ":&c&l " + baoBonusyWartosci[3] + "%"));
+                    }
+                } else if (i == 4) {
+                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")) {
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + " HP"));
+                    } else {
+                        itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[4] + ":&c&l " + baoBonusyWartosci[4] + "%"));
+                    }
+                } else {
+                    itemMeta.setDisplayName(Utils.format("&6&l" + baoBonusy[i] + ":&c&l " + baoBonusyWartosci[i] + "%"));
+                }
+            }
+
+            item.setItemMeta(itemMeta);
+
+            baoGUI.setItem(11 + i, item);
+        }
+        return baoGUI;
+    }
+
+    public void losujNowyBonus1(final UUID uuid) {
+        String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
+        String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
+
         final int nowyBaoBonus1 = random.nextInt(3) + 1;
         int nowaWartoscBonusu;
         switch (nowyBaoBonus1) {
@@ -201,9 +248,18 @@ public class BAOManager {
                 baoBonusyWartosci[0] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
+        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
+        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
-        //                  LOSOWANIE 2 BONUSU BAO                  \\
+        this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
+        this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
+    }
 
+    public void losujNowyBonus2(final UUID uuid) {
+        String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
+        String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
+
+        int nowaWartoscBonusu;
         final int nowyBaoBonus2 = random.nextInt(3) + 1;
         switch (nowyBaoBonus2) {
             case 1:
@@ -222,9 +278,18 @@ public class BAOManager {
                 baoBonusyWartosci[1] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
+        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
+        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
-        //                  LOSOWANIE 3 BONUSU BAO                  \\
+        this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
+        this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
+    }
 
+    public void losujNowyBonus3(final UUID uuid) {
+        String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
+        String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
+
+        int nowaWartoscBonusu;
         final int nowyBaoBonus3 = random.nextInt(2) + 1;
         switch (nowyBaoBonus3) {
             case 1:
@@ -238,9 +303,18 @@ public class BAOManager {
                 baoBonusyWartosci[2] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
+        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
+        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
-        //                  LOSOWANIE 4 BONUSU BAO                  \\
+        this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
+        this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
+    }
 
+    public void losujNowyBonus4(final UUID uuid) {
+        String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
+        String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
+
+        int nowaWartoscBonusu;
         final int nowyBaoBonus4 = random.nextInt(2) + 1;
         switch (nowyBaoBonus4) {
             case 1:
@@ -250,13 +324,22 @@ public class BAOManager {
                 break;
             case 2:
                 baoBonusy[3] = "Dodatkowe Obrazenia";
-                nowaWartoscBonusu = random.nextInt(5000) + 1;
+                nowaWartoscBonusu = random.nextInt(750) + 1;
                 baoBonusyWartosci[3] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
+        final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
+        final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
-        //                  LOSOWANIE 5 BONUSU BAO                  \\
+        this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
+        this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
+    }
 
+    public void losujNowyBonus5(final UUID uuid) {
+        String[] baoBonusy = this.getBaoBonusy(uuid).split(",");
+        String[] baoBonusyWartosci = this.getBaoBonusyWartosci(uuid).split(",");
+
+        int nowaWartoscBonusu;
         final int nowyBaoBonus5 = random.nextInt(2) + 1;
         switch (nowyBaoBonus5) {
             case 1:
@@ -270,13 +353,24 @@ public class BAOManager {
                 baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
                 break;
         }
-
-
         final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];
         final String wartosciBonusowPoLosowaniu = baoBonusyWartosci[0] + "," + baoBonusyWartosci[1] + "," + baoBonusyWartosci[2] + "," + baoBonusyWartosci[3] + "," + baoBonusyWartosci[4];
 
         this.updateBaoBonusy(uuid, bonusyPoLosowaniu);
         this.updateBaoBonusyWartosci(uuid, wartosciBonusowPoLosowaniu);
+    }
+
+    public void losujNoweBonusy(final UUID uuid) {
+        //                  LOSOWANIE 1 BONUSU BAO                  \\
+        this.losujNowyBonus1(uuid);
+        //                  LOSOWANIE 2 BONUSU BAO                  \\
+        this.losujNowyBonus2(uuid);
+        //                  LOSOWANIE 3 BONUSU BAO                  \\
+        this.losujNowyBonus3(uuid);
+        //                  LOSOWANIE 4 BONUSU BAO                  \\
+        this.losujNowyBonus4(uuid);
+        //                  LOSOWANIE 5 BONUSU BAO                  \\
+        this.losujNowyBonus5(uuid);
     }
 
 }

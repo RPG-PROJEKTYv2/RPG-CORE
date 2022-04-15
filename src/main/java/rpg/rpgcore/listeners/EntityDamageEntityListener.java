@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
@@ -39,12 +40,27 @@ public class EntityDamageEntityListener implements Listener {
 
         if (damager instanceof Player) {
             final Player p = (Player) damager;
-            final double dmg = e.getDamage();
+            double dmgZMiecza;
 
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(dmg, entity.getLocation(), p));
+            if (p.getItemInHand() == null) {
+                e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
+                return;
+            }
 
+            if (String.valueOf(p.getItemInHand().getType()).trim().contains("SWORD")) {
+                for (int j = 0; j < p.getItemInHand().getItemMeta().getLore().size(); j++) {
+                    if (p.getItemInHand().getItemMeta().getLore().get(j).trim().contains("Obrazenia: ")) {
+                        dmgZMiecza = Double.parseDouble(Utils.removeColor(p.getItemInHand().getItemMeta().getLore().get(j).trim().replace("Obrazenia: ", "")));
+                        e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), dmgZMiecza));
+                    }
+                }
+
+            } else {
+                e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
+            }
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
         }
-
     }
 
 
