@@ -32,7 +32,7 @@ public class Heal implements CommandExecutor {
 
         if (args.length == 0) {
 
-            p.setHealth(20.0);
+            p.setHealth(p.getMaxHealth());
             p.setFoodLevel(20);
             p.sendMessage(Utils.format("&aZostales uleczony!"));
 
@@ -58,7 +58,7 @@ public class Heal implements CommandExecutor {
                 return false;
             }
 
-            target.setHealth(20.0);
+            target.setHealth(target.getMaxHealth());
             target.setFoodLevel(20);
             target.sendMessage(Utils.format("&aZostales uleczony przez dobrego czleka!"));
             p.sendMessage(Utils.format("&aUleczono gracza " + p.getName()));

@@ -4,6 +4,8 @@ package rpg.rpgcore.managers;
 //import jdk.jfr.BooleanFlag;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,6 +149,11 @@ public class PlayerManager {
     //@BooleanFlag ??????
     public boolean isBanned(final UUID uuid) {
         return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
+    }
+
+    @Getter
+    public String getPlayerGroup(final Player player) {
+        return PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
     }
 
 

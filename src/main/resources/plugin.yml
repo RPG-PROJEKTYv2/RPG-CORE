@@ -38,7 +38,13 @@ commands:
       
   tempban:
 
-  os:
+  osiagniecia:
+    aliases:
+      - os
 
   setdmg:
+
+  akcesoria:
+    aliases:
+      - akce
     

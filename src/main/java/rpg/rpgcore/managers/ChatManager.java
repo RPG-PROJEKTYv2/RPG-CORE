@@ -47,7 +47,7 @@ public class ChatManager implements Listener {
     public String formatujChat(final Player player, final String format, String message) {
         final int playerLVL = rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId());
         String playerName = player.getName();
-        String playerRank = PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
+        String playerRank = rpgcore.getPlayerManager().getPlayerGroup(player);
 
         switch (playerRank) {
             case "H@":

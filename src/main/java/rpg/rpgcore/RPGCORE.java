@@ -10,7 +10,6 @@ import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
 import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 public final class RPGCORE extends JavaPlugin {
@@ -30,6 +29,7 @@ public final class RPGCORE extends JavaPlugin {
     private ChatManager chatManager;
     private BAOManager baoManager;
     private OsManager osManager;
+    private AkcesoriaManager akcesoriaManager;
 
     private int i = 1;
 
@@ -63,8 +63,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("gm").setExecutor(new Gm());
         this.getCommand("heal").setExecutor(new Heal(this));
         this.getCommand("tempban").setExecutor(new TempBan(this));
-        this.getCommand("os").setExecutor(new Os(this));
+        this.getCommand("osiagniecia").setExecutor(new Osiagniecia(this));
         this.getCommand("setdmg").setExecutor(new SetDmg(this));
+        this.getCommand("akcesoria").setExecutor(new Akcesoria(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -76,6 +77,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
@@ -106,6 +109,7 @@ public final class RPGCORE extends JavaPlugin {
         this.chatManager = new ChatManager(this);
         this.baoManager = new BAOManager();
         this.osManager = new OsManager(this);
+        this.akcesoriaManager = new AkcesoriaManager();
     }
 
     private void autoMessage() {
@@ -175,5 +179,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public OsManager getOsManager() {
         return osManager;
+    }
+
+    public AkcesoriaManager getAkcesoriaManager() {
+        return akcesoriaManager;
     }
 }

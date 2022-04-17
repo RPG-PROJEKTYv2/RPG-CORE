@@ -569,10 +569,71 @@ public class PlayerInventoryClickListener implements Listener {
             e.getWhoClicked().closeInventory();
         }
 
-        if (e.getClickedInventory().getName().trim().contains("Historia kar gracza ")) {
+        if (e.getClickedInventory().getName().contains("Historia kar gracza ")) {
             e.setCancelled(true);
             return;
         }
+
+        if (e.getClickedInventory().getName().contains("Akcesoria gracza ")) {
+            ItemStack itemToGiveBack;
+
+            e.setCancelled(true);
+
+            if (e.getCurrentItem().getType() == Material.BARRIER) {
+                return;
+            }
+
+            if (e.getSlot() == 10){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
+                return;
+            }
+
+            if (e.getSlot() == 11){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
+                return;
+            }
+
+            if (e.getSlot() == 12){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
+                return;
+            }
+
+            if (e.getSlot() == 13){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
+                return;
+            }
+
+            if (e.getSlot() == 14){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
+                return;
+            }
+
+            if (e.getSlot() == 15){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
+                return;
+            }
+
+            if (e.getSlot() == 16){
+                itemToGiveBack = e.getCurrentItem();
+                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
+                return;
+            }
+            return;
+        }
+
 
     }
 }

@@ -7,11 +7,11 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-public class Os implements CommandExecutor {
+public class Osiagniecia implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public Os(RPGCORE rpgcore) {
+    public Osiagniecia(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
