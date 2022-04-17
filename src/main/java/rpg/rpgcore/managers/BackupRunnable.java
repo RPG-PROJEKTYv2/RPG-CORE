@@ -34,4 +34,43 @@ public class BackupRunnable implements Runnable {
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&aUpdate zakonczony pomyslnie!"));
 
     }
+
+
+    /*
+    public class SaveDataBaseTask {
+
+    private final ConcurrentMap<String, Integer> playerMap;
+    private final Main main;
+
+    public SaveDataBaseTask(final Main main) {
+        this.playerMap = new ConcurrentHashMap<String, Integer>();
+        this.main = main;
+        this.onLoad();
+    }
+
+    private void onLoad() {
+        new BukkitRunnable() {
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    User user = SaveDataBaseTask.this.main.getUserManager().find(player.getUniqueId());
+                    if (user.isVerify()) {
+                        int seconds = SaveDataBaseTask.this.playerMap.getOrDefault(user.getName(), 300);
+                        if (--seconds == 0) {
+                            long time = System.currentTimeMillis();
+
+                            time = System.currentTimeMillis() - time;
+
+                            System.out.println("[HypeRPGCore] saved player: " + user.getName() + " " + time + "ms");
+
+                            //MessageHelper.build("&8[&2!&8] &aPomyslnie zapisano Twoj ekwipunek. &f" + DateUtil.getTime()).send(user.getPlayer());
+                            seconds = 300;
+                        }
+                        SaveDataBaseTask.this.playerMap.put(user.getPlayer().getName(), seconds);
+                    }
+                }
+            }
+        }.runTaskTimerAsynchronously(this.main, 20L, 20L);
+    }
+}
+     */
 }

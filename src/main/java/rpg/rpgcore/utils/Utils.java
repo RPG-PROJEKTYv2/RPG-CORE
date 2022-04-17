@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,14 @@ public class Utils {
 
     public static String format(String str) {
         return ChatColor.translateAlternateColorCodes('&', str.replace(">>", "»").replace("<<", "«"));
+    }
+
+    public static List<String> format(List<String> lore) {
+
+        for (int i = 0; i < lore.size(); i++) {
+            lore.set(i, format(lore.get(i)));
+        }
+        return lore;
     }
 
     public static String permisje(final String perm) {
@@ -66,7 +75,7 @@ public class Utils {
 
     public static String banMessage(final String senderName, final String reason, final String banExpiry, final String dateOfBan) {
         return (SERVERNAME + format("\n&7Zostales zablokowany na tym serwerze" +
-                "\n&7Za:&c" + reason +
+                "\n&7Za:&c " + reason +
                 "\n&7Wygasa:&c " + banExpiry +
                 "\n&7Nadany:&c " + dateOfBan +
                 "\n&7Przez:&c " + senderName +
@@ -83,7 +92,7 @@ public class Utils {
     }
 
     public static String banBroadcast(final String namePlayerToBan, final String senderName, final String reason, final String banExpiry) {
-        return (BANPREFIX + format("&7Gracz&c " + namePlayerToBan + " &7zostal zbanowany na serwerze przez&c " + senderName + ". &7Wygasa: " + banExpiry + ". &7Powod:&c" + reason));
+        return (BANPREFIX + format("&7Gracz&c " + namePlayerToBan + " &7zostal zbanowany na serwerze przez&c " + senderName + ". &7Wygasa: " + banExpiry + ". &7Powod:&c " + reason));
     }
 
     public static String unBanBroadcast(final String namePlayerToUnBan, final String senderName) {

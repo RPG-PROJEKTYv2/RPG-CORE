@@ -10,6 +10,7 @@ import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
 import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 public final class RPGCORE extends JavaPlugin {
@@ -29,7 +30,6 @@ public final class RPGCORE extends JavaPlugin {
     private ChatManager chatManager;
     private BAOManager baoManager;
     private OsManager osManager;
-
 
     private int i = 1;
 
@@ -74,9 +74,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(chatManager, this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 7200L, 72000L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
     }
 

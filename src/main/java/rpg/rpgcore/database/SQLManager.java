@@ -178,7 +178,7 @@ public class SQLManager {
         PreparedStatement ps = null;
         try {
             conn = pool.getConnection();
-            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
@@ -186,10 +186,25 @@ public class SQLManager {
             ps.setDouble(4, 0.0);
             ps.setString(5, banInfo);
             ps.setString(6, "");
+            ps.setInt(7, 0);
+            ps.setString(8, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(9, 0);
+            ps.setString(10, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(11, 0);
+            ps.setString(12, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(13, 0);
+            ps.setString(14, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(15, 0);
+            ps.setString(16, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(17, 0);
+            ps.setString(18, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(19, 0);
+            ps.setString(20, "false,false,false,false,false,false,false,false,false,false");
+
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "", "", "", "", "", "", "");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false");
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 
@@ -199,8 +214,8 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
-            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0");
+            rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {

@@ -361,7 +361,7 @@ public class OsManager {
             this.itemStack = new ItemStack(Material.DIAMOND_BLOCK);
             this.itemMeta = this.itemStack.getItemMeta();
 
-            itemMeta.setDisplayName(Utils.format("&6&lZnalezione Sakwy #" + i));
+            itemMeta.setDisplayName(Utils.format("&6&lZnalezione Niesy #" + i));
             itemMeta.addEnchant(Enchantment.DURABILITY, 10, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

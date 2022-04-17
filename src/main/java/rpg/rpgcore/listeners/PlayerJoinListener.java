@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
@@ -63,9 +65,21 @@ public class PlayerJoinListener implements Listener {
             if (rpgcore.getPlayerManager().isBanned(uuid)) {
 
                 final String[] banInfo = rpgcore.getPlayerManager().getPlayerBanInfo(uuid).split(";");
-                for (String s : banInfo) {
-                    System.out.println(s);
+
+                try {
+                    final Date teraz = new Date();
+                    final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
+
+                    if (teraz.after(dataWygasnieciaBana)) {
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unBanPlayer(e.getUniqueId()));
+                        return;
+                    }
+
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
                 }
+
+
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
             }
         }

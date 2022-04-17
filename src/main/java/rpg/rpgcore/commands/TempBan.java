@@ -62,6 +62,100 @@ public class TempBan implements CommandExecutor {
             rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, args[2], false, "Brak Powodu!");
             return false;
         }
+
+        if (args.length == 4) {
+            if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
+                player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+                return false;
+            }
+            final String jednostka = args[2];
+
+            final UUID uuidPlayerToTempBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+
+            if (uuidPlayerToTempBan == null) {
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
+            if (args[0].equalsIgnoreCase(sender.getName())) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
+            }
+
+            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToTempBan)) {
+                sender.sendMessage(Utils.ALREADYBANNED);
+                return false;
+            }
+            int time = 0;
+            try {
+                time = Integer.parseInt(args[1]);
+            } catch (final NumberFormatException e) {
+                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
+            }
+
+            if (args[3].equalsIgnoreCase("-s")) {
+                rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, true, "Brak Powodu!");
+                return false;
+            }
+
+            final StringBuilder reason = new StringBuilder();
+            reason.append(args[3]);
+
+            args[0] = "";
+            args[1] = "";
+            args[2] = "";
+
+            rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, false, String.valueOf(reason));
+            return false;
+        }
+
+        if (args.length > 4) {
+            boolean silent = false;
+            if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
+                player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+                return false;
+            }
+            final String jednostka = args[2];
+            final UUID uuidPlayerToTempBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+
+            if (uuidPlayerToTempBan == null) {
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+                return false;
+            }
+
+            if (args[0].equalsIgnoreCase(sender.getName())) {
+                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                return false;
+            }
+
+            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToTempBan)) {
+                sender.sendMessage(Utils.ALREADYBANNED);
+                return false;
+            }
+            int time = 0;
+            try {
+                time = Integer.parseInt(args[1]);
+            } catch (final NumberFormatException e) {
+                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
+            }
+
+            if (args[3].equalsIgnoreCase("-s")) {
+                silent = true;
+                args[3] = "";
+            }
+            args[0] = "";
+            args[1] = "";
+            args[2] = "";
+            final StringBuilder reason = new StringBuilder();
+            for (final String arg : args) {
+                if (!(arg.equalsIgnoreCase(""))) {
+                    reason.append(arg).append(" ");
+                }
+            }
+
+            rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, silent, String.valueOf(reason));
+            return false;
+        }
         player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
         return false;
     }
