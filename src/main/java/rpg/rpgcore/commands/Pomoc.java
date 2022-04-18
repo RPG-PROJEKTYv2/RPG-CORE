@@ -27,7 +27,7 @@ public class Pomoc implements CommandExecutor {
 
         if (args.length == 0) {
 
-            player.openInventory(rpgcore.getPomocManager().pomocGUI());
+            player.openInventory(rpgcore.getPomocManager().pomocGUIMAIN());
             return false;
         }
         player.sendMessage("poprawne uzycie /pomoc");
