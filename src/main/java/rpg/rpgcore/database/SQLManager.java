@@ -4,7 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.managers.SpawnManager;
+import rpg.rpgcore.utils.Utils;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -135,6 +137,22 @@ public class SQLManager {
         } finally {
             pool.close(conn, ps, null);
         }
+
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM Inventories");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                rpgcore.getAkcesoriaManager().createAkcesoriaGUI(UUID.fromString(rs.getString("uuid")), Utils.itemStackArrayFromBase64(rs.getString("Akcesoria")));
+            }
+
+            ps.executeQuery();
+        } catch (final SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
     }
 
     public void setSpawn(final Location spawn) {
@@ -216,6 +234,15 @@ public class SQLManager {
 
             rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
             rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
+
+
+            ps = conn.prepareStatement("INSERT INTO `Inventories` VALUES (?,?)");
+
+            ps.setString(1, String.valueOf(uuid));
+            ps.setString(2, Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+
+            ps.executeUpdate();
+
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
@@ -366,6 +393,24 @@ public class SQLManager {
             ps = conn.prepareStatement("UPDATE `player` SET osMobyAccept=? WHERE uuid=?");
 
             ps.setString(1, osMobyAccept);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void updatePlayerAkcesoria(final UUID uuid, final String akcesoriaInString) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `Inventories` SET Akcesoria=? WHERE uuid=?");
+
+            ps.setString(1, akcesoriaInString);
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();

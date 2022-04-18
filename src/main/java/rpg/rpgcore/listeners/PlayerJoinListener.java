@@ -1,6 +1,7 @@
 package rpg.rpgcore.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,6 +30,10 @@ public class PlayerJoinListener implements Listener {
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
 
+        if (!(rpgcore.getAkcesoriaManager().getAkcesoriaMap().containsKey(playerUUID))) {
+            rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(playerUUID);
+        }
+
         if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false"));
             e.setJoinMessage(Utils.firstJoinMessage(playerName));
@@ -52,6 +57,21 @@ public class PlayerJoinListener implements Listener {
         for (Player rest : Bukkit.getOnlinePlayers()) {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
+
+        if (rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[4].equalsIgnoreCase("dodatkowe hp")) {
+            p.setMaxHealth(p.getMaxHealth() + Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[4]) * 2);
+        }
+
+        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(13).getType() != Material.BARRIER) {
+            p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
+        }
+
+        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(14).getType() != Material.BARRIER) {
+            p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
+        }
+
+        p.setHealth(p.getMaxHealth());
+        p.setFoodLevel(20);
         e.setJoinMessage(Utils.joinMessage(playerName));
     }
 

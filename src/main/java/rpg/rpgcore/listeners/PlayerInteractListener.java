@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class PlayerInteractListener implements Listener {
@@ -20,6 +21,8 @@ public class PlayerInteractListener implements Listener {
     public PlayerInteractListener(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
+
+    final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(final PlayerInteractEvent e) {
@@ -63,7 +66,9 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(10, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -94,7 +99,9 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(11, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -125,7 +132,9 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(12, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -156,7 +165,10 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(13, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
+                    player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 13, "Dodatkowe HP") * 2);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -187,7 +199,10 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(14, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
+                    player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 14, "Dodatkowe HP") * 2);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -218,7 +233,9 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(15, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -249,7 +266,9 @@ public class PlayerInteractListener implements Listener {
                         return;
                     }
                     rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).setItem(16, itemToSet);
-                    player.getInventory().remove(itemToSet);
+                    this.itemMapToRemove.put(0, itemToSet);
+                    player.getInventory().removeItem(this.itemMapToRemove.get(0));
+                    this.itemMapToRemove.clear();
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }

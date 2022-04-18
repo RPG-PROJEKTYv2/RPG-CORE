@@ -111,7 +111,7 @@ public final class RPGCORE extends JavaPlugin {
         this.chatManager = new ChatManager(this);
         this.baoManager = new BAOManager();
         this.osManager = new OsManager(this);
-        this.akcesoriaManager = new AkcesoriaManager();
+        this.akcesoriaManager = new AkcesoriaManager(this);
         this.pomocManager = new PomocManager(this);
     }
 

@@ -68,6 +68,19 @@ public class CreateTables {
         } finally {
             pool.close(conn, ps, null);
         }
-    }
 
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `Inventories` (" +
+                    " `uuid` VARCHAR(36) NOT NULL," +
+                    " `Akcesoria` TEXT NOT NULL, " +
+                    "  PRIMARY KEY (`uuid`))");
+            ps.execute();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+
+    }
 }

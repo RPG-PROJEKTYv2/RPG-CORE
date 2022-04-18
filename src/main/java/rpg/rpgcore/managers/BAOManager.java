@@ -347,6 +347,11 @@ public class BAOManager {
 
         int nowaWartoscBonusu;
         final int nowyBaoBonus5 = random.nextInt(2) + 1;
+        if (baoBonusy[4].equalsIgnoreCase("Dodatkowe HP")) {
+            if (Bukkit.getPlayer(uuid).getMaxHealth() > 10) {
+                Bukkit.getPlayer(uuid).setMaxHealth(Bukkit.getPlayer(uuid).getMaxHealth() - Double.parseDouble(baoBonusyWartosci[4]));
+            }
+        }
         switch (nowyBaoBonus5) {
             case 1:
                 baoBonusy[4] = "Dodatkowe HP";
@@ -358,6 +363,7 @@ public class BAOManager {
                 baoBonusy[4] = "Dodatkowy EXP";
                 nowaWartoscBonusu = random.nextInt(15) + 1;
                 baoBonusyWartosci[4] = String.valueOf(nowaWartoscBonusu);
+                Bukkit.getPlayer(uuid).setMaxHealth(Bukkit.getPlayer(uuid).getMaxHealth() + nowaWartoscBonusu);
                 break;
         }
         final String bonusyPoLosowaniu = baoBonusy[0] + "," + baoBonusy[1] + "," + baoBonusy[2] + "," + baoBonusy[3] + "," + baoBonusy[4];

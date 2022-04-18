@@ -607,6 +607,7 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 13){
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
                 return;
             }
@@ -614,6 +615,7 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 14){
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
                 return;
             }
