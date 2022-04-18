@@ -30,6 +30,7 @@ public final class RPGCORE extends JavaPlugin {
     private BAOManager baoManager;
     private OsManager osManager;
     private AkcesoriaManager akcesoriaManager;
+    private PomocManager pomocManager;
 
     private int i = 1;
 
@@ -66,6 +67,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("osiagniecia").setExecutor(new Osiagniecia(this));
         this.getCommand("setdmg").setExecutor(new SetDmg(this));
         this.getCommand("akcesoria").setExecutor(new Akcesoria(this));
+        this.getCommand("pomoc").setExecutor(new Pomoc(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -110,6 +112,7 @@ public final class RPGCORE extends JavaPlugin {
         this.baoManager = new BAOManager();
         this.osManager = new OsManager(this);
         this.akcesoriaManager = new AkcesoriaManager();
+        this.pomocManager = new PomocManager(this);
     }
 
     private void autoMessage() {
@@ -183,5 +186,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public AkcesoriaManager getAkcesoriaManager() {
         return akcesoriaManager;
+    }
+
+    public PomocManager getPomocManager() {
+        return pomocManager;
     }
 }

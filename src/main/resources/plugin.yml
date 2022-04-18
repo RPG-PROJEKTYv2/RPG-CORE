@@ -47,4 +47,7 @@ commands:
   akcesoria:
     aliases:
       - akce
+  pomoc:
+    aliases:
+      - help
     
