@@ -67,9 +67,10 @@ public class OsManager {
     public Inventory osGuiMain() {
         this.gui = Bukkit.createInventory(null, 3*9, Utils.format("&6&lOsiagniecia"));
 
+        this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
+        this.itemMeta = itemStack.getItemMeta();
+
         for (int i = 0; i < gui.getSize(); i++) {
-            this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
-            this.itemMeta = itemStack.getItemMeta();
 
             itemMeta.setDisplayName(" ");
 

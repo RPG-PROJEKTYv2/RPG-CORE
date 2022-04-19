@@ -72,6 +72,8 @@ public class PlayerJoinListener implements Listener {
 
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
+
+        rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
         e.setJoinMessage(Utils.joinMessage(playerName));
     }
 

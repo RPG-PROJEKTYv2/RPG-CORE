@@ -44,7 +44,7 @@ public class Akcesoria implements CommandExecutor {
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(uuid);
             }
             player.openInventory(rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid));
-            this.dajTestAkce(player);
+//            this.dajTestAkce(player);
             return false;
         }
 
@@ -106,7 +106,7 @@ public class Akcesoria implements CommandExecutor {
 
         testlore.clear();
         testZegarek.setName("&7&lTestowy Zegarek");
-        testlore.add("&3Dodatkowe Obrazenia: &f750");
+        testlore.add("&3Obrazenia: &f750");
         testlore.add("&3Silny przeciwko Ludziom: &f30%");
         testlore.add("&3Obrona: &f-25%");
         testlore.add(" ");

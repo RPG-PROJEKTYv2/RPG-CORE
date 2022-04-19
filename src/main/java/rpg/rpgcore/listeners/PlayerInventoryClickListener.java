@@ -584,6 +584,9 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 10) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
+                rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
+                rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
                 return;
             }
@@ -591,6 +594,9 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 11) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerPrzeszywka(playerUUID, rpgcore.getPlayerManager().getPlayerPrzeszywka(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Przeszycie Bloku"));
+                rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
+                System.out.println("Naszyjnik dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
                 return;
             }
@@ -598,6 +604,8 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 12) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerKryt(playerUUID, rpgcore.getPlayerManager().getPlayerKryt(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Cios Krytyczny"));
+                rpgcore.getPlayerManager().updatePlayerSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
                 return;
             }
@@ -605,6 +613,8 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 13) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
+                rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
                 return;
@@ -613,7 +623,10 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 14) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
+                rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
+                System.out.println("Pierek blok -" + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
                 return;
             }
@@ -621,6 +634,10 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 15) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
+                rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
+                rpgcore.getPlayerManager().updatePlayerMinusSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerMinusSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
+                System.out.println("energia blok - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
                 return;
             }
@@ -628,6 +645,10 @@ public class PlayerInventoryClickListener implements Listener {
             if (e.getSlot() == 16) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
+                rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
+                rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
+                rpgcore.getPlayerManager().updatePlayerMinusDef(playerUUID, rpgcore.getPlayerManager().getPlayerMinusDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
+                System.out.println("Zegarek dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
                 return;
             }
@@ -637,11 +658,11 @@ public class PlayerInventoryClickListener implements Listener {
         if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIMAIN().getName())) {
             e.setCancelled(true);
             if (e.getCurrentItem().getType() == Material.BOOK) {
-                player.openInventory(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR(player));
+                player.openInventory(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR());
                 return;
             }
             if (e.getSlot() == 13) {
-                player.openInventory(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY(player));
+                player.openInventory(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY());
                 return;
             }
             if (e.getCurrentItem().getType() == Material.FIREWORK_CHARGE) {
@@ -653,12 +674,14 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
         // POMOC 2
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY(player).getName())) {
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY())) {
             e.setCancelled(true);
+            return;
         }
         // POMOC 3
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR(player).getName())) {
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR().getName())) {
             e.setCancelled(true);
+            return;
         }
     }
 }

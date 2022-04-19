@@ -50,4 +50,8 @@ commands:
   pomoc:
     aliases:
       - help
+
+  sprawdzmojebonusy:
+    aliases:
+      - smb
     

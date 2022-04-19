@@ -106,7 +106,20 @@ public class SQLManager {
                         rs.getString("osNiesyAccept"),
                         rs.getString("osRybakAccept"),
                         rs.getString("osDrwalAccept"),
-                        rs.getString("osGornikAccept"));
+                        rs.getString("osGornikAccept"),
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0);
             }
 
             ps.executeQuery();
@@ -222,7 +235,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 

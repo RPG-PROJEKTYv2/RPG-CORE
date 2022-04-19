@@ -37,6 +37,19 @@ public class PlayerManager {
     private final HashMap<UUID, String> osRybakAccept = new HashMap<>();
     private final HashMap<UUID, String> osDrwalAccept = new HashMap<>();
     private final HashMap<UUID, String> osGornikAccept = new HashMap<>();
+    private final HashMap<UUID, Double> playerDamage = new HashMap<>();
+    private final HashMap<UUID, Double> playerHP = new HashMap<>();
+    private final HashMap<UUID, Double> playerSrednie = new HashMap<>();
+    private final HashMap<UUID, Double> playerMinusSrednie = new HashMap<>();
+    private final HashMap<UUID, Double> playerDef = new HashMap<>();
+    private final HashMap<UUID, Double> playerMinusDef = new HashMap<>();
+    private final HashMap<UUID, Double> playerKryt = new HashMap<>();
+    private final HashMap<UUID, Double> playerBlok = new HashMap<>();
+    private final HashMap<UUID, Double> playerPrzeszywka = new HashMap<>();
+    private final HashMap<UUID, Double> playerSilnyNaLudzi = new HashMap<>();
+    private final HashMap<UUID, Double> playerDefNaLudzi = new HashMap<>();
+    private final HashMap<UUID, Double> playerSilnyNaMoby = new HashMap<>();
+    private final HashMap<UUID, Double> playerDefNaMoby = new HashMap<>();
 
     public UUID getPlayerUUID(final String playerName) {
         return this.playerUUID.get(playerName);
@@ -56,7 +69,9 @@ public class PlayerManager {
 
     public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp,
                              final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
-                             final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept) {
+                             final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept,
+                             final double srednie, final double minusSrednie, final double def, final double minusDef, final double silnyNaLudzi, final double defNaLudzi, final double silnyNaMoby, final double defNaMoby,
+                             final double damage, final double blok, final double przeszywka, final double kryt, final double hp) {
         this.players.add(playerUUID);
         this.playersNames.add(playerName);
         this.playerUUID.put(playerName, playerUUID);
@@ -79,6 +94,19 @@ public class PlayerManager {
         this.osRybakAccept.put(playerUUID, osRybakAccept);
         this.osDrwalAccept.put(playerUUID, osDrwalAccept);
         this.osGornikAccept.put(playerUUID, osGornikAccept);
+        this.playerSrednie.put(playerUUID, srednie);
+        this.playerMinusSrednie.put(playerUUID, minusSrednie);
+        this.playerDef.put(playerUUID, def);
+        this.playerMinusDef.put(playerUUID, minusDef);
+        this.playerSilnyNaLudzi.put(playerUUID, silnyNaLudzi);
+        this.playerDefNaLudzi.put(playerUUID, defNaLudzi);
+        this.playerSilnyNaMoby.put(playerUUID, silnyNaMoby);
+        this.playerDefNaMoby.put(playerUUID, defNaMoby);
+        this.playerDamage.put(playerUUID, damage);
+        this.playerBlok.put(playerUUID, blok);
+        this.playerPrzeszywka.put(playerUUID, przeszywka);
+        this.playerKryt.put(playerUUID, kryt);
+        this.playerHP.put(playerUUID, hp);
     }
 
     public void removeAllPlayers() {
@@ -151,20 +179,6 @@ public class PlayerManager {
         return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
     }
 
-    @Getter
-    public String getPlayerGroup(final Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
-    }
-
-
-    public HashMap<UUID, Integer> getPlayerLvl() {
-        return playerLvl;
-    }
-
-    public HashMap<UUID, Double> getPlayerExp() {
-        return playerExp;
-    }
-
     @Setter
     public void updatePlayerOsMoby(final UUID uuid, final int noweOsMoby) {
         this.osMoby.replace(uuid, noweOsMoby);
@@ -233,6 +247,71 @@ public class PlayerManager {
     @Setter
     public void updatePlayerOsGornikAccepted(final UUID uuid, final String noweOsGornikAccepted) {
         this.osGornikAccept.replace(uuid, noweOsGornikAccepted);
+    }
+
+    @Setter
+    public void updatePlayerDamage(final UUID uuid, final double nowyDamage) {
+        this.playerDamage.replace(uuid, nowyDamage);
+    }
+
+    @Setter
+    public void updatePlayerHP(final UUID uuid, final double noweHP) {
+        this.playerHP.replace(uuid, noweHP);
+    }
+
+    @Setter
+    public void updatePlayerSrednie(final UUID uuid, final double noweSrednie) {
+        this.playerSrednie.replace(uuid, noweSrednie);
+    }
+
+    @Setter
+    public void updatePlayerMinusSrednie(final UUID uuid, final double noweMinusSrednie) {
+        this.playerMinusSrednie.replace(uuid, noweMinusSrednie);
+    }
+
+    @Setter
+    public void updatePlayerDef(final UUID uuid, final double nowyDef) {
+        this.playerDef.replace(uuid, nowyDef);
+    }
+
+    @Setter
+    public void updatePlayerMinusDef(final UUID uuid, final double nowyMinusDef) {
+        this.playerMinusDef.replace(uuid, nowyMinusDef);
+    }
+
+    @Setter
+    public void updatePlayerBlok(final UUID uuid, final double nowyBlok) {
+        this.playerBlok.replace(uuid, nowyBlok);
+    }
+
+    @Setter
+    public void updatePlayerKryt(final UUID uuid, final double nowyKryt) {
+        this.playerKryt.replace(uuid, nowyKryt);
+    }
+
+    @Setter
+    public void updatePlayerSilnyNaLudzi(final UUID uuid, final double nowySilnyNaLudzi) {
+        this.playerSilnyNaLudzi.replace(uuid, nowySilnyNaLudzi);
+    }
+
+    @Setter
+    public void updatePlayerDefNaLudzi(final UUID uuid, final double nowyDefNaLudzi) {
+        this.playerDefNaLudzi.replace(uuid, nowyDefNaLudzi);
+    }
+
+    @Setter
+    public void updatePlayerSilnyNaMoby(final UUID uuid, final double nowySilnyNaMoby) {
+        this.playerSilnyNaMoby.replace(uuid, nowySilnyNaMoby);
+    }
+
+    @Setter
+    public void updatePlayerDefNaMoby(final UUID uuid, final double nowyDefNaLudzi) {
+        this.playerDefNaLudzi.replace(uuid, nowyDefNaLudzi);
+    }
+
+    @Setter
+    public void updatePlayerPrzeszywka(final UUID uuid, final double nowaPrzeszywka) {
+        this.playerPrzeszywka.replace(uuid, nowaPrzeszywka);
     }
 
     @Getter
@@ -304,4 +383,87 @@ public class PlayerManager {
     public String getOsGornikAccept(final UUID uuid) {
         return this.osGornikAccept.get(uuid);
     }
+
+    @Getter
+    public Double getPlayerDamage(final UUID uuid) {
+        return this.playerDamage.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerSrednie(final UUID uuid) {
+        return this.playerSrednie.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerMinusSrednie(final UUID uuid) {
+        return this.playerMinusSrednie.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerDef(final UUID uuid) {
+        return this.playerDef.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerMinusDef(final UUID uuid) {
+        return this.playerMinusDef.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerHP(final UUID uuid) {
+        return this.playerHP.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerBlok(final UUID uuid) {
+        return this.playerBlok.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerKryt(final UUID uuid) {
+        return this.playerKryt.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerPrzeszywka(final UUID uuid) {
+        return this.playerPrzeszywka.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerSilnyNaLudzi(final UUID uuid) {
+        return this.playerSilnyNaLudzi.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerDefNaLudzi(final UUID uuid) {
+        return this.playerDefNaLudzi.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerSilnyNaMoby(final UUID uuid) {
+        return this.playerSilnyNaMoby.get(uuid);
+    }
+
+    @Getter
+    public Double getPlayerDefNaMoby(final UUID uuid) {
+        return this.playerDefNaMoby.get(uuid);
+    }
+
+
+
+    @Getter
+    public String getPlayerGroup(final Player player) {
+        return PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
+    }
+
+    @Getter
+    public HashMap<UUID, Integer> getPlayerLvl() {
+        return playerLvl;
+    }
+
+    @Getter
+    public HashMap<UUID, Double> getPlayerExp() {
+        return playerExp;
+    }
+
 }

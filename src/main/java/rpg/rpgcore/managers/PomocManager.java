@@ -2,24 +2,28 @@ package rpg.rpgcore.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class PomocManager {
 
     private Inventory gui;
-    private ItemStack itemStack;
-    private ItemMeta itemMeta;
-    private ArrayList<String> itemLore = new ArrayList<>();
+    private final ItemBuilder test = new ItemBuilder(Material.ITEM_FRAME, 10, (short) 3);
+    private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
+    private final ItemBuilder regulaminItaryfikator = new ItemBuilder(Material.BOOK);
+    private final ItemBuilder regulamin = new ItemBuilder(Material.BOOK_AND_QUILL);
+    private final ItemBuilder taryfikator = new ItemBuilder(Material.PAPER);
+    private final ItemBuilder poradnik = new ItemBuilder(Material.FIREWORK_CHARGE);
+    private final ItemBuilder komendy = new ItemBuilder(Material.INK_SACK, 1, (short) 1);
+    private final ItemBuilder komendyList = new ItemBuilder(Material.ITEM_FRAME);
+    private final ArrayList<String> itemLore = new ArrayList<>();
 
     private final RPGCORE rpgcore;
 
@@ -31,367 +35,271 @@ public class PomocManager {
     public Inventory pomocGUIMAIN() {
         this.gui = Bukkit.createInventory(null, 3 * 9, Utils.format("&e&lPomoc serwerowa."));
 
+        fillInventory.setName(" ");
         for (int i = 0; i < gui.getSize(); i++) {
-            this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
-            this.itemMeta = itemStack.getItemMeta();
-
-            itemMeta.setDisplayName(" ");
-
-            this.itemStack.setItemMeta(itemMeta);
-            gui.setItem(i, itemStack);
+            gui.setItem(i, fillInventory.toItemStack());
         }
         this.itemLore.clear();
 
         // REGULAMIN I TARYFIKATOR
 
-        this.itemStack = new ItemStack(Material.BOOK);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&4Regulamin &f& &cTaryfikator"));
+        regulaminItaryfikator.setName("&4Regulamin &f& &cTaryfikator");
 
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fKliknij aby zobaczyć regulamin serwerowy."));
+        this.itemLore.add("&fKliknij aby zobaczyć regulamin serwerowy.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 10, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        regulaminItaryfikator.addGlowing();
 
 
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(10, itemStack);
+        regulaminItaryfikator.setLore(itemLore);
+        gui.setItem(10, regulaminItaryfikator.toItemStack());
         this.itemLore.clear();
 
         // POMOC
 
 
-        this.itemStack = new ItemStack(351, 1, (short) 1);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&aKomendy serwerowe"));
+        komendy.setName("&aKomendy serwerowe");
 
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fKliknij aby zobaczyć spis komend."));
+        this.itemLore.add("&fKliknij aby zobaczyć spis komend.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 13, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        komendy.addGlowing();
 
 
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(13, itemStack);
+        komendy.setLore(itemLore);
+        gui.setItem(13, komendy.toItemStack());
         this.itemLore.clear();
 
         // TARYFIKATOR
 
-        this.itemStack = new ItemStack(Material.FIREWORK_CHARGE);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&bPoradnik"));
+        poradnik.setName("&bPoradnik");
 
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fKliknij aby wyświetlić poradnik na czacie."));
+        this.itemLore.add("&fKliknij aby wyświetlić poradnik na czacie.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 16, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        komendy.addGlowing();
 
 
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(16, itemStack);
+        komendy.setLore(itemLore);
+        gui.setItem(16, komendy.toItemStack());
         this.itemLore.clear();
 
         return this.gui;
     }
 //===========================================================================================================================
-    public Inventory pomocGUIREGULAMINTARYFIKATOR(final Player player) {
+    public Inventory pomocGUIREGULAMINTARYFIKATOR() {
         this.gui = Bukkit.createInventory(null, 9, Utils.format("&4Regulamin &f& &cTaryfikator."));
 
+        fillInventory.setName(" ");
+
         for (int i = 0; i < gui.getSize(); i++) {
-            this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
-            this.itemMeta = itemStack.getItemMeta();
-
-            itemMeta.setDisplayName(" ");
-
-            this.itemStack.setItemMeta(itemMeta);
-            gui.setItem(i, itemStack);
+            gui.setItem(i, fillInventory.toItemStack());
         }
 
         // REGULAMIN
-        this.itemStack = new ItemStack(Material.BOOK_AND_QUILL);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&4Regulamin"));
+        regulamin.setName("&4Regulamin");
 
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fKliknij aby zobaczyć regulamin serwerowy."));
+        this.itemLore.add("&fKliknij aby zobaczyć regulamin serwerowy.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 2, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        regulamin.addGlowing();
 
 
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(2, itemStack);
+        regulamin.setLore(itemLore);
+        gui.setItem(2, regulamin.toItemStack());
         this.itemLore.clear();
 
         // TARYFIKATOR
-        this.itemStack = new ItemStack(Material.PAPER);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&cTaryfikator"));
+        taryfikator.setName("&cTaryfikator");
 
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fKliknij aby zobaczyć taryfikator serwerowy."));
+        this.itemLore.add("&fKliknij aby zobaczyć taryfikator serwerowy.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 6, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        taryfikator.addGlowing();
 
 
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(6, itemStack);
+        taryfikator.setLore(itemLore);
+        gui.setItem(6, taryfikator.toItemStack());
         this.itemLore.clear();
 
         return this.gui;
     }
 //===========================================================================================================================
-    public Inventory pomocGUIPODSTAWOWEKOMENDY(final Player player) {
+    public Inventory pomocGUIPODSTAWOWEKOMENDY() {
         this.gui = Bukkit.createInventory(null, 4*9, Utils.format("&aPodstawowe komendy."));
+
+        fillInventory.setName(" ");
+
         for (int i = 0; i < gui.getSize(); i++) {
-            this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
-            this.itemMeta = itemStack.getItemMeta();
-
-            itemMeta.setDisplayName(" ");
-
-            this.itemStack.setItemMeta(itemMeta);
-            gui.setItem(i, itemStack);
+            gui.setItem(i, fillInventory.toItemStack());
         }
 
-        // KOMENDA 1
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/listanpc"));
-        this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fSpis wszystkich npc na spawnie."));
+        komendyList.addGlowing();
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 10, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(10, itemStack);
+        // KOMENDA 1
+        komendyList.setName("&8* &6/listanpc");
+        this.itemLore.add(" ");
+        this.itemLore.add("&fSpis wszystkich npc na spawnie.");
+
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(10, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 2
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/itemshop"));
+        komendyList.setName("&8* &6/itemshop");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fPrzenośny itemshop serwerowy."));
+        this.itemLore.add("&fPrzenośny itemshop serwerowy.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 11, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(11, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(11, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 3
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/money"));
+        komendyList.setName("&8* &6/money");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fStan twojego konta."));
+        this.itemLore.add("&fStan twojego konta.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 12, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(12, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(12, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 4
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/wyplac <kwota>"));
+        komendyList.setName("&8* &6/wyplac <kwota>");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fWypłacanie danej kwoty z konta."));
+        this.itemLore.add("&fWypłacanie danej kwoty z konta.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 13, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(13, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(13, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 5
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/targ"));
+        komendyList.setName("&8* &6/targ");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fTarg serwerowy."));
+        this.itemLore.add("&fTarg serwerowy.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 14, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(14, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(14, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 6
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/wystaw <kwota>"));
+        komendyList.setName("&8* &6/wystaw <kwota>");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fWystawianie na targ itemu z łapki za daną cene."));
+        this.itemLore.add("&fWystawianie na targ itemu z łapki za daną cene.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 15, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(15, itemStack);
+        komendyList.setLore(itemLore);
+
+        gui.setItem(15, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 7
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/eventy"));
+        komendyList.setName("&8* &6/eventy");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fSpis aktualnych eventów."));
+        this.itemLore.add("&fSpis aktualnych eventów.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 16, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(16, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(16, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 8
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/level"));
+        komendyList.setName("&8* &6/level");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fTwój aktualny level."));
+        this.itemLore.add("&fTwój aktualny level.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 19, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(19, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(19, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 9
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/level <gracz>"));
+        komendyList.setName("&8* &6/level <gracz>");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fAktualny level gracza."));
+        this.itemLore.add("&fAktualny level gracza.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 20, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(20, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(20, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 10
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/misje"));
+        komendyList.setName("&8* &6/misje");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fTwoje odebrane misje."));
+        this.itemLore.add("&fTwoje odebrane misje.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 21, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(21, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(21, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 11
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6[eq]"));
+        komendyList.setName("&8* &6[eq]");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fMenu pokazywania rzeczy na czacie."));
+        this.itemLore.add("&fMenu pokazywania rzeczy na czacie.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 22, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(22, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(22, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 12
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/rangi"));
+        komendyList.setName("&8* &6/rangi");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fOpis rang w menu."));
+        this.itemLore.add("&fOpis rang w menu.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 23, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(23, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(23, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 13
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/konto"));
+        komendyList.setName("&8* &6/konto");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fOpis twojego konta."));
+        this.itemLore.add("&fOpis twojego konta.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 24, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(24, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(24, komendyList.toItemStack());
         this.itemLore.clear();
 
         // KOMENDA 14
-        this.itemStack = new ItemStack(Material.ITEM_FRAME);
-        this.itemMeta = this.itemStack.getItemMeta();
-        itemMeta.setDisplayName(Utils.format("&8* &6/administracja"));
+        komendyList.setName("&8* &6/administracja");
         this.itemLore.add(" ");
-        this.itemLore.add(Utils.format("&fSpis administracji."));
+        this.itemLore.add("&fSpis administracji.");
 
-        itemMeta.addEnchant(Enchantment.DURABILITY, 25, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setLore(itemLore);
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(25, itemStack);
+
+        komendyList.setLore(itemLore);
+
+        gui.setItem(25, komendyList.toItemStack());
         this.itemLore.clear();
         return this.gui;
     }
 //===========================================================================================================================
 /*public Inventory pomocGUIREGULAMIN(final Player player) {
     this.gui = Bukkit.createInventory(null, 3*9, Utils.format("&4Regulamin."));
+
+    fillInventory.setName(" ");
+
     for (int i = 0; i < gui.getSize(); i++) {
-        this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
-        this.itemMeta = itemStack.getItemMeta();
-
-        itemMeta.setDisplayName(" ");
-
-        this.itemStack.setItemMeta(itemMeta);
-        gui.setItem(i, itemStack);
+        gui.setItem(i, fillInventory.toItemStack());
     }
 
     return this.gui;
-    }
- */
+    }*/
 }
