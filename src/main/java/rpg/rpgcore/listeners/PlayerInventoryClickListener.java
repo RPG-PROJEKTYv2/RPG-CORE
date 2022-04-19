@@ -1,7 +1,6 @@
 package rpg.rpgcore.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.w3c.dom.Text;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -583,28 +581,28 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
 
-            if (e.getSlot() == 10){
+            if (e.getSlot() == 10) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
                 return;
             }
 
-            if (e.getSlot() == 11){
+            if (e.getSlot() == 11) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
                 return;
             }
 
-            if (e.getSlot() == 12){
+            if (e.getSlot() == 12) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
                 return;
             }
 
-            if (e.getSlot() == 13){
+            if (e.getSlot() == 13) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
@@ -612,7 +610,7 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
 
-            if (e.getSlot() == 14){
+            if (e.getSlot() == 14) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
@@ -620,14 +618,14 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
 
-            if (e.getSlot() == 15){
+            if (e.getSlot() == 15) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
                 return;
             }
 
-            if (e.getSlot() == 16){
+            if (e.getSlot() == 16) {
                 itemToGiveBack = e.getCurrentItem();
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
@@ -635,7 +633,32 @@ public class PlayerInventoryClickListener implements Listener {
             }
             return;
         }
-
-
+        // POMOC 1
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIMAIN().getName())) {
+            e.setCancelled(true);
+            if (e.getCurrentItem().getType() == Material.BOOK) {
+                player.openInventory(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR(player));
+                return;
+            }
+            if (e.getSlot() == 13) {
+                player.openInventory(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY(player));
+                return;
+            }
+            if (e.getCurrentItem().getType() == Material.FIREWORK_CHARGE) {
+                player.closeInventory();
+                player.sendMessage("Poradnik");
+                player.sendMessage("1. Nie bądź kurwą...");
+                return;
+            }
+            return;
+        }
+        // POMOC 2
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY(player).getName())) {
+            e.setCancelled(true);
+        }
+        // POMOC 3
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR(player).getName())) {
+            e.setCancelled(true);
+        }
     }
 }
