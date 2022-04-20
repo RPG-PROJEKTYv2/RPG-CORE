@@ -2,20 +2,14 @@ package rpg.rpgcore.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
 
 public class PomocManager {
-
     private Inventory gui;
-    private final ItemBuilder test = new ItemBuilder(Material.ITEM_FRAME, 10, (short) 3);
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ItemBuilder regulaminItaryfikator = new ItemBuilder(Material.BOOK);
     private final ItemBuilder regulamin = new ItemBuilder(Material.BOOK_AND_QUILL);
@@ -24,12 +18,6 @@ public class PomocManager {
     private final ItemBuilder komendy = new ItemBuilder(Material.INK_SACK, 1, (short) 1);
     private final ItemBuilder komendyList = new ItemBuilder(Material.ITEM_FRAME);
     private final ArrayList<String> itemLore = new ArrayList<>();
-
-    private final RPGCORE rpgcore;
-
-    public PomocManager(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
-    }
 
 //===========================================================================================================================
     public Inventory pomocGUIMAIN() {
@@ -55,7 +43,7 @@ public class PomocManager {
         gui.setItem(10, regulaminItaryfikator.toItemStack());
         this.itemLore.clear();
 
-        // POMOC
+        // KOMENDY SERWEROWE
 
 
         komendy.setName("&aKomendy serwerowe");
@@ -70,18 +58,18 @@ public class PomocManager {
         gui.setItem(13, komendy.toItemStack());
         this.itemLore.clear();
 
-        // TARYFIKATOR
+        // PORADNIK
 
         poradnik.setName("&bPoradnik");
 
         this.itemLore.add(" ");
-        this.itemLore.add("&fKliknij aby wyświetlić poradnik na czacie.");
+        this.itemLore.add("&fKliknij aby wyświetlić poradnik.");
 
-        komendy.addGlowing();
+        poradnik.addGlowing();
 
 
-        komendy.setLore(itemLore);
-        gui.setItem(16, komendy.toItemStack());
+        poradnik.setLore(itemLore);
+        gui.setItem(16, poradnik.toItemStack());
         this.itemLore.clear();
 
         return this.gui;
@@ -100,7 +88,7 @@ public class PomocManager {
         regulamin.setName("&4Regulamin");
 
         this.itemLore.add(" ");
-        this.itemLore.add("&fKliknij aby zobaczyć regulamin serwerowy.");
+        this.itemLore.add("&fKliknij aby otrzymać link do regulaminu.");
 
         regulamin.addGlowing();
 
@@ -113,7 +101,7 @@ public class PomocManager {
         taryfikator.setName("&cTaryfikator");
 
         this.itemLore.add(" ");
-        this.itemLore.add("&fKliknij aby zobaczyć taryfikator serwerowy.");
+        this.itemLore.add("&fKliknij aby otrzymać link do taryfikatora.");
 
         taryfikator.addGlowing();
 
@@ -290,16 +278,4 @@ public class PomocManager {
         this.itemLore.clear();
         return this.gui;
     }
-//===========================================================================================================================
-/*public Inventory pomocGUIREGULAMIN(final Player player) {
-    this.gui = Bukkit.createInventory(null, 3*9, Utils.format("&4Regulamin."));
-
-    fillInventory.setName(" ");
-
-    for (int i = 0; i < gui.getSize(); i++) {
-        gui.setItem(i, fillInventory.toItemStack());
-    }
-
-    return this.gui;
-    }*/
 }

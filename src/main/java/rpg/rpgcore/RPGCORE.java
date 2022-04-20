@@ -113,7 +113,7 @@ public final class RPGCORE extends JavaPlugin {
         this.baoManager = new BAOManager();
         this.osManager = new OsManager(this);
         this.akcesoriaManager = new AkcesoriaManager(this);
-        this.pomocManager = new PomocManager(this);
+        this.pomocManager = new PomocManager();
     }
 
     private void autoMessage() {

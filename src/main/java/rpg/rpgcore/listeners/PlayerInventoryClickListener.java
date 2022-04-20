@@ -667,19 +667,29 @@ public class PlayerInventoryClickListener implements Listener {
             }
             if (e.getCurrentItem().getType() == Material.FIREWORK_CHARGE) {
                 player.closeInventory();
-                player.sendMessage("Poradnik");
+                player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Poradnik:"));
                 player.sendMessage("1. Nie bądź kurwą...");
+                player.sendMessage("2. Odpierdalasz = wypierdalasz");
                 return;
             }
             return;
         }
-        // POMOC 2
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY())) {
+        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY().getName())) {
             e.setCancelled(true);
             return;
         }
         // POMOC 3
         if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR().getName())) {
+            if (e.getSlot() == 2) {
+                player.closeInventory();
+                player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do regulaminu:"));
+                player.sendMessage(Utils.format("&ewww.twojstarywzoo.pl"));
+            }
+            if (e.getSlot() == 6) {
+                player.closeInventory();
+                player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do taryfikatora:"));
+                player.sendMessage(Utils.format("&ewww.twojstarywzoo.pl"));
+            }
             e.setCancelled(true);
             return;
         }
