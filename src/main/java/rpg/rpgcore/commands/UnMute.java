@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class UnMute implements CommandExecutor {
@@ -46,6 +47,11 @@ public class UnMute implements CommandExecutor {
 
             rpgcore.getMuteManager().unMutePlayer(senderName, uuidToUnMute, false);
 
+            final Date dataUb = new Date();
+            final String unmuteInfo = senderName + ";" + Utils.dateFormat.format(dataUb);
+
+            this.addToPunishmentHistory(uuidToUnMute, "UnMute;" + unmuteInfo);
+
             return false;
         }
 
@@ -81,11 +87,29 @@ public class UnMute implements CommandExecutor {
 
             rpgcore.getMuteManager().unMutePlayer(senderName, uuidToUnMute, silent);
 
+            final Date dataUb = new Date();
+            final String unmuteInfo = senderName + ";" + Utils.dateFormat.format(dataUb);
+
+            this.addToPunishmentHistory(uuidToUnMute, "UnMute;" + unmuteInfo);
+
             return false;
         }
 
 
         sender.sendMessage(Utils.poprawneUzycie("unmute <gracz>"));
         return false;
+    }
+
+    private void addToPunishmentHistory(final UUID uuid, final String punishment) {
+
+        final StringBuilder newPunishment = new StringBuilder();
+
+        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        newPunishment.append(punishment).append(",");
+
+        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
+
     }
 }

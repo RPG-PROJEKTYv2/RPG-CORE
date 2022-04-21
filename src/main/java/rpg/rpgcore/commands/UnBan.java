@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class UnBan implements CommandExecutor {
@@ -46,6 +47,11 @@ public class UnBan implements CommandExecutor {
 
             rpgcore.getBanManager().unBanPlayer(senderName, uuidToUnBan, false);
 
+            final Date dataUb = new Date();
+            final String unbanInfo = senderName + ";" + Utils.dateFormat.format(dataUb);
+
+            this.addToPunishmentHistory(uuidToUnBan, "UnBan;" + unbanInfo);
+
             return false;
         }
 
@@ -81,9 +87,28 @@ public class UnBan implements CommandExecutor {
 
             rpgcore.getBanManager().unBanPlayer(senderName, uuidToUnBan, silent);
 
+            final Date dataUb = new Date();
+            final String unbanInfo = senderName + ";" + Utils.dateFormat.format(dataUb);
+
+            this.addToPunishmentHistory(uuidToUnBan, "UnBan;" + unbanInfo);
+
             return false;
         }
         sender.sendMessage(Utils.poprawneUzycie("unban [gracz]"));
         return false;
+    }
+
+
+    private void addToPunishmentHistory(final UUID uuid, final String punishment) {
+
+        final StringBuilder newPunishment = new StringBuilder();
+
+        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        newPunishment.append(punishment).append(",");
+
+        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
+
     }
 }
