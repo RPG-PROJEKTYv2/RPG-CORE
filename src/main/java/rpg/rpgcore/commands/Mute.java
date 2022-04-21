@@ -1,79 +1,77 @@
 package rpg.rpgcore.commands;
 
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
-
-public class Ban implements CommandExecutor {
+public class Mute implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    public Ban(RPGCORE rpgcore) {
+    public Mute(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-    }
-
-    private void sendHelp(final CommandSender sender) {
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
-        sender.sendMessage(Utils.format("&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie"));
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
     }
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 
-        if (!(sender.hasPermission("rpg.ban"))) {
-            sender.sendMessage(Utils.permisje("rpg.ban"));
+        if (!(sender.hasPermission("rpg.mute"))) {
+            sender.sendMessage(Utils.permisje("rpg.mute"));
             return false;
         }
 
         final String senderName = sender.getName();
-        final String banExpiry = "Pernamentny";
+        final String muteExpiry = "Permamentny";
 
-        if (args.length == 1) {
 
-            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+        if (args.length == 1){
 
-            if (uuidPlayerToBan == null) {
+            final UUID uuidPlayerToMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+
+            if (uuidPlayerToMute == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
             if (args[0].equalsIgnoreCase(senderName)) {
-                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                sender.sendMessage(Utils.theSenderCannotBeTarget("wyciszyc"));
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
-                sender.sendMessage(Utils.ALREADYBANNED);
+            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToMute)) {
+                sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
 
-            rpgcore.getBanManager().banPlayer(senderName, uuidPlayerToBan, " Brak powodu", false, banExpiry);
+            rpgcore.getMuteManager().mutePlayer(senderName, uuidPlayerToMute, " Brak powodu", false, muteExpiry);
 
             return false;
         }
 
+
+
         if (args.length >= 2) {
 
-            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidPlayerToMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
             args[0] = "";
 
-            if (uuidPlayerToBan == null) {
-                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+            if (uuidPlayerToMute == null) {
+                sender.sendMessage(Utils.MUTEPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
             if (args[0].equalsIgnoreCase(senderName)) {
-                sender.sendMessage(Utils.theSenderCannotBeTarget("zbanowac"));
+                sender.sendMessage(Utils.theSenderCannotBeTarget("wyciszyc"));
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
-                sender.sendMessage(Utils.ALREADYBANNED);
+            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToMute)) {
+                sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
 
@@ -97,13 +95,12 @@ public class Ban implements CommandExecutor {
 
             final String finalReason = String.valueOf(reason);
 
-            rpgcore.getBanManager().banPlayer(senderName, uuidPlayerToBan, finalReason, silent, banExpiry);
+            rpgcore.getMuteManager().mutePlayer(senderName, uuidPlayerToMute, finalReason, silent, muteExpiry);
 
             return false;
         }
 
-        sendHelp(sender);
-
+        sender.sendMessage(Utils.poprawneUzycie("mute <gracz> [-s] [powod]"));
         return false;
     }
 }

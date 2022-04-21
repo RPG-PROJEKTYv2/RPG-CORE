@@ -2,6 +2,7 @@ package rpg.rpgcore.managers;
 
 
 //import jdk.jfr.BooleanFlag;
+
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -20,6 +21,7 @@ public class PlayerManager {
     private final HashMap<String, UUID> playerUUID = new HashMap<>();
     private final HashMap<UUID, String> playerName = new HashMap<>();
     private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
+    private final HashMap<UUID, String> playerMuteInfo = new HashMap<>();
     private final HashMap<UUID, String> playerPunishmentHistory = new HashMap<>();
     private final HashMap<UUID, Integer> playerLvl = new HashMap<>();
     private final HashMap<UUID, Double> playerExp = new HashMap<>();
@@ -67,7 +69,7 @@ public class PlayerManager {
         return this.playersNames;
     }
 
-    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String punishmentHistory, final int playerLvl, final double playerExp,
+    public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String muteinfo, final String punishmentHistory, final int playerLvl, final double playerExp,
                              final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
                              final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept,
                              final double srednie, final double minusSrednie, final double def, final double minusDef, final double silnyNaLudzi, final double defNaLudzi, final double silnyNaMoby, final double defNaMoby,
@@ -79,6 +81,7 @@ public class PlayerManager {
         this.playerLvl.put(playerUUID, playerLvl);
         this.playerExp.put(playerUUID, playerExp);
         this.playerBanInfo.put(playerUUID, banInfo);
+        this.playerMuteInfo.put(playerUUID, muteinfo);
         this.playerPunishmentHistory.put(playerUUID, punishmentHistory);
         this.osMoby.put(playerUUID, osMoby);
         this.osLudzie.put(playerUUID, osLudzie);
@@ -117,6 +120,7 @@ public class PlayerManager {
         this.playerLvl.clear();
         this.playerExp.clear();
         this.playerBanInfo.clear();
+        this.playerMuteInfo.clear();
         this.playerPunishmentHistory.clear();
         this.osMoby.clear();
         this.osLudzie.clear();
@@ -139,9 +143,19 @@ public class PlayerManager {
         this.playerBanInfo.replace(uuid, banInfo);
     }
 
+    @Setter
+    public void updatePlayerMuteInfo(final UUID uuid, final String banInfo) {
+        this.playerMuteInfo.replace(uuid, banInfo);
+    }
+
     @Getter
     public String getPlayerBanInfo(final UUID uuid) {
         return this.playerBanInfo.get(uuid);
+    }
+
+    @Getter
+    public String getPlayerMuteInfo(final UUID uuid) {
+        return this.playerMuteInfo.get(uuid);
     }
 
     @Setter
@@ -177,6 +191,10 @@ public class PlayerManager {
     //@BooleanFlag ??????
     public boolean isBanned(final UUID uuid) {
         return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
+    }
+
+    public boolean isMuted(final UUID uuid) {
+        return !(getPlayerMuteInfo(uuid).equalsIgnoreCase("false"));
     }
 
     @Setter
@@ -448,7 +466,6 @@ public class PlayerManager {
     public Double getPlayerDefNaMoby(final UUID uuid) {
         return this.playerDefNaMoby.get(uuid);
     }
-
 
 
     @Getter

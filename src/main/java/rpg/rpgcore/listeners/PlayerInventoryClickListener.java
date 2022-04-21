@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
@@ -37,7 +38,10 @@ public class PlayerInventoryClickListener implements Listener {
         final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {
-            player.closeInventory();
+            return;
+        }
+
+        if (e.getInventory().getType() == InventoryType.PLAYER) {
             return;
         }
         //                      GUI OD BAO                  \\
@@ -419,10 +423,10 @@ public class PlayerInventoryClickListener implements Listener {
             final int clickedSlot = e.getSlot();
             final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>&7: <message>");
             final String message = rpgcore.getChatManager().getMessageWithEQ(e.getWhoClicked().getUniqueId());
-            final ArrayList<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq\\]")));
+            final ArrayList<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
             final String formatPrzedWiadomoscia = rpgcore.getChatManager().formatujChat(player, przedFormatem, "");
             final String playerGroup = PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
-            String finalMessage;
+            StringBuilder finalMessage;
             String color = "&7";
             if (message.contains("&")) {
                 int znak = message.lastIndexOf("&");
@@ -477,18 +481,18 @@ public class PlayerInventoryClickListener implements Listener {
                     }
                     if (!(msg.isEmpty())) {
                         if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
-                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player));
+                            finalMessage = new StringBuilder("&7" + Utils.removeColor(msg.get(0)) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = finalMessage + " " + msg.get(i);
+                                finalMessage.append(" ").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = msg.get(0) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = Utils.format(finalMessage + " " + color + msg.get(i));
+                                finalMessage = new StringBuilder(Utils.format(finalMessage + " " + color + msg.get(i)));
                             }
                         }
                     } else {
-                        finalMessage = Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player));
+                        finalMessage = new StringBuilder(Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
                     }
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;
@@ -535,18 +539,18 @@ public class PlayerInventoryClickListener implements Listener {
 
                     if (!(msg.isEmpty())) {
                         if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
-                            finalMessage = "&7" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                            finalMessage = new StringBuilder("&7" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = finalMessage + " " + msg.get(i);
+                                finalMessage.append(" ").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = msg.get(0) + Utils.format(" &8[&f " + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = Utils.format(finalMessage + " " + color + msg.get(i));
+                                finalMessage = new StringBuilder(Utils.format(finalMessage + " " + color + msg.get(i)));
                             }
                         }
                     } else {
-                        finalMessage = Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]");
+                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
                     }
 
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);

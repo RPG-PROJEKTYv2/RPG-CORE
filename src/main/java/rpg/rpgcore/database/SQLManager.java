@@ -90,6 +90,7 @@ public class SQLManager {
                         rs.getString("nick"),
                         UUID.fromString(rs.getString("uuid")),
                         rs.getString("banInfo"),
+                        rs.getString("muteInfo"),
                         rs.getString("punishmentHistory"),
                         rs.getInt("lvl"),
                         rs.getDouble("exp"),
@@ -204,38 +205,39 @@ public class SQLManager {
         }
     }
 
-    public void createPlayer(final String nick, final UUID uuid, final String banInfo) {
+    public void createPlayer(final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = pool.getConnection();
-            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO `player` VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, nick);
             ps.setInt(3, 1);
             ps.setDouble(4, 0.0);
             ps.setString(5, banInfo);
-            ps.setString(6, "");
-            ps.setInt(7, 0);
-            ps.setString(8, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(9, 0);
-            ps.setString(10, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(11, 0);
-            ps.setString(12, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(13, 0);
-            ps.setString(14, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(15, 0);
-            ps.setString(16, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(17, 0);
-            ps.setString(18, "false,false,false,false,false,false,false,false,false,false");
-            ps.setInt(19, 0);
-            ps.setString(20, "false,false,false,false,false,false,false,false,false,false");
+            ps.setString(6, muteInfo);
+            ps.setString(7, "");
+            ps.setInt(8, 0);
+            ps.setString(9, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(10, 0);
+            ps.setString(11, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(12, 0);
+            ps.setString(13, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(14, 0);
+            ps.setString(15, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(16, 0);
+            ps.setString(17, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(18, 0);
+            ps.setString(19, "false,false,false,false,false,false,false,false,false,false");
+            ps.setInt(20, 0);
+            ps.setString(21, "false,false,false,false,false,false,false,false,false,false");
 
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 
@@ -284,6 +286,27 @@ public class SQLManager {
         }
     }
 
+    public void mutePlayer(final UUID uuid, final String muteInfo) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set muteInfo=? WHERE uuid=?");
+
+            ps.setString(1, muteInfo);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+
+            rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, muteInfo);
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
     public void unBanPlayer(final UUID uuid) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -298,6 +321,27 @@ public class SQLManager {
             ps.executeUpdate();
 
             rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, "false");
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void unMutePlayer(final UUID uuid) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` set muteInfo=? WHERE uuid=?");
+
+            ps.setString(1, "false");
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+
+            rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, "false");
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {

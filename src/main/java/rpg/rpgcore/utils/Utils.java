@@ -2,6 +2,7 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -26,11 +27,13 @@ public class Utils {
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
-    public static final String BANPREFIX = format("&f&lTEST&3&lBANS&7 ");
+    public static final String BANPREFIX = format("&f&lTEST&3&lBAN&7 ");
+    public static final String MUTEPREFIX = format("&f&lTEST&3&lMUTE&7 ");
     public static final String LVLPREFIX = format("&f&lTEST&6&lLVL&7 ");
     public static final String KICKPREFIX = format("&f&lTEST&3&lKICK&7 ");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
+    public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
     public static DecimalFormat df = new DecimalFormat("0.0");
     public static DecimalFormat procentFormat = new DecimalFormat("##.##");
@@ -105,12 +108,21 @@ public class Utils {
         return (BANPREFIX + format("&7Gracz&c " + namePlayerToBan + " &7zostal zbanowany na serwerze przez&c " + senderName + ". &7Wygasa: " + banExpiry + ". &7Powod:&c " + reason));
     }
 
+    public static String muteBroadcast(final String namePlayerToMute, final String senderName, final String reason, final String muteExpiry) {
+        return (MUTEPREFIX + format("&7Gracz&c " + namePlayerToMute + " &7zostal wyciszony na serwerze przez&c " + senderName + ". &7Wygasa: " + muteExpiry + ". &7Powod:&c " + reason));
+    }
+
+
     public static String unBanBroadcast(final String namePlayerToUnBan, final String senderName) {
         return (BANPREFIX + format("&7Gracz&c " + namePlayerToUnBan + " &7zostal odbanowany przez&c " + senderName));
     }
 
+    public static String unMuteBroadcast(final String namePlayerToUnMute, final String senderName) {
+        return (MUTEPREFIX + format("&7Gracz&c " + namePlayerToUnMute + " &7zostal odciszony przez&c " + senderName));
+    }
+
     public static String theSenderCannotBeTarget(final String type) {
-        return (BANPREFIX + format("&cNie mozesz " + type + " samego siebie!"));
+        return (SERVERNAME + format("&cNie mozesz " + type + " samego siebie!"));
     }
 
     public static String removeColor(String toRemove) {
@@ -158,8 +170,8 @@ public class Utils {
             dataOutput.writeInt(items.length);
 
             // Save every element in the list
-            for (int i = 0; i < items.length; i++) {
-                dataOutput.writeObject(items[i]);
+            for (ItemStack item : items) {
+                dataOutput.writeObject(item);
             }
 
             // Serialize that array
@@ -227,4 +239,8 @@ public class Utils {
         }
     }
 
+    public static void youAreMuted(final Player player, final String adminNick, final String reason, final String expiry) {
+        player.sendMessage(format(MUTEPREFIX + "&7Zostales wyciszony przez &c" + adminNick + " &7za: &c" + reason));
+        player.sendMessage(format(MUTEPREFIX + "&4Wygasa: &6" + expiry));
+    }
 }

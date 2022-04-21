@@ -35,7 +35,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false"));
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false", "false"));
             e.setJoinMessage(Utils.firstJoinMessage(playerName));
         }
 

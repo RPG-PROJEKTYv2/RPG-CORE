@@ -25,6 +25,7 @@ public class CreateTables {
                     " `lvl` INT NOT NULL," +
                     " `exp` DOUBLE NOT NULL," +
                     " `banInfo` TEXT NOT NULL, " +
+                    " `muteInfo` TEXT NOT NULL, " +
                     " `punishmentHistory` TEXT NULL DEFAULT NULL," +
                     " `osMoby` INT NOT NULL DEFAULT 0," +
                     " `osLudzie` INT NOT NULL DEFAULT 0," +

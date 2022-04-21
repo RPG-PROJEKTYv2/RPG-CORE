@@ -54,4 +54,10 @@ commands:
   sprawdzmojebonusy:
     aliases:
       - smb
+
+  mute:
+
+  unmute:
+
+  tempmute:
     
