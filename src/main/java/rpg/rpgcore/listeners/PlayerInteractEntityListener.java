@@ -1,7 +1,9 @@
 package rpg.rpgcore.listeners;
 
+import net.minecraft.server.v1_8_R3.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -9,7 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -43,12 +47,11 @@ public class PlayerInteractEntityListener implements Listener {
         }
 
 
+        // DUSZOLOG
         if (e.getRightClicked().getType() == EntityType.PLAYER) {
-
             final Entity npc = e.getRightClicked();
-
-            if (npc.getName().equalsIgnoreCase("itemshop")) {
-                player.sendMessage("itemshop :)");
+            if (npc.getName().equalsIgnoreCase(Utils.format("&aDuszolog"))) {
+                player.sendMessage("duszolog test :)");
                 return;
             }
 
