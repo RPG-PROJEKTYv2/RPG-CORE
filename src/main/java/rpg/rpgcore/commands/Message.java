@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.UUID;
+
 public class Message implements CommandExecutor {
 
     private final RPGCORE rpgcore;
@@ -24,6 +26,7 @@ public class Message implements CommandExecutor {
         }
 
         final Player player = (Player) sender;
+        final UUID playerUUID = player.getUniqueId();
 
         if (!(player.hasPermission("rpg.msg"))) {
             player.sendMessage(Utils.permisje("rpg.msg"));
@@ -40,6 +43,7 @@ public class Message implements CommandExecutor {
             }
 
             final Player target = Bukkit.getPlayer(args[0]);
+            final UUID targetUUID = target.getUniqueId();
 
 //            if (player == target) {
 //                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz napisac sam do siebie"));
@@ -60,7 +64,12 @@ public class Message implements CommandExecutor {
             }
 
             rpgcore.getMsgManager().sendMessages(player, target, String.valueOf(message));
+            if (rpgcore.getMsgManager().isInMessageMapAsKey(playerUUID)) {
+                rpgcore.getMsgManager().updateMessageMap(playerUUID, targetUUID);
+                return false;
+            }
 
+            rpgcore.getMsgManager().putInMessageMap(playerUUID, targetUUID);
             return false;
         }
 

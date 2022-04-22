@@ -8,6 +8,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.UUID;
+
 public class PlayerQuitListener implements Listener {
 
     private final RPGCORE rpgcore;
@@ -20,9 +22,11 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuitListener(final PlayerQuitEvent e) {
 
         final Player p = e.getPlayer();
+        final UUID pUUID = p.getUniqueId();
         final String name = p.getName();
 
-        rpgcore.getVanishManager().getVanishList().remove(p.getUniqueId());
+        rpgcore.getVanishManager().getVanishList().remove(pUUID);
+        rpgcore.getMsgManager().getMessageMap().remove(pUUID);
 
         e.setQuitMessage(Utils.quitMessage(name));
     }
