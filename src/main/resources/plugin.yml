@@ -60,4 +60,14 @@ commands:
   unmute:
 
   tempmute:
+
+  message:
+    aliases:
+      - msg
+      - pw
+      - m
+
+  reply:
+    aliases:
+      - r
     

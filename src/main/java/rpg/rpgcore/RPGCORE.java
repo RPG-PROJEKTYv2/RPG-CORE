@@ -32,6 +32,7 @@ public final class RPGCORE extends JavaPlugin {
     private AkcesoriaManager akcesoriaManager;
     private PomocManager pomocManager;
     private MuteManager muteManager;
+    private MSGManager msgManager;
 
     private int i = 1;
 
@@ -73,6 +74,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("mute").setExecutor(new Mute(this));
         this.getCommand("unmute").setExecutor(new UnMute(this));
         this.getCommand("tempmute").setExecutor(new TempMute(this));
+        this.getCommand("message").setExecutor(new Message(this));
+        this.getCommand("reply").setExecutor(new Reply(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -119,6 +122,7 @@ public final class RPGCORE extends JavaPlugin {
         this.akcesoriaManager = new AkcesoriaManager(this);
         this.pomocManager = new PomocManager();
         this.muteManager = new MuteManager(this);
+        this.msgManager = new MSGManager();
     }
 
     private void autoMessage() {
@@ -200,5 +204,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public MuteManager getMuteManager() {
         return muteManager;
+    }
+
+    public MSGManager getMsgManager() {
+        return msgManager;
     }
 }
