@@ -121,7 +121,7 @@ public class AkcesoriaManager {
             return;
         }
 
-        Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
         ItemStack akce;
 
         for (int i = 0; i < 7 ; i++) {

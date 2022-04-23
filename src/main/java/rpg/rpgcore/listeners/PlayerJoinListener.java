@@ -58,27 +58,29 @@ public class PlayerJoinListener implements Listener {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
 
-        if (rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[4].equalsIgnoreCase("dodatkowe hp")) {
+        if (rpgcore.getBaoManager().getBaoBonusy(playerUUID) != null && rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[4].equalsIgnoreCase("dodatkowe hp")) {
             p.setMaxHealth(p.getMaxHealth() + Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[4]) * 2);
         }
 
-        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(13).getType() != Material.BARRIER) {
-            p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
-        }
+        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID) != null) {
+            if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(13).getType() != Material.BARRIER) {
+                p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
+            }
 
-        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(14).getType() != Material.BARRIER) {
-            p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
+            if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(14).getType() != Material.BARRIER) {
+                p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
+            }
+
+            rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
         }
 
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
 
-        rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
         e.setJoinMessage(Utils.joinMessage(playerName));
     }
 
 
-    //TODO Dokonczyc dla TempBana by Caufland
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();

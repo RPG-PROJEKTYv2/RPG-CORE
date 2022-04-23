@@ -32,8 +32,10 @@ commands:
   
   lvl:
   
-  gm:
-  
+  gamemode:
+    aliases:
+      - gm
+
   heal:
       
   tempban:

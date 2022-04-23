@@ -173,11 +173,4 @@ public class ChatManager implements Listener {
                 "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.THORNS) +
                 "&8]&7";
     }
-
-    @EventHandler
-    public void onInventoryClose(final InventoryCloseEvent e) {
-        if (e.getInventory().getName().equals(Utils.format("&4&lEQ GUI"))) {
-            this.updateMessageWithEQ(e.getPlayer().getUniqueId(), "");
-        }
-    }
 }

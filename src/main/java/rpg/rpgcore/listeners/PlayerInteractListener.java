@@ -301,6 +301,10 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
+            if (e.getItem() == null) {
+                return;
+            }
+
             if (e.getItem().equals(rpgcore.getBaoManager().getItemDoZmianki())) {
                 if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
