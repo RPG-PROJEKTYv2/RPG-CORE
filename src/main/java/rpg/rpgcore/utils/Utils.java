@@ -32,6 +32,7 @@ public class Utils {
     public static final String LVLPREFIX = format("&f&lTEST&6&lLVL&7 ");
     public static final String KICKPREFIX = format("&f&lTEST&3&lKICK&7 ");
     public static final String TRADEPREFIX = format("&f&lTEST&3&lTRADE&7 ");
+    public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 ");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));

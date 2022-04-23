@@ -5,6 +5,7 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -15,8 +16,8 @@ public class TradeManager {
 
     private final RPGCORE rpgcore;
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
-    private final ItemBuilder accept = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14);
-    private final ItemBuilder acceptTarget = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14);
+    private final ItemBuilder noAccept = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14);
+    private final ItemBuilder accept = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5);
     private final HashMap<UUID, UUID> tradeMap = new HashMap<>();
     private final List<UUID> acceptList = new ArrayList<>();
 
@@ -37,15 +38,10 @@ public class TradeManager {
             }
         }
 
-        accept.setName("&cJeszcze nie zaakceptowales wymiany");
-        accept.hideFlag();
 
-        tradeGUI.setItem(48, accept.toItemStack());
+        tradeGUI.setItem(48, getNoAcceptItem(sender));
 
-        acceptTarget.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &cjeszcze nie zaakceptowal wymiany");
-        acceptTarget.hideFlag();
-
-        tradeGUI.setItem(50, acceptTarget.toItemStack());
+        tradeGUI.setItem(50, getNoAcceptItem(target));
         return tradeGUI;
     }
 
@@ -100,7 +96,6 @@ public class TradeManager {
     @Setter
     public void canceltrade(final UUID sender, final UUID target) {
         if (!this.isInAcceptList(target)) {
-            this.tradeMap.remove(sender, target);
             return;
         }
         this.acceptList.remove(target);
@@ -112,4 +107,20 @@ public class TradeManager {
             Bukkit.getPlayer(target).sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Czas na zaakceptowanie wymiany od gracza &6" + rpgcore.getPlayerManager().getPlayerName(sender) + " &7wylasnie minal!"));
         }
     }
+
+    @Getter
+    public ItemStack getNoAcceptItem(final UUID target) {
+        noAccept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &cjeszcze nie zaakceptowal wymiany");
+        noAccept.hideFlag();
+
+        return this.noAccept.toItemStack();
+    }
+
+    @Getter
+    public ItemStack getAcceptItem(final UUID target) {
+        accept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &azaakceptowal wymiane");
+        accept.hideFlag();
+        return this.accept.toItemStack();
+    }
+
 }

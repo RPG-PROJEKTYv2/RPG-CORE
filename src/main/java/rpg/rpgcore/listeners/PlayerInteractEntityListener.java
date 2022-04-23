@@ -27,9 +27,9 @@ public class PlayerInteractEntityListener implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        player.sendMessage(e.getRightClicked().getEntityId() + " -ID");
 
         if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
+            player.sendMessage(e.getRightClicked().getEntityId() + " -ID");
             if (e.getRightClicked().getEntityId() == 2 || e.getRightClicked().getEntityId() == 3 || e.getRightClicked().getEntityId() == 4 || e.getRightClicked().getEntityId() == 9 ||
                     e.getRightClicked().getEntityId() == 5 || e.getRightClicked().getEntityId() == 8 || e.getRightClicked().getEntityId() == 6 || e.getRightClicked().getEntityId() == 19 ||
                     e.getRightClicked().getEntityId() == 22 || e.getRightClicked().getEntityId() == 7 || e.getRightClicked().getEntityId() == 21 || e.getRightClicked().getEntityId() == 20) {
@@ -51,7 +51,6 @@ public class PlayerInteractEntityListener implements Listener {
             final Player playerRightClicked = (Player) e.getRightClicked();
             final String entityName = Utils.removeColor(playerRightClicked.getName());
 
-            player.sendMessage(player.getUniqueId().toString());
 
             if (entityName.equalsIgnoreCase("Duszolog")) {
                 player.sendMessage("duszolog test :)");
@@ -60,7 +59,6 @@ public class PlayerInteractEntityListener implements Listener {
 
 
             if (player.isSneaking()) {
-                player.sendMessage("dziala?");
                 if (entityName.equalsIgnoreCase("trener") || entityName.equalsIgnoreCase("kolekcjoner") ||
                         entityName.equalsIgnoreCase("magazynier") || entityName.equalsIgnoreCase("medyk") ||
                         entityName.equalsIgnoreCase("czarodziej") || entityName.equalsIgnoreCase("itemshop") ||
@@ -68,13 +66,12 @@ public class PlayerInteractEntityListener implements Listener {
                         entityName.equalsIgnoreCase("straznik") || entityName.equalsIgnoreCase("alchemik") ||
                         entityName.equalsIgnoreCase("rybak") || entityName.equalsIgnoreCase("dungeony") ||
                         entityName.equalsIgnoreCase("kupiec") || entityName.equalsIgnoreCase("duszolog")) {
-                    player.sendMessage("weszlo do ifa");
                     return;
                 }
                 final UUID entityUUID = playerRightClicked.getUniqueId();
 
                 if (rpgcore.getTradeManager().isInAcceptList(uuid)) {
-                    final Inventory tradeGUi = rpgcore.getTradeManager().createTradeGUI(uuid, entityUUID);
+                    final Inventory tradeGUi = rpgcore.getTradeManager().createTradeGUI(entityUUID, uuid);
                     player.openInventory(tradeGUi);
                     playerRightClicked.openInventory(tradeGUi);
                     rpgcore.getTradeManager().removeFromAcceptList(uuid);

@@ -33,6 +33,10 @@ public class PlayerInventoryCloseListener implements Listener {
             for (int i = 0; i < e.getViewers().size(); i++) {
                 final Player viewer = (Player) e.getViewers().get(i);
                 rpgcore.getServer().getScheduler().runTaskLater(rpgcore, viewer::closeInventory, 1L);
+                if (rpgcore.getTradeManager().isInTradeMapAsKey(e.getPlayer().getUniqueId())) {
+                    rpgcore.getTradeManager().getTradeMap().remove(e.getPlayer().getUniqueId());
+                }
+                rpgcore.getTradeManager().getTradeMap().remove(viewer.getUniqueId(), e.getPlayer().getUniqueId());
             }
         }
     }

@@ -34,10 +34,6 @@ public class PlayerJoinListener implements Listener {
             rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(playerUUID);
         }
 
-        if (!(rpgcore.getPlayerManager().getPlayers().contains(playerUUID))) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(playerName, playerUUID, "false", "false"));
-            e.setJoinMessage(Utils.firstJoinMessage(playerName));
-        }
 
         if (
                 (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID))) ||
@@ -84,6 +80,10 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
+
+        if (!(rpgcore.getPlayerManager().getPlayers().contains(uuid))) {
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(e.getName(), uuid, "false", "false"));
+        }
 
         if (rpgcore.getPlayerManager().getPlayers().contains(uuid)) {
             if (rpgcore.getPlayerManager().isBanned(uuid)) {
