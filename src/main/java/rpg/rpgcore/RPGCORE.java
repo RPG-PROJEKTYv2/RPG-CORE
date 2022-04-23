@@ -8,6 +8,7 @@ import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
+import rpg.rpgcore.managers.npc.DuszologNPC;
 import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
@@ -34,6 +35,7 @@ public final class RPGCORE extends JavaPlugin {
     private MuteManager muteManager;
     private MSGManager msgManager;
     private TradeManager tradeManager;
+    private DuszologNPC duszologNPC;
 
     private int i = 1;
 
@@ -126,6 +128,7 @@ public final class RPGCORE extends JavaPlugin {
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
         this.tradeManager = new TradeManager(this);
+        this.duszologNPC = new DuszologNPC();
     }
 
     private void autoMessage() {
@@ -215,5 +218,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public TradeManager getTradeManager() {
         return tradeManager;
+    }
+
+    public DuszologNPC getDuszologNPC() {
+        return duszologNPC;
     }
 }

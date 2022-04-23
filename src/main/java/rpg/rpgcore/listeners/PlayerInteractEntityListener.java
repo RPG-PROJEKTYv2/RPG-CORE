@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.managers.npc.DuszologNPC;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -44,20 +45,21 @@ public class PlayerInteractEntityListener implements Listener {
         }
 
 
-
-        // DUSZOLOG
+        // NPCTY
         if (e.getRightClicked().getType() == EntityType.PLAYER) {
 
             final Player playerRightClicked = (Player) e.getRightClicked();
             final String entityName = Utils.removeColor(playerRightClicked.getName());
 
-
+            // DUSZOLOG
             if (entityName.equalsIgnoreCase("Duszolog")) {
-                player.sendMessage("duszolog test :)");
+                rpgcore.getDuszologNPC().dajTestDusze(player);
+                player.openInventory(rpgcore.getDuszologNPC().duszologMAIN());
                 return;
             }
 
 
+            // TRADE
             if (player.isSneaking()) {
                 if (entityName.equalsIgnoreCase("trener") || entityName.equalsIgnoreCase("kolekcjoner") ||
                         entityName.equalsIgnoreCase("magazynier") || entityName.equalsIgnoreCase("medyk") ||

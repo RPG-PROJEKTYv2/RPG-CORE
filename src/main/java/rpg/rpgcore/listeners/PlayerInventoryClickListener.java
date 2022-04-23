@@ -699,7 +699,15 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
 
-
+        // DUSZOLOG
+        if (e.getClickedInventory().getName().equals(rpgcore.getDuszologNPC().duszologMAIN().getName())) {
+            if (e.getSlot() == 10) {
+                rpgcore.getDuszologNPC().craftowanieDUSZ(player);
+                player.closeInventory();
+            }
+            e.setCancelled(true);
+            return;
+        }
         //                      TRADE                   \\
 
 
