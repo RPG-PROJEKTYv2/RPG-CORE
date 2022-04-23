@@ -9,9 +9,12 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DuszologNPC {
+
     private Inventory gui;
+    
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ArrayList<String> itemLore = new ArrayList<>();
     private final ItemBuilder craftowanie = new ItemBuilder(Material.BEACON);
@@ -19,20 +22,66 @@ public class DuszologNPC {
     private final ItemBuilder spiswszystkiego = new ItemBuilder(Material.EXP_BOTTLE);
 
 
-    private ItemBuilder testDUSZA1 = new ItemBuilder(Material.PRISMARINE_CRYSTALS, 1);
-    private ItemBuilder testDUSZA2 = new ItemBuilder(Material.INK_SACK, 1, (short) 1);
-    private ItemBuilder testDUSZA3 = new ItemBuilder(Material.BLAZE_POWDER, 1);
-    private ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
-    private ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
+    private final ItemBuilder testDUSZA1 = new ItemBuilder(Material.PRISMARINE_CRYSTALS, 1);
+    private final ItemBuilder testDUSZA2 = new ItemBuilder(Material.INK_SACK, 1, (short) 1);
+    private final ItemBuilder testDUSZA3 = new ItemBuilder(Material.BLAZE_POWDER, 1);
+    private final ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
+    private final ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
 
 
     public void craftowanieDUSZ(final Player player) {
         if (player.getInventory().contains(Material.STONE, 1) || player.getInventory().contains(Material.COBBLESTONE, 1)
         || player.getInventory().contains(Material.IRON_INGOT, 5)) {
-            player.getInventory().remove(Material.STONE);
-            player.sendMessage("test");
+            Random random = new Random();
+            int szansa = random.nextInt(100) + 1;
+            if (szansa < 0.01 ) {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &5&LDROPU&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(" ");
+                player.getInventory().addItem(testDUSZA5.toItemStack());
+            } else if (szansa < 4) {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &b&lODBICIA CIOSU&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+                player.getInventory().addItem(testDUSZA1.toItemStack());
+            } else if (szansa < 10) {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &a&lOBRONY&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+                player.getInventory().addItem(testDUSZA4.toItemStack());
+            } else if (szansa < 12) {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &4&lOBRAZEN&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+                player.getInventory().addItem(testDUSZA3.toItemStack());
+            } else if (szansa < 15) {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &c&lZYCIA&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+                player.getInventory().addItem(testDUSZA2.toItemStack());
+            } else {
+                Bukkit.broadcastMessage(" ");
+                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &4&lPUSTKE&c!"));
+                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+                Bukkit.broadcastMessage(" ");
+            }
         } else {
-            player.sendMessage("Nie masz potrzebnych przedmiotow. x1 stone , x1 cobel , x5 iron sztabka");
+            player.sendMessage(Utils.format("&a&lDuszolog &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
         }
     }
 
@@ -51,15 +100,15 @@ public class DuszologNPC {
         this.itemLore.add(" ");
         this.itemLore.add("&8>> &eKliknij aby stworzyc losowa &f&ldusze&e!");
         this.itemLore.add(" ");
-        this.itemLore.add("&8[ &e>> &8] &eSzanse na dusze:");
-        this.itemLore.add("&8* &bOdbicia: &c10%");
-        this.itemLore.add("&8* &cZycia: &c10%");
-        this.itemLore.add("&8* &4Obrazen: &c10%");
+        this.itemLore.add("&8[ &e>> &8] &eSzanse na dropniecie duszy:");
+        this.itemLore.add("&8* &bOdbicia: &c4%");
+        this.itemLore.add("&8* &cZycia: &c15%");
+        this.itemLore.add("&8* &4Obrazen: &c12%");
         this.itemLore.add("&8* &aObrony: &c10%");
+        this.itemLore.add("&8* &5Dropu: &c0.01%");
         this.itemLore.add(" ");
         this.itemLore.add("&8[ &e>> &8] &eSzanse na inne:");
         this.itemLore.add("&8* &cPustka: &c40%");
-        this.itemLore.add("&8* &fZwrot wiekszosci itemow: &c10%");
         this.itemLore.add(" ");
 
         craftowanie.addGlowing();
