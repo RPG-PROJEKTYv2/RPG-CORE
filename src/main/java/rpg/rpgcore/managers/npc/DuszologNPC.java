@@ -25,11 +25,14 @@ public class DuszologNPC {
     private ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
     private ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
 
+
     public void craftowanieDUSZ(final Player player) {
-        if (player.getInventory().contains(Material.STONE, 1) || player.getInventory().contains(Material.COBBLESTONE, 1)) {
+        if (player.getInventory().contains(Material.STONE, 1) || player.getInventory().contains(Material.COBBLESTONE, 1)
+        || player.getInventory().contains(Material.IRON_INGOT, 5)) {
+            player.getInventory().remove(Material.STONE);
             player.sendMessage("test");
         } else {
-            player.sendMessage("brak stone i cobbla");
+            player.sendMessage("Nie masz potrzebnych przedmiotow. x1 stone , x1 cobel , x5 iron sztabka");
         }
     }
 
