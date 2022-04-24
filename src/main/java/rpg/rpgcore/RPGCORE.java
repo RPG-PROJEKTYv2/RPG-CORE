@@ -91,6 +91,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInventoryCloseListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryDragListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
 

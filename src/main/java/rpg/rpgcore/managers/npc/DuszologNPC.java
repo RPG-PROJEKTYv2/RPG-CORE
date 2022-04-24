@@ -42,51 +42,28 @@ public class DuszologNPC {
             player.getInventory().remove(component3.toItemStack());
             Random random = new Random();
             int szansa = random.nextInt(1000) + 1;
-            if (szansa <= 1 ) {
+            if (szansa <= 10) {
                 Bukkit.broadcastMessage(" ");
                 Bukkit.broadcastMessage(" ");
                 Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &5&LDROPU&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+                this.sendBroadcast(player, "&f&lDUSZE &5&LDROPU");
                 Bukkit.broadcastMessage(" ");
                 Bukkit.broadcastMessage(" ");
                 player.getInventory().addItem(testDUSZA5.toItemStack());
-            } else if (szansa < 40) {
-                Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &b&lODBICIA CIOSU&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+            } else if (szansa <= 130) {
+                this.sendBroadcast(player, "&f&lDUSZE &b&lODBICIA CIOSU");
                 player.getInventory().addItem(testDUSZA1.toItemStack());
-            } else if (szansa < 100) {
-                Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &a&lOBRONY&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+            } else if (szansa <= 230) {
+                this.sendBroadcast(player, "&f&lDUSZE &a&lOBRONY");
                 player.getInventory().addItem(testDUSZA4.toItemStack());
-            } else if (szansa < 120) {
-                Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &4&lOBRAZEN&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+            } else if (szansa <= 330) {
+                this.sendBroadcast(player, "&f&lDUSZE &4&lOBRAZEN");
                 player.getInventory().addItem(testDUSZA3.toItemStack());
-            } else if (szansa < 150) {
-                Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &f&lDUSZE &c&lZYCIA&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+            } else if (szansa <= 430) {
+                this.sendBroadcast(player, "&f&lDUSZE &c&lZYCIA");
                 player.getInventory().addItem(testDUSZA2.toItemStack());
             } else {
-                Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
-                Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl &4&lPUSTKE&c!"));
-                Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
-                Bukkit.broadcastMessage(" ");
+                this.sendBroadcast(player, "&4&lPUSTKE");
             }
         } else {
             player.sendMessage(Utils.format("&a&lDuszolog &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
@@ -201,6 +178,14 @@ public class DuszologNPC {
         testDUSZA5.setLore(testlore);
 
         player.getInventory().addItem(testDUSZA1.toItemStack(), testDUSZA2.toItemStack(), testDUSZA3.toItemStack(), testDUSZA4.toItemStack(), testDUSZA5.toItemStack());
+    }
+
+    private void sendBroadcast(final Player player, final String nazwaDuszy) {
+        Bukkit.broadcastMessage(" ");
+        Bukkit.broadcastMessage(Utils.format("&8[ &e>> &8] &a&lDuszolog &8[ &e<< &8]"));
+        Bukkit.broadcastMessage(Utils.format("&cGracz &e" + player.getName() + " &cwytworzyl " + nazwaDuszy + "&c!"));
+        Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
+        Bukkit.broadcastMessage(" ");
     }
 
 }

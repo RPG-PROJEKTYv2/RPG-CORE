@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,6 +43,9 @@ public class PlayerInventoryCloseListener implements Listener {
                 final Player firstViewer = (Player) e.getViewers().get(1);
                 final Player secViewer = (Player) e.getViewers().get(0);
 
+                if (!(rpgcore.getTradeManager().getTradeMap().containsKey(firstViewer.getUniqueId()) && rpgcore.getTradeManager().getTradeMap().containsValue(secViewer.getUniqueId()))) {
+                    return;
+                }
 
                 for(int i = 0; i < e.getInventory().getSize(); i++) {
 
@@ -79,11 +83,6 @@ public class PlayerInventoryCloseListener implements Listener {
                 rpgcore.getServer().getScheduler().runTaskLater(rpgcore, lastViewer::closeInventory, 1L);
                 return;
             }
-
-//            if (rpgcore.getTradeManager().isInTradeMapAsKey(e.getPlayer().getUniqueId())) {
-//                rpgcore.getTradeManager().getTradeMap().remove(e.getPlayer().getUniqueId());
-//            }
-//            rpgcore.getTradeManager().getTradeMap().remove(viewer.getUniqueId(), e.getPlayer().getUniqueId());
         }
     }
 }

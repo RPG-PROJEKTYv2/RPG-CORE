@@ -8,13 +8,11 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
@@ -42,9 +40,6 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
 
-        if (e.getInventory().getType() == InventoryType.PLAYER) {
-            return;
-        }
         //                      GUI OD BAO                  \\
         if (e.getClickedInventory().getName().equals(Utils.format("&6&lSTOL MAGII"))) {
 
@@ -717,18 +712,27 @@ public class PlayerInventoryClickListener implements Listener {
             final Player secViewer = (Player) e.getClickedInventory().getViewers().get(0);
             final UUID secViewerUUID = secViewer.getUniqueId();
             final UUID firstViewerUUID = firstViewer.getUniqueId();
-            if (e.getClickedInventory().getName().equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName()) ||
-                    e.getClickedInventory().getName().equals(rpgcore.getTradeManager().createTradeGUI(secViewerUUID, firstViewerUUID).getName())) {
+            if (e.getClickedInventory().getName().equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName())) {
                 final int i = e.getSlot();
 
+                if (rpgcore.getTradeManager().isTradeAccepted(e.getClickedInventory())) {
+                    e.setCancelled(true);
+                    return;
+                }
 
                 if (!((i > 9 && i < 13) || (i > 13 && i< 17) || (i > 18 && i < 22) || (i > 22 && i < 26) || (i > 27 && i < 31) || (i > 31 && i < 35) || (i > 36 && i < 40) ||
                         (i > 40 && i < 44))) {
                     e.setCancelled(true);
                     if (i == 48) {
-                        if (e.getWhoClicked() == firstViewer) {
+                        if (e.getWhoClicked().equals(firstViewer)) {
                             if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
                                 e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getAcceptItem(firstViewerUUID));
+                                if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
+                                        && e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                                    e.setCancelled(true);
+                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(e.getClickedInventory(), firstViewer, secViewer), 1L);
+                                    return;
+                                }
                                 return;
                             }
                             e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID));
@@ -736,9 +740,15 @@ public class PlayerInventoryClickListener implements Listener {
                         }
                     }
                     if (i == 50) {
-                        if (e.getWhoClicked() == secViewer) {
+                        if (e.getWhoClicked().equals(secViewer)) {
                             if (e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
                                 e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getAcceptItem(secViewerUUID));
+                                if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
+                                        && e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                                    e.setCancelled(true);
+                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(e.getClickedInventory(), firstViewer, secViewer), 1L);
+                                    return;
+                                }
                                 return;
                             }
                             e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID));
@@ -748,8 +758,8 @@ public class PlayerInventoryClickListener implements Listener {
                     return;
                 }
 
-                if (e.getWhoClicked() == firstViewer) {
-                    if (! ((i > 9 && i < 13) || (i > 18 && i < 22) || (i > 27 && i < 31) || (i > 36 && i < 40)) ) {
+                if (e.getWhoClicked().equals(firstViewer)) {
+                    if (! (i < 13 || i > 18 && i < 22 || i > 27 && i < 31 || i > 36 && i < 40)) {
                         e.setCancelled(true);
                         return;
                     }
@@ -758,10 +768,11 @@ public class PlayerInventoryClickListener implements Listener {
                         e.setCancelled(true);
                         return;
                     }
+                    return;
                 }
 
-                if (e.getWhoClicked() == secViewer) {
-                    if (! ((i > 13 && i< 17) || (i > 22 && i < 26) || (i > 31 && i < 35) || (i > 40 && i < 44)) ) {
+                if (e.getWhoClicked().equals(secViewer)) {
+                    if (! (i > 13 && i < 17 || i > 22 && i < 26 || i > 31 && i < 35 || i > 40)) {
                         e.setCancelled(true);
                         return;
                     }
@@ -769,6 +780,7 @@ public class PlayerInventoryClickListener implements Listener {
                         e.setCancelled(true);
                         return;
                     }
+                    return;
                 }
             }
             return;
