@@ -713,12 +713,8 @@ public class PlayerInventoryClickListener implements Listener {
 
 
         if (e.getClickedInventory().getName().contains("Wymiana ")) {
-            Player secViewer = (Player) e.getClickedInventory().getViewers().get(0);
-            Player firstViewer = Bukkit.getPlayer(rpgcore.getTradeManager().getTradeSender(secViewer.getUniqueId()));
-            if (secViewer == player) {
-                secViewer = (Player) e.getClickedInventory().getViewers().get(1);
-                firstViewer = Bukkit.getPlayer(rpgcore.getTradeManager().getTradeTarget(secViewer.getUniqueId()));
-            }
+            final Player firstViewer = (Player) e.getClickedInventory().getViewers().get(1);
+            final Player secViewer = (Player) e.getClickedInventory().getViewers().get(0);
             final UUID secViewerUUID = secViewer.getUniqueId();
             final UUID firstViewerUUID = firstViewer.getUniqueId();
             if (e.getClickedInventory().getName().equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName()) ||
@@ -729,46 +725,52 @@ public class PlayerInventoryClickListener implements Listener {
                 if (!((i > 9 && i < 13) || (i > 13 && i< 17) || (i > 18 && i < 22) || (i > 22 && i < 26) || (i > 27 && i < 31) || (i > 31 && i < 35) || (i > 36 && i < 40) ||
                         (i > 40 && i < 44))) {
                     e.setCancelled(true);
-                    if (e.getCurrentItem() == rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID)) {
-                        firstViewer.sendMessage("kliknieto item gracza 1");
+                    if (i == 48) {
                         if (e.getWhoClicked() == firstViewer) {
-                            e.getInventory().setItem(48, rpgcore.getTradeManager().getAcceptItem(firstViewerUUID));
+                            if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
+                                e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getAcceptItem(firstViewerUUID));
+                                return;
+                            }
+                            e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID));
                             return;
                         }
-                    } else if (e.getCurrentItem() == rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID)) {
-                        secViewer.sendMessage("kliknieto item gracza 2");
+                    }
+                    if (i == 50) {
                         if (e.getWhoClicked() == secViewer) {
-                            e.getInventory().setItem(50, rpgcore.getTradeManager().getAcceptItem(secViewerUUID));
-                            return;
-                        }
-                    } else if (e.getCurrentItem() == rpgcore.getTradeManager().getAcceptItem(firstViewerUUID)) {
-                        if (e.getWhoClicked() == firstViewer) {
-                            e.getInventory().setItem(48, rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID));
-                            return;
-                        }
-                    } else if (e.getCurrentItem() == rpgcore.getTradeManager().getAcceptItem(secViewerUUID)) {
-                        if (e.getWhoClicked() == secViewer) {
-                            e.getInventory().setItem(50, rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID));
+                            if (e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                                e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getAcceptItem(secViewerUUID));
+                                return;
+                            }
+                            e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID));
                             return;
                         }
                     }
                     return;
                 }
 
+                if (e.getWhoClicked() == firstViewer) {
+                    if (! ((i > 9 && i < 13) || (i > 18 && i < 22) || (i > 27 && i < 31) || (i > 36 && i < 40)) ) {
+                        e.setCancelled(true);
+                        return;
+                    }
 
+                    if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
 
-
+                if (e.getWhoClicked() == secViewer) {
+                    if (! ((i > 13 && i< 17) || (i > 22 && i < 26) || (i > 31 && i < 35) || (i > 40 && i < 44)) ) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                    if (e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
             }
-
-
-
-
-
-
-
-
-
-
             return;
         }
 

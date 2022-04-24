@@ -30,6 +30,8 @@ public class PlayerJoinListener implements Listener {
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
 
+        p.setMaxHealth(20);
+
         if (!(rpgcore.getAkcesoriaManager().getAkcesoriaMap().containsKey(playerUUID))) {
             rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(playerUUID);
         }

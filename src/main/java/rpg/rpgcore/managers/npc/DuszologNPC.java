@@ -27,11 +27,19 @@ public class DuszologNPC {
     private final ItemBuilder testDUSZA3 = new ItemBuilder(Material.BLAZE_POWDER, 1);
     private final ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
     private final ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
+    private final ItemBuilder component1 = new ItemBuilder(Material.STONE);
+    private final ItemBuilder component2 = new ItemBuilder(Material.COBBLESTONE);
+    private final ItemBuilder component3 = new ItemBuilder(Material.IRON_INGOT);
+    private final ItemBuilder component4 = new ItemBuilder(Material.STONE);
+    private final ItemBuilder component5 = new ItemBuilder(Material.STONE);
+    private final ItemBuilder component6 = new ItemBuilder(Material.STONE);
+    private final ItemBuilder component7 = new ItemBuilder(Material.STONE);
+    private final ItemBuilder component8 = new ItemBuilder(Material.STONE);
 
 
     public void craftowanieDUSZ(final Player player) {
-        if (player.getInventory().contains(Material.STONE, 1) || player.getInventory().contains(Material.COBBLESTONE, 1)
-        || player.getInventory().contains(Material.IRON_INGOT, 5)) {
+        if (player.getInventory().containsAtLeast(component1.toItemStack(), 1) && player.getInventory().containsAtLeast(component2.toItemStack(), 1)
+        && player.getInventory().containsAtLeast(component3.toItemStack(), 5)) {
             Random random = new Random();
             int szansa = random.nextInt(100) + 1;
             if (szansa < 0.01 ) {
