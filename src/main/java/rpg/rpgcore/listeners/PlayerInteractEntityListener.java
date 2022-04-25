@@ -53,7 +53,6 @@ public class PlayerInteractEntityListener implements Listener {
 
             // DUSZOLOG
             if (entityName.equalsIgnoreCase("Duszolog")) {
-                rpgcore.getDuszologNPC().dajTestDusze(player);
                 player.openInventory(rpgcore.getDuszologNPC().duszologMAIN());
                 return;
             }

@@ -4,10 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -32,41 +34,41 @@ public class DuszologNPC {
     private final ItemBuilder component2 = new ItemBuilder(Material.COBBLESTONE);
     private final ItemBuilder component3 = new ItemBuilder(Material.IRON_INGOT);
 
-
+    final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
+    List<String> testlore = new ArrayList<>();
 
     public void craftowanieDUSZ(final Player player) {
         if (player.getInventory().containsAtLeast(component1.toItemStack(), 1) && player.getInventory().containsAtLeast(component2.toItemStack(), 1)
         && player.getInventory().containsAtLeast(component3.toItemStack(), 1)) {
-            player.getInventory().remove(component1.toItemStack());
-            player.getInventory().remove(component2.toItemStack());
-            player.getInventory().remove(component3.toItemStack());
+            itemMapToRemove.put(0, component1.toItemStack());
+            itemMapToRemove.put(1, component2.toItemStack());
+            itemMapToRemove.put(2, component3.toItemStack());
+            player.getInventory().removeItem(itemMapToRemove.get(0));
+            player.getInventory().removeItem(itemMapToRemove.get(1));
+            player.getInventory().removeItem(itemMapToRemove.get(2));
+
             Random random = new Random();
             int szansa = random.nextInt(1000) + 1;
             if (szansa <= 10) {
                 Bukkit.broadcastMessage(" ");
                 Bukkit.broadcastMessage(" ");
+                this.sendBroadcast(player, "&f&lDUSZE &5&LDROPU &c0.0001%");
                 Bukkit.broadcastMessage(" ");
-                this.sendBroadcast(player, "&f&lDUSZE &5&LDROPU");
                 Bukkit.broadcastMessage(" ");
-                Bukkit.broadcastMessage(" ");
-                player.getInventory().addItem(testDUSZA5.toItemStack());
-            } else if (szansa <= 130) {
-                this.sendBroadcast(player, "&f&lDUSZE &b&lODBICIA CIOSU");
-                player.getInventory().addItem(testDUSZA1.toItemStack());
-            } else if (szansa <= 230) {
-                this.sendBroadcast(player, "&f&lDUSZE &a&lOBRONY");
-                player.getInventory().addItem(testDUSZA4.toItemStack());
-            } else if (szansa <= 330) {
-                this.sendBroadcast(player, "&f&lDUSZE &4&lOBRAZEN");
-                player.getInventory().addItem(testDUSZA3.toItemStack());
-            } else if (szansa <= 430) {
-                this.sendBroadcast(player, "&f&lDUSZE &c&lZYCIA");
-                player.getInventory().addItem(testDUSZA2.toItemStack());
+                dajDROPU(player);
+            } else if (szansa <= 60) {
+                dajODBICIA(player);
+            } else if (szansa <= 160) {
+                dajOBRONY(player);
+            } else if (szansa <= 260) {
+                dajOBRAZEN(player);
+            } else if (szansa <= 410) {
+                dajZYCIA(player);
             } else {
                 this.sendBroadcast(player, "&4&lPUSTKE");
             }
         } else {
-            player.sendMessage(Utils.format("&a&lDuszolog &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
+            player.sendMessage(Utils.format("&a&lDuszolog &8>> &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
         }
     }
 
@@ -86,11 +88,11 @@ public class DuszologNPC {
         this.itemLore.add("&8>> &eKliknij aby stworzyc losowa &f&ldusze&e!");
         this.itemLore.add(" ");
         this.itemLore.add("&8[ &e>> &8] &eSzanse na dropniecie duszy:");
-        this.itemLore.add("&8* &bOdbicia: &c4%");
+        this.itemLore.add("&8* &bOdbicia: &c5%");
         this.itemLore.add("&8* &cZycia: &c15%");
         this.itemLore.add("&8* &4Obrazen: &c10%");
         this.itemLore.add("&8* &aObrony: &c10%");
-        this.itemLore.add("&8* &5Dropu: &c0.001%");
+        this.itemLore.add("&8* &5Dropu: &c0.01%");
         this.itemLore.add(" ");
         this.itemLore.add("&8[ &e>> &8] &eSzanse na inne:");
         this.itemLore.add("&8* &cPustka: &c50%");
@@ -106,8 +108,9 @@ public class DuszologNPC {
         potrzebneitemy.setName("&aPotrzebne przedmioty");
         this.itemLore.add(" ");
         this.itemLore.add("&8[ &e>> &8] &eLista:");
-        this.itemLore.add("&8>> &f1. &6Stone &cx64&8.");
-        this.itemLore.add("&8>> &f1. &6Skrzynka &cx32&8.");
+        this.itemLore.add("&8>> &f1. &6Stone &cx1&8.");
+        this.itemLore.add("&8>> &f2. &6Cobblestone &cx1&8.");
+        this.itemLore.add("&8>> &f3. &6Sztabka zelaza &cx1&8.");
         this.itemLore.add(" ");
         potrzebneitemy.addGlowing();
         potrzebneitemy.setLore(itemLore);
@@ -133,40 +136,67 @@ public class DuszologNPC {
         return this.gui;
     }
 
-    public void dajTestDusze(final Player player) {
-        List<String> testlore = new ArrayList<>();
+    private void dajZYCIA(final Player player) {
 
-        testDUSZA1.setName("&8* &f&lDusza &bOdbicia &8*");
-        testlore.add(" ");
-        testlore.add("&8>> &eBonus odbicia ciosu: &c3%");
-        testlore.add(" ");
-        testDUSZA1.addGlowing();
-        testDUSZA1.setLore(testlore);
+        Random randomZYCIA = new Random();
+        int szansaZYCIA  = randomZYCIA.nextInt(15) + 1;
 
         testlore.clear();
         testDUSZA2.setName("&8* &f&lDusza &cZycia &8*");
         testlore.add(" ");
-        testlore.add("&8>> &eBonus dodatkowego zdrowia: &c+15");
+        testlore.add("&8>> &eBonus dodatkowego zdrowia: &c+" + szansaZYCIA);
         testlore.add(" ");
         testDUSZA2.addGlowing();
         testDUSZA2.setLore(testlore);
+        player.getInventory().addItem(testDUSZA2.toItemStack());
+        this.sendBroadcast(player, "&f&lDUSZE &c&lZYCIA &c+" + szansaZYCIA);
+    }
+    private void dajOBRAZEN(final Player player) {
+
+        Random randomOBRAZEN = new Random();
+        int szansaOBRAZEN  = randomOBRAZEN.nextInt(10) + 1;
 
         testlore.clear();
         testDUSZA3.setName("&8* &f&lDusza &4Obrazen &8*");
         testlore.add(" ");
-        testlore.add("&8>> &eBonus dodatkowych obrazen: &c8%");
+        testlore.add("&8>> &eBonus dodatkowych obrazen: &c" + szansaOBRAZEN + "&c%");
         testlore.add(" ");
         testDUSZA3.addGlowing();
         testDUSZA3.setLore(testlore);
+        player.getInventory().addItem(testDUSZA3.toItemStack());
+        this.sendBroadcast(player, "&f&lDUSZE &4&lOBRAZEN &c" + szansaOBRAZEN + "&c%");
+    }
+    private void dajOBRONY(final Player player) {
+
+        Random randomOBRONY = new Random();
+        int szansaOBRONY  = randomOBRONY.nextInt(10) + 1;
 
         testlore.clear();
         testDUSZA4.setName("&8* &f&lDusza &aObrony &8*");
         testlore.add(" ");
-        testlore.add("&8>> &eBonus dodatkowej obrony: &c8%");
+        testlore.add("&8>> &eBonus dodatkowej obrony: &c" + szansaOBRONY + "%");
         testlore.add(" ");
         testDUSZA4.addGlowing();
         testDUSZA4.setLore(testlore);
+        player.getInventory().addItem(testDUSZA4.toItemStack());
+        this.sendBroadcast(player, "&f&lDUSZE &a&lOBRONY &c" + szansaOBRONY + "&c%");
+    }
+    private void dajODBICIA(final Player player) {
 
+        Random randomODBICIA = new Random();
+        int szansaODBICIA  = randomODBICIA.nextInt(5) + 1;
+
+        testlore.clear();
+        testDUSZA1.setName("&8* &f&lDusza &bOdbicia &8*");
+        testlore.add(" ");
+        testlore.add("&8>> &eBonus odbicia ciosu: &c" + szansaODBICIA + "%");
+        testlore.add(" ");
+        testDUSZA1.addGlowing();
+        testDUSZA1.setLore(testlore);
+        player.getInventory().addItem(testDUSZA1.toItemStack());
+        this.sendBroadcast(player, "&f&lDUSZE &b&lODBICIA &c" + szansaODBICIA + "&c%");
+    }
+    private void dajDROPU(final Player player) {
         testlore.clear();
         testDUSZA5.setName("&8* &f&lDusza &5Dropu &8*");
         testlore.add(" ");
@@ -176,8 +206,7 @@ public class DuszologNPC {
         testlore.add(" ");
         testDUSZA5.addGlowing();
         testDUSZA5.setLore(testlore);
-
-        player.getInventory().addItem(testDUSZA1.toItemStack(), testDUSZA2.toItemStack(), testDUSZA3.toItemStack(), testDUSZA4.toItemStack(), testDUSZA5.toItemStack());
+        player.getInventory().addItem(testDUSZA5.toItemStack());
     }
 
     private void sendBroadcast(final Player player, final String nazwaDuszy) {
