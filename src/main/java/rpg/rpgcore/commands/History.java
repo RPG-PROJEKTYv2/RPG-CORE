@@ -7,8 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -22,7 +20,7 @@ public class History implements CommandExecutor {
 
     private final RPGCORE rpgcore;
     private final ItemBuilder itemBuilder = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
-    private List<String> lore = new ArrayList<>();
+    private final List<String> lore = new ArrayList<>();
 
     public History(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -131,7 +129,6 @@ public class History implements CommandExecutor {
 
         final String[] fullPunishmentHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid)).split(",");
 
-        int j = 0;
         for (final String onePunishment : fullPunishmentHistory) {
 
             if (!(onePunishment.equalsIgnoreCase( ""))){
@@ -158,14 +155,8 @@ public class History implements CommandExecutor {
                     }
                     itemBuilder.setLore(lore);
                     lore.clear();
-                    for (int i = 0; i < punishmentHistory.getSize(); i++) {
-                        if (punishmentHistory.getItem(i) == null) {
-                            punishmentHistory.setItem(i, itemBuilder.toItemStack());
-                            break;
-                        }
-                    }
+                    punishmentHistory.setItem(punishmentHistory.firstEmpty(), itemBuilder.toItemStack());
                 }
-                j++;
             }
         }
         return punishmentHistory;

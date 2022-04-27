@@ -23,6 +23,7 @@ public class PlayerManager {
     private final HashMap<UUID, String> playerBanInfo = new HashMap<>();
     private final HashMap<UUID, String> playerMuteInfo = new HashMap<>();
     private final HashMap<UUID, String> playerPunishmentHistory = new HashMap<>();
+    private final HashMap<UUID, Double> playerKasa = new HashMap<>();
     private final HashMap<UUID, Integer> playerLvl = new HashMap<>();
     private final HashMap<UUID, Double> playerExp = new HashMap<>();
     private final HashMap<UUID, Integer> osMoby = new HashMap<>();
@@ -73,11 +74,12 @@ public class PlayerManager {
                              final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
                              final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept,
                              final double srednie, final double minusSrednie, final double def, final double minusDef, final double silnyNaLudzi, final double defNaLudzi, final double silnyNaMoby, final double defNaMoby,
-                             final double damage, final double blok, final double przeszywka, final double kryt, final double hp) {
+                             final double damage, final double blok, final double przeszywka, final double kryt, final double hp, final double playerKasa) {
         this.players.add(playerUUID);
         this.playersNames.add(playerName);
         this.playerUUID.put(playerName, playerUUID);
         this.playerName.put(playerUUID, playerName);
+        this.playerKasa.put(playerUUID, playerKasa);
         this.playerLvl.put(playerUUID, playerLvl);
         this.playerExp.put(playerUUID, playerExp);
         this.playerBanInfo.put(playerUUID, banInfo);
@@ -110,6 +112,7 @@ public class PlayerManager {
         this.playerPrzeszywka.put(playerUUID, przeszywka);
         this.playerKryt.put(playerUUID, kryt);
         this.playerHP.put(playerUUID, hp);
+
     }
 
     public void removeAllPlayers() {
@@ -117,6 +120,7 @@ public class PlayerManager {
         this.playerUUID.clear();
         this.players.clear();
         this.playersNames.clear();
+        this.playerKasa.clear();
         this.playerLvl.clear();
         this.playerExp.clear();
         this.playerBanInfo.clear();
@@ -481,6 +485,25 @@ public class PlayerManager {
     @Getter
     public HashMap<UUID, Double> getPlayerExp() {
         return playerExp;
+    }
+
+    @Getter
+    public double getPlayerKasa(final UUID uuid) {
+        return this.playerKasa.get(uuid);
+    }
+
+    @Setter
+    public void updatePlayerKasa(final UUID uuid, final double kasa) {
+        this.playerKasa.replace(uuid, kasa);
+    }
+
+    @Setter
+    public void putPlayerKasa(final double kasa, final UUID uuid) {
+        this.playerKasa.put(uuid, kasa);
+    }
+
+    public boolean isPlayerInKasaMap(final UUID uuid) {
+        return this.playerKasa.containsKey(uuid);
     }
 
 }

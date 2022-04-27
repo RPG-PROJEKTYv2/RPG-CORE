@@ -120,7 +120,8 @@ public class SQLManager {
                         0.0,
                         0.0,
                         0.0,
-                        0.0);
+                        0.0,
+                        rs.getDouble("kasa"));
             }
 
             ps.executeQuery();
@@ -159,6 +160,7 @@ public class SQLManager {
 
             while (rs.next()) {
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUI(UUID.fromString(rs.getString("uuid")), Utils.itemStackArrayFromBase64(rs.getString("Akcesoria")));
+                rpgcore.getTargManager().putPlayerInTargMap(UUID.fromString(rs.getString("uuid")), Utils.fromBase64(rs.getString("Targ"), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(UUID.fromString(rs.getString("uuid")))));
             }
 
             ps.executeQuery();
@@ -237,7 +239,7 @@ public class SQLManager {
 
             ps.executeUpdate();
 
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
             ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
 
@@ -255,6 +257,7 @@ public class SQLManager {
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+            ps.setString(3, Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
 
             ps.executeUpdate();
 
@@ -468,6 +471,41 @@ public class SQLManager {
             ps = conn.prepareStatement("UPDATE `Inventories` SET Akcesoria=? WHERE uuid=?");
 
             ps.setString(1, akcesoriaInString);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+    public void updatePlayerTarg(final UUID uuid, final String targiInString) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `Inventories` SET Targ=? WHERE uuid=?");
+
+            ps.setString(1, targiInString);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void updatePlayerKasa(final UUID uuid, final double kasa) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `player` SET kasa=? WHERE uuid=?");
+
+            ps.setDouble(1, kasa);
             ps.setString(2, String.valueOf(uuid));
 
             ps.executeUpdate();

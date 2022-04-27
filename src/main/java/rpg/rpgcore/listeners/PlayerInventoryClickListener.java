@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
@@ -32,6 +33,7 @@ public class PlayerInventoryClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
         final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
@@ -40,10 +42,14 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
 
-        //                      GUI OD BAO                  \\
-        if (e.getClickedInventory().getName().equals(Utils.format("&6&lSTOL MAGII"))) {
+        final String clickedInventoryTitle = clickedInventory.getTitle();
+        final ItemStack clickedItem = e.getCurrentItem();
+        final int clickedSlot = e.getSlot();
 
-            if (e.getSlot() == 16) {
+        //                      GUI OD BAO                  \\
+        if (clickedInventoryTitle.equals(Utils.format("&6&lSTOL MAGII"))) {
+
+            if (clickedSlot == 16) {
                 if (!(player.getInventory().containsAtLeast(rpgcore.getBaoManager().getItemDoLosowania(), 1))) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz &3&lKamien Bao&c!"));
                     player.closeInventory();
@@ -64,96 +70,95 @@ public class PlayerInventoryClickListener implements Listener {
             player.closeInventory();
         }
 
-        if (e.getClickedInventory().getName().equalsIgnoreCase(rpgcore.getBaoManager().ksiegaMagiiGUI(playerUUID).getName())) {
+        if (clickedInventoryTitle.equalsIgnoreCase(rpgcore.getBaoManager().ksiegaMagiiGUI(playerUUID).getName())) {
             e.setCancelled(true);
-            if (e.getSlot() == 11) {
+            if (clickedSlot == 11) {
                 rpgcore.getBaoManager().losujNowyBonus1(playerUUID);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " %");
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " %");
             }
-            if (e.getSlot() == 12) {
+            if (clickedSlot == 12) {
                 rpgcore.getBaoManager().losujNowyBonus2(playerUUID);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " %");
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " %");
             }
-            if (e.getSlot() == 13) {
+            if (clickedSlot == 13) {
                 rpgcore.getBaoManager().losujNowyBonus3(playerUUID);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " %");
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " %");
             }
-            if (e.getSlot() == 14) {
+            if (clickedSlot == 14) {
                 rpgcore.getBaoManager().losujNowyBonus4(playerUUID);
                 if (rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[3].equalsIgnoreCase("dodatkowe obrazenia")) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " DMG");
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " DMG");
                 } else {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " %");
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " %");
                 }
             }
-            if (e.getSlot() == 15) {
+            if (clickedSlot == 15) {
                 rpgcore.getBaoManager().losujNowyBonus5(playerUUID);
                 if (rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[4].equalsIgnoreCase("dodatkowe hp")) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " HP");
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " HP");
                 } else {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[e.getSlot() - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[e.getSlot() - 11]) + " %");
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[clickedSlot - 11] + " " + rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[clickedSlot - 11]) + " %");
                 }
             }
             player.closeInventory();
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osGuiMain().getName())) {
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGuiMain().getName())) {
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.GOLD_SWORD){
+            if (clickedItem.getType() == Material.GOLD_SWORD){
                 player.openInventory(rpgcore.getOsManager().osMobyGui(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.DIAMOND_SWORD) {
+            if (clickedItem.getType() == Material.DIAMOND_SWORD) {
                 player.openInventory(rpgcore.getOsManager().osGraczeGUI(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.EXP_BOTTLE) {
+            if (clickedItem.getType() == Material.EXP_BOTTLE) {
                 player.openInventory(rpgcore.getOsManager().osSakwyGUI(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.DIAMOND_BLOCK) {
+            if (clickedItem.getType() == Material.DIAMOND_BLOCK) {
                 player.openInventory(rpgcore.getOsManager().osNiesyGUI(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.FISHING_ROD) {
+            if (clickedItem.getType() == Material.FISHING_ROD) {
                 player.openInventory(rpgcore.getOsManager().osRybakGUI(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.DIAMOND_AXE) {
+            if (clickedItem.getType() == Material.DIAMOND_AXE) {
                 player.openInventory(rpgcore.getOsManager().osDrwalGUI(playerUUID));
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.GOLD_PICKAXE) {
+            if (clickedItem.getType() == Material.GOLD_PICKAXE) {
                 player.openInventory(rpgcore.getOsManager().osGornikGUI(playerUUID));
                 return;
             }
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osMobyGui(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osMobyGui(playerUUID).getName())) {
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsMobyAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int killedMobs = rpgcore.getPlayerManager().getPlayerOsMoby(playerUUID);
 
-            if (killedMobs < rpgcore.getOsManager().getRequiredForOsMoby().get(slot+1)) {
+            if (killedMobs < rpgcore.getOsManager().getRequiredForOsMoby().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsMobyAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsMobyAccepted.append(accepted[i]);
@@ -165,36 +170,36 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsMobyAccepted(playerUUID, String.valueOf(noweOsMobyAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsMobyAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osGraczeGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGraczeGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsLudzieAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int killedPlayers = rpgcore.getPlayerManager().getPlayerOsLudzie(playerUUID);
 
-            if (killedPlayers < rpgcore.getOsManager().getRequiredForOsLudzie().get(slot+1)) {
+            if (killedPlayers < rpgcore.getOsManager().getRequiredForOsLudzie().get(clickedSlot+1)) {
                 return;
             }
 
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsLudzieAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsLudzieAccepted.append(accepted[i]);
@@ -206,35 +211,35 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsLudzieAccepted(playerUUID, String.valueOf(noweOsLudzieAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsLudzieAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osSakwyGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osSakwyGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsSakwyAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int dropped = rpgcore.getPlayerManager().getPlayerOsSakwy(playerUUID);
 
-            if (dropped < rpgcore.getOsManager().getRequiredForOsSakwy().get(slot+1)) {
+            if (dropped < rpgcore.getOsManager().getRequiredForOsSakwy().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsSakwyAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsSakwyAccepted.append(accepted[i]);
@@ -246,35 +251,35 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsSakwyAccepted(playerUUID, String.valueOf(noweOsSakwyAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsSakwyAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osNiesyGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osNiesyGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsNiesyAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int dropped = rpgcore.getPlayerManager().getPlayerOsNiesy(playerUUID);
 
-            if (dropped < rpgcore.getOsManager().getRequiredForOsNiesy().get(slot+1)) {
+            if (dropped < rpgcore.getOsManager().getRequiredForOsNiesy().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsNiesyAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsNiesyAccepted.append(accepted[i]);
@@ -286,35 +291,35 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsNiesyAccepted(playerUUID, String.valueOf(noweOsNiesyAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsNiesyAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osRybakGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osRybakGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsRybakAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int dropped = rpgcore.getPlayerManager().getPlayerOsRybak(playerUUID);
 
-            if (dropped < rpgcore.getOsManager().getRequiredForOsRybak().get(slot+1)) {
+            if (dropped < rpgcore.getOsManager().getRequiredForOsRybak().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsRybakAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsRybakAccepted.append(accepted[i]);
@@ -326,35 +331,35 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsRybakAccepted(playerUUID, String.valueOf(noweOsRybakAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsRybakAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osDrwalGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osDrwalGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsDrwalAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int dropped = rpgcore.getPlayerManager().getPlayerOsDrwal(playerUUID);
 
-            if (dropped < rpgcore.getOsManager().getRequiredForOsDrwal().get(slot+1)) {
+            if (dropped < rpgcore.getOsManager().getRequiredForOsDrwal().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsDrwalAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsDrwalAccepted.append(accepted[i]);
@@ -366,35 +371,35 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsDrwalAccepted(playerUUID, String.valueOf(noweOsDrwalAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsDrwalAccepted.setLength(0);
             return;
         }
 
-        if (e.getClickedInventory().getName().equals(rpgcore.getOsManager().osGornikGUI(playerUUID).getName())) {
-            final int slot = e.getSlot();
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGornikGUI(playerUUID).getName())) {
+
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
             String[] accepted = rpgcore.getPlayerManager().getOsGornikAccept(playerUUID).split(",");
 
-            if (accepted[slot].equalsIgnoreCase("true")) {
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
                 return;
             }
 
-            if (slot != 0 && accepted[slot-1].equalsIgnoreCase("false")) {
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
                 return;
             }
 
             final int dropped = rpgcore.getPlayerManager().getPlayerOsGornik(playerUUID);
 
-            if (dropped < rpgcore.getOsManager().getRequiredForOsGornik().get(slot+1)) {
+            if (dropped < rpgcore.getOsManager().getRequiredForOsGornik().get(clickedSlot+1)) {
                 return;
             }
 
-            accepted[slot] = "true";
+            accepted[clickedSlot] = "true";
             StringBuilder noweOsGornikAccepted = new StringBuilder();
             for (int i = 0; i < accepted.length; i++) {
                 noweOsGornikAccepted.append(accepted[i]);
@@ -406,17 +411,16 @@ public class PlayerInventoryClickListener implements Listener {
             rpgcore.getPlayerManager().updatePlayerOsGornikAccepted(playerUUID, String.valueOf(noweOsGornikAccepted));
 
             player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(e.getCurrentItem().getItemMeta().getDisplayName())));
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsGornikAccepted.setLength(0);
         }
 
-        if (e.getClickedInventory().getName().equals(Utils.format("&4&lEQ GUI"))) {
+        if (clickedInventoryTitle.equals(Utils.format("&4&lEQ GUI"))) {
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.AIR) {
+            if (clickedItem.getType() == Material.AIR) {
                 e.getWhoClicked().closeInventory();
                 return;
             }
-            final int clickedSlot = e.getSlot();
             final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>&7: <message>");
             final String message = rpgcore.getChatManager().getMessageWithEQ(e.getWhoClicked().getUniqueId());
             final ArrayList<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
@@ -428,6 +432,7 @@ public class PlayerInventoryClickListener implements Listener {
                 int znak = message.lastIndexOf("&");
                 color = message.substring(znak, znak + 2);
             }
+            final boolean playerGroupIsValid = playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy");
             switch (clickedSlot) {
                 case 0:
                     if (e.getWhoClicked().getItemInHand().getType().equals(Material.AIR)) {
@@ -446,14 +451,14 @@ public class PlayerInventoryClickListener implements Listener {
                     item.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(e.getWhoClicked().getItemInHand()).save(new NBTTagCompound()).toString()).create()));
                     if (!(msg.isEmpty())) {
                         TextComponent firstPartOfMessage;
-                        if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
+                        if (playerGroupIsValid) {
                             firstPartOfMessage = new TextComponent(Utils.format("&7" + Utils.removeColor(msg.get(0))));
                         } else {
                             firstPartOfMessage = new TextComponent(Utils.format("&7" + msg.get(0)));
                         }
                         beforeMessage.addExtra(firstPartOfMessage);
                         beforeMessage.addExtra(item);
-                        if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
+                        if (playerGroupIsValid) {
                             for (int i = 1; i < msg.size(); i++) {
                                 beforeMessage.addExtra(Utils.format(" " + "&7" + msg.get(i)));
                             }
@@ -476,7 +481,7 @@ public class PlayerInventoryClickListener implements Listener {
                         return;
                     }
                     if (!(msg.isEmpty())) {
-                        if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
+                        if (playerGroupIsValid) {
                             finalMessage = new StringBuilder("&7" + Utils.removeColor(msg.get(0)) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" ").append(msg.get(i));
@@ -534,7 +539,7 @@ public class PlayerInventoryClickListener implements Listener {
                     final double expNaNextLvlGracza = rpgcore.getLvlManager().getExpForLvl(lvlGracza + 1);
 
                     if (!(msg.isEmpty())) {
-                        if (playerGroup.equals("Gracz") || playerGroup.equals("Vip") || playerGroup.equals("Svip") || playerGroup.equals("ELITA") || playerGroup.equals("Budowniczy")) {
+                        if (playerGroupIsValid) {
                             finalMessage = new StringBuilder("&7" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" ").append(msg.get(i));
@@ -567,105 +572,105 @@ public class PlayerInventoryClickListener implements Listener {
             e.getWhoClicked().closeInventory();
         }
 
-        if (e.getClickedInventory().getName().contains("Historia kar gracza ")) {
+        if (clickedInventoryTitle.contains("Historia kar gracza ")) {
             e.setCancelled(true);
             return;
         }
 
-        if (e.getClickedInventory().getName().contains("Akcesoria gracza ")) {
+        if (clickedInventoryTitle.contains("Akcesoria gracza ")) {
             ItemStack itemToGiveBack;
 
             e.setCancelled(true);
 
-            if (e.getCurrentItem().getType() == Material.BARRIER) {
+            if (clickedItem.getType() == Material.BARRIER) {
                 return;
             }
 
-            if (e.getSlot() == 10) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 10) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
                 rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
                 rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
                 return;
             }
 
-            if (e.getSlot() == 11) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 11) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerPrzeszywka(playerUUID, rpgcore.getPlayerManager().getPlayerPrzeszywka(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Przeszycie Bloku"));
                 rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
                 System.out.println("Naszyjnik dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
                 return;
             }
 
-            if (e.getSlot() == 12) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 12) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerKryt(playerUUID, rpgcore.getPlayerManager().getPlayerKryt(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Cios Krytyczny"));
                 rpgcore.getPlayerManager().updatePlayerSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
                 return;
             }
 
-            if (e.getSlot() == 13) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 13) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
                 rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
                 return;
             }
 
-            if (e.getSlot() == 14) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 14) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
                 rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
                 player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
                 System.out.println("Pierek blok -" + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
                 return;
             }
 
-            if (e.getSlot() == 15) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 15) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
                 rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
                 rpgcore.getPlayerManager().updatePlayerMinusSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerMinusSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
                 System.out.println("energia blok - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
                 return;
             }
 
-            if (e.getSlot() == 16) {
-                itemToGiveBack = e.getCurrentItem();
+            if (clickedSlot == 16) {
+                itemToGiveBack = clickedItem;
                 e.getWhoClicked().getInventory().addItem(itemToGiveBack);
                 rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
                 rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
                 rpgcore.getPlayerManager().updatePlayerMinusDef(playerUUID, rpgcore.getPlayerManager().getPlayerMinusDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
                 System.out.println("Zegarek dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
-                e.getInventory().setItem(e.getSlot(), rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
                 return;
             }
             return;
         }
         // POMOC 1
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIMAIN().getName())) {
+        if (clickedInventoryTitle.equals(rpgcore.getPomocManager().pomocGUIMAIN().getName())) {
             e.setCancelled(true);
-            if (e.getCurrentItem().getType() == Material.BOOK) {
+            if (clickedItem.getType() == Material.BOOK) {
                 player.openInventory(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR());
                 return;
             }
-            if (e.getSlot() == 13) {
+            if (clickedSlot == 13) {
                 player.openInventory(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY());
                 return;
             }
-            if (e.getCurrentItem().getType() == Material.FIREWORK_CHARGE) {
+            if (clickedItem.getType() == Material.FIREWORK_CHARGE) {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Poradnik:"));
                 player.sendMessage("1. Nie bądź kurwą...");
@@ -674,18 +679,18 @@ public class PlayerInventoryClickListener implements Listener {
             }
             return;
         }
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY().getName())) {
+        if (clickedInventoryTitle.equals(rpgcore.getPomocManager().pomocGUIPODSTAWOWEKOMENDY().getName())) {
             e.setCancelled(true);
             return;
         }
         // POMOC 3
-        if (e.getClickedInventory().getName().equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR().getName())) {
-            if (e.getSlot() == 2) {
+        if (clickedInventoryTitle.equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR().getName())) {
+            if (clickedSlot == 2) {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do regulaminu:"));
                 player.sendMessage(Utils.format("&ewww.twojstarywzoo.pl"));
             }
-            if (e.getSlot() == 6) {
+            if (clickedSlot == 6) {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do taryfikatora:"));
                 player.sendMessage(Utils.format("&ewww.twojstarywzoo.pl"));
@@ -695,27 +700,29 @@ public class PlayerInventoryClickListener implements Listener {
         }
 
         // DUSZOLOG
-        if (e.getClickedInventory().getName().equals(rpgcore.getDuszologNPC().duszologMAIN().getName())) {
-            if (e.getSlot() == 10) {
+        if (clickedInventoryTitle.equals(rpgcore.getDuszologNPC().duszologMAIN().getName())) {
+            if (clickedSlot == 10) {
                 rpgcore.getDuszologNPC().craftowanieDUSZ(player);
                 player.closeInventory();
             }
             e.setCancelled(true);
             return;
         }
+
+
         //                      TRADE                   \\
 
 
 
-        if (e.getClickedInventory().getName().contains("Wymiana ")) {
-            final Player firstViewer = (Player) e.getClickedInventory().getViewers().get(1);
-            final Player secViewer = (Player) e.getClickedInventory().getViewers().get(0);
+        if (clickedInventoryTitle.contains("Wymiana ")) {
+            final Player firstViewer = (Player) clickedInventory.getViewers().get(1);
+            final Player secViewer = (Player) clickedInventory.getViewers().get(0);
             final UUID secViewerUUID = secViewer.getUniqueId();
             final UUID firstViewerUUID = firstViewer.getUniqueId();
-            if (e.getClickedInventory().getName().equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName())) {
-                final int i = e.getSlot();
+            if (clickedInventoryTitle.equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName())) {
+                final int i = clickedSlot;
 
-                if (rpgcore.getTradeManager().isTradeAccepted(e.getClickedInventory())) {
+                if (rpgcore.getTradeManager().isTradeAccepted(clickedInventory)) {
                     e.setCancelled(true);
                     return;
                 }
@@ -725,33 +732,33 @@ public class PlayerInventoryClickListener implements Listener {
                     e.setCancelled(true);
                     if (i == 48) {
                         if (e.getWhoClicked().equals(firstViewer)) {
-                            if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
-                                e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getAcceptItem(firstViewerUUID));
-                                if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
-                                        && e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                            if (clickedInventory.getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
+                                clickedInventory.setItem(48, rpgcore.getTradeManager().getAcceptItem(firstViewerUUID));
+                                if (clickedInventory.getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
+                                        && clickedInventory.getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
                                     e.setCancelled(true);
-                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(e.getClickedInventory(), firstViewer, secViewer), 1L);
+                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(clickedInventory, firstViewer, secViewer), 1L);
                                     return;
                                 }
                                 return;
                             }
-                            e.getClickedInventory().setItem(48, rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID));
+                            clickedInventory.setItem(48, rpgcore.getTradeManager().getNoAcceptItem(firstViewerUUID));
                             return;
                         }
                     }
                     if (i == 50) {
                         if (e.getWhoClicked().equals(secViewer)) {
-                            if (e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
-                                e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getAcceptItem(secViewerUUID));
-                                if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
-                                        && e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                            if (clickedInventory.getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                                clickedInventory.setItem(50, rpgcore.getTradeManager().getAcceptItem(secViewerUUID));
+                                if (clickedInventory.getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())
+                                        && clickedInventory.getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
                                     e.setCancelled(true);
-                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(e.getClickedInventory(), firstViewer, secViewer), 1L);
+                                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getTradeManager().tradeAccepted(clickedInventory, firstViewer, secViewer), 1L);
                                     return;
                                 }
                                 return;
                             }
-                            e.getClickedInventory().setItem(50, rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID));
+                            clickedInventory.setItem(50, rpgcore.getTradeManager().getNoAcceptItem(secViewerUUID));
                             return;
                         }
                     }
@@ -764,7 +771,7 @@ public class PlayerInventoryClickListener implements Listener {
                         return;
                     }
 
-                    if (e.getClickedInventory().getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
+                    if (clickedInventory.getItem(48).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID).getItemMeta().getDisplayName())) {
                         e.setCancelled(true);
                         return;
                     }
@@ -776,7 +783,7 @@ public class PlayerInventoryClickListener implements Listener {
                         e.setCancelled(true);
                         return;
                     }
-                    if (e.getClickedInventory().getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
+                    if (clickedInventory.getItem(50).getItemMeta().getDisplayName().equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID).getItemMeta().getDisplayName())) {
                         e.setCancelled(true);
                         return;
                     }
@@ -786,5 +793,54 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
 
+
+        //                      TARGI                   \\
+
+
+
+        if (clickedInventoryTitle.contains("Lista Targow")) {
+            e.setCancelled(true);
+
+            if (clickedItem == null) {
+                return;
+            }
+
+            if (clickedItem.getType().equals(Material.BARRIER) || clickedItem.getType().equals(Material.STAINED_GLASS_PANE)) {
+                return;
+            }
+
+            int page = Integer.parseInt(Utils.removeColor(clickedInventoryTitle.replace("Lista Targow ", "").replace("    ", "").trim()));
+
+            if (clickedItem.getItemMeta().getDisplayName().contains("nastepna")) {
+                player.openInventory(rpgcore.getTargManager().openTargGUI(page + 1));
+                return;
+            }
+
+            if (clickedItem.getItemMeta().getDisplayName().contains("poprzednia")) {
+                player.openInventory(rpgcore.getTargManager().openTargGUI(page - 1));
+                return;
+            }
+
+            final UUID playerTargUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim()));
+            player.openInventory(rpgcore.getTargManager().getPlayerTarg(playerTargUUID));
+
+            return;
+        }
+
+        if (clickedInventoryTitle.contains("Targ gracza")) {
+            e.setCancelled(true);
+
+            if (clickedItem == null) {
+                return;
+            }
+
+            if (clickedItem.getType().equals(Material.ARROW) && Utils.removeColor(clickedItem.getItemMeta().getDisplayName()).equals("Powrot")) {
+                player.openInventory(rpgcore.getTargManager().openTargGUI(1));
+                return;
+            }
+
+        }
+        
+        
     }
 }

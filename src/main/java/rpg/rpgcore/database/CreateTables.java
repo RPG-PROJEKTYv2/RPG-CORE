@@ -75,6 +75,7 @@ public class CreateTables {
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `Inventories` (" +
                     " `uuid` VARCHAR(36) NOT NULL," +
                     " `Akcesoria` TEXT NOT NULL, " +
+                    " `Targ` TEXT NOT NULL, " +
                     "  PRIMARY KEY (`uuid`))");
             ps.execute();
         } catch (final SQLException e) {

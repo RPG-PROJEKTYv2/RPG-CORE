@@ -26,12 +26,13 @@ public class PlayerInteractListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(final PlayerInteractEvent e) {
+        final ItemStack eventItem = e.getItem();
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
         ItemStack itemToSet;
 
         if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (e.getItem().equals(rpgcore.getBaoManager().getItemDoZmianki())) {
+            if (eventItem.equals(rpgcore.getBaoManager().getItemDoZmianki())) {
                 if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
                     e.setCancelled(true);
@@ -42,21 +43,21 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.ITEM_FRAME) {
+            if (eventItem.getType() == Material.ITEM_FRAME) {
 
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Tarcza")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Tarcza")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(10).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cTarcze"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -79,20 +80,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.STORAGE_MINECART) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.STORAGE_MINECART) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Naszyjnik")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Naszyjnik")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(11).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cNaszyjnik"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -114,20 +115,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.POWERED_MINECART) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.POWERED_MINECART) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Bransoleta")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Bransoleta")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(12).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cBransolete"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -149,20 +150,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.HOPPER_MINECART) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.HOPPER_MINECART) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Kolczyki")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Kolczyki")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(13).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazone &cKolczyki"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -185,20 +186,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.EXPLOSIVE_MINECART) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.EXPLOSIVE_MINECART) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Pierscien")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Pierscien")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(14).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cPierscien"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -221,20 +222,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.MINECART) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.MINECART) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Energia")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Energia")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(15).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cEnergie"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -257,20 +258,20 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem().getType() == Material.WATCH) {
-                if (e.getItem().getItemMeta().getDisplayName() == null) {
+            if (eventItem.getType() == Material.WATCH) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
 
-                if (e.getItem().getItemMeta().getDisplayName().contains("Zegarek")) {
+                if (eventItem.getItemMeta().getDisplayName().contains("Zegarek")) {
 
                     if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(16).getType() != Material.BARRIER){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cZegarek"));
                         return;
                     }
-                    itemToSet = e.getItem();
+                    itemToSet = eventItem;
 
-                    if (e.getItem().getAmount() != 1){
+                    if (eventItem.getAmount() != 1){
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
@@ -292,6 +293,18 @@ public class PlayerInteractListener implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
                 return;
             }
+            
+            if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
+                final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
+
+                itemMapToRemove.clear();
+                itemMapToRemove.put(0, eventItem);
+                player.getInventory().removeItem(itemMapToRemove.get(0));
+                itemMapToRemove.clear();
+                rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
+                player.sendMessage(Utils.format(Utils.SERVERNAME +  "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
+                return;
+            }
 
             return;
         }
@@ -301,11 +314,11 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (e.getItem() == null) {
+            if (eventItem == null) {
                 return;
             }
 
-            if (e.getItem().equals(rpgcore.getBaoManager().getItemDoZmianki())) {
+            if (eventItem.equals(rpgcore.getBaoManager().getItemDoZmianki())) {
                 if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
                     e.setCancelled(true);
@@ -313,6 +326,18 @@ public class PlayerInteractListener implements Listener {
                 }
                 e.setCancelled(true);
                 player.openInventory(rpgcore.getBaoManager().ksiegaMagiiGUI(player.getUniqueId()));
+                return;
+            }
+
+            if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
+                final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
+
+                itemMapToRemove.clear();
+                itemMapToRemove.put(0, eventItem);
+                player.getInventory().removeItem(itemMapToRemove.get(0));
+                itemMapToRemove.clear();
+                rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
+                player.sendMessage(Utils.format(Utils.SERVERNAME +  "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
                 return;
             }
         }

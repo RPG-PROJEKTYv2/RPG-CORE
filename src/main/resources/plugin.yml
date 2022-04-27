@@ -72,4 +72,25 @@ commands:
   reply:
     aliases:
       - r
+
+
+  testanimation:
+
+  targ:
+    aliases:
+      - market
+      - ah
+
+  kasa:
+    aliases:
+      - bal
+      - balance
+      - money
+      - kaska
+
+  wyplac:
+    aliases:
+      - withdraw
+
+  wystaw:
     

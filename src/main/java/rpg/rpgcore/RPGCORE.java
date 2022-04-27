@@ -36,6 +36,7 @@ public final class RPGCORE extends JavaPlugin {
     private MSGManager msgManager;
     private TradeManager tradeManager;
     private DuszologNPC duszologNPC;
+    private TargManager targManager;
 
     private int i = 1;
 
@@ -79,6 +80,11 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("tempmute").setExecutor(new TempMute(this));
         this.getCommand("message").setExecutor(new Message(this));
         this.getCommand("reply").setExecutor(new Reply(this));
+        this.getCommand("targ").setExecutor(new Targ(this));
+        this.getCommand("kasa").setExecutor(new Kasa(this));
+        this.getCommand("wyplac").setExecutor(new Wyplac(this));
+        this.getCommand("wystaw").setExecutor(new Wystaw());
+//        this.getCommand("testanimation").setExecutor(new TestAnimation(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -130,6 +136,7 @@ public final class RPGCORE extends JavaPlugin {
         this.msgManager = new MSGManager();
         this.tradeManager = new TradeManager(this);
         this.duszologNPC = new DuszologNPC();
+        this.targManager = new TargManager(this);
     }
 
     private void autoMessage() {
@@ -223,5 +230,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public DuszologNPC getDuszologNPC() {
         return duszologNPC;
+    }
+
+    public TargManager getTargManager() {
+        return targManager;
     }
 }

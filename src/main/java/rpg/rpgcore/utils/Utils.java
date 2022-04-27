@@ -2,6 +2,7 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -38,7 +40,8 @@ public class Utils {
     public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
     public static DecimalFormat df = new DecimalFormat("0.0");
-    public static DecimalFormat procentFormat = new DecimalFormat("##.##");
+    public static DecimalFormat kasaFormat = new DecimalFormat("0.00");
+    public static DecimalFormat procentFormat = new DecimalFormat("00.00");
     public static int MAXLVL = 130;
 
     public static String format(String str) {
@@ -139,7 +142,8 @@ public class Utils {
             String znak = String.valueOf(toRemove.charAt(index));
             String kolor = String.valueOf(toRemove.charAt(index + 1));
 
-            toRemove = toRemove.replaceFirst(kolor, "").replaceFirst(znak, "");
+
+            toRemove = toRemove.replace(znak + kolor, "");
             index = toRemove.indexOf(znakToLook);
         }
         return toRemove;
@@ -244,5 +248,26 @@ public class Utils {
     public static void youAreMuted(final Player player, final String adminNick, final String reason, final String expiry) {
         player.sendMessage(format(MUTEPREFIX + "&7Zostales wyciszony przez &c" + adminNick + " &7za: &c" + reason));
         player.sendMessage(format(MUTEPREFIX + "&4Wygasa: &6" + expiry));
+    }
+
+    public static String spaceNumber(String numberInString) {
+        String afterDot = "";
+        if (numberInString.contains(".")) {
+            int dotIndex = numberInString.indexOf('.');
+            afterDot = numberInString.substring(dotIndex, dotIndex + 3);
+            numberInString = numberInString.substring(0, dotIndex);
+        }
+        numberInString = reverseString(numberInString).replaceAll("...(?!$)", "$0 ");
+
+        if (afterDot.equals("")) {
+            return reverseString(numberInString);
+        }
+
+        return reverseString(numberInString) + afterDot;
+    }
+
+    private static String reverseString(final String str) {
+        final StringBuilder sb = new StringBuilder(str);
+        return sb.reverse().toString();
     }
 }

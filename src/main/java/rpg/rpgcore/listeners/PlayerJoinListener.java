@@ -36,6 +36,10 @@ public class PlayerJoinListener implements Listener {
             rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(playerUUID);
         }
 
+        if (!(rpgcore.getTargManager().isInPlayerTargMap(playerUUID))) {
+            rpgcore.getTargManager().createPlayerTargGUI(playerUUID);
+        }
+
 
         if (
                 (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID))) ||
