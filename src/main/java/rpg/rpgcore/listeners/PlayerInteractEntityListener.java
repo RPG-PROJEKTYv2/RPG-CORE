@@ -56,6 +56,11 @@ public class PlayerInteractEntityListener implements Listener {
                 player.openInventory(rpgcore.getDuszologNPC().duszologMAIN());
                 return;
             }
+            // TELEPORTER
+            if (entityName.equalsIgnoreCase("TELEPORTER")) {
+                player.openInventory(rpgcore.getTeleporterNPC().teleporterMAIN());
+                return;
+            }
 
 
             // TRADE

@@ -708,8 +708,6 @@ public class PlayerInventoryClickListener implements Listener {
             e.setCancelled(true);
             return;
         }
-
-
         //                      TRADE                   \\
 
 

@@ -9,6 +9,7 @@ import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
 import rpg.rpgcore.managers.npc.DuszologNPC;
+import rpg.rpgcore.managers.npc.TeleporterNPC;
 import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
@@ -37,6 +38,7 @@ public final class RPGCORE extends JavaPlugin {
     private TradeManager tradeManager;
     private DuszologNPC duszologNPC;
     private TargManager targManager;
+    private TeleporterNPC teleporterNPC;
 
     private int i = 1;
 
@@ -137,6 +139,7 @@ public final class RPGCORE extends JavaPlugin {
         this.tradeManager = new TradeManager(this);
         this.duszologNPC = new DuszologNPC();
         this.targManager = new TargManager(this);
+        this.teleporterNPC = new TeleporterNPC();
     }
 
     private void autoMessage() {
@@ -234,5 +237,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public TargManager getTargManager() {
         return targManager;
+    }
+
+    public TeleporterNPC getTeleporterNPC() {
+        return teleporterNPC;
     }
 }
