@@ -93,19 +93,20 @@ public class PlayerInventoryCloseListener implements Listener {
 
         if (Utils.removeColor(closedInventoryTitle).equals("Wystaw przedmiot")) {
             final ItemStack itemToGiveBack = closedInventory.getItem(4);
-            final ItemMeta itemToGiveBackMeta = itemToGiveBack.getItemMeta();
-
-            final List<String> loreItemToGiveBack = new ArrayList<>(itemToGiveBackMeta.getLore());
-
-            int sizeOfLore = loreItemToGiveBack.size();
-            for (int i = 0; i < 7; i++) {
-                loreItemToGiveBack.set(sizeOfLore - i, "");
+            if (!(rpgcore.getTargManager().isInWystawia(uuid))) {
+                return;
             }
+            rpgcore.getTargManager().returnPlayerItem(player, itemToGiveBack);
+            rpgcore.getTargManager().removeFromWystawia(uuid);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
+            return;
+        }
 
-            itemToGiveBackMeta.setLore(loreItemToGiveBack);
-            itemToGiveBack.setItemMeta(itemToGiveBackMeta);
-
-            player.getInventory().addItem(itemToGiveBack);
+        if (closedInventoryTitle.contains("Targ gracza ")) {
+            if (rpgcore.getTargManager().isInTaskMap(uuid)) {
+                rpgcore.getTargManager().removePlayerFromTaskMap(uuid);
+                return;
+            }
         }
     }
 }

@@ -15,13 +15,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerInventoryClickListener implements Listener {
 
@@ -799,7 +797,7 @@ public class PlayerInventoryClickListener implements Listener {
         if (clickedInventoryTitle.contains("Lista Targow")) {
             e.setCancelled(true);
 
-            if (clickedItem == null) {
+            if (clickedItem.getType() == Material.AIR) {
                 return;
             }
 
@@ -807,7 +805,15 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
 
+            int task;
+
+            if (rpgcore.getTargManager().isInTaskMap(playerUUID)) {
+                rpgcore.getServer().getScheduler().cancelTask(rpgcore.getTargManager().getPlayerTaskId(playerUUID));
+                rpgcore.getTargManager().removePlayerFromTaskMap(playerUUID);
+            }
+
             int page = Integer.parseInt(Utils.removeColor(clickedInventoryTitle.replace("Lista Targow ", "").replace("    ", "").trim()));
+
 
             if (clickedItem.getItemMeta().getDisplayName().contains("nastepna")) {
                 player.openInventory(rpgcore.getTargManager().openTargGUI(page + 1));
@@ -820,8 +826,20 @@ public class PlayerInventoryClickListener implements Listener {
             }
 
             final UUID playerTargUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim()));
+            if (rpgcore.getTargManager().getPlayerTarg(playerTargUUID).getViewers().size() != 0) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cKtos aktualnie przeglada ten targ, sprobuj ponownie za chwile"));
+                return;
+            }
             player.openInventory(rpgcore.getTargManager().getPlayerTarg(playerTargUUID));
-
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otworzyles targ gracza &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim())));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostanie zamkniety po &c60 sekundach"));
+            task = rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> {
+                if (player.getOpenInventory().getTopInventory().getName().contains("Targ gracza") || player.getOpenInventory().getTopInventory().getName().contains("Kup przedmiot ")) {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostal zamkniety poniewaz byl otwarty dluzej niz &c60 sekundach"));
+                }
+            }, 1200L);
+            rpgcore.getTargManager().putPlayerTask(playerUUID, task);
             return;
         }
 
@@ -836,6 +854,70 @@ public class PlayerInventoryClickListener implements Listener {
                 player.openInventory(rpgcore.getTargManager().openTargGUI(1));
                 return;
             }
+
+        }
+
+
+        if (clickedInventoryTitle.equals(Utils.format("&7&lWystaw przedmiot"))) {
+            e.setCancelled(true);
+            if (clickedSlot == 4) {
+                return;
+            }
+
+            if (clickedSlot < 4) {
+                String cena = "";
+                String podatek = "";
+                final ItemStack item = clickedInventory.getItem(4);
+
+
+                for (String s : item.getItemMeta().getLore()) {
+                    if (s.contains("Cena: ")) {
+                        cena = Utils.removeColor(s).replace("Cena: ", "").replace(" $", "").trim();
+                    }
+                    if (s.contains("5% ceny wystawienia")) {
+                        podatek = Utils.removeColor(s).replace("W wysokosci 5% ceny wystawienia, czyli ", "").replace(" $", "");
+                    }
+                }
+
+                System.out.println(cena);
+                System.out.println(podatek);
+                double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
+                double kasa = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+
+                if (kasa < podatekInDouble) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz pieniedzy, zeby wystawic ten przedmiot"));
+
+                    rpgcore.getTargManager().returnPlayerItem(player, item);
+                    rpgcore.getTargManager().removeFromWystawia(playerUUID);
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
+                    return;
+                }
+                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasa - podatekInDouble);
+
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                final int loreSize = lore.size() -1;
+
+                lore.remove(loreSize);
+                lore.remove(loreSize-1);
+                lore.remove(loreSize-2);
+                lore.remove(loreSize-3);
+                lore.remove(loreSize-4);
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+
+                rpgcore.getTargManager().getPlayerTarg(playerUUID).setItem(rpgcore.getTargManager().getPlayerTarg(playerUUID).firstEmpty(), item);
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wystawiles przedmiot za &6&o" + cena + " &2$"));
+                rpgcore.getTargManager().removeFromWystawia(playerUUID);
+                player.closeInventory();
+                return;
+            }
+
+            rpgcore.getTargManager().returnPlayerItem(player, clickedInventory.getItem(4));
+            rpgcore.getTargManager().removeFromWystawia(playerUUID);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAnulowales wystawianie przedmiotu"));
+            return;
 
         }
         

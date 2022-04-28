@@ -27,7 +27,9 @@ public class TargManager {
     private final ItemBuilder goRightAllow = new ItemBuilder(Material.ARROW);
     private final ItemBuilder goRightDisallow = new ItemBuilder(Material.BARRIER);
     private final HashMap<UUID, Inventory> playerTargMap = new HashMap<>();
+    private final HashMap<UUID, Integer> taskMap = new HashMap<>();
     private final List<String> lore = new ArrayList<>();
+    private final List<UUID> wystawia = new ArrayList<>();
     private final List<ItemStack> allItems = new ArrayList<>();
 
     public TargManager(final RPGCORE rpgcore) {
@@ -100,6 +102,46 @@ public class TargManager {
         return this.playerTargMap.containsKey(uuid);
     }
 
+    @Getter
+    public int getPlayerTaskId(final UUID uuid) {
+        return this.taskMap.get(uuid);
+    }
+
+    @Setter
+    public void updatePlayerTask(final UUID uuid, final int task) {
+        this.taskMap.replace(uuid, task);
+    }
+
+    @Setter
+    public void putPlayerTask(final UUID uuid, final int task) {
+        this.taskMap.put(uuid, task);
+    }
+
+    @Setter
+    public void removePlayerFromTaskMap(final UUID uuid) {
+        this.taskMap.remove(uuid);
+    }
+
+    public boolean isInTaskMap(final UUID uuid) {
+        return this.taskMap.containsKey(uuid);
+    }
+
+    @Setter
+    public void addToWystawia(final UUID uuid) {
+        this.wystawia.add(uuid);
+    }
+
+    @Setter
+    public void removeFromWystawia(final UUID uuid) {
+        this.wystawia.remove(uuid);
+    }
+
+    public boolean isInWystawia(final UUID uuid) {
+        return this.wystawia.contains(uuid);
+    }
+
+
+
 
     public void createPlayerTargGUI(final UUID uuid) {
         final Inventory targ = Bukkit.createInventory(null, 54, Utils.format("&f&lTarg gracza &3") + rpgcore.getPlayerManager().getPlayerName(uuid));
@@ -121,5 +163,25 @@ public class TargManager {
         targ.setItem(49, goBack.toItemStack());
 
         this.putPlayerInTargMap(uuid, targ);
+    }
+
+    public void returnPlayerItem(final Player player, final ItemStack itemStack) {
+        final ItemMeta meta = itemStack.getItemMeta();
+
+        final List<String> itemLore = meta.getLore();
+
+        final int i = itemLore.size();
+        itemLore.remove(i-1);
+        itemLore.remove(i-2);
+        itemLore.remove(i-3);
+        itemLore.remove(i-4);
+        itemLore.remove(i-5);
+        itemLore.remove(i-6);
+        itemLore.remove(i-7);
+
+        meta.setLore(Utils.format(itemLore));
+        itemStack.setItemMeta(meta);
+
+        player.getInventory().addItem(itemStack);
     }
 }

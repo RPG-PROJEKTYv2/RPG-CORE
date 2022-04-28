@@ -62,7 +62,7 @@ public class Wyplac implements CommandExecutor {
                 czek.addGlowing();
 
                 player.getInventory().addItem(czek.toItemStack());
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.kasaFormat.format(wyplac) + " &2$"));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.spaceNumber(Utils.kasaFormat.format(wyplac)) + " &2$"));
                 return false;
 
             } catch (NumberFormatException e) {

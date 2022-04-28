@@ -22,7 +22,7 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
-        final String message = e.getMessage();
+        final String message = e.getMessage().replaceAll("%", "%%");
         if (rpgcore.getPlayerManager().isMuted(player.getUniqueId())) {
             final String[] muteInfo = rpgcore.getPlayerManager().getPlayerMuteInfo(player.getUniqueId()).split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
