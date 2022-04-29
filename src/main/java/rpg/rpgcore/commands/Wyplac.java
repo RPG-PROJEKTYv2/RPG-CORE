@@ -47,7 +47,7 @@ public class Wyplac implements CommandExecutor {
             try {
                 final double wyplac = Double.parseDouble(args[0]);
 
-                if (wyplac <= 1) {
+                if (wyplac < 1) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz wyplacic tej kwoty"));
                     return false;
                 }

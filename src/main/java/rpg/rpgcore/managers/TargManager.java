@@ -42,9 +42,11 @@ public class TargManager {
         allItems.clear();
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            targItem.setName("&4&l" + p.getName());
-            targItem.hideFlag();
-            allItems.add(targItem.toItemStack().clone());
+            if (rpgcore.getTargManager().getPlayerTarg(p.getUniqueId()).getItem(0) != null) {
+                targItem.setName("&4&l" + p.getName());
+                targItem.hideFlag();
+                allItems.add(targItem.toItemStack().clone());
+            }
         }
 
         fill.setName(" ");
@@ -183,5 +185,50 @@ public class TargManager {
         itemStack.setItemMeta(meta);
 
         player.getInventory().addItem(itemStack);
+    }
+
+    public double getItemCena(final ItemStack is) {
+        for (String s : is.getItemMeta().getLore()) {
+            if (s.contains("Cena: ")) {
+                System.out.println(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
+                double cena = Double.parseDouble(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
+                System.out.println(cena);
+               return cena;
+            }
+        }
+        return 0.0;
+    }
+
+    public void givePlayerBoughtItem(final Player player, final ItemStack is) {
+        final ItemMeta meta = is.getItemMeta();
+
+        final List<String> lore = meta.getLore();
+
+        final int loreSize = lore.size();
+
+        lore.remove(loreSize - 1);
+        lore.remove(loreSize - 2);
+
+        meta.setLore(Utils.format(lore));
+
+        is.setItemMeta(meta);
+
+        player.getInventory().addItem(is);
+    }
+
+    public void updatePlayerTarg(final Player player, final int slot) {
+        final Inventory targ = this.getPlayerTarg(player.getUniqueId());
+
+        this.givePlayerBoughtItem(player, targ.getItem(slot));
+
+        targ.setItem(slot, null);
+
+        for (int i = 0; i < 45; i++) {
+            targ.setItem(targ.firstEmpty(), targ.getItem(i));
+            targ.setItem(i, null);
+        }
+
+        this.updatePlayerTarg(player.getUniqueId(), targ);
+
     }
 }

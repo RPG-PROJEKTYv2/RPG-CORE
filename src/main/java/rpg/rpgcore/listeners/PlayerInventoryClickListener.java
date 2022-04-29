@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -836,7 +837,7 @@ public class PlayerInventoryClickListener implements Listener {
             task = rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> {
                 if (player.getOpenInventory().getTopInventory().getName().contains("Targ gracza") || player.getOpenInventory().getTopInventory().getName().contains("Kup przedmiot ")) {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostal zamkniety poniewaz byl otwarty dluzej niz &c60 sekundach"));
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostal zamkniety poniewaz byl otwarty dluzej niz &c60 sekund"));
                 }
             }, 1200L);
             rpgcore.getTargManager().putPlayerTask(playerUUID, task);
@@ -855,6 +856,59 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
 
+            final String targetName = Utils.removeColor(clickedInventoryTitle).replace("Targ gracza ", "").trim();
+            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(targetName);
+
+            if (player.getName().equals(targetName)) {
+                rpgcore.getTargManager().updatePlayerTarg(player, clickedSlot);
+                if (clickedItem.getItemMeta().getDisplayName() == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zdjales ze swojego targu &6" + clickedItem.getAmount() + "x " + clickedItem.getType()));
+                } else {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zdjales ze swojego targu &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName()));
+                }
+
+                if (rpgcore.getTargManager().getPlayerTarg(playerUUID).getItem(0) != null) {
+                    player.openInventory(rpgcore.getTargManager().getPlayerTarg(playerUUID));
+                    return;
+                }
+                player.closeInventory();
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma wystawionych zadnych przedmiotow"));
+                return;
+            }
+
+
+
+            final double kasaGracza = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+            final double itemCena = rpgcore.getTargManager().getItemCena(clickedItem);
+
+            if (kasaGracza < itemCena) {
+
+                player.closeInventory();
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz wystarczajacych srodkow, zeby kupic ten przedmiot."));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cBrakuje ci &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena - kasaGracza)) + " &2$"));
+
+
+                return;
+            }
+
+            rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasaGracza - itemCena);
+            rpgcore.getPlayerManager().updatePlayerKasa(targetUUID, rpgcore.getPlayerManager().getPlayerKasa(targetUUID) + itemCena);
+            rpgcore.getTargManager().givePlayerBoughtItem(player, clickedItem);
+
+            rpgcore.getTargManager().updatePlayerTarg(Bukkit.getPlayer(targetUUID), clickedSlot);
+            player.closeInventory();
+            for (int i = 0; i < clickedInventory.getViewers().size(); i++) {
+                Player p = (Player) clickedInventory.getViewers().get(i);
+                p.updateInventory();
+            }
+            if (clickedItem.getItemMeta().getDisplayName() == null) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+                Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+                return;
+            }
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            return;
         }
 
 
@@ -881,8 +935,8 @@ public class PlayerInventoryClickListener implements Listener {
 
                 System.out.println(cena);
                 System.out.println(podatek);
-                double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
-                double kasa = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+                final double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
+                final double kasa = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
 
                 if (kasa < podatekInDouble) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz pieniedzy, zeby wystawic ten przedmiot"));
@@ -907,6 +961,10 @@ public class PlayerInventoryClickListener implements Listener {
                 item.setItemMeta(meta);
 
                 rpgcore.getTargManager().getPlayerTarg(playerUUID).setItem(rpgcore.getTargManager().getPlayerTarg(playerUUID).firstEmpty(), item);
+                for (int i = 0; i < rpgcore.getTargManager().getPlayerTarg(playerUUID).getViewers().size(); i++) {
+                    Player p = (Player) rpgcore.getTargManager().getPlayerTarg(playerUUID).getViewers().get(i);
+                    p.updateInventory();
+                }
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wystawiles przedmiot za &6&o" + cena + " &2$"));
                 rpgcore.getTargManager().removeFromWystawia(playerUUID);
                 player.closeInventory();
@@ -920,7 +978,7 @@ public class PlayerInventoryClickListener implements Listener {
             return;
 
         }
-        
+
         
     }
 }
