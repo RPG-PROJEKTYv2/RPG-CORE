@@ -140,7 +140,7 @@ public final class RPGCORE extends JavaPlugin {
         this.tradeManager = new TradeManager(this);
         this.duszologNPC = new DuszologNPC();
         this.targManager = new TargManager(this);
-        this.teleporterNPC = new TeleporterNPC();
+        this.teleporterNPC = new TeleporterNPC(this);
     }
 
     private void autoMessage() {

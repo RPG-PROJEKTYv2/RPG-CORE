@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -706,6 +705,22 @@ public class PlayerInventoryClickListener implements Listener {
             }
             e.setCancelled(true);
             return;
+        }
+        // TELEPORTER
+        if (clickedInventoryTitle.equals(rpgcore.getTeleporterNPC().teleporterMAIN(player).getName())) {
+            if (clickedSlot == 10) {
+                if (clickedItem.getType() == Material.GRASS) {
+                    player.sendMessage("test teleportacja 1 expo");
+                    player.closeInventory();
+                }
+            }
+            if (clickedSlot == 11) {
+                if (clickedItem.getType() == Material.STONE) {
+                    player.sendMessage("test teleportacja 2 expo");
+                    player.closeInventory();
+                }
+            }
+            e.setCancelled(true);
         }
         //                      TRADE                   \\
 

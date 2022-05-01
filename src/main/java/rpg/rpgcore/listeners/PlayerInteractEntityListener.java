@@ -58,7 +58,7 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // TELEPORTER
             if (entityName.equalsIgnoreCase("TELEPORTER")) {
-                player.openInventory(rpgcore.getTeleporterNPC().teleporterMAIN());
+                player.openInventory(rpgcore.getTeleporterNPC().teleporterMAIN(player));
                 return;
             }
 
