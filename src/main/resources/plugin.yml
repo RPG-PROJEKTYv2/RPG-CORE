@@ -3,7 +3,7 @@ version: '${project.version}'
 main: rpg.rpgcore.RPGCORE
 depend:
   - MythicMobs
-authors: [ Caufland, MiresPL ]
+authors: [ MiresPL, ZwariowanyOrzel ]
 description: RPG-CORE
 commands:
   spawn:

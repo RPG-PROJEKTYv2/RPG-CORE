@@ -703,6 +703,13 @@ public class PlayerInventoryClickListener implements Listener {
                 rpgcore.getDuszologNPC().craftowanieDUSZ(player);
                 player.closeInventory();
             }
+            if (clickedSlot == 11) {
+                player.openInventory(rpgcore.getDuszologNPC().dodawanieDUSZ());
+            }
+            if (clickedSlot == 13) {
+                rpgcore.getDuszologNPC().craftowanieKAMIENUZBROJENIA(player);
+                player.closeInventory();
+            }
             e.setCancelled(true);
             return;
         }

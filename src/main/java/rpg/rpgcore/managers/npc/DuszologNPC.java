@@ -3,6 +3,7 @@ package rpg.rpgcore.managers.npc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -16,12 +17,15 @@ import java.util.Random;
 public class DuszologNPC {
 
     private Inventory gui;
-    
+
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ArrayList<String> itemLore = new ArrayList<>();
     private final ItemBuilder craftowanie = new ItemBuilder(Material.BEACON);
     private final ItemBuilder potrzebneitemy = new ItemBuilder(Material.MONSTER_EGG);
     private final ItemBuilder spiswszystkiego = new ItemBuilder(Material.EXP_BOTTLE);
+    private final ItemBuilder dodawaniedusz = new ItemBuilder(Material.ANVIL);
+    private final ItemBuilder potrzebneitemydodawaniedusz = new ItemBuilder(Material.FERMENTED_SPIDER_EYE);
+    private final ItemBuilder opisduszologa = new ItemBuilder(Material.REDSTONE_TORCH_ON);
 
 
     private final ItemBuilder testDUSZA1 = new ItemBuilder(Material.PRISMARINE_CRYSTALS, 1);
@@ -29,6 +33,7 @@ public class DuszologNPC {
     private final ItemBuilder testDUSZA3 = new ItemBuilder(Material.BLAZE_POWDER, 1);
     private final ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
     private final ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
+    private final ItemBuilder kamienuzbrojenia = new ItemBuilder(Material.FIREWORK_CHARGE, 1);
 
     private final ItemBuilder component1 = new ItemBuilder(Material.STONE);
     private final ItemBuilder component2 = new ItemBuilder(Material.COBBLESTONE);
@@ -72,6 +77,28 @@ public class DuszologNPC {
         }
     }
 
+    public void craftowanieKAMIENUZBROJENIA(final Player player) {
+        if (player.getInventory().containsAtLeast(component1.toItemStack(), 1) && player.getInventory().containsAtLeast(component2.toItemStack(), 1)
+                && player.getInventory().containsAtLeast(component3.toItemStack(), 1)) {
+            itemMapToRemove.put(0, component1.toItemStack());
+            itemMapToRemove.put(1, component2.toItemStack());
+            itemMapToRemove.put(2, component3.toItemStack());
+            player.getInventory().removeItem(itemMapToRemove.get(0));
+            player.getInventory().removeItem(itemMapToRemove.get(1));
+            player.getInventory().removeItem(itemMapToRemove.get(2));
+            Random random = new Random();
+            int szansa = random.nextInt(10) + 1;
+            if (szansa <= 4) {
+                player.sendMessage(Utils.format("&a&lDuszolog &8>> &cWytworzyles &3Kamien &bUzbrojenia &cgratulacje!"));
+                dajKAMIENUZBROJENIA(player);
+            } else if (szansa <= 9) {
+                player.sendMessage(Utils.format("&a&lDuszolog &8>> &cNiestety nie udalo ci sie wytworzyc &3Kamiania &bUzbrojenia&c."));
+            }
+        } else {
+            player.sendMessage(Utils.format("&a&lDuszolog &8>> &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
+        }
+    }
+
     public Inventory duszologMAIN() {
         this.gui = Bukkit.createInventory(null, 3 * 9, Utils.format("&a&lDuszolog"));
 
@@ -107,14 +134,19 @@ public class DuszologNPC {
 
         potrzebneitemy.setName("&aPotrzebne przedmioty");
         this.itemLore.add(" ");
-        this.itemLore.add("&8[ &e>> &8] &eLista:");
+        this.itemLore.add("&8[ &e>> &8] &eLista itemow na crafting &fduszy&e:");
+        this.itemLore.add("&8>> &f1. &6Stone &cx1&8.");
+        this.itemLore.add("&8>> &f2. &6Cobblestone &cx1&8.");
+        this.itemLore.add("&8>> &f3. &6Sztabka zelaza &cx1&8.");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8[ &e>> &8] &eLista itemow na crafting &3kamien &buzbrojenia&e:");
         this.itemLore.add("&8>> &f1. &6Stone &cx1&8.");
         this.itemLore.add("&8>> &f2. &6Cobblestone &cx1&8.");
         this.itemLore.add("&8>> &f3. &6Sztabka zelaza &cx1&8.");
         this.itemLore.add(" ");
         potrzebneitemy.addGlowing();
         potrzebneitemy.setLore(itemLore);
-        gui.setItem(11, potrzebneitemy.toItemStack());
+        gui.setItem(14, potrzebneitemy.toItemStack());
         this.itemLore.clear();
 
         // spis wszystkiego
@@ -132,6 +164,64 @@ public class DuszologNPC {
         spiswszystkiego.setLore(itemLore);
         gui.setItem(16, spiswszystkiego.toItemStack());
         this.itemLore.clear();
+
+        // dodawanie dusz
+
+        dodawaniedusz.setName("&3Dodawanie &f&lDusz &3do ekwipunku");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8>> &eKliknij aby dodac &fdusze &edo twojego ekwipunku");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8[ &e>> &8] &eWymagania:");
+        this.itemLore.add("&8* &6Dodany &3Kamien &bUzbrojenia &6do ekwipunku");
+        this.itemLore.add(" ");
+        dodawaniedusz.addGlowing();
+        dodawaniedusz.setLore(itemLore);
+        gui.setItem(11, dodawaniedusz.toItemStack());
+        this.itemLore.clear();
+
+        // dodawanie miejsca na dusze
+
+        potrzebneitemydodawaniedusz.setName("&bCraftowanie: &3Kamien &bUzbrojenia &cx1");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8>> &eKliknij aby stworzyc &3kamien &buzbrojenia&e!");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8[ &e>> &8] &eSzanse na drop:");
+        this.itemLore.add("&8* &3Kamien &bUzbrojenia: &c50%");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8[ &e>> &8] &eSzanse na inne:");
+        this.itemLore.add("&8* &cPustka: &c50%");
+        this.itemLore.add(" ");
+        potrzebneitemydodawaniedusz.addGlowing();
+        potrzebneitemydodawaniedusz.setLore(itemLore);
+        gui.setItem(13, potrzebneitemydodawaniedusz.toItemStack());
+        this.itemLore.clear();
+
+        // opis duszologa
+
+        opisduszologa.setName("&8* &9Informacje &8*");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8* &eTutaj mozesz stworzyc dusze, ktore");
+        this.itemLore.add("&8* &edodasz do seta w zakladce 'dodawanie'");
+        this.itemLore.add("&8* &eaby dodac dusze do seta musisz pierwsze");
+        this.itemLore.add("&8* &ewytworzyc na nie miejsce w zakladce 'dodawanie miejsca'");
+        this.itemLore.add(" ");
+        opisduszologa.addGlowing();
+        opisduszologa.setLore(itemLore);
+        gui.setItem(26, opisduszologa.toItemStack());
+        this.itemLore.clear();
+
+        return this.gui;
+    }
+
+    public Inventory dodawanieDUSZ() {
+        this.gui = Bukkit.createInventory(null, InventoryType.ANVIL, Utils.format("&3Dodawanie &f&lDusz"));
+
+        this.itemLore.clear();
+        opisduszologa.setName("test");
+        gui.setItem(0, opisduszologa.toItemStack());
+
+        this.itemLore.clear();
+
 
         return this.gui;
     }
@@ -208,6 +298,20 @@ public class DuszologNPC {
         testDUSZA5.setLore(testlore);
         player.getInventory().addItem(testDUSZA5.toItemStack());
     }
+    private void dajKAMIENUZBROJENIA(final Player player) {
+        testlore.clear();
+        kamienuzbrojenia.setName("&3Kamien &bUzbrojenia");
+        testlore.add(" ");
+        testlore.add("&8>> &eKliknij PPM aby dodac kamien do ekwipunku");
+        testlore.add(" ");
+        testlore.add("&8* &7Kamien ten pozwoli ci zrobic miejsce na");
+        testlore.add("&7twoim secie do ktorego przypiszesz dusze");
+        testlore.add("&7wytworzone u duszologa.");
+        testlore.add(" ");
+        kamienuzbrojenia.addGlowing();
+        kamienuzbrojenia.setLore(testlore);
+        player.getInventory().addItem(kamienuzbrojenia.toItemStack());
+    }
 
     private void sendBroadcast(final Player player, final String nazwaDuszy) {
         Bukkit.broadcastMessage(" ");
@@ -216,5 +320,4 @@ public class DuszologNPC {
         Bukkit.broadcastMessage(Utils.format("&8>> &4&lGRATULACJE!!!"));
         Bukkit.broadcastMessage(" ");
     }
-
 }
