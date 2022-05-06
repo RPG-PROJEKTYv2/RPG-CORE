@@ -1,6 +1,7 @@
 package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -87,7 +88,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("wyplac").setExecutor(new Wyplac(this));
         this.getCommand("wystaw").setExecutor(new Wystaw(this));
         this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
-//        this.getCommand("testanimation").setExecutor(new TestAnimation(this));
+        this.getCommand("testanimation").setExecutor(new TestAnimation(this));
+        this.getCommand("test").setExecutor(new Test());
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -103,6 +105,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InventoryDragListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 

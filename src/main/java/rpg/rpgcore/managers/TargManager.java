@@ -17,6 +17,9 @@ import java.util.*;
 
 public class TargManager {
 
+    //TODO zrobic zapis targow po edycji ich (kupienie, sprzedanie)
+
+
     private final RPGCORE rpgcore;
 
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 ,(short) 15);
