@@ -88,11 +88,11 @@ public class DuszologNPC {
             player.getInventory().removeItem(itemMapToRemove.get(2));
             Random random = new Random();
             int szansa = random.nextInt(10) + 1;
-            if (szansa <= 4) {
+            if (szansa <= 5) {
                 player.sendMessage(Utils.format("&a&lDuszolog &8>> &cWytworzyles &3Kamien &bUzbrojenia &cgratulacje!"));
                 dajKAMIENUZBROJENIA(player);
-            } else if (szansa <= 9) {
-                player.sendMessage(Utils.format("&a&lDuszolog &8>> &cNiestety nie udalo ci sie wytworzyc &3Kamiania &bUzbrojenia&c."));
+            } else {
+                player.sendMessage(Utils.format("&a&lDuszolog &8>> &cNiestety nie udalo ci sie wytworzyc &3Kamienia &bUzbrojenia&c."));
             }
         } else {
             player.sendMessage(Utils.format("&a&lDuszolog &8>> &7Nie posiadasz wszystkich przedmiotow potrzebnych do tego craftingu."));
@@ -298,7 +298,7 @@ public class DuszologNPC {
         testDUSZA5.setLore(testlore);
         player.getInventory().addItem(testDUSZA5.toItemStack());
     }
-    private void dajKAMIENUZBROJENIA(final Player player) {
+    public void dajKAMIENUZBROJENIA(final Player player) {
         testlore.clear();
         kamienuzbrojenia.setName("&3Kamien &bUzbrojenia");
         testlore.add(" ");

@@ -51,18 +51,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Tarcza")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(10).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(10).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cTarcze"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -87,18 +87,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Naszyjnik")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(11).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(11).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cNaszyjnik"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -122,18 +122,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Bransoleta")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(12).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(12).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cBransolete"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -157,18 +157,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Kolczyki")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(13).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(13).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazone &cKolczyki"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -193,18 +193,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Pierscien")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(14).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(14).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cPierscien"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -229,18 +229,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Energia")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(15).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(15).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cEnergie"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -265,18 +265,18 @@ public class PlayerInteractListener implements Listener {
 
                 if (eventItem.getItemMeta().getDisplayName().contains("Zegarek")) {
 
-                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(16).getType() != Material.BARRIER){
+                    if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid).getItem(16).getType() != Material.BARRIER) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cZegarek"));
                         return;
                     }
                     itemToSet = eventItem;
 
-                    if (eventItem.getAmount() != 1){
+                    if (eventItem.getAmount() != 1) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zalozyc wiecej niz jednego przedmiotu"));
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")){
+                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -293,7 +293,7 @@ public class PlayerInteractListener implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
                 return;
             }
-            
+
             if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
                 final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
 
@@ -302,13 +302,25 @@ public class PlayerInteractListener implements Listener {
                 player.getInventory().removeItem(itemMapToRemove.get(0));
                 itemMapToRemove.clear();
                 rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
-                player.sendMessage(Utils.format(Utils.SERVERNAME +  "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
                 return;
             }
 
+            // DUSZOLOG CLICKED
+
+            if (eventItem.getType() == Material.FIREWORK_CHARGE) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
+                    return;
+                }
+                if (eventItem.getItemMeta().getDisplayName().contains(Utils.format("&3Kamien &bUzbrojenia"))) {
+                    return;
+                }
+                return;
+            }
+
+
             return;
         }
-
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock() == null) {
                 return;
