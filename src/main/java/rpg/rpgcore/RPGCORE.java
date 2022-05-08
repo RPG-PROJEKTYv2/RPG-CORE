@@ -1,7 +1,6 @@
 package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -10,6 +9,7 @@ import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
 import rpg.rpgcore.managers.npc.DuszologNPC;
+import rpg.rpgcore.managers.npc.RybakNPC;
 import rpg.rpgcore.managers.npc.TeleporterNPC;
 import rpg.rpgcore.managers.vanish.VanishManager;
 import rpg.rpgcore.utils.Config;
@@ -40,6 +40,8 @@ public final class RPGCORE extends JavaPlugin {
     private DuszologNPC duszologNPC;
     private TargManager targManager;
     private TeleporterNPC teleporterNPC;
+    private CooldownManager cooldownManager;
+    private RybakNPC rybakNPC;
 
     private int i = 1;
 
@@ -47,6 +49,7 @@ public final class RPGCORE extends JavaPlugin {
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
+        this.initNPCS();
 
         this.createTables.createTables();
         this.sql.loadAll();
@@ -107,6 +110,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
@@ -142,9 +146,14 @@ public final class RPGCORE extends JavaPlugin {
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
         this.tradeManager = new TradeManager(this);
-        this.duszologNPC = new DuszologNPC();
         this.targManager = new TargManager(this);
+        this.cooldownManager = new CooldownManager();
+    }
+
+    private void initNPCS() {
+        this.duszologNPC = new DuszologNPC();
         this.teleporterNPC = new TeleporterNPC(this);
+        this.rybakNPC = new RybakNPC(this);
     }
 
     private void autoMessage() {
@@ -246,5 +255,13 @@ public final class RPGCORE extends JavaPlugin {
 
     public TeleporterNPC getTeleporterNPC() {
         return teleporterNPC;
+    }
+
+    public CooldownManager getCooldownManager() {
+        return cooldownManager;
+    }
+
+    public RybakNPC getRybakNPC() {
+        return rybakNPC;
     }
 }

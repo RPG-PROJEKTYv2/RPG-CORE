@@ -61,7 +61,7 @@ public class Heal implements CommandExecutor {
             target.setHealth(target.getMaxHealth());
             target.setFoodLevel(20);
             target.sendMessage(Utils.format("&aZostales uleczony przez dobrego czleka!"));
-            p.sendMessage(Utils.format("&aUleczono gracza " + p.getName()));
+            p.sendMessage(Utils.format("&aUleczono gracza " + target.getName()));
 
             return false;
         }

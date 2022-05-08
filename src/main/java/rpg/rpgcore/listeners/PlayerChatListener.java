@@ -10,6 +10,7 @@ import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerChatListener implements Listener {
 
@@ -22,7 +23,16 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
-        final String message = e.getMessage().replaceAll("%", "%%");
+        final String message = e.getMessage().replaceFirst("%", "%%");
+
+        if (rpgcore.getCooldownManager().hasChatCooldown(player.getUniqueId())) {
+            final long sekundy = rpgcore.getCooldownManager().getPlayerChatCooldown(player.getUniqueId()) - System.currentTimeMillis();
+            final String mili = String.valueOf(TimeUnit.MILLISECONDS.toMillis(sekundy) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(sekundy)));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&3Nastepna wiadomosc mozesz wyslac za &f" + TimeUnit.MILLISECONDS.toSeconds(sekundy) + "&f.&f" + mili + " &3sekund"));
+            e.setCancelled(true);
+            return;
+        }
+
         if (rpgcore.getPlayerManager().isMuted(player.getUniqueId())) {
             final String[] muteInfo = rpgcore.getPlayerManager().getPlayerMuteInfo(player.getUniqueId()).split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
@@ -37,6 +47,7 @@ public class PlayerChatListener implements Listener {
                 if (teraz.after(dataMuta)) {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unMutePlayer(player.getUniqueId()));
                     formatuj(e, message, player);
+                    rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());
                     return;
                 }
                 Utils.youAreMuted(player, muteInfo[0], muteInfo[1], Utils.convertDatesToTimeLeft(dataMuta, teraz));
@@ -49,6 +60,7 @@ public class PlayerChatListener implements Listener {
         }
         //TODO zrobic klany xd
         formatuj(e, message, player);
+        rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());
     }
 
 

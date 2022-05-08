@@ -144,6 +144,26 @@ public class SQLManager {
                 rpgcore.getBaoManager().updateBaoBonusyWartosci(
                         UUID.fromString(rs.getString("uuid")),
                         rs.getString("BAO_WARTOSCI"));
+
+                rpgcore.getRybakNPC().setPlayerRybakMisje(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getString("RYBAK_MISJE"));
+
+                rpgcore.getRybakNPC().setPlayerRybakSredniDMG(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getDouble("RYBAK_SRDMG"));
+
+                rpgcore.getRybakNPC().setPlayerRybakSredniDef(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getDouble("RYBAK_SRDEF"));
+
+                rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getDouble("RYBAK_DDMG"));
+
+                rpgcore.getRybakNPC().setPlayerRybakBlok(
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getDouble("RYBAK_BLOK"));
             }
 
             ps.executeQuery();
@@ -241,19 +261,29 @@ public class SQLManager {
 
             rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
-            ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO `npc` VALUES (?,?,?,?,?,?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
             ps.setString(3, "0,0,0,0");
+            ps.setString(4, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+            ps.setDouble(5, 0.0);
+            ps.setDouble(6, 0.0);
+            ps.setDouble(7, 0.0);
+            ps.setDouble(8, 0.0);
 
             ps.executeUpdate();
 
             rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
             rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
+            rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+            rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
 
 
-            ps = conn.prepareStatement("INSERT INTO `Inventories` VALUES (?,?)");
+            ps = conn.prepareStatement("INSERT INTO `Inventories` VALUES (?,?,?)");
 
             ps.setString(1, String.valueOf(uuid));
             ps.setString(2, Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));

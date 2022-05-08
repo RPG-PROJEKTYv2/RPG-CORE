@@ -62,6 +62,11 @@ public class CreateTables {
                     " `uuid` VARCHAR(36) NOT NULL," +
                     " `BAO_BONUSY` TEXT NOT NULL, " +
                     " `BAO_WARTOSCI` TEXT NOT NULL," +
+                    " `RYBAK_MISJE` TEXT NOT NULL," +
+                    " `RYBAK_SRDMG` DOUBLE NOT NULL," +
+                    " `RYBAK_SRDEF` DOUBLE NOT NULL," +
+                    " `RYBAK_DDMG` DOUBLE NOT NULL," +
+                    " `RYBAK_BLOK` DOUBLE NOT NULL," +
                     "  PRIMARY KEY (`uuid`))");
             ps.execute();
         } catch (final SQLException e) {
