@@ -27,13 +27,16 @@ public class DuszologNPC {
     private final ItemBuilder potrzebneitemydodawaniedusz = new ItemBuilder(Material.FERMENTED_SPIDER_EYE);
     private final ItemBuilder opisduszologa = new ItemBuilder(Material.REDSTONE_TORCH_ON);
 
+    private final ItemBuilder brakitemu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
+    private final ItemBuilder miejsceodbioru = new ItemBuilder(Material.BARRIER);
+    private final ItemBuilder kamienuzbrojenia = new ItemBuilder(Material.FIREWORK_CHARGE, 1);
+
 
     private final ItemBuilder testDUSZA1 = new ItemBuilder(Material.PRISMARINE_CRYSTALS, 1);
     private final ItemBuilder testDUSZA2 = new ItemBuilder(Material.INK_SACK, 1, (short) 1);
     private final ItemBuilder testDUSZA3 = new ItemBuilder(Material.BLAZE_POWDER, 1);
     private final ItemBuilder testDUSZA4 = new ItemBuilder(Material.IRON_INGOT, 1);
     private final ItemBuilder testDUSZA5 = new ItemBuilder(Material.NETHER_STAR, 1);
-    private final ItemBuilder kamienuzbrojenia = new ItemBuilder(Material.FIREWORK_CHARGE, 1);
 
     private final ItemBuilder component1 = new ItemBuilder(Material.STONE);
     private final ItemBuilder component2 = new ItemBuilder(Material.COBBLESTONE);
@@ -222,6 +225,47 @@ public class DuszologNPC {
 
         this.itemLore.clear();
 
+
+        return this.gui;
+    }
+
+    public Inventory dodawanieKAMIENIA() {
+        this.gui = Bukkit.createInventory(null, InventoryType.FURNACE, Utils.format("&eDodaj &3Kamien &bUzbrojenia"));
+
+        this.itemLore.clear();
+
+        // MIEJSCE NA KOMPONENT
+        brakitemu.setName("&c&lBRAK CZESCI SETA");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8>> &eKliknij na czesc seta aby ja dodac");
+        this.itemLore.add(" ");
+
+        brakitemu.addGlowing();
+        brakitemu.setLore(itemLore);
+        gui.setItem(0, brakitemu.toItemStack());
+        this.itemLore.clear();
+
+        // MIEJSCE NA CZEK Z KASĄ
+        brakitemu.setName("&c&lBRAK CZEKU NA &2$");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8>> &eKliknij na czek z &2$ &eaby go dodac");
+        this.itemLore.add(" ");
+
+        brakitemu.addGlowing();
+        brakitemu.setLore(itemLore);
+        gui.setItem(1, brakitemu.toItemStack());
+        this.itemLore.clear();
+
+        // MIEJSCE ODBIORU
+        miejsceodbioru.setName("&c&lBLAD DODAWANIA");
+        this.itemLore.add(" ");
+        this.itemLore.add("&8>> &eBrak spelnionych wymagan do dodawania &3kamienia&e!");
+        this.itemLore.add(" ");
+
+        miejsceodbioru.addGlowing();
+        miejsceodbioru.setLore(itemLore);
+        gui.setItem(2, miejsceodbioru.toItemStack());
+        this.itemLore.clear();
 
         return this.gui;
     }

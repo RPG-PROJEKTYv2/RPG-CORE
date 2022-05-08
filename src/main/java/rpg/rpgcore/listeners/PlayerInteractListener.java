@@ -306,13 +306,14 @@ public class PlayerInteractListener implements Listener {
                 return;
             }
 
-            // DUSZOLOG CLICKED
+            // DUSZOLOG
 
             if (eventItem.getType() == Material.FIREWORK_CHARGE) {
                 if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
                 }
                 if (eventItem.getItemMeta().getDisplayName().contains(Utils.format("&3Kamien &bUzbrojenia"))) {
+                    player.openInventory(rpgcore.getDuszologNPC().dodawanieKAMIENIA());
                     return;
                 }
                 return;

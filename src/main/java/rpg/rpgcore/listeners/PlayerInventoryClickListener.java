@@ -8,11 +8,13 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -713,6 +715,28 @@ public class PlayerInventoryClickListener implements Listener {
             e.setCancelled(true);
             return;
         }
+        if (clickedInventoryTitle.equals(rpgcore.getDuszologNPC().dodawanieKAMIENIA().getName())) {
+            if (clickedSlot == 2) {
+                if (clickedItem.getType() == Material.DIAMOND_CHESTPLATE) {
+                    player.sendMessage("ta juz tworzysz itd klata");
+                    player.closeInventory();
+                }
+                e.setCancelled(true);
+            }
+        }
+        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (player.getOpenInventory().getTitle().contains(Utils.format("&eDodaj &3Kamien &bUzbrojenia"))) {
+                if (clickedItem.getType() == Material.DIAMOND_CHESTPLATE) {
+                    ItemStack klata = e.getCurrentItem();
+
+                    player.getOpenInventory().getTopInventory().setItem(1, klata);
+                    itemMapToRemove.put(1, klata);
+                    player.getInventory().removeItem(itemMapToRemove.get(1));
+                }
+                e.setCancelled(true);
+            }
+        }
+
         // TELEPORTER
         if (clickedInventoryTitle.equals(rpgcore.getTeleporterNPC().teleporterMAIN(player).getName())) {
             if (clickedSlot == 10) {
