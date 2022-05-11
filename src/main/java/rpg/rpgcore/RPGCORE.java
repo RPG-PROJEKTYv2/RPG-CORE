@@ -1,6 +1,8 @@
 package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
@@ -58,6 +60,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getLvlManager().loadExpForAllMobs();
         this.getOsManager().loadAllRequiredOs();
         this.autoMessage();
+        this.getRybakNPC().loadExpWedka();
+
 
 
         this.getCommand("teleport").setExecutor(new Teleport(this));
@@ -111,6 +115,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 

@@ -38,6 +38,11 @@ public class PlayerInteractListener implements Listener {
                     e.setCancelled(true);
                     return;
                 }
+                if (rpgcore.getBaoManager().getBaoBonusy(uuid).contains("Brak Bonusu")) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw wylosowac swoje bonusy w &5&lStole Magii"));
+                    e.setCancelled(true);
+                    return;
+                }
                 e.setCancelled(true);
                 player.openInventory(rpgcore.getBaoManager().ksiegaMagiiGUI(player.getUniqueId()));
                 return;
@@ -334,6 +339,11 @@ public class PlayerInteractListener implements Listener {
             if (eventItem.equals(rpgcore.getBaoManager().getItemDoZmianki())) {
                 if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
+                    e.setCancelled(true);
+                    return;
+                }
+                if (rpgcore.getBaoManager().getBaoBonusy(uuid).contains("Brak Bonusu")) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw wylosowac swoje bonusy w &5&lStole Magii"));
                     e.setCancelled(true);
                     return;
                 }

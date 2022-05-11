@@ -4,7 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.utils.Items;
+import rpg.rpgcore.utils.GlobalItems;
 
 public class Test implements CommandExecutor {
 
@@ -14,7 +14,7 @@ public class Test implements CommandExecutor {
 
         final Player player = (Player) commandSender;
 
-        player.getInventory().addItem(Items.SAKWA());
+        player.getInventory().addItem(GlobalItems.SAKWA());
 
         return false;
     }

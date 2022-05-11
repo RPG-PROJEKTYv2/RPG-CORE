@@ -34,12 +34,14 @@ public class Utils {
     public static final String KICKPREFIX = format("&f&lTEST&3&lKICK&7 ");
     public static final String TRADEPREFIX = format("&f&lTEST&3&lTRADE&7 ");
     public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 ");
+    public static final String RYBAK = format("&6&lRybak >> ");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
     public static DecimalFormat df = new DecimalFormat("0.0");
     public static DecimalFormat kasaFormat = new DecimalFormat("0.00");
+    public static DecimalFormat wedkaFormat = new DecimalFormat("0.00");
     public static DecimalFormat procentFormat = new DecimalFormat("00.00");
     public static int MAXLVL = 130;
 

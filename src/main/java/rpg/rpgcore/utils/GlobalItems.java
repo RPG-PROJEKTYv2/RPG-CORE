@@ -3,7 +3,7 @@ package rpg.rpgcore.utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class Items {
+public class GlobalItems {
 
     public static ItemStack SAKWA() {
         ItemBuilder sakwa = new ItemBuilder(Material.EXP_BOTTLE, 1);

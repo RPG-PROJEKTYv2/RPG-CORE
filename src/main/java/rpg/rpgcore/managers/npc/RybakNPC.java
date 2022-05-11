@@ -4,8 +4,11 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -28,6 +31,7 @@ public class RybakNPC {
     private final HashMap<UUID, Double> ryabkDodatkowyDMG = new HashMap<>();
     private final HashMap<UUID, Double> ryabkBlok = new HashMap<>();
     private final HashMap<UUID, Double> ryabkSredniDef = new HashMap<>();
+    private final HashMap<Integer, Double> wymaganyExpWedki = new HashMap<>(50);
 
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ItemBuilder sklep = new ItemBuilder(Material.DOUBLE_PLANT);
@@ -35,6 +39,7 @@ public class RybakNPC {
     private final ItemBuilder stats = new ItemBuilder(Material.PAPER);
     private final ItemBuilder misjeItem = new ItemBuilder(Material.BOOK_AND_QUILL);
     private final ItemBuilder misjeItemEnd = new ItemBuilder(Material.BOOK);
+    private final ItemBuilder wedka = new ItemBuilder(Material.FISHING_ROD);
     private final List<String> lore = new ArrayList<>();
 
 
@@ -85,6 +90,128 @@ public class RybakNPC {
 
 
         player.openInventory(rybakGUI);
+    }
+
+    public void openRybakSklep(final Player player) {
+        final Inventory rybakGUI = Bukkit.createInventory(null, 9, Utils.format("&a&lSklep Rybacki"));
+
+        fill.setName(" ").hideFlag();
+
+        for (int i = 0; i < rybakGUI.getSize(); i++) {
+            rybakGUI.setItem(i, fill.toItemStack());
+        }
+
+        lore.clear();
+
+        lore.add("&bWlasciciel: &f" + player.getName());
+        lore.add("&bPoziom: &f0");
+        lore.add("&bExp: &f0&b/&f" + this.wymaganyExpWedki.get(1));
+        lore.add("&bWylowione ryby: &f0");
+        lore.add(" ");
+        lore.add("&f&lBonusy");
+        lore.add("&8- &bSzansa na podwojne wylowienie: &f0.05%");
+        lore.add("&8- &bSzansa na skrzynie rybaka: &f0.005%");
+        lore.add(" ");
+        lore.add("&2Cena: &6100 000 000 &2$");
+
+        wedka.setName("&6Wedka").setLore(lore);
+        rybakGUI.setItem(4, wedka.toItemStack());
+
+        player.openInventory(rybakGUI);
+    }
+
+    public void loadExpWedka() {
+        double wymaganyExp = 100.0;
+        for (int i = 1; i <= 50; i++) {
+            this.wymaganyExpWedki.put(i, wymaganyExp);
+            wymaganyExp += 150;
+        }
+    }
+
+    public ItemStack givePlayerRod(final Player player) {
+        final ItemBuilder wedkaGracza = new ItemBuilder(Material.FISHING_ROD);
+
+        lore.clear();
+
+        lore.add("&bWlasciciel: &f" + player.getName());
+        lore.add("&bPoziom: &f0");
+        lore.add("&bExp: &f0&b/&f" + this.wymaganyExpWedki.get(1));
+        lore.add("&bWylowione ryby: &f0");
+        lore.add(" ");
+        lore.add("&f&lBonusy");
+        lore.add("&8- &bSzansa na podwojne wylowienie: &f0.05%");
+        lore.add("&8- &bSzansa na skrzynie rybaka: &f0.005%");
+
+        wedkaGracza.setName("&6Wedka").setLore(lore);
+
+        return wedkaGracza.toItemStack();
+    }
+
+    public void addStatsToRod(final Player player, final double fishExp) {
+
+        if (player.getItemInHand().getType() != Material.FISHING_ROD) {
+            return;
+        }
+
+        if (player.getItemInHand().getItemMeta().getDisplayName() == null || player.getItemInHand().getItemMeta().getLore() == null) {
+            return;
+        }
+
+        final ItemStack playerRod = player.getItemInHand();
+        final ItemMeta im = playerRod.getItemMeta();
+        final List<String> lore = im.getLore();
+
+        int rodLvl = Integer.parseInt(Utils.removeColor(lore.get(1)).replace("Poziom: ", "").trim());
+        double rodExp = Double.parseDouble(Utils.removeColor(lore.get(2).replace("Exp: ", "").substring(0,Utils.removeColor(lore.get(2)).indexOf('/') + 1)));
+        int fished = rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId());
+        if (rodLvl == 50) {
+            lore.set(3, "&bWylowione ryby: &f" + (fished+1));
+            im.setLore(Utils.format(lore));
+            playerRod.setItemMeta(im);
+            rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
+            return;
+        }
+
+        lore.set(2, "&bExp: &f" + (rodExp + fishExp) + "&b/&f" + this.wymaganyExpWedki.get(rodLvl + 1));
+        lore.set(3, "&bWylowione ryby: &f" + (fished+1));
+        rodExp += fishExp;
+
+        if (rodExp >= this.wymaganyExpWedki.get(rodLvl + 1)) {
+            rodLvl += 1;
+            rodExp = 0.0;
+            if (rodLvl == 50) {
+                lore.set(1, "&bPoziom: &4&lMAX");
+                lore.set(2, "&bExp: &4&lMAX");
+            } else {
+                lore.set(1, "&bPoziom: &f" + rodLvl);
+                lore.set(2, "&bExp: &f" + rodExp + "&b/&f" + this.wymaganyExpWedki.get(rodLvl + 1));
+            }
+            double doubleDrop = Double.parseDouble(Utils.removeColor(lore.get(6)).replace("-", "").replace("Szansa na podwojne wylowienie:", "").replace(" ", "").replace("%", "").trim());
+            double caseDrop = Double.parseDouble(Utils.removeColor(lore.get(7)).replace("-", "").replace("Szansa na skrzynie rybaka:", "").replace(" ", "").replace("%", "").trim());
+
+            doubleDrop += 0.75;
+            caseDrop += 0.25;
+
+            lore.set(6, "&8- &bSzansa na podwojne wylowienie: &f" + Utils.wedkaFormat.format(doubleDrop) + "%");
+            lore.set(7, "&8- &bSzansa na skrzynie rybaka: &f" + Utils.wedkaFormat.format(caseDrop) + "%");
+
+            if (im.getEnchantLevel(Enchantment.LURE) < 5) {
+                if (rodLvl % 5 == 0) {
+                    im.addEnchant(Enchantment.LURE, playerRod.getEnchantmentLevel(Enchantment.LURE) + 1, true);
+                }
+            }
+            if (im.getEnchantLevel(Enchantment.LUCK) < 5) {
+                if (rodLvl % 10 == 0) {
+                    im.addEnchant(Enchantment.LUCK, playerRod.getEnchantmentLevel(Enchantment.LUCK) + 1, true);
+                }
+            }
+            player.sendMessage(Utils.format(Utils.RYBAK + " &7Twoja wedka zyskala nowe moce"));
+        }
+
+        im.setLore(Utils.format(lore));
+        playerRod.setItemMeta(im);
+        rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
+        return;
     }
 
     @Getter

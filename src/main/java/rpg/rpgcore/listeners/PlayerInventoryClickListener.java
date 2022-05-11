@@ -1025,6 +1025,33 @@ public class PlayerInventoryClickListener implements Listener {
 
         }
 
+        if (clickedInventoryTitle.contains("Menu Rybaka")) {
+            e.setCancelled(true);
+            if (clickedSlot == 16) {
+                rpgcore.getRybakNPC().openRybakSklep(player);
+                return;
+            }
+        }
+
+        if (clickedInventoryTitle.contains("Sklep Rybacki")) {
+            e.setCancelled(true);
+            if (clickedSlot == 4) {
+                final double cenaWedki = Double.parseDouble(Utils.removeColor(clickedItem.getItemMeta().getLore().get(clickedItem.getItemMeta().getLore().size() - 1)).replace("Cena:", "").replace(" ", "").replace("$", "").trim());
+                if (rpgcore.getPlayerManager().getPlayerKasa(playerUUID) < cenaWedki) {
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&cCzy ty probujesz mnie oszukac? Nie stac cie na moja wedke"));
+                    player.closeInventory();
+                    return;
+                }
+
+                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) - cenaWedki);
+
+                player.getInventory().addItem(rpgcore.getRybakNPC().givePlayerRod(player));
+                player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie zakupiles moja wedka. &6Udanych lowow!"));
+                player.closeInventory();
+                return;
+            }
+        }
+
         
     }
 }

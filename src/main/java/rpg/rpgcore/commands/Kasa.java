@@ -34,6 +34,17 @@ public class Kasa implements CommandExecutor {
             return false;
         }
 
+        if (args.length == 1) {
+            if (args[0].equals("daj")) {
+                if (!player.hasPermission("admin.rpg.dajkase")) {
+                    player.sendMessage(Utils.permisje("admin.rpg.dajkase"));
+                    return false;
+                }
+                rpgcore.getPlayerManager().updatePlayerKasa(player.getUniqueId(), 100000000000.0);
+                return false;
+            }
+        }
+
         player.sendMessage(Utils.poprawneUzycie("kasa"));
     return false;
     }
