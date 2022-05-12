@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -31,15 +32,18 @@ public class RybakNPC {
     private final HashMap<UUID, Double> ryabkDodatkowyDMG = new HashMap<>();
     private final HashMap<UUID, Double> ryabkBlok = new HashMap<>();
     private final HashMap<UUID, Double> ryabkSredniDef = new HashMap<>();
+    private final HashMap<UUID, Integer> ryabkPostep = new HashMap<>();
+    private final HashMap<Integer, String> misjeRybackie = new HashMap<>(45);
     private final HashMap<Integer, Double> wymaganyExpWedki = new HashMap<>(50);
 
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ItemBuilder sklep = new ItemBuilder(Material.DOUBLE_PLANT);
     private final ItemBuilder misje = new ItemBuilder(Material.BOOK);
     private final ItemBuilder stats = new ItemBuilder(Material.PAPER);
-    private final ItemBuilder misjeItem = new ItemBuilder(Material.BOOK_AND_QUILL);
-    private final ItemBuilder misjeItemEnd = new ItemBuilder(Material.BOOK);
     private final ItemBuilder wedka = new ItemBuilder(Material.FISHING_ROD);
+
+    private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
+
     private final List<String> lore = new ArrayList<>();
 
 
@@ -88,7 +92,6 @@ public class RybakNPC {
         rybakGUI.setItem(13, stats.toItemStack());
 
 
-
         player.openInventory(rybakGUI);
     }
 
@@ -120,12 +123,117 @@ public class RybakNPC {
         player.openInventory(rybakGUI);
     }
 
+    public void openRybakKampania(final Player player) {
+        final Inventory kampaniaGui = Bukkit.createInventory(null, 45, Utils.format("&4&lKampania Rybacka"));
+
+        final ItemBuilder misjeItem = new ItemBuilder(Material.BOOK_AND_QUILL);
+        final ItemBuilder misjeDone = new ItemBuilder(Material.BOOK);
+        final ItemBuilder previousNotDone = new ItemBuilder(Material.BARRIER);
+
+        final String[] playerMisje = rpgcore.getRybakNPC().getPlayerRybakMisje(player.getUniqueId()).split(",");
+        final List<String> lore = new ArrayList<>();
+
+        fill.setName(" ").hideFlag();
+
+        for (int i = 0; i < kampaniaGui.getSize(); i++) {
+            if (playerMisje[i].equals("true")) {
+                lore.clear();
+                lore.add("&a&lUKONCZONE");
+                kampaniaGui.setItem(i, misjeDone.setName("&c&lMisja #" + (i + 1)).setLore(lore).addGlowing().toItemStack().clone());
+            } else {
+                if (i != 0 && kampaniaGui.getItem(i - 1).getType().equals(Material.BOOK_AND_QUILL)) {
+                    lore.clear();
+
+                    lore.add(" ");
+                    lore.add("&cNajpierw musisz wykonac poprzednia misje");
+                    lore.add("&czeby otrzymac dostep do kolejnych");
+
+                    for (int j = i; j < kampaniaGui.getSize(); j++) {
+                        kampaniaGui.setItem(j, previousNotDone.setName("&c&lMisja #" + (j + 1)).setLore(lore).addGlowing().toItemStack().clone());
+                    }
+                    break;
+                } else {
+                    String[] misja = this.misjeRybackie.get(i).split(";");
+                    lore.clear();
+                    lore.add(" ");
+                    lore.add("&f&lMisja:");
+                    lore.add("&3" + misja[0] + " &f" + misja[1] + "x " + misja[2]);
+                    lore.add(" ");
+                    lore.add("&f&lPostep:");
+                    lore.add("&b" + this.ryabkPostep.get(player.getUniqueId()) + " &f/&b " + misja[1] + " &8(&b" + Utils.procentFormat.format((long) (this.ryabkPostep.get(player.getUniqueId()) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+
+                    kampaniaGui.setItem(i, misjeItem.setName("&c&lMisja #" + (i + 1)).setLore(lore).toItemStack().clone());
+                }
+            }
+        }
+
+
+        player.openInventory(kampaniaGui);
+    }
+
+    public void loadRybakMisje() {
+        for (int i = 0; i < 45; i++) {
+            this.misjeRybackie.put(i, "Wylow;10;&6Karasi");
+        }
+    }
+
     public void loadExpWedka() {
         double wymaganyExp = 100.0;
         for (int i = 1; i <= 50; i++) {
             this.wymaganyExpWedki.put(i, wymaganyExp);
             wymaganyExp += 150;
         }
+    }
+
+    public void loadRybakDrops() {
+        /*\
+        Material.RAW_FISH, 1, (short) 1 - RAW SALMON
+        Material.RAW_FISH, 1, (short) 2 - CLOWNFISH
+        Material.RAW_FISH, 1, (short) 3 - PUFFERFISH
+        Material.COOCKED_FISH, 1, (short) 1 - COOCKED SALMON
+         */
+        final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH);
+        final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+        final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+        final ItemBuilder krasnopiorka = new ItemBuilder(Material.RAW_FISH, 1, (short) 2);
+        final ItemBuilder dorszCzarny = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
+        final ItemBuilder dorada = new ItemBuilder(Material.RAW_FISH);
+        final ItemBuilder cierniczek = new ItemBuilder(Material.COOKED_FISH);
+        final ItemBuilder fladra = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
+        final ItemBuilder karas = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+        final ItemBuilder karp = new ItemBuilder(Material.COOKED_FISH);
+        final ItemBuilder leszcz = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
+        final ItemBuilder makrela = new ItemBuilder(Material.COOKED_FISH);
+        final ItemBuilder mintaj = new ItemBuilder(Material.COOKED_FISH);
+        final ItemBuilder okon = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
+        final ItemBuilder plotka = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+        final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
+
+
+        final List<String> lore = new ArrayList<>();
+
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+        rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, dorada.setName("&6Dorada").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, fladra.setName("&6Fladra").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, karp.setName("&6Karp").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, leszcz.setName("&6Leszcz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, makrela.setName("&6Makrela").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity przedmiot rybacki").addGlowing().toItemStack());
+    }
+
+    public ItemStack getDrop() {
+        return this.rybakDrops.next();
     }
 
     public ItemStack givePlayerRod(final Player player) {
@@ -162,10 +270,10 @@ public class RybakNPC {
         final List<String> lore = im.getLore();
 
         int rodLvl = Integer.parseInt(Utils.removeColor(lore.get(1)).replace("Poziom: ", "").trim());
-        double rodExp = Double.parseDouble(Utils.removeColor(lore.get(2).replace("Exp: ", "").substring(0,Utils.removeColor(lore.get(2)).indexOf('/') + 1)));
+        double rodExp = Double.parseDouble(Utils.removeColor(lore.get(2).replace("Exp: ", "").substring(0, Utils.removeColor(lore.get(2)).indexOf('/') + 1)));
         int fished = rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId());
         if (rodLvl == 50) {
-            lore.set(3, "&bWylowione ryby: &f" + (fished+1));
+            lore.set(3, "&bWylowione ryby: &f" + (fished + 1));
             im.setLore(Utils.format(lore));
             playerRod.setItemMeta(im);
             rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
@@ -173,7 +281,7 @@ public class RybakNPC {
         }
 
         lore.set(2, "&bExp: &f" + (rodExp + fishExp) + "&b/&f" + this.wymaganyExpWedki.get(rodLvl + 1));
-        lore.set(3, "&bWylowione ryby: &f" + (fished+1));
+        lore.set(3, "&bWylowione ryby: &f" + (fished + 1));
         rodExp += fishExp;
 
         if (rodExp >= this.wymaganyExpWedki.get(rodLvl + 1)) {
@@ -295,5 +403,20 @@ public class RybakNPC {
     @Setter
     public void updatePlayerRybakDodatowyDMG(final UUID uuid, final double nowyDodatkowyDMG) {
         this.ryabkDodatkowyDMG.replace(uuid, nowyDodatkowyDMG);
+    }
+
+    @Getter
+    public int getPlayerPostep(final UUID uuid) {
+        return this.ryabkPostep.get(uuid);
+    }
+
+    @Setter
+    public void setPlayerPostep(final UUID uuid, final int postep) {
+        this.ryabkPostep.put(uuid, postep);
+    }
+
+    @Setter
+    public void updtaePlayerPostep(final UUID uuid, final int nowyPostep) {
+        this.ryabkPostep.replace(uuid, nowyPostep);
     }
 }

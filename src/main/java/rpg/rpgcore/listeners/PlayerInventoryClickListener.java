@@ -1027,6 +1027,10 @@ public class PlayerInventoryClickListener implements Listener {
 
         if (clickedInventoryTitle.contains("Menu Rybaka")) {
             e.setCancelled(true);
+            if (clickedSlot == 10) {
+                rpgcore.getRybakNPC().openRybakKampania(player);
+                return;
+            }
             if (clickedSlot == 16) {
                 rpgcore.getRybakNPC().openRybakSklep(player);
                 return;

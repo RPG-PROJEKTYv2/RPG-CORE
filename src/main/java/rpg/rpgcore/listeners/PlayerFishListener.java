@@ -25,7 +25,6 @@ public class PlayerFishListener implements Listener {
         this.rpgcore = rpgcore;
     }
     private final RandomItems<String> firstRoll = new RandomItems<>();
-    private final RandomItems<ItemStack> fish = new RandomItems<>();
     private final RandomItems<String> mob = new RandomItems<>();
 
 
@@ -33,6 +32,7 @@ public class PlayerFishListener implements Listener {
     public void onFish(final PlayerFishEvent e) {
 
         load();
+        rpgcore.getRybakNPC().loadRybakDrops();
 
         e.setExpToDrop(0);
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
@@ -48,7 +48,7 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cNiestety ryba zerwala sie z linki"));
                     return;
                 case "fish":
-                    ItemStack is = fish.next();
+                    ItemStack is = rpgcore.getRybakNPC().getDrop();
                     player.getInventory().addItem(is);
                     player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + is.getAmount() + "x " + is.getItemMeta().getDisplayName()));
                     break;
@@ -87,14 +87,14 @@ public class PlayerFishListener implements Listener {
 
     public void load() {
 
-        firstRoll.add(0.25, "fish");
-        firstRoll.add(0.25, "mob");
-        firstRoll.add(0.5, "empty");
+        firstRoll.add(0.375, "fish");
+        firstRoll.add(0.375, "mob");
+        firstRoll.add(0.25, "empty");
 
         ItemBuilder item = new ItemBuilder(Material.RAW_FISH);
 
 
-        fish.add(1, item.setName("&6Rybka").toItemStack());
+        //fish.add(1, item.setName("&6Rybka").toItemStack());
 
         mob.add(1, "zombie");
     }

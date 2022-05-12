@@ -23,7 +23,7 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
-        final String message = e.getMessage().replaceFirst("%", "%%");
+        final String message = e.getMessage().replaceAll("%", "%%");
 
         if (rpgcore.getCooldownManager().hasChatCooldown(player.getUniqueId())) {
             final long sekundy = rpgcore.getCooldownManager().getPlayerChatCooldown(player.getUniqueId()) - System.currentTimeMillis();
@@ -47,6 +47,9 @@ public class PlayerChatListener implements Listener {
                 if (teraz.after(dataMuta)) {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unMutePlayer(player.getUniqueId()));
                     formatuj(e, message, player);
+                    if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
+                        return;
+                    }
                     rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());
                     return;
                 }
@@ -60,6 +63,9 @@ public class PlayerChatListener implements Listener {
         }
         //TODO zrobic klany xd
         formatuj(e, message, player);
+        if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
+            return;
+        }
         rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());
     }
 

@@ -63,6 +63,7 @@ public class CreateTables {
                     " `BAO_BONUSY` TEXT NOT NULL, " +
                     " `BAO_WARTOSCI` TEXT NOT NULL," +
                     " `RYBAK_MISJE` TEXT NOT NULL," +
+                    " `RYBAK_POSTEP` INT NOT NULL," +
                     " `RYBAK_SRDMG` DOUBLE NOT NULL," +
                     " `RYBAK_SRDEF` DOUBLE NOT NULL," +
                     " `RYBAK_DDMG` DOUBLE NOT NULL," +

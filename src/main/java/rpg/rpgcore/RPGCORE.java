@@ -60,7 +60,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getLvlManager().loadExpForAllMobs();
         this.getOsManager().loadAllRequiredOs();
         this.autoMessage();
-        this.getRybakNPC().loadExpWedka();
 
 
 
@@ -160,6 +159,12 @@ public final class RPGCORE extends JavaPlugin {
         this.duszologNPC = new DuszologNPC();
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
+
+
+
+        this.getRybakNPC().loadExpWedka();
+        this.getRybakNPC().loadRybakDrops();
+        this.getRybakNPC().loadRybakMisje();
     }
 
     private void autoMessage() {
