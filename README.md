@@ -3,7 +3,7 @@
 ***
 <h3>TODO</h3>
 <li>Ustalic nazwy map, limity zbroji, mieczy, akce, nazwy mobow, szanse na drop, itd.</li>
-<li>Item Helpers - (Akcesoria, zbroje, miecze) ~ Mires</li>
+<li style="text-decoration: line-through;">Item Helpers - (Akcesoria, zbroje, miecze) ~ Mires</li>
 <li>Dokonczyc system lowienia ~ Mires</li>
 <li>Zrobic npc</li>
 
