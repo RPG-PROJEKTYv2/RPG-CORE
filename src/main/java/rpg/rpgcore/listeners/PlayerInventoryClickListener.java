@@ -1056,6 +1056,10 @@ public class PlayerInventoryClickListener implements Listener {
             }
         }
 
+        if (clickedInventoryTitle.contains("Kampania Rybacka")) {
+            e.setCancelled(true);
+        }
+
         
     }
 }

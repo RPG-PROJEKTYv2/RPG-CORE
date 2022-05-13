@@ -32,7 +32,7 @@ public class RybakNPC {
     private final HashMap<UUID, Double> ryabkDodatkowyDMG = new HashMap<>();
     private final HashMap<UUID, Double> ryabkBlok = new HashMap<>();
     private final HashMap<UUID, Double> ryabkSredniDef = new HashMap<>();
-    private final HashMap<UUID, Integer> ryabkPostep = new HashMap<>();
+    private final HashMap<UUID, Integer> rybakPostep = new HashMap<>();
     private final HashMap<Integer, String> misjeRybackie = new HashMap<>(45);
     private final HashMap<Integer, Double> wymaganyExpWedki = new HashMap<>(50);
 
@@ -114,6 +114,7 @@ public class RybakNPC {
         lore.add("&f&lBonusy");
         lore.add("&8- &bSzansa na podwojne wylowienie: &f0.05%");
         lore.add("&8- &bSzansa na skrzynie rybaka: &f0.005%");
+        lore.add("&8- &bSzansa na wylowienie podwodnego stworzenia: &f0.1%");
         lore.add(" ");
         lore.add("&2Cena: &6100 000 000 &2$");
 
@@ -160,7 +161,7 @@ public class RybakNPC {
                     lore.add("&3" + misja[0] + " &f" + misja[1] + "x " + misja[2]);
                     lore.add(" ");
                     lore.add("&f&lPostep:");
-                    lore.add("&b" + this.ryabkPostep.get(player.getUniqueId()) + " &f/&b " + misja[1] + " &8(&b" + Utils.procentFormat.format((long) (this.ryabkPostep.get(player.getUniqueId()) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+                    lore.add("&b" + this.rybakPostep.get(player.getUniqueId()) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(player.getUniqueId()) / Integer.parseInt(misja[1])) * 100) + "%&8)");
 
                     kampaniaGui.setItem(i, misjeItem.setName("&c&lMisja #" + (i + 1)).setLore(lore).toItemStack().clone());
                 }
@@ -214,7 +215,9 @@ public class RybakNPC {
 
         lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
 
-        rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(1, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
+
+        /*rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
@@ -229,7 +232,7 @@ public class RybakNPC {
         rybakDrops.add(0.06666, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity przedmiot rybacki").addGlowing().toItemStack());
+        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity przedmiot rybacki").addGlowing().toItemStack());*/
     }
 
     public ItemStack getDrop() {
@@ -249,10 +252,22 @@ public class RybakNPC {
         lore.add("&f&lBonusy");
         lore.add("&8- &bSzansa na podwojne wylowienie: &f0.05%");
         lore.add("&8- &bSzansa na skrzynie rybaka: &f0.005%");
+        lore.add("&8- &bSzansa na wylowienie podwodnego stworzenia: &f0.1%");
 
         wedkaGracza.setName("&6Wedka").setLore(lore);
 
         return wedkaGracza.toItemStack();
+    }
+
+    public ItemStack getChest() {
+        final ItemBuilder chest = new ItemBuilder(Material.CHEST);
+        final List<String> lore = new ArrayList<>();
+
+        lore.add("&8&n&oKliknij&r &8&ozeby otworzyc skrzynie i otrzymac przedmioty");
+
+        chest.setName("&a&lSkrzynia Rybaka").setLore(lore).hideFlag();
+
+        return chest.toItemStack();
     }
 
     public void addStatsToRod(final Player player, final double fishExp) {
@@ -296,12 +311,19 @@ public class RybakNPC {
             }
             double doubleDrop = Double.parseDouble(Utils.removeColor(lore.get(6)).replace("-", "").replace("Szansa na podwojne wylowienie:", "").replace(" ", "").replace("%", "").trim());
             double caseDrop = Double.parseDouble(Utils.removeColor(lore.get(7)).replace("-", "").replace("Szansa na skrzynie rybaka:", "").replace(" ", "").replace("%", "").trim());
+            double mobChance = Double.parseDouble(Utils.removeColor(lore.get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
 
             doubleDrop += 0.75;
             caseDrop += 0.25;
+            if (rodLvl - 1 == 1) {
+                mobChance += 0.3;
+            } else {
+                mobChance += 0.5;
+            }
 
             lore.set(6, "&8- &bSzansa na podwojne wylowienie: &f" + Utils.wedkaFormat.format(doubleDrop) + "%");
             lore.set(7, "&8- &bSzansa na skrzynie rybaka: &f" + Utils.wedkaFormat.format(caseDrop) + "%");
+            lore.set(8, "&8- &bSzansa na wylowienie podwodnego stworzenia: &f" + Utils.wedkaFormat.format(mobChance) + "%");
 
             if (im.getEnchantLevel(Enchantment.LURE) < 5) {
                 if (rodLvl % 5 == 0) {
@@ -339,6 +361,17 @@ public class RybakNPC {
 
     public boolean isInRybakMisjeMap(final UUID uuid) {
         return this.ryabkMisje.containsKey(uuid);
+    }
+
+    @Getter
+    public int getPlayerCurrentMission(final UUID uuid) {
+        final String[] missions = this.ryabkMisje.get(uuid).split(",");
+
+        int i = 0;
+        while (missions[i].equalsIgnoreCase("true")) {
+            i++;
+        }
+        return i + 1;
     }
 
 
@@ -407,16 +440,16 @@ public class RybakNPC {
 
     @Getter
     public int getPlayerPostep(final UUID uuid) {
-        return this.ryabkPostep.get(uuid);
+        return this.rybakPostep.get(uuid);
     }
 
     @Setter
     public void setPlayerPostep(final UUID uuid, final int postep) {
-        this.ryabkPostep.put(uuid, postep);
+        this.rybakPostep.put(uuid, postep);
     }
 
     @Setter
-    public void updtaePlayerPostep(final UUID uuid, final int nowyPostep) {
-        this.ryabkPostep.replace(uuid, nowyPostep);
+    public void updatePlayerPostep(final UUID uuid, final int nowyPostep) {
+        this.rybakPostep.replace(uuid, this.rybakPostep.get(uuid) + nowyPostep);
     }
 }

@@ -29,6 +29,9 @@ public class RandomItems<E> {
         return map.higherEntry(value).getValue();
     }
 
+    public void clear() {
+        map.clear();
+    }
 
     /*
     public Item getDrawnItem(Player player, int number) {
