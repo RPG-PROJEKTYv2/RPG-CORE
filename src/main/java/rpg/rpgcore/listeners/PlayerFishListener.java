@@ -46,9 +46,11 @@ public class PlayerFishListener implements Listener {
 
             double mobChance = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
 
-            firstRoll.add(0.7 - (0.1 + (mobChance / 100)), "fish");
+            firstRoll.add(1, "mob");
+
+            /*firstRoll.add(0.7 - (0.1 + (mobChance / 100)), "fish");
             firstRoll.add(0.1 + (mobChance / 100), "mob");
-            firstRoll.add(0.3, "empty");
+            firstRoll.add(0.3, "empty");*/
 
             String result = firstRoll.next();
 
@@ -94,27 +96,7 @@ public class PlayerFishListener implements Listener {
 
                     break;
                 case "mob":
-
-                    Location hook = e.getHook().getLocation();
-
-                    Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                        Entity mob = Bukkit.getWorld(player.getWorld().getName()).spawnEntity(hook, EntityType.ZOMBIE);
-                        mob.setCustomName(Utils.format("&3Potwor z Glebin"));
-                        player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + mob.getCustomName()));
-
-                        Vector lookingAt = player.getLocation().getDirection().normalize();
-
-                        double pushX = player.getLocation().getDirection().normalize().getX() * -2;
-                        double pushY = player.getLocation().getDirection().normalize().getY() * -2;
-                        double pushZ = player.getLocation().getDirection().normalize().getZ() * -2;
-
-
-                        Vector push = new Vector(pushX, pushY, pushZ);
-
-                        mob.setVelocity(push);
-
-
-                    }, 1L);
+                    rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
                     break;
             }
 

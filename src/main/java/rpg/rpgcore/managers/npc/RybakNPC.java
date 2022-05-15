@@ -3,12 +3,18 @@ package rpg.rpgcore.managers.npc;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
@@ -127,7 +133,6 @@ public class RybakNPC {
     public void openRybakKampania(final Player player) {
         final Inventory kampaniaGui = Bukkit.createInventory(null, 45, Utils.format("&4&lKampania Rybacka"));
 
-        final ItemBuilder misjeItem = new ItemBuilder(Material.BOOK_AND_QUILL);
         final ItemBuilder misjeDone = new ItemBuilder(Material.BOOK);
         final ItemBuilder previousNotDone = new ItemBuilder(Material.BARRIER);
 
@@ -154,16 +159,7 @@ public class RybakNPC {
                     }
                     break;
                 } else {
-                    String[] misja = this.misjeRybackie.get(i).split(";");
-                    lore.clear();
-                    lore.add(" ");
-                    lore.add("&f&lMisja:");
-                    lore.add("&3" + misja[0] + " &f" + misja[1] + "x " + misja[2]);
-                    lore.add(" ");
-                    lore.add("&f&lPostep:");
-                    lore.add("&b" + this.rybakPostep.get(player.getUniqueId()) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(player.getUniqueId()) / Integer.parseInt(misja[1])) * 100) + "%&8)");
-
-                    kampaniaGui.setItem(i, misjeItem.setName("&c&lMisja #" + (i + 1)).setLore(lore).toItemStack().clone());
+                    kampaniaGui.setItem(i, this.createCurrentMissionItem(player.getUniqueId(), i).clone());
                 }
             }
         }
@@ -217,7 +213,7 @@ public class RybakNPC {
 
         rybakDrops.add(1, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
 
-        /*rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
@@ -232,7 +228,7 @@ public class RybakNPC {
         rybakDrops.add(0.06666, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity przedmiot rybacki").addGlowing().toItemStack());*/
+        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity przedmiot rybacki").addGlowing().toItemStack());
     }
 
     public ItemStack getDrop() {
@@ -270,6 +266,53 @@ public class RybakNPC {
         return chest.toItemStack();
     }
 
+    public void runFishAnimation(final Player player, final Entity entity) {
+        double pushX = player.getLocation().getDirection().normalize().getX() * -2;
+        double pushY = player.getLocation().getDirection().normalize().getY() * -2;
+        double pushZ = player.getLocation().getDirection().normalize().getZ() * -2;
+
+        Vector push = new Vector(pushX, pushY, pushZ);
+
+        entity.setVelocity(push);
+    }
+
+    public void spawnNurekGlebinowy(final Player player, final Location location) {
+        LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
+        entity.setCustomName(Utils.format("&3Potwor z Glebin"));
+        player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + entity.getCustomName()));
+        runFishAnimation(player, entity);
+
+        EntityEquipment entityInv = entity.getEquipment();
+
+        final ItemBuilder helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
+        final ItemBuilder klata = new ItemBuilder(Material.LEATHER_CHESTPLATE);
+        final ItemBuilder spodnie = new ItemBuilder(Material.LEATHER_LEGGINGS);
+        final ItemBuilder buty = new ItemBuilder(Material.LEATHER_BOOTS);
+        final ItemBuilder miecz = new ItemBuilder(Material.GOLD_SWORD);
+
+        helm.setSkullOwnerURL("http://textures.minecraft.net/texture/8569245371edff63a26913a972f2c44fbe41f75e42668a72599759cf452f3a");
+        player.getInventory().addItem(helm.toItemStack());
+        klata.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
+        spodnie.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
+        buty.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
+        miecz.addGlowing();
+
+        entityInv.setHelmet(helm.toItemStack());
+        entityInv.setChestplate(klata.toItemStack());
+        entityInv.setLeggings(spodnie.toItemStack());
+        entityInv.setBoots(buty.toItemStack());
+        entityInv.setItemInHand(miecz.toItemStack());
+
+        entityInv.setHelmetDropChance(0f);
+        entityInv.setChestplateDropChance(0f);
+        entityInv.setLeggingsDropChance(0f);
+        entityInv.setBootsDropChance(0f);
+        entityInv.setItemInHandDropChance(0f);
+
+
+    }
+
+
     public void addStatsToRod(final Player player, final double fishExp) {
 
         if (player.getItemInHand().getType() != Material.FISHING_ROD) {
@@ -286,7 +329,7 @@ public class RybakNPC {
 
         int rodLvl = Integer.parseInt(Utils.removeColor(lore.get(1)).replace("Poziom: ", "").trim());
         double rodExp = Double.parseDouble(Utils.removeColor(lore.get(2).replace("Exp: ", "").substring(0, Utils.removeColor(lore.get(2)).indexOf('/') + 1)));
-        int fished = rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId());
+        int fished = Integer.parseInt(Utils.removeColor(lore.get(3)).replace("Wylowione ryby: ", "").trim());
         if (rodLvl == 50) {
             lore.set(3, "&bWylowione ryby: &f" + (fished + 1));
             im.setLore(Utils.format(lore));
@@ -341,7 +384,22 @@ public class RybakNPC {
         im.setLore(Utils.format(lore));
         playerRod.setItemMeta(im);
         rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
-        return;
+    }
+
+    public ItemStack createCurrentMissionItem(final UUID uuid, final int misjaNr) {
+        final ItemBuilder misjeItem = new ItemBuilder(Material.BOOK_AND_QUILL);
+
+        final String[] misja = this.misjeRybackie.get(misjaNr).split(";");
+
+        lore.clear();
+        lore.add(" ");
+        lore.add("&f&lMisja:");
+        lore.add("&3" + misja[0] + " &f" + misja[1] + "x " + misja[2]);
+        lore.add(" ");
+        lore.add("&f&lPostep:");
+        lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+
+        return misjeItem.setName("&c&lMisja #" + (misjaNr + 1)).setLore(lore).toItemStack();
     }
 
     @Getter

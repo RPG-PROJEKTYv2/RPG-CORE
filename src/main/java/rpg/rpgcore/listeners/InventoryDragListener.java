@@ -23,7 +23,9 @@ public class InventoryDragListener implements Listener {
         if (e.getInventory().getType().equals(InventoryType.PLAYER)) {
             return;
         }
+        if (e.getInventory().getTitle().contains("Wymiana")) {
         e.setCancelled(true);
+        }
     }
 
 }

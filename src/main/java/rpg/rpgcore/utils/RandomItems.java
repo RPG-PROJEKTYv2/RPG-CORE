@@ -33,16 +33,4 @@ public class RandomItems<E> {
         map.clear();
     }
 
-    /*
-    public Item getDrawnItem(Player player, int number) {
-        if (number == 0) {
-            for (Item item : this.items) {
-                if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current()
-                        .nextDouble(0.0, 100.0)) {
-                    MessageHelper.build("&8[&2+&8] &f" + ChatColor.stripColor(item.getRewardItem().getItemMeta().getDisplayName())).send(player);
-                    return item;
-                }
-            }
-        }
-     */
 }

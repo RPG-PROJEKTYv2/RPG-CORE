@@ -552,6 +552,42 @@ public class SQLManager {
         }
     }
 
+    public void updatePlayerRybakPostep(final UUID uuid, final int postep) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `npc` SET RYBAK_POSTEP=? WHERE uuid=?");
+
+            ps.setInt(1, postep);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
+    public void updatePlayerRybakMisje(final UUID uuid, final String misje) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = pool.getConnection();
+            ps = conn.prepareStatement("UPDATE `npc` SET RYBAK_MISJE=? WHERE uuid=?");
+
+            ps.setString(1, misje);
+            ps.setString(2, String.valueOf(uuid));
+
+            ps.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            pool.close(conn, ps, null);
+        }
+    }
+
     public void onDisable() {
         pool.closePool();
     }

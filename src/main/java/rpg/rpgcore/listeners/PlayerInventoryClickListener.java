@@ -685,6 +685,7 @@ public class PlayerInventoryClickListener implements Listener {
         }
         // POMOC 3
         if (clickedInventoryTitle.equals(rpgcore.getPomocManager().pomocGUIREGULAMINTARYFIKATOR().getName())) {
+            e.setCancelled(true);
             if (clickedSlot == 2) {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do regulaminu:"));
@@ -695,12 +696,12 @@ public class PlayerInventoryClickListener implements Listener {
                 player.sendMessage(Utils.SERVERNAME + Utils.format(" &6Link do taryfikatora:"));
                 player.sendMessage(Utils.format("&ewww.twojstarywzoo.pl"));
             }
-            e.setCancelled(true);
             return;
         }
 
         // DUSZOLOG
         if (clickedInventoryTitle.equals(rpgcore.getDuszologNPC().duszologMAIN().getName())) {
+            e.setCancelled(true);
             if (clickedSlot == 10) {
                 rpgcore.getDuszologNPC().craftowanieDUSZ(player);
                 player.closeInventory();
@@ -712,28 +713,89 @@ public class PlayerInventoryClickListener implements Listener {
                 rpgcore.getDuszologNPC().craftowanieKAMIENUZBROJENIA(player);
                 player.closeInventory();
             }
-            e.setCancelled(true);
             return;
         }
         if (clickedInventoryTitle.equals(rpgcore.getDuszologNPC().dodawanieKAMIENIA().getName())) {
+            e.setCancelled(true);
             if (clickedSlot == 2) {
                 if (clickedItem.getType() == Material.DIAMOND_CHESTPLATE) {
                     player.sendMessage("ta juz tworzysz itd klata");
                     player.closeInventory();
                 }
-                e.setCancelled(true);
             }
         }
         if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
             if (player.getOpenInventory().getTitle().contains(Utils.format("&eDodaj &3Kamien &bUzbrojenia"))) {
-                if (clickedItem.getType() == Material.DIAMOND_CHESTPLATE) {
+                e.setCancelled(true);
+                player.sendMessage(clickedSlot + " - slot");
+                if (!(player.getOpenInventory().getTopInventory().getItem(0).getType().equals(Material.STAINED_GLASS_PANE))) {
+                    player.sendMessage("test");
+
+                    ItemStack is = player.getOpenInventory().getTopInventory().getItem(0).clone();
+                    ItemMeta meta = is.getItemMeta();
+
+                    List<String> lore = meta.getLore();
+
+                    int miejsce = 0;
+
+                    if (!(lore.contains("Miejsce"))) {
+                        for (int i = 0; i < lore.size(); i++) {
+                            if (lore.get(i).contains("Thorns")) {
+                                miejsce = i;
+                                break;
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < lore.size(); i++) {
+                            if (lore.get(i).contains("Miejsce")) {
+                                miejsce = i;
+                            }
+                        }
+                    }
+
+                    //Obrona: 100
+                    //Throns: 70
+
+                    //Obrona: 100
+                    //Throns: 70
+                    //
+                    //Miejsce: ...
+                    //
+                    //Dodakowa Odpornosc: ...
+                    //Dodatkowy Exp: ...
+                    //DOdatkowy dmg: ...
+
+
+
+                    List<String> loreAfterMiejsce = new ArrayList<>();
+
+                    for (int i = miejsce + 1; i < lore.size(); i++) {
+                        loreAfterMiejsce.add(lore.get(miejsce));
+                        lore.remove(miejsce);
+                    }
+                    if (!(lore.contains("Miejsce"))) {
+                        lore.add(" ");
+                        lore.add("Miejsce na cos tam:");
+                    } else {
+                        lore.add("Miejsce na cos tam:");
+                    }
+
+                    lore.addAll(loreAfterMiejsce);
+
+                    meta.setLore(lore);
+                    is.setItemMeta(meta);
+
+                    player.getOpenInventory().getTopInventory().setItem(2, is);
+
+                    return;
+                }
+                if (String.valueOf(clickedItem.getType()).contains("CHESTPLATE")) {
                     ItemStack klata = e.getCurrentItem();
 
-                    player.getOpenInventory().getTopInventory().setItem(1, klata);
+                    player.getOpenInventory().getTopInventory().setItem(0, klata);
                     itemMapToRemove.put(1, klata);
                     player.getInventory().removeItem(itemMapToRemove.get(1));
                 }
-                e.setCancelled(true);
             }
         }
 
