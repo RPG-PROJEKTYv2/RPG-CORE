@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -105,39 +106,6 @@ public class ItemBuilder {
         } catch (ClassCastException im) {
             // empty catch block
         }
-        return this;
-    }
-
-    public ItemBuilder setSkullOwnerURL(String url) {
-        SkullMeta headMeta = (SkullMeta) this.is.getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        byte[] encodedData = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
-        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-        /*Field profileField;
-        try {
-            profileField = headMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(headMeta, profile);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {
-            e1.printStackTrace();
-        }*/
-        try {
-            Method profileMethod = headMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
-            profileMethod.setAccessible(true);
-            profileMethod.invoke(headMeta, profile);
-        } catch (NoSuchMethodException e) {
-            Field profileField;
-            try {
-                profileField = headMeta.getClass().getDeclaredField("profile");
-                profileField.setAccessible(true);
-                profileField.set(headMeta, profile);
-            } catch (NoSuchFieldException | IllegalAccessException noSuchFieldException) {
-                noSuchFieldException.printStackTrace();
-            }
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        this.is.setItemMeta(headMeta);
         return this;
     }
 

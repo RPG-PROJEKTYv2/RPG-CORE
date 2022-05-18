@@ -1,7 +1,10 @@
 package rpg.rpgcore.managers.npc;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,12 +17,14 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -276,6 +281,30 @@ public class RybakNPC {
         entity.setVelocity(push);
     }
 
+    public static ItemStack getSkull() {
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.fromString("470342fb-1116-3032-9b24-6f674e1e52b0"), "skin3b285efa");
+        profile.getProperties().put("textures", new Property("textures",
+                "eyJ0aW1lc3RhbXAiOjE0OTE2NjU5Nzc1NDAsInByb2ZpbGVJZCI6IjdkYTJhYjNhOTNjYTQ4ZWU4MzA0OGFmYzNiODBlNjhlIiwicHJvZmlsZU5hbWUiOiJHb2xkYXBmZWwiLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzg1NjkyNDUzNzFlZGZmNjNhMjY5MTNhOTcyZjJjNDRmYmU0MWY3NWU0MjY2OGE3MjU5OTc1OWNmNDUyZjNhIn19fQ==",
+                "SoovlSRBotT4WJa/7ta9ecVEyV8iEel7Ln3qtbRESHpiWwNwqmiPpV8vtjtL9YB3c2D+z/0Xao2BVaBJICMBB5UeS7MgxV6Pp1dqZ0uuxrsS2H4rvceQzXs7lphLvxIveVu4z7VBZL/sEj2pAcIDCqvb5T2F9Fi2PMROBcDNZI/D5f088MbCZ1pgyi5DZWRhAGLwFwAPu6j7iyo+rq9LKWsOP7QPXmzmtuj545duhc2yEMZRLYyJY6nVM/PrwtqIoUB6r6tm0ETLmL/H8idoauqwNwZfOFsFVgxKeZWHHr6xCz0vTNk/vs43k5ZF8szzdCmHeKGffe9YfO6ftXwMuR/KLVv1YaYsNkSD3VcFuGaIJl17VmvxLlo01KfZqYfZoKEK4YLR2sqGSLNwcf46UWlXtawXf/AscPy6V38+qJYTnQHDxa7wVbzUQaANYxz42XwPxPDO2fTWlPkw3Y1WL4mRZ3I10QwiXgPh4CRpL1UsVvNcljZncanI0W8So3b9S9fsEWce7vipQvMZTCjH9p7lC1B8orRxNfwx9lZ+94bpOkHcD+JI1l+TGS4Z2gRSF/+CBLGeU71XROGYX1Ocvc/gfpMofUVAWQxMjGkW5wXJmSJiyLpD7TOd098ll8nsi7vRrCGPoYBFrSA6vJyDIbaUeQiDmlA8euKpOtuYeAw="
+        ));
+        Field profileField = null;
+        try {
+            profileField = skullMeta.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        profileField.setAccessible(true);
+        try {
+            profileField.set(skullMeta, profile);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        skull.setItemMeta(skullMeta);
+        return skull;
+    }
+
     public void spawnNurekGlebinowy(final Player player, final Location location) {
         LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
         entity.setCustomName(Utils.format("&3Potwor z Glebin"));
@@ -284,20 +313,18 @@ public class RybakNPC {
 
         EntityEquipment entityInv = entity.getEquipment();
 
-        final ItemBuilder helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
         final ItemBuilder klata = new ItemBuilder(Material.LEATHER_CHESTPLATE);
         final ItemBuilder spodnie = new ItemBuilder(Material.LEATHER_LEGGINGS);
         final ItemBuilder buty = new ItemBuilder(Material.LEATHER_BOOTS);
         final ItemBuilder miecz = new ItemBuilder(Material.GOLD_SWORD);
 
-        helm.setSkullOwnerURL("http://textures.minecraft.net/texture/8569245371edff63a26913a972f2c44fbe41f75e42668a72599759cf452f3a");
-        player.getInventory().addItem(helm.toItemStack());
+        player.getInventory().addItem(getSkull());
         klata.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
         spodnie.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
         buty.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
         miecz.addGlowing();
 
-        entityInv.setHelmet(helm.toItemStack());
+        entityInv.setHelmet(getSkull());
         entityInv.setChestplate(klata.toItemStack());
         entityInv.setLeggings(spodnie.toItemStack());
         entityInv.setBoots(buty.toItemStack());
