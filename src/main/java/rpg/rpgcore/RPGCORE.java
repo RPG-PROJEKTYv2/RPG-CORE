@@ -95,7 +95,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("wystaw").setExecutor(new Wystaw(this));
         this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
         this.getCommand("testanimation").setExecutor(new TestAnimation(this));
-        this.getCommand("test").setExecutor(new Test());
+        this.getCommand("test").setExecutor(new Test(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
@@ -164,6 +164,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.getRybakNPC().loadExpWedka();
         this.getRybakNPC().loadRybakDrops();
+        this.getRybakNPC().loadRybakMobs();
         this.getRybakNPC().loadRybakMisje();
     }
 

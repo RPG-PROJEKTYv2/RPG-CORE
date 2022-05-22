@@ -1,19 +1,12 @@
 package rpg.rpgcore.listeners;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
@@ -54,7 +47,7 @@ public class PlayerFishListener implements Listener {
 
             String result = firstRoll.next();
 
-            player.sendMessage(result);
+            int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(player.getUniqueId());
             switch (result) {
                 case "empty":
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cNiestety ryba zerwala sie z linki"));
@@ -87,16 +80,150 @@ public class PlayerFishListener implements Listener {
                     player.getInventory().addItem(is);
                     player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + is.getAmount() + "x " + is.getItemMeta().getDisplayName()));
 
-                    int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(player.getUniqueId());
-                    if (is.getItemMeta().getDisplayName().contains("Karas")) {
+                    if (is.getItemMeta().getDisplayName().contains("Sledz")) {
                         if (currentMission == 1) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
                         }
                     }
 
+                    if (is.getItemMeta().getDisplayName().contains("Dorsz")) {
+                        if (currentMission == 2) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Losos")) {
+                        if (currentMission == 3) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Krasnopiorka")) {
+                        if (currentMission == 4) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Dorsz Czarny")) {
+                        if (currentMission == 5) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Dorada")) {
+                        if (currentMission == 6) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Cierniczek")) {
+                        if (currentMission == 7) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Fladra")) {
+                        if (currentMission == 8) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Karas")) {
+                        if (currentMission == 9) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Karp")) {
+                        if (currentMission == 10) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+
+                    if (is.getItemMeta().getDisplayName().contains("Leszcz")) {
+                        if (currentMission == 11) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Makrela")) {
+                        if (currentMission == 12) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Mintaj")) {
+                        if (currentMission == 13) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Okon")) {
+                        if (currentMission == 14) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Plotka")) {
+                        if (currentMission == 15) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Skrzynia Rybaka")) {
+                        if (currentMission == 16) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+                    if (is.getItemMeta().getDisplayName().contains("Niesamowity przedmiot rybacki")) {
+                        if (currentMission == 17) {
+                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                            return;
+                        }
+                    }
+
+
                     break;
                 case "mob":
-                    rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
+                    String mob = rpgcore.getRybakNPC().getMob();
+                    switch (mob) {
+                        case "nurek":
+                            rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
+
+                            if (currentMission == 18) {
+                                rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
+                                return;
+                            }
+
+                            break;
+                        case "wladca":
+                            rpgcore.getRybakNPC().spawnPodwodnyWladca(player, e.getHook().getLocation());
+
+                            if (currentMission == 18) {
+                                rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
+                                return;
+                            }
+
+                            break;
+                    }
                     break;
             }
 

@@ -2,6 +2,7 @@ package rpg.rpgcore.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -45,6 +46,16 @@ public class EntityDamageEntityListener implements Listener {
             if (p.getItemInHand() == null) {
                 e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
+                if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    if (entity.isInsideVehicle()) {
+                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                    } else {
+                        livingEntity = (LivingEntity) entity.getPassenger();
+                        livingEntity.damage(e.getDamage());
+                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                    }
+                }
                 return;
             }
 
@@ -53,11 +64,31 @@ public class EntityDamageEntityListener implements Listener {
                     if (p.getItemInHand().getItemMeta().getLore().get(j).trim().contains("Obrazenia: ")) {
                         dmgZMiecza = Double.parseDouble(Utils.removeColor(p.getItemInHand().getItemMeta().getLore().get(j).trim().replace("Obrazenia: ", "")));
                         e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), dmgZMiecza));
+                        if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (entity.isInsideVehicle()) {
+                                livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                            } else {
+                                livingEntity = (LivingEntity) entity.getPassenger();
+                                livingEntity.damage(e.getDamage());
+                                livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                            }
+                        }
                     }
                 }
 
             } else {
                 e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
+                if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    if (entity.isInsideVehicle()) {
+                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                    } else {
+                        livingEntity = (LivingEntity) entity.getPassenger();
+                        livingEntity.damage(e.getDamage());
+                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
+                    }
+                }
             }
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
         }

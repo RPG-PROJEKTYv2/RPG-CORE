@@ -10,13 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -106,6 +102,26 @@ public class ItemBuilder {
         } catch (ClassCastException im) {
             // empty catch block
         }
+        return this;
+    }
+
+    public ItemBuilder setSkullOwnerByURL(final String uuid, final String nick, final String texture, final String signature) {
+        SkullMeta skullMeta = (SkullMeta) this.is.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.fromString(uuid), nick);
+        profile.getProperties().put("textures", new Property("textures", texture, signature));
+        Field profileField = null;
+        try {
+            profileField = skullMeta.getClass().getDeclaredField("profile");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        profileField.setAccessible(true);
+        try {
+            profileField.set(skullMeta, profile);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        this.is.setItemMeta(skullMeta);
         return this;
     }
 
