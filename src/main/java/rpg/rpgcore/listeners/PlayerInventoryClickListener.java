@@ -1120,6 +1120,50 @@ public class PlayerInventoryClickListener implements Listener {
 
         if (clickedInventoryTitle.contains("Kampania Rybacka")) {
             e.setCancelled(true);
+
+            if (!clickedItem.getType().equals(Material.BOOK_AND_QUILL)){
+                return;
+            }
+
+            final String[] misjeGracza = rpgcore.getRybakNPC().getPlayerRybakMisje(playerUUID).split(",");
+
+            if (misjeGracza[clickedSlot].equalsIgnoreCase("true")) {
+                return;
+            }
+
+            final String[] misja = rpgcore.getRybakNPC().getMisja(clickedSlot).split(";");
+
+            if (rpgcore.getRybakNPC().getPlayerPostep(playerUUID) < Integer.parseInt(misja[1])) {
+                player.closeInventory();
+                player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                return;
+            }
+
+            misjeGracza[clickedSlot] = "true";
+            rpgcore.getRybakNPC().addReward(playerUUID, misja[3], misja[4]);
+            rpgcore.getRybakNPC().addReward(playerUUID, misja[5], misja[6]);
+
+            final StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < misjeGracza.length; i++) {
+                builder.append(misjeGracza[i]);
+                if (!(i+1 > misjeGracza.length)) {
+                    builder.append(",");
+                }
+            }
+
+            rpgcore.getRybakNPC().updatePlayerRybakMisje(playerUUID, String.valueOf(builder));
+            rpgcore.getRybakNPC().setPlayerPostep(playerUUID, 0);
+
+            player.closeInventory();
+            if (clickedSlot == 44) {
+                for (int i=0; i<20;i++) {
+                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.RYBAK + "&7Gracz &6" + player.getName() + " &7ukonczyl wlasnie moja &4&lCALA KAMPANIE.&6Gratulacje!"));
+                }
+                return;
+            }
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.RYBAK + "&7Gracz &6" + player.getName() + " &7ukonczyl wlasnie moja &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().replace("Misja #", "")) + " &7misje.&6Gratulacje!"));
+            return;
         }
 
         
