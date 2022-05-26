@@ -170,46 +170,46 @@ public class RybakNPC {
         this.misjeRybackie.put(0, "Wylow;192;&6Sledzie;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(1, "Wylow;192;&6Dorsze;Srednia Defensywa;2.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(2, "Wylow;192;&6Lososie;Srednie Obrazenia;1.5;Srednia Defenswa;2.5");
-        this.misjeRybackie.put(3, "Oddaj;256;&6Sledzi&3,&6Dorszy&3,&6Lososi;Blok Ciosu;0.5;Dodatkowe Obrazenia;75");
+        this.misjeRybackie.put(3, "Oddaj;256;&6Sledzi&3,&6Dorszy&3,&6Lososi;Blok Ciosu;0.5;Dodatkowe Obrazenia;75"); //DODAC DO CLICKA
         this.misjeRybackie.put(4, "Wylow;192;&6Krasnopiorki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(5, "Wylow;192;&6Czarne Dorsze;Srednie Obrazenia;1.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(6, "Wylow;192;&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
-        this.misjeRybackie.put(7, "Oddaj;256;&6Kransopiorki&3,&6Czarne dorsze&3,&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
+        this.misjeRybackie.put(7, "Oddaj;256;&6Kransopiorki&3,&6Czarne dorsze&3,&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5"); //DODAC DO CLICKA
         this.misjeRybackie.put(8, "Wylow;1;&3Podwodny Nurek;Dodatkowe Obrazenia;75;Blok Ciosu;0.5");
         this.misjeRybackie.put(9, "Oddaj;32;&a&lSkrzynia rybaka;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(10, "Wylow;192;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(11, "Wylow;192;&6Fladry;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(12, "Oddaj;512;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
-        this.misjeRybackie.put(13, "Oddaj;512;&6Fladry;Srednie Obrazenia;1.5;Blok Ciosu;0.5");
+        this.misjeRybackie.put(12, "Oddaj;512;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5"); //DODAC DO CLICKA
+        this.misjeRybackie.put(13, "Oddaj;512;&6Fladry;Srednie Obrazenia;1.5;Blok Ciosu;0.5"); //DODAC DO CLICKA
         this.misjeRybackie.put(14, "Wylow;32;&a&lSkrzynia Rybaka;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(15, "Wylow;1;&3&lNiesamowity Przedmiot Rybacki;Srednia Defensywa;2.5;Blok Ciosu;0.5");
-        this.misjeRybackie.put(16, "Zabij;1;&3Podwodny Nurek;Blok Ciosu;0.5;Srednia Defensywa;2.5");
+        this.misjeRybackie.put(16, "Zabij;1;&3Podwodny Nurek;Blok Ciosu;0.5;Srednia Defensywa;2.5"); //DODAC DO DEATH
         this.misjeRybackie.put(17, "Wylow;192;&6Karasie;Dodatkowe Obrazenia;75;Srednie Obrazenia;1.5");
         this.misjeRybackie.put(18, "Wylow;192;&6Karpie;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
-        this.misjeRybackie.put(19, "Oddaj;64;&a&lSkrzynia Rybaka;Blok Ciosu;1;Srednia Defensywa;2.5");
+        this.misjeRybackie.put(19, "Oddaj;64;&a&lSkrzynia Rybaka;Blok Ciosu;1;Srednia Defensywa;2.5"); //DODAC DO CLICKA
         this.misjeRybackie.put(20, "Wylow;2;&3&lNiesamowity Przedmiot Rybacki;Srednie Obrazenia;2;Blok Ciosu;1");
-        this.misjeRybackie.put(21, "Oddaj;256;&6Karasie&3,&6Karpie;Srednia Defensywa;3;Blok Ciosu;1");
+        this.misjeRybackie.put(21, "Oddaj;256;&6Karasie&3,&6Karpie;Srednia Defensywa;3;Blok Ciosu;1"); //DODAC DO CLICKA
         this.misjeRybackie.put(22, "Wylow;192;&6Leszcze;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(23, "Wylow;192;&6Makrele;Srednie Obrazenia;2;Srednia Defensywa;3");
-        this.misjeRybackie.put(24, "Zabij;3;&6&lPodwodny Wladca;Srednie Obrazenia;2;Blok Ciosu;1");
+        this.misjeRybackie.put(24, "Zabij;3;&6&lPodwodny Wladca;Srednie Obrazenia;2;Blok Ciosu;1"); //DODAC DO DEATH
         this.misjeRybackie.put(25, "Wylow;192;&6Mintaje;Srednia Defensywa;3;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(26, "Oddaj;256;&6Leszcze&3,&6Makrele&3,&6Minatje;Blok Ciosu;1;Srednia Defensywa;3");
+        this.misjeRybackie.put(26, "Oddaj;256;&6Leszcze&3,&6Makrele&3,&6Minatje;Blok Ciosu;1;Srednia Defensywa;3"); //DODAC DO CLICKA
         this.misjeRybackie.put(27, "Wylow;5;&6&lPodwodny Wladca;Srednie Obrazenia;2;Blok Ciosu;1");
         this.misjeRybackie.put(28, "Wylow;48;&a&lSkrzynia Rybaka;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(29, "Wylow;192;&6Okonie;Srednia Defensywa;3;Blok Ciosu;1");
         this.misjeRybackie.put(30, "Wylow;192;&6Plotki;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(31, "Wylow;3;&3&lNiesamowity Przedmiot Rybacki;Blok Ciosu;2;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(32, "Oddaj;256;&6Okoni&3,&6Plotek;Srednie Obrazenia;2;Srednia Defensywa;3");
-        this.misjeRybackie.put(33, "Zabij;10;&6&lPodwodny Wladca;Srednie Obrazenia;4;Srednia Defensywa;3");
-        this.misjeRybackie.put(34, "Wylow;512;&6Sledz;Blok Ciosu;1;Dodatkowe Obrazenia;75");
+        this.misjeRybackie.put(32, "Oddaj;256;&6Okoni&3,&6Plotek;Srednie Obrazenia;2;Srednia Defensywa;3"); //DODAC DO CLICKA
+        this.misjeRybackie.put(33, "Zabij;10;&6&lPodwodny Wladca;Srednie Obrazenia;4;Srednia Defensywa;3"); //DODAC DO DEATH
+        this.misjeRybackie.put(34, "Wylow;512;&6Sledzi;Blok Ciosu;1;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(35, "Wylow;512;&6Dorsz;Srednia Defensywa;3;Blok Ciosu;1");
         this.misjeRybackie.put(36, "Wylow;512;&6Losos;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(37, "Wylow;512;&6Krasnopiorka;Blok Ciosu;1;Srednia Defensywa;3");
         this.misjeRybackie.put(38, "Wylow;512;&6Czarny Dorsz;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(39, "Wylow;512;&6Dorady;Blok Ciosu;2;Srednia Defensywa;3");
-        this.misjeRybackie.put(40, "Sprzedaj;10000;&3ryb;Srednie Obrazenia;2;Dodatkowe Obrazenia;150");
+        this.misjeRybackie.put(40, "Sprzedaj;10000;&3ryb;Srednie Obrazenia;2;Dodatkowe Obrazenia;150"); //DODAC DO SKLEPU
         this.misjeRybackie.put(41, "Wylow;5000;&3ryb;Srednia Defensywa;3;Blok Ciosu;1");
-        this.misjeRybackie.put(42, "Sprzedaj;15000;&3ryb;Srednie Obrazenia;2;Srednia Defensywa;3");
+        this.misjeRybackie.put(42, "Sprzedaj;15000;&3ryb;Srednie Obrazenia;2;Srednia Defensywa;3"); //DODAC DO SKLEPU
         this.misjeRybackie.put(43, "Wylow;5;&3&lNiesamowity Przedmiot Rybacki;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(44, "Wylow;20;&6&lPodwodny Wladca;Srednie Obrazenia;3.5;Dodatkowe Obrazenia;450");
     }

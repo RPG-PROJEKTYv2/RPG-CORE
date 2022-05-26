@@ -81,70 +81,80 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + is.getAmount() + "x " + is.getItemMeta().getDisplayName()));
 
                     if (is.getItemMeta().getDisplayName().contains("Sledz")) {
-                        if (currentMission == 1) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 5);
+                        if (currentMission == 1 || currentMission == 35) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorsz")) {
-                        if (currentMission == 2) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 5);
+                        if (currentMission == 2 || currentMission == 36) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Losos")) {
-                        if (currentMission == 3) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 5);
+                        if (currentMission == 3 || currentMission == 37) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Krasnopiorka")) {
-                        if (currentMission == 4) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 7);
+                        if (currentMission == 5 || currentMission == 38) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorsz Czarny")) {
-                        if (currentMission == 5) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 7);
+                        if (currentMission == 6 || currentMission == 39) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorada")) {
-                        if (currentMission == 6) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 7);
+                        if (currentMission == 7 || currentMission == 40) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Cierniczek")) {
-                        if (currentMission == 7) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 9);
+                        if (currentMission == 11) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Fladra")) {
-                        if (currentMission == 8) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 9);
+                        if (currentMission == 12) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Karas")) {
-                        if (currentMission == 9) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 12);
+                        if (currentMission == 18) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Karp")) {
-                        if (currentMission == 10) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 12);
+                        if (currentMission == 19) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
@@ -152,52 +162,64 @@ public class PlayerFishListener implements Listener {
 
 
                     if (is.getItemMeta().getDisplayName().contains("Leszcz")) {
-                        if (currentMission == 11) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 12);
+                        if (currentMission == 23) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Makrela")) {
-                        if (currentMission == 12) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 15);
+                        if (currentMission == 24) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Mintaj")) {
-                        if (currentMission == 13) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 15);
+                        if (currentMission == 26) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Okon")) {
-                        if (currentMission == 14) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 20);
+                        if (currentMission == 30) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Plotka")) {
-                        if (currentMission == 15) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 20);
+                        if (currentMission == 31) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Skrzynia Rybaka")) {
-                        if (currentMission == 16) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 25);
+                        if (currentMission == 15 || currentMission == 29) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Niesamowity przedmiot rybacki")) {
-                        if (currentMission == 17) {
+                        rpgcore.getRybakNPC().addStatsToRod(player, 100);
+                        if (currentMission == 16 || currentMission == 21 || currentMission == 32 || currentMission == 44) {
                             rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                             return;
                         }
+                    }
+
+                    if (currentMission == 42) {
+                        rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
+                        return;
                     }
 
 
@@ -208,7 +230,8 @@ public class PlayerFishListener implements Listener {
                         case "nurek":
                             rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
 
-                            if (currentMission == 18) {
+                            rpgcore.getRybakNPC().addStatsToRod(player, 100);
+                            if (currentMission == 9) {
                                 rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
                                 return;
                             }
@@ -217,7 +240,8 @@ public class PlayerFishListener implements Listener {
                         case "wladca":
                             rpgcore.getRybakNPC().spawnPodwodnyWladca(player, e.getHook().getLocation());
 
-                            if (currentMission == 18) {
+                            rpgcore.getRybakNPC().addStatsToRod(player, 350);
+                            if (currentMission == 18 || currentMission == 28 || currentMission == 45) {
                                 rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
                                 return;
                             }
@@ -229,7 +253,6 @@ public class PlayerFishListener implements Listener {
 
 
 
-            rpgcore.getRybakNPC().addStatsToRod(player, 2500);
             rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId()) + 1);
             return;
         }

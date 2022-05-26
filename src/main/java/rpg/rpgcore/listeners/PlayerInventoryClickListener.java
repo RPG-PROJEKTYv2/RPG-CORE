@@ -19,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -1132,6 +1133,39 @@ public class PlayerInventoryClickListener implements Listener {
             }
 
             final String[] misja = rpgcore.getRybakNPC().getMisja(clickedSlot).split(";");
+
+            final int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);
+
+            if (currentMission == 4) {
+                final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH, 64);
+                final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 64, (short) 1);
+                final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 64, (short) 1);
+
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                sledz.setName("&6Sledz").setLore(lore).hideFlag();
+                dorsz.setName("&6Dorsz").setLore(lore).hideFlag();
+                losos.setName("&6Losos").setLore(lore).hideFlag();
+
+                player.getInventory().addItem(sledz.toItemStack(), dorsz.toItemStack(), losos.toItemStack());
+
+                if (player.getInventory().containsAtLeast(sledz.toItemStack(), 4) && player.getInventory().containsAtLeast(dorsz.toItemStack(), 4)
+                        && player.getInventory().containsAtLeast(losos.toItemStack(), 4)) {
+                    player.sendMessage("masz rybki");
+                } else {
+                    player.sendMessage("nie masz rybek");
+                }
+            }
+
+
+
+
+
+
+
+
 
             if (rpgcore.getRybakNPC().getPlayerPostep(playerUUID) < Integer.parseInt(misja[1])) {
                 player.closeInventory();
