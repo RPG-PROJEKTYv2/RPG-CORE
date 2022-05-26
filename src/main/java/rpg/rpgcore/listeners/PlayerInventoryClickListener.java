@@ -1137,9 +1137,9 @@ public class PlayerInventoryClickListener implements Listener {
             final int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);
 
             if (currentMission == 4) {
-                final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH, 64);
-                final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 64, (short) 1);
-                final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 64, (short) 1);
+                final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH, 256);
+                final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
+                final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
 
                 final List<String> lore = new ArrayList<>();
 
@@ -1149,15 +1149,152 @@ public class PlayerInventoryClickListener implements Listener {
                 dorsz.setName("&6Dorsz").setLore(lore).hideFlag();
                 losos.setName("&6Losos").setLore(lore).hideFlag();
 
-                player.getInventory().addItem(sledz.toItemStack(), dorsz.toItemStack(), losos.toItemStack());
 
-                if (player.getInventory().containsAtLeast(sledz.toItemStack(), 4) && player.getInventory().containsAtLeast(dorsz.toItemStack(), 4)
-                        && player.getInventory().containsAtLeast(losos.toItemStack(), 4)) {
-                    player.sendMessage("masz rybki");
+                if (player.getInventory().containsAtLeast(sledz.toItemStack(), 256) && player.getInventory().containsAtLeast(dorsz.toItemStack(), 256)
+                        && player.getInventory().containsAtLeast(losos.toItemStack(), 256)) {
+                    player.getInventory().removeItem(sledz.toItemStack());
+                    player.getInventory().removeItem(dorsz.toItemStack());
+                    player.getInventory().removeItem(losos.toItemStack());
                 } else {
-                    player.sendMessage("nie masz rybek");
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
                 }
-            }
+            } else if (currentMission == 8) {
+                final ItemBuilder krasnopiorka = new ItemBuilder(Material.RAW_FISH, 256, (short) 2);
+                final ItemBuilder dorszCzarny = new ItemBuilder(Material.COOKED_FISH, 256, (short) 1);
+                final ItemBuilder dorada = new ItemBuilder(Material.RAW_FISH, 256);
+
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                krasnopiorka.setName("&6Krasnopiorka").setLore(lore);
+                dorszCzarny.setName("&6Dorsz Czarny").setLore(lore);
+                dorada.setName("&6Dorada").setLore(lore);
+
+
+                if (player.getInventory().containsAtLeast(krasnopiorka.toItemStack(), 256) && player.getInventory().containsAtLeast(dorszCzarny.toItemStack(), 256)
+                        && player.getInventory().containsAtLeast(dorada.toItemStack(), 256)) {
+                    player.getInventory().removeItem(krasnopiorka.toItemStack());
+                    player.getInventory().removeItem(dorszCzarny.toItemStack());
+                    player.getInventory().removeItem(dorada.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 13) {
+                final ItemBuilder cierniczek = new ItemBuilder(Material.COOKED_FISH, 512);
+
+
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                cierniczek.setName("&6Cierniczek").setLore(lore);
+
+
+                //player.getInventory().addItem(sledz.toItemStack(), dorsz.toItemStack(), losos.toItemStack());
+
+                if (player.getInventory().containsAtLeast(cierniczek.toItemStack(), 512)) {
+                    player.getInventory().removeItem(cierniczek.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 14) {
+                final ItemBuilder fladra = new ItemBuilder(Material.RAW_FISH, 512, (short) 3);
+
+
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                fladra.setName("&6Fladra").setLore(lore);
+
+                if (player.getInventory().containsAtLeast(fladra.toItemStack(), 512)) {
+                    player.getInventory().removeItem(fladra.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 20) {
+                final ItemBuilder chest = new ItemBuilder(Material.CHEST, 64);
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&n&oKliknij&r &8&ozeby otworzyc skrzynie i otrzymac przedmioty");
+
+                chest.setName("&a&lSkrzynia Rybaka").setLore(lore);
+
+                if (player.getInventory().containsAtLeast(chest.toItemStack(), 64)) {
+                    player.getInventory().removeItem(chest.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 22) {
+                final ItemBuilder karas = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
+                final ItemBuilder karp = new ItemBuilder(Material.COOKED_FISH, 256);
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                karas.setName("&6Karas").setLore(lore);
+                karp.setName("&6Karp").setLore(lore);
+
+                if (player.getInventory().containsAtLeast(karas.toItemStack(), 256) && player.getInventory().containsAtLeast(karp.toItemStack(), 256)) {
+                    player.getInventory().removeItem(karas.toItemStack());
+                    player.getInventory().removeItem(karp.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 27) {
+                final ItemBuilder leszcz = new ItemBuilder(Material.COOKED_FISH, 256, (short) 1);
+                final ItemBuilder makrela = new ItemBuilder(Material.COOKED_FISH, 256);
+                final ItemBuilder mintaj = new ItemBuilder(Material.COOKED_FISH, 256);
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                leszcz.setName("&6Leszcz").setLore(lore);
+                makrela.setName("&6Makrela").setLore(lore);
+                mintaj.setName("&6Mintaj").setLore(lore);
+
+                if (player.getInventory().containsAtLeast(leszcz.toItemStack(), 256) && player.getInventory().containsAtLeast(makrela.toItemStack(), 256)
+                && player.getInventory().containsAtLeast(mintaj.toItemStack(), 256)) {
+                    player.getInventory().removeItem(leszcz.toItemStack());
+                    player.getInventory().removeItem(makrela.toItemStack());
+                    player.getInventory().removeItem(mintaj.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else if (currentMission == 33) {
+                final ItemBuilder okon = new ItemBuilder(Material.RAW_FISH, 256, (short) 3);
+                final ItemBuilder plotka = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
+                final List<String> lore = new ArrayList<>();
+
+                lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+
+                okon.setName("&6Okon").setLore(lore);
+                plotka.setName("&6Plotka").setLore(lore);
+
+                if (player.getInventory().containsAtLeast(okon.toItemStack(), 256) && player.getInventory().containsAtLeast(plotka.toItemStack(), 256)) {
+                    player.getInventory().removeItem(okon.toItemStack());
+                    player.getInventory().removeItem(plotka.toItemStack());
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    return;
+                }
+            } else
 
 
 

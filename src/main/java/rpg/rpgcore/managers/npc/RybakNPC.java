@@ -45,6 +45,25 @@ public class RybakNPC {
     private final ItemBuilder stats = new ItemBuilder(Material.PAPER);
     private final ItemBuilder wedka = new ItemBuilder(Material.FISHING_ROD);
 
+    private final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH);
+    private final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+    private final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+    private final ItemBuilder krasnopiorka = new ItemBuilder(Material.RAW_FISH, 1, (short) 2);
+    private final ItemBuilder dorszCzarny = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
+    private final ItemBuilder dorada = new ItemBuilder(Material.RAW_FISH);
+    private final ItemBuilder cierniczek = new ItemBuilder(Material.COOKED_FISH);
+    private final ItemBuilder fladra = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
+    private final ItemBuilder karas = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+    private final ItemBuilder karp = new ItemBuilder(Material.COOKED_FISH);
+    private final ItemBuilder leszcz = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
+    private final ItemBuilder makrela = new ItemBuilder(Material.COOKED_FISH);
+    private final ItemBuilder mintaj = new ItemBuilder(Material.COOKED_FISH);
+    private final ItemBuilder okon = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
+    private final ItemBuilder plotka = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
+    private final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
+
+    private final ItemBuilder wedkaGracza = new ItemBuilder(Material.FISHING_ROD);
+
     private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
     private final RandomItems<String> rybakMobs = new RandomItems<>();
 
@@ -100,7 +119,7 @@ public class RybakNPC {
     }
 
     public void openRybakSklep(final Player player) {
-        final Inventory rybakGUI = Bukkit.createInventory(null, 9, Utils.format("&a&lSklep Rybacki"));
+        final Inventory rybakGUI = Bukkit.createInventory(null, 18, Utils.format("&a&lSklep Rybacki"));
 
         fill.setName(" ").hideFlag();
 
@@ -123,9 +142,41 @@ public class RybakNPC {
         lore.add("&2Cena: &6100 000 000 &2$");
 
         wedka.setName("&6Wedka").setLore(lore);
-        rybakGUI.setItem(4, wedka.toItemStack());
 
+        lore.clear();
+
+        lore.add(" ");
+        sledz.setName("&6Sledz").setLore(lore);
+        dorsz.setName("&6Dorsz").setLore(lore);
+        losos.setName("&6Losos").setLore(lore);
+        krasnopiorka.setName("&6Krasnopiorka").setLore(lore);
+        dorszCzarny.setName("&6Dorsz Czarny").setLore(lore);
+        dorada.setName("&6Dorada").setLore(lore);
+        cierniczek.setName("&6Cierniczek").setLore(lore);
+        fladra.setName("&6Fladra").setLore(lore);
+        karas.setName("&6Karas").setLore(lore);
+        karp.setName("&6Karp").setLore(lore);
+        leszcz.setName("&6Leszcz").setLore(lore);
+        makrela.setName("&6Makrela").setLore(lore);
+        mintaj.setName("&6Mintaj").setLore(lore);
+        okon.setName("&6Okon").setLore(lore);
+        plotka.setName("&6Plotka").setLore(lore);
+
+        rybakGUI.setItem(0, wedka.toItemStack());
+        
         player.openInventory(rybakGUI);
+    }
+
+    private List<String> setLoreSell(final double cena) {
+        lore.clear();
+
+        lore.add(" ");
+        lore.add("&2Cena: &6" + Utils.spaceNumber(String.valueOf(cena)) + " &2$");
+        lore.add(" ");
+        lore.add("&8");
+        lore.add(" ");
+
+        return lore;
     }
 
     public void openRybakKampania(final Player player) {
@@ -170,36 +221,36 @@ public class RybakNPC {
         this.misjeRybackie.put(0, "Wylow;192;&6Sledzie;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(1, "Wylow;192;&6Dorsze;Srednia Defensywa;2.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(2, "Wylow;192;&6Lososie;Srednie Obrazenia;1.5;Srednia Defenswa;2.5");
-        this.misjeRybackie.put(3, "Oddaj;256;&6Sledzi&3,&6Dorszy&3,&6Lososi;Blok Ciosu;0.5;Dodatkowe Obrazenia;75"); //DODAC DO CLICKA
+        this.misjeRybackie.put(3, "Oddaj;256;&6Sledzi&3,&6Dorszy&3,&6Lososi;Blok Ciosu;0.5;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(4, "Wylow;192;&6Krasnopiorki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(5, "Wylow;192;&6Czarne Dorsze;Srednie Obrazenia;1.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(6, "Wylow;192;&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
-        this.misjeRybackie.put(7, "Oddaj;256;&6Kransopiorki&3,&6Czarne dorsze&3,&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5"); //DODAC DO CLICKA
+        this.misjeRybackie.put(7, "Oddaj;256;&6Kransopiorki&3,&6Czarne dorsze&3,&6Dorady;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(8, "Wylow;1;&3Podwodny Nurek;Dodatkowe Obrazenia;75;Blok Ciosu;0.5");
         this.misjeRybackie.put(9, "Oddaj;32;&a&lSkrzynia rybaka;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(10, "Wylow;192;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
         this.misjeRybackie.put(11, "Wylow;192;&6Fladry;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(12, "Oddaj;512;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5"); //DODAC DO CLICKA
-        this.misjeRybackie.put(13, "Oddaj;512;&6Fladry;Srednie Obrazenia;1.5;Blok Ciosu;0.5"); //DODAC DO CLICKA
+        this.misjeRybackie.put(12, "Oddaj;512;&6Cierniczki;Blok Ciosu;0.5;Srednia Defensywa;2.5");
+        this.misjeRybackie.put(13, "Oddaj;512;&6Fladry;Srednie Obrazenia;1.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(14, "Wylow;32;&a&lSkrzynia Rybaka;Srednie Obrazenia;1.5;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(15, "Wylow;1;&3&lNiesamowity Przedmiot Rybacki;Srednia Defensywa;2.5;Blok Ciosu;0.5");
         this.misjeRybackie.put(16, "Zabij;1;&3Podwodny Nurek;Blok Ciosu;0.5;Srednia Defensywa;2.5"); //DODAC DO DEATH
         this.misjeRybackie.put(17, "Wylow;192;&6Karasie;Dodatkowe Obrazenia;75;Srednie Obrazenia;1.5");
         this.misjeRybackie.put(18, "Wylow;192;&6Karpie;Srednie Obrazenia;1.5;Srednia Defensywa;2.5");
-        this.misjeRybackie.put(19, "Oddaj;64;&a&lSkrzynia Rybaka;Blok Ciosu;1;Srednia Defensywa;2.5"); //DODAC DO CLICKA
+        this.misjeRybackie.put(19, "Oddaj;64;&a&lSkrzynia Rybaka;Blok Ciosu;1;Srednia Defensywa;2.5");
         this.misjeRybackie.put(20, "Wylow;2;&3&lNiesamowity Przedmiot Rybacki;Srednie Obrazenia;2;Blok Ciosu;1");
-        this.misjeRybackie.put(21, "Oddaj;256;&6Karasie&3,&6Karpie;Srednia Defensywa;3;Blok Ciosu;1"); //DODAC DO CLICKA
+        this.misjeRybackie.put(21, "Oddaj;256;&6Karasie&3,&6Karpie;Srednia Defensywa;3;Blok Ciosu;1");
         this.misjeRybackie.put(22, "Wylow;192;&6Leszcze;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(23, "Wylow;192;&6Makrele;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(24, "Zabij;3;&6&lPodwodny Wladca;Srednie Obrazenia;2;Blok Ciosu;1"); //DODAC DO DEATH
         this.misjeRybackie.put(25, "Wylow;192;&6Mintaje;Srednia Defensywa;3;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(26, "Oddaj;256;&6Leszcze&3,&6Makrele&3,&6Minatje;Blok Ciosu;1;Srednia Defensywa;3"); //DODAC DO CLICKA
+        this.misjeRybackie.put(26, "Oddaj;256;&6Leszcze&3,&6Makrele&3,&6Minatje;Blok Ciosu;1;Srednia Defensywa;3");
         this.misjeRybackie.put(27, "Wylow;5;&6&lPodwodny Wladca;Srednie Obrazenia;2;Blok Ciosu;1");
         this.misjeRybackie.put(28, "Wylow;48;&a&lSkrzynia Rybaka;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(29, "Wylow;192;&6Okonie;Srednia Defensywa;3;Blok Ciosu;1");
         this.misjeRybackie.put(30, "Wylow;192;&6Plotki;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(31, "Wylow;3;&3&lNiesamowity Przedmiot Rybacki;Blok Ciosu;2;Dodatkowe Obrazenia;75");
-        this.misjeRybackie.put(32, "Oddaj;256;&6Okoni&3,&6Plotek;Srednie Obrazenia;2;Srednia Defensywa;3"); //DODAC DO CLICKA
+        this.misjeRybackie.put(32, "Oddaj;256;&6Okoni&3,&6Plotek;Srednie Obrazenia;2;Srednia Defensywa;3");
         this.misjeRybackie.put(33, "Zabij;10;&6&lPodwodny Wladca;Srednie Obrazenia;4;Srednia Defensywa;3"); //DODAC DO DEATH
         this.misjeRybackie.put(34, "Wylow;512;&6Sledzi;Blok Ciosu;1;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(35, "Wylow;512;&6Dorsz;Srednia Defensywa;3;Blok Ciosu;1");
@@ -229,29 +280,10 @@ public class RybakNPC {
         Material.RAW_FISH, 1, (short) 3 - PUFFERFISH
         Material.COOCKED_FISH, 1, (short) 1 - COOCKED SALMON
          */
-        final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH);
-        final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
-        final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
-        final ItemBuilder krasnopiorka = new ItemBuilder(Material.RAW_FISH, 1, (short) 2);
-        final ItemBuilder dorszCzarny = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
-        final ItemBuilder dorada = new ItemBuilder(Material.RAW_FISH);
-        final ItemBuilder cierniczek = new ItemBuilder(Material.COOKED_FISH);
-        final ItemBuilder fladra = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
-        final ItemBuilder karas = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
-        final ItemBuilder karp = new ItemBuilder(Material.COOKED_FISH);
-        final ItemBuilder leszcz = new ItemBuilder(Material.COOKED_FISH, 1, (short) 1);
-        final ItemBuilder makrela = new ItemBuilder(Material.COOKED_FISH);
-        final ItemBuilder mintaj = new ItemBuilder(Material.COOKED_FISH);
-        final ItemBuilder okon = new ItemBuilder(Material.RAW_FISH, 1, (short) 3);
-        final ItemBuilder plotka = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
-        final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
-
-
-        final List<String> lore = new ArrayList<>();
+        
+        lore.clear();
 
         lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-
-        rybakDrops.add(1, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
 
         rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.06666, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
@@ -287,8 +319,6 @@ public class RybakNPC {
     }
 
     public ItemStack givePlayerRod(final Player player) {
-        final ItemBuilder wedkaGracza = new ItemBuilder(Material.FISHING_ROD);
-
         lore.clear();
 
         lore.add("&bWlasciciel: &f" + player.getName());
@@ -562,8 +592,10 @@ public class RybakNPC {
             lore.add("&8- &3" + misja[5] + ": &f" + misja[6] + "%");
         }
         lore.add(" ");
-        lore.add("&f&lPostep:");
-        lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+        if (!(misjaNr == 3 || misjaNr == 7 || misjaNr == 12 || misjaNr == 13 || misjaNr == 19 || misjaNr == 21 || misjaNr == 26 || misjaNr == 32)) {
+            lore.add("&f&lPostep:");
+            lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+        }
 
         return misjeItem.setName("&c&lMisja #" + (misjaNr + 1)).setLore(lore).toItemStack();
     }
