@@ -8,6 +8,11 @@ import rpg.rpgcore.managers.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -70,16 +75,17 @@ public class RedisManager {
 
             if (j.hexists("spawn", "world")) {
                 final Map<String, String> spawn = j.hgetAll("spawn");
-                new Location(Bukkit.getWorld(spawn.get("world")), Double.parseDouble(spawn.get("x")), Double.parseDouble(spawn.get("y")), Double.parseDouble(spawn.get("z")), Float.parseFloat(spawn.get("yaw")), Float.parseFloat(spawn.get("pitch")));
+                this.setSpawn(new Location(Bukkit.getWorld(spawn.get("world")), Double.parseDouble(spawn.get("x")), Double.parseDouble(spawn.get("y")), Double.parseDouble(spawn.get("z")), Float.parseFloat(spawn.get("yaw")), Float.parseFloat(spawn.get("pitch"))));
             } else {
                 this.setFirstSpawn();
             }
 
-            Map<String, String> playerMap = j.hgetAll("players");
-            for (Map.Entry<String, String> entry : playerMap.entrySet()) {
-                UUID playerUUID = UUID.fromString(entry.getValue());
+            List<String> playerMap = j.lrange("players", 0, j.llen("players") - 1);
+            for (String s : playerMap) {
+                UUID playerUUID = UUID.fromString(s);
                 System.out.println(playerUUID);
-                Map<String, String> singlePlayerStats = j.hgetAll(entry.getValue());
+                Map<String, String> singlePlayerStats = j.hgetAll(s);
+
 
                 rpgcore.getPlayerManager().createPlayer(
                         singlePlayerStats.get("nick"),
@@ -160,6 +166,266 @@ public class RedisManager {
             pool.getPool().close();
         }
 
-
     }
+
+    public void setSpawn(final Location spawn) {
+
+        final String w = spawn.getWorld().getName();
+        final double x = spawn.getX();
+        final double y = spawn.getY();
+        final double z = spawn.getZ();
+        final float yaw = spawn.getYaw();
+        final float pitch = spawn.getPitch();
+
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset("spawn", "world", w);
+            j.hset("spawn", "x", String.valueOf(x));
+            j.hset("spawn", "y", String.valueOf(y));
+            j.hset("spawn", "z", String.valueOf(z));
+            j.hset("spawn", "yaw", String.valueOf(yaw));
+            j.hset("spawn", "pitch", String.valueOf(pitch));
+
+            final Location newLocspawn = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
+
+            rpgcore.getSpawnManager().setSpawn(newLocspawn);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void createPlayer(final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            String uuidToString = String.valueOf(uuid);
+            j.rpush("players", uuidToString);
+
+            Map<String, String> playerInfoMap = new HashMap<>();
+
+            playerInfoMap.put("nick", nick);
+            playerInfoMap.put("kasa", String.valueOf(100.0));
+            playerInfoMap.put("lvl", String.valueOf(1));
+            playerInfoMap.put("exp", String.valueOf(0.0));
+            playerInfoMap.put("banInfo", String.valueOf(banInfo));
+            playerInfoMap.put("muteInfo", String.valueOf(muteInfo));
+            playerInfoMap.put("punishmentHistory", "");
+            playerInfoMap.put("osMoby", String.valueOf(0));
+            playerInfoMap.put("osMobyAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osLudzie", String.valueOf(0));
+            playerInfoMap.put("osLudzieAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osSakwy", String.valueOf(0));
+            playerInfoMap.put("osSakwyAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osNiesy", String.valueOf(0));
+            playerInfoMap.put("osNiesyAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osRybak", String.valueOf(0));
+            playerInfoMap.put("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osDrwal", String.valueOf(0));
+            playerInfoMap.put("osDrwalAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("osGornik", String.valueOf(0));
+            playerInfoMap.put("osGornikAccept", "false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+            playerInfoMap.put("BAO_WARTOSCI", "0,0,0,0,0");
+            playerInfoMap.put("RYBAK_MISJE", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+            playerInfoMap.put("RYBAK_POSTEP", String.valueOf(0));
+            playerInfoMap.put("RYBAK_SRDMG", String.valueOf(0.0));
+            playerInfoMap.put("RYBAK_SRDEF", String.valueOf(0.0));
+            playerInfoMap.put("RYBAK_DDMG", String.valueOf(0.0));
+            playerInfoMap.put("RYBAK_BLOK", String.valueOf(0.0));
+            playerInfoMap.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+            playerInfoMap.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+
+            j.hset(uuidToString, playerInfoMap);
+
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
+
+
+            rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
+            rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+            rpgcore.getRybakNPC().setPlayerPostep(uuid, 0);
+            rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, 0.0);
+            rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
+
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void banPlayer(final UUID uuid, final String banInfo) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "banInfo", banInfo);
+
+            rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, banInfo);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+
+    public void mutePlayer(final UUID uuid, final String muteInfo) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "muteInfo", muteInfo);
+
+            rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, muteInfo);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void unBanPlayer(final UUID uuid) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "banInfo", "false");
+
+            rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, "false");
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+
+    public void unMutePlayer(final UUID uuid) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "muteInfo", "false");
+            rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, "false");
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void setPunishmentHistory(final UUID uuid, final String punishmentHistory) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "punishmentHistory", punishmentHistory);
+
+            rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, punishmentHistory);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerLvl(final UUID uuid, final int lvl) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "lvl", String.valueOf(lvl));
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerExp(final UUID uuid, final double exp) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            j.hset(String.valueOf(uuid), "exp", String.valueOf(exp));
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerBaoBonusy(final UUID uuid, final String baoBonusy) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "BAO_BONUSY", baoBonusy);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerBaoWartosci(final UUID uuid, final String baoWartosci) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "BAO_WARTOSCI", baoWartosci);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerOsAccept(final UUID uuid, final String osMobyAccept) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "osMobyAccept", osMobyAccept);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerAkcesoria(final UUID uuid, final String akcesoriaInString) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "Akcesoria", akcesoriaInString);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerTarg(final UUID uuid, final String targiInString) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "Targ", targiInString);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerKasa(final UUID uuid, final double kasa) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "kasa", String.valueOf(kasa));
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerRybakPostep(final UUID uuid, final int postep) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "RYBAK_POSTEP", String.valueOf(postep));
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerRybakMisje(final UUID uuid, final String misje) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "RYBAK_MISJE", misje);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void onDisable() {
+        pool.getPool().close();
+    }
+
 }
