@@ -1,11 +1,11 @@
 package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
+import rpg.rpgcore.database.RedisManager;
+import rpg.rpgcore.database.RedisPoolManager;
 import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
@@ -20,6 +20,8 @@ import rpg.rpgcore.utils.Utils;
 public final class RPGCORE extends JavaPlugin {
 
     private final Config config = new Config(this);
+    private RedisPoolManager redisPool;
+    private RedisManager redis;
     private SpawnManager spawn;
     private SQLManager sql;
     private CreateTables createTables;
@@ -55,6 +57,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.createTables.createTables();
         this.sql.loadAll();
+        this.redis.loadAll();
 
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
@@ -123,6 +126,7 @@ public final class RPGCORE extends JavaPlugin {
 
     public void onDisable() {
         this.sql.onDisable();
+        this.redisPool.onDisable();
         this.spawn.setSpawn(null);
         this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
@@ -131,6 +135,8 @@ public final class RPGCORE extends JavaPlugin {
     private void initDatabase() {
         this.sql = new SQLManager(this);
         this.createTables = new CreateTables(this);
+        this.redisPool = new RedisPoolManager(this);
+        this.redis = new RedisManager(this);
     }
 
     private void initManagers() {
@@ -187,6 +193,14 @@ public final class RPGCORE extends JavaPlugin {
 
     public SQLManager getSQLManager() {
         return sql;
+    }
+
+    public RedisPoolManager getRedisPool() {
+        return redisPool;
+    }
+
+    public RedisManager getRedis() {
+        return redis;
     }
 
     public SpawnManager getSpawnManager() {
