@@ -1,8 +1,10 @@
 package rpg.rpgcore.database;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.managers.SpawnManager;
 import rpg.rpgcore.utils.Utils;
@@ -364,11 +366,33 @@ public class RedisManager {
         }
     }
 
-    public void updatePlayerOsAccept(final UUID uuid, final String osMobyAccept) {
+    public void updatePlayerOsAccept(final UUID uuid, final String osMobyAccept, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept) {
         Jedis j = null;
         try {
             j = pool.getPool();
             j.hset(String.valueOf(uuid), "osMobyAccept", osMobyAccept);
+            j.hset(String.valueOf(uuid), "osLudzieAccept", osLudzieAccept);
+            j.hset(String.valueOf(uuid), "osSakwyAccept", osSakwyAccept);
+            j.hset(String.valueOf(uuid), "osNiesyAccept", osNiesyAccept);
+            j.hset(String.valueOf(uuid), "osRybakAccept", osRybakAccept);
+            j.hset(String.valueOf(uuid), "osDrwalAccept", osDrwalAccept);
+            j.hset(String.valueOf(uuid), "osGornikAccept", osGornikAccept);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerOs(final UUID uuid, final Integer osMoby, final Integer osLudzie, final Integer osSakwy, final Integer osNiesy, final Integer osRybak, final Integer osDrwal, final Integer osGornik) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "osMoby", String.valueOf(osMoby));
+            j.hset(String.valueOf(uuid), "osLudzie", String.valueOf(osLudzie));
+            j.hset(String.valueOf(uuid), "osSakwy", String.valueOf(osSakwy));
+            j.hset(String.valueOf(uuid), "osNiesy", String.valueOf(osNiesy));
+            j.hset(String.valueOf(uuid), "osRybak", String.valueOf(osRybak));
+            j.hset(String.valueOf(uuid), "osDrwal", String.valueOf(osDrwal));
+            j.hset(String.valueOf(uuid), "osGornik", String.valueOf(osGornik));
         } finally {
             pool.getPool().close();
         }
@@ -398,9 +422,31 @@ public class RedisManager {
         Jedis j = null;
         try {
             j = pool.getPool();
-            j.hset(String.valueOf(uuid), "kasa", String.valueOf(kasa));
+            j.hset(String.valueOf(uuid), "kasa", Utils.kasaFormat.format(kasa));
+            System.out.println(String.format("%.2f" + kasa));
         } finally {
             pool.getPool().close();
+        }
+    }
+    final GenericObjectPoolConfig jedisPoolConfig = new GenericObjectPoolConfig();
+    public void test() {
+        jedisPoolConfig.setMaxTotal(100);
+        jedisPoolConfig.setMaxIdle(100);
+        jedisPoolConfig.setMaxWaitMillis(-1);
+        jedisPoolConfig.setBlockWhenExhausted(false);
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "130.61.33.79", 6379, -1, "");
+//Run the following command:
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //Specific commands
+            jedis.set("test", "testConfigu");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            //In JedisPool mode, the Jedis resource is returned to the resource pool.
+            if (jedis != null)
+                jedis.close();
         }
     }
 
@@ -419,6 +465,19 @@ public class RedisManager {
         try {
             j = pool.getPool();
             j.hset(String.valueOf(uuid), "RYBAK_MISJE", misje);
+        } finally {
+            pool.getPool().close();
+        }
+    }
+
+    public void updatePlayerRybakNagrody(final UUID uuid, final String srdmg, final String srdef, final String ddmg, final String blok) {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+            j.hset(String.valueOf(uuid), "RYBAK_SRDMG", srdmg);
+            j.hset(String.valueOf(uuid), "RYBAK_SRDEF", srdef);
+            j.hset(String.valueOf(uuid), "RYBAK_DDMG", ddmg);
+            j.hset(String.valueOf(uuid), "RYBAK_BLOK", blok);
         } finally {
             pool.getPool().close();
         }
