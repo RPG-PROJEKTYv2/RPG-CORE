@@ -377,7 +377,7 @@ public class RybakNPC {
         this.misjeRybackie.put(37, "Wylow;512;&6Krasnopiorka;Blok Ciosu;1;Srednia Defensywa;3");
         this.misjeRybackie.put(38, "Wylow;512;&6Czarny Dorsz;Srednie Obrazenia;2;Dodatkowe Obrazenia;75");
         this.misjeRybackie.put(39, "Wylow;512;&6Dorady;Blok Ciosu;2;Srednia Defensywa;3");
-        this.misjeRybackie.put(40, "Sprzedaj;10000;&3ryb;Srednie Obrazenia;2;Dodatkowe Obrazenia;150"); //DODAC DO SKLEPU
+        this.misjeRybackie.put(40, "Sprzedaj;10000;&3ryb;Srednie Obrazenia;2;Dodatkowe Obrazenia;150");
         this.misjeRybackie.put(41, "Wylow;5000;&3ryb;Srednia Defensywa;3;Blok Ciosu;1");
         this.misjeRybackie.put(42, "Sprzedaj;15000;&3ryb;Srednie Obrazenia;2;Srednia Defensywa;3"); //DODAC DO SKLEPU
         this.misjeRybackie.put(43, "Wylow;5;&3&lNiesamowity Przedmiot Rybacki;Srednie Obrazenia;2;Srednia Defensywa;3");
@@ -713,7 +713,7 @@ public class RybakNPC {
         lore.add(" ");
         if (!(misjaNr == 3 || misjaNr == 7 || misjaNr == 12 || misjaNr == 13 || misjaNr == 19 || misjaNr == 21 || misjaNr == 26 || misjaNr == 32)) {
             lore.add("&f&lPostep:");
-            lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + (((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+            lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + String.format("%.2f", ((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
         }
 
         return misjeItem.setName("&c&lMisja #" + (misjaNr + 1)).setLore(lore).toItemStack();

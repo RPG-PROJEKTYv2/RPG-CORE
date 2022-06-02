@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
@@ -1104,7 +1105,7 @@ public class PlayerInventoryClickListener implements Listener {
         if (clickedInventoryTitle.contains("Sklep Rybacki")) {
             e.setCancelled(true);
             //                  KUPOWANIE WEDKI             \\
-            if (clickedSlot == 4) {
+            if (clickedSlot == 0) {
                 final double cenaWedki = Double.parseDouble(Utils.removeColor(clickedItem.getItemMeta().getLore().get(clickedItem.getItemMeta().getLore().size() - 1)).replace("Cena:", "").replace(" ", "").replace("$", "").trim());
                 if (rpgcore.getPlayerManager().getPlayerKasa(playerUUID) < cenaWedki) {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cCzy ty probujesz mnie oszukac? Nie stac cie na moja wedke"));
@@ -1123,23 +1124,25 @@ public class PlayerInventoryClickListener implements Listener {
 
             //                  SPRZEDAWANIE RYBEK             \\
 
-            ItemStack is = new ItemStack(clickedItem.getType());
+            ItemStack is = clickedItem.clone();
             ItemMeta im = is.getItemMeta();
             List<String> lore = new ArrayList<>();
-            lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+            lore.add(Utils.format("&8&oChyba &8&n&orybak&r &8&otego potrzebuje"));
             im.setDisplayName(clickedItem.getItemMeta().getDisplayName());
             im.setLore(lore);
+            im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            im.addItemFlags(ItemFlag.HIDE_DESTROYS);
             is.setItemMeta(im);
 
-            int amount = 1;
+            int amount = 0;
 
             if (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.SHIFT_LEFT)) amount = 1;
             if (e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 for (ItemStack is2 : player.getInventory().getContents()) {
-                    if (is2.getItemMeta().hasDisplayName()) {
+                    if (is2 != null && is2.getType() != null && is2.getItemMeta().getDisplayName() != null) {
                         if (is2.getItemMeta().getDisplayName().equals(is.getItemMeta().getDisplayName())) {
                             amount += is2.getAmount();
-                            break;
                         }
                     }
                 }
@@ -1148,6 +1151,7 @@ public class PlayerInventoryClickListener implements Listener {
             is.setAmount(amount);
             lore.clear();
 
+
             if (player.getInventory().containsAtLeast(is, amount)) {
                 player.getInventory().removeItem(is);
 
@@ -1155,13 +1159,17 @@ public class PlayerInventoryClickListener implements Listener {
                 double cena = 0.0;
                 for (String s : lore) {
                     if (s.contains("Cena: ")) {
-                        cena = Double.parseDouble(s.replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
+                        cena = Double.parseDouble(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
                         break;
                     }
                 }
                 rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) + (cena * amount));
                 player.sendMessage(Utils.format(Utils.RYBAK + "&aSprzedales &6&o" + amount + " &a&orybek za &6&o" + (cena * amount) + " &a$"));
                 player.closeInventory();
+                final int mission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);
+                if (mission == 41 || mission == 43) {
+                    rpgcore.getRybakNPC().updatePlayerPostep(playerUUID, amount);
+                }
                 return;
             }
             player.sendMessage(Utils.format(Utils.RYBAK + "&cNie masz tego rodzaju rybek w swoim ekwipunku"));

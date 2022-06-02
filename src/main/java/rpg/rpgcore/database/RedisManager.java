@@ -3,6 +3,7 @@ package rpg.rpgcore.database;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import rpg.rpgcore.RPGCORE;
@@ -168,6 +169,68 @@ public class RedisManager {
             pool.getPool().close();
         }
 
+    }
+
+    public void tempSaveAllPlayers() {
+        Jedis j = pool.getPool();
+
+        try {
+            System.out.println(rpgcore.getPlayerManager().getPlayers().size());
+            for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
+                j.rpush("players", uuid.toString());
+            }
+
+        } finally {
+            pool.getPool().close();
+        }
+
+    }
+
+
+    public void saveAllDataForPlayer() {
+        Jedis j = null;
+        try {
+            j = pool.getPool();
+
+            for (final UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
+                final String uuidToString = String.valueOf(uuid);
+
+                j.hset(uuidToString, "nick", rpgcore.getPlayerManager().getPlayerName(uuid));
+                j.hset(uuidToString, "kasa", String.valueOf(rpgcore.getPlayerManager().getPlayerKasa(uuid)));
+                j.hset(uuidToString, "lvl", String.valueOf(rpgcore.getPlayerManager().getPlayerLvl(uuid)));
+                j.hset(uuidToString, "exp", String.valueOf(rpgcore.getPlayerManager().getPlayerExp(uuid)));
+                j.hset(uuidToString, "banInfo", String.valueOf(rpgcore.getPlayerManager().getPlayerBanInfo(uuid)));
+                j.hset(uuidToString, "muteInfo", String.valueOf(rpgcore.getPlayerManager().getPlayerMuteInfo(uuid)));
+                j.hset(uuidToString, "punishmentHistory", rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+                j.hset(uuidToString, "osMoby", String.valueOf(rpgcore.getPlayerManager().getPlayerOsMoby(uuid)));
+                j.hset(uuidToString, "osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
+                j.hset(uuidToString, "osLudzie", String.valueOf(rpgcore.getPlayerManager().getPlayerOsLudzie(uuid)));
+                j.hset(uuidToString, "osLudzieAccept", rpgcore.getPlayerManager().getOsLudzieAccept(uuid));
+                j.hset(uuidToString, "osSakwy", String.valueOf(rpgcore.getPlayerManager().getPlayerOsSakwy(uuid)));
+                j.hset(uuidToString, "osSakwyAccept", rpgcore.getPlayerManager().getOsSakwyAccept(uuid));
+                j.hset(uuidToString, "osNiesy", String.valueOf(rpgcore.getPlayerManager().getPlayerOsNiesy(uuid)));
+                j.hset(uuidToString, "osNiesyAccept", rpgcore.getPlayerManager().getOsNiesyAccept(uuid));
+                j.hset(uuidToString, "osRybak", String.valueOf(rpgcore.getPlayerManager().getPlayerOsRybak(uuid)));
+                j.hset(uuidToString, "osRybakAccept", rpgcore.getPlayerManager().getOsRybakAccept(uuid));
+                j.hset(uuidToString, "osDrwal", String.valueOf(rpgcore.getPlayerManager().getPlayerOsDrwal(uuid)));
+                j.hset(uuidToString, "osDrwalAccept", rpgcore.getPlayerManager().getOsDrwalAccept(uuid));
+                j.hset(uuidToString, "osGornik", String.valueOf(rpgcore.getPlayerManager().getPlayerOsGornik(uuid)));
+                j.hset(uuidToString, "osGornikAccept", rpgcore.getPlayerManager().getOsGornikAccept(uuid));
+                j.hset(uuidToString, "BAO_BONUSY", rpgcore.getBaoManager().getBaoBonusy(uuid));
+                j.hset(uuidToString, "BAO_WARTOSCI", rpgcore.getBaoManager().getBaoBonusyWartosci(uuid));
+                j.hset(uuidToString, "RYBAK_MISJE", rpgcore.getRybakNPC().getPlayerRybakMisje(uuid));
+                j.hset(uuidToString, "RYBAK_POSTEP", String.valueOf(rpgcore.getRybakNPC().getPlayerPostep(uuid)));
+                j.hset(uuidToString, "RYBAK_SRDMG", String.valueOf(rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid)));
+                j.hset(uuidToString, "RYBAK_SRDEF", String.valueOf(rpgcore.getRybakNPC().getPlayerRybakSredniDef(uuid)));
+                j.hset(uuidToString, "RYBAK_DDMG", String.valueOf(rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid)));
+                j.hset(uuidToString, "RYBAK_BLOK", String.valueOf(rpgcore.getRybakNPC().getPlayerRybakBlok(uuid)));
+                j.hset(uuidToString, "Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+                j.hset(uuidToString, "Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+
+            }
+        } finally {
+            pool.getPool().close();
+        }
     }
 
     public void setSpawn(final Location spawn) {
@@ -426,28 +489,6 @@ public class RedisManager {
             System.out.println(String.format("%.2f" + kasa));
         } finally {
             pool.getPool().close();
-        }
-    }
-    final GenericObjectPoolConfig jedisPoolConfig = new GenericObjectPoolConfig();
-    public void test() {
-        jedisPoolConfig.setMaxTotal(100);
-        jedisPoolConfig.setMaxIdle(100);
-        jedisPoolConfig.setMaxWaitMillis(-1);
-        jedisPoolConfig.setBlockWhenExhausted(true);
-        jedisPoolConfig.setTestOnBorrow(true);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "130.61.33.79", 6379);
-        //Run the following command:
-        Jedis jedis = null;
-        try {
-            jedis = jedisPool.getResource();
-            //Specific commands
-            jedis.set("test", "testConfigu");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            //In JedisPool mode, the Jedis resource is returned to the resource pool.
-            if (jedis != null)
-                jedis.close();
         }
     }
 

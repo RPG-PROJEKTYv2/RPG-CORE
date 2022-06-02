@@ -57,7 +57,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.createTables.createTables();
         this.sql.loadAll();
-        this.redis.loadAll();
+        //this.redis.loadAll();
 
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
@@ -121,7 +121,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 600L, 600L);
 
     }
 
