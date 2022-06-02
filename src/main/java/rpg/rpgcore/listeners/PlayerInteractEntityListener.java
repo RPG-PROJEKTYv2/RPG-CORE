@@ -31,9 +31,7 @@ public class PlayerInteractEntityListener implements Listener {
 
         if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
             player.sendMessage(e.getRightClicked().getEntityId() + " -ID");
-            if (e.getRightClicked().getEntityId() == 2 || e.getRightClicked().getEntityId() == 3 || e.getRightClicked().getEntityId() == 4 || e.getRightClicked().getEntityId() == 9 ||
-                    e.getRightClicked().getEntityId() == 5 || e.getRightClicked().getEntityId() == 8 || e.getRightClicked().getEntityId() == 6 || e.getRightClicked().getEntityId() == 19 ||
-                    e.getRightClicked().getEntityId() == 22 || e.getRightClicked().getEntityId() == 7 || e.getRightClicked().getEntityId() == 21 || e.getRightClicked().getEntityId() == 20) {
+            if (rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getEntityId())) {
                 e.setCancelled(true);
                 if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < 74) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGI"));

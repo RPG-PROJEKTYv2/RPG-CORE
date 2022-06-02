@@ -433,16 +433,17 @@ public class RedisManager {
         jedisPoolConfig.setMaxTotal(100);
         jedisPoolConfig.setMaxIdle(100);
         jedisPoolConfig.setMaxWaitMillis(-1);
-        jedisPoolConfig.setBlockWhenExhausted(false);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "130.61.33.79", 6379, -1, "");
-//Run the following command:
+        jedisPoolConfig.setBlockWhenExhausted(true);
+        jedisPoolConfig.setTestOnBorrow(true);
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, "130.61.33.79", 6379);
+        //Run the following command:
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             //Specific commands
             jedis.set("test", "testConfigu");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         } finally {
             //In JedisPool mode, the Jedis resource is returned to the resource pool.
             if (jedis != null)

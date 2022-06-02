@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -1102,6 +1103,7 @@ public class PlayerInventoryClickListener implements Listener {
 
         if (clickedInventoryTitle.contains("Sklep Rybacki")) {
             e.setCancelled(true);
+            //                  KUPOWANIE WEDKI             \\
             if (clickedSlot == 4) {
                 final double cenaWedki = Double.parseDouble(Utils.removeColor(clickedItem.getItemMeta().getLore().get(clickedItem.getItemMeta().getLore().size() - 1)).replace("Cena:", "").replace(" ", "").replace("$", "").trim());
                 if (rpgcore.getPlayerManager().getPlayerKasa(playerUUID) < cenaWedki) {
@@ -1117,6 +1119,54 @@ public class PlayerInventoryClickListener implements Listener {
                 player.closeInventory();
                 return;
             }
+
+
+            //                  SPRZEDAWANIE RYBEK             \\
+
+            ItemStack is = new ItemStack(clickedItem.getType());
+            ItemMeta im = is.getItemMeta();
+            List<String> lore = new ArrayList<>();
+            lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+            im.setDisplayName(clickedItem.getItemMeta().getDisplayName());
+            im.setLore(lore);
+            is.setItemMeta(im);
+
+            int amount = 1;
+
+            if (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.SHIFT_LEFT)) amount = 1;
+            if (e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                for (ItemStack is2 : player.getInventory().getContents()) {
+                    if (is2.getItemMeta().hasDisplayName()) {
+                        if (is2.getItemMeta().getDisplayName().equals(is.getItemMeta().getDisplayName())) {
+                            amount += is2.getAmount();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            is.setAmount(amount);
+            lore.clear();
+
+            if (player.getInventory().containsAtLeast(is, amount)) {
+                player.getInventory().removeItem(is);
+
+                lore = clickedItem.getItemMeta().getLore();
+                double cena = 0.0;
+                for (String s : lore) {
+                    if (s.contains("Cena: ")) {
+                        cena = Double.parseDouble(s.replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
+                        break;
+                    }
+                }
+                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) + (cena * amount));
+                player.sendMessage(Utils.format(Utils.RYBAK + "&aSprzedales &6&o" + amount + " &a&orybek za &6&o" + (cena * amount) + " &a$"));
+                player.closeInventory();
+                return;
+            }
+            player.sendMessage(Utils.format(Utils.RYBAK + "&cNie masz tego rodzaju rybek w swoim ekwipunku"));
+            player.closeInventory();
+            return;
         }
 
         if (clickedInventoryTitle.contains("Kampania Rybacka")) {

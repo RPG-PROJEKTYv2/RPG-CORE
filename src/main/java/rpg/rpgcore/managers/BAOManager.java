@@ -1,23 +1,27 @@
 package rpg.rpgcore.managers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class BAOManager {
 
     private final HashMap<UUID, String> baoBonusy = new HashMap<>();
     private final HashMap<UUID, String> baoBonusyWartosci = new HashMap<>();
+    private final List<Integer> entityIdList = new ArrayList<>();
 
     private final Random random = new Random();
 
@@ -384,6 +388,22 @@ public class BAOManager {
         this.losujNowyBonus4(uuid);
         //                  LOSOWANIE 5 BONUSU BAO                  \\
         this.losujNowyBonus5(uuid);
+    }
+
+    public void getAllEntities() {
+        ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -12.5, 8, 53.5), EntityType.ARMOR_STAND);
+        as.setVisible(false);
+        for (Entity e : as.getNearbyEntities(1, 2, 1)) {
+            if (!(e instanceof Player)) {
+                this.entityIdList.add(e.getEntityId());
+            }
+        }
+
+        Bukkit.getServer().getScheduler().runTaskLater(RPGCORE.getPlugin(RPGCORE.class), as::remove, 100L);
+    }
+
+    public boolean checkIfClickedEntityIsInList(final int entityId) {
+        return this.entityIdList.contains(entityId);
     }
 
 }

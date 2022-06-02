@@ -143,41 +143,160 @@ public class RybakNPC {
 
         wedka.setName("&6Wedka").setLore(lore);
 
-        lore.clear();
-
-        lore.add(" ");
-        sledz.setName("&6Sledz").setLore(lore);
-        dorsz.setName("&6Dorsz").setLore(lore);
-        losos.setName("&6Losos").setLore(lore);
-        krasnopiorka.setName("&6Krasnopiorka").setLore(lore);
-        dorszCzarny.setName("&6Dorsz Czarny").setLore(lore);
-        dorada.setName("&6Dorada").setLore(lore);
-        cierniczek.setName("&6Cierniczek").setLore(lore);
-        fladra.setName("&6Fladra").setLore(lore);
-        karas.setName("&6Karas").setLore(lore);
-        karp.setName("&6Karp").setLore(lore);
-        leszcz.setName("&6Leszcz").setLore(lore);
-        makrela.setName("&6Makrela").setLore(lore);
-        mintaj.setName("&6Mintaj").setLore(lore);
-        okon.setName("&6Okon").setLore(lore);
-        plotka.setName("&6Plotka").setLore(lore);
+        sledz.setName("&6Sledz").setLore(setLoreSell(5000));
+        dorsz.setName("&6Dorsz").setLore(setLoreSell(5000));
+        losos.setName("&6Losos").setLore(setLoreSell(5000));
+        krasnopiorka.setName("&6Krasnopiorka").setLore(setLoreSell(5000));
+        dorszCzarny.setName("&6Dorsz Czarny").setLore(setLoreSell(5000));
+        dorada.setName("&6Dorada").setLore(setLoreSell(7500));
+        cierniczek.setName("&6Cierniczek").setLore(setLoreSell(7500));
+        fladra.setName("&6Fladra").setLore(setLoreSell(7500));
+        karas.setName("&6Karas").setLore(setLoreSell(7500));
+        karp.setName("&6Karp").setLore(setLoreSell(10000));
+        leszcz.setName("&6Leszcz").setLore(setLoreSell(10000));
+        makrela.setName("&6Makrela").setLore(setLoreSell(10000));
+        mintaj.setName("&6Mintaj").setLore(setLoreSell(12500));
+        okon.setName("&6Okon").setLore(setLoreSell(12500));
+        plotka.setName("&6Plotka").setLore(setLoreSell(12500));
 
         rybakGUI.setItem(0, wedka.toItemStack());
-        
+        rybakGUI.setItem(1, sledz.toItemStack());
+        rybakGUI.setItem(2, dorsz.toItemStack());
+        rybakGUI.setItem(3, losos.toItemStack());
+        rybakGUI.setItem(4, krasnopiorka.toItemStack());
+        rybakGUI.setItem(5, dorszCzarny.toItemStack());
+        rybakGUI.setItem(6, dorada.toItemStack());
+        rybakGUI.setItem(7, cierniczek.toItemStack());
+        rybakGUI.setItem(8, fladra.toItemStack());
+        rybakGUI.setItem(9, karas.toItemStack());
+        rybakGUI.setItem(10, karp.toItemStack());
+        rybakGUI.setItem(11, leszcz.toItemStack());
+        rybakGUI.setItem(12, makrela.toItemStack());
+        rybakGUI.setItem(13, mintaj.toItemStack());
+        rybakGUI.setItem(14, okon.toItemStack());
+        rybakGUI.setItem(15, plotka.toItemStack());
+
         player.openInventory(rybakGUI);
     }
 
     private List<String> setLoreSell(final double cena) {
-        lore.clear();
+        List<String> lore2 = new ArrayList<>();
 
-        lore.add(" ");
-        lore.add("&2Cena: &6" + Utils.spaceNumber(String.valueOf(cena)) + " &2$");
-        lore.add(" ");
-        lore.add("&8");
-        lore.add(" ");
+        lore2.add(" ");
+        lore2.add("&2Cena: &6" + Utils.spaceNumber(String.format("%.0f", cena)) + " &2$");
+        lore2.add(" ");
+        lore2.add("&6LMB &7- Sprzedaj &61 &7sztuke");
+        lore2.add("&6RMB &7- Sprzedaj &6wszystkie &7posiadane w ekwipunku");
 
-        return lore;
+        return lore2;
     }
+
+    public ItemStack getSledz() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        sledz.setName("&6Sledz").setLore(lore).hideFlag();
+        return sledz.toItemStack();
+    }
+
+    public ItemStack getDorsz() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        dorsz.setName("&6Dorsz").setLore(lore).hideFlag();
+        return dorsz.toItemStack();
+    }
+
+    public ItemStack getLosos() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        losos.setName("&6Losos").setLore(lore).hideFlag();
+        return losos.toItemStack();
+    }
+
+    public ItemStack getKrasnopiorka() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag();
+        return krasnopiorka.toItemStack();
+    }
+
+    public ItemStack getDorszCzarny() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag();
+        return dorszCzarny.toItemStack();
+    }
+
+    public ItemStack getDorada() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        dorada.setName("&6Dorada").setLore(lore).hideFlag();
+        return dorada.toItemStack();
+    }
+
+    public ItemStack getCierniczek() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag();
+        return cierniczek.toItemStack();
+    }
+
+    public ItemStack getFladra() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        fladra.setName("&6Fladra").setLore(lore).hideFlag();
+        return fladra.toItemStack();
+    }
+
+    public ItemStack getKaras() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        karas.setName("&6Karas").setLore(lore).hideFlag();
+        return karas.toItemStack();
+    }
+
+    public ItemStack getKarp() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        karp.setName("&6Karp").setLore(lore).hideFlag();
+        return karp.toItemStack();
+    }
+
+    public ItemStack getLeszcz() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        leszcz.setName("&6Leszcz").setLore(lore).hideFlag();
+        return leszcz.toItemStack();
+    }
+
+    public ItemStack getMakrela() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        makrela.setName("&6Makrela").setLore(lore).hideFlag();
+        return makrela.toItemStack();
+    }
+
+    public ItemStack getMintaj() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        mintaj.setName("&6Mintaj").setLore(lore).hideFlag();
+        return mintaj.toItemStack();
+    }
+
+    public ItemStack getOkon() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        okon.setName("&6Okon").setLore(lore).hideFlag();
+        return okon.toItemStack();
+    }
+
+    public ItemStack getPlotka() {
+        lore.clear();
+        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
+        plotka.setName("&6Plotka").setLore(lore).hideFlag();
+        return plotka.toItemStack();
+    }
+
+
 
     public void openRybakKampania(final Player player) {
         final Inventory kampaniaGui = Bukkit.createInventory(null, 45, Utils.format("&4&lKampania Rybacka"));

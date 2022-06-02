@@ -1,12 +1,10 @@
 package rpg.rpgcore.database;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import rpg.rpgcore.RPGCORE;
 
-import java.time.Duration;
+
 
 public class RedisPoolManager {
 
