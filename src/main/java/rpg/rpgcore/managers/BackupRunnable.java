@@ -17,8 +17,6 @@ public class BackupRunnable implements Runnable {
     public void run() {
 
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&6Rozpoczeto update do bazy daynch..."));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getRedis().tempSaveAllPlayers());
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getRedis().saveAllDataForPlayer());
 
         for (final UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
 
