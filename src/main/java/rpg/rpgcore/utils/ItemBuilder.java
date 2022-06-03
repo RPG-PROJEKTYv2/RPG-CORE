@@ -146,6 +146,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setAmount(int amount) {
+        this.is.setAmount(amount);
+        return this;
+    }
+
     public ItemStack toItemStack() {
         return this.is;
     }

@@ -191,113 +191,6 @@ public class RybakNPC {
         return lore2;
     }
 
-    public ItemStack getSledz() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        sledz.setName("&6Sledz").setLore(lore).hideFlag();
-        return sledz.toItemStack();
-    }
-
-    public ItemStack getDorsz() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        dorsz.setName("&6Dorsz").setLore(lore).hideFlag();
-        return dorsz.toItemStack();
-    }
-
-    public ItemStack getLosos() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        losos.setName("&6Losos").setLore(lore).hideFlag();
-        return losos.toItemStack();
-    }
-
-    public ItemStack getKrasnopiorka() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag();
-        return krasnopiorka.toItemStack();
-    }
-
-    public ItemStack getDorszCzarny() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag();
-        return dorszCzarny.toItemStack();
-    }
-
-    public ItemStack getDorada() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        dorada.setName("&6Dorada").setLore(lore).hideFlag();
-        return dorada.toItemStack();
-    }
-
-    public ItemStack getCierniczek() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag();
-        return cierniczek.toItemStack();
-    }
-
-    public ItemStack getFladra() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        fladra.setName("&6Fladra").setLore(lore).hideFlag();
-        return fladra.toItemStack();
-    }
-
-    public ItemStack getKaras() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        karas.setName("&6Karas").setLore(lore).hideFlag();
-        return karas.toItemStack();
-    }
-
-    public ItemStack getKarp() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        karp.setName("&6Karp").setLore(lore).hideFlag();
-        return karp.toItemStack();
-    }
-
-    public ItemStack getLeszcz() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        leszcz.setName("&6Leszcz").setLore(lore).hideFlag();
-        return leszcz.toItemStack();
-    }
-
-    public ItemStack getMakrela() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        makrela.setName("&6Makrela").setLore(lore).hideFlag();
-        return makrela.toItemStack();
-    }
-
-    public ItemStack getMintaj() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        mintaj.setName("&6Mintaj").setLore(lore).hideFlag();
-        return mintaj.toItemStack();
-    }
-
-    public ItemStack getOkon() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        okon.setName("&6Okon").setLore(lore).hideFlag();
-        return okon.toItemStack();
-    }
-
-    public ItemStack getPlotka() {
-        lore.clear();
-        lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
-        plotka.setName("&6Plotka").setLore(lore).hideFlag();
-        return plotka.toItemStack();
-    }
-
-
-
     public void openRybakKampania(final Player player) {
         final Inventory kampaniaGui = Bukkit.createInventory(null, 45, Utils.format("&4&lKampania Rybacka"));
 
@@ -404,21 +297,21 @@ public class RybakNPC {
 
         lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
 
-        rybakDrops.add(0.06666, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, dorada.setName("&6Dorada").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, fladra.setName("&6Fladra").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, karp.setName("&6Karp").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, leszcz.setName("&6Leszcz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, makrela.setName("&6Makrela").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.06666, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.1, dorada.setName("&6Dorada").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.05, cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.05, fladra.setName("&6Fladra").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.05, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.05, karp.setName("&6Karp").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.05, leszcz.setName("&6Leszcz").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.0374975, makrela.setName("&6Makrela").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.0374975, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.0374975, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
+        rybakDrops.add(0.0374975, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
         rybakDrops.add(0.001, nies.setName("&b&lNiesamowity Przedmiot Rybacki").addGlowing().toItemStack());
     }
 
@@ -446,9 +339,9 @@ public class RybakNPC {
         lore.add("&bWylowione ryby: &f0");
         lore.add(" ");
         lore.add("&f&lBonusy");
-        lore.add("&8- &bSzansa na podwojne wylowienie: &f0.05%");
-        lore.add("&8- &bSzansa na skrzynie rybaka: &f0.005%");
-        lore.add("&8- &bSzansa na wylowienie podwodnego stworzenia: &f0.1%");
+        lore.add("&8- &bSzansa na podwojne wylowienie: &f0%");
+        lore.add("&8- &bSzansa na skrzynie rybaka: &f0%");
+        lore.add("&8- &bSzansa na wylowienie podwodnego stworzenia: &f0%");
 
         wedkaGracza.setName("&6Wedka").setLore(lore);
 
@@ -525,19 +418,6 @@ public class RybakNPC {
 
     }
 
-    public void setMagmaCubeSize(final Entity entity, final int size) {
-        net.minecraft.server.v1_8_R3.Entity nmsEntity = ((CraftEntity) entity).getHandle();
-
-        NBTTagCompound tag = new NBTTagCompound();
-
-        nmsEntity.c(tag);
-
-        tag.setInt("Size", size);
-
-        EntityLiving el = (EntityLiving) nmsEntity;
-        el.a(tag);
-    }
-
     public void setNoAi(final Entity entity) {
         net.minecraft.server.v1_8_R3.Entity nmsEntity = ((CraftEntity) entity).getHandle();
 
@@ -554,7 +434,6 @@ public class RybakNPC {
     public void spawnPodwodnyWladca(final Player player, final Location location) {
         final LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.GUARDIAN);
         final LivingEntity entityPassenger = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
-        setMagmaCubeSize(entityPassenger, 1);
         setNoAi(entityPassenger);
         entity.setPassenger(entityPassenger);
         entityPassenger.setCustomNameVisible(true);
@@ -659,17 +538,15 @@ public class RybakNPC {
             double caseDrop = Double.parseDouble(Utils.removeColor(lore.get(7)).replace("-", "").replace("Szansa na skrzynie rybaka:", "").replace(" ", "").replace("%", "").trim());
             double mobChance = Double.parseDouble(Utils.removeColor(lore.get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
 
-            doubleDrop += 0.75;
-            caseDrop += 0.25;
-            if (rodLvl - 1 == 1) {
-                mobChance += 0.3;
-            } else {
-                mobChance += 0.5;
+            doubleDrop += 0.5;
+            caseDrop += 0.3;
+            if (rodLvl >= 15) {
+                mobChance += 0.25;
             }
 
-            lore.set(6, "&8- &bSzansa na podwojne wylowienie: &f" + Utils.wedkaFormat.format(doubleDrop) + "%");
-            lore.set(7, "&8- &bSzansa na skrzynie rybaka: &f" + Utils.wedkaFormat.format(caseDrop) + "%");
-            lore.set(8, "&8- &bSzansa na wylowienie podwodnego stworzenia: &f" + Utils.wedkaFormat.format(mobChance) + "%");
+            lore.set(6, "&8- &bSzansa na podwojne wylowienie: &f" + String.format("%.2f", doubleDrop) + "%");
+            lore.set(7, "&8- &bSzansa na skrzynie rybaka: &f" + String.format("%.2f", caseDrop) + "%");
+            lore.set(8, "&8- &bSzansa na wylowienie podwodnego stworzenia: &f" + String.format("%.2f", mobChance) + "%");
 
             if (im.getEnchantLevel(Enchantment.LURE) < 5) {
                 if (rodLvl % 5 == 0) {

@@ -19,7 +19,7 @@ public class Test implements CommandExecutor {
 
         final Player player = (Player) commandSender;
 
-        player.getInventory().addItem(GlobalItems.SAKWA());
+        player.getInventory().addItem(GlobalItems.getSakwa(1));
 
         if (strings.length == 1) {
             try {

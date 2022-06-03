@@ -37,13 +37,12 @@ public class PlayerFishListener implements Listener {
 
             firstRoll.clear();
 
-            //double mobChance = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
+            double mobChance = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
 
-            firstRoll.add(1, "mob");
 
-            /*firstRoll.add(0.7 - (0.1 + (mobChance / 100)), "fish");
+            firstRoll.add(0.7 - (0.1 + (mobChance / 100)), "fish");
             firstRoll.add(0.1 + (mobChance / 100), "mob");
-            firstRoll.add(0.3, "empty");*/
+            firstRoll.add(0.3, "empty");
 
             String result = firstRoll.next();
 

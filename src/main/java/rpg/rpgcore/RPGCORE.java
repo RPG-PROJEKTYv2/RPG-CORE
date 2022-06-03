@@ -9,6 +9,7 @@ import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.managers.god.GodManager;
+import rpg.rpgcore.managers.npc.MagazynierNPC;
 import rpg.rpgcore.managers.npc.DuszologNPC;
 import rpg.rpgcore.managers.npc.RybakNPC;
 import rpg.rpgcore.managers.npc.TeleporterNPC;
@@ -44,6 +45,7 @@ public final class RPGCORE extends JavaPlugin {
     private TeleporterNPC teleporterNPC;
     private CooldownManager cooldownManager;
     private RybakNPC rybakNPC;
+    private MagazynierNPC magazynierNPC;
 
     private int i = 1;
 
@@ -119,7 +121,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 600L, 600L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
     }
 
@@ -162,6 +164,7 @@ public final class RPGCORE extends JavaPlugin {
         this.duszologNPC = new DuszologNPC();
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
+        this.magazynierNPC = new MagazynierNPC(this);
 
 
 
@@ -282,5 +285,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public RybakNPC getRybakNPC() {
         return rybakNPC;
+    }
+
+    public MagazynierNPC getMagazynierNPC() {
+        return magazynierNPC;
     }
 }

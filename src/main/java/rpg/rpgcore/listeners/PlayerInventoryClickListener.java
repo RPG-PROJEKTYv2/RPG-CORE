@@ -1352,15 +1352,7 @@ public class PlayerInventoryClickListener implements Listener {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
                     return;
                 }
-            } else
-
-
-
-
-
-
-
-
+            }
 
             if (rpgcore.getRybakNPC().getPlayerPostep(playerUUID) < Integer.parseInt(misja[1])) {
                 player.closeInventory();
@@ -1392,6 +1384,20 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
             rpgcore.getServer().broadcastMessage(Utils.format(Utils.RYBAK + "&7Gracz &6" + player.getName() + " &7ukonczyl wlasnie moja &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().replace("Misja #", "")) + " &7misje.&6Gratulacje!"));
+            return;
+        }
+
+        if (clickedInventoryTitle.equals(Utils.removeColor("&b&lMagazynier"))) {
+            e.setCancelled(true);
+            if (clickedSlot == 0) {
+                // OPEN MAGAZYNY
+                return;
+            }
+            if (clickedSlot == 4) {
+                // OPEN KAMPANIA
+                return;
+            }
+
             return;
         }
 

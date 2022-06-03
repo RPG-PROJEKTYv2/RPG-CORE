@@ -42,6 +42,15 @@ public class PlayerInteractEntityListener implements Listener {
             }
         }
 
+        if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // MAGAZYNIER
+            if (entityName.equalsIgnoreCase("Magazynier")) {
+                rpgcore.getMagazynierNPC().openMagazynierMain(player);
+                return;
+            }
+        }
+
 
         // NPCTY
         if (e.getRightClicked().getType() == EntityType.PLAYER) {
@@ -59,11 +68,12 @@ public class PlayerInteractEntityListener implements Listener {
                 player.openInventory(rpgcore.getTeleporterNPC().teleporterMAIN(player));
                 return;
             }
-
+            // RYBAK
             if (entityName.equalsIgnoreCase("Rybak")) {
                 rpgcore.getRybakNPC().openRybakGUI(player);
                 return;
             }
+
 
 
             // TRADE
