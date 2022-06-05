@@ -3,7 +3,7 @@ package rpg.rpgcore.database;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.managers.SpawnManager;
+import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;

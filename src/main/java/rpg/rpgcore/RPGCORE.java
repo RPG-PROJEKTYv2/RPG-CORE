@@ -2,18 +2,66 @@ package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.admin.teleport.Teleport;
+import rpg.rpgcore.admin.teleport.TeleportCoords;
+import rpg.rpgcore.admin.teleport.TeleportManager;
+import rpg.rpgcore.admin.ban.Ban;
+import rpg.rpgcore.admin.ban.BanManager;
+import rpg.rpgcore.admin.ban.TempBan;
+import rpg.rpgcore.admin.ban.UnBan;
+import rpg.rpgcore.admin.commands.*;
+import rpg.rpgcore.admin.god.God;
+import rpg.rpgcore.admin.vanish.Vanish;
+import rpg.rpgcore.akcesoria.AKCESORIAInventoryClick;
+import rpg.rpgcore.akcesoria.AKCESORIAPlayerInteract;
+import rpg.rpgcore.akcesoria.Akcesoria;
+import rpg.rpgcore.akcesoria.AkcesoriaManager;
+import rpg.rpgcore.bao.BAOEntityInteract;
+import rpg.rpgcore.bao.BAOInventoryClick;
+import rpg.rpgcore.bao.BAOManager;
+import rpg.rpgcore.bao.BAOPlayerInteract;
+import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.database.SQLManager;
+import rpg.rpgcore.economy.EconomyInventoryClick;
+import rpg.rpgcore.economy.Kasa;
+import rpg.rpgcore.economy.Wyplac;
+import rpg.rpgcore.history.HISTORYInventoryClick;
+import rpg.rpgcore.history.History;
 import rpg.rpgcore.listeners.*;
+import rpg.rpgcore.lvl.Lvl;
+import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.managers.*;
-import rpg.rpgcore.managers.god.GodManager;
-import rpg.rpgcore.managers.npc.MagazynierNPC;
-import rpg.rpgcore.managers.npc.DuszologNPC;
-import rpg.rpgcore.managers.npc.RybakNPC;
-import rpg.rpgcore.managers.npc.TeleporterNPC;
-import rpg.rpgcore.managers.vanish.VanishManager;
+import rpg.rpgcore.admin.god.GodManager;
+import rpg.rpgcore.msg.MSGManager;
+import rpg.rpgcore.msg.Message;
+import rpg.rpgcore.msg.Reply;
+import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
+import rpg.rpgcore.npc.magazynier.MagazynierNPC;
+import rpg.rpgcore.npc.duszolog.DuszologInventoryClick;
+import rpg.rpgcore.npc.duszolog.DuszologNPC;
+import rpg.rpgcore.npc.rybak.PlayerFishListener;
+import rpg.rpgcore.npc.rybak.RybakInventoryClick;
+import rpg.rpgcore.npc.rybak.RybakNPC;
+import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
+import rpg.rpgcore.npc.teleporter.TeleporterNPC;
+import rpg.rpgcore.admin.vanish.VanishManager;
+import rpg.rpgcore.npc.duszolog.DuszologPlayerInteract;
+import rpg.rpgcore.os.OSInventoryClick;
+import rpg.rpgcore.os.OsManager;
+import rpg.rpgcore.os.Osiagniecia;
+import rpg.rpgcore.pomoc.POMOCInventoryClick;
+import rpg.rpgcore.pomoc.Pomoc;
+import rpg.rpgcore.pomoc.PomocManager;
+import rpg.rpgcore.spawn.Spawn;
+import rpg.rpgcore.spawn.SpawnManager;
+import rpg.rpgcore.targ.*;
+import rpg.rpgcore.trade.TRADEInventoryClick;
+import rpg.rpgcore.trade.TRADEInventoryClose;
+import rpg.rpgcore.trade.TRADEInventoryDrag;
+import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
@@ -84,7 +132,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("heal").setExecutor(new Heal(this));
         this.getCommand("tempban").setExecutor(new TempBan(this));
         this.getCommand("osiagniecia").setExecutor(new Osiagniecia(this));
-        this.getCommand("setdmg").setExecutor(new SetDmg(this));
+        this.getCommand("setdmg").setExecutor(new SetDmg());
         this.getCommand("akcesoria").setExecutor(new Akcesoria(this));
         this.getCommand("pomoc").setExecutor(new Pomoc(this));
         this.getCommand("sprawdzmojebonusy").setExecutor(new SprawdzMojeBonusy(this));
@@ -106,20 +154,68 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
-        this.getServer().getPluginManager().registerEvents(chatManager, this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerInventoryClickListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerInventoryCloseListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new InventoryDragListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+
+        // BAO
+        this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
+        this.getServer().getPluginManager().registerEvents(new BAOPlayerInteract(this), this);
+
+        // OS
+        this.getServer().getPluginManager().registerEvents(new OSInventoryClick(this), this);
+
+        // TRADE
+        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
+        this.getServer().getPluginManager().registerEvents(new TRADEInventoryDrag(), this);
+
+        // TARG
+        this.getServer().getPluginManager().registerEvents(new TARGInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new TARGInventoryClose(this), this);
+
+        // POMOC
+        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
+
+        // EQ
+        this.getServer().getPluginManager().registerEvents(new EQInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
+
+        // AKCESORIA
+        this.getServer().getPluginManager().registerEvents(new AKCESORIAInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new AKCESORIAPlayerInteract(this), this);
+
+        // HISTORY
+        this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
+
+        // POMOC
+        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
+
+        // ECONOMY
+        this.getServer().getPluginManager().registerEvents(new EconomyInventoryClick(this), this);
+
+        // NPC
+
+        // ...DUSZOLOG
+        this.getServer().getPluginManager().registerEvents(new DuszologInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new DuszologPlayerInteract(this), this);
+
+        // ...RYBAK
+        this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
+
+        // ...MAGAZYNIER
+        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
+
+        // ...TELEPORTER
+        this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
+
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
