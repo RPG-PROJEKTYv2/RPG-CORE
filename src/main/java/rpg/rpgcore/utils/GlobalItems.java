@@ -24,6 +24,7 @@ public class GlobalItems {
     private static final ItemBuilder plotka = new ItemBuilder(Material.RAW_FISH, 1, (short) 1);
     private static final ItemBuilder sakwa = new ItemBuilder(Material.EXP_BOTTLE, 1);
     private static final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
+    private static final ItemBuilder bonNaMagazyn = new ItemBuilder(Material.PAPER);
     
     private static final List<String> lore = new ArrayList<>();
 
@@ -145,6 +146,16 @@ public class GlobalItems {
         lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
         plotka.setName("&6Plotka").setLore(lore).hideFlag().setAmount(amount);
         return plotka.toItemStack().clone();
+    }
+
+    // RÓŻNE BONY
+
+    public static ItemStack getBonNaMagazyn(final int amount) {
+        lore.clear();
+        lore.add("&8&oChyba &b&lMagazynier &8tego potrzebuje");
+
+        bonNaMagazyn.setName("&bBon na powiekszenie magazynu").setLore(lore).addGlowing().setAmount(amount);
+        return bonNaMagazyn.toItemStack().clone();
     }
 
 }

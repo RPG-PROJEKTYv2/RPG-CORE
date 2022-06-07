@@ -20,6 +20,8 @@ public class MagazynierNPC {
 
     private final Map<UUID, String> playerMagazyny = new HashMap<>();
     private final Map<UUID, Map<Integer, Inventory>> magazyny = new HashMap<>();
+    private final Map<Integer, String> missionLore = new HashMap<>(4);
+    private final Map<UUID, Integer> playerProgress = new HashMap<>();
 
     private final ItemBuilder open = new ItemBuilder(Material.CHEST);
     private final ItemBuilder missions = new ItemBuilder(Material.BOOK_AND_QUILL);
@@ -29,10 +31,19 @@ public class MagazynierNPC {
     private final ItemBuilder unlocked = new ItemBuilder(Material.CHEST);
     private final ItemBuilder locked = new ItemBuilder(Material.BARRIER);
     private final ItemBuilder back = new ItemBuilder(Material.ARROW);
+    private final ItemBuilder info = new ItemBuilder(Material.REDSTONE_TORCH_ON);
 
     private final List<String> lore = new ArrayList<>();
     private final List<String> artifactOwner = new ArrayList<>(1);
 
+
+
+    public void loadMagazynierMissions() {
+        this.missionLore.put(0, "Oddaj;6400;dowolnych skrzynek");
+        this.missionLore.put(1, "Sprzedaj;15000;dowolnych przedmiotow");
+        this.missionLore.put(2, "Zabij;50000;dowolnych potworow;2;&bBon na powiekszenie magazynu");
+        this.missionLore.put(3, "Oddaj;3;&bBon na powiekszenie magazynu");
+    }
 
     public void openMagazynierMain(final Player player) {
         final Inventory inventory = rpgcore.getServer().createInventory(null, InventoryType.HOPPER, Utils.format("&b&lMagazynier"));
@@ -73,10 +84,10 @@ public class MagazynierNPC {
 
     public void openMagazynierMagazyny(final Player player) {
         final Inventory inventory = rpgcore.getServer().createInventory(null, InventoryType.HOPPER, Utils.format("&6&lLista Magazynow"));
-        if (!this.isInPlayerMagazyny(player.getUniqueId())) {
-            this.setPlayerMagazyn(player.getUniqueId(), "true,false,false,false,false");
+        if (!this.isInPlayerMagazynyAccess(player.getUniqueId())) {
+            this.setPlayerMagazynAccess(player.getUniqueId(), "true,false,false,false,false");
         }
-        final String[] unlockedMag = getPlayerMagazyny(player.getUniqueId()).split(",");
+        final String[] unlockedMag = getPlayerMagazynyAccess(player.getUniqueId()).split(",");
         lore.clear();
         lore.add(" ");
         for (int i = 0; i < inventory.getSize(); i++) {
@@ -100,7 +111,7 @@ public class MagazynierNPC {
         final Inventory magazyn = Bukkit.createInventory(null, 54, Utils.format("&6&lMagazyn #" + numer));
         fill.setName(" ").addGlowing();
 
-        for(int i =45 ; i < 54 ; i++){
+        for(int i = 45 ; i < 54 ; i++){
             magazyn.setItem(i, fill.toItemStack());
         }
 
@@ -119,18 +130,56 @@ public class MagazynierNPC {
         return getPlayerMagazynContent(uuid, numer);
     }
 
-    public void setPlayerMagazyn(final UUID uuid, final String magazyn) {
+    public void openMagazynierKampania(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lKampania Magazyniera"));
+
+        lore.clear();
+        lore.add("&c&lUWAGA!");
+        lore.add("&8Npc zabiera wszytskie skrzynki");
+        lore.add("&8z ekwipunku podczas oddawania&c&l!");
+        lore.add("&c&lUWAGA!");
+        lore.add("&8Musisz miec przy sobie wymagana ilosc");
+        lore.add("&bBonu na powiekszenie magazynu&8, zeby misja dzialala&c&l!");
+
+        gui.setItem(0, info.setName(Utils.format("&c&lInformacje!")).setLore(lore).addGlowing().toItemStack());
+
+        final String[] playerMissionStatus = this.getPlayerMagazynyAccess(player.getUniqueId()).split(",");
+        for (int i = 1; i < gui.getSize(); i++) {
+            lore.clear();
+            final String[] missionLore = rpgcore.getMagazynierNPC().getMissionLore(i - 1).split(";");
+            if (missionLore.length == 3) {
+                lore.add("");
+                lore.add("&f" + missionLore[0] + " &c" + missionLore[1] + "x &6" + missionLore[2]);
+            } else {
+                lore.add("");
+                lore.add("&f" + missionLore[0] + " &c" + missionLore[1] + "x &6" + missionLore[2]);
+                lore.add("&8- &c" + missionLore[3] + "x " + missionLore[4]);
+            }
+            lore.add(" ");
+            if (playerMissionStatus[i].equals("true")) {
+                lore.add("&a&lOdblokowano");
+            } else {
+                lore.add("&c&lZablokowano");
+            }
+            gui.setItem(i, mission.setName("&c&lMisja " + (i + 1)).setLore(lore).addGlowing().toItemStack().clone());
+            player.openInventory(gui);
+        }
+
+
+    }
+
+    public void setPlayerMagazynAccess(final UUID uuid, final String magazyn) {
         this.playerMagazyny.put(uuid, magazyn);
     }
 
-    public void updatePlayerMagazyn(final UUID uuid, final String magazyn) {
+    public void updatePlayerMagazynAccess(final UUID uuid, final String magazyn) {
         this.playerMagazyny.replace(uuid, magazyn);
     }
-    public String getPlayerMagazyny(final UUID uuid) {
+    public String getPlayerMagazynyAccess(final UUID uuid) {
         return this.playerMagazyny.get(uuid);
     }
 
-    public boolean isInPlayerMagazyny(final UUID uuid) {
+    public boolean isInPlayerMagazynyAccess(final UUID uuid) {
         return this.playerMagazyny.containsKey(uuid);
     }
 
@@ -152,6 +201,26 @@ public class MagazynierNPC {
 
     public boolean isInPlayerMagazynContent(final UUID uuid, final int numer) {
         return this.magazyny.containsKey(uuid) && this.magazyny.get(uuid).containsKey(numer);
+    }
+
+    public String getMissionLore(final int numer) {
+        return this.missionLore.get(numer);
+    }
+
+    public int getPlayerProgress(final UUID uuid) {
+        return this.playerProgress.get(uuid);
+    }
+
+    public void setPlayerProgress(final UUID uuid, final int progress) {
+        this.playerProgress.put(uuid, progress);
+    }
+
+    public void updatePlayerProgress(final UUID uuid, final int progress) {
+        this.playerProgress.replace(uuid, this.playerProgress.get(uuid) + progress);
+    }
+
+    public boolean isInPlayerProgress(final UUID uuid) {
+        return this.playerProgress.containsKey(uuid);
     }
 
 }

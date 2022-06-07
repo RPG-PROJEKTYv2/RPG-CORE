@@ -39,6 +39,7 @@ import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.Message;
 import rpg.rpgcore.msg.Reply;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
+import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.duszolog.DuszologInventoryClick;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
@@ -112,6 +113,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getOsManager().loadAllRequiredOs();
         this.autoMessage();
         this.getBaoManager().getAllEntities();
+        this.getMagazynierNPC().loadMagazynierMissions();
 
 
 
@@ -212,6 +214,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClose(this), this);
 
         // ...TELEPORTER
         this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
