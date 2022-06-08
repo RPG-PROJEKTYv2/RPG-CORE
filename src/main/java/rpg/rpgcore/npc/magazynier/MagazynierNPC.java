@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.GlobalItems;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -43,6 +44,7 @@ public class MagazynierNPC {
         this.missionLore.put(1, "Sprzedaj;15000;dowolnych przedmiotow");
         this.missionLore.put(2, "Zabij;50000;dowolnych potworow;2;&bBon na powiekszenie magazynu");
         this.missionLore.put(3, "Oddaj;3;&bBon na powiekszenie magazynu");
+        this.artifactOwner.add("null");
     }
 
     public void openMagazynierMain(final Player player) {
@@ -59,18 +61,22 @@ public class MagazynierNPC {
         open.setName(Utils.format("&b&lOtwórz magazyn")).setLore(lore);
         inventory.setItem(0, open.toItemStack());
 
-        lore.clear();
-        lore.add(" ");
-        lore.add("&8Miejsce na artefakt &b&lMagazyniera.");
-        if (!artifactOwner.isEmpty()) {
-            lore.add("&8Podobno zdobyl go:");
-            lore.add("&f- &6" + artifactOwner.get(0));
-        } else {
-            lore.add("&8Podobno nikt go jeszcze nie zdobyl.");
-        }
+        if (!player.getName().equals(artifactOwner.get(0))) {
+            lore.clear();
+            lore.add(" ");
+            lore.add("&8Miejsce na artefakt &b&lMagazyniera.");
+            if (!artifactOwner.get(0).equals("null")) {
+                lore.add("&8Podobno zdobyl go:");
+                lore.add("&f- &6" + artifactOwner.get(0));
+            } else {
+                lore.add("&8Podobno nikt go jeszcze nie zdobyl.");
+            }
 
-        artifactPlace.setName(Utils.format("&6&lMiejsce na artefakt")).setLore(lore);
-        inventory.setItem(2, artifactPlace.toItemStack());
+            artifactPlace.setName(Utils.format("&6&lMiejsce na artefakt")).setLore(lore);
+            inventory.setItem(2, artifactPlace.toItemStack());
+        } else {
+            inventory.setItem(2, GlobalItems.getArtefaktMagazynier(player.getName()));
+        }
 
         lore.clear();
         lore.add(" ");
@@ -161,7 +167,7 @@ public class MagazynierNPC {
             } else {
                 lore.add("&c&lZablokowano");
             }
-            gui.setItem(i, mission.setName("&c&lMisja " + (i + 1)).setLore(lore).addGlowing().toItemStack().clone());
+            gui.setItem(i, mission.setName("&c&lMisja " + i).setLore(lore).addGlowing().toItemStack().clone());
             player.openInventory(gui);
         }
 
@@ -221,6 +227,15 @@ public class MagazynierNPC {
 
     public boolean isInPlayerProgress(final UUID uuid) {
         return this.playerProgress.containsKey(uuid);
+    }
+
+
+    public void setArtifactOwner(final String playerName) {
+        this.artifactOwner.set(0, playerName);
+    }
+
+    public String getArtifactOwner() {
+        return this.artifactOwner.get(0);
     }
 
 }

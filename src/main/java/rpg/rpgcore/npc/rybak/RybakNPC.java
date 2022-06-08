@@ -159,22 +159,22 @@ public class RybakNPC {
         okon.setName("&6Okon").setLore(setLoreSell(12500));
         plotka.setName("&6Plotka").setLore(setLoreSell(12500));
 
-        rybakGUI.setItem(0, wedka.toItemStack());
-        rybakGUI.setItem(1, sledz.toItemStack());
-        rybakGUI.setItem(2, dorsz.toItemStack());
-        rybakGUI.setItem(3, losos.toItemStack());
-        rybakGUI.setItem(4, krasnopiorka.toItemStack());
-        rybakGUI.setItem(5, dorszCzarny.toItemStack());
-        rybakGUI.setItem(6, dorada.toItemStack());
-        rybakGUI.setItem(7, cierniczek.toItemStack());
-        rybakGUI.setItem(8, fladra.toItemStack());
-        rybakGUI.setItem(9, karas.toItemStack());
-        rybakGUI.setItem(10, karp.toItemStack());
-        rybakGUI.setItem(11, leszcz.toItemStack());
-        rybakGUI.setItem(12, makrela.toItemStack());
-        rybakGUI.setItem(13, mintaj.toItemStack());
-        rybakGUI.setItem(14, okon.toItemStack());
-        rybakGUI.setItem(15, plotka.toItemStack());
+        rybakGUI.setItem(0, wedka.toItemStack().clone());
+        rybakGUI.setItem(1, sledz.toItemStack().clone());
+        rybakGUI.setItem(2, dorsz.toItemStack().clone());
+        rybakGUI.setItem(3, losos.toItemStack().clone());
+        rybakGUI.setItem(4, krasnopiorka.toItemStack().clone());
+        rybakGUI.setItem(5, dorszCzarny.toItemStack().clone());
+        rybakGUI.setItem(6, dorada.toItemStack().clone());
+        rybakGUI.setItem(7, cierniczek.toItemStack().clone());
+        rybakGUI.setItem(8, fladra.toItemStack().clone());
+        rybakGUI.setItem(9, karas.toItemStack().clone());
+        rybakGUI.setItem(10, karp.toItemStack().clone());
+        rybakGUI.setItem(11, leszcz.toItemStack().clone());
+        rybakGUI.setItem(12, makrela.toItemStack().clone());
+        rybakGUI.setItem(13, mintaj.toItemStack().clone());
+        rybakGUI.setItem(14, okon.toItemStack().clone());
+        rybakGUI.setItem(15, plotka.toItemStack().clone());
 
         player.openInventory(rybakGUI);
     }
@@ -297,22 +297,22 @@ public class RybakNPC {
 
         lore.add("&8&oChyba &8&n&orybak&r &8&otego potrzebuje");
 
-        rybakDrops.add(0.1, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.1, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.1, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.1, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.1, dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.1, dorada.setName("&6Dorada").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.05, cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.05, fladra.setName("&6Fladra").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.05, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.05, karp.setName("&6Karp").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.05, leszcz.setName("&6Leszcz").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.0374975, makrela.setName("&6Makrela").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.0374975, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.0374975, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.0374975, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack());
-        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity Przedmiot Rybacki").addGlowing().toItemStack());
+        rybakDrops.add(0.1, sledz.setName("&6Sledz").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.1, dorsz.setName("&6Dorsz").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.1, losos.setName("&6Losos").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.1, krasnopiorka.setName("&6Krasnopiorka").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.1, dorszCzarny.setName("&6Dorsz Czarny").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.1, dorada.setName("&6Dorada").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.05, cierniczek.setName("&6Cierniczek").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.05, fladra.setName("&6Fladra").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.05, karas.setName("&6Karas").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.05, karp.setName("&6Karp").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.05, leszcz.setName("&6Leszcz").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.0374975, makrela.setName("&6Makrela").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.0374975, mintaj.setName("&6Mintaj").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.0374975, okon.setName("&6Okon").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.0374975, plotka.setName("&6Plotka").setLore(lore).hideFlag().toItemStack().clone());
+        rybakDrops.add(0.001, nies.setName("&b&lNiesamowity Przedmiot Rybacki").addGlowing().toItemStack().clone());
     }
 
     public void loadRybakMobs() {

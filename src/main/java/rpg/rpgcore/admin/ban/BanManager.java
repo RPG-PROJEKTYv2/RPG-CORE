@@ -26,7 +26,7 @@ public class BanManager {
 
         rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
 
     }
 
@@ -38,7 +38,7 @@ public class BanManager {
             Bukkit.getServer().broadcastMessage(Utils.unBanBroadcast(nameOfPlayerToBan, senderName));
         }
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unBanPlayer(uuidToUnBan));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(uuidToUnBan));
     }
 
     public void banPlayer(final String banSender, final UUID uuidPlayerToBan, final String reason, final boolean silent, final String banExpiry) {
@@ -56,7 +56,7 @@ public class BanManager {
         }
 
         final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToBan, banInfo));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().banPlayer(uuidPlayerToBan, banInfo));
 
         this.addToPunishmentHistory(uuidPlayerToBan, "Ban;" + banInfo);
     }
@@ -116,7 +116,7 @@ public class BanManager {
         }
 
         final String tempBanInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempBanExpireDate) + ";" + Utils.dateFormat.format(tempBanDate);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().banPlayer(uuidPlayerToTempBan, tempBanInfo));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().banPlayer(uuidPlayerToTempBan, tempBanInfo));
 
         this.addToPunishmentHistory(uuidPlayerToTempBan, "TempBan;" + tempBanInfo);
     }

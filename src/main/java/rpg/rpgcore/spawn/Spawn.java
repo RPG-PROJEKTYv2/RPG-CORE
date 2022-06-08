@@ -45,7 +45,7 @@ public class Spawn implements CommandExecutor {
                 final double z = p.getLocation().getZ();
                 final World w = p.getLocation().getWorld();
 
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setSpawn(p.getLocation()));
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setSpawn(p.getLocation()));
 
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie ustawiono nowego spawna! Na kordach: " + " &7x: " + Utils.df.format(x) + " &7y: " + Utils.df.format(y) + " &7z: " + Utils.df.format(z) + " &7w swiecie " + w.getName()));
 

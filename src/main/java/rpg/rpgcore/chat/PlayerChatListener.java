@@ -45,7 +45,7 @@ public class PlayerChatListener implements Listener {
                 final Date dataMuta = Utils.dateFormat.parse(muteInfo[2]);
 
                 if (teraz.after(dataMuta)) {
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unMutePlayer(player.getUniqueId()));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unMutePlayer(player.getUniqueId()));
                     formatuj(e, message, player);
                     if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
                         return;

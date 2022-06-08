@@ -22,9 +22,7 @@ import rpg.rpgcore.bao.BAOManager;
 import rpg.rpgcore.bao.BAOPlayerInteract;
 import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.*;
-import rpg.rpgcore.database.CreateTables;
 import rpg.rpgcore.database.MongoManager;
-import rpg.rpgcore.database.SQLManager;
 import rpg.rpgcore.economy.EconomyInventoryClick;
 import rpg.rpgcore.economy.Kasa;
 import rpg.rpgcore.economy.Wyplac;
@@ -38,6 +36,7 @@ import rpg.rpgcore.admin.god.GodManager;
 import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.Message;
 import rpg.rpgcore.msg.Reply;
+import rpg.rpgcore.npc.magazynier.Magazyn;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
@@ -70,9 +69,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private final Config config = new Config(this);
     private SpawnManager spawn;
-    private SQLManager sql;
     private MongoManager mongo;
-    private CreateTables createTables;
     private TeleportManager teleportManager;
     private BanManager banManager;
     private VanishManager vanishManager;
@@ -104,9 +101,7 @@ public final class RPGCORE extends JavaPlugin {
         this.initManagers();
         this.initNPCS();
 
-        this.createTables.createTables();
-        this.sql.loadAll();
-        //this.mongo.tempMoveAll();
+        this.mongo.loadAll();
 
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
@@ -215,6 +210,7 @@ public final class RPGCORE extends JavaPlugin {
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClose(this), this);
+        this.getCommand("magazyn").setExecutor(new Magazyn(this));
 
         // ...TELEPORTER
         this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
@@ -225,15 +221,16 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     public void onDisable() {
-        this.sql.onDisable();
+        this.mongo.onDisable();
+        this.mongo.saveAllPlayers();
         this.spawn.setSpawn(null);
         this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
     }
 
     private void initDatabase() {
-        this.sql = new SQLManager(this);
-        this.createTables = new CreateTables(this);
+        //this.sql = new SQLManager(this);
+        //this.createTables = new CreateTables(this);
         this.mongo = new MongoManager(this);
     }
 
@@ -289,10 +286,7 @@ public final class RPGCORE extends JavaPlugin {
             System.out.println("[rpg.core] Automessage jest aktualnie wylaczany. Zmien opcje auto_message na true w pliku config.yml i przeladuj serwer zeby ja wlaczyc!");
         }
     }
-
-    public SQLManager getSQLManager() {
-        return sql;
-    }
+    
 
     public MongoManager getMongoManager() {
         return mongo;

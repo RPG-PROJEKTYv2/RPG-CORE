@@ -26,7 +26,7 @@ public class MuteManager {
 
         rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
 
     }
 
@@ -38,7 +38,7 @@ public class MuteManager {
             Bukkit.getServer().broadcastMessage(Utils.unMuteBroadcast(nameOfPlayerToUnMute, senderName));
         }
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unMutePlayer(uuidToUnMute));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unMutePlayer(uuidToUnMute));
     }
 
     public void mutePlayer(final String muteSender, final UUID uuidPlayerToMute, final String reason, final boolean silent, final String muteExpiry) {
@@ -56,7 +56,7 @@ public class MuteManager {
 
 
         final String muteInfo = muteSender + ";" + reason + ";" + muteExpiry + ";" + Utils.dateFormat.format(muteDate);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().mutePlayer(uuidPlayerToMute, muteInfo));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().mutePlayer(uuidPlayerToMute, muteInfo));
 
         this.addToPunishmentHistory(uuidPlayerToMute, "Mute;" + muteInfo);
     }
@@ -99,7 +99,7 @@ public class MuteManager {
         }
 
         final String tempMuteInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempMuteExpireDate) + ";" + Utils.dateFormat.format(tempMuteDate);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().mutePlayer(uuidPlayerToTempMute, tempMuteInfo));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().mutePlayer(uuidPlayerToTempMute, tempMuteInfo));
 
         this.addToPunishmentHistory(uuidPlayerToTempMute, "TempMute;" + tempMuteInfo);
     }

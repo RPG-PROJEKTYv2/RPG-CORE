@@ -25,6 +25,7 @@ public class GlobalItems {
     private static final ItemBuilder sakwa = new ItemBuilder(Material.EXP_BOTTLE, 1);
     private static final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
     private static final ItemBuilder bonNaMagazyn = new ItemBuilder(Material.PAPER);
+    private static final ItemBuilder artefaktMagazyniera = new ItemBuilder(Material.EMERALD);
     
     private static final List<String> lore = new ArrayList<>();
 
@@ -156,6 +157,22 @@ public class GlobalItems {
 
         bonNaMagazyn.setName("&bBon na powiekszenie magazynu").setLore(lore).addGlowing().setAmount(amount);
         return bonNaMagazyn.toItemStack().clone();
+    }
+
+
+
+    // ARTEFAKTY
+
+    public static ItemStack getArtefaktMagazynier(final String playerName) {
+        lore.clear();
+        lore.add("&8Artefakt ten pozwala na otwieranie");
+        lore.add("&8swoich magazynow nie chodzac do &b&lMagazyniera");
+        lore.add(" ");
+        lore.add("&6Wlasciciel: &7" + playerName);
+        lore.add(" ");
+        lore.add("&4&lARTEFAKT");
+        artefaktMagazyniera.setName("&4&lArtefakt &b&lMagazyniera").setLore(lore).addGlowing();
+        return artefaktMagazyniera.toItemStack().clone();
     }
 
 }

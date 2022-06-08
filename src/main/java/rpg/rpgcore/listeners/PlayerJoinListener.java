@@ -32,24 +32,15 @@ public class PlayerJoinListener implements Listener {
 
         p.setMaxHealth(20);
 
-        if (!(rpgcore.getAkcesoriaManager().getAkcesoriaMap().containsKey(playerUUID))) {
-            rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(playerUUID);
+        int playerLvl;
+        double playerExp;
+        if (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID)) || !(rpgcore.getPlayerManager().getPlayerExp().containsKey(playerUUID))) {
+            playerLvl = 1;
+            playerExp = 0 / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
+        } else {
+            playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
+            playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
         }
-
-        if (!(rpgcore.getTargManager().isInPlayerTargMap(playerUUID))) {
-            rpgcore.getTargManager().createPlayerTargGUI(playerUUID);
-        }
-
-
-        if (
-                (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID))) ||
-                        (!(rpgcore.getPlayerManager().getPlayerExp().containsKey(playerUUID)))) {
-
-            return;
-        }
-
-        int playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
-        final double playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
 
         if (playerLvl == 0) {
             playerLvl = 1;
@@ -80,6 +71,7 @@ public class PlayerJoinListener implements Listener {
         p.setFoodLevel(20);
 
         e.setJoinMessage(Utils.joinMessage(playerName));
+        p.teleport(rpgcore.getSpawnManager().getSpawn());
     }
 
 
@@ -88,7 +80,7 @@ public class PlayerJoinListener implements Listener {
         final UUID uuid = e.getUniqueId();
 
         if (!(rpgcore.getPlayerManager().getPlayers().contains(uuid))) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().createPlayer(e.getName(), uuid, "false", "false"));
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().createPlayer(e.getName(), uuid, "false", "false"));
         }
 
         if (rpgcore.getPlayerManager().getPlayers().contains(uuid)) {
@@ -101,7 +93,7 @@ public class PlayerJoinListener implements Listener {
                     final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
 
                     if (teraz.after(dataWygasnieciaBana)) {
-                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getSQLManager().unBanPlayer(e.getUniqueId()));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
                         return;
                     }
 

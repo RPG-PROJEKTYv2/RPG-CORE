@@ -26,7 +26,6 @@ public class DuszologNPC {
     private final ItemBuilder dodawaniedusz = new ItemBuilder(Material.ANVIL);
     private final ItemBuilder potrzebneitemydodawaniedusz = new ItemBuilder(Material.FERMENTED_SPIDER_EYE);
     private final ItemBuilder opisduszologa = new ItemBuilder(Material.REDSTONE_TORCH_ON);
-
     private final ItemBuilder brakitemu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
     private final ItemBuilder miejsceodbioru = new ItemBuilder(Material.BARRIER);
     private final ItemBuilder kamienuzbrojenia = new ItemBuilder(Material.FIREWORK_CHARGE, 1);
