@@ -10,6 +10,7 @@ import rpg.rpgcore.utils.GlobalItems;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
+import java.io.IOException;
 import java.util.*;
 
 public class MagazynierNPC {
@@ -126,12 +127,28 @@ public class MagazynierNPC {
         return magazyn;
     }
 
+    public void createAll(final UUID uuid) {
+        addToPlayerMagazynContent(uuid);
+        for (int i = 1; i <= 5; i++) {
+            setPlayerMagazynContent(uuid, i, this.createEmptyMagazyn(i));
+        }
+    }
+
+    public void loadAll(final UUID uuid, final String magazyny) {
+        final String[] magazynyList = magazyny.split(",");
+        addToPlayerMagazynContent(uuid);
+        for (int i = 1; i <= 5; i++) {
+            try {
+                setPlayerMagazynContent(uuid, i, Utils.fromBase64(magazynyList[i - 1], Utils.format("&6&lMagazyn #" + i)));
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public Inventory openMagazyn(final UUID uuid, final int numer) {
         if (!isInPlayerMagazynContent(uuid, numer)) {
-            addToPlayerMagazynContent(uuid);
-            for (int i = 1; i <= 5; i++) {
-                setPlayerMagazynContent(uuid, i, createEmptyMagazyn(i));
-            }
+            createAll(uuid);
         }
         return getPlayerMagazynContent(uuid, numer);
     }
@@ -170,8 +187,11 @@ public class MagazynierNPC {
             gui.setItem(i, mission.setName("&c&lMisja " + i).setLore(lore).addGlowing().toItemStack().clone());
             player.openInventory(gui);
         }
+    }
 
-
+    public String getPlayerAllMagazyny(final UUID uuid) {
+        String magazyny = Utils.toBase64(this.getPlayerMagazynContent(uuid, 1)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 2)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 3)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 4)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 5));
+        return magazyny;
     }
 
     public void setPlayerMagazynAccess(final UUID uuid, final String magazyn) {

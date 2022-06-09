@@ -26,6 +26,8 @@ import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.economy.EconomyInventoryClick;
 import rpg.rpgcore.economy.Kasa;
 import rpg.rpgcore.economy.Wyplac;
+import rpg.rpgcore.guilds.Guild;
+import rpg.rpgcore.guilds.GuildManager;
 import rpg.rpgcore.history.HISTORYInventoryClick;
 import rpg.rpgcore.history.History;
 import rpg.rpgcore.listeners.*;
@@ -92,6 +94,7 @@ public final class RPGCORE extends JavaPlugin {
     private CooldownManager cooldownManager;
     private RybakNPC rybakNPC;
     private MagazynierNPC magazynierNPC;
+    private GuildManager guildManager;
 
     private int i = 1;
 
@@ -197,6 +200,9 @@ public final class RPGCORE extends JavaPlugin {
         // ECONOMY
         this.getServer().getPluginManager().registerEvents(new EconomyInventoryClick(this), this);
 
+        // GUILDS
+        this.getCommand("klan").setExecutor(new Guild(this));
+
         // NPC
 
         // ...DUSZOLOG
@@ -254,6 +260,7 @@ public final class RPGCORE extends JavaPlugin {
         this.tradeManager = new TradeManager(this);
         this.targManager = new TargManager(this);
         this.cooldownManager = new CooldownManager();
+        this.guildManager = new GuildManager(this);
     }
 
     private void initNPCS() {
@@ -382,5 +389,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public MagazynierNPC getMagazynierNPC() {
         return magazynierNPC;
+    }
+
+    public GuildManager getGuildManager() {
+        return guildManager;
     }
 }

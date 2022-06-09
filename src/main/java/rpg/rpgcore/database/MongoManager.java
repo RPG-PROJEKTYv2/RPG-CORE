@@ -8,70 +8,16 @@ import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.util.*;
 
 public class MongoManager {
 
     private final RPGCORE rpgcore;
     private final MongoConnectionPoolManager pool;
 
-
-
     public MongoManager(final RPGCORE rpgcore) {
         this.pool = new MongoConnectionPoolManager(rpgcore);
         this.rpgcore = rpgcore;
-    }
-
-
-    public void tempMoveAll() {
-        DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
-        for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
-            BasicDBObject document = new BasicDBObject();
-            document.put("_id", uuid.toString());
-            document.put("nick", rpgcore.getPlayerManager().getPlayerName(uuid));
-            document.put("level", rpgcore.getPlayerManager().getPlayerLvl(uuid));
-            document.put("exp", rpgcore.getPlayerManager().getPlayerExp(uuid));
-            document.put("kasa", String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(uuid)));
-            document.put("banInfo", rpgcore.getPlayerManager().getPlayerBanInfo(uuid));
-            document.put("muteInfo", rpgcore.getPlayerManager().getPlayerMuteInfo(uuid));
-            document.put("punishmentHistory", rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
-            document.put("osMoby", rpgcore.getPlayerManager().getPlayerOsMoby(uuid));
-            document.put("osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
-            document.put("osLudzie", rpgcore.getPlayerManager().getPlayerOsLudzie(uuid));
-            document.put("osLudzieAccept", rpgcore.getPlayerManager().getOsLudzieAccept(uuid));
-            document.put("osSakwy", rpgcore.getPlayerManager().getPlayerOsSakwy(uuid));
-            document.put("osSakwyAccept", rpgcore.getPlayerManager().getOsSakwyAccept(uuid));
-            document.put("osNiesy", rpgcore.getPlayerManager().getPlayerOsNiesy(uuid));
-            document.put("osNiesyAccept", rpgcore.getPlayerManager().getOsNiesyAccept(uuid));
-            document.put("osRybak", rpgcore.getPlayerManager().getPlayerOsRybak(uuid));
-            document.put("osRybakAccept", rpgcore.getPlayerManager().getOsRybakAccept(uuid));
-            document.put("osDrwal", rpgcore.getPlayerManager().getPlayerOsDrwal(uuid));
-            document.put("osDrwalAccept", rpgcore.getPlayerManager().getOsDrwalAccept(uuid));
-            document.put("osGornik", rpgcore.getPlayerManager().getPlayerOsGornik(uuid));
-            document.put("osGornikAccept", rpgcore.getPlayerManager().getOsGornikAccept(uuid));
-            document.put("BAO_BONUSY", rpgcore.getBaoManager().getBaoBonusy(uuid));
-            document.put("BAO_WARTOSCI", rpgcore.getBaoManager().getBaoBonusyWartosci(uuid));
-            document.put("RYBAK_MISJE", rpgcore.getRybakNPC().getPlayerRybakMisje(uuid));
-            document.put("RYBAK_POSTEP", rpgcore.getRybakNPC().getPlayerPostep(uuid));
-            document.put("RYBAK_SRDMG", rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid));
-            document.put("RYBAK_SRDEF", rpgcore.getRybakNPC().getPlayerRybakSredniDef(uuid));
-            document.put("RYBAK_DDMG", rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid));
-            document.put("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
-            document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-            document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-            collection.insert(document);
-        }
-        collection = database.getCollection("spawn");
-        BasicDBObject document = new BasicDBObject();
-        document.put("world", rpgcore.getSpawnManager().getSpawn().getWorld().getName());
-        document.put("x", rpgcore.getSpawnManager().getSpawn().getX());
-        document.put("y", rpgcore.getSpawnManager().getSpawn().getY());
-        document.put("z", rpgcore.getSpawnManager().getSpawn().getZ());
-        document.put("yaw", rpgcore.getSpawnManager().getSpawn().getYaw());
-        document.put("pitch", rpgcore.getSpawnManager().getSpawn().getPitch());
-        collection.insert(document);
-        pool.closePool();
     }
 
     public void setFirstSpawn() {
@@ -171,10 +117,68 @@ public class MongoManager {
             try {
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64((String) obj.get("Akcesoria")));
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64((String) obj.get("Targ"), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+                //rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
             } catch (final IOException e) {
                 e.printStackTrace();
             }
 
+        }
+
+        collection = database.getCollection("guilds");
+        result = collection.find();
+        while (result.hasNext()) {
+            DBObject obj = result.next();
+            final String guildName = obj.get("_id").toString();
+
+            final List<UUID> members = new ArrayList<>();
+
+            for (final String member : String.valueOf(obj.get("membersList")).split(",")) {
+                members.add(UUID.fromString(member));
+            }
+
+            final Map<UUID, Integer> killsMap = new HashMap<>();
+            BasicDBObject kills = (BasicDBObject) obj.get("killsMap");
+            for (final String key : kills.keySet()) {
+                killsMap.put(UUID.fromString(key), kills.getInt(key));
+            }
+
+            final Map<UUID, Integer> deathsMap = new HashMap<>();
+            BasicDBObject deaths = (BasicDBObject) obj.get("deathsMap");
+            for (final String key : deaths.keySet()) {
+                deathsMap.put(UUID.fromString(key), deaths.getInt(key));
+            }
+
+            final Map<UUID, Double> expEarnedMap = new HashMap<>();
+            BasicDBObject expEarned = (BasicDBObject) obj.get("expEarnedMap");
+            for (final String key : expEarned.keySet()) {
+                expEarnedMap.put(UUID.fromString(key), expEarned.getDouble(key));
+            }
+
+            final Map<UUID, Date> lastOnlineMap = new HashMap<>();
+            BasicDBObject lastOnline = (BasicDBObject) obj.get("lastOnlineMap");
+            for (final String key : lastOnline.keySet()) {
+                lastOnlineMap.put(UUID.fromString(key), new Date(lastOnline.getLong(key)));
+            }
+
+            rpgcore.getGuildManager().loadGuild(
+                    guildName,
+                    (String) obj.get("description"),
+                    UUID.fromString((String) obj.get("owner")),
+                    (String) obj.get("coOwner"),
+                    members,
+                    (int) obj.get("points"),
+                    (int) obj.get("lvl"),
+                    (double) obj.get("exp"),
+                    Double.parseDouble((String) obj.get("balance")),
+                    (double) obj.get("dodatkowyExp"),
+                    (double) obj.get("sredniDmg"),
+                    (double) obj.get("sredniDef"),
+                    (double) obj.get("silnyNaLudzi"),
+                    (double) obj.get("defNaLudzi"),
+                    killsMap,
+                    deathsMap,
+                    expEarnedMap,
+                    lastOnlineMap);
         }
         pool.closePool();
     }
@@ -214,45 +218,49 @@ public class MongoManager {
     }
 
     public void createPlayer(final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
+        rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(uuid);
+        rpgcore.getTargManager().createPlayerTargGUI(uuid);
+        rpgcore.getMagazynierNPC().createAll(uuid);
 
-            DB database = pool.getPool().getDB("minecraft");
-            DBCollection collection = database.getCollection("players");
+        DB database = pool.getPool().getDB("minecraft");
+        DBCollection collection = database.getCollection("players");
 
-            BasicDBObject document = new BasicDBObject();
+        BasicDBObject document = new BasicDBObject();
 
-            document.put("_id", uuid.toString());
-            document.put("nick", nick);
-            document.put("banInfo", banInfo);
-            document.put("muteInfo", muteInfo);
-            document.put("level", 1);
-            document.put("exp", 0);
-            document.put("osMoby", 0);
-            document.put("osLudzie", 0);
-            document.put("osSakwy", 0);
-            document.put("osNiesy", 0);
-            document.put("osRybak", 0);
-            document.put("osDrwal", 0);
-            document.put("osGornik", 0);
-            document.put("osMobyAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osLudzieAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osSakwyAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osNiesyAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osDrwalAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("osGornikAccept", "false,false,false,false,false,false,false,false,false,false");
-            document.put("kasa", 100.0);
-            document.put("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
-            document.put("BAO_WARTOSCI", "0,0,0,0,0");
-            document.put("RYBAK_MISJE","false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
-            document.put("RYBAK_POSTEP", 0);
-            document.put("RYBAK_SRDMG", 0.0);
-            document.put("RYBAK_SRDEF", 0.0);
-            document.put("RYBAK_DDMG", 0.0);
-            document.put("RYBAK_BLOK", 0.0);
-            document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-            document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+        document.put("_id", uuid.toString());
+        document.put("nick", nick);
+        document.put("banInfo", banInfo);
+        document.put("muteInfo", muteInfo);
+        document.put("level", 1);
+        document.put("exp", 0);
+        document.put("osMoby", 0);
+        document.put("osLudzie", 0);
+        document.put("osSakwy", 0);
+        document.put("osNiesy", 0);
+        document.put("osRybak", 0);
+        document.put("osDrwal", 0);
+        document.put("osGornik", 0);
+        document.put("osMobyAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osLudzieAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osSakwyAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osNiesyAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osDrwalAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("osGornikAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.put("kasa", 100.0);
+        document.put("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
+        document.put("BAO_WARTOSCI", "0,0,0,0,0");
+        document.put("RYBAK_MISJE","false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+        document.put("RYBAK_POSTEP", 0);
+        document.put("RYBAK_SRDMG", 0.0);
+        document.put("RYBAK_SRDEF", 0.0);
+        document.put("RYBAK_DDMG", 0.0);
+        document.put("RYBAK_BLOK", 0.0);
+        document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+        document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
 
-            collection.insert(document);
+        collection.insert(document);
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
@@ -264,9 +272,6 @@ public class MongoManager {
         rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, 0.0);
         rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, 0.0);
         rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
-
-        rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(uuid);
-        rpgcore.getTargManager().createPlayerTargGUI(uuid);
 
         pool.closePool();
     }
@@ -389,6 +394,7 @@ public class MongoManager {
         document.put("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
         document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
         document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
 
         BasicDBObject update = new BasicDBObject();
         update.put("$set", document);
@@ -435,6 +441,7 @@ public class MongoManager {
             document.put("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
             document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
             document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+            document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
 
             BasicDBObject update = new BasicDBObject();
             update.put("$set", document);
@@ -442,6 +449,86 @@ public class MongoManager {
             collection.update(query, update);
         }
         pool.closePool();
+    }
+
+    public void saveGuildFirst(final String tag) {
+        DB database = pool.getPool().getDB("minecraft");
+        DBCollection collection = database.getCollection("guilds");
+        BasicDBObject guild = createGuildDocument(tag);
+        collection.insert(guild);
+        pool.closePool();
+    }
+
+    public void saveGuild(final String tag) {
+        DB database = pool.getPool().getDB("minecraft");
+        DBCollection collection = database.getCollection("guilds");
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", tag);
+
+        BasicDBObject guild = createGuildDocument(tag);
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", guild);
+
+        collection.update(query, update);
+        pool.closePool();
+    }
+
+    private BasicDBObject createGuildDocument(final String tag) {
+        final StringBuilder sb = new StringBuilder();
+        BasicDBObject guild = new BasicDBObject();
+
+        guild.put("_id", tag);
+        guild.put("description", rpgcore.getGuildManager().getGuildDescription(tag));
+        guild.put("owner", rpgcore.getGuildManager().getGuildOwner(tag).toString());
+        guild.put("coOwner", rpgcore.getGuildManager().getGuildCoOwner(tag));
+        for (UUID uuid : rpgcore.getGuildManager().getGuildMembers(tag)) {
+            sb.append(uuid.toString());
+            sb.append(",");
+        }
+        String members = String.valueOf(sb);
+        int lastIndex = members.lastIndexOf(",");
+        members = members.substring(0, lastIndex);
+        System.out.println(members);
+        guild.put("membersList", members);
+        guild.put("points", rpgcore.getGuildManager().getGuildPoints(tag));
+        guild.put("lvl", rpgcore.getGuildManager().getGuildLvl(tag));
+        guild.put("exp", rpgcore.getGuildManager().getGuildExp(tag));
+        guild.put("balance", String.format("%.2f", rpgcore.getGuildManager().getGuildBalance(tag)));
+        guild.put("dodatkowyExp", rpgcore.getGuildManager().getGuildDodatkowyExp(tag));
+        guild.put("sredniDmg", rpgcore.getGuildManager().getGuildSredniDmg(tag));
+        guild.put("sredniDef", rpgcore.getGuildManager().getGuildSredniDef(tag));
+        guild.put("silnyNaLudzi", rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag));
+        guild.put("defNaLudzi", rpgcore.getGuildManager().getGuildDefNaLudzi(tag));
+
+        BasicDBObject killsMap = new BasicDBObject();
+        for (Map.Entry<UUID, Integer> entry : rpgcore.getGuildManager().getGuildKills(tag).entrySet()) {
+            killsMap.put(String.valueOf(entry.getKey()), entry.getValue());
+        }
+
+        guild.put("killsMap", killsMap);
+
+        BasicDBObject deathsMap = new BasicDBObject();
+        for (Map.Entry<UUID, Integer> entry : rpgcore.getGuildManager().getGuildDeaths(tag).entrySet()) {
+            deathsMap.put(String.valueOf(entry.getKey()), entry.getValue());
+        }
+
+        guild.put("deathsMap", deathsMap);
+
+        BasicDBObject expEarnedMap = new BasicDBObject();
+        for (Map.Entry<UUID, Double> entry : rpgcore.getGuildManager().getGuildExpEarned(tag).entrySet()) {
+            expEarnedMap.put(String.valueOf(entry.getKey()), entry.getValue());
+        }
+
+        guild.put("expEarnedMap", expEarnedMap);
+
+        BasicDBObject lastOnlineMap = new BasicDBObject();
+        for (Map.Entry<UUID, Date> entry : rpgcore.getGuildManager().getGuildLastOnline(tag).entrySet()) {
+            lastOnlineMap.put(String.valueOf(entry.getKey()), entry.getValue());
+        }
+
+        guild.put("lastOnlineMap", lastOnlineMap);
+        return guild;
     }
 
     public void onDisable() {
