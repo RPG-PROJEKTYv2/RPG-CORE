@@ -166,10 +166,11 @@ public class MongoManager {
                     UUID.fromString((String) obj.get("owner")),
                     (String) obj.get("coOwner"),
                     members,
+                    (boolean) obj.get("pvp"),
                     (int) obj.get("points"),
                     (int) obj.get("lvl"),
                     (double) obj.get("exp"),
-                    Double.parseDouble((String) obj.get("balance")),
+                    (int) obj.get("balance"),
                     (double) obj.get("dodatkowyExp"),
                     (double) obj.get("sredniDmg"),
                     (double) obj.get("sredniDef"),
@@ -491,10 +492,11 @@ public class MongoManager {
         members = members.substring(0, lastIndex);
         System.out.println(members);
         guild.put("membersList", members);
+        guild.put("pvp", rpgcore.getGuildManager().getGuildPvPStatus(tag));
         guild.put("points", rpgcore.getGuildManager().getGuildPoints(tag));
         guild.put("lvl", rpgcore.getGuildManager().getGuildLvl(tag));
         guild.put("exp", rpgcore.getGuildManager().getGuildExp(tag));
-        guild.put("balance", String.format("%.2f", rpgcore.getGuildManager().getGuildBalance(tag)));
+        guild.put("balance", rpgcore.getGuildManager().getGuildBalance(tag));
         guild.put("dodatkowyExp", rpgcore.getGuildManager().getGuildDodatkowyExp(tag));
         guild.put("sredniDmg", rpgcore.getGuildManager().getGuildSredniDmg(tag));
         guild.put("sredniDef", rpgcore.getGuildManager().getGuildSredniDef(tag));
@@ -529,6 +531,16 @@ public class MongoManager {
 
         guild.put("lastOnlineMap", lastOnlineMap);
         return guild;
+    }
+
+    public void removeGuild(final String tag) {
+
+        DB database = pool.getPool().getDB("minecraft");
+        DBCollection collection = database.getCollection("guilds");
+        BasicDBObject toRemove = new BasicDBObject("_id", tag);
+        collection.remove(toRemove);
+
+        pool.closePool();
     }
 
     public void onDisable() {

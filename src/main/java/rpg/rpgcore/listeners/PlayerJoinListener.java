@@ -1,5 +1,10 @@
 package rpg.rpgcore.listeners;
 
+import com.keenant.tabbed.Tabbed;
+import com.keenant.tabbed.item.TabItem;
+import com.keenant.tabbed.item.TextTabItem;
+import com.keenant.tabbed.tablist.TableTabList;
+import com.keenant.tabbed.tablist.TitledTabList;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,10 +14,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
@@ -70,6 +78,15 @@ public class PlayerJoinListener implements Listener {
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
 
+        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(p);
+
+        if (rpgcore.getGuildManager().hasGuild(playerUUID)) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
+            NameTagUtil.setPlayerDisplayNameGuild(p, playerGroup, tag);
+        } else {
+            NameTagUtil.setPlayerDisplayNameNoGuild(p, playerGroup);
+        }
+
         e.setJoinMessage(Utils.joinMessage(playerName));
         p.teleport(rpgcore.getSpawnManager().getSpawn());
     }
@@ -107,5 +124,6 @@ public class PlayerJoinListener implements Listener {
         }
 
     }
+
 
 }

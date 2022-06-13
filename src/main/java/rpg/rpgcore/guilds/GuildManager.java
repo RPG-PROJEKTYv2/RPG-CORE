@@ -1,8 +1,11 @@
 package rpg.rpgcore.guilds;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -26,7 +29,8 @@ public class GuildManager {
     private final Map<String, Integer> guildPoints = new HashMap<>();
     private final Map<String, Integer> guildLvl = new HashMap<>();
     private final Map<String, Double> guildExp = new HashMap<>();
-    private final Map<String, Double> guildBalance = new HashMap<>();
+    private final Map<String, Integer> guildBalance = new HashMap<>();
+    private final Map<String, Boolean> guildPvPStatus = new HashMap<>();
 
     // BONUSY
     private final Map<String, Double> guildDodatkowyExp = new HashMap<>();
@@ -41,6 +45,18 @@ public class GuildManager {
     private final Map<String, Map<UUID, Double>> guildExpEarned = new HashMap<>();
     private final Map<String, Map<UUID, Date>> guildLastOnline = new HashMap<>();
 
+    // INVITES
+    private final Map<UUID, Map<String, Integer>> guildInvites = new HashMap<>();
+
+    // ITEMY DO GUI
+    private final List<String> lore = new ArrayList<>();
+    private final ItemBuilder members = new ItemBuilder(Material.DIAMOND_CHESTPLATE);
+    private final ItemBuilder memberItem = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
+    private final ItemBuilder upgrades = new ItemBuilder(Material.ANVIL);
+    private final ItemBuilder info = new ItemBuilder(Material.GOLD_BLOCK);
+    private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
+
+
 
     public void listAllCommands(final Player player) {
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6KLANY&8}&8&m-_-_-_-_-_-_-_-_-"));
@@ -48,6 +64,13 @@ public class GuildManager {
         player.sendMessage(Utils.format("&6/klan usun &8- &7usuwa klan &8(&7musisz byc &4Zalozycielem &7klanu&8)"));
         player.sendMessage(Utils.format("&6/klan zapros <nick> &8- &7zaprasza podanego gracza do twojego klanu"));
         player.sendMessage(Utils.format("&6/klan wyrzuc <nick> &8- &7wyrzuca podanego gracza z klanu"));
+        player.sendMessage(Utils.format("&6/klan lider <nick> &8- &7mianuje nowego lidera klanu"));
+        player.sendMessage(Utils.format("&6/klan zastepca <nick> &8- &7mianuje nowego zastepce klanu"));
+        player.sendMessage(Utils.format("&6/klan pvp &8- &7zmienia status pvp w klanie"));
+        player.sendMessage(Utils.format("&6/klan usunzastepce &8- &7usuwa zastepce klanu"));
+        player.sendMessage(Utils.format("&6/klan dolacz <TAG> &8- &7dolacza do podanego klanu, jesli masz zaproszenie"));
+        player.sendMessage(Utils.format("&6/klan wplac <ilosc> &8- &7wplaca do skarbca klanowego podana ilosc"));
+        player.sendMessage(Utils.format("&6/klan opusc &8- &7opuszcza klan"));
         player.sendMessage(Utils.format("&6/klan panel &8- &7otwiera panel klanowy"));
         player.sendMessage(Utils.format("&6/klan info <TAG> &8- &7wyswietla informacje o podanym klanie"));
         player.sendMessage(Utils.format("&6/klan stats &8- &7wyswietla statystyki twojego klanu"));
@@ -68,12 +91,17 @@ public class GuildManager {
         } else {
             player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getPlayerManager().getPlayerName(guildCoOwner.get(tag))));
         }
+        if (guildPvPStatus.get(tag)) {
+            player.sendMessage(Utils.format("&6PvP: &a&lON"));
+        } else {
+            player.sendMessage(Utils.format("&6PvP: &c&lOFF"));
+        }
         player.sendMessage(Utils.format("&6Punkty: &7" + guildPoints.get(tag)));
         player.sendMessage(Utils.format("&6Lvl: &7" + guildLvl.get(tag)));
         player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag)));
         player.sendMessage(Utils.format("&6Czlonkowie: "));
         for (UUID uuid : guildMembers.get(tag)) {
-            if (Bukkit.getPlayer(uuid).isOnline()) {
+            if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
                 player.sendMessage(Utils.format("&8- &a" + rpgcore.getPlayerManager().getPlayerName(uuid)));
             } else {
                 player.sendMessage(Utils.format("&8- &c" + rpgcore.getPlayerManager().getPlayerName(uuid)));
@@ -88,10 +116,11 @@ public class GuildManager {
         guildOwner.put(tag, owner);
         guildCoOwner.put(tag, null);
         guildMembers.put(tag, new ArrayList<>());
+        guildPvPStatus.put(tag, false);
         guildPoints.put(tag, 0);
         guildLvl.put(tag, 1);
         guildExp.put(tag, 0.0);
-        guildBalance.put(tag, 0.0);
+        guildBalance.put(tag, 0);
         guildDodatkowyExp.put(tag, 0.0);
         guildSredniDmg.put(tag, 0.0);
         guildSredniDef.put(tag, 0.0);
@@ -111,8 +140,8 @@ public class GuildManager {
         rpgcore.getMongoManager().saveGuildFirst(tag);
     }
 
-    public void loadGuild(final String tag, final String description,  final UUID owner, final String coOwner, final List<UUID> members, final int points, final int lvl,
-                          final double exp, final double balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef,
+    public void loadGuild(final String tag, final String description,  final UUID owner, final String coOwner, final List<UUID> members, final boolean pvp, final int points, final int lvl,
+                          final double exp, final int balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef,
                           final double silnyNaLudzi, final double defNaLudzi, final Map<UUID, Integer> kills, final Map<UUID, Integer> deaths,
                           final Map<UUID, Double> expEarned, final Map<UUID, Date> lastOnline) {
         guildList.add(tag);
@@ -124,6 +153,7 @@ public class GuildManager {
             guildCoOwner.put(tag, UUID.fromString(coOwner));
         }
         guildMembers.put(tag, members);
+        guildPvPStatus.put(tag, pvp);
         guildPoints.put(tag, points);
         guildLvl.put(tag, lvl);
         guildExp.put(tag, exp);
@@ -139,12 +169,27 @@ public class GuildManager {
         guildLastOnline.put(tag, lastOnline);
     }
 
+    public void addPlayerToGuild(final String tag, final UUID uuid) {
+        guildMembers.get(tag).add(uuid);
+        guildKills.get(tag).put(uuid, 0);
+        guildDeaths.get(tag).put(uuid, 0);
+        guildExpEarned.get(tag).put(uuid, 0.0);
+    }
+
+    public void removePlayerFromGuild(final String tag, final UUID uuid) {
+        guildMembers.get(tag).remove(uuid);
+        guildKills.get(tag).remove(uuid);
+        guildDeaths.get(tag).remove(uuid);
+        guildExpEarned.get(tag).remove(uuid);
+    }
+
     public void deleteGuild(final String tag) {
         guildList.remove(tag);
         guildDescription.remove(tag);
         guildOwner.remove(tag);
         guildCoOwner.remove(tag);
         guildMembers.get(tag).clear();
+        guildPvPStatus.remove(tag);
         guildMembers.remove(tag);
         guildPoints.remove(tag);
         guildLvl.remove(tag);
@@ -165,13 +210,130 @@ public class GuildManager {
         guildLastOnline.remove(tag);
     }
 
-    public void setAll(final String tag, final UUID owner, final UUID coOwner, final List<UUID> members, final int points, final int lvl, final double exp,
-                       final double balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef, final double silnyNaLudzi, final double defNaLudzi,
+    public String getGuildTag(final UUID uuid) {
+        for (String tag : guildList) {
+            if (guildMembers.get(tag).contains(uuid)) {
+                return tag;
+            }
+        }
+        return "Brak Klanu";
+    }
+
+    public void showPanel(final String tag, final Player player) {
+        final Inventory panel = Bukkit.createInventory(null, 27, Utils.format("&6&lPanel Klanu " + tag));
+
+        fill.setName(" ");
+        for (int i = 0; i < panel.getSize(); i++) {
+            panel.setItem(i, fill.toItemStack());
+        }
+
+        lore.clear();
+        lore.add("&8&oKliknij&8, zeby sprawdzic informacje");
+        lore.add("&8dotyczace czlonkow swojego klanu");
+
+        panel.setItem(10, members.setName("&6&lCzlonkowie").setLore(lore).toItemStack());
+
+        lore.clear();
+        lore.add("&6Punkty: &7" + guildPoints.get(tag));
+        lore.add("&6Lvl: &7" + guildLvl.get(tag));
+        lore.add("&6Exp: &7" + guildExp.get(tag));
+        lore.add("&6Stan Konta: &7" + guildBalance.get(tag) + " &6kredytow");
+
+        panel.setItem(13, info.setName("&6&lStatystyki").setLore(lore).toItemStack());
+
+        lore.clear();
+        lore.add("&8&oKliknij&8, zeby sprawdzic poziom ulepszenia swojego klanu");
+        lore.add("&8&o(tylko dla &4&oLidera&8&o/&c&oZastepcy&8&o)");
+
+        panel.setItem(16, upgrades.setName("&6&lUlepszenia").setLore(lore).toItemStack());
+
+        player.openInventory(panel);
+    }
+
+    public void showMembers(final String tag, final Player player) {
+        final Inventory membersPanel = Bukkit.createInventory(null, 27, Utils.format("&6&lCzlonkowie Klanu " + tag));
+
+        for (int i = 0; i < this.getGuildMembers(tag).size(); i++) {
+            final UUID uuid = this.getGuildMembers(tag).get(i);
+
+            if (this.getGuildOwner(tag).equals(uuid)) {
+                memberItem.setName("&4&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
+                memberItem.setName("&c&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            } else {
+                memberItem.setName("&6&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            }
+
+            lore.clear();
+            lore.add("&6Lvl: &7" + rpgcore.getPlayerManager().getPlayerLvl(uuid));
+            if (rpgcore.getPlayerManager().getPlayerLvl(uuid) == 130) {
+                lore.add("&6Exp: &4&lMAX &6/ &4&lMAX &8(&4&lMAX &7%&8)");
+            } else {
+                lore.add("&6Exp: &7" + rpgcore.getPlayerManager().getPlayerExp(uuid) + " &6/ &7" + rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)
+                        + " &8(&6" + Utils.procentFormat.format((rpgcore.getPlayerManager().getPlayerExp(uuid) / rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)) * 100) + "&7%&8)");
+            }
+            lore.add("&6Zabojstwa: &7" + this.getGuildKills(tag).get(uuid));
+            lore.add("&6Zgony: &7" + this.getGuildDeaths(tag).get(uuid));
+            lore.add("&6Zdobyte doswiadczenie: &7" + this.getGuildExpEarned(tag).get(uuid));
+            lore.add(" ");
+            if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
+                lore.add("&a&lOnline");
+            } else {
+                lore.add("&c&lOffline");
+                lore.add("&7Ostatnio widany: &c" + this.getGuildLastOnline(tag).get(uuid));
+            }
+
+            membersPanel.setItem(i, memberItem.setSkullOwner(rpgcore.getPlayerManager().getPlayerName(uuid)).setLore(lore).toItemStack().clone());
+
+        }
+
+        player.openInventory(membersPanel);
+    }
+
+    public void invitePlayer(final String tag, final UUID uuid, final Player player) {
+        guildInvites.put(uuid, new HashMap<>());
+        guildInvites.get(uuid).put(tag, 0);
+        int i = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.removeFromGuildInvites(uuid, tag, player), 600L).getTaskId();
+        this.updateInviteTaskId(uuid, tag, i);
+        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aOtrzymano zaproszenie do klanu &6" + tag));
+    }
+
+    public void acceptInvite(final String tag, final UUID uuid, final Player player) {
+        if (this.getGuildInviteTag(uuid) != null && this.getGuildInviteTag(uuid).contains(tag)) {
+            this.addPlayerToGuild(tag, uuid);
+            this.removeFromGuildInvites(uuid, tag, player);
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aZaakceptowano zaproszenie do Klanu &6" + tag));
+        }
+    }
+
+    public void sendMessageToGuild(final String tag, final String message, final Player sender) {
+        String prefix = "&6";
+        String messagePrefix = "&f";
+
+        if (this.getGuildOwner(tag).equals(sender.getUniqueId())) {
+            prefix = "&4";
+            messagePrefix = "&c";
+        } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(sender.getUniqueId())) {
+            prefix = "&c";
+            messagePrefix = "&c";
+        }
+        for (final UUID uuid : this.getGuildMembers(tag)) {
+            if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
+                final Player player = Bukkit.getPlayer(uuid);
+                player.sendMessage(Utils.format("&8[&4KlanChat&8] " + prefix + sender.getName() + ">> " + messagePrefix + message));
+            }
+        }
+    }
+
+
+    public void setAll(final String tag, final UUID owner, final UUID coOwner, final List<UUID> members, final boolean pvp, final int points, final int lvl, final double exp,
+                       final int balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef, final double silnyNaLudzi, final double defNaLudzi,
                        final Map<UUID, Integer> kills, final Map<UUID, Integer> deaths, final Map<UUID, Double> expEarned) {
         setGuildOwner(tag, owner);
         setGuildCoOwner(tag, coOwner);
         setGuildMembers(tag, members);
         setGuildPoints(tag, points);
+        setGuildPvPStatus(tag, pvp);
         setGuildLvl(tag, lvl);
         setGuildExp(tag, exp);
         setGuildBalance(tag, balance);
@@ -214,7 +376,7 @@ public class GuildManager {
         return guildExp.get(tag);
     }
 
-    public double getGuildBalance(final String tag) {
+    public int getGuildBalance(final String tag) {
         return guildBalance.get(tag);
     }
 
@@ -270,6 +432,10 @@ public class GuildManager {
         guildMembers.put(tag, members);
     }
 
+    public void setGuildPvPStatus(final String tag, final boolean pvp) {
+        guildPvPStatus.put(tag, pvp);
+    }
+
     public void setGuildPoints(final String tag, final int points) {
         guildPoints.put(tag, points);
     }
@@ -282,7 +448,7 @@ public class GuildManager {
         guildExp.put(tag, exp);
     }
 
-    public void setGuildBalance(final String tag, final double balance) {
+    public void setGuildBalance(final String tag, final int balance) {
         guildBalance.put(tag, balance);
     }
 
@@ -354,7 +520,7 @@ public class GuildManager {
         guildExp.replace(tag, guildExp.get(tag) + exp);
     }
 
-    public void updateGuildBalance(final String tag, final double balance) {
+    public void updateGuildBalance(final String tag, final int balance) {
         guildBalance.replace(tag, guildBalance.get(tag) + balance);
     }
 
@@ -392,5 +558,54 @@ public class GuildManager {
 
     public void updateGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
         guildLastOnline.get(tag).replace(player, lastOnline);
+    }
+
+    public boolean hasGuild(final UUID uuid) {
+        for (String tag : guildList) {
+            if (guildMembers.get(tag).contains(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addToGuildInvites(final UUID uuid, final String tag, final int taskId) {
+        guildInvites.put(uuid, new HashMap<>());
+        guildInvites.get(uuid).put(tag, taskId);
+    }
+
+    public void updateInviteTaskId(final UUID uuid, final String tag, final int taskId) {
+        guildInvites.get(uuid).replace(tag, taskId);
+    }
+
+    public List<String> getGuildInviteTag(final UUID uuid) {
+        List<String> tags = new ArrayList<>();
+        for (String tag : guildList) {
+            if (guildInvites.get(uuid).containsKey(tag)) {
+                tags.add(tag);
+            }
+        }
+        return tags;
+    }
+
+    public void removeFromGuildInvites(final UUID uuid, final String tag, final Player player) {
+        final int i = guildInvites.get(uuid).get(tag);
+        Bukkit.getScheduler().cancelTask(i);
+        guildInvites.get(uuid).remove(tag);
+        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cZaproszenie od klanu &6" + tag + "&c wygaslo."));
+    }
+
+    public void removeFromGuildInvitesAccepted(final UUID uuid, final String tag) {
+        final int i = guildInvites.get(uuid).get(tag);
+        Bukkit.getScheduler().cancelTask(i);
+        guildInvites.get(uuid).remove(tag);
+    }
+
+    public List<String> getListOfGuilds() {
+        return guildList;
+    }
+
+    public boolean getGuildPvPStatus(final String tag) {
+        return guildPvPStatus.get(tag);
     }
 }

@@ -1,5 +1,6 @@
 package rpg.rpgcore;
 
+import com.keenant.tabbed.Tabbed;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.admin.teleport.Teleport;
@@ -28,6 +29,8 @@ import rpg.rpgcore.economy.Kasa;
 import rpg.rpgcore.economy.Wyplac;
 import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.guilds.GuildManager;
+import rpg.rpgcore.guilds.GuildsInventoryClick;
+import rpg.rpgcore.guilds.GuildsPlayerDamage;
 import rpg.rpgcore.history.HISTORYInventoryClick;
 import rpg.rpgcore.history.History;
 import rpg.rpgcore.listeners.*;
@@ -95,11 +98,13 @@ public final class RPGCORE extends JavaPlugin {
     private RybakNPC rybakNPC;
     private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
+    private Tabbed tabbed;
 
     private int i = 1;
 
     public void onEnable() {
         this.config.createConfig();
+        this.tabbed = new Tabbed(this);
         this.initDatabase();
         this.initManagers();
         this.initNPCS();
@@ -202,6 +207,8 @@ public final class RPGCORE extends JavaPlugin {
 
         // GUILDS
         this.getCommand("klan").setExecutor(new Guild(this));
+        this.getServer().getPluginManager().registerEvents(new GuildsInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new GuildsPlayerDamage(this), this);
 
         // NPC
 
@@ -393,5 +400,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public GuildManager getGuildManager() {
         return guildManager;
+    }
+
+    public Tabbed getTabbed() {
+        return tabbed;
     }
 }
