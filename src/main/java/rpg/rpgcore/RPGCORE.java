@@ -62,6 +62,7 @@ import rpg.rpgcore.pomoc.Pomoc;
 import rpg.rpgcore.pomoc.PomocManager;
 import rpg.rpgcore.spawn.Spawn;
 import rpg.rpgcore.spawn.SpawnManager;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.targ.*;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
@@ -98,13 +99,12 @@ public final class RPGCORE extends JavaPlugin {
     private RybakNPC rybakNPC;
     private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
-    private Tabbed tabbed;
+    private TabManager tabManager;
 
     private int i = 1;
 
     public void onEnable() {
         this.config.createConfig();
-        this.tabbed = new Tabbed(this);
         this.initDatabase();
         this.initManagers();
         this.initNPCS();
@@ -268,6 +268,7 @@ public final class RPGCORE extends JavaPlugin {
         this.targManager = new TargManager(this);
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);
+        this.tabManager = new TabManager(this);
     }
 
     private void initNPCS() {
@@ -402,7 +403,8 @@ public final class RPGCORE extends JavaPlugin {
         return guildManager;
     }
 
-    public Tabbed getTabbed() {
-        return tabbed;
+    public TabManager getTabManager() {
+        return tabManager;
     }
+
 }

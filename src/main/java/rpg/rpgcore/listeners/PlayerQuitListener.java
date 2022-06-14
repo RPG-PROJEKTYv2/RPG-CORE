@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -29,6 +30,7 @@ public class PlayerQuitListener implements Listener {
         rpgcore.getMsgManager().getMessageMap().remove(pUUID);
 
         e.setQuitMessage(Utils.quitMessage(name));
+        TabManager.removePlayer(p);
     }
 
 }

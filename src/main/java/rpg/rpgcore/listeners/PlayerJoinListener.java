@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
@@ -89,6 +90,10 @@ public class PlayerJoinListener implements Listener {
 
         e.setJoinMessage(Utils.joinMessage(playerName));
         p.teleport(rpgcore.getSpawnManager().getSpawn());
+
+        TabManager.addPlayer(p);
+        TabManager.add(p.getUniqueId());
+        TabManager.update(p.getUniqueId());
     }
 
 
