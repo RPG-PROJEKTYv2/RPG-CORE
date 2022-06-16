@@ -63,6 +63,7 @@ import rpg.rpgcore.pomoc.PomocManager;
 import rpg.rpgcore.spawn.Spawn;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.targ.*;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
@@ -230,7 +231,7 @@ public final class RPGCORE extends JavaPlugin {
 
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
-
+        new UpdateTabTask(this);
     }
 
     public void onDisable() {

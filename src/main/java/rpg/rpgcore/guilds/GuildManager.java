@@ -301,7 +301,9 @@ public class GuildManager {
     public void acceptInvite(final String tag, final UUID uuid, final Player player) {
         if (this.getGuildInviteTag(uuid) != null && this.getGuildInviteTag(uuid).contains(tag)) {
             this.addPlayerToGuild(tag, uuid);
-            this.removeFromGuildInvites(uuid, tag, player);
+            final int taskID = this.guildInvites.get(uuid).get(tag);
+            guildInvites.get(uuid).remove(tag);
+            this.removeFromGuildInvites(uuid, tag, player, taskID);
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aZaakceptowano zaproszenie do Klanu &6" + tag));
         }
     }
@@ -588,11 +590,19 @@ public class GuildManager {
         return tags;
     }
 
+    public void removeFromGuildInvites(final UUID uuid, final String tag, final Player player, final int taskId) {
+        Bukkit.getScheduler().cancelTask(taskId);
+        if (guildInvites.get(uuid).containsKey(tag)) {
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cZaproszenie od klanu &6" + tag + "&c wygaslo."));
+        }
+    }
+
     public void removeFromGuildInvites(final UUID uuid, final String tag, final Player player) {
         final int i = guildInvites.get(uuid).get(tag);
         Bukkit.getScheduler().cancelTask(i);
-        guildInvites.get(uuid).remove(tag);
-        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cZaproszenie od klanu &6" + tag + "&c wygaslo."));
+        if (guildInvites.get(uuid).containsKey(tag)) {
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cZaproszenie od klanu &6" + tag + "&c wygaslo."));
+        }
     }
 
     public void removeFromGuildInvitesAccepted(final UUID uuid, final String tag) {
@@ -607,5 +617,21 @@ public class GuildManager {
 
     public boolean getGuildPvPStatus(final String tag) {
         return guildPvPStatus.get(tag);
+    }
+
+    public int getGuildKillsAll(final String tag) {
+        int kills = 0;
+        for (UUID uuid : guildMembers.get(tag)) {
+            kills += guildKills.get(tag).get(uuid);
+        }
+        return kills;
+    }
+
+    public int getGuildDeathsAll(final String tag) {
+        int deaths = 0;
+        for (UUID uuid : guildMembers.get(tag)) {
+            deaths += guildDeaths.get(tag).get(uuid);
+        }
+        return deaths;
     }
 }

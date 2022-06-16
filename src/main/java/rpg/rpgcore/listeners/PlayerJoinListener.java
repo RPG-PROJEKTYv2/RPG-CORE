@@ -92,7 +92,7 @@ public class PlayerJoinListener implements Listener {
         p.teleport(rpgcore.getSpawnManager().getSpawn());
 
         TabManager.addPlayer(p);
-        TabManager.add(p.getUniqueId());
+        TabManager.add(p);
         TabManager.update(p.getUniqueId());
     }
 

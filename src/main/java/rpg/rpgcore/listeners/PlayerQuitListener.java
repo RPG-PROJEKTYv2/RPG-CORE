@@ -31,6 +31,7 @@ public class PlayerQuitListener implements Listener {
 
         e.setQuitMessage(Utils.quitMessage(name));
         TabManager.removePlayer(p);
+
     }
 
 }

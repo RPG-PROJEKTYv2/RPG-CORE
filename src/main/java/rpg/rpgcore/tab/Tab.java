@@ -33,10 +33,11 @@ public class Tab {
 
     public void set(final Player player, final int column, final int row, final String text) {
         slots[row][column] = Utils.format(text);
-        packetManager.send(player, tabProfiles[row][column], slots[row][column], PlayerInfoAction.UPDATE_DISPLAY_NAME);
+        PacketManager.send(player, tabProfiles[row][column], slots[row][column], PlayerInfoAction.UPDATE_DISPLAY_NAME);
     }
 
     public void set(final Player player, final String header, final String footer) {
-        packetManager.send(player, header, footer);
+        PacketManager.send(player, header, footer);
     }
+
 }
