@@ -10,6 +10,8 @@ import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -84,11 +86,11 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                this.updateOneMember(tag, player);
-
                 rpgcore.getGuildManager().removePlayerFromGuild(tag, uuid);
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + "&c opuscil klan &6" + tag));
-                NameTagUtil.setPlayerDisplayNameNoGuild(player, playerGroup);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(player, playerGroup));
+                final String tagForLambda = tag;
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(tagForLambda, player));
                 return false;
             }
 
@@ -175,7 +177,7 @@ public class Guild implements CommandExecutor {
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
                     final String tagForLambda = tag;
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () ->NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tagForLambda));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tagForLambda));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(tagForLambda, player));
                     return false;
                 } else {
@@ -331,7 +333,9 @@ public class Guild implements CommandExecutor {
                 final String description = sb.toString().trim();
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
-                NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tag);
+                final String tagForLambda = tag;
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tagForLambda));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(tagForLambda, player));
                 return false;
             }
 
@@ -361,24 +365,29 @@ public class Guild implements CommandExecutor {
     }
 
     private void updateGuild(final String tag) {
+        final List<UUID> members = new ArrayList<>(20);
         for (final UUID uuid1 : rpgcore.getGuildManager().getGuildMembers(tag)) {
             final Player p = Bukkit.getPlayer(uuid1);
             if (p != null && p.isOnline()) {
                 final String group = rpgcore.getPlayerManager().getPlayerGroup(p);
                 NameTagUtil.setPlayerDisplayNameNoGuild(p, group);
                 TabManager.removePlayer(p);
-                TabManager.addPlayer(p);
-                for (Player restOfServer : Bukkit.getOnlinePlayers()) {
-                    TabManager.update(restOfServer.getUniqueId());
-                }
+                members.add(uuid1);
             }
+        }
+        rpgcore.getGuildManager().getGuildMembers(tag).clear();
+
+        for (UUID uuid1 : members) {
+            TabManager.addPlayer(Bukkit.getPlayer(uuid1));
+        }
+        members.clear();
+        for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+            TabManager.update(restOfServer.getUniqueId());
         }
     }
 
     private void updateOneMember(final String tag, final Player player) {
         if (player != null && player.isOnline()) {
-            final String group = rpgcore.getPlayerManager().getPlayerGroup(player);
-            NameTagUtil.setPlayerDisplayNameNoGuild(player, group);
             TabManager.removePlayer(player);
             TabManager.addPlayer(player);
             for (Player restOfServer : Bukkit.getOnlinePlayers()) {

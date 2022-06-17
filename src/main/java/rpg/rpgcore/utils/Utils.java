@@ -52,9 +52,7 @@ public class Utils {
 
     public static List<String> format(List<String> lore) {
 
-        for (int i = 0; i < lore.size(); i++) {
-            lore.set(i, format(lore.get(i)));
-        }
+        lore.replaceAll(Utils::format);
         return lore;
     }
 
@@ -266,6 +264,32 @@ public class Utils {
         }
 
         return reverseString(numberInString) + afterDot;
+    }
+
+    public static String getGroupColor(final String group) {
+        switch (group) {
+            case "H@":
+            case "Admin":
+                return "&4&l" + group + "&c ";
+            case "GM":
+            case "Mod":
+            case "KidMod":
+                return "&2&l" + group + "&a ";
+            case "Helper":
+                return "&3&l" + group + "&b ";
+            case "JuniorHelper":
+                return "&3&lJrHelper" + "&b ";
+            case "ELITA":
+                return "&5&lELITA &7";
+            case "Svip":
+                return "&6&lS&e&lvip &7";
+            case "Vip":
+                return "&e&lVip &7";
+            case "Budowniczy":
+                return "&d&lBud &7";
+            default:
+                return "&7";
+        }
     }
 
     private static String reverseString(final String str) {
