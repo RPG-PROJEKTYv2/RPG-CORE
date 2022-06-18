@@ -1,6 +1,5 @@
 package rpg.rpgcore;
 
-import com.keenant.tabbed.Tabbed;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.admin.teleport.Teleport;
@@ -24,7 +23,7 @@ import rpg.rpgcore.bao.BAOPlayerInteract;
 import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.*;
 import rpg.rpgcore.database.MongoManager;
-import rpg.rpgcore.economy.EconomyInventoryClick;
+import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.Kasa;
 import rpg.rpgcore.economy.Wyplac;
 import rpg.rpgcore.guilds.Guild;
@@ -204,7 +203,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
 
         // ECONOMY
-        this.getServer().getPluginManager().registerEvents(new EconomyInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new EconomyPlayerInteract(this), this);
 
         // GUILDS
         this.getCommand("klan").setExecutor(new Guild(this));

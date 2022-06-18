@@ -26,7 +26,7 @@ public class DuszologInventoryClick implements Listener {
         this.rpgcore = rpgcore;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void duszologInventoryClick(final InventoryClickEvent e) {
 
         final Inventory clickedInventory = e.getClickedInventory();

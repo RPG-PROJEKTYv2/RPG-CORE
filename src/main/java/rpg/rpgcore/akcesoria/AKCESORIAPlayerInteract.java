@@ -282,18 +282,6 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
-                return;
-            }
-
-            if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
-                final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
-
-                itemMapToRemove.clear();
-                itemMapToRemove.put(0, eventItem);
-                player.getInventory().removeItem(itemMapToRemove.get(0));
-                itemMapToRemove.clear();
-                rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
             }
         }
 

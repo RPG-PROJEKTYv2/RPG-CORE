@@ -27,13 +27,13 @@ public class Utils {
     public static final Random random = new Random();
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
-    public static final String SERVERNAME = format("&f&lTEST&3&lRPG&7 ");
-    public static final String BANPREFIX = format("&f&lTEST&3&lBAN&7 ");
-    public static final String MUTEPREFIX = format("&f&lTEST&3&lMUTE&7 ");
-    public static final String LVLPREFIX = format("&f&lTEST&6&lLVL&7 ");
-    public static final String KICKPREFIX = format("&f&lTEST&3&lKICK&7 ");
-    public static final String TRADEPREFIX = format("&f&lTEST&3&lTRADE&7 ");
-    public static final String GUILDSPREFIX = format("&f&lTEST&3&lKLANY&7 ");
+    public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 ");
+    public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 ");
+    public static final String MUTEPREFIX = format("&4&lHELL&8&lMUTE&7 ");
+    public static final String LVLPREFIX = format("&4&lHELL&6&lLVL&7 ");
+    public static final String KICKPREFIX = format("&4&lHELL&8&lKICK&7 ");
+    public static final String TRADEPREFIX = format("&4&lHELL&8&lTRADE&7 ");
+    public static final String GUILDSPREFIX = format("&4&lHELL&8&lKLANY&7 ");
     public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 ");
     public static final String RYBAK = format("&6&lRybak >> ");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
@@ -42,7 +42,6 @@ public class Utils {
     public static final String NOALREADYBANNED = (BANPREFIX + format("&cTen gracz nie jest zbanowany!"));
     public static DecimalFormat df = new DecimalFormat("0.0");
     public static DecimalFormat kasaFormat = new DecimalFormat("0.00");
-    public static DecimalFormat wedkaFormat = new DecimalFormat("0.00");
     public static DecimalFormat procentFormat = new DecimalFormat("00.00");
     public static int MAXLVL = 130;
 

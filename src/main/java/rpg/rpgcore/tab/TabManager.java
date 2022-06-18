@@ -59,8 +59,8 @@ public class TabManager {
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
         final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
         if (tab != null) {
-            tab.set(player, 0, 0, "&FInformacje o graczu             ");
-            tab.set(player, 1, 0, "&fLista Graczy                    ");
+            tab.set(player, 0, 0, "&7Informacje                       ");
+            tab.set(player, 1, 0, "&7Lista Graczy:                    ");
             tab.set(player, 2, 0, "&7                                ");
             tab.set(player, 3, 0, "&7                                ");
             tab.set(player, 0, 19, "&7                                ");
@@ -95,35 +95,35 @@ public class TabManager {
             final String expNextLvl = String.format("%.2f", rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) + 1));
             final String procenty = String.format("%.2f", (rpgcore.getPlayerManager().getPlayerExp(player.getUniqueId()) / rpgcore.getLvlManager().getExpForLvl(lvl + 1)) * 100);
 
-            tab.set(player, 0, 2, "&fGracz: &b" + player.getName());
+            tab.set(player, 0, 2, "&7Gracz: &c" + player.getName());
             if (Utils.getGroupColor(playerGroup).equals("&7")) {
-                tab.set(player, 0, 3, "&fRanga: &7Gracz");
+                tab.set(player, 0, 3, "&7Ranga: &7Gracz");
             } else {
-                tab.set(player, 0, 3, "&fRanga: " + Utils.getGroupColor(playerGroup));
+                tab.set(player, 0, 3, "&7Ranga: " + Utils.getGroupColor(playerGroup));
             }
-            tab.set(player, 0, 4, "&fGildia: &b" + tag);
+            tab.set(player, 0, 4, "&7Gildia: &c" + tag);
             if (lvl == Utils.MAXLVL) {
-                tab.set(player, 0, 5, "&fPoziom: &4&lMAX LVL");
-                tab.set(player, 0, 6, "&fEXP: &4&lMAX &f/ &4&lMAX &8(&4&lMAX&8)");
+                tab.set(player, 0, 5, "&7Poziom: &4&lMAX LVL");
+                tab.set(player, 0, 6, "&7EXP: &4&lMAX &7/ &4&lMAX &8(&4&lMAX&8)");
             } else {
-                tab.set(player, 0, 5, "&fPoziom: &b" + lvl);
-                tab.set(player, 0, 6, "&fEXP: &b" + exp + " &f/ &b" + expNextLvl + " &8(&b" + procenty + " %&8)");
+                tab.set(player, 0, 5, "&7Poziom: &c" + lvl);
+                tab.set(player, 0, 6, "&7EXP: &c" + exp + " &7/ &c" + expNextLvl + " &8(&c" + procenty + " %&8)");
             }
-            tab.set(player, 0, 7, "&fKasa: &b" + Utils.spaceNumber(String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId()))) + " &2$");
+            tab.set(player, 0, 7, "&7Kasa: &c" + Utils.spaceNumber(String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId()))) + " &2$");
             tab.set(player, 0, 8, "&7                                ");
-            tab.set(player, 0, 9, "&f&lKLAN");
+            tab.set(player, 0, 9, "&4&lKLAN");
             if (!tag.equals("Brak Klanu")) {
-                tab.set(player, 0, 10, "&fPunkty: &b" + rpgcore.getGuildManager().getGuildPoints(tag));
-                tab.set(player, 0, 11, "&fPoziom: &b" + rpgcore.getGuildManager().getGuildLvl(tag));
-                tab.set(player, 0, 12, "&fKredyty: &b" + rpgcore.getGuildManager().getGuildBalance(tag) + " &fkredytow");
-                tab.set(player, 0, 13, "&fZabojstwa: &b" + rpgcore.getGuildManager().getGuildKillsAll(tag));
-                tab.set(player, 0, 14, "&fZgony: &b" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
+                tab.set(player, 0, 10, "&7Punkty: &c" + rpgcore.getGuildManager().getGuildPoints(tag));
+                tab.set(player, 0, 11, "&7Poziom: &c" + rpgcore.getGuildManager().getGuildLvl(tag));
+                tab.set(player, 0, 12, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
+                tab.set(player, 0, 13, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
+                tab.set(player, 0, 14, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
             } else {
-                tab.set(player, 0, 10, "&fPunkty: &bn/a");
-                tab.set(player, 0, 11, "&fPoziom: &bn/a");
-                tab.set(player, 0, 12, "&fKredyty: &bn/a");
-                tab.set(player, 0, 13, "&fZabojstwa: &bn/a");
-                tab.set(player, 0, 14, "&fZgony: &bn/a");
+                tab.set(player, 0, 10, "&7Punkty: &cn/a");
+                tab.set(player, 0, 11, "&7Poziom: &cn/a");
+                tab.set(player, 0, 12, "&7Kredyty: &cn/a");
+                tab.set(player, 0, 13, "&7Zabojstwa: &cn/a");
+                tab.set(player, 0, 14, "&7Zgony: &cn/a");
             }
 
             /*if (!tag.equals("Brak Klanu")) {
@@ -170,10 +170,10 @@ public class TabManager {
                 tab.set(player, 3, 18, "&8- &fDodatkowy EXP: &30%&f/&350%");
             }*/
             tab.set(player,
-                    "\n&fWitamy na Serwerze &3TestRPG.PL\n",
-                    "\n&fAktualnie graczy: &3" + Bukkit.getOnlinePlayers().size() +
-                            "\n&fTwoj Ping: &3" + ((CraftPlayer) player).getHandle().ping + " &fms" +
-                            "\n&fDiscord: &3dc.testrpg.pl               &fSklep: &3testrpg.pl               &fFacebook: &3fb.testrpg.pl\n");
+                    "\n&7Witamy na Serwerze &cTestRPG.PL\n",
+                    "\n&7Aktualnie graczy: &c" + Bukkit.getOnlinePlayers().size() +
+                            "\n&7Twoj Ping: &c" + ((CraftPlayer) player).getHandle().ping + " &7ms" +
+                            "\n&7Discord: &cdc.testrpg.pl               &7Sklep: &ctestrpg.pl               &7Facebook: &cfb.testrpg.pl\n");
         }
     }
 

@@ -9,18 +9,19 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EconomyInventoryClick implements Listener {
+public class EconomyPlayerInteract implements Listener {
 
     final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
     private final RPGCORE rpgcore;
 
-    public EconomyInventoryClick(RPGCORE rpgcore) {
+    public EconomyPlayerInteract(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
@@ -31,23 +32,18 @@ public class EconomyInventoryClick implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 
             if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
                 final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
 
-                itemMapToRemove.clear();
-                itemMapToRemove.put(0, eventItem);
-                player.getInventory().removeItem(itemMapToRemove.get(0));
-                itemMapToRemove.clear();
+                final ItemStack is = e.getItem().clone();
+                is.setAmount(1);
+                player.getInventory().removeItem(is);
                 rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
-                return;
             }
-            return;
-        }
-
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock() == null) {
                 return;
             }
@@ -60,10 +56,9 @@ public class EconomyInventoryClick implements Listener {
             if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
                 final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
 
-                itemMapToRemove.clear();
-                itemMapToRemove.put(0, eventItem);
-                player.getInventory().removeItem(itemMapToRemove.get(0));
-                itemMapToRemove.clear();
+                final ItemStack is = e.getItem().clone();
+                is.setAmount(1);
+                player.getInventory().removeItem(is);
                 rpgcore.getPlayerManager().updatePlayerKasa(uuid, rpgcore.getPlayerManager().getPlayerKasa(uuid) + kwotaZCzeku);
                 player.sendMessage(Utils.format(Utils.SERVERNAME +  "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
             }
