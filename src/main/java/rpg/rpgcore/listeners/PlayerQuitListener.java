@@ -9,6 +9,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.Utils;
 
+import javax.rmi.CORBA.Util;
+import java.util.Date;
 import java.util.UUID;
 
 public class PlayerQuitListener implements Listener {
@@ -28,6 +30,12 @@ public class PlayerQuitListener implements Listener {
 
         rpgcore.getVanishManager().getVanishList().remove(pUUID);
         rpgcore.getMsgManager().getMessageMap().remove(pUUID);
+
+        if (rpgcore.getGuildManager().hasGuild(pUUID)) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(pUUID);
+            rpgcore.getGuildManager().putGuildLastOnline(tag, pUUID, new Date());
+            System.out.println("dodano!");
+        }
 
         e.setQuitMessage(Utils.quitMessage(name));
         TabManager.removePlayer(p);

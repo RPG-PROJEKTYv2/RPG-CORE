@@ -29,14 +29,14 @@ public class DuszologInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void duszologInventoryClick(final InventoryClickEvent e) {
 
+        if (e.getClickedInventory() == null) {
+            return;
+        }
+
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
         final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
-
-        if (e.getClickedInventory() == null) {
-            return;
-        }
 
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final ItemStack clickedItem = e.getCurrentItem();

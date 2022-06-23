@@ -84,9 +84,11 @@ public class PlayerJoinListener implements Listener {
         if (rpgcore.getGuildManager().hasGuild(playerUUID)) {
             final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
             NameTagUtil.setPlayerDisplayNameGuild(p, playerGroup, tag);
+            rpgcore.getGuildManager().getGuildLastOnline(tag).remove(playerUUID);
         } else {
             NameTagUtil.setPlayerDisplayNameNoGuild(p, playerGroup);
         }
+
 
         e.setJoinMessage(Utils.joinMessage(playerName));
         p.teleport(rpgcore.getSpawnManager().getSpawn());

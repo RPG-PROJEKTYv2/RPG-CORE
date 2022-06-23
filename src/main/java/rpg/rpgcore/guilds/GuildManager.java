@@ -5,7 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -56,7 +58,17 @@ public class GuildManager {
     private final ItemBuilder info = new ItemBuilder(Material.GOLD_BLOCK);
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
 
+    // MAPA OD LVLI
+    private final Map<Integer, Double> guildLvlMap = new HashMap<>(48);
 
+
+    public void loadGuildLvlReq() {
+        double next = 5000.0;
+        for (int i = 2; i <= 50; i++) {
+            this.guildLvlMap.put(i, next);
+            next+=5000.0;
+        }
+    }
 
     public void listAllCommands(final Player player) {
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6KLANY&8}&8&m-_-_-_-_-_-_-_-_-"));
@@ -98,7 +110,7 @@ public class GuildManager {
         }
         player.sendMessage(Utils.format("&6Punkty: &7" + guildPoints.get(tag)));
         player.sendMessage(Utils.format("&6Lvl: &7" + guildLvl.get(tag)));
-        player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag)));
+        player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag) + " &6/&7 " + this.getGuildNextLvlExp(tag)));
         player.sendMessage(Utils.format("&6Czlonkowie: "));
         for (UUID uuid : guildMembers.get(tag)) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
@@ -181,6 +193,25 @@ public class GuildManager {
         guildKills.get(tag).remove(uuid);
         guildDeaths.get(tag).remove(uuid);
         guildExpEarned.get(tag).remove(uuid);
+
+        if (this.getGuildCoOwner(tag).equals(uuid)) {
+            this.setGuildCoOwner(tag, null);
+        }
+
+        final Player player = Bukkit.getPlayer(uuid);
+        rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
+        final String group = rpgcore.getPlayerManager().getPlayerGroup(Bukkit.getPlayer(uuid));
+        if (player.isOnline()) {
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(player, group));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                TabManager.removePlayer(player);
+                TabManager.addPlayer(player);
+                for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                    TabManager.update(restOfServer.getUniqueId());
+                }
+            });
+        }
+
     }
 
     public void deleteGuild(final String tag) {
@@ -253,8 +284,10 @@ public class GuildManager {
     public void showMembers(final String tag, final Player player) {
         final Inventory membersPanel = Bukkit.createInventory(null, 27, Utils.format("&6&lCzlonkowie Klanu " + tag));
 
-        for (int i = 0; i < this.getGuildMembers(tag).size(); i++) {
-            final UUID uuid = this.getGuildMembers(tag).get(i);
+        final List<UUID> members = sortMemebers(tag);
+
+        for (int i = 0; i < members.size(); i++) {
+            final UUID uuid = members.get(i);
 
             if (this.getGuildOwner(tag).equals(uuid)) {
                 memberItem.setName("&4&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
@@ -280,7 +313,12 @@ public class GuildManager {
                 lore.add("&a&lOnline");
             } else {
                 lore.add("&c&lOffline");
-                lore.add("&7Ostatnio widany: &c" + this.getGuildLastOnline(tag).get(uuid));
+                lore.add("&7Ostatnio widany: &c" + this.getLastSeenDateInString(tag, uuid));
+            }
+
+            if (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId())) {
+                lore.add(" ");
+                lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }
 
             membersPanel.setItem(i, memberItem.setSkullOwner(rpgcore.getPlayerManager().getPlayerName(uuid)).setLore(lore).toItemStack().clone());
@@ -288,6 +326,23 @@ public class GuildManager {
         }
 
         player.openInventory(membersPanel);
+    }
+
+    private List<UUID> sortMemebers(final String tag) {
+        final List<UUID> members = new ArrayList<>();
+
+        members.add(this.getGuildOwner(tag));
+        if (this.getGuildCoOwner(tag) != null) {
+            members.add(this.getGuildCoOwner(tag));
+        }
+
+        for (UUID uuid : this.getGuildMembers(tag)) {
+            if (!members.contains(uuid)) {
+                members.add(uuid);
+            }
+        }
+
+        return members;
     }
 
     public void invitePlayer(final String tag, final UUID uuid, final Player player) {
@@ -562,6 +617,14 @@ public class GuildManager {
         guildLastOnline.get(tag).replace(player, lastOnline);
     }
 
+    public void putGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
+        guildLastOnline.get(tag).put(player, lastOnline);
+    }
+
+    public String getLastSeenDateInString(final String tag, final UUID uuid) {
+        return Utils.dateFormat.format(guildLastOnline.get(tag).get(uuid));
+    }
+
     public boolean hasGuild(final UUID uuid) {
         for (String tag : guildList) {
             if (guildMembers.get(tag).contains(uuid)) {
@@ -633,5 +696,9 @@ public class GuildManager {
             deaths += guildDeaths.get(tag).get(uuid);
         }
         return deaths;
+    }
+
+    public double getGuildNextLvlExp(final String tag) {
+        return this.guildLvlMap.get(this.getGuildLvl(tag) + 1);
     }
 }

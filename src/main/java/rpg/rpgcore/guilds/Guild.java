@@ -111,6 +111,7 @@ public class Guild implements CommandExecutor {
                     rpgcore.getGuildManager().setGuildPvPStatus(tag, true);
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aWlaczono pvp w klanie"));
                 }
+                return false;
             }
         }
 
@@ -217,11 +218,6 @@ public class Guild implements CommandExecutor {
 
                 if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToKick)) {
                     rpgcore.getGuildManager().removePlayerFromGuild(tag, uuidToKick);
-                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &cwlasnie wyrzucil &6" + rpgcore.getPlayerManager().getPlayerName(uuidToKick) +"&c z klanu &6" + tag));
-                    final String group = rpgcore.getPlayerManager().getPlayerGroup(Bukkit.getPlayer(uuidToKick));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(Bukkit.getPlayer(uuidToKick), group));
-                    final String tagForLambda = tag;
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(tagForLambda, Bukkit.getPlayer(uuidToKick)));
                     return false;
                 } else {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToKick) + " &cnie jest czlonkiem twojego klanu"));

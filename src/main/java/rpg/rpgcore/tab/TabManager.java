@@ -101,79 +101,37 @@ public class TabManager {
             } else {
                 tab.set(player, 0, 3, "&7Ranga: " + Utils.getGroupColor(playerGroup));
             }
-            tab.set(player, 0, 4, "&7Gildia: &c" + tag);
+            tab.set(player, 0, 4, "&7Gildia: &3" + tag);
             if (lvl == Utils.MAXLVL) {
                 tab.set(player, 0, 5, "&7Poziom: &4&lMAX LVL");
                 tab.set(player, 0, 6, "&7EXP: &4&lMAX &7/ &4&lMAX &8(&4&lMAX&8)");
             } else {
                 tab.set(player, 0, 5, "&7Poziom: &c" + lvl);
-                tab.set(player, 0, 6, "&7EXP: &c" + exp + " &7/ &c" + expNextLvl + " &8(&c" + procenty + " %&8)");
+                tab.set(player, 0, 6, "&7EXP: &b" + exp + " &7/ &b" + expNextLvl + " &8(&b" + procenty + " %&8)");
             }
-            tab.set(player, 0, 7, "&7Kasa: &c" + Utils.spaceNumber(String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId()))) + " &2$");
+            tab.set(player, 0, 7, "&7Kasa: &6" + Utils.spaceNumber(String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId()))) + " &2$");
             tab.set(player, 0, 8, "&7                                ");
             tab.set(player, 0, 9, "&4&lKLAN");
             if (!tag.equals("Brak Klanu")) {
                 tab.set(player, 0, 10, "&7Punkty: &c" + rpgcore.getGuildManager().getGuildPoints(tag));
                 tab.set(player, 0, 11, "&7Poziom: &c" + rpgcore.getGuildManager().getGuildLvl(tag));
-                tab.set(player, 0, 12, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
-                tab.set(player, 0, 13, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
-                tab.set(player, 0, 14, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
+                tab.set(player, 0, 12, "&7Exp: &c" + rpgcore.getGuildManager().getGuildExp(tag) + "&7/&c" + rpgcore.getGuildManager().getGuildNextLvlExp(tag));
+                tab.set(player, 0, 13, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
+                tab.set(player, 0, 14, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
+                tab.set(player, 0, 15, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
             } else {
                 tab.set(player, 0, 10, "&7Punkty: &cn/a");
                 tab.set(player, 0, 11, "&7Poziom: &cn/a");
-                tab.set(player, 0, 12, "&7Kredyty: &cn/a");
-                tab.set(player, 0, 13, "&7Zabojstwa: &cn/a");
-                tab.set(player, 0, 14, "&7Zgony: &cn/a");
+                tab.set(player, 0, 12, "&7Exp: &cn/a");
+                tab.set(player, 0, 13, "&7Kredyty: &cn/a");
+                tab.set(player, 0, 14, "&7Zabojstwa: &cn/a");
+                tab.set(player, 0, 15, "&7Zgony: &cn/a");
             }
-
-            /*if (!tag.equals("Brak Klanu")) {
-                tab.set(player, 3, 1, "&fKlan: &3" + tag);
-                tab.set(player, 3, 2, "&fLider: &3" + rpgcore.getPlayerManager().getPlayerName(rpgcore.getGuildManager().getGuildOwner(tag)));
-                if (rpgcore.getPlayerManager().getPlayerName(rpgcore.getGuildManager().getGuildCoOwner(tag)) == null) {
-                    tab.set(player, 3, 3, "&fZastepca: &3Brak Zastepcy");
-                } else {
-                    tab.set(player, 3, 3, "&fZastepca: &3" + rpgcore.getPlayerManager().getPlayerName(rpgcore.getGuildManager().getGuildCoOwner(tag)));
-                }
-                tab.set(player, 3, 4, "&fCzlonkowie: &3" + rpgcore.getGuildManager().getGuildMembers(tag).size() + "&f/&320");
-                tab.set(player, 3, 5, "&fPoziom: &3" + rpgcore.getGuildManager().getGuildLvl(tag));
-                tab.set(player, 3, 6, "&fExp: &3" + String.format("%.2f", rpgcore.getGuildManager().getGuildExp(tag)) + " &f/&3Zrobic next lvl");
-                tab.set(player, 3, 7, "&fKredyty: &3" + rpgcore.getGuildManager().getGuildBalance(tag));
-                tab.set(player, 3, 8, "                                  ");
-                tab.set(player, 3, 9, "&fPunkty: &3" + rpgcore.getGuildManager().getGuildPoints(tag));
-                tab.set(player, 3, 10, "&fZabojstw razem: &3" + rpgcore.getGuildManager().getGuildKillsAll(tag));
-                tab.set(player, 3, 11, "&fSmierci razem: &3" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
-                tab.set(player, 3, 12, "                                  ");
-                tab.set(player, 3, 13, "&f&lBonusy:                       ");
-                tab.set(player, 3, 14, "&8- &fSrednie obrazenia: &3" + String.format("%.1f", rpgcore.getGuildManager().getGuildSredniDmg(tag)) + "%&f/&350%");
-                tab.set(player, 3, 15, "&8- &fSrednia defensywa: &3" + String.format("%.1f", rpgcore.getGuildManager().getGuildSredniDef(tag)) + "%&f/&350%");
-                tab.set(player, 3, 16, "&8- &fSilny na Ludzi: &3" + String.format("%.1f", rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag)) + "%&f/&375%");
-                tab.set(player, 3, 17, "&8- &fDef na Ludzi: &3" + String.format("%.1f", rpgcore.getGuildManager().getGuildDefNaLudzi(tag)) + "%&f/&375%");
-                tab.set(player, 3, 18, "&8- &fDodatkowy EXP: &3" + String.format("%.1f", rpgcore.getGuildManager().getGuildDodatkowyExp(tag)) + "%&f/&350%");
-            } else {
-                tab.set(player, 3, 1, "&fKlan: &3Brak Klanu");
-                tab.set(player, 3, 2, "&fLider: &3Brak");
-                tab.set(player, 3, 3, "&fZastepca: &3Brak");
-                tab.set(player, 3, 4, "&fCzlonkowie: &3Brak");
-                tab.set(player, 3, 5, "&fPoziom: &30");
-                tab.set(player, 3, 6, "&fExp: &30&f/&30");
-                tab.set(player, 3, 7, "&fKredyty: &30");
-                tab.set(player, 3, 8, "                                  ");
-                tab.set(player, 3, 9, "&fPunkty: &30");
-                tab.set(player, 3, 10, "&fZabojstw razem: &30");
-                tab.set(player, 3, 11, "&fSmierci razem: &30");
-                tab.set(player, 3, 12, "                                  ");
-                tab.set(player, 3, 13, "&f&lBonusy:                       ");
-                tab.set(player, 3, 14, "&8- &fSrednie obrazenia: &30%&f/&350%");
-                tab.set(player, 3, 15, "&8- &fSrednia defensywa: &30%&f/&350%");
-                tab.set(player, 3, 16, "&8- &fSilny na Ludzi: &30%&f/&375%");
-                tab.set(player, 3, 17, "&8- &fDef na Ludzi: &30%&f/&375%");
-                tab.set(player, 3, 18, "&8- &fDodatkowy EXP: &30%&f/&350%");
-            }*/
             tab.set(player,
-                    "\n&7Witamy na Serwerze &cTestRPG.PL\n",
+                    "\n&7Witamy na Serwerze &cHellRPG.pl\n",
                     "\n&7Aktualnie graczy: &c" + Bukkit.getOnlinePlayers().size() +
                             "\n&7Twoj Ping: &c" + ((CraftPlayer) player).getHandle().ping + " &7ms" +
-                            "\n&7Discord: &cdc.testrpg.pl               &7Sklep: &ctestrpg.pl               &7Facebook: &cfb.testrpg.pl\n");
+                            "\n&7Discord: &cdc.HellRPG.pl               &7Sklep: &cHellRPG.pl               &7Facebook: &cfb.HellRPG.pl\n");
         }
     }
 

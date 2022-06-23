@@ -1,5 +1,6 @@
 package rpg.rpgcore.guilds;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,6 +50,44 @@ public class GuildsInventoryClick implements Listener {
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&c&lULEPSZENIA COMMING SOON!"));
                 return;
             }
+            return;
+        }
+
+        if (clickedInventoryTitle.contains("Czlonkowie Klanu")) {
+            e.setCancelled(true);
+            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
+
+            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID))) {
+                return;
+            }
+
+            if (clickedSlot == 0) {
+                return;
+            }
+
+
+            if (clickedItem.getType().equals(Material.AIR)) {
+                return;
+            }
+
+            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName()));
+
+            if (targetUUID.equals(playerUUID)) {
+                return;
+            }
+
+            if (clickedSlot == 1) {
+                if (rpgcore.getGuildManager().getGuildCoOwner(tag) != null) {
+                    if (rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID)) {
+                        rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
+                        player.closeInventory();
+                        return;
+                    }
+                }
+            }
+
+            rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
+            player.closeInventory();
             return;
         }
     }

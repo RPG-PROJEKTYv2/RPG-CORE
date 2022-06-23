@@ -26,14 +26,13 @@ public class MagazynierInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void magazynierInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
-        final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
-
         if (e.getClickedInventory() == null) {
             return;
         }
 
+        final Inventory clickedInventory = e.getClickedInventory();
+        final Player player = (Player) e.getWhoClicked();
+        final UUID playerUUID = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();

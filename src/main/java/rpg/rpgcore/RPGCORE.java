@@ -22,6 +22,9 @@ import rpg.rpgcore.bao.BAOManager;
 import rpg.rpgcore.bao.BAOPlayerInteract;
 import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.*;
+import rpg.rpgcore.commands.kosz.Kosz;
+import rpg.rpgcore.commands.kosz.KoszInventoryClick;
+import rpg.rpgcore.commands.kosz.KoszInventoryClose;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.Kasa;
@@ -40,6 +43,9 @@ import rpg.rpgcore.admin.god.GodManager;
 import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.Message;
 import rpg.rpgcore.msg.Reply;
+import rpg.rpgcore.npc.kupiec.KupiecInventoryClick;
+import rpg.rpgcore.npc.kupiec.KupiecInventoryClose;
+import rpg.rpgcore.npc.kupiec.KupiecNPC;
 import rpg.rpgcore.npc.magazynier.Magazyn;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
@@ -66,7 +72,6 @@ import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.targ.*;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
-import rpg.rpgcore.trade.TRADEInventoryDrag;
 import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
@@ -100,6 +105,7 @@ public final class RPGCORE extends JavaPlugin {
     private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
     private TabManager tabManager;
+    private KupiecNPC kupiecNPC;
 
     private int i = 1;
 
@@ -114,6 +120,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
         this.getOsManager().loadAllRequiredOs();
+        this.getKupiecNPC().loadAll();
+        this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
         this.getBaoManager().getAllEntities();
         this.getMagazynierNPC().loadMagazynierMissions();
@@ -167,6 +175,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
 
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
@@ -179,7 +188,6 @@ public final class RPGCORE extends JavaPlugin {
         // TRADE
         this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
-        this.getServer().getPluginManager().registerEvents(new TRADEInventoryDrag(), this);
 
         // TARG
         this.getServer().getPluginManager().registerEvents(new TARGInventoryClick(this), this);
@@ -210,6 +218,13 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GuildsInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new GuildsPlayerDamage(this), this);
 
+
+        // KOSZ
+        this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
+        this.getCommand("kosz").setExecutor(new Kosz());
+
+
         // NPC
 
         // ...DUSZOLOG
@@ -228,22 +243,23 @@ public final class RPGCORE extends JavaPlugin {
         // ...TELEPORTER
         this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
 
+        // ...KUPIEC
+        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
         new UpdateTabTask(this);
     }
 
     public void onDisable() {
-        this.mongo.onDisable();
         this.mongo.saveAllPlayers();
+        this.mongo.onDisable();
         this.spawn.setSpawn(null);
         this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
     }
 
     private void initDatabase() {
-        //this.sql = new SQLManager(this);
-        //this.createTables = new CreateTables(this);
         this.mongo = new MongoManager(this);
     }
 
@@ -276,7 +292,7 @@ public final class RPGCORE extends JavaPlugin {
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
         this.magazynierNPC = new MagazynierNPC(this);
-
+        this.kupiecNPC = new KupiecNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -405,6 +421,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public TabManager getTabManager() {
         return tabManager;
+    }
+
+    public KupiecNPC getKupiecNPC() {
+        return kupiecNPC;
     }
 
 }

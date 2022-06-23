@@ -101,4 +101,10 @@ commands:
   magazyn:
 
   klan:
+    aliases:
+      - g
+
+  kosz:
+    aliases:
+      - k
     

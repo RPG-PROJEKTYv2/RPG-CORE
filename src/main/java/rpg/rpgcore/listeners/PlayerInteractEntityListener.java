@@ -21,7 +21,7 @@ public class PlayerInteractEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteractEntity(PlayerInteractAtEntityEvent e){
+    public void onPlayerInteractEntity(PlayerInteractAtEntityEvent e) {
 
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
@@ -31,6 +31,15 @@ public class PlayerInteractEntityListener implements Listener {
             // MAGAZYNIER
             if (entityName.equalsIgnoreCase("Magazynier")) {
                 rpgcore.getMagazynierNPC().openMagazynierMain(player);
+                return;
+            }
+        }
+
+        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // KUPIEC
+            if (entityName.equalsIgnoreCase("Kupiec")) {
+                rpgcore.getKupiecNPC().openKupiecInventory(player);
                 return;
             }
         }

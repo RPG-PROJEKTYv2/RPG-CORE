@@ -22,7 +22,9 @@ public class Config {
         rpgcore.getConfig().addDefault("auto_message", true);
         rpgcore.getConfig().addDefault("auto_message_time", 5000);
         autoCfg.put("auto_message_1", "&7To jest podstawowa wiadomosc. Edytuj Plik config.yml, zeby ja zmienic!");
-        rpgcore.getConfig().createSection("auto_messages", autoCfg);
+        if (rpgcore.getConfig().getConfigurationSection("auto_message") != null) {
+            rpgcore.getConfig().createSection("auto_messages", autoCfg);
+        }
         rpgcore.getConfig().addDefault("max_lvl", 130);
         if (rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl") == null) {
             rpgcore.getConfig().createSection("wymaganyexp_na_lvl");
@@ -57,6 +59,16 @@ public class Config {
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").addDefault("Drwal_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").addDefault("Gornik_" + i,1 );
             }
+
+        }
+
+        if (rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List") == null) {
+            rpgcore.getConfig().createSection("Kupiec_Item_List");
+            rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").addDefault("Item_List", "MINECART,DIAMOND_CHESTPLATE");
+            rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").createSection("Item_Price_List");
+            rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getConfigurationSection("Item_Price_List").createSection("MINECART");
+            rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getConfigurationSection("Item_Price_List").getConfigurationSection("MINECART").createSection("Example_Item_Name");
+            rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getConfigurationSection("Item_Price_List").getConfigurationSection("MINECART").getConfigurationSection("Example_Item_Name").addDefault("Price", 100.0);
 
         }
 
