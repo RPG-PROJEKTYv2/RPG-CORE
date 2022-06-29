@@ -51,6 +51,7 @@ public class LvlManager {
     public void loadExpForAllMobs() {
         try {
             List<String> allMobsToArray = new ArrayList<>(MythicMobs.inst().getMobManager().getMobNames());
+            //MythicMobs.inst().getAPIHelper().spawnMythicMob();
             for (String s : allMobsToArray) {
                 String mob = Utils.removeColor(MythicMobs.inst().getMobManager().getMythicMob(s).getDisplayName().get());
                 double exp = 0;

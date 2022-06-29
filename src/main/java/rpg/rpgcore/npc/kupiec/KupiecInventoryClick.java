@@ -47,7 +47,6 @@ public class KupiecInventoryClick implements Listener {
 
         if (Utils.removeColor(clickedInventoryTitle).equals("Kupiec")) {
             final List<ItemStack> playerItems = rpgcore.getKupiecNPC().getPlayerItemStackList(playerUUID);
-            player.sendMessage("kliknieto w gui");
             if (clickedItem.getType().equals(Material.STAINED_GLASS_PANE) || clickedItem.getType().equals(Material.PAPER)) {
                 e.setCancelled(true);
                 return;
@@ -55,6 +54,31 @@ public class KupiecInventoryClick implements Listener {
 
             if (e.getClick().isShiftClick() || e.getClick().isKeyboardClick() || e.getClick().isCreativeAction()){
                 e.setCancelled(true);
+                return;
+            }
+
+            if (clickedSlot == 49) {
+                e.setCancelled(true);
+
+                if (playerItems.isEmpty()) {
+                    return;
+                }
+
+                if (!e.getCursor().getType().equals(Material.AIR)) {
+                    return;
+                }
+
+                final double moneyToAdd = rpgcore.getKupiecNPC().getPlayerSellValueItems(playerUUID);
+                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) + moneyToAdd);
+
+                for (ItemStack is : playerItems) {
+                    clickedInventory.remove(is);
+                }
+                rpgcore.getKupiecNPC().resetPlayerSellValueItems(playerUUID);
+                rpgcore.getKupiecNPC().resetPlayerItemStack(playerUUID);
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
+                rpgcore.getKupiecNPC().addMoneyEarnedPerDay(moneyToAdd);
+                player.sendMessage(Utils.format(Utils.KUPIEC + "Pomyslnie sprzedano wszystkie przedmioty za &6" + Utils.spaceNumber(String.format("%.2f", moneyToAdd)) + " &2$"));
                 return;
             }
 
@@ -75,7 +99,7 @@ public class KupiecInventoryClick implements Listener {
                         e.getCursor().setAmount(1);
                     }
                     rpgcore.getKupiecNPC().addPlayerItemStack(playerUUID, e.getCursor().clone());
-                    rpgcore.getKupiecNPC().addPlayerSellValueItems(playerUUID, rpgcore.getKupiecNPC().getItemPrice(e.getCursor()));
+                    rpgcore.getKupiecNPC().addPlayerSellValueItems(playerUUID, rpgcore.getKupiecNPC().getItemPrice(e.getCursor()) * e.getCursor().getAmount());
 
                     clickedInventory.setItem(49, rpgcore.getKupiecNPC().getSellItem(rpgcore.getKupiecNPC().getPlayerSellValueItems(playerUUID)));
                 }

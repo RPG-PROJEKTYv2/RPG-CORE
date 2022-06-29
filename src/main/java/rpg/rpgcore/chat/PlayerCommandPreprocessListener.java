@@ -25,7 +25,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         if (rpgcore.getCooldownManager().hasCommandCooldown(player.getUniqueId())) {
             final long sekundy = rpgcore.getCooldownManager().getPlayerCommandCooldown(player.getUniqueId()) - System.currentTimeMillis();
             final String mili = String.valueOf(TimeUnit.MILLISECONDS.toMillis(sekundy) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(sekundy)));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&3Nastepnej komendy mozesz uzyc za &f" + TimeUnit.MILLISECONDS.toSeconds(sekundy) + "&f.&f" + mili + " &3sekund"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nastepnej komendy mozesz uzyc za &c" + TimeUnit.MILLISECONDS.toSeconds(sekundy) + "&7.&c" + mili + " sekund"));
             e.setCancelled(true);
             return;
         }

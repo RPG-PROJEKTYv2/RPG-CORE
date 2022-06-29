@@ -79,7 +79,8 @@ public class EntityDamageEntityListener implements Listener {
 
             } else {
                 e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
-                if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
+                //TODO WALI COS NULLPOINTEREM W IFIE I TRZEBA SPRAWDZIC CO
+                /*if ((entity.getCustomName() != null && entity.getPassenger() != null && (entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca"))) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     if (entity.isInsideVehicle()) {
                         livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
@@ -88,7 +89,7 @@ public class EntityDamageEntityListener implements Listener {
                         livingEntity.damage(e.getDamage());
                         livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
                     }
-                }
+                }*/
             }
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
         }

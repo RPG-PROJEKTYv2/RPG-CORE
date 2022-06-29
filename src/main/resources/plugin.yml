@@ -107,4 +107,6 @@ commands:
   kosz:
     aliases:
       - k
+
+  helpop:
     

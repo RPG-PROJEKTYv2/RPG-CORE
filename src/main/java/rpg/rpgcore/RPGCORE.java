@@ -161,6 +161,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
         this.getCommand("testanimation").setExecutor(new TestAnimation(this));
         this.getCommand("test").setExecutor(new Test(this));
+        this.getCommand("helpop").setExecutor(new HelpOP(this));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);

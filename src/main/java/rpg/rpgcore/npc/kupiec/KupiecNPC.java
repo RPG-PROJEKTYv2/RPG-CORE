@@ -48,17 +48,10 @@ public class KupiecNPC {
                 }
             }
         }
-        System.out.println(itemStackList);
-        System.out.println(itemPriceMap);
     }
 
 
     public void openKupiecInventory(final Player player) {
-        final ItemBuilder testItem = new ItemBuilder(Material.DIAMOND_CHESTPLATE, 1);
-
-        player.getInventory().addItem(testItem.setName("&6To jest testowy Item").toItemStack());
-
-
         final Inventory gui = Bukkit.createInventory(null, 54, "Kupiec");
 
         glass1.setName(" ");
@@ -87,9 +80,7 @@ public class KupiecNPC {
     }
 
     public boolean checkIfItemIsInLists(final ItemStack itemStack) {
-        System.out.println(itemStack.getType());
         if (itemStackList.contains(itemStack.getType())) {
-            System.out.println("ma taki item stack");
             return itemPriceMap.containsKey(Utils.removeColor(itemStack.getItemMeta().getDisplayName()));
         } else {
             return false;
@@ -105,7 +96,7 @@ public class KupiecNPC {
 
         lore.add(" ");
         lore.add("&7Sprzedaj swoje przedmioty za:");
-        lore.add("&6" + String.format("%.2f", newSellStackCash) +"&2$");
+        lore.add("&6" + Utils.spaceNumber(String.format("%.2f", newSellStackCash)) +"&2$");
 
         sell.setName("&6&lSprzedaj").setLore(lore);
         return sell.toItemStack().clone();
@@ -116,7 +107,7 @@ public class KupiecNPC {
 
         lore.add(" ");
         lore.add("&7Gracze zarobili dzisiaj:");
-        lore.add("&6" + String.format("%.2f", moneyEarnedPerDay) +"&2$");
+        lore.add("&6" + Utils.spaceNumber(String.format("%.2f", moneyEarnedPerDay)) +"&2$");
 
         dailyIncome.setName("&c&lDzienny zarobek").setLore(lore);
 

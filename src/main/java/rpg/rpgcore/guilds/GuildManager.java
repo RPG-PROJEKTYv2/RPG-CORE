@@ -194,7 +194,7 @@ public class GuildManager {
         guildDeaths.get(tag).remove(uuid);
         guildExpEarned.get(tag).remove(uuid);
 
-        if (this.getGuildCoOwner(tag).equals(uuid)) {
+        if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
             this.setGuildCoOwner(tag, null);
         }
 
@@ -313,7 +313,7 @@ public class GuildManager {
                 lore.add("&a&lOnline");
             } else {
                 lore.add("&c&lOffline");
-                lore.add("&7Ostatnio widany: &c" + this.getLastSeenDateInString(tag, uuid));
+                lore.add("&7Ostatnio widziany: &c" + this.getLastSeenDateInString(tag, uuid));
             }
 
             if (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId())) {
