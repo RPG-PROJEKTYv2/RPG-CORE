@@ -245,9 +245,9 @@ public class DuszologNPC {
         this.itemLore.clear();
 
         // MIEJSCE NA CZEK Z KASĄ
-        brakitemu.setName("&c&lBRAK CZEKU NA &2$");
+        brakitemu.setName("&c&lBRAK CZEKU NA &6&l10 000 000&2$");
         this.itemLore.add(" ");
-        this.itemLore.add("&8>> &eKliknij na czek z &2$ &eaby go dodac");
+        this.itemLore.add("&8>> &eKliknij na czek z &6&l10 000 000&2$ &eaby go dodac");
         this.itemLore.add(" ");
 
         brakitemu.addGlowing();

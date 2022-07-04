@@ -37,5 +37,15 @@ public class DuszologPlayerInteract implements Listener {
                 }
             }
         }
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (eventItem.getType() == Material.FIREWORK_CHARGE) {
+                if (eventItem.getItemMeta().getDisplayName() == null) {
+                    return;
+                }
+                if (eventItem.getItemMeta().getDisplayName().contains(Utils.format("&3Kamien &bUzbrojenia"))) {
+                    player.openInventory(rpgcore.getDuszologNPC().dodawanieKAMIENIA());
+                }
+            }
+        }
     }
 }
