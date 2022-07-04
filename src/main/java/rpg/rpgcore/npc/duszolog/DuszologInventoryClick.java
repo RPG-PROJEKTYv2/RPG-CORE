@@ -76,9 +76,9 @@ public class DuszologInventoryClick implements Listener {
                 e.setCancelled(true);
                 if (clickedItem.getType() == Material.DOUBLE_PLANT) {
                     if (clickedItem.getItemMeta().getDisplayName().contains(Utils.format("&eCzek na &610 000 000.00 &2$"))) {
-                        //if (player.getOpenInventory().getTopInventory().getItem(0).getType().equals("CHESTPLATE")) {
-                        //    player.sendMessage("test");
-                        //}
+                        if (String.valueOf(player.getOpenInventory().getTopInventory().getItem(0).getType()).contains("CHESTPLATE")) {
+                            player.sendMessage("test");
+                        }
                         if (String.valueOf(clickedItem.getType()).contains("CHESTPLATE")) {
                             if (player.getOpenInventory().getTopInventory().getItem(0).getType().equals(Material.STAINED_GLASS_PANE)) {
                                 if (player.getOpenInventory().getTopInventory().getItem(1).getType().equals(Material.DOUBLE_PLANT)) {

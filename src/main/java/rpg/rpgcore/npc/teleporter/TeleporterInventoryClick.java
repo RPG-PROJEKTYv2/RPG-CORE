@@ -1,5 +1,7 @@
 package rpg.rpgcore.npc.teleporter;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +29,7 @@ public class TeleporterInventoryClick implements Listener {
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
+        // HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {
             return;
@@ -38,15 +40,17 @@ public class TeleporterInventoryClick implements Listener {
         final int clickedSlot = e.getSlot();
 
         if (clickedInventoryTitle.equals(rpgcore.getTeleporterNPC().teleporterMAIN(player).getName())) {
-            if (clickedSlot == 10) {
-                if (clickedItem.getType() == Material.GRASS) {
-                    player.sendMessage("test teleportacja 1 expo");
+            if (clickedSlot == 0) {
+                if (clickedItem.getType() == Material.IRON_FENCE) {
+                    Location locEXP1 = new Location(Bukkit.getWorld("Expowisko1"), 1, 5, 30);
+                    player.teleport(locEXP1);
                     player.closeInventory();
                 }
             }
-            if (clickedSlot == 11) {
-                if (clickedItem.getType() == Material.STONE) {
-                    player.sendMessage("test teleportacja 2 expo");
+            if (clickedSlot == 1) {
+                if (clickedItem.getType() == Material.RED_MUSHROOM) {
+                    Location locEXP2 = new Location(Bukkit.getWorld("Expowisko1"), 1, 5, 30);
+                    player.teleport(locEXP2);
                     player.closeInventory();
                 }
             }
