@@ -316,7 +316,7 @@ public class GuildManager {
                 lore.add("&7Ostatnio widziany: &c" + this.getLastSeenDateInString(tag, uuid));
             }
 
-            if (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId())) {
+            if (this.getGuildCoOwner(tag) != null && (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId()))) {
                 lore.add(" ");
                 lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }
