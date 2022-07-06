@@ -169,7 +169,7 @@ public class PomocManager {
         this.itemLore.clear();
 
         // KOMENDA 5
-        komendyList.setName("&8* &6/OLDtarg");
+        komendyList.setName("&8* &6/targ");
         this.itemLore.add(" ");
         this.itemLore.add("&fTarg serwerowy.");
 
@@ -182,7 +182,7 @@ public class PomocManager {
         // KOMENDA 6
         komendyList.setName("&8* &6/wystaw <kwota>");
         this.itemLore.add(" ");
-        this.itemLore.add("&fWystawianie na OLDtarg itemu z łapki za daną cene.");
+        this.itemLore.add("&fWystawianie na targ itemu z łapki za daną cene.");
 
         komendyList.setLore(itemLore);
 

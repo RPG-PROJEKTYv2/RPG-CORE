@@ -394,7 +394,7 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private void updateInventory(final int itemCategory) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (final Player p : Bukkit.getOnlinePlayers()) {
             if (p.getOpenInventory() != null && p.getOpenInventory().getTopInventory() != null && Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targi #")
                     || Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targ gracza")) {
                 if (Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targi #")) {
