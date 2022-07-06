@@ -43,6 +43,10 @@ import rpg.rpgcore.admin.god.GodManager;
 import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.Message;
 import rpg.rpgcore.msg.Reply;
+import rpg.rpgcore.newTarg.NewTarg;
+import rpg.rpgcore.newTarg.NewTargInventoryClick;
+import rpg.rpgcore.newTarg.NewTargManager;
+import rpg.rpgcore.newTarg.NewTargWystaw;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClick;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClose;
 import rpg.rpgcore.npc.kupiec.KupiecNPC;
@@ -69,7 +73,7 @@ import rpg.rpgcore.spawn.Spawn;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
-import rpg.rpgcore.targ.*;
+import rpg.rpgcore.OLDtarg.*;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
@@ -106,6 +110,7 @@ public final class RPGCORE extends JavaPlugin {
     private GuildManager guildManager;
     private TabManager tabManager;
     private KupiecNPC kupiecNPC;
+    private NewTargManager newTargManager;
 
     private int i = 1;
 
@@ -154,10 +159,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("tempmute").setExecutor(new TempMute(this));
         this.getCommand("message").setExecutor(new Message(this));
         this.getCommand("reply").setExecutor(new Reply(this));
-        this.getCommand("targ").setExecutor(new Targ(this));
+        this.getCommand("targ").setExecutor(new NewTarg(this));
         this.getCommand("kasa").setExecutor(new Kasa(this));
         this.getCommand("wyplac").setExecutor(new Wyplac(this));
-        this.getCommand("wystaw").setExecutor(new Wystaw(this));
+        this.getCommand("wystaw").setExecutor(new NewTargWystaw(this));
         this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
         this.getCommand("testanimation").setExecutor(new TestAnimation(this));
         this.getCommand("test").setExecutor(new Test(this));
@@ -191,7 +196,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
 
         // TARG
-        this.getServer().getPluginManager().registerEvents(new TARGInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new NewTargInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new TARGInventoryClose(this), this);
 
         // POMOC
@@ -248,7 +253,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
 
+        // BACKUP
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
+
+        // TAB
         new UpdateTabTask(this);
     }
 
@@ -286,6 +294,7 @@ public final class RPGCORE extends JavaPlugin {
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);
         this.tabManager = new TabManager(this);
+        this.newTargManager = new NewTargManager(this);
     }
 
     private void initNPCS() {
@@ -426,6 +435,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public KupiecNPC getKupiecNPC() {
         return kupiecNPC;
+    }
+
+    public NewTargManager getNewTargManager() {
+        return newTargManager;
     }
 
 }

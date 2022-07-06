@@ -1,4 +1,4 @@
-package rpg.rpgcore.targ;
+package rpg.rpgcore.OLDtarg;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
@@ -45,7 +45,7 @@ public class TargManager {
         allItems.clear();
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (rpgcore.getTargManager().getPlayerTarg(p.getUniqueId()).getItem(0) != null) {
+            if (getPlayerTarg(p.getUniqueId()).getItem(0) != null) {
                 targItem.setName("&4&l" + p.getName());
                 targItem.hideFlag();
                 allItems.add(targItem.toItemStack().clone());
@@ -183,6 +183,7 @@ public class TargManager {
         itemLore.remove(i-5);
         itemLore.remove(i-6);
         itemLore.remove(i-7);
+        itemLore.remove(i-8);
 
         meta.setLore(Utils.format(itemLore));
         itemStack.setItemMeta(meta);

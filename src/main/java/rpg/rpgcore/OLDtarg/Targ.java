@@ -1,4 +1,4 @@
-package rpg.rpgcore.targ;
+package rpg.rpgcore.OLDtarg;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,8 +24,8 @@ public class Targ implements CommandExecutor {
 
         final Player player = (Player) sender;
 
-        if (!(player.hasPermission("rpg.targ"))) {
-            player.sendMessage(Utils.permisje("rpg.targ"));
+        if (!(player.hasPermission("rpg.OLDtarg"))) {
+            player.sendMessage(Utils.permisje("rpg.OLDtarg"));
             return false;
         }
 
@@ -35,7 +35,7 @@ public class Targ implements CommandExecutor {
         }
 
 
-        player.sendMessage(Utils.poprawneUzycie("targ"));
+        player.sendMessage(Utils.poprawneUzycie("OLDtarg"));
         return false;
     }
 }

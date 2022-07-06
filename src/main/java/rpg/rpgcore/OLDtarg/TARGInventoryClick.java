@@ -1,4 +1,4 @@
-package rpg.rpgcore.targ;
+package rpg.rpgcore.OLDtarg;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -74,16 +74,16 @@ public class TARGInventoryClick implements Listener {
 
             final UUID playerTargUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim()));
             if (rpgcore.getTargManager().getPlayerTarg(playerTargUUID).getViewers().size() != 0) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cKtos aktualnie przeglada ten targ, sprobuj ponownie za chwile"));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cKtos aktualnie przeglada ten OLDtarg, sprobuj ponownie za chwile"));
                 return;
             }
             player.openInventory(rpgcore.getTargManager().getPlayerTarg(playerTargUUID));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otworzyles targ gracza &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim())));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostanie zamkniety po &c60 sekundach"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otworzyles OLDtarg gracza &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim())));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie OLDtarg zostanie zamkniety po &c60 sekundach"));
             task = rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> {
                 if (player.getOpenInventory().getTopInventory().getName().contains("Targ gracza") || player.getOpenInventory().getTopInventory().getName().contains("Kup przedmiot ")) {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie targ zostal zamkniety poniewaz byl otwarty dluzej niz &c60 sekund"));
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&8&oOchrona AntyBlock, &8otwarty przez ciebie OLDtarg zostal zamkniety poniewaz byl otwarty dluzej niz &c60 sekund"));
                 }
             }, 1200L);
             rpgcore.getTargManager().putPlayerTask(playerUUID, task);

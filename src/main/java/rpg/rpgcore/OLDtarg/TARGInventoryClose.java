@@ -1,4 +1,4 @@
-package rpg.rpgcore.targ;
+package rpg.rpgcore.OLDtarg;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -80,6 +80,8 @@ commands:
     aliases:
       - market
       - ah
+      - bazar
+      - rynek
 
   kasa:
     aliases:

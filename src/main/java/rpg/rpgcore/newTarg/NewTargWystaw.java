@@ -1,4 +1,4 @@
-package rpg.rpgcore.targ;
+package rpg.rpgcore.newTarg;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,20 +13,19 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Wystaw implements CommandExecutor {
+public class NewTargWystaw implements CommandExecutor {
 
     private final RPGCORE rpgcore;
 
-    private final ItemBuilder accept = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 ,(short) 5);
-    private final ItemBuilder cancell = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 ,(short) 14);
-    private final HashMap<Integer, ItemStack> itemsToRemove = new HashMap<>();
-
-    public Wystaw(final RPGCORE rpgcore) {
+    public NewTargWystaw(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
+
+    private final ItemBuilder accept = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 ,(short) 5);
+    private final ItemBuilder cancel = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 ,(short) 14);
 
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
@@ -48,6 +47,11 @@ public class Wystaw implements CommandExecutor {
             return false;
         }
 
+        if (player.getItemInHand().getItemMeta().getDisplayName() == null) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przedmiot &cmusi &7posiadac nazwe"));
+            return false;
+        }
+
         if (args.length == 1) {
             if (args[0].contains("k")) {
                 int kIndex = args[0].indexOf('k');
@@ -63,12 +67,10 @@ public class Wystaw implements CommandExecutor {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz wystawic przedmiotu za taka kwote"));
                     return false;
                 }
-                rpgcore.getTargManager().addToWystawia(player.getUniqueId());
+                rpgcore.getNewTargManager().addToWystawia(player.getUniqueId());
                 this.wystawGUI(player, player.getItemInHand(), cena);
 
-                itemsToRemove.put(0, player.getItemInHand());
-                player.getInventory().removeItem(itemsToRemove.get(0));
-                itemsToRemove.clear();
+                player.getInventory().removeItem(player.getItemInHand());
 
 
                 return false;
@@ -89,23 +91,28 @@ public class Wystaw implements CommandExecutor {
         accept.setName("&a&lWystaw przedmiot!");
         accept.addGlowing();
 
-        cancell.setName("&c&lAnuluj!");
-        cancell.addGlowing();
+        cancel.setName("&c&lAnuluj!");
+        cancel.addGlowing();
 
         for (int i = 0; i < wystawGUI.getSize(); i++) {
             if (i < 4) {
                 wystawGUI.setItem(i, accept.toItemStack());
             } else {
-                wystawGUI.setItem(i, cancell.toItemStack());
+                wystawGUI.setItem(i, cancel.toItemStack());
             }
         }
 
         final ItemMeta meta = is.getItemMeta();
 
-        final List<String> lore = meta.getLore();
+        List<String> lore = new ArrayList<>();
+
+        if (meta.hasLore()) {
+            lore = meta.getLore();
+        }
 
         lore.add(" ");
-        lore.add("&2Cena: &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwota)) + " &2$");
+        lore.add(Utils.format("&7Wlasciciel: &c" + player.getName()));
+        lore.add(Utils.format("&7Cena: &6" + Utils.spaceNumber(String.format("%.2f", kwota)) + "&2$"));
         lore.add(" ");
         lore.add("&8Wystawiajac ten przedmiot za kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(kwota)) + " &2$");
         lore.add("&8Zaplacisz podatek za wystawienie przedmiotu");
@@ -121,4 +128,5 @@ public class Wystaw implements CommandExecutor {
 
         player.openInventory(wystawGUI);
     }
+
 }
