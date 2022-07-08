@@ -47,6 +47,8 @@ import rpg.rpgcore.newTarg.NewTarg;
 import rpg.rpgcore.newTarg.NewTargInventoryClick;
 import rpg.rpgcore.newTarg.NewTargManager;
 import rpg.rpgcore.newTarg.NewTargWystaw;
+import rpg.rpgcore.npc.kowal.KowalInventoryClick;
+import rpg.rpgcore.npc.kowal.KowalNPC;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClick;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClose;
 import rpg.rpgcore.npc.kupiec.KupiecNPC;
@@ -110,6 +112,7 @@ public final class RPGCORE extends JavaPlugin {
     private GuildManager guildManager;
     private TabManager tabManager;
     private KupiecNPC kupiecNPC;
+    private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
 
     private int i = 1;
@@ -253,6 +256,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
 
+        // ...KOWAL
+        this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
+
         // BACKUP
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
@@ -303,6 +309,7 @@ public final class RPGCORE extends JavaPlugin {
         this.rybakNPC = new RybakNPC(this);
         this.magazynierNPC = new MagazynierNPC(this);
         this.kupiecNPC = new KupiecNPC(this);
+        this.kowalNPC = new KowalNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -435,6 +442,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public KupiecNPC getKupiecNPC() {
         return kupiecNPC;
+    }
+
+    public KowalNPC getKowalNPC() {
+        return kowalNPC;
     }
 
     public NewTargManager getNewTargManager() {

@@ -26,6 +26,7 @@ public class GlobalItems {
     private static final ItemBuilder nies = new ItemBuilder(Material.DIAMOND_BLOCK);
     private static final ItemBuilder bonNaMagazyn = new ItemBuilder(Material.PAPER);
     private static final ItemBuilder artefaktMagazyniera = new ItemBuilder(Material.EMERALD);
+    private static final ItemBuilder zwojBlogoslawienstwa = new ItemBuilder(Material.BOOK);
     
     private static final List<String> lore = new ArrayList<>();
 
@@ -173,6 +174,18 @@ public class GlobalItems {
         lore.add("&4&lARTEFAKT");
         artefaktMagazyniera.setName("&4&lArtefakt &b&lMagazyniera").setLore(lore).addGlowing();
         return artefaktMagazyniera.toItemStack().clone();
+    }
+
+
+
+    // ITEMY DO ULEPSZEN I TAKICH INNYCH
+    public static ItemStack getZwojBlogoslawienstwa(final int amount) {
+        lore.clear();
+        lore.add("&8Przedmiot ten ochroni twoj");
+        lore.add("&8przedmiot przed spaleniem podczas");
+        lore.add("&8ulepszania go u &4&lKowala");
+        zwojBlogoslawienstwa.setName("&a&lZwoj Blogoslawienstwa").setLore(lore).addGlowing().setAmount(amount);
+        return zwojBlogoslawienstwa.toItemStack().clone();
     }
 
 }
