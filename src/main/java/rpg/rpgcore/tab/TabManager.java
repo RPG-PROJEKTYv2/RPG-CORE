@@ -59,22 +59,22 @@ public class TabManager {
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
         final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
         if (tab != null) {
-            tab.set(player, 0, 0, "&7Informacje                       ");
-            tab.set(player, 1, 0, "&7Lista Graczy:                    ");
-            tab.set(player, 2, 0, "&7                                ");
-            tab.set(player, 3, 0, "&7                                ");
-            tab.set(player, 0, 19, "&7                                ");
-            tab.set(player, 1, 19, "&7                                ");
-            tab.set(player, 2, 19, "&7                                ");
-            tab.set(player, 3, 19, "&7                                ");
+            tab.set(player, 0, 0, "&7Informacje");
+            tab.set(player, 1, 0, "&7Lista Graczy:");
+            tab.set(player, 2, 0, "&7");
+            tab.set(player, 3, 0, "&7");
+            tab.set(player, 0, 19, "&7");
+            tab.set(player, 1, 19, "&7");
+            tab.set(player, 2, 19, "&7");
+            tab.set(player, 3, 19, "&7");
             int number2 = 1;
             int number3 = 2;
             int number4 = 3;
             for (int i = 1; i < 19; i++) {
-                tab.set(player, 0, i, "&7                                ");
-                tab.set(player, 1, i, "&7                                ");
-                tab.set(player, 2, i, "&7                                ");
-                tab.set(player, 3, i, "&7                                ");
+                tab.set(player, 0, i, "&7");
+                tab.set(player, 1, i, "&7");
+                tab.set(player, 2, i, "&7");
+                tab.set(player, 3, i, "&7");
                 if (lista.size() >= number2) {
                     tab.set(player, 1, i, Utils.format(lista.get(number2 - 1).replaceAll("/", " ")));
                 }

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Random;
 import java.util.UUID;
 
 import static rpg.rpgcore.utils.Utils.random;
@@ -24,11 +25,16 @@ public class DamageManager {
     }
 
     public void sendDamagePacket(final double dmg, final Location entityLocation, final Player p) {
-        entityLocation.add(0, 0, 0.5);
+        final Random random = new Random();
+
+        final double randomx = (random.nextInt(11)-5) / 10.0;
+        final double randomy = (random.nextInt(11)-5) / 10.0;
+        final double randomz = (random.nextInt(11)-5) / 10.0;
+        entityLocation.add(randomx, randomy, randomz);
         final WorldServer s = ((CraftWorld) entityLocation.getWorld()).getHandle();
         final EntityArmorStand stand = new EntityArmorStand(s);
 
-        stand.setLocation(entityLocation.getX() + random.nextDouble(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
+        stand.setLocation(entityLocation.getX(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
         stand.setCustomName(Utils.format("&c- " + Utils.df.format(dmg)));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);

@@ -68,13 +68,14 @@ public class MongoManager {
         while (result.hasNext()) {
             DBObject obj = result.next();
             UUID uuid = UUID.fromString(obj.get("_id").toString());
+            System.out.println(uuid);
             rpgcore.getPlayerManager().createPlayer(
                     (String) obj.get("nick"),
                     uuid,
                     (String) obj.get("banInfo"),
                     (String) obj.get("muteInfo"),
                     (String) obj.get("punishmentHistory"),
-                    (int) obj.get("level"),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level"))))),
                     (double) obj.get("exp"),
                     (int) obj.get("osMoby"),
                     (int) obj.get("osLudzie"),

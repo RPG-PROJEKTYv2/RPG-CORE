@@ -34,7 +34,6 @@ public class PlayerQuitListener implements Listener {
         if (rpgcore.getGuildManager().hasGuild(pUUID)) {
             final String tag = rpgcore.getGuildManager().getGuildTag(pUUID);
             rpgcore.getGuildManager().putGuildLastOnline(tag, pUUID, new Date());
-            System.out.println("dodano!");
         }
 
         e.setQuitMessage(Utils.quitMessage(name));

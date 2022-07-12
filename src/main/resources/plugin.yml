@@ -111,4 +111,7 @@ commands:
       - k
 
   helpop:
+
+  removenearbyentities:
+
     

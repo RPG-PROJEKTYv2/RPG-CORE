@@ -296,4 +296,63 @@ public class Utils {
         final StringBuilder sb = new StringBuilder(str);
         return sb.reverse().toString();
     }
+
+    public static int getProtectionLevel(final ItemStack is) {
+
+        if (is.getItemMeta().getLore() == null) {
+            return 0;
+        }
+
+        for (final String s : is.getItemMeta().getLore()) {
+            if (removeColor(s).contains("❣ Obrona: ")) {
+                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
+            }
+        }
+
+        return 0;
+    }
+
+    public static int getThornsLevel(final ItemStack is) {
+
+        if (is.getItemMeta().getLore() == null) {
+            return 0;
+        }
+
+        for (final String s : is.getItemMeta().getLore()) {
+            if (removeColor(s).contains("✪ Thorns: ")) {
+                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
+            }
+        }
+
+        return 0;
+    }
+    public static int getSharpnessLevel(final ItemStack is) {
+
+        if (is.getItemMeta().getLore() == null) {
+            return 0;
+        }
+
+        for (final String s : is.getItemMeta().getLore()) {
+            if (removeColor(s).contains("⚔ Obrazenia: ")) {
+                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
+            }
+        }
+
+        return 0;
+    }
+
+    public static int getObrazeniaMobyLevel(final ItemStack is) {
+
+        if (is.getItemMeta().getLore() == null) {
+            return 0;
+        }
+
+        for (final String s : is.getItemMeta().getLore()) {
+            if (removeColor(s).contains("☠ Obrazenia na potwory: ")) {
+                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
+            }
+        }
+
+        return 0;
+    }
 }

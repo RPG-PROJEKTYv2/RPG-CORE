@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,19 @@ public class PlayerInteractEntityListener implements Listener {
 
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
+
+        if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
+            player.sendMessage("X -" + e.getRightClicked().getLocation().getX());
+            player.sendMessage("Y - " + e.getRightClicked().getLocation().getY());
+            player.sendMessage("Z - " + e.getRightClicked().getLocation().getZ());
+            player.sendMessage("YAW - " + e.getRightClicked().getLocation().getYaw());
+            player.sendMessage("PITCH - " + e.getRightClicked().getLocation().getPitch());
+            final ArmorStand as = (ArmorStand) e.getRightClicked();
+            player.sendMessage("REKA X - " + as.getRightArmPose().getX());
+            player.sendMessage("REKA Y - " + as.getRightArmPose().getY());
+            player.sendMessage("REKA Z - " + as.getRightArmPose().getZ());
+            return;
+        }
 
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());

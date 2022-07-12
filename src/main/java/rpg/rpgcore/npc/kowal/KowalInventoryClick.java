@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.GlobalItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -42,12 +43,18 @@ public class KowalInventoryClick implements Listener {
             e.setCancelled(true);
 
             if (clickedItem.getType().equals(Material.ANVIL)) {
+                if (rpgcore.getKowalNPC().hasAlreadyUpgraded(playerUUID)) {
+                    player.sendMessage(Utils.format("&4&lKowal &8>> &7Przedmiot mozesz ulepszyc tylko raz na jedno &4DT"));
+                    player.closeInventory();
+                    return;
+                }
                 rpgcore.getKowalNPC().openKowalUlepszanieGui(player);
                 return;
             }
 
             if (clickedItem.getType().equals(Material.REDSTONE_TORCH_ON)) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + " &cDalsze &4DT &7bedzie dostepne w pozniejszym terminie"));
+                rpgcore.getKowalNPC().resetUpgradeList();
                 return;
             }
 
@@ -109,8 +116,16 @@ public class KowalInventoryClick implements Listener {
                 return;
             }
 
-            //TODO ZROBIC SAM SYSTEM ULEPSZANIA
+            if (clickedSlot == 22 && !clickedInventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
+                boolean hasZwoj = false;
 
+                if (clickedInventory.getItem(14).equals(GlobalItems.getZwojBlogoslawienstwa(1))) {
+                    hasZwoj = true;
+                }
+                rpgcore.getKowalNPC().upgradeItem(player, clickedInventory.getItem(12).clone(), hasZwoj);
+                player.closeInventory();
+                return;
+            }
             return;
         }
 
