@@ -135,8 +135,14 @@ public class MagazynierNPC {
     }
 
     public void loadAll(final UUID uuid, final String magazyny) {
-        final String[] magazynyList = magazyny.split(",");
         addToPlayerMagazynContent(uuid);
+        if (magazyny == null) {
+            for (int i = 1; i <= 5; i++) {
+                setPlayerMagazynContent(uuid, i, this.createEmptyMagazyn(i));
+            }
+            return;
+        }
+        final String[] magazynyList = magazyny.split(",");
         for (int i = 1; i <= 5; i++) {
             try {
                 setPlayerMagazynContent(uuid, i, Utils.fromBase64(magazynyList[i - 1], Utils.format("&6&lMagazyn #" + i)));
@@ -190,8 +196,7 @@ public class MagazynierNPC {
     }
 
     public String getPlayerAllMagazyny(final UUID uuid) {
-        String magazyny = Utils.toBase64(this.getPlayerMagazynContent(uuid, 1)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 2)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 3)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 4)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 5));
-        return magazyny;
+        return Utils.toBase64(this.getPlayerMagazynContent(uuid, 1)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 2)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 3)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 4)) + "," + Utils.toBase64(this.getPlayerMagazynContent(uuid, 5));
     }
 
     public void setPlayerMagazynAccess(final UUID uuid, final String magazyn) {

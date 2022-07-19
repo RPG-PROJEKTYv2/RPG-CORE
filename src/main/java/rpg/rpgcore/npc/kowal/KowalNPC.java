@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -107,6 +107,25 @@ public class KowalNPC {
         this.upgradeList.add(player.getUniqueId());
         this.clearOstatniUlepszonyItem(player.getUniqueId());
         this.addToAnimationList(player.getUniqueId());
+        player.teleport(new Location(player.getWorld(), -33.5, 6, -3.5, -90, -4.5F));
+
+        /*Location kowalLocation = new Location(Bukkit.getWorld("dt"), 0, 0, 0);
+
+        for (Player p : Bukkit.getWorld("dt").getPlayers()) {
+            if (Utils.removeColor(p.getName()).equals("Kowal")) {
+               kowalLocation = p.getLocation();
+            }
+        }
+
+        Collection<Entity> nearbyEntities = Bukkit.getWorld("dt").getNearbyEntities(kowalLocation, 2, 2, 2);
+
+        for (Entity entity : nearbyEntities) {
+            if (entity instanceof Player) {
+                if (!Utils.removeColor(entity.getName()).equals("Kowal")) {
+                    player.hidePlayer((Player) entity);
+                }
+            }
+        }*/
 
         ulepszanie.add(0.5, "udane");
         ulepszanie.add(0.5, "nieudane");
@@ -171,7 +190,6 @@ public class KowalNPC {
 
         player.getInventory().addItem(itemToUpgrade.clone());
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
-        return;
     }
 
     public void upgradeWeapon(final Player player, final ItemStack itemToUpgrade, final int sharp, final int obrazeniaMoby) {
@@ -192,7 +210,6 @@ public class KowalNPC {
 
         player.getInventory().addItem(itemToUpgrade.clone());
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
-        return;
     }
 
     private void runAnimation(final Player player, final ItemStack is, final boolean ulepszylo) {

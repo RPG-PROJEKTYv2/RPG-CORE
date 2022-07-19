@@ -28,6 +28,9 @@ public class PlayerQuitListener implements Listener {
         final UUID pUUID = p.getUniqueId();
         final String name = p.getName();
 
+        rpgcore.getServer().getScheduler().cancelTask(rpgcore.getBackupManager().getTaskId(pUUID));
+        rpgcore.getBackupManager().removeFromTaskMap(pUUID);
+
         rpgcore.getVanishManager().getVanishList().remove(pUUID);
         rpgcore.getMsgManager().getMessageMap().remove(pUUID);
 

@@ -118,7 +118,7 @@ public class MongoManager {
             try {
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64((String) obj.get("Akcesoria")));
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64((String) obj.get("Targ"), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
-                //rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
+                rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
             } catch (final IOException e) {
                 e.printStackTrace();
             }
@@ -252,7 +252,7 @@ public class MongoManager {
         document.put("kasa", 100.0);
         document.put("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
         document.put("BAO_WARTOSCI", "0,0,0,0,0");
-        document.put("RYBAK_MISJE","false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
+        document.put("RYBAK_MISJE", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
         document.put("RYBAK_POSTEP", 0);
         document.put("RYBAK_SRDMG", 0.0);
         document.put("RYBAK_SRDEF", 0.0);
@@ -406,10 +406,10 @@ public class MongoManager {
         pool.closePool();
     }
 
-    public void saveAllPlayers() {
-        DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
-        for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
+    public void savePlayer(final UUID uuid) {
+        try {
+            DB database = pool.getPool().getDB("minecraft");
+            DBCollection collection = database.getCollection("players");
             BasicDBObject query = new BasicDBObject();
             query.put("_id", uuid.toString());
 
@@ -449,8 +449,16 @@ public class MongoManager {
             update.put("$set", document);
 
             collection.update(query, update);
+
+            pool.closePool();
+
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+        } catch (final Exception e) {
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            e.printStackTrace();
+        } finally {
+            pool.closePool();
         }
-        pool.closePool();
     }
 
     public void saveGuildFirst(final String tag) {
@@ -462,18 +470,27 @@ public class MongoManager {
     }
 
     public void saveGuild(final String tag) {
-        DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("guilds");
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", tag);
+        try {
+            DB database = pool.getPool().getDB("minecraft");
+            DBCollection collection = database.getCollection("guilds");
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", tag);
 
-        BasicDBObject guild = createGuildDocument(tag);
+            BasicDBObject guild = createGuildDocument(tag);
 
-        BasicDBObject update = new BasicDBObject();
-        update.put("$set", guild);
+            BasicDBObject update = new BasicDBObject();
+            update.put("$set", guild);
 
-        collection.update(query, update);
-        pool.closePool();
+            collection.update(query, update);
+            pool.closePool();
+
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
+        } catch (final Exception e) {
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag);
+            e.printStackTrace();
+        } finally {
+            pool.closePool();
+        }
     }
 
     private BasicDBObject createGuildDocument(final String tag) {
@@ -491,7 +508,6 @@ public class MongoManager {
         String members = String.valueOf(sb);
         int lastIndex = members.lastIndexOf(",");
         members = members.substring(0, lastIndex);
-        System.out.println(members);
         guild.put("membersList", members);
         guild.put("pvp", rpgcore.getGuildManager().getGuildPvPStatus(tag));
         guild.put("points", rpgcore.getGuildManager().getGuildPoints(tag));
@@ -547,8 +563,6 @@ public class MongoManager {
     public void onDisable() {
         pool.closePool();
     }
-
-
 
 
 }

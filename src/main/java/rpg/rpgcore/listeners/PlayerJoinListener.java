@@ -39,6 +39,8 @@ public class PlayerJoinListener implements Listener {
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
 
+        rpgcore.getBackupManager().savePlayer(playerUUID);
+
         p.setMaxHealth(20);
 
         int playerLvl;
