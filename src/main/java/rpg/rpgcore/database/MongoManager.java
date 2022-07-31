@@ -76,14 +76,14 @@ public class MongoManager {
                     (String) obj.get("muteInfo"),
                     (String) obj.get("punishmentHistory"),
                     Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level"))))),
-                    (double) obj.get("exp"),
-                    (int) obj.get("osMoby"),
-                    (int) obj.get("osLudzie"),
-                    (int) obj.get("osSakwy"),
-                    (int) obj.get("osNiesy"),
-                    (int) obj.get("osRybak"),
-                    (int) obj.get("osDrwal"),
-                    (int) obj.get("osGornik"),
+                    Double.parseDouble(String.valueOf(obj.get("exp"))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMoby"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osLudzie"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osSakwy"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osNiesy"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osRybak"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osDrwal"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osGornik"))))),
                     (String) obj.get("osMobyAccept"),
                     (String) obj.get("osLudzieAccept"),
                     (String) obj.get("osSakwyAccept"),
@@ -104,20 +104,20 @@ public class MongoManager {
                     0.0,
                     0.0,
                     0.0,
-                    Double.parseDouble((String) obj.get("kasa"))
+                    Double.parseDouble(String.valueOf(obj.get("kasa")))
             );
-            rpgcore.getBaoManager().updateBaoBonusy(uuid, (String) obj.get("BAO_BONUSY"));
-            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, (String) obj.get("BAO_WARTOSCI"));
-            rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, (String) obj.get("RYBAK_MISJE"));
-            rpgcore.getRybakNPC().setPlayerPostep(uuid, (int) obj.get("RYBAK_POSTEP"));
-            rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, (double) obj.get("RYBAK_SRDMG"));
-            rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, (double) obj.get("RYBAK_SRDEF"));
-            rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, (double) obj.get("RYBAK_DDMG"));
-            rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, (double) obj.get("RYBAK_BLOK"));
+            rpgcore.getBaoManager().updateBaoBonusy(uuid, String.valueOf(obj.get("BAO_BONUSY")));
+            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, String.valueOf(obj.get("BAO_WARTOSCI")));
+            rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, String.valueOf(obj.get("RYBAK_MISJE")));
+            rpgcore.getRybakNPC().setPlayerPostep(uuid, Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("RYBAK_POSTEP"))))));
+            rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_SRDMG"))));
+            rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_SRDEF"))));
+            rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_DDMG"))));
+            rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_BLOK"))));
 
             try {
-                rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64((String) obj.get("Akcesoria")));
-                rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64((String) obj.get("Targ"), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+                rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64(String.valueOf(obj.get("Akcesoria"))));
+                rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
                 rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
             } catch (final IOException e) {
                 e.printStackTrace();
@@ -167,20 +167,20 @@ public class MongoManager {
                     UUID.fromString((String) obj.get("owner")),
                     (String) obj.get("coOwner"),
                     members,
-                    (boolean) obj.get("pvp"),
-                    (int) obj.get("points"),
-                    (int) obj.get("lvl"),
-                    (double) obj.get("exp"),
-                    (int) obj.get("balance"),
-                    (double) obj.get("dodatkowyExp"),
-                    (double) obj.get("sredniDmg"),
-                    (double) obj.get("sredniDef"),
-                    (double) obj.get("silnyNaLudzi"),
-                    (double) obj.get("defNaLudzi"),
-                    killsMap,
-                    deathsMap,
-                    expEarnedMap,
-                    lastOnlineMap);
+                    Boolean.parseBoolean(String.valueOf(obj.get("pvp"))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("points"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("lvl"))))),
+                    Double.parseDouble(String.valueOf(obj.get("exp"))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("balance"))))),
+                    Double.parseDouble(String.valueOf(obj.get("dodatkowyExp"))),
+                    Double.parseDouble(String.valueOf(obj.get("sredniDmg"))),
+                    Double.parseDouble(String.valueOf(obj.get("sredniDef"))),
+                    Double.parseDouble(String.valueOf(obj.get("silnyNaLudzi"))),
+                    Double.parseDouble(String.valueOf(obj.get("defNaLudzi"))),
+                            killsMap,
+                            deathsMap,
+                            expEarnedMap,
+                            lastOnlineMap);
         }
         pool.closePool();
     }
@@ -452,8 +452,10 @@ public class MongoManager {
 
             pool.closePool();
 
+            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
             System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
         } catch (final Exception e) {
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
             System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
             e.printStackTrace();
         } finally {
@@ -484,8 +486,10 @@ public class MongoManager {
             collection.update(query, update);
             pool.closePool();
 
+            Utils.sendToAdministration("&aPomyslnie zapisano gilde: &6" + tag);
             System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
         } catch (final Exception e) {
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu klanu &6:" + tag);
             System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag);
             e.printStackTrace();
         } finally {
@@ -543,7 +547,7 @@ public class MongoManager {
 
         BasicDBObject lastOnlineMap = new BasicDBObject();
         for (Map.Entry<UUID, Date> entry : rpgcore.getGuildManager().getGuildLastOnline(tag).entrySet()) {
-            lastOnlineMap.put(String.valueOf(entry.getKey()), entry.getValue());
+            lastOnlineMap.put(String.valueOf(entry.getKey()), entry.getValue().getTime());
         }
 
         guild.put("lastOnlineMap", lastOnlineMap);

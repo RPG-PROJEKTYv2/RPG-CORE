@@ -24,7 +24,7 @@ public class DamageManager {
         this.rpgcore = rpgcore;
     }
 
-    public void sendDamagePacket(final double dmg, final Location entityLocation, final Player p) {
+    public void sendDamagePacket(final String prefix, final double dmg, final Location entityLocation, final Player p) {
         final Random random = new Random();
 
         final double randomx = (random.nextInt(11)-5) / 10.0;
@@ -35,7 +35,7 @@ public class DamageManager {
         final EntityArmorStand stand = new EntityArmorStand(s);
 
         stand.setLocation(entityLocation.getX(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
-        stand.setCustomName(Utils.format("&c- " + Utils.df.format(dmg)));
+        stand.setCustomName(Utils.format(prefix + "- " + Utils.spaceNumber(String.format("%.2f", dmg))));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
         stand.setInvisible(true);

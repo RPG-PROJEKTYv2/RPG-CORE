@@ -27,6 +27,7 @@ public class GlobalItems {
     private static final ItemBuilder bonNaMagazyn = new ItemBuilder(Material.PAPER);
     private static final ItemBuilder artefaktMagazyniera = new ItemBuilder(Material.EMERALD);
     private static final ItemBuilder zwojBlogoslawienstwa = new ItemBuilder(Material.BOOK);
+    private static final ItemBuilder hellCoin = new ItemBuilder(Material.EMERALD);
     
     private static final List<String> lore = new ArrayList<>();
 
@@ -186,6 +187,14 @@ public class GlobalItems {
         lore.add("&8ulepszania go u &4&lKowala");
         zwojBlogoslawienstwa.setName("&a&lZwoj Blogoslawienstwa").setLore(lore).addGlowing().setAmount(amount);
         return zwojBlogoslawienstwa.toItemStack().clone();
+    }
+
+    // HELLCOINY
+    public static ItemStack getHellCoin(final int value, final int amount) {
+        lore.clear();
+        lore.add("&8&oKliknij&8, zeby zasilic swoj balans");
+        hellCoin.setName("&c&l" + value + " &4&lH&8&lC").setLore(lore).addGlowing().setAmount(amount);
+        return hellCoin.toItemStack().clone();
     }
 
 }

@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.rybak;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -57,19 +58,23 @@ public class PlayerFishListener implements Listener {
                     double doubleDrop = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(6)).replace("-", "").replace("Szansa na podwojne wylowienie:", "").replace(" ", "").replace("%", "").trim());
 
                     chestDrop.clear();
-                    chestDrop.add(caseDrop/100, "chest");
-                    chestDrop.add(1 - (caseDrop/100), "empty");
+                    chestDrop.add((caseDrop/100), "chest");
+                    chestDrop.add((1 - (caseDrop/100)), "empty");
 
-                    if (chestDrop.next().equals("chest")) {
+                    String chestResult = chestDrop.next();
+                    if (chestResult.equals("chest")) {
                         is = rpgcore.getRybakNPC().getChest();
                     }
+
+
 
                     doubleDrops.clear();
                     doubleDrops.add(doubleDrop/100, "double");
                     doubleDrops.add(1.0 - (doubleDrop/100), "single");
 
+                    String doubleResult = doubleDrops.next();
 
-                    if (doubleDrops.next().equals("double")) {
+                    if (doubleResult.equals("double")) {
                         is.setAmount(2);
                     } else {
                         is.setAmount(1);

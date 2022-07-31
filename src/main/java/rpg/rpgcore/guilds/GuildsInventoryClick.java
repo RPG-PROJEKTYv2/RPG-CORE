@@ -5,10 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.GlobalItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -36,6 +38,7 @@ public class GuildsInventoryClick implements Listener {
         final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
+        // MAIN GUI
         if (clickedInventoryTitle.contains("Panel Klanu")) {
             e.setCancelled(true);
 
@@ -47,12 +50,19 @@ public class GuildsInventoryClick implements Listener {
             }
 
             if (clickedSlot == 16) {
-                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&c&lULEPSZENIA COMMING SOON!"));
+                if (rpgcore.getGuildManager().getGuildOwner(playerGuild).equals(playerUUID) ||
+                        (rpgcore.getGuildManager().getGuildCoOwner(playerGuild) != null && rpgcore.getGuildManager().getGuildCoOwner(playerGuild).equals(playerUUID))) {
+                    rpgcore.getGuildManager().showUpgrades(playerGuild, player);
+                    return;
+                }
+                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem/zastepca klanu!"));
+                player.closeInventory();
                 return;
             }
             return;
         }
 
+        // MEMBERS
         if (clickedInventoryTitle.contains("Czlonkowie Klanu")) {
             e.setCancelled(true);
             final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
@@ -88,6 +98,88 @@ public class GuildsInventoryClick implements Listener {
 
             rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
             player.closeInventory();
+            return;
+        }
+
+        // UPGRADES
+        if (clickedInventoryTitle.contains("Ulepszenia Klanu ")) {
+            e.setCancelled(true);
+            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
+            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) ||
+                    (rpgcore.getGuildManager().getGuildCoOwner(tag) != null && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID)))) {
+                player.closeInventory();
+                return;
+            }
+            int guildPoints = rpgcore.getGuildManager().getGuildBalance(tag);
+
+            if (guildPoints < 1) {
+                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cTwoj Klan nie posiada dostepnych kredytow do rozdania. Mozesz je zdobyc zwiekszajac poziom swojej gildi"));
+                rpgcore.getGuildManager().setGuildBalance(tag, 1);
+                player.closeInventory();
+                return;
+            }
+
+
+            switch (clickedSlot) {
+                case 0:
+                    if (rpgcore.getGuildManager().getGuildSredniDmg(tag) >= 50) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
+                        player.closeInventory();
+                        return;
+                    }
+                    rpgcore.getGuildManager().updateGuildSredniDmg(tag, 2.5);
+                    break;
+                case 1:
+                    return;
+                case 2:
+                    if (rpgcore.getGuildManager().getGuildSredniDef(tag) >= 50) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
+                        player.closeInventory();
+                        return;
+                    }
+                    rpgcore.getGuildManager().updateGuildSredniDef(tag, 2.5);
+                    break;
+                case 3:
+                    return;
+                case 4:
+                    if (rpgcore.getGuildManager().getGuildDodatkowyExp(tag) >= 25) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
+                        player.closeInventory();
+                        return;
+                    }
+                    if (!player.getInventory().containsAtLeast(GlobalItems.getHellCoin(100, 1), 1)) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz odpowiednich przedmiotow do ulepszenia tego drzewka!"));
+                        player.closeInventory();
+                        return;
+                    }
+                    rpgcore.getGuildManager().updateGuildDodatkowyExp(tag, 2.5);
+                    rpgcore.getGuildManager().updateGuildBalance(tag, -1);
+                    player.getInventory().removeItem(GlobalItems.getHellCoin(100, 1));
+                    break;
+                case 5:
+                    return;
+                case 6:
+                    if (rpgcore.getGuildManager().getGuildDefNaLudzi(tag) >= 50) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
+                        player.closeInventory();
+                        return;
+                    }
+                    rpgcore.getGuildManager().updateGuildDefNaLudzi(tag, 2.5);
+                    break;
+                case 7:
+                    return;
+                case 8:
+                    if (rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag) >= 50) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
+                        player.closeInventory();
+                        return;
+                    }
+                    rpgcore.getGuildManager().updateGuildSilnyNaLudzi(tag, 2.5);
+                    break;
+            }
+            rpgcore.getGuildManager().updateGuildBalance(tag, -1);
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + clickedItem.getItemMeta().getDisplayName()));
+            rpgcore.getGuildManager().showUpgrades(tag, player);
             return;
         }
     }

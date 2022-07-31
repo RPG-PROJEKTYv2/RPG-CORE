@@ -28,6 +28,9 @@ public class DuszologPlayerInteract implements Listener {
         final Player player = e.getPlayer();
 
         if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (eventItem == null) {
+                return;
+            }
             if (eventItem.getType() == Material.FIREWORK_CHARGE) {
                 if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;
@@ -38,6 +41,13 @@ public class DuszologPlayerInteract implements Listener {
             }
         }
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getClickedBlock() == null) {
+                return;
+            }
+
+            if (eventItem == null) {
+                return;
+            }
             if (eventItem.getType() == Material.FIREWORK_CHARGE) {
                 if (eventItem.getItemMeta().getDisplayName() == null) {
                     return;

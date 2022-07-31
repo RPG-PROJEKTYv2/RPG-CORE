@@ -171,8 +171,8 @@ public class NewTargInventoryClick implements Listener {
                     if (s.contains("Cena: ")) {
                         cena = Utils.removeColor(s).replace("Cena: ", "").replace(" $", "").trim();
                     }
-                    if (s.contains("5% ceny wystawienia")) {
-                        podatek = Utils.removeColor(s).replace("W wysokosci 5% ceny wystawienia, czyli ", "").replace(" $", "");
+                    if (s.contains("1% ceny wystawienia")) {
+                        podatek = Utils.removeColor(s).replace("W wysokosci 1% ceny wystawienia, czyli ", "").replace(" $", "");
                     }
                 }
 

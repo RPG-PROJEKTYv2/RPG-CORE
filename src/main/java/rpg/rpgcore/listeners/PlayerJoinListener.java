@@ -75,7 +75,7 @@ public class PlayerJoinListener implements Listener {
                 p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
             }
 
-            rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
+            //rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
         }
 
         p.setHealth(p.getMaxHealth());

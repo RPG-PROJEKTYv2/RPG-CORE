@@ -292,6 +292,14 @@ public class Utils {
         }
     }
 
+    public static void sendToAdministration(final String message) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (player.hasPermission("admin.rpg.seeDataBaseMessages")) {
+                player.sendMessage(format("&4&lHell&6&lDB " + message));
+            }
+        }
+    }
+
     private static String reverseString(final String str) {
         final StringBuilder sb = new StringBuilder(str);
         return sb.reverse().toString();

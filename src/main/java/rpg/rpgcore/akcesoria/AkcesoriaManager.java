@@ -83,8 +83,7 @@ public class AkcesoriaManager {
         return akcesoria;
     }
 
-    public final int getAkcesoriaBonus(final UUID uuid, final int slotAkcesorium , final String nazwaBonusu) {
-        int wartoscBonusu = 0;
+    public final double getAkcesoriaBonus(final UUID uuid, final int slotAkcesorium , final String nazwaBonusu) {
 
         Inventory akcesoria = this.getAkcesoriaGUI(uuid);
 
@@ -92,23 +91,22 @@ public class AkcesoriaManager {
 
         for (int i = 0; i < akce.getItemMeta().getLore().size(); i++) {
             if (akce.getItemMeta().getLore().get(i).trim().contains(nazwaBonusu)) {
-                wartoscBonusu = Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "")));
+                return Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "")));
             }
         }
 
-        return wartoscBonusu;
+        return 0.0;
     }
 
-    public final int getAkcesoriaBonus(final ItemStack akce , final String nazwaBonusu) {
-        int wartoscBonusu = 0;
+    public final double getAkcesoriaBonus(final ItemStack akce , final String nazwaBonusu) {
 
         for (int i = 0; i < akce.getItemMeta().getLore().size(); i++) {
             if (akce.getItemMeta().getLore().get(i).trim().contains(nazwaBonusu)) {
-                wartoscBonusu = Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "").replace("-", "")));
+                return Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "").replace("-", "")));
             }
         }
 
-        return wartoscBonusu;
+        return 0.0;
     }
 
     public void loadAllAkceBonus(final UUID uuid) {
@@ -168,7 +166,7 @@ public class AkcesoriaManager {
 
                 if (akce.getType() == Material.WATCH) {
                     rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                    rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Silny przeciwko Ludziom"));
+                    rpgcore.getPlayerManager().updatePlayerSilnyNaMoby(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaMoby(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Silny przeciwko Potworom"));
                     rpgcore.getPlayerManager().updatePlayerMinusDef(uuid, rpgcore.getPlayerManager().getPlayerMinusDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrona"));
                     System.out.println("Zegarek dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
                 }
@@ -194,6 +192,41 @@ public class AkcesoriaManager {
             return;
         }
         this.akcesoriaMap.put(uuid, inventory);
+    }
+
+    public boolean isTarczaEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(10).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isNaszyjnikEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(11).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isBransoletaEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(12).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isKolczykiEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(13).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isPierscienEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(14).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isEnergiaEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(15).getType().equals(Material.BARRIER);
+    }
+
+    public boolean isZegarekEquiped(final UUID uuid) {
+        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
+        return !akceGUI.getItem(16).getType().equals(Material.BARRIER);
     }
 
 }

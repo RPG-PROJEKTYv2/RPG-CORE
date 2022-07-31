@@ -115,7 +115,11 @@ public class TabManager {
             if (!tag.equals("Brak Klanu")) {
                 tab.set(player, 0, 10, "&7Punkty: &c" + rpgcore.getGuildManager().getGuildPoints(tag));
                 tab.set(player, 0, 11, "&7Poziom: &c" + rpgcore.getGuildManager().getGuildLvl(tag));
-                tab.set(player, 0, 12, "&7Exp: &c" + rpgcore.getGuildManager().getGuildExp(tag) + "&7/&c" + rpgcore.getGuildManager().getGuildNextLvlExp(tag));
+                if (rpgcore.getGuildManager().getGuildLvl(tag) == 50) {
+                    tab.set(player, 0, 12, "&7Exp: &4&lMAX &7/ &4&lMAX");
+                } else {
+                    tab.set(player, 0, 12, "&7Exp: &c" + rpgcore.getGuildManager().getGuildExp(tag) + "&7/&c" + rpgcore.getGuildManager().getGuildNextLvlExp(tag));
+                }
                 tab.set(player, 0, 13, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
                 tab.set(player, 0, 14, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
                 tab.set(player, 0, 15, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));

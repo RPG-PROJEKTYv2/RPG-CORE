@@ -116,7 +116,7 @@ public class NewTargWystaw implements CommandExecutor {
         lore.add(" ");
         lore.add("&8Wystawiajac ten przedmiot za kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(kwota)) + " &2$");
         lore.add("&8Zaplacisz podatek za wystawienie przedmiotu");
-        lore.add("&8W wysokosci &c5% ceny wystawienia&8, czyli &6&o" + Utils.spaceNumber(Utils.kasaFormat.format((kwota * 5) /100)) + " &2$" );
+        lore.add("&8W wysokosci &c1% ceny wystawienia&8, czyli &6&o" + Utils.spaceNumber(Utils.kasaFormat.format((kwota * 1) /100)) + " &2$" );
         lore.add(" ");
 
         meta.setLore(Utils.format(lore));

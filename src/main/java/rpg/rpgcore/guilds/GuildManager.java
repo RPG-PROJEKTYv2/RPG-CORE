@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -57,16 +58,21 @@ public class GuildManager {
     private final ItemBuilder upgrades = new ItemBuilder(Material.ANVIL);
     private final ItemBuilder info = new ItemBuilder(Material.GOLD_BLOCK);
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
+    private final ItemBuilder sredniDmgItem = new ItemBuilder(Material.DIAMOND_SWORD);
+    private final ItemBuilder sredniDefItem = new ItemBuilder(Material.DIAMOND_CHESTPLATE);
+    private final ItemBuilder dmgLudzieItem = new ItemBuilder(Material.IRON_SWORD);
+    private final ItemBuilder defLudzieItem = new ItemBuilder(Material.IRON_CHESTPLATE);
+    private final ItemBuilder expItem = new ItemBuilder(Material.EXP_BOTTLE);
 
     // MAPA OD LVLI
     private final Map<Integer, Double> guildLvlMap = new HashMap<>(48);
 
 
     public void loadGuildLvlReq() {
-        double next = 5000.0;
+        double next = 5000;
         for (int i = 2; i <= 50; i++) {
             this.guildLvlMap.put(i, next);
-            next+=5000.0;
+            next+=5000;
         }
     }
 
@@ -110,7 +116,11 @@ public class GuildManager {
         }
         player.sendMessage(Utils.format("&6Punkty: &7" + guildPoints.get(tag)));
         player.sendMessage(Utils.format("&6Lvl: &7" + guildLvl.get(tag)));
-        player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag) + " &6/&7 " + this.getGuildNextLvlExp(tag)));
+        if (this.getGuildLvl(tag) == 50) {
+            player.sendMessage(Utils.format("&6Exp: &4&lMAX &7/ &4&lMAX"));
+        } else  {
+            player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag) + " &6/&7 " + this.getGuildNextLvlExp(tag)));
+        }
         player.sendMessage(Utils.format("&6Czlonkowie: "));
         for (UUID uuid : guildMembers.get(tag)) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
@@ -267,7 +277,11 @@ public class GuildManager {
         lore.clear();
         lore.add("&6Punkty: &7" + guildPoints.get(tag));
         lore.add("&6Lvl: &7" + guildLvl.get(tag));
-        lore.add("&6Exp: &7" + guildExp.get(tag));
+        if (this.getGuildLvl(tag) == 50) {
+            lore.add("&6Exp: &4&lMAX &6/ &4&lMAX");
+        } else {
+            lore.add("&6Exp: &7" + guildExp.get(tag) + "&6/&7 " + this.getGuildNextLvlExp(tag));
+        }
         lore.add("&6Stan Konta: &7" + guildBalance.get(tag) + " &6kredytow");
 
         panel.setItem(13, info.setName("&6&lStatystyki").setLore(lore).toItemStack());
@@ -343,6 +357,124 @@ public class GuildManager {
         }
 
         return members;
+    }
+
+    public void showUpgrades(final String tag, final Player player) {
+        final Inventory upgradesPanel = Bukkit.createInventory(null, 9, Utils.format("&6&lUlepszenia Klanu " + tag));
+
+        fill.setName(" ");
+        for (int i = 0; i < upgradesPanel.getSize(); i++) {
+            upgradesPanel.setItem(i, fill.toItemStack());
+        }
+
+        upgradesPanel.setItem(0, getSredniDmgItem(tag));
+        upgradesPanel.setItem(2, getSredniDefItem(tag));
+        upgradesPanel.setItem(4, getDodatkowyExpItem(tag));
+        upgradesPanel.setItem(6, getDefLudzieItem(tag));
+        upgradesPanel.setItem(8, getDmgLudzieItem(tag));
+
+        player.openInventory(upgradesPanel);
+    }
+
+    public ItemStack getSredniDmgItem(final String tag) {
+        final List<String> lore = new ArrayList<>();
+
+        if (String.valueOf(this.getGuildSredniDmg(tag)).contains(".0")) {
+            lore.add("&7Postep: &c" + String.format("%.0f", this.getGuildSredniDmg(tag)) + "% &7/ &c50%");
+        } else  {
+            lore.add("&7Postep: &c" + this.getGuildSredniDmg(tag) + "% &7/ &c50%");
+        }
+        if (this.getGuildSredniDmg(tag) != 50) {
+            lore.add(" ");
+            lore.add("&6Koszt ulepszenia:");
+            lore.add("&8- &71 &6kredyt");
+            return sredniDmgItem.setName("&c&lSrednie Obrazenia").setLore(lore).hideFlag().toItemStack().clone();
+        } else {
+            lore.add(" ");
+            lore.add("&4&lMAX");
+            return sredniDmgItem.setName("&c&lSrednie Obrazenia").setLore(lore).addGlowing().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getSredniDefItem(final String tag) {
+        final List<String> lore = new ArrayList<>();
+
+        if (String.valueOf(this.getGuildSredniDef(tag)).contains(".0")) {
+            lore.add("&7Postep: &c" + String.format("%.0f", this.getGuildSredniDef(tag)) + "% &7/ &c50%");
+        } else  {
+            lore.add("&7Postep: &c" + this.getGuildSredniDef(tag) + "% &7/ &c50%");
+        }
+        if (this.getGuildSredniDef(tag) != 50) {
+            lore.add(" ");
+            lore.add("&6Koszt ulepszenia:");
+            lore.add("&8- &71 &6kredyt");
+            return sredniDefItem.setName("&c&lSrednia Odpornosc").setLore(lore).hideFlag().toItemStack().clone();
+        } else {
+            lore.add(" ");
+            lore.add("&4&lMAX");
+            return sredniDefItem.setName("&c&lSrednia Odpornosc").setLore(lore).addGlowing().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getDmgLudzieItem(final String tag) {
+        final List<String> lore = new ArrayList<>();
+
+        if (String.valueOf(this.getGuildSilnyNaLudzi(tag)).contains(".0")) {
+            lore.add("&7Postep: &c" + String.format("%.0f", this.getGuildSilnyNaLudzi(tag)) + "% &7/ &c50%");
+        } else  {
+            lore.add("&7Postep: &c" + this.getGuildSilnyNaLudzi(tag) + "% &7/ &c50%");
+        }
+        if (this.getGuildSilnyNaLudzi(tag) != 50) {
+            lore.add(" ");
+            lore.add("&6Koszt ulepszenia:");
+            lore.add("&8- &71 &6kredyt");
+            return dmgLudzieItem.setName("&c&lSilny Przeciwko Ludziom").setLore(lore).hideFlag().toItemStack().clone();
+        } else {
+            lore.add(" ");
+            lore.add("&4&lMAX");
+            return dmgLudzieItem.setName("&c&lSilny Przeciwko Ludziom").setLore(lore).addGlowing().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getDefLudzieItem(final String tag) {
+        final List<String> lore = new ArrayList<>();
+
+        if (String.valueOf(this.getGuildDefNaLudzi(tag)).contains(".0")) {
+            lore.add("&7Postep: &c" + String.format("%.0f", this.getGuildDefNaLudzi(tag)) + "% &7/ &c50%");
+        } else  {
+            lore.add("&7Postep: &c" + this.getGuildDefNaLudzi(tag) + "% &7/ &c50%");
+        }
+        if (this.getGuildDefNaLudzi(tag) != 50) {
+            lore.add(" ");
+            lore.add("&6Koszt ulepszenia:");
+            lore.add("&8- &71 &6kredyt");
+            return defLudzieItem.setName("&c&lOdpornosc Przeciwko Ludziom").setLore(lore).hideFlag().toItemStack().clone();
+        } else {
+            lore.add(" ");
+            lore.add("&4&lMAX");
+            return defLudzieItem.setName("&c&lOdpornosc Przeciwko Ludziom").setLore(lore).addGlowing().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getDodatkowyExpItem(final String tag) {
+        final List<String> lore = new ArrayList<>();
+
+        if (String.valueOf(this.getGuildDodatkowyExp(tag)).contains(".0")) {
+            lore.add("&7Postep: &c" + String.format("%.0f", this.getGuildDodatkowyExp(tag)) + "% &7/ &c25%");
+        } else  {
+            lore.add("&7Postep: &c" + this.getGuildDodatkowyExp(tag) + "% &7/ &c25%");
+        }
+        if (this.getGuildDodatkowyExp(tag) != 25) {
+            lore.add(" ");
+            lore.add("&6Koszt ulepszenia:");
+            lore.add("&8- &72 &6kredyt");
+            lore.add("&8- &c&l100 &4&lH&8&lC");
+            return expItem.setName("&c&lDodatkowy EXP").setLore(lore).hideFlag().toItemStack().clone();
+        } else {
+            lore.add(" ");
+            lore.add("&4&lMAX");
+            return expItem.setName("&c&lDodatkowy EXP").setLore(lore).addGlowing().toItemStack().clone();
+        }
     }
 
     public void invitePlayer(final String tag, final UUID uuid, final Player player) {
@@ -575,6 +707,13 @@ public class GuildManager {
 
     public void updateGuildExp(final String tag, final double exp) {
         guildExp.replace(tag, guildExp.get(tag) + exp);
+        if (this.getGuildExp(tag) >= this.getGuildNextLvlExp(tag)) {
+            this.updateGuildLvl(tag, 1);
+            this.setGuildExp(tag, 0);
+            this.updateGuildBalance(tag, 1);
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&7Klan &6" + tag + " &7osiagnal &6" + this.getGuildLvl(tag) + " &7poziom!"));
+
+        }
     }
 
     public void updateGuildBalance(final String tag, final int balance) {
@@ -602,15 +741,15 @@ public class GuildManager {
     }
 
     public void updateGuildKills(final String tag, final UUID player, final int kills) {
-        guildKills.get(tag).replace(player, kills);
+        guildKills.get(tag).replace(player, this.getGuildKills(tag).get(player) + kills);
     }
 
     public void updateGuildDeaths(final String tag, final UUID player, final int deaths) {
-        guildDeaths.get(tag).replace(player, deaths);
+        guildDeaths.get(tag).replace(player, this.getGuildDeaths(tag).get(player) + deaths);
     }
 
     public void updateGuildExpEarned(final String tag, final UUID player, final double expEarned) {
-        guildExpEarned.get(tag).replace(player, expEarned);
+        guildExpEarned.get(tag).replace(player, this.getGuildExpEarned(tag).get(player) + expEarned);
     }
 
     public void updateGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {

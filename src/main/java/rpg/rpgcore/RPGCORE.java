@@ -29,10 +29,7 @@ import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.Kasa;
 import rpg.rpgcore.economy.Wyplac;
-import rpg.rpgcore.guilds.Guild;
-import rpg.rpgcore.guilds.GuildManager;
-import rpg.rpgcore.guilds.GuildsInventoryClick;
-import rpg.rpgcore.guilds.GuildsPlayerDamage;
+import rpg.rpgcore.guilds.*;
 import rpg.rpgcore.history.HISTORYInventoryClick;
 import rpg.rpgcore.history.History;
 import rpg.rpgcore.listeners.*;
@@ -180,6 +177,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("klan").setExecutor(new Guild(this));
         this.getServer().getPluginManager().registerEvents(new GuildsInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new GuildsPlayerDamage(this), this);
+        this.getServer().getPluginManager().registerEvents(new GuildEntityDeath(this), this);
 
 
         // KOSZ
