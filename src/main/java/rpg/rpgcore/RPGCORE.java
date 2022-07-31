@@ -44,6 +44,7 @@ import rpg.rpgcore.newTarg.NewTarg;
 import rpg.rpgcore.newTarg.NewTargInventoryClick;
 import rpg.rpgcore.newTarg.NewTargManager;
 import rpg.rpgcore.newTarg.NewTargWystaw;
+import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
 import rpg.rpgcore.npc.kowal.KowalInventoryClick;
 import rpg.rpgcore.npc.kowal.KowalNPC;
@@ -113,6 +114,7 @@ public final class RPGCORE extends JavaPlugin {
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
+    private BackupManager backup;
 
     private int i = 1;
 
@@ -132,59 +134,11 @@ public final class RPGCORE extends JavaPlugin {
         this.autoMessage();
         this.getBaoManager().getAllEntities();
         this.getMagazynierNPC().loadMagazynierMissions();
+        this.getKolekcjonerNPC().loadMissions();
 
+        this.initGlobalCommands();
+        this.initGlobalEvents();
 
-
-        this.getCommand("teleport").setExecutor(new Teleport(this));
-        this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
-        this.getCommand("spawn").setExecutor(new Spawn(this));
-        this.getCommand("ban").setExecutor(new Ban(this));
-        this.getCommand("unban").setExecutor(new UnBan(this));
-        this.getCommand("kick").setExecutor(new Kick(this));
-        this.getCommand("vanish").setExecutor(new Vanish(this));
-        this.getCommand("god").setExecutor(new God(this));
-        this.getCommand("speed").setExecutor(new Speed());
-        this.getCommand("fly").setExecutor(new Fly(this));
-        this.getCommand("history").setExecutor(new History(this));
-        this.getCommand("back").setExecutor(new Back(this));
-        this.getCommand("lvl").setExecutor(new Lvl(this));
-        this.getCommand("gamemode").setExecutor(new Gm());
-        this.getCommand("heal").setExecutor(new Heal(this));
-        this.getCommand("tempban").setExecutor(new TempBan(this));
-        this.getCommand("osiagniecia").setExecutor(new Osiagniecia(this));
-        this.getCommand("setdmg").setExecutor(new SetDmg());
-        this.getCommand("akcesoria").setExecutor(new Akcesoria(this));
-        this.getCommand("pomoc").setExecutor(new Pomoc(this));
-        this.getCommand("sprawdzmojebonusy").setExecutor(new SprawdzMojeBonusy(this));
-        this.getCommand("mute").setExecutor(new Mute(this));
-        this.getCommand("unmute").setExecutor(new UnMute(this));
-        this.getCommand("tempmute").setExecutor(new TempMute(this));
-        this.getCommand("message").setExecutor(new Message(this));
-        this.getCommand("reply").setExecutor(new Reply(this));
-        this.getCommand("targ").setExecutor(new NewTarg(this));
-        this.getCommand("kasa").setExecutor(new Kasa(this));
-        this.getCommand("wyplac").setExecutor(new Wyplac(this));
-        this.getCommand("wystaw").setExecutor(new NewTargWystaw(this));
-        this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
-        this.getCommand("testanimation").setExecutor(new TestAnimation(this));
-        this.getCommand("test").setExecutor(new Test(this));
-        this.getCommand("helpop").setExecutor(new HelpOP(this));
-        this.getCommand("removenearbyentities").setExecutor(new RemoveNearbyEntities());
-
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
-        this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
-        this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
 
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
@@ -260,19 +214,78 @@ public final class RPGCORE extends JavaPlugin {
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
 
+        // ...KOLEKCJONER
+        this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
+
         // BACKUP
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BackupRunnable(this), 6000L, 6000L);
 
         // TAB
         new UpdateTabTask(this);
+
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
     }
 
     public void onDisable() {
-        this.mongo.saveAllPlayers();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
+
+    }
+
+    private void initGlobalCommands() {
+        this.getCommand("teleport").setExecutor(new Teleport(this));
+        this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
+        this.getCommand("spawn").setExecutor(new Spawn(this));
+        this.getCommand("ban").setExecutor(new Ban(this));
+        this.getCommand("unban").setExecutor(new UnBan(this));
+        this.getCommand("kick").setExecutor(new Kick(this));
+        this.getCommand("vanish").setExecutor(new Vanish(this));
+        this.getCommand("god").setExecutor(new God(this));
+        this.getCommand("speed").setExecutor(new Speed());
+        this.getCommand("fly").setExecutor(new Fly(this));
+        this.getCommand("history").setExecutor(new History(this));
+        this.getCommand("back").setExecutor(new Back(this));
+        this.getCommand("lvl").setExecutor(new Lvl(this));
+        this.getCommand("gamemode").setExecutor(new Gm());
+        this.getCommand("heal").setExecutor(new Heal(this));
+        this.getCommand("tempban").setExecutor(new TempBan(this));
+        this.getCommand("osiagniecia").setExecutor(new Osiagniecia(this));
+        this.getCommand("setdmg").setExecutor(new SetDmg());
+        this.getCommand("akcesoria").setExecutor(new Akcesoria(this));
+        this.getCommand("pomoc").setExecutor(new Pomoc(this));
+        this.getCommand("sprawdzmojebonusy").setExecutor(new SprawdzMojeBonusy(this));
+        this.getCommand("mute").setExecutor(new Mute(this));
+        this.getCommand("unmute").setExecutor(new UnMute(this));
+        this.getCommand("tempmute").setExecutor(new TempMute(this));
+        this.getCommand("message").setExecutor(new Message(this));
+        this.getCommand("reply").setExecutor(new Reply(this));
+        this.getCommand("targ").setExecutor(new NewTarg(this));
+        this.getCommand("kasa").setExecutor(new Kasa(this));
+        this.getCommand("wyplac").setExecutor(new Wyplac(this));
+        this.getCommand("wystaw").setExecutor(new NewTargWystaw(this));
+        this.getCommand("sprawdz").setExecutor(new Sprawdz(this));
+        this.getCommand("testanimation").setExecutor(new TestAnimation(this));
+        this.getCommand("test").setExecutor(new Test(this));
+        this.getCommand("helpop").setExecutor(new HelpOP(this));
+        this.getCommand("removenearbyentities").setExecutor(new RemoveNearbyEntities());
+    }
+
+    private void initGlobalEvents() {
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
     }
 
     private void initDatabase() {
@@ -302,6 +315,7 @@ public final class RPGCORE extends JavaPlugin {
         this.guildManager = new GuildManager(this);
         this.tabManager = new TabManager(this);
         this.newTargManager = new NewTargManager(this);
+        this.backup = new BackupManager(this);
     }
 
     private void initNPCS() {
@@ -334,6 +348,12 @@ public final class RPGCORE extends JavaPlugin {
             }, 1L, time);
         } else {
             System.out.println("[rpg.core] Automessage jest aktualnie wylaczany. Zmien opcje auto_message na true w pliku config.yml i przeladuj serwer zeby ja wlaczyc!");
+        }
+    }
+
+    private void saveGuilds() {
+        for (final String tag : this.getGuildManager().getListOfGuilds()) {
+            this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveGuild(tag));
         }
     }
     
@@ -457,4 +477,7 @@ public final class RPGCORE extends JavaPlugin {
         return newTargManager;
     }
 
+    public BackupManager getBackupManager() {
+        return backup;
+    }
 }

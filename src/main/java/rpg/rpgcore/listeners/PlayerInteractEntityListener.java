@@ -86,7 +86,7 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // KOLEKCJONER
             if (entityName.equalsIgnoreCase("Kolekcjoner")) {
-                player.openInventory(rpgcore.getKolekcjoerNPC().kolekcjonerMAIN(player));
+                rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
                 return;
             }
 

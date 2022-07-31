@@ -123,6 +123,13 @@ public class MongoManager {
                 e.printStackTrace();
             }
 
+            rpgcore.getKolekcjonerNPC().loadAll(
+                    uuid,
+                    (String) obj.get("kolekcjonerPostep"),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("postepMisji"))))),
+                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDMG"))),
+                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDef"))),
+                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniKryt"))));
         }
 
         collection = database.getCollection("guilds");
@@ -177,10 +184,10 @@ public class MongoManager {
                     Double.parseDouble(String.valueOf(obj.get("sredniDef"))),
                     Double.parseDouble(String.valueOf(obj.get("silnyNaLudzi"))),
                     Double.parseDouble(String.valueOf(obj.get("defNaLudzi"))),
-                            killsMap,
-                            deathsMap,
-                            expEarnedMap,
-                            lastOnlineMap);
+                    killsMap,
+                    deathsMap,
+                    expEarnedMap,
+                    lastOnlineMap);
         }
         pool.closePool();
     }
@@ -366,6 +373,50 @@ public class MongoManager {
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
 
+        BasicDBObject document = this.getPlayerDocument(uuid);
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+
+        pool.closePool();
+    }
+
+    public void tempUpdate() {
+        for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
+            updatePlayer(uuid);
+        }
+    }
+
+    public void savePlayer(final UUID uuid) {
+        try {
+            DB database = pool.getPool().getDB("minecraft");
+            DBCollection collection = database.getCollection("players");
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", uuid.toString());
+
+            BasicDBObject document = this.getPlayerDocument(uuid);
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$set", document);
+
+            collection.update(query, update);
+
+            pool.closePool();
+
+            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+        } catch (final Exception e) {
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            e.printStackTrace();
+        } finally {
+            pool.closePool();
+        }
+    }
+
+    private BasicDBObject getPlayerDocument(final UUID uuid) {
         BasicDBObject document = new BasicDBObject();
         document.put("_id", uuid.toString());
         document.put("nick", rpgcore.getPlayerManager().getPlayerName(uuid));
@@ -397,70 +448,12 @@ public class MongoManager {
         document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
         document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
         document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
-
-        BasicDBObject update = new BasicDBObject();
-        update.put("$set", document);
-
-        collection.update(query, update);
-
-        pool.closePool();
-    }
-
-    public void savePlayer(final UUID uuid) {
-        try {
-            DB database = pool.getPool().getDB("minecraft");
-            DBCollection collection = database.getCollection("players");
-            BasicDBObject query = new BasicDBObject();
-            query.put("_id", uuid.toString());
-
-            BasicDBObject document = new BasicDBObject();
-            document.put("_id", uuid.toString());
-            document.put("nick", rpgcore.getPlayerManager().getPlayerName(uuid));
-            document.put("level", rpgcore.getPlayerManager().getPlayerLvl(uuid));
-            document.put("exp", rpgcore.getPlayerManager().getPlayerExp(uuid));
-            document.put("kasa", String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(uuid)));
-            document.put("osMoby", rpgcore.getPlayerManager().getPlayerOsMoby(uuid));
-            document.put("osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
-            document.put("osLudzie", rpgcore.getPlayerManager().getPlayerOsLudzie(uuid));
-            document.put("osLudzieAccept", rpgcore.getPlayerManager().getOsLudzieAccept(uuid));
-            document.put("osSakwy", rpgcore.getPlayerManager().getPlayerOsSakwy(uuid));
-            document.put("osSakwyAccept", rpgcore.getPlayerManager().getOsSakwyAccept(uuid));
-            document.put("osNiesy", rpgcore.getPlayerManager().getPlayerOsNiesy(uuid));
-            document.put("osNiesyAccept", rpgcore.getPlayerManager().getOsNiesyAccept(uuid));
-            document.put("osRybak", rpgcore.getPlayerManager().getPlayerOsRybak(uuid));
-            document.put("osRybakAccept", rpgcore.getPlayerManager().getOsRybakAccept(uuid));
-            document.put("osDrwal", rpgcore.getPlayerManager().getPlayerOsDrwal(uuid));
-            document.put("osDrwalAccept", rpgcore.getPlayerManager().getOsDrwalAccept(uuid));
-            document.put("osGornik", rpgcore.getPlayerManager().getPlayerOsGornik(uuid));
-            document.put("osGornikAccept", rpgcore.getPlayerManager().getOsGornikAccept(uuid));
-            document.put("BAO_BONUSY", rpgcore.getBaoManager().getBaoBonusy(uuid));
-            document.put("BAO_WARTOSCI", rpgcore.getBaoManager().getBaoBonusyWartosci(uuid));
-            document.put("RYBAK_MISJE", rpgcore.getRybakNPC().getPlayerRybakMisje(uuid));
-            document.put("RYBAK_POSTEP", rpgcore.getRybakNPC().getPlayerPostep(uuid));
-            document.put("RYBAK_SRDMG", rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid));
-            document.put("RYBAK_SRDEF", rpgcore.getRybakNPC().getPlayerRybakSredniDef(uuid));
-            document.put("RYBAK_DDMG", rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid));
-            document.put("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
-            document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-            document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-            document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
-
-            BasicDBObject update = new BasicDBObject();
-            update.put("$set", document);
-
-            collection.update(query, update);
-
-            pool.closePool();
-
-            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-        } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-            e.printStackTrace();
-        } finally {
-            pool.closePool();
-        }
+        document.put("kolekcjonerPostep", rpgcore.getKolekcjonerNPC().getKolekcjonerPostepInString(uuid));
+        document.put("postepMisji", rpgcore.getKolekcjonerNPC().getPostepMisji(uuid));
+        document.put("kolekcjonerSredniDMG", rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid));
+        document.put("kolekcjonerSredniDef", rpgcore.getKolekcjonerNPC().getKolekcjonerSredniDef(uuid));
+        document.put("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
+        return document;
     }
 
     public void saveGuildFirst(final String tag) {

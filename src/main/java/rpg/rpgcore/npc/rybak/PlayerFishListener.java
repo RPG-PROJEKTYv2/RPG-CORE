@@ -18,25 +18,14 @@ public class PlayerFishListener implements Listener {
     public PlayerFishListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
-    private final RandomItems<String> firstRoll = new RandomItems<>();
-    private final RandomItems<ItemStack> fish = new RandomItems<>();
-    private final RandomItems<String> doubleDrops = new RandomItems<>();
-    private final RandomItems<String> chestDrop = new RandomItems<>();
-    private final RandomItems<String> mob = new RandomItems<>();
-
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFish(final PlayerFishEvent e) {
-
-        load();
-
         e.setExpToDrop(0);
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             e.getCaught().remove();
-
+            final RandomItems<String> firstRoll = new RandomItems<>();
             final Player player = e.getPlayer();
-
-            firstRoll.clear();
 
             double mobChance = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(8)).replace("-", "").replace("Szansa na wylowienie podwodnego stworzenia:", "").replace(" ", "").replace("%", "").trim());
 
@@ -53,11 +42,20 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cNiestety ryba zerwala sie z linki"));
                     return;
                 case "fish":
-                    ItemStack is = rpgcore.getRybakNPC().getDrop();
-                    double caseDrop = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(7)).replace("-", "").replace("Szansa na skrzynie rybaka:", "").replace(" ", "").replace("%", "").trim());
-                    double doubleDrop = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(6)).replace("-", "").replace("Szansa na podwojne wylowienie:", "").replace(" ", "").replace("%", "").trim());
+                    final RandomItems<String> chestDrop = new RandomItems<>();
+                    final RandomItems<String> doubleDrops = new RandomItems<>();
 
-                    chestDrop.clear();
+                    ItemStack is = rpgcore.getRybakNPC().getDrop();
+                    final double caseDrop = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(7)).replace("-", "").replace("Szansa na skrzynie rybaka:", "").replace(" ", "").replace("%", "").trim());
+                    final double doubleDrop = Double.parseDouble(Utils.removeColor(player.getItemInHand().getItemMeta().getLore().get(6)).replace("-", "").replace("Szansa na podwojne wylowienie:", "").replace(" ", "").replace("%", "").trim());
+
+                    player.sendMessage("Chest - " + caseDrop);
+                    player.sendMessage("Double - " + doubleDrop);
+                    player.sendMessage("chest #1 - " + (caseDrop/100));
+                    player.sendMessage("chest #2 - " + (1 - (caseDrop/100)));
+                    player.sendMessage("double #1 - " + (doubleDrop/100));
+                    player.sendMessage("double #2 - " + (1 - (doubleDrop/100)));
+
                     chestDrop.add((caseDrop/100), "chest");
                     chestDrop.add((1 - (caseDrop/100)), "empty");
 
@@ -66,18 +64,15 @@ public class PlayerFishListener implements Listener {
                         is = rpgcore.getRybakNPC().getChest();
                     }
 
-
-
-                    doubleDrops.clear();
                     doubleDrops.add(doubleDrop/100, "double");
                     doubleDrops.add(1.0 - (doubleDrop/100), "single");
 
                     String doubleResult = doubleDrops.next();
 
+                    is.setAmount(1);
+
                     if (doubleResult.equals("double")) {
                         is.setAmount(2);
-                    } else {
-                        is.setAmount(1);
                     }
 
 
@@ -225,8 +220,6 @@ public class PlayerFishListener implements Listener {
                         rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
                         return;
                     }
-
-
                     break;
                 case "mob":
                     String mob = rpgcore.getRybakNPC().getMob();
@@ -259,9 +252,5 @@ public class PlayerFishListener implements Listener {
 
             rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId()) + 1);
         }
-    }
-
-    public void load() {
-        mob.add(1, "zombie");
     }
 }

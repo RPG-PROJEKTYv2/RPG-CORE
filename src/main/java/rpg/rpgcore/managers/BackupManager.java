@@ -18,7 +18,7 @@ public class BackupManager {
 
     public void savePlayer(final UUID uuid) {
         final int task = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(uuid)), 100L, 6000L);
-        rpgcore.getBackupManager().addToTaskMap(uuid, task);
+        this.addToTaskMap(uuid, task);
     }
 
 

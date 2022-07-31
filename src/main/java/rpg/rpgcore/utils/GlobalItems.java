@@ -28,6 +28,7 @@ public class GlobalItems {
     private static final ItemBuilder artefaktMagazyniera = new ItemBuilder(Material.EMERALD);
     private static final ItemBuilder zwojBlogoslawienstwa = new ItemBuilder(Material.BOOK);
     private static final ItemBuilder hellCoin = new ItemBuilder(Material.EMERALD);
+    private static final ItemBuilder kolekcjonerItem1x10 = new ItemBuilder(Material.STICK);
     
     private static final List<String> lore = new ArrayList<>();
 
@@ -195,6 +196,15 @@ public class GlobalItems {
         lore.add("&8&oKliknij&8, zeby zasilic swoj balans");
         hellCoin.setName("&c&l" + value + " &4&lH&8&lC").setLore(lore).addGlowing().setAmount(amount);
         return hellCoin.toItemStack().clone();
+    }
+
+
+    // KOLEKCJONER
+    public static ItemStack getKolekcjonerItem1x10(final int amount) {
+        lore.clear();
+        lore.add(" ");
+        lore.add("&8&oChyba kolekcjoner tego potrzebuje");
+        return kolekcjonerItem1x10.setName("&7&lTestowy Patyk").setLore(lore).hideFlag().setAmount(amount).toItemStack().clone();
     }
 
 }
