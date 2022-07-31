@@ -84,6 +84,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKowalNPC().openKowalMainGui(player);
                 return;
             }
+            // KOLEKCJONER
+            if (entityName.equalsIgnoreCase("Kolekcjoner")) {
+                player.openInventory(rpgcore.getKolekcjoerNPC().kolekcjonerMAIN(player));
+                return;
+            }
 
             // TRADE
             if (player.isSneaking()) {

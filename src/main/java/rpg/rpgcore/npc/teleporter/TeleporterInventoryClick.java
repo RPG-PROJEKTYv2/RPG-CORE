@@ -28,7 +28,7 @@ public class TeleporterInventoryClick implements Listener {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
+        //final UUID playerUUID = player.getUniqueId();
         // HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {

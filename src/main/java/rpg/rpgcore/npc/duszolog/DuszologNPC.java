@@ -17,11 +17,11 @@ import java.util.Random;
 public class DuszologNPC {
 
     private Inventory gui;
-
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ArrayList<String> itemLore = new ArrayList<>();
+
     private final ItemBuilder craftowanie = new ItemBuilder(Material.BEACON);
-    private final ItemBuilder potrzebneitemy = new ItemBuilder(Material.MONSTER_EGG);
+    private final ItemBuilder potrzebneitemy = new ItemBuilder(Material.MONSTER_EGG, 1, (short) 51);
     private final ItemBuilder spiswszystkiego = new ItemBuilder(Material.EXP_BOTTLE);
     private final ItemBuilder dodawaniedusz = new ItemBuilder(Material.ANVIL);
     private final ItemBuilder potrzebneitemydodawaniedusz = new ItemBuilder(Material.FERMENTED_SPIDER_EYE);
@@ -118,7 +118,7 @@ public class DuszologNPC {
         this.itemLore.add(" ");
         this.itemLore.add("&8[ &e>> &8] &eSzanse na dropniecie duszy:");
         this.itemLore.add("&8* &bOdbicia: &c5%");
-        this.itemLore.add("&8* &cZycia: &c15%");
+        this.itemLore.add("&8* &cZycia: &c+15");
         this.itemLore.add("&8* &4Obrazen: &c10%");
         this.itemLore.add("&8* &aObrony: &c10%");
         this.itemLore.add("&8* &5Dropu: &c0.01%");
