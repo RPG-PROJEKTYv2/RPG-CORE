@@ -39,7 +39,7 @@ public class PlayerJoinListener implements Listener {
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
 
-        rpgcore.getBackupManager().savePlayer(playerUUID);
+        rpgcore.getBackupManager().savePlayer(p, playerUUID);
 
         p.setMaxHealth(20);
 
@@ -106,7 +106,7 @@ public class PlayerJoinListener implements Listener {
         final UUID uuid = e.getUniqueId();
 
         if (!(rpgcore.getPlayerManager().getPlayers().contains(uuid))) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().createPlayer(e.getName(), uuid, "false", "false"));
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().createPlayer(Bukkit.getPlayer(e.getUniqueId()), e.getName(), uuid, "false", "false"));
         }
 
         if (rpgcore.getPlayerManager().getPlayers().contains(uuid)) {

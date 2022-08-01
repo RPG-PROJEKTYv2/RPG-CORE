@@ -218,6 +218,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
 
         // BACKUP
+        //this.mongo.tempUpdate();
 
         // TAB
         new UpdateTabTask(this);
@@ -352,9 +353,7 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void saveGuilds() {
-        for (final String tag : this.getGuildManager().getListOfGuilds()) {
-            this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveGuild(tag));
-        }
+        this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveGuild());
     }
     
 

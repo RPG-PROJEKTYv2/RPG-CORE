@@ -1,5 +1,6 @@
 package rpg.rpgcore.managers;
 
+import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
@@ -16,8 +17,8 @@ public class BackupManager {
 
     private final ConcurrentMap<UUID, Integer> taskMap = new ConcurrentHashMap<>();
 
-    public void savePlayer(final UUID uuid) {
-        final int task = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(uuid)), 100L, 6000L);
+    public void savePlayer(final Player player, final UUID uuid) {
+        final int task = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid)), 100L, 6000L);
         this.addToTaskMap(uuid, task);
     }
 

@@ -3,6 +3,7 @@ package rpg.rpgcore.database;
 import com.mongodb.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
@@ -27,7 +28,7 @@ public class MongoManager {
         final double z = SpawnManager.defaultSpawnZ;
 
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("spawn");
+        DBCollection collection = database.getCollection("hellrpg_spawn");
 
         BasicDBObject document = new BasicDBObject();
 
@@ -53,7 +54,7 @@ public class MongoManager {
         DBCollection collection;
         DBCursor result;
 
-        collection = database.getCollection("spawn");
+        collection = database.getCollection("hellrpg_spawn");
         result = collection.find();
         if (result.hasNext()) {
             DBObject obj = result.next();
@@ -62,52 +63,56 @@ public class MongoManager {
             this.setFirstSpawn();
         }
 
-
-        collection = database.getCollection("players");
+        collection = database.getCollection("hellrpg_gracze");
         result = collection.find();
         while (result.hasNext()) {
             DBObject obj = result.next();
+            String nick = (String) obj.get("nick");
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
-            rpgcore.getPlayerManager().createPlayer(
-                    (String) obj.get("nick"),
-                    uuid,
-                    (String) obj.get("banInfo"),
-                    (String) obj.get("muteInfo"),
-                    (String) obj.get("punishmentHistory"),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level"))))),
-                    Double.parseDouble(String.valueOf(obj.get("exp"))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMoby"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osLudzie"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osSakwy"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osNiesy"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osRybak"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osDrwal"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osGornik"))))),
-                    (String) obj.get("osMobyAccept"),
-                    (String) obj.get("osLudzieAccept"),
-                    (String) obj.get("osSakwyAccept"),
-                    (String) obj.get("osNiesyAccept"),
-                    (String) obj.get("osRybakAccept"),
-                    (String) obj.get("osDrwalAccept"),
-                    (String) obj.get("osGornikAccept"),
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    Double.parseDouble(String.valueOf(obj.get("kasa")))
-            );
+            String punishmentHistory = (String) obj.get("punishmentHistory");
+            int lvl = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level")))));
+            double exp = Double.parseDouble(String.valueOf(obj.get("exp")));
+            double kasa = Double.parseDouble(String.valueOf(obj.get("kasa")));
+            int hellCoins = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("hellcoins")))));
+            boolean pierscienDoswiadczenia = Boolean.parseBoolean(String.valueOf(obj.get("pierscien_doswiadczenia")));
+            Date pierscienDoswiadczeniaCzas = new Date(Long.parseLong(String.valueOf(obj.get("pierscien_doswiadczenia_czas"))));
+
+            collection = database.getCollection("hellrpg_bany");
+            obj = collection.find(new BasicDBObject("_id", uuid.toString())).next();
+            String banInfo = (String) obj.get("banInfo");
+
+            collection = database.getCollection("hellrpg_muty");
+            obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
+            String muteInfo = (String) obj.get("muteInfo");
+
+            collection = database.getCollection("hellrpg_osiagniecia");
+            obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
+            int osMoby = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMoby")))));
+            int osLudzie = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osLudzie")))));
+            int osSakwy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osSakwy")))));
+            int osNiesy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osNiesy")))));
+            int osRybak = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osRybak")))));
+            int osDrwal = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osDrwal")))));
+            int osGornik = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osGornik")))));
+            String osMobyAccept = (String) obj.get("osMobyAccept");
+            String osLudzieAccept = (String) obj.get("osLudzieAccept");
+            String osSakwyAccept = (String) obj.get("osSakwyAccept");
+            String osNiesyAccept = (String) obj.get("osNiesyAccept");
+            String osRybakAccept = (String) obj.get("osRybakAccept");
+            String osDrwalAccept = (String) obj.get("osDrwalAccept");
+            String osGornikAccept = (String) obj.get("osGornikAccept");
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp, osMoby, osLudzie, osSakwy, osNiesy, osRybak, osDrwal, osGornik,
+                    osMobyAccept, osLudzieAccept, osSakwyAccept, osNiesyAccept, osRybakAccept, osDrwalAccept, osGornikAccept, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);
+
+            collection = database.getCollection("hellrpg_bao");
+            obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
             rpgcore.getBaoManager().updateBaoBonusy(uuid, String.valueOf(obj.get("BAO_BONUSY")));
             rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, String.valueOf(obj.get("BAO_WARTOSCI")));
+
+            collection = database.getCollection("hellrpg_rybak");
+            obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
             rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, String.valueOf(obj.get("RYBAK_MISJE")));
             rpgcore.getRybakNPC().setPlayerPostep(uuid, Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("RYBAK_POSTEP"))))));
             rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_SRDMG"))));
@@ -116,13 +121,23 @@ public class MongoManager {
             rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_BLOK"))));
 
             try {
+                collection = database.getCollection("hellrpg_akcesoria");
+                obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64(String.valueOf(obj.get("Akcesoria"))));
+
+                collection = database.getCollection("hellrpg_targi");
+                obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+
+                collection = database.getCollection("hellrpg_magazyny");
+                obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
                 rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
             } catch (final IOException e) {
                 e.printStackTrace();
             }
 
+            collection = database.getCollection("hellrpg_kolekcjoner");
+            obj = collection.findOne(new BasicDBObject("_id", uuid.toString()));
             rpgcore.getKolekcjonerNPC().loadAll(
                     uuid,
                     (String) obj.get("kolekcjonerPostep"),
@@ -132,7 +147,7 @@ public class MongoManager {
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniKryt"))));
         }
 
-        collection = database.getCollection("guilds");
+        collection = database.getCollection("hellrpg_gildie");
         result = collection.find();
         while (result.hasNext()) {
             DBObject obj = result.next();
@@ -203,7 +218,7 @@ public class MongoManager {
         final float pitch = spawn.getPitch();
 
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("spawn");
+        DBCollection collection = database.getCollection("hellrpg_spawn");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", "spawn");
@@ -226,22 +241,60 @@ public class MongoManager {
         pool.closePool();
     }
 
-    public void createPlayer(final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
+    public void createPlayer(final Player player, final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
         rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(uuid);
         rpgcore.getTargManager().createPlayerTargGUI(uuid);
         rpgcore.getMagazynierNPC().createAll(uuid);
 
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_gracze");
 
         BasicDBObject document = new BasicDBObject();
 
         document.put("_id", uuid.toString());
         document.put("nick", nick);
-        document.put("banInfo", banInfo);
-        document.put("muteInfo", muteInfo);
+        document.put("punishmentHistory", nick);
         document.put("level", 1);
-        document.put("exp", 0);
+        document.put("exp", 0.0);
+        document.put("kasa", 100.0);
+        document.put("hellcoins", 0);
+        document.put("pierscien_doswiadczenia", false);
+        document.put("pierscien_doswiadczenia_czas", 0);
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_bany");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("banInfo", banInfo);
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_muty");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("muteInfo", muteInfo);
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_ekwipunek");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("ekwipunek", Utils.toBase64(player.getInventory()));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_enderchest");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("enderchest", Utils.toBase64(player.getEnderChest()));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_zbroja");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_osiagniecia");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("osMoby", 0);
         document.put("osLudzie", 0);
         document.put("osSakwy", 0);
@@ -256,20 +309,55 @@ public class MongoManager {
         document.put("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
         document.put("osDrwalAccept", "false,false,false,false,false,false,false,false,false,false");
         document.put("osGornikAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.put("kasa", 100.0);
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_bao");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
         document.put("BAO_WARTOSCI", "0,0,0,0,0");
+        collection.insert(document);
+
+
+        collection = database.getCollection("hellrpg_rybak");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("RYBAK_MISJE", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
         document.put("RYBAK_POSTEP", 0);
         document.put("RYBAK_SRDMG", 0.0);
         document.put("RYBAK_SRDEF", 0.0);
         document.put("RYBAK_DDMG", 0.0);
         document.put("RYBAK_BLOK", 0.0);
-        document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-        document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
-
         collection.insert(document);
+
+        collection = database.getCollection("hellrpg_akcesoria");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_targi");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_magazyny");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
+        collection.insert(document);
+
+        collection = database.getCollection("hellrpg_kolekcjoner");
+        document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("kolekcjonerPostep", rpgcore.getKolekcjonerNPC().getKolekcjonerPostepInString(uuid));
+        document.put("postepMisji", rpgcore.getKolekcjonerNPC().getPostepMisji(uuid));
+        document.put("kolekcjonerSredniDMG", rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid));
+        document.put("kolekcjonerSredniDef", rpgcore.getKolekcjonerNPC().getKolekcjonerSredniDef(uuid));
+        document.put("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
+        collection.insert(document);
+
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
@@ -287,7 +375,7 @@ public class MongoManager {
 
     public void banPlayer(final UUID uuid, final String banInfo) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_bany");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
@@ -302,7 +390,7 @@ public class MongoManager {
 
     public void mutePlayer(final UUID uuid, final String muteInfo) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_muty");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
@@ -317,7 +405,7 @@ public class MongoManager {
 
     public void unBanPlayer(final UUID uuid) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_bany");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
@@ -334,7 +422,7 @@ public class MongoManager {
 
     public void unMutePlayer(final UUID uuid) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_muty");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
@@ -351,7 +439,7 @@ public class MongoManager {
 
     public void setPunishmentHistory(final UUID uuid, final String punishmentHistory) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_gracze");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
@@ -368,15 +456,15 @@ public class MongoManager {
 
     public void updatePlayer(final UUID uuid) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("players");
+        DBCollection collection = database.getCollection("hellrpg_gracze");
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", uuid.toString());
 
-        BasicDBObject document = this.getPlayerDocument(uuid);
+        //BasicDBObject document = this.getPlayerDocument(uuid);
 
         BasicDBObject update = new BasicDBObject();
-        update.put("$set", document);
+        // update.put("$set", document);
 
         collection.update(query, update);
 
@@ -385,23 +473,29 @@ public class MongoManager {
 
     public void tempUpdate() {
         for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
-            updatePlayer(uuid);
+            savePlayer(Bukkit.getPlayer(uuid), uuid);
         }
     }
 
-    public void savePlayer(final UUID uuid) {
+    public void savePlayer(final Player player, final UUID uuid) {
         try {
             DB database = pool.getPool().getDB("minecraft");
-            DBCollection collection = database.getCollection("players");
-            BasicDBObject query = new BasicDBObject();
-            query.put("_id", uuid.toString());
 
-            BasicDBObject document = this.getPlayerDocument(uuid);
+            this.savePlayerDocument(uuid, database.getCollection("hellrpg_gracze"));
+            this.saveBanDocument(uuid, database.getCollection("hellrpg_bany"));
+            this.saveMuteDocument(uuid, database.getCollection("hellrpg_muty"));
+            //this.savePlayerInventory(uuid, database.getCollection("hellrpg_inventory"));
+            this.saveOsDocument(uuid, database.getCollection("hellrpg_osiagniecia"));
+            this.saveBaoDocument(uuid, database.getCollection("hellrpg_bao"));
+            this.saveRybakDocument(uuid, database.getCollection("hellrpg_rybak"));
+            this.saveKolekcjonerDocument(uuid, database.getCollection("hellrpg_kolekcjoner"));
+            this.saveMagazynyDocument(uuid, database.getCollection("hellrpg_magazyny"));
+            this.saveTargDocument(uuid, database.getCollection("hellrpg_targi"));
+            this.saveAkcesoriaDocument(uuid, database.getCollection("hellrpg_akcesoria"));
+            this.saveEkwipunekDocument(player, database.getCollection("hellrpg_ekwipunek"));
+            this.saveEnderchestDocument(player, database.getCollection("hellrpg_enderchest"));
+            this.saveZbrojaDocument(player, database.getCollection("hellrpg_zbroja"));
 
-            BasicDBObject update = new BasicDBObject();
-            update.put("$set", document);
-
-            collection.update(query, update);
 
             pool.closePool();
 
@@ -416,13 +510,61 @@ public class MongoManager {
         }
     }
 
-    private BasicDBObject getPlayerDocument(final UUID uuid) {
+    private void savePlayerDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
         BasicDBObject document = new BasicDBObject();
         document.put("_id", uuid.toString());
         document.put("nick", rpgcore.getPlayerManager().getPlayerName(uuid));
+        document.put("punishmentHistory", rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
         document.put("level", rpgcore.getPlayerManager().getPlayerLvl(uuid));
         document.put("exp", rpgcore.getPlayerManager().getPlayerExp(uuid));
         document.put("kasa", String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(uuid)));
+        document.put("hellcoins", 0);
+        document.put("pierscien_doswiadczenia", false);
+        document.put("pierscien_doswiadczenia_czas", 0);
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveBanDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("banInfo", rpgcore.getPlayerManager().getPlayerBanInfo(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveMuteDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("muteInfo", rpgcore.getPlayerManager().getPlayerMuteInfo(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveOsDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("osMoby", rpgcore.getPlayerManager().getPlayerOsMoby(uuid));
         document.put("osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
         document.put("osLudzie", rpgcore.getPlayerManager().getPlayerOsLudzie(uuid));
@@ -437,53 +579,206 @@ public class MongoManager {
         document.put("osDrwalAccept", rpgcore.getPlayerManager().getOsDrwalAccept(uuid));
         document.put("osGornik", rpgcore.getPlayerManager().getPlayerOsGornik(uuid));
         document.put("osGornikAccept", rpgcore.getPlayerManager().getOsGornikAccept(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveBaoDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("BAO_BONUSY", rpgcore.getBaoManager().getBaoBonusy(uuid));
         document.put("BAO_WARTOSCI", rpgcore.getBaoManager().getBaoBonusyWartosci(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveRybakDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("RYBAK_MISJE", rpgcore.getRybakNPC().getPlayerRybakMisje(uuid));
         document.put("RYBAK_POSTEP", rpgcore.getRybakNPC().getPlayerPostep(uuid));
         document.put("RYBAK_SRDMG", rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid));
         document.put("RYBAK_SRDEF", rpgcore.getRybakNPC().getPlayerRybakSredniDef(uuid));
         document.put("RYBAK_DDMG", rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid));
         document.put("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
-        document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-        document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveKolekcjonerDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
         document.put("kolekcjonerPostep", rpgcore.getKolekcjonerNPC().getKolekcjonerPostepInString(uuid));
         document.put("postepMisji", rpgcore.getKolekcjonerNPC().getPostepMisji(uuid));
         document.put("kolekcjonerSredniDMG", rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid));
         document.put("kolekcjonerSredniDef", rpgcore.getKolekcjonerNPC().getKolekcjonerSredniDef(uuid));
         document.put("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
-        return document;
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveMagazynyDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveTargDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveAkcesoriaDocument(final UUID uuid, final DBCollection collection) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", uuid.toString());
+
+        BasicDBObject document = new BasicDBObject();
+        document.put("_id", uuid.toString());
+        document.put("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", document);
+
+        collection.update(query, update);
+    }
+
+    private void saveEkwipunekDocument(final Player player, final DBCollection collection) {
+        DBCursor cursor = collection.find(new BasicDBObject("_id", player.getUniqueId().toString()));
+        if (cursor.hasNext()) {
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", player.getUniqueId().toString());
+
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("ekwipunek", Utils.toBase64(player.getInventory()));
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$set", document);
+
+            collection.update(query, update);
+        } else {
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("ekwipunek", Utils.toBase64(player.getInventory()));
+            collection.insert(document);
+        }
+        System.out.println("Zapisano ekwipunek gracza " + player.getName());
+    }
+
+    private void saveEnderchestDocument(final Player player, final DBCollection collection) {
+        DBCursor cursor = collection.find(new BasicDBObject("_id", player.getUniqueId().toString()));
+        if (cursor.hasNext()) {
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", player.getUniqueId().toString());
+
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("enderchest", Utils.toBase64(player.getEnderChest()));
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$set", document);
+
+            collection.update(query, update);
+        } else {
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("enderchest", Utils.toBase64(player.getEnderChest()));
+            collection.insert(document);
+        }
+    }
+
+    private void saveZbrojaDocument(final Player player, final DBCollection collection) {
+        DBCursor cursor = collection.find(new BasicDBObject("_id", player.getUniqueId().toString()));
+        if (cursor.hasNext()) {
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", player.getUniqueId().toString());
+
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$set", document);
+
+            collection.update(query, update);
+        } else {
+            BasicDBObject document = new BasicDBObject();
+            document.put("_id", player.getUniqueId().toString());
+            document.put("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
+            collection.insert(document);
+        }
     }
 
     public void saveGuildFirst(final String tag) {
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("guilds");
+        DBCollection collection = database.getCollection("hellrpg_gildie");
         BasicDBObject guild = createGuildDocument(tag);
         collection.insert(guild);
         pool.closePool();
     }
 
-    public void saveGuild(final String tag) {
+    public void saveGuild() {
+        String tag2 = "";
         try {
-            DB database = pool.getPool().getDB("minecraft");
-            DBCollection collection = database.getCollection("guilds");
-            BasicDBObject query = new BasicDBObject();
-            query.put("_id", tag);
+            for (String tag : rpgcore.getGuildManager().getListOfGuilds()) {
+                tag2 = tag;
+                DB database = pool.getPool().getDB("minecraft");
+                DBCollection collection = database.getCollection("hellrpg_gildie");
+                BasicDBObject query = new BasicDBObject();
+                query.put("_id", tag);
 
-            BasicDBObject guild = createGuildDocument(tag);
+                BasicDBObject guild = createGuildDocument(tag);
 
-            BasicDBObject update = new BasicDBObject();
-            update.put("$set", guild);
+                BasicDBObject update = new BasicDBObject();
+                update.put("$set", guild);
 
-            collection.update(query, update);
-            pool.closePool();
+                collection.update(query, update);
+                pool.closePool();
 
-            Utils.sendToAdministration("&aPomyslnie zapisano gilde: &6" + tag);
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
+                Utils.sendToAdministration("&aPomyslnie zapisano gilde: &6" + tag);
+                System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
+            }
         } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu klanu &6:" + tag);
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag);
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu klanu &6:" + tag2);
+            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag2);
             e.printStackTrace();
         } finally {
             pool.closePool();
@@ -550,7 +845,7 @@ public class MongoManager {
     public void removeGuild(final String tag) {
 
         DB database = pool.getPool().getDB("minecraft");
-        DBCollection collection = database.getCollection("guilds");
+        DBCollection collection = database.getCollection("hellrpg_gildie");
         BasicDBObject toRemove = new BasicDBObject("_id", tag);
         collection.remove(toRemove);
 
