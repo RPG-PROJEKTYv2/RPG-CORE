@@ -1,4 +1,4 @@
-package rpg.rpgcore.listeners;
+package rpg.rpgcore.dmg;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.AkcesoriaHelper;
+import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -40,7 +41,7 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
-                final double attackerDmg = this.calculateAttackerDmgToPlayer(attacker);
+                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
                 e.setDamage(attackerDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", attackerDmg, victim.getLocation(), attacker));
 
@@ -48,7 +49,7 @@ public class EntityDamageEntityListener implements Listener {
                 // ... Victim jest Mobem
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
-                final double attackerDmg = this.calculateAttackerDmgToEntity(attacker);
+                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker);
                 e.setDamage(attackerDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", attackerDmg, victim.getLocation(), attacker));
             }
@@ -71,88 +72,6 @@ public class EntityDamageEntityListener implements Listener {
         }
     }
 
-    private double calculateAttackerDmgToPlayer(final Player attacker) {
-        final ItemStack weapon = attacker.getItemInHand();
-        final UUID uuid = attacker.getUniqueId();
-        double dmg = 0;
-        double mnoznik = 1;
-
-        // MIECZ
-        if (weapon != null) {
-            dmg += Utils.getSharpnessLevel(weapon);
-        }
-
-        // Akcesoria
-        if (rpgcore.getAkcesoriaManager().isTarczaEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 10, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isNaszyjnikEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 11, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isBransoletaEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 12, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isKolczykiEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 13, "Silny przeciwko Ludziom");
-        }
-        if (rpgcore.getAkcesoriaManager().isEnergiaEquiped(uuid)) {
-            mnoznik -= rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 15, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isZegarekEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Obrazenia");
-        }
-
-        return dmg * (mnoznik / 100);
-    }
-
-    private double calculateAttackerDmgToEntity(final Player attacker) {
-        final ItemStack weapon = attacker.getItemInHand();
-        final UUID uuid = attacker.getUniqueId();
-        double dmg = 0;
-        double mnoznik = 1;
-
-        // MIECZ DMG
-        if (!weapon.getType().equals(Material.AIR)) {
-            dmg += Utils.getSharpnessLevel(weapon);
-            dmg += Utils.getObrazeniaMobyLevel(weapon);
-        }
-
-        // Akcesoria
-        if (rpgcore.getAkcesoriaManager().isTarczaEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 10, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isNaszyjnikEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 11, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isBransoletaEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 12, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isEnergiaEquiped(uuid)) {
-            mnoznik -= rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 15, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isZegarekEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Obrazenia");
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Silny przeciwko potworom");
-        }
-
-        // BAO
-        if (!rpgcore.getBaoManager().getBaoBonusy(uuid).contains("Brak Bonusu")) {
-            final String[] bonusy = rpgcore.getBaoManager().getBaoBonusy(uuid).split(",");
-            final String[] wartosci = rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",");
-
-            if (bonusy[0].equals("Srednie obrazenia") || bonusy[0].equals("Srednia defensywa przeciwko potworom")) {
-                mnoznik += Double.parseDouble(wartosci[0]);
-            }
-            if (bonusy[3].equals("Dodatkowe Obrazenia")) {
-                dmg += Double.parseDouble(wartosci[3]);
-            }
-
-        }
-
-
-
-        return dmg * (mnoznik / 100);
-    }
 
 
 

@@ -114,7 +114,7 @@ public class MagazynierNPC {
 
     }
 
-    public Inventory createEmptyMagazyn(final int numer) {
+    private Inventory createEmptyMagazyn(final int numer) {
         final Inventory magazyn = Bukkit.createInventory(null, 54, Utils.format("&6&lMagazyn #" + numer));
         fill.setName(" ").addGlowing();
 

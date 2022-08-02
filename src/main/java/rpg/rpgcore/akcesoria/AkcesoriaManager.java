@@ -11,13 +11,14 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class AkcesoriaManager {
 
     private final RPGCORE rpgcore;
 
-    private final HashMap<UUID, Inventory> akcesoriaMap = new HashMap<>();
+    private final Map<UUID, Inventory> akcesoriaMap = new HashMap<>();
     private final ItemBuilder noAkcesoria = new ItemBuilder(Material.BARRIER, 1);
     private final ItemBuilder fillGUI = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
 
@@ -25,7 +26,7 @@ public class AkcesoriaManager {
         this.rpgcore = rpgcore;
     }
 
-    public Inventory createAkcesoriaGUINew(final UUID uuid) {
+    private Inventory createAkcesoriaGUINew(final UUID uuid) {
         final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getPlayerManager().getPlayerName(uuid)));
 
         fillGUI.setName(" ");
@@ -59,7 +60,7 @@ public class AkcesoriaManager {
         }
 
 
-        this.updateAkcesoriaGUI(uuid, akcesoriaGUI);
+        this.setAkcesoriaGUI(uuid, akcesoriaGUI);
         return akcesoriaGUI;
     }
 
@@ -177,20 +178,22 @@ public class AkcesoriaManager {
 
     @Getter
     public Inventory getAkcesoriaGUI(final UUID uuid) {
+        akcesoriaMap.computeIfAbsent(uuid, k -> this.createAkcesoriaGUINew(uuid));
         return this.akcesoriaMap.get(uuid);
     }
 
     @Getter
-    public HashMap<UUID, Inventory> getAkcesoriaMap() {
+    public Map<UUID, Inventory> getAkcesoriaMap() {
         return this.akcesoriaMap;
     }
 
     @Setter
     public void updateAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
-        if (this.akcesoriaMap.containsKey(uuid)) {
-            this.akcesoriaMap.replace(uuid, inventory);
-            return;
-        }
+        this.akcesoriaMap.replace(uuid, inventory);
+    }
+
+    @Setter
+    public void setAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
         this.akcesoriaMap.put(uuid, inventory);
     }
 
