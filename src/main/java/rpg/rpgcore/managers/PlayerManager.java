@@ -506,4 +506,15 @@ public class PlayerManager {
         return this.playerKasa.containsKey(uuid);
     }
 
+    public boolean isPlayerStaff(final Player player) {
+        final String playerGroup = this.getPlayerGroup(player);
+        return playerGroup.equals("H@") || playerGroup.equals("Admin") || playerGroup.equals("GM") || playerGroup.equals("Mod")
+                || playerGroup.equals("KidMod") || playerGroup.equals("Helper") || playerGroup.equals("JuniorHelper");
+    }
+
+    public boolean isPlayerHighStaff(final Player player) {
+        final String playerGroup = this.getPlayerGroup(player);
+        return playerGroup.equals("H@") || playerGroup.equals("Admin") || playerGroup.equals("GM");
+    }
+
 }

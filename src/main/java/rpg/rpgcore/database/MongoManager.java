@@ -50,13 +50,8 @@ public class MongoManager {
 
     }
 
-    private void repairMiresXD() {
-        Document doc = new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80").append("nick", "Mires_").append("punishmentHistory", "").append("level", 130).append("exp", 0.0).append("kasa", "98897845000.00").append("hellcoins", 0).append("pierscien_doswiadczenia", false).append("pierscien_doswiadczenia_czas", 0);
-        pool.getGracze().findOneAndReplace(new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80"), doc);
-    }
 
     public void loadAll() {
-        repairMiresXD();
         MongoCursor<Document> result;
 
         Document objSpawn = pool.getSpawn().find(new Document("_id", "spawn")).first();
@@ -77,6 +72,7 @@ public class MongoManager {
             Document obj = result.next();
             String nick = (String) obj.get("nick");
             UUID uuid = UUID.fromString(obj.get("_id").toString());
+            System.out.println(uuid);
             String punishmentHistory = (String) obj.get("punishmentHistory");
             int lvl = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level")))));
             double exp = Double.parseDouble(String.valueOf(obj.get("exp")));
@@ -174,6 +170,9 @@ public class MongoManager {
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDMG"))),
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDef"))),
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniKryt"))));
+
+            //obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
+            //rpgcore.getTrenerNPC().fromDocument(obj);
         }
 
         result = pool.getGildie().find().cursor();
@@ -362,6 +361,8 @@ public class MongoManager {
         document.append("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
         pool.getKolekcjoner().insertOne(document);
 
+        pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
+
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
@@ -375,6 +376,8 @@ public class MongoManager {
         rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
 
 
+
+
     }
 
     public void banPlayer(final UUID uuid, final String banInfo) {
@@ -382,8 +385,7 @@ public class MongoManager {
         query.append("_id", uuid.toString());
 
         pool.getBany().findOneAndReplace(query, new Document("_id", uuid.toString()).append("banInfo", banInfo));
-
-
+        rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, banInfo);
     }
 
     public void mutePlayer(final UUID uuid, final String muteInfo) {
@@ -391,8 +393,7 @@ public class MongoManager {
         query.append("_id", uuid.toString());
 
         pool.getMuty().findOneAndReplace(query, new Document("_id", uuid.toString()).append("muteInfo", muteInfo));
-
-
+        rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, muteInfo);
     }
 
     public void unBanPlayer(final UUID uuid) {
@@ -402,8 +403,6 @@ public class MongoManager {
         pool.getBany().findOneAndReplace(query, new Document("_id", uuid.toString()).append("banInfo", "false"));
 
         rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, "false");
-
-
     }
 
     public void unMutePlayer(final UUID uuid) {
@@ -421,7 +420,10 @@ public class MongoManager {
         Document query = new Document();
         query.append("_id", uuid.toString());
 
-        pool.getGracze().findOneAndReplace(query, new Document("_id", uuid.toString()).append("punishmentHistory", punishmentHistory));
+        Document update = new Document("$set", new Document("punishmentHistory", punishmentHistory));
+
+
+        pool.getGracze().findOneAndUpdate(query, update);
 
         rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, punishmentHistory);
 

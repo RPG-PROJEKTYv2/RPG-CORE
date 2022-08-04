@@ -785,6 +785,10 @@ public class GuildManager {
     public List<String> getGuildInviteTag(final UUID uuid) {
         List<String> tags = new ArrayList<>();
         for (String tag : guildList) {
+            if (guildInvites.get(uuid) == null) {
+                guildInvites.computeIfAbsent(uuid, k -> new HashMap<>());
+                return new ArrayList<>();
+            }
             if (guildInvites.get(uuid).containsKey(tag)) {
                 tags.add(tag);
             }

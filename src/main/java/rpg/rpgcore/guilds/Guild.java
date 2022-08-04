@@ -169,7 +169,7 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                if (rpgcore.getGuildManager().getGuildInviteTag(uuid) == null) {
+                if (rpgcore.getGuildManager().getGuildInviteTag(uuid).isEmpty()) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie masz zaproszenia do zadnego klanu"));
                     return false;
                 }

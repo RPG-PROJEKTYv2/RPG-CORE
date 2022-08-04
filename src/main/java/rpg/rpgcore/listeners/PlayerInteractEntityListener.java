@@ -89,6 +89,10 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
                 return;
             }
+            if (entityName.equalsIgnoreCase("Trener")) {
+                rpgcore.getTrenerNPC().openTrenerGUI(player);
+                return;
+            }
 
             // TRADE
             if (player.isSneaking()) {

@@ -11,6 +11,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> chatCooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> commandCooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> helpopCooldown = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> trenerCooldown = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -43,8 +44,23 @@ public class CooldownManager {
     public void givePlayerHelpopCooldown(final UUID uuid) {
         this.helpopCooldown.put(uuid, System.currentTimeMillis() + 30000);
     }
-
     public long getPlayerHelpopCooldown(final UUID uuid) {
         return this.helpopCooldown.asMap().get(uuid);
+    }
+
+    public String getPlayerTrenerCooldown(final UUID uuid) {
+        final long diff = Math.abs(this.trenerCooldown.asMap().get(uuid) - System.currentTimeMillis());
+        return String.format("%d min %d sec",
+                TimeUnit.MILLISECONDS.toMinutes(diff),
+                TimeUnit.MILLISECONDS.toSeconds(diff) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
+        );
+    }
+
+    public void givePlayerTrenerCooldown(final UUID uuid) {
+        this.trenerCooldown.put(uuid, System.currentTimeMillis() + 1800000);
+    }
+
+    public boolean hasTrenerCooldown(final UUID uuid) {
+        return this.trenerCooldown.asMap().containsKey(uuid);
     }
 }

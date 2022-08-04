@@ -120,7 +120,7 @@ public class LvlManager {
         killer.sendMessage("Exp za moba - " + expDoDodania);
 
         if (aktualnyExpGracza >= expNaNextLvlGracza) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer, killerUUID));
+            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer));
             return;
         }
         aktualnyExpGracza = aktualnyExpGracza + expDoDodania;
@@ -132,10 +132,16 @@ public class LvlManager {
 //        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza) * 100) + "%&b) [EXP]")));
     }
 
-    public void updateLVL(final Player killer, final UUID killerUUID) {
+    public void updateLVL(final Player killer) {
+        final UUID killerUUID = killer.getUniqueId();
         int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(killerUUID);
         int nextLvlGracza = aktualnyLvlGracza + 1;
 
+        if (nextLvlGracza == 2) {
+            rpgcore.getTrenerNPC().updatePoints(killerUUID, 2);
+        } else {
+            rpgcore.getTrenerNPC().updatePoints(killerUUID, 1);
+        }
         rpgcore.getPlayerManager().updatePlayerLvl(killerUUID, nextLvlGracza);
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, 0);
         killer.setExp(0);

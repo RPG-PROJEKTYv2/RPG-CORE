@@ -44,10 +44,11 @@ public class ChatManager {
         this.messageWithEQ.put(uuid, message);
     }
 
-    public String formatujChat(final Player player, final String format, String message) {
+    public String formatujChat(final Player player, String format, String message) {
         final int playerLVL = rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId());
         String playerName = player.getName();
         String playerRank = rpgcore.getPlayerManager().getPlayerGroup(player);
+        String playerGuild = "";
 
         switch (playerRank) {
             case "H@":
@@ -80,10 +81,17 @@ public class ChatManager {
                 playerName = Utils.format("&7" + playerName);
                 break;
         }
-        if (playerRank.equals("Gracz")) {
-            return PlaceholderAPI.setPlaceholders(player, format.replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-group>", "").replace("<player-name>", playerName).replace("<message>", message));
+        if (!rpgcore.getGuildManager().getGuildTag(player.getUniqueId()).equals("Brak Klanu")) {
+            playerGuild = Utils.format("&8(&e" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8) ");
         }
-        return PlaceholderAPI.setPlaceholders(player, format.replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));
+        format = format.replace("<player-klan>", playerGuild).replace("<player-lvl>", String.valueOf(playerLVL));
+        if (playerRank.equals("Gracz")) {
+            return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", "").replace("<player-name>", playerName).replace("<message>", message));
+        }
+        if (rpgcore.getPlayerManager().isPlayerHighStaff(player)) {
+            return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", Utils.format(message)));
+        }
+        return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));
     }
 
 

@@ -67,6 +67,8 @@ import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.admin.vanish.VanishManager;
 import rpg.rpgcore.npc.duszolog.DuszologPlayerInteract;
+import rpg.rpgcore.npc.trener.TrenerInventoryClick;
+import rpg.rpgcore.npc.trener.TrenerNPC;
 import rpg.rpgcore.os.OSInventoryClick;
 import rpg.rpgcore.os.OsManager;
 import rpg.rpgcore.os.Osiagniecia;
@@ -113,11 +115,12 @@ public final class RPGCORE extends JavaPlugin {
     private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
     private TabManager tabManager;
+    private BackupManager backup;
     private KupiecNPC kupiecNPC;
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
-    private BackupManager backup;
+    private TrenerNPC trenerNPC;
 
     private int i = 1;
 
@@ -220,13 +223,16 @@ public final class RPGCORE extends JavaPlugin {
         // ...KOLEKCJONER
         this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
 
+        // ...TRENER
+        this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
+
         // BACKUP
         //this.mongo.tempUpdate();
 
         // TAB
         new UpdateTabTask(this);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
+        //this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
     }
 
     public void onDisable() {
@@ -330,6 +336,7 @@ public final class RPGCORE extends JavaPlugin {
         this.kolekcjonerNPC = new KolekcjonerNPC(this);
         this.kupiecNPC = new KupiecNPC(this);
         this.kowalNPC = new KowalNPC(this);
+        this.trenerNPC = new TrenerNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -467,6 +474,14 @@ public final class RPGCORE extends JavaPlugin {
         return tabManager;
     }
 
+    public NewTargManager getNewTargManager() {
+        return newTargManager;
+    }
+
+    public BackupManager getBackupManager() {
+        return backup;
+    }
+
     public KupiecNPC getKupiecNPC() {
         return kupiecNPC;
     }
@@ -475,11 +490,8 @@ public final class RPGCORE extends JavaPlugin {
         return kowalNPC;
     }
 
-    public NewTargManager getNewTargManager() {
-        return newTargManager;
+    public TrenerNPC getTrenerNPC() {
+        return trenerNPC;
     }
 
-    public BackupManager getBackupManager() {
-        return backup;
-    }
 }

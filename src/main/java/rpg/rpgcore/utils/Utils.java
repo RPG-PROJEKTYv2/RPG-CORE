@@ -38,6 +38,7 @@ public class Utils {
     public static final String RYBAK = format("&6&lRybak &8>> &7");
     public static final String KUPIEC = format("&2&lKupiec &8>> &a");
     public static final String KOLEKCJONER = format("&6&lKolekcjoner &8>> &7");
+    public static final String TRENER = format("&6&lTrener &8>> &7");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));

@@ -53,9 +53,14 @@ public class EQInventoryClick implements Listener {
                 e.getWhoClicked().closeInventory();
                 return;
             }
-            final String przedFormatem = Utils.format("&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>&7: <message>");
+            final String przedFormatem = Utils.format("<player-klan>&8[&bLvl. &f<player-lvl>&8]<player-group> &7<player-name>:&f <message>");
             final String message = rpgcore.getChatManager().getMessageWithEQ(e.getWhoClicked().getUniqueId());
-            final ArrayList<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
+            ArrayList<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
+            if (message.contains("[i]")) {
+                msg = new ArrayList<>(Arrays.asList(message.split("\\[i]")));
+            } else if (message.contains("[item]")){
+                msg = new ArrayList<>(Arrays.asList(message.split("\\[item]")));
+            }
             final String formatPrzedWiadomoscia = rpgcore.getChatManager().formatujChat(player, przedFormatem, "");
             final String playerGroup = PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
             StringBuilder finalMessage;

@@ -207,6 +207,7 @@ public class MagazynierNPC {
         this.playerMagazyny.replace(uuid, magazyn);
     }
     public String getPlayerMagazynyAccess(final UUID uuid) {
+        this.playerMagazyny.computeIfAbsent(uuid, k -> "true,false,false,false,false");
         return this.playerMagazyny.get(uuid);
     }
 
