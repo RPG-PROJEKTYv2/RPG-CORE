@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -117,7 +117,7 @@ public class MagazynierInventoryClick implements Listener {
             }
 
             if (clickedSlot == 4) {
-                if (!player.getInventory().containsAtLeast(GlobalItems.getBonNaMagazyn(3),3 )) {
+                if (!player.getInventory().containsAtLeast(GlobalItem.getItem("I17", 3),3 )) {
                     int amount = 0;
                     for (ItemStack is2 : player.getInventory().getContents()) {
                         if (is2.getItemMeta().getDisplayName().contains("Bon na magazyn")) {
@@ -130,7 +130,7 @@ public class MagazynierInventoryClick implements Listener {
                     return;
                 }
                 if (progress >= Integer.parseInt(clickedMission[1])) {
-                    player.getInventory().remove(GlobalItems.getBonNaMagazyn(3));
+                    player.getInventory().remove(GlobalItem.getItem("I17", 3));
                     playerMissionStatus[clickedSlot] = "true";
                     player.sendMessage(Utils.format("&b&lMagazynier &8>> &aGracz &6" + player.getName() + " &awykonal moja &6" + (clickedSlot + 1) + " &amisje!"));
 
@@ -142,7 +142,7 @@ public class MagazynierInventoryClick implements Listener {
             }
 
             if (clickedSlot == 5) {
-                if (!player.getInventory().containsAtLeast(GlobalItems.getBonNaMagazyn(3),3)) {
+                if (!player.getInventory().containsAtLeast(GlobalItem.getItem("I17", 3),3)) {
                     int amount = 0;
                     for (ItemStack is2 : player.getInventory().getContents()) {
                         if (is2.getItemMeta().getDisplayName().contains("Bon na magazyn")) {
@@ -154,7 +154,7 @@ public class MagazynierInventoryClick implements Listener {
                     player.closeInventory();
                     return;
                 }
-                player.getInventory().remove(GlobalItems.getBonNaMagazyn(3));
+                player.getInventory().remove(GlobalItem.getItem("I17", 3));
                 playerMissionStatus[clickedSlot] = "true";
                 player.sendMessage(Utils.format("&b&lMagazynier &8>> &aGracz &6" + player.getName() + " &awykonal moja &6" + (clickedSlot + 1) + " &amisje!"));
 

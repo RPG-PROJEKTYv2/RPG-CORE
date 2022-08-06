@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -117,17 +117,11 @@ public class KowalInventoryClick implements Listener {
             }
 
             if (clickedSlot == 22 && !clickedInventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
-                boolean hasZwoj = false;
+                boolean hasZwoj = clickedInventory.getItem(14).equals(GlobalItem.getItem("I19", 1));
 
-                if (clickedInventory.getItem(14).equals(GlobalItems.getZwojBlogoslawienstwa(1))) {
-                    hasZwoj = true;
-                }
                 rpgcore.getKowalNPC().upgradeItem(player, clickedInventory.getItem(12).clone(), hasZwoj);
                 player.closeInventory();
-                return;
             }
-            return;
         }
-
     }
 }

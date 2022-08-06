@@ -43,6 +43,7 @@ public class Config {
             rpgcore.getConfig().createSection("Osiagniecia");
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Moby");
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Gracze");
+            rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Metiny");
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Sakwy");
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Niesy");
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Rybak");
@@ -53,6 +54,7 @@ public class Config {
             for (int i = 1; i <= 10; i++){
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").addDefault("Moby_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").addDefault("Gracze_" + i,1 );
+                rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").addDefault("Metiny_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").addDefault("Sakwy_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").addDefault("Niesy_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").addDefault("Rybak_" + i,1 );

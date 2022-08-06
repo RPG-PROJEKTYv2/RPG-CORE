@@ -24,6 +24,7 @@ public class OsManager {
 
     private final HashMap<Integer, Integer> requiredForOsMoby = new HashMap<>();
     private final HashMap<Integer, Integer> requiredForOsLudzie = new HashMap<>();
+    private final HashMap<Integer, Integer> requiredForOsMetiny = new HashMap<>();
     private final HashMap<Integer, Integer> requiredForOsSakwy = new HashMap<>();
     private final HashMap<Integer, Integer> requiredForOsNiesy = new HashMap<>();
     private final HashMap<Integer, Integer> requiredForOsRybak = new HashMap<>();
@@ -38,13 +39,14 @@ public class OsManager {
     }
 
     public void loadAllRequiredOs() {
-        System.out.println(rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getKeys(false));
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getKeys(false).size(); i++) {
             this.requiredForOsMoby.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getInt("Moby_" + i));
         }
-        System.out.println(requiredForOsMoby);
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getKeys(false).size(); i++) {
             this.requiredForOsLudzie.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getInt("Gracze_" + i));
+        }
+        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getKeys(false).size(); i++) {
+            this.requiredForOsLudzie.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getInt("Metiny_" + i));
         }
         for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getKeys(false).size(); i++) {
             this.requiredForOsSakwy.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getInt("Sakwy_" + i));

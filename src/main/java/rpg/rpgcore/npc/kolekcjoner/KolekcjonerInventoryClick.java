@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class KolekcjonerInventoryClick implements Listener {
             e.setCancelled(true);
 
             if (clickedSlot != 13) {
-                player.getInventory().addItem(GlobalItems.getKolekcjonerItem1x10(10));
+                player.getInventory().addItem(GlobalItem.getItem("I21", 1));
                 return;
             }
 

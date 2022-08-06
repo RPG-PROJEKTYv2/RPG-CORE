@@ -391,7 +391,7 @@ public class BAOManager {
     }
 
     public void getAllEntities() {
-        ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -12.5, 8, 53.5), EntityType.ARMOR_STAND);
+        ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -135, 8, -182.5), EntityType.ARMOR_STAND);
         as.setVisible(false);
         for (Entity e : as.getNearbyEntities(1, 2, 1)) {
             if (!(e instanceof Player)) {

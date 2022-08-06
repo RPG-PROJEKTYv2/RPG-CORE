@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -76,7 +76,7 @@ public class MagazynierNPC {
             artifactPlace.setName(Utils.format("&6&lMiejsce na artefakt")).setLore(lore);
             inventory.setItem(2, artifactPlace.toItemStack());
         } else {
-            inventory.setItem(2, GlobalItems.getArtefaktMagazynier(player.getName()));
+            inventory.setItem(2, GlobalItem.getArtefakt("I18", player.getName()));
         }
 
         lore.clear();

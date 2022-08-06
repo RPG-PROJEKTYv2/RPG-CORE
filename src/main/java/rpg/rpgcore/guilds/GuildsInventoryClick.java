@@ -5,12 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -147,14 +146,14 @@ public class GuildsInventoryClick implements Listener {
                         player.closeInventory();
                         return;
                     }
-                    if (!player.getInventory().containsAtLeast(GlobalItems.getHellCoin(100, 1), 1)) {
+                    if (!player.getInventory().containsAtLeast(GlobalItem.getHellCoin(100), 1)) {
                         player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz odpowiednich przedmiotow do ulepszenia tego drzewka!"));
                         player.closeInventory();
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildDodatkowyExp(tag, 2.5);
                     rpgcore.getGuildManager().updateGuildBalance(tag, -1);
-                    player.getInventory().removeItem(GlobalItems.getHellCoin(100, 1));
+                    player.getInventory().removeItem(GlobalItem.getHellCoin(100));
                     break;
                 case 5:
                     return;
@@ -180,7 +179,6 @@ public class GuildsInventoryClick implements Listener {
             rpgcore.getGuildManager().updateGuildBalance(tag, -1);
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + clickedItem.getItemMeta().getDisplayName()));
             rpgcore.getGuildManager().showUpgrades(tag, player);
-            return;
         }
     }
 }

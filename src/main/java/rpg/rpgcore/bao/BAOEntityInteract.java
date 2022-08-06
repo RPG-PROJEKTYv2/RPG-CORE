@@ -27,7 +27,6 @@ public class BAOEntityInteract implements Listener {
 
 
         if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
-            player.sendMessage(e.getRightClicked().getEntityId() + " -ID");
             if (rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getEntityId())) {
                 e.setCancelled(true);
                 if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < 74) {

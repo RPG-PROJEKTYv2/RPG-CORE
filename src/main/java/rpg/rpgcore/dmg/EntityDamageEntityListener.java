@@ -1,8 +1,10 @@
 package rpg.rpgcore.dmg;
 
+import com.mojang.authlib.yggdrasil.response.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.AkcesoriaHelper;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
@@ -28,7 +31,20 @@ public class EntityDamageEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
 
-
+        if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
+            if (e.getDamager() instanceof Player) {
+                e.setCancelled(true);
+                if (e.getEntity().getCustomName() == null) {
+                    return;
+                }
+                if (!rpgcore.getCooldownManager().hasMetinyCooldown(e.getDamager().getUniqueId())) {
+                    MetinyHelper.attackMetin(Integer.parseInt(e.getEntity().getCustomName()), 1, e.getEntity(), ((Player) e.getDamager()).getPlayer());
+                    rpgcore.getCooldownManager().givePlayerMetinyCooldown(e.getDamager().getUniqueId());
+                    return;
+                }
+                return;
+            }
+        }
 
         // ATAKUJACY JEST GRACZEM
         if (e.getDamager() instanceof Player) {

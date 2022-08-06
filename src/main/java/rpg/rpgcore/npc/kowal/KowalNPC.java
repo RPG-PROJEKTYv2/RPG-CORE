@@ -14,10 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
-import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.RandomItems;
-import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.*;
 
 import java.util.*;
 
@@ -45,7 +42,7 @@ public class KowalNPC {
 
     public void openKowalMainGui(final Player player) {
 
-        player.getInventory().addItem(GlobalItems.getZwojBlogoslawienstwa(1));
+        player.getInventory().addItem(GlobalItem.getItem("I19", 1));
 
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&4&lKowal"));
         final List<String> lore = new ArrayList<>();

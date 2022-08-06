@@ -4,9 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 
 public class Test implements CommandExecutor {
 
@@ -20,7 +19,7 @@ public class Test implements CommandExecutor {
 
         final Player player = (Player) commandSender;
 
-        player.getInventory().addItem(GlobalItems.getSakwa(1));
+        player.getInventory().addItem(GlobalItem.getItem("I16", 1));
 
         if (strings.length == 1) {
             try {

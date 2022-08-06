@@ -7,7 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems;
+import rpg.rpgcore.utils.GlobalItem;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -120,7 +120,7 @@ public class KolekcjonerNPC {
 
         switch (postep) {
             case 1:
-                currentItem = GlobalItems.getKolekcjonerItem1x10(1);
+                currentItem = GlobalItem.getItem("I21", 1);
                 final ItemMeta im = currentItem.getItemMeta();
                 final List<String> lore = im.getLore();
 
@@ -159,7 +159,7 @@ public class KolekcjonerNPC {
     public ItemStack getRequiredItem(final int currentMission) {
         switch (currentMission) {
             case 1:
-                return GlobalItems.getKolekcjonerItem1x10(1);
+                return GlobalItem.getItem("I21", 1);
             case 2:
                 break;
             case 3:

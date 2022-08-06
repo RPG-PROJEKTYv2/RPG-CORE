@@ -114,4 +114,10 @@ commands:
 
   removenearbyentities:
 
+  metin:
+    aliases:
+      - metiny
+      - metki
+      - metins
+
     

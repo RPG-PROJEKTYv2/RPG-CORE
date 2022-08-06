@@ -25,7 +25,6 @@ import rpg.rpgcore.commands.*;
 import rpg.rpgcore.commands.kosz.Kosz;
 import rpg.rpgcore.commands.kosz.KoszInventoryClick;
 import rpg.rpgcore.commands.kosz.KoszInventoryClose;
-import rpg.rpgcore.database.MongoConnectionPoolManager;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.dmg.DamageManager;
 import rpg.rpgcore.dmg.EntityDamageEntityListener;
@@ -40,6 +39,8 @@ import rpg.rpgcore.lvl.Lvl;
 import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.managers.*;
 import rpg.rpgcore.admin.god.GodManager;
+import rpg.rpgcore.metiny.MetinCommand;
+import rpg.rpgcore.metiny.MetinyManager;
 import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.Message;
 import rpg.rpgcore.msg.Reply;
@@ -80,6 +81,7 @@ import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
+import rpg.rpgcore.tasks.MetinyTask;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
@@ -88,6 +90,7 @@ import rpg.rpgcore.utils.Utils;
 
 public final class RPGCORE extends JavaPlugin {
 
+    private static RPGCORE instance;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -114,17 +117,22 @@ public final class RPGCORE extends JavaPlugin {
     private RybakNPC rybakNPC;
     private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
-    private TabManager tabManager;
     private BackupManager backup;
     private KupiecNPC kupiecNPC;
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
     private TrenerNPC trenerNPC;
+    private MetinyManager metinyManager;
 
     private int i = 1;
 
+    public static RPGCORE getInstance() {
+        return instance;
+    }
+
     public void onEnable() {
+        instance = this;
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
@@ -232,7 +240,9 @@ public final class RPGCORE extends JavaPlugin {
         // TAB
         new UpdateTabTask(this);
 
-        //this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
+
+        new MetinyTask(this);
     }
 
     public void onDisable() {
@@ -279,6 +289,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("test").setExecutor(new Test(this));
         this.getCommand("helpop").setExecutor(new HelpOP(this));
         this.getCommand("removenearbyentities").setExecutor(new RemoveNearbyEntities());
+        this.getCommand("metin").setExecutor(new MetinCommand(this));
     }
 
     private void initGlobalEvents() {
@@ -323,9 +334,10 @@ public final class RPGCORE extends JavaPlugin {
         this.targManager = new TargManager(this);
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);
-        this.tabManager = new TabManager(this);
+        new TabManager(this);
         this.newTargManager = new NewTargManager(this);
         this.backup = new BackupManager(this);
+        this.metinyManager = new MetinyManager(this);
     }
 
     private void initNPCS() {
@@ -470,10 +482,6 @@ public final class RPGCORE extends JavaPlugin {
         return guildManager;
     }
 
-    public TabManager getTabManager() {
-        return tabManager;
-    }
-
     public NewTargManager getNewTargManager() {
         return newTargManager;
     }
@@ -492,6 +500,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public TrenerNPC getTrenerNPC() {
         return trenerNPC;
+    }
+
+    public MetinyManager getMetinyManager() {
+        return metinyManager;
     }
 
 }

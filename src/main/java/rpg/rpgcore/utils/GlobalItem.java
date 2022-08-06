@@ -1,0 +1,88 @@
+package rpg.rpgcore.utils;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+
+public enum GlobalItem {
+    I1("I1", new ItemBuilder(Material.RAW_FISH).setName("&6Sledz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Dorsz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I3("I3", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Losos").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I4("I4", new ItemBuilder(Material.RAW_FISH, 1, (short) 2).setName("&6Krasnopiorka").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I5("I5", new ItemBuilder(Material.COOKED_FISH, 1, (short) 1).setName("&6Dorsz Czarny").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I6("I6", new ItemBuilder(Material.RAW_FISH).setName("&6Dorada").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I7("I7", new ItemBuilder(Material.COOKED_FISH).setName("&6Cierniczek").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I8("I8", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Fladra").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I9("I9", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Karas").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I10("I10", new ItemBuilder(Material.COOKED_FISH).setName("&6Karp").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I11("I11", new ItemBuilder(Material.COOKED_FISH, 1, (short) 1).setName("&6Leszcz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I12("I12", new ItemBuilder(Material.COOKED_FISH).setName("&6Makrela").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I13("I13", new ItemBuilder(Material.COOKED_FISH).setName("&6Mintaj").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I14("I14", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Okon").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I15("I15", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Plotka").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I16("I16", new ItemBuilder(Material.EXP_BOTTLE, 1).setName("&8• &eSakwa &8•").addGlowing().toItemStack().clone()),
+    I17("I17", new ItemBuilder(Material.PAPER).setName("&bBon na powiekszenie magazynu").setLore(Arrays.asList("&8&oChyba &b&lMagazynier &8tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I18("I18", new ItemBuilder(Material.EMERALD).setName("&4&lArtefakt &b&lMagazyniera").setLore(Arrays.asList("&8Artefakt ten pozwala na otwieranie","&8swoich magazynow nie chodzac do &b&lMagazyniera","&6Wlasciciel: &7playerName", " ","&4&lARTEFAKT")).addGlowing().toItemStack().clone()),
+    I19("I19", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Blogoslawienstwa").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
+    I20("I20", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&8&lC").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
+    I21("I21", new ItemBuilder(Material.STICK).setName("&7&lTestowy Patyk").setLore(Arrays.asList(" ", "&8&oChyba kolekcjoner tego potrzebuje")).hideFlag().toItemStack().clone());
+
+    private final ItemStack itemStack;
+    private final String name;
+
+    GlobalItem(String name, ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.name = name;
+    }
+
+    public static void getList(Player player) {
+        int i = 1;
+        for (GlobalItem rank : values()) {
+            ItemStack itemStack = rank.getItemStack();
+            player.sendMessage(Utils.format(i + ". " + itemStack.getItemMeta().getDisplayName()));
+            i = i + 1;
+        }
+    }
+
+    public static GlobalItem getByName(String name) {
+        for (GlobalItem rank : values()) {
+            if (rank.getName().equalsIgnoreCase(name)) {
+                return rank;
+            }
+        }
+        return null;
+    }
+
+    public static ItemStack getItem(String string, int number) {
+        ItemStack itemStack = GlobalItem.getByName(string).getItemStack();
+        itemStack.setAmount(number);
+        return itemStack;
+    }
+
+    public static ItemStack getArtefakt(final String itemName, final String playerName) {
+        ItemStack itemStack = GlobalItem.getByName(itemName).getItemStack();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(itemMeta.getDisplayName().replace("playerName", playerName));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public static ItemStack getHellCoin(final int value) {
+        ItemStack itemStack = GlobalItem.getByName("I20").getItemStack();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(itemMeta.getDisplayName().replace("value", String.valueOf(value)));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack;
+    }
+}

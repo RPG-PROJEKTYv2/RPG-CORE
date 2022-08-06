@@ -9,12 +9,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
 import javax.print.Doc;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MongoManager {
 
@@ -232,6 +234,15 @@ public class MongoManager {
                     lastOnlineMap);
         }
 
+    }
+
+    public Map<Integer, Metiny> loadMetins() {
+        Map<Integer, Metiny> metiny = new ConcurrentHashMap<>();
+        for (Document document : pool.getMetiny().find()) {
+            Metiny metiny1 = new Metiny(document);
+            metiny.put(metiny1.getId(), metiny1);
+        }
+        return metiny;
     }
 
 
@@ -759,6 +770,25 @@ public class MongoManager {
     public void removeGuild(final String tag) {
         Document toRemove = new Document("_id", tag);
         pool.getGildie().deleteOne(toRemove);
+    }
+
+    public void addDataMetins(Metiny metiny) {
+        this.pool.getMetiny().insertOne(metiny.toDocument());
+    }
+
+    public void saveDataMetins(final int id, final Metiny metiny) {
+        this.pool.getMetiny().findOneAndReplace(new Document("_id", id), metiny.toDocument());
+    }
+
+    public void removeDataMetins(final int id) {
+        Document querry = new Document("_id", id);
+        this.pool.getMetiny().deleteMany(querry);
+    }
+
+    public void saveAllMetins() {
+        for (Metiny metiny : rpgcore.getMetinyManager().getMetins()) {
+            this.saveDataMetins(metiny.getId(), metiny);
+        }
     }
 
     public void onDisable() {
