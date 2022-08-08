@@ -61,6 +61,7 @@ import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.duszolog.DuszologInventoryClick;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
+import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.rybak.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.RybakNPC;
@@ -124,6 +125,7 @@ public final class RPGCORE extends JavaPlugin {
     private KolekcjonerNPC kolekcjonerNPC;
     private TrenerNPC trenerNPC;
     private MetinyManager metinyManager;
+    private MetinologNPC metinologNPC;
 
     private int i = 1;
 
@@ -338,6 +340,7 @@ public final class RPGCORE extends JavaPlugin {
         this.newTargManager = new NewTargManager(this);
         this.backup = new BackupManager(this);
         this.metinyManager = new MetinyManager(this);
+        this.metinologNPC = new MetinologNPC(this);
     }
 
     private void initNPCS() {
@@ -355,6 +358,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getRybakNPC().loadRybakDrops();
         this.getRybakNPC().loadRybakMobs();
         this.getRybakNPC().loadRybakMisje();
+        this.getMetinologNPC().loadMissions();
     }
 
     private void autoMessage() {
@@ -504,6 +508,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public MetinyManager getMetinyManager() {
         return metinyManager;
+    }
+
+    public MetinologNPC getMetinologNPC() {
+        return metinologNPC;
     }
 
 }

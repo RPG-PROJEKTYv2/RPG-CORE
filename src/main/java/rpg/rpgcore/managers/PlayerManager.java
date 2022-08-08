@@ -28,6 +28,7 @@ public class PlayerManager {
     private final HashMap<UUID, Double> playerExp = new HashMap<>();
     private final HashMap<UUID, Integer> osMoby = new HashMap<>();
     private final HashMap<UUID, Integer> osLudzie = new HashMap<>();
+    private final HashMap<UUID, Integer> osMetiny = new HashMap<>();
     private final HashMap<UUID, Integer> osSakwy = new HashMap<>();
     private final HashMap<UUID, Integer> osNiesy = new HashMap<>();
     private final HashMap<UUID, Integer> osRybak = new HashMap<>();
@@ -35,6 +36,7 @@ public class PlayerManager {
     private final HashMap<UUID, Integer> osGornik = new HashMap<>();
     private final HashMap<UUID, String> osMobyAccept = new HashMap<>();
     private final HashMap<UUID, String> osLudzieAccept = new HashMap<>();
+    private final HashMap<UUID, String> osMetinyAccept = new HashMap<>();
     private final HashMap<UUID, String> osSakwyAccept = new HashMap<>();
     private final HashMap<UUID, String> osNiesyAccept = new HashMap<>();
     private final HashMap<UUID, String> osRybakAccept = new HashMap<>();
@@ -71,8 +73,8 @@ public class PlayerManager {
     }
 
     public void createPlayer(final String playerName, final UUID playerUUID, final String banInfo, final String muteinfo, final String punishmentHistory, final int playerLvl, final double playerExp,
-                             final int osMoby, final int osLudzie, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
-                             final String osMobyAccpet, final String osLudzieAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept,
+                             final int osMoby, final int osLudzie, final int osMetiny, final int osSakwy, final int osNiesy, final int osRybak, final int osDrwal, final int osGornik,
+                             final String osMobyAccpet, final String osLudzieAccept, final String osMetinyAccept, final String osSakwyAccept, final String osNiesyAccept, final String osRybakAccept, final String osDrwalAccept, final String osGornikAccept,
                              final double srednie, final double minusSrednie, final double def, final double minusDef, final double silnyNaLudzi, final double defNaLudzi, final double silnyNaMoby, final double defNaMoby,
                              final double damage, final double blok, final double przeszywka, final double kryt, final double hp, final double playerKasa) {
         this.players.add(playerUUID);
@@ -87,6 +89,7 @@ public class PlayerManager {
         this.playerPunishmentHistory.put(playerUUID, punishmentHistory);
         this.osMoby.put(playerUUID, osMoby);
         this.osLudzie.put(playerUUID, osLudzie);
+        this.osMetiny.put(playerUUID, osMetiny);
         this.osSakwy.put(playerUUID, osSakwy);
         this.osNiesy.put(playerUUID, osNiesy);
         this.osRybak.put(playerUUID, osRybak);
@@ -94,6 +97,7 @@ public class PlayerManager {
         this.osGornik.put(playerUUID, osGornik);
         this.osMobyAccept.put(playerUUID, osMobyAccpet);
         this.osLudzieAccept.put(playerUUID, osLudzieAccept);
+        this.osMetinyAccept.put(playerUUID, osMetinyAccept);
         this.osSakwyAccept.put(playerUUID, osSakwyAccept);
         this.osNiesyAccept.put(playerUUID, osNiesyAccept);
         this.osRybakAccept.put(playerUUID, osRybakAccept);
@@ -128,6 +132,7 @@ public class PlayerManager {
         this.playerPunishmentHistory.clear();
         this.osMoby.clear();
         this.osLudzie.clear();
+        this.osMetiny.clear();
         this.osSakwy.clear();
         this.osNiesy.clear();
         this.osRybak.clear();
@@ -135,6 +140,7 @@ public class PlayerManager {
         this.osGornik.clear();
         this.osMobyAccept.clear();
         this.osLudzieAccept.clear();
+        this.osMetinyAccept.clear();
         this.osSakwyAccept.clear();
         this.osNiesyAccept.clear();
         this.osRybakAccept.clear();
@@ -192,7 +198,6 @@ public class PlayerManager {
         return this.playerLvl.get(uuid);
     }
 
-    //@BooleanFlag ??????
     public boolean isBanned(final UUID uuid) {
         return !(getPlayerBanInfo(uuid).equalsIgnoreCase("false"));
     }
@@ -209,6 +214,10 @@ public class PlayerManager {
     @Setter
     public void updatePlayerOsLudzie(final UUID uuid, final int noweOsLudzie) {
         this.osLudzie.replace(uuid, noweOsLudzie);
+    }
+
+    public void updatePlayerOsMetiny(final UUID uuid, final int noweOsMetiny) {
+        this.osMetiny.replace(uuid, noweOsMetiny);
     }
 
     @Setter
@@ -346,6 +355,10 @@ public class PlayerManager {
         return this.osLudzie.get(uuid);
     }
 
+    public int getPlayerOsMetiny(final UUID uuid) {
+        return this.osMetiny.get(uuid);
+    }
+
     @Getter
     public int getPlayerOsSakwy(final UUID uuid) {
         return this.osSakwy.get(uuid);
@@ -379,6 +392,10 @@ public class PlayerManager {
     @Getter
     public String getOsLudzieAccept(final UUID uuid) {
         return this.osLudzieAccept.get(uuid);
+    }
+
+    public String getOsMetinyAccept(final UUID uuid) {
+        return this.osMetinyAccept.get(uuid);
     }
 
     @Getter

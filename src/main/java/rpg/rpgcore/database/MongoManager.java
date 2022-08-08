@@ -10,6 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.metiny.Metiny;
+import rpg.rpgcore.npc.metinolog.MetinologObject;
+import rpg.rpgcore.npc.metinolog.MetinologUser;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
@@ -52,8 +54,28 @@ public class MongoManager {
 
     }
 
+    public void fixMires() {
+        pool.getOsiagniecia().findOneAndReplace(new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80"), new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80").append("osMoby",10000)
+                .append("osMobyAccept","true,true,true,true,true,true,true,true,true,false")
+                .append("osLudzie",1000)
+                .append("osLudzieAccept","false,false,false,false,false,false,false,false,false,false")
+                .append("osMetiny",0)
+                .append("osMetinyAccept","false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false")
+                .append("osSakwy",0)
+                .append("osSakwyAccept","false,false,false,false,false,false,false,false,false,false")
+                .append("osNiesy",0)
+                .append("osNiesyAccept","false,false,false,false,false,false,false,false,false,false")
+                .append("osRybak",0)
+                .append("osRybakAccept","false,false,false,false,false,false,false,false,false,false")
+                .append("osDrwal",0)
+                .append("osDrwalAccept","false,false,false,false,false,false,false,false,false,false")
+                .append("osGornik",0)
+                .append("osGornikAccept","false,false,false,false,false,false,false,false,false,false"));
+    }
+
 
     public void loadAll() {
+        this.fixMires();
         MongoCursor<Document> result;
 
         Document objSpawn = pool.getSpawn().find(new Document("_id", "spawn")).first();
@@ -92,6 +114,7 @@ public class MongoManager {
             obj = pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first();
             int osMoby;
             int osLudzie;
+            int osMetiny;
             int osSakwy;
             int osNiesy;
             int osRybak;
@@ -99,6 +122,7 @@ public class MongoManager {
             int osGornik;
             String osMobyAccept;
             String osLudzieAccept;
+            String osMetinyAccept;
             String osSakwyAccept;
             String osNiesyAccept;
             String osRybakAccept;
@@ -107,6 +131,7 @@ public class MongoManager {
             if (obj == null) {
                 osMoby = 0;
                 osLudzie = 0;
+                osMetiny = 0;
                 osSakwy = 0;
                 osNiesy = 0;
                 osRybak = 0;
@@ -114,6 +139,7 @@ public class MongoManager {
                 osGornik = 0;
                 osMobyAccept = "false,false,false,false,false,false,false,false,false,false";
                 osLudzieAccept = "false,false,false,false,false,false,false,false,false,false";
+                osMetinyAccept = "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false";
                 osSakwyAccept = "false,false,false,false,false,false,false,false,false,false";
                 osNiesyAccept = "false,false,false,false,false,false,false,false,false,false";
                 osRybakAccept = "false,false,false,false,false,false,false,false,false,false";
@@ -122,6 +148,7 @@ public class MongoManager {
             } else {
                 osMoby = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMoby")))));
                 osLudzie = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osLudzie")))));
+                osMetiny = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMetiny")))));
                 osSakwy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osSakwy")))));
                 osNiesy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osNiesy")))));
                 osRybak = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osRybak")))));
@@ -129,14 +156,15 @@ public class MongoManager {
                 osGornik = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osGornik")))));
                 osMobyAccept = (String) obj.get("osMobyAccept");
                 osLudzieAccept = (String) obj.get("osLudzieAccept");
+                osMetinyAccept = (String) obj.get("osMetinyAccept");
                 osSakwyAccept = (String) obj.get("osSakwyAccept");
                 osNiesyAccept = (String) obj.get("osNiesyAccept");
                 osRybakAccept = (String) obj.get("osRybakAccept");
                 osDrwalAccept = (String) obj.get("osDrwalAccept");
                 osGornikAccept = (String) obj.get("osGornikAccept");
             }
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp, osMoby, osLudzie, osSakwy, osNiesy, osRybak, osDrwal, osGornik,
-                    osMobyAccept, osLudzieAccept, osSakwyAccept, osNiesyAccept, osRybakAccept, osDrwalAccept, osGornikAccept, 0, 0, 0, 0,
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp, osMoby, osLudzie, osMetiny, osSakwy, osNiesy, osRybak, osDrwal, osGornik,
+                    osMobyAccept, osLudzieAccept, osMetinyAccept, osSakwyAccept, osNiesyAccept, osRybakAccept, osDrwalAccept, osGornikAccept, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);
 
             obj = pool.getBao().find(new Document("_id", uuid.toString())).first();
@@ -173,8 +201,18 @@ public class MongoManager {
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDef"))),
                     Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniKryt"))));
 
-            //obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
-            //rpgcore.getTrenerNPC().fromDocument(obj);
+            obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
+            if (obj == null) {
+                obj = rpgcore.getTrenerNPC().toDocument(uuid);
+            }
+            rpgcore.getTrenerNPC().fromDocument(obj);
+
+            obj = pool.getMetinolog().find(new Document("_id", uuid.toString())).first();
+            if (obj == null) {
+                new MetinologObject(uuid);
+            } else {
+                new MetinologObject(obj);
+            }
         }
 
         result = pool.getGildie().find().cursor();
@@ -317,6 +355,7 @@ public class MongoManager {
         document.append("_id", uuid.toString());
         document.append("osMoby", 0);
         document.append("osLudzie", 0);
+        document.append("osMetiny", 0);
         document.append("osSakwy", 0);
         document.append("osNiesy", 0);
         document.append("osRybak", 0);
@@ -324,6 +363,7 @@ public class MongoManager {
         document.append("osGornik", 0);
         document.append("osMobyAccept", "false,false,false,false,false,false,false,false,false,false");
         document.append("osLudzieAccept", "false,false,false,false,false,false,false,false,false,false");
+        document.append("osMetinyAccept", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
         document.append("osSakwyAccept", "false,false,false,false,false,false,false,false,false,false");
         document.append("osNiesyAccept", "false,false,false,false,false,false,false,false,false,false");
         document.append("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
@@ -374,8 +414,10 @@ public class MongoManager {
 
         pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
 
+        this.addDataMetinolog(new MetinologObject(uuid));
 
-        rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
+
+        rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
         rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
         rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
@@ -385,8 +427,6 @@ public class MongoManager {
         rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, 0.0);
         rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, 0.0);
         rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
-
-
 
 
     }
@@ -440,24 +480,6 @@ public class MongoManager {
 
     }
 
-    public void updatePlayer(final UUID uuid) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        //Document document = this.getPlayerDocument(uuid);
-
-
-        //pool.getGracz().findOneAndReplace(query, update);
-
-
-    }
-
-    public void tempUpdate() {
-        for (UUID uuid : rpgcore.getPlayerManager().getPlayers()) {
-            savePlayer(Bukkit.getPlayer(uuid), uuid);
-        }
-    }
-
     public void savePlayer(final Player player, final UUID uuid) {
         try {
             this.savePlayerDocument(uuid, pool.getGracze());
@@ -474,6 +496,9 @@ public class MongoManager {
             this.saveEkwipunekDocument(player, pool.getEkwipunek());
             this.saveEnderchestDocument(player, pool.getEnderchest());
             this.saveZbrojaDocument(player, pool.getZbroja());
+
+            pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
+            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
 
 
             Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
@@ -535,6 +560,8 @@ public class MongoManager {
         document.append("osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
         document.append("osLudzie", rpgcore.getPlayerManager().getPlayerOsLudzie(uuid));
         document.append("osLudzieAccept", rpgcore.getPlayerManager().getOsLudzieAccept(uuid));
+        document.append("osMetiny", rpgcore.getPlayerManager().getPlayerOsMetiny(uuid));
+        document.append("osMetinyAccept", rpgcore.getPlayerManager().getOsMetinyAccept(uuid));
         document.append("osSakwy", rpgcore.getPlayerManager().getPlayerOsSakwy(uuid));
         document.append("osSakwyAccept", rpgcore.getPlayerManager().getOsSakwyAccept(uuid));
         document.append("osNiesy", rpgcore.getPlayerManager().getPlayerOsNiesy(uuid));
@@ -788,6 +815,29 @@ public class MongoManager {
     public void saveAllMetins() {
         for (Metiny metiny : rpgcore.getMetinyManager().getMetins()) {
             this.saveDataMetins(metiny.getId(), metiny);
+        }
+    }
+
+    public Map<UUID, MetinologObject> loadAllMetinolog() {
+        Map<UUID, MetinologObject> metinolog = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getMetinolog().find()) {
+            MetinologObject metinologObject = new MetinologObject(document);
+            metinolog.put(metinologObject.getID(), metinologObject);
+        }
+        return metinolog;
+    }
+
+    public void addDataMetinolog(final MetinologObject metinolog) {
+        this.pool.getMetinolog().insertOne(metinolog.toDocument());
+    }
+
+    public void saveDataMetinolog(final UUID id, final MetinologObject metinolog) {
+        this.pool.getMetinolog().findOneAndReplace(new Document("_id", id), metinolog.toDocument());
+    }
+
+    public void saveAllMetinolog() {
+        for (MetinologObject metinolog : rpgcore.getMetinologNPC().getMetinologObject()) {
+            this.saveDataMetinolog(metinolog.getID(), metinolog);
         }
     }
 

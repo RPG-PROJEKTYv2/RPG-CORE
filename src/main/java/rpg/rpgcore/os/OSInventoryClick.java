@@ -49,6 +49,10 @@ public class OSInventoryClick implements Listener {
                 player.openInventory(rpgcore.getOsManager().osGraczeGUI(playerUUID));
                 return;
             }
+            if (clickedItem.getType() == Material.NETHER_STAR) {
+                player.openInventory(rpgcore.getOsManager().osMetinyGUI(playerUUID));
+                return;
+            }
             if (clickedItem.getType() == Material.EXP_BOTTLE) {
                 player.openInventory(rpgcore.getOsManager().osSakwyGUI(playerUUID));
                 return;
@@ -148,6 +152,46 @@ public class OSInventoryClick implements Listener {
             player.closeInventory();
             Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsLudzieAccepted.setLength(0);
+            return;
+        }
+
+        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osMetinyGUI(playerUUID).getName())) {
+
+            e.setCancelled(true);
+            if (clickedItem.getType() == Material.AIR) {
+                return;
+            }
+
+            String[] accepted = rpgcore.getPlayerManager().getOsMetinyAccept(playerUUID).split(",");
+
+            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+                return;
+            }
+
+            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+                return;
+            }
+
+            final int killedPlayers = rpgcore.getPlayerManager().getPlayerOsMetiny(playerUUID);
+
+            if (killedPlayers < rpgcore.getOsManager().getRequiredForOsMetiny().get(clickedSlot+1)) {
+                return;
+            }
+
+
+            accepted[clickedSlot] = "true";
+            StringBuilder noweOsMetinyAccept = new StringBuilder();
+            for (int i = 0; i < accepted.length; i++) {
+                noweOsMetinyAccept.append(accepted[i]);
+                if (!(i+1 >= accepted.length)) {
+                    noweOsMetinyAccept.append(",");
+                }
+            }
+            player.sendMessage(String.valueOf(noweOsMetinyAccept));
+            rpgcore.getPlayerManager().updatePlayerOsLudzieAccepted(playerUUID, String.valueOf(noweOsMetinyAccept));
+
+            player.closeInventory();
+            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             return;
         }
 

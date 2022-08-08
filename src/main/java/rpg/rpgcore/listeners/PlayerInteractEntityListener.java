@@ -76,8 +76,14 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
                 return;
             }
+            // TRENER
             if (entityName.equalsIgnoreCase("Trener")) {
                 rpgcore.getTrenerNPC().openTrenerGUI(player);
+                return;
+            }
+            // Metinolog
+            if (entityName.equalsIgnoreCase("Metinolog")) {
+                rpgcore.getMetinologNPC().openMetinologGUI(player);
                 return;
             }
 

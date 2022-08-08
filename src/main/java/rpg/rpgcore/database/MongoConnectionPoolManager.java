@@ -36,6 +36,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_kolekcjoner;
     private final MongoCollection<Document> hellrpg_magazynier;
     private final MongoCollection<Document> hellrpg_trener;
+    private final MongoCollection<Document> hellrpg_metinolog;
 
 
     public MongoConnectionPoolManager(final RPGCORE rpgcore) {
@@ -100,6 +101,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_trener")) {
             database.createCollection("hellrpg_trener");
         }
+        if (!collections.contains("hellrpg_metinolog")) {
+            database.createCollection("hellrpg_metinolog");
+        }
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
@@ -119,6 +123,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_kolekcjoner = database.getCollection("hellrpg_kolekcjoner");
         this.hellrpg_magazynier = database.getCollection("hellrpg_magazynier");
         this.hellrpg_trener = database.getCollection("hellrpg_trener");
+        this.hellrpg_metinolog = database.getCollection("hellrpg_metinolog");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.hasPermission("*")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
@@ -204,6 +209,10 @@ public class MongoConnectionPoolManager {
 
     public MongoCollection<Document> getTrener() {
         return this.hellrpg_trener;
+    }
+
+    public MongoCollection<Document> getMetinolog() {
+        return this.hellrpg_metinolog;
     }
 
     public void closePool() {

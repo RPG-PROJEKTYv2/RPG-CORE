@@ -9,9 +9,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -39,35 +41,35 @@ public class OsManager {
     }
 
     public void loadAllRequiredOs() {
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getKeys(false).size(); i++) {
             this.requiredForOsMoby.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Moby").getInt("Moby_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getKeys(false).size(); i++) {
             this.requiredForOsLudzie.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gracze").getInt("Gracze_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getKeys(false).size(); i++) {
-            this.requiredForOsLudzie.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getInt("Metiny_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getKeys(false).size(); i++) {
+            this.requiredForOsMetiny.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metiny").getInt("Metiny_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getKeys(false).size(); i++) {
             this.requiredForOsSakwy.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Sakwy").getInt("Sakwy_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getKeys(false).size(); i++) {
             this.requiredForOsNiesy.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Niesy").getInt("Niesy_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getKeys(false).size(); i++) {
             this.requiredForOsRybak.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Rybak").getInt("Rybak_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getKeys(false).size(); i++) {
             this.requiredForOsDrwal.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Drwal").getInt("Drwal_" + i));
         }
-        for (int i = 1; i < rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getKeys(false).size(); i++) {
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getKeys(false).size(); i++) {
             this.requiredForOsGornik.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getInt("Gornik_" + i));
         }
     }
 
 
     public Inventory osGuiMain() {
-        this.gui = Bukkit.createInventory(null, 3*9, Utils.format("&6&lOsiagniecia"));
+        this.gui = Bukkit.createInventory(null, 2*9, Utils.format("&6&lOsiagniecia"));
 
         this.itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
         this.itemMeta = itemStack.getItemMeta();
@@ -100,7 +102,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(10, itemStack);
+        gui.setItem(0, itemStack);
 
         this.itemLore.clear();
 
@@ -121,10 +123,13 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(11, itemStack);
+        gui.setItem(1, itemStack);
 
 
         this.itemLore.clear();
+
+        //                  ITEM OD OSIAGNIEC Z METYN
+        gui.setItem(2, new ItemBuilder(Material.NETHER_STAR).setName("&6Zniszczone Kamienie Metin").setLore(Arrays.asList(" ", "&8&oKliknij, zeby zobaczyc drzewko osiganiec zniszczonych kamieni metin")).hideFlag().toItemStack().clone());
 
         //                  ITEM OD OSIAGNIEC Z SAKW
         this.itemStack = new ItemStack(Material.EXP_BOTTLE);
@@ -143,7 +148,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(12, itemStack);
+        gui.setItem(3, itemStack);
 
         this.itemLore.clear();
 
@@ -164,7 +169,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(13, itemStack);
+        gui.setItem(4, itemStack);
 
 
         this.itemLore.clear();
@@ -186,7 +191,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(14, itemStack);
+        gui.setItem(5, itemStack);
 
 
         this.itemLore.clear();
@@ -208,7 +213,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(15, itemStack);
+        gui.setItem(6, itemStack);
 
 
         this.itemLore.clear();
@@ -229,7 +234,7 @@ public class OsManager {
 
         this.itemStack.setItemMeta(itemMeta);
 
-        gui.setItem(16, itemStack);
+        gui.setItem(7, itemStack);
 
         this.itemLore.clear();
 
@@ -310,6 +315,27 @@ public class OsManager {
 
 
             this.gui.setItem(i-1, this.itemStack);
+        }
+
+        return this.gui;
+    }
+
+    public Inventory osMetinyGUI(final UUID uuid) {
+        this.gui = Bukkit.createInventory(null, 2*9, Utils.format("&6&lOsiagniecia - Zniszczone Metiny"));
+
+        final String[] osMetinAccepted = rpgcore.getPlayerManager().getOsMetinyAccept(uuid).split(",");
+        final int metinKills = rpgcore.getPlayerManager().getPlayerOsMetiny(uuid);
+
+        for (int i = 1; i < 19; i++){
+            this.itemLore.clear();
+            if (osMetinAccepted[i-1] == null || osMetinAccepted[i-1].equalsIgnoreCase("false")) {
+                this.itemLore.add(Utils.format("&3Postep: &c" + metinKills + " &3/ &c" + this.requiredForOsMetiny.get(i) + " &3(&c" + Utils.procentFormat.format((double) (metinKills / this.requiredForOsMetiny.get(i)) * 100) + " %&3)"));
+            } else {
+                this.itemLore.add(Utils.format("&3Postep: &a&lWykonano!"));
+            }
+
+
+            this.gui.setItem(i-1, new ItemBuilder(Material.NETHER_STAR).setName(Utils.format("&6&lZniszczone Kamienie Metin #" + i)).setLore(itemLore).toItemStack().clone());
         }
 
         return this.gui;
@@ -512,6 +538,10 @@ public class OsManager {
 
     public HashMap<Integer, Integer> getRequiredForOsLudzie() {
         return requiredForOsLudzie;
+    }
+
+    public HashMap<Integer, Integer> getRequiredForOsMetiny() {
+        return requiredForOsMetiny;
     }
 
     public HashMap<Integer, Integer> getRequiredForOsSakwy() {
