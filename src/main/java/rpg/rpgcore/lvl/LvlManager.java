@@ -61,6 +61,7 @@ public class LvlManager {
                 expZaMoby.put(mob, exp);
             }
             allMobsToArray.clear();
+            System.out.println(expZaMoby);
             System.out.println("[rpg.core] Pomyslnie zaladowano exp za moby");
         } catch (final Exception e) {
             e.printStackTrace();
@@ -102,8 +103,16 @@ public class LvlManager {
         final UUID killerUUID = killer.getUniqueId();
 
         if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130) {
-//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+0 exp &b(&4&lMAX LVL%&b) [EXP]")));
+            rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]");
             return;
+        }
+
+        double dodatkowyExp = 100;
+        if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
+            dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
+        }
+        if (rpgcore.getBaoManager().getBaoBonusy(killerUUID).split(",")[4].equalsIgnoreCase("Dodatkowy EXP")) {
+            dodatkowyExp += Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(killerUUID).split(",")[4]);
         }
 
         final int lvlGracza = rpgcore.getPlayerManager().getPlayerLvl(killerUUID);
@@ -111,25 +120,16 @@ public class LvlManager {
 
         double aktualnyExpGracza = rpgcore.getPlayerManager().getPlayerExp(killerUUID);
         final double expNaNextLvlGracza = this.getExpForLvl(nextLvlGracza);
-        final double expDoDodania = this.getExp(mob);
-
-        killer.sendMessage("Aktualny lvl gracza - " + lvlGracza);
-        killer.sendMessage("Next lvl gracza - " + nextLvlGracza);
-        killer.sendMessage("Aktualny exp gracza - " + aktualnyExpGracza);
-        killer.sendMessage("Exp na next lvl - " + expNaNextLvlGracza);
-        killer.sendMessage("Exp za moba - " + expDoDodania);
+        double expDoDodania = this.getExp(mob);
 
         if (aktualnyExpGracza >= expNaNextLvlGracza) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer));
             return;
         }
-        aktualnyExpGracza = aktualnyExpGracza + expDoDodania;
-        killer.sendMessage("Exp po dodaniu wszystkiego - " + aktualnyExpGracza);
-        killer.setExp((float) (aktualnyExpGracza / expNaNextLvlGracza));
+        expDoDodania = expDoDodania * (dodatkowyExp / 100);
+        aktualnyExpGracza += expDoDodania;
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
-        killer.sendMessage("Ustawiono exp gracza - " + rpgcore.getPlayerManager().getPlayerExp(killerUUID));
-        final double expForLambda = aktualnyExpGracza;
-//        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, rpgcore.getNmsManager().makeActionBar("&b[EXP] &f+" + expDoDodania + " exp &b(&f" + Utils.procentFormat.format((expForLambda / expNaNextLvlGracza) * 100) + "%&b) [EXP]")));
+        rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodania + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]");
     }
 
     public void updateLVL(final Player killer) {
@@ -151,7 +151,7 @@ public class LvlManager {
         }
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
+        rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle);
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
         }

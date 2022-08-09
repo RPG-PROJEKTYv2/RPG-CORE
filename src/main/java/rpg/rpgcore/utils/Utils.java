@@ -166,7 +166,7 @@ public class Utils {
         final String content = toBase64(playerInventory);
         final String armor = itemStackArrayToBase64(playerInventory.getArmorContents());
 
-        return new String[] { content, armor };
+        return new String[]{content, armor};
     }
 
     public static String itemStackArrayToBase64(final ItemStack[] items) throws IllegalStateException {
@@ -336,6 +336,7 @@ public class Utils {
 
         return 0;
     }
+
     public static int getSharpnessLevel(final ItemStack is) {
 
         if (is.getItemMeta().getLore() == null) {
@@ -364,5 +365,77 @@ public class Utils {
         }
 
         return 0;
+    }
+
+    public static long durationFromString(String string, boolean now) {
+        if (string == null || string.isEmpty()) {
+            return 0L;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        long time = now ? System.currentTimeMillis() : 0L;
+        char[] var5 = string.toCharArray();
+        int var6 = var5.length;
+
+        for (char character : var5) {
+            if (Character.isDigit(character)) {
+                stringBuilder.append(character);
+            } else {
+                int amount = Integer.parseInt(stringBuilder.toString());
+                switch (character) {
+                    case 'd':
+                        time += (long) amount * 86400000L;
+                        break;
+                    case 'h':
+                        time += (long) amount * 3600000L;
+                        break;
+                    case 'm':
+                        time += (long) amount * 60000L;
+                        break;
+                    case 's':
+                        time += (long) amount * 1000L;
+                }
+
+                stringBuilder = new StringBuilder();
+            }
+        }
+
+        return time;
+    }
+
+    public static String durationToString(long time, boolean now) {
+        if (!now) {
+            time -= System.currentTimeMillis();
+        }
+
+        if (time < 1L) {
+            return "<1s";
+        }
+        long months = TimeUnit.MILLISECONDS.toDays(time) / 30L;
+        long days = TimeUnit.MILLISECONDS.toDays(time) % 30L;
+        long hours = TimeUnit.MILLISECONDS.toHours(time) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(time));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time));
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
+        StringBuilder stringBuilder = new StringBuilder();
+        if (months > 0L) {
+            stringBuilder.append(months).append("msc").append(" ");
+        }
+
+        if (days > 0L) {
+            stringBuilder.append(days).append("d").append(" ");
+        }
+
+        if (hours > 0L) {
+            stringBuilder.append(hours).append("h").append(" ");
+        }
+
+        if (minutes > 0L) {
+            stringBuilder.append(minutes).append("m").append(" ");
+        }
+
+        if (seconds > 0L) {
+            stringBuilder.append(seconds).append("s");
+        }
+
+        return stringBuilder.length() > 0 ? stringBuilder.toString().trim() : time + "ms";
     }
 }

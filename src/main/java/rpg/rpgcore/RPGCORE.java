@@ -2,16 +2,22 @@ package rpg.rpgcore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import rpg.rpgcore.admin.teleport.Teleport;
-import rpg.rpgcore.admin.teleport.TeleportCoords;
-import rpg.rpgcore.admin.teleport.TeleportManager;
-import rpg.rpgcore.admin.ban.Ban;
-import rpg.rpgcore.admin.ban.BanManager;
-import rpg.rpgcore.admin.ban.TempBan;
-import rpg.rpgcore.admin.ban.UnBan;
-import rpg.rpgcore.admin.commands.*;
-import rpg.rpgcore.admin.god.God;
-import rpg.rpgcore.admin.vanish.Vanish;
+import rpg.rpgcore.chat.mute.Mute;
+import rpg.rpgcore.chat.mute.MuteManager;
+import rpg.rpgcore.chat.mute.TempMute;
+import rpg.rpgcore.chat.mute.UnMute;
+import rpg.rpgcore.commands.admin.*;
+import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.server.ServerManager;
+import rpg.rpgcore.commands.admin.teleport.Teleport;
+import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
+import rpg.rpgcore.commands.admin.teleport.TeleportManager;
+import rpg.rpgcore.commands.admin.ban.Ban;
+import rpg.rpgcore.commands.admin.ban.BanManager;
+import rpg.rpgcore.commands.admin.ban.TempBan;
+import rpg.rpgcore.commands.admin.ban.UnBan;
+import rpg.rpgcore.commands.admin.god.God;
+import rpg.rpgcore.commands.admin.vanish.Vanish;
 import rpg.rpgcore.akcesoria.AKCESORIAInventoryClick;
 import rpg.rpgcore.akcesoria.AKCESORIAPlayerInteract;
 import rpg.rpgcore.akcesoria.Akcesoria;
@@ -21,10 +27,13 @@ import rpg.rpgcore.bao.BAOInventoryClick;
 import rpg.rpgcore.bao.BAOManager;
 import rpg.rpgcore.bao.BAOPlayerInteract;
 import rpg.rpgcore.chat.*;
-import rpg.rpgcore.commands.*;
-import rpg.rpgcore.commands.kosz.Kosz;
-import rpg.rpgcore.commands.kosz.KoszInventoryClick;
-import rpg.rpgcore.commands.kosz.KoszInventoryClose;
+import rpg.rpgcore.commands.player.kosz.Kosz;
+import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
+import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
+import rpg.rpgcore.commands.player.HelpOP;
+import rpg.rpgcore.commands.player.SprawdzMojeBonusy;
+import rpg.rpgcore.commands.player.Test;
+import rpg.rpgcore.commands.player.TestAnimation;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.dmg.DamageManager;
 import rpg.rpgcore.dmg.EntityDamageEntityListener;
@@ -38,7 +47,7 @@ import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.lvl.Lvl;
 import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.managers.*;
-import rpg.rpgcore.admin.god.GodManager;
+import rpg.rpgcore.commands.admin.god.GodManager;
 import rpg.rpgcore.metiny.MetinCommand;
 import rpg.rpgcore.metiny.MetinyManager;
 import rpg.rpgcore.msg.MSGManager;
@@ -67,7 +76,7 @@ import rpg.rpgcore.npc.rybak.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.RybakNPC;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
-import rpg.rpgcore.admin.vanish.VanishManager;
+import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.npc.duszolog.DuszologPlayerInteract;
 import rpg.rpgcore.npc.trener.TrenerInventoryClick;
 import rpg.rpgcore.npc.trener.TrenerNPC;
@@ -82,6 +91,7 @@ import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
+import rpg.rpgcore.tasks.ActionBarTask;
 import rpg.rpgcore.tasks.MetinyTask;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
@@ -126,6 +136,7 @@ public final class RPGCORE extends JavaPlugin {
     private TrenerNPC trenerNPC;
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
+    private ServerManager serverManager;
 
     private int i = 1;
 
@@ -245,6 +256,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
 
         new MetinyTask(this);
+        new ActionBarTask(this);
     }
 
     public void onDisable() {
@@ -292,6 +304,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("helpop").setExecutor(new HelpOP(this));
         this.getCommand("removenearbyentities").setExecutor(new RemoveNearbyEntities());
         this.getCommand("metin").setExecutor(new MetinCommand(this));
+        this.getCommand("dodatkowyexp").setExecutor(new DodatkowyExpCommand());
+        this.getCommand("chat").setExecutor(new ChatCommand(this));
     }
 
     private void initGlobalEvents() {
@@ -341,6 +355,7 @@ public final class RPGCORE extends JavaPlugin {
         this.backup = new BackupManager(this);
         this.metinyManager = new MetinyManager(this);
         this.metinologNPC = new MetinologNPC(this);
+        this.serverManager = new ServerManager(this);
     }
 
     private void initNPCS() {
@@ -512,6 +527,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public MetinologNPC getMetinologNPC() {
         return metinologNPC;
+    }
+
+    public ServerManager getServerManager() {
+        return serverManager;
     }
 
 }

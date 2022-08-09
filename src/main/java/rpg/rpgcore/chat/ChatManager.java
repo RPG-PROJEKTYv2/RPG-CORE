@@ -19,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ranks.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -27,6 +28,9 @@ public class ChatManager {
 
     private final RPGCORE rpgcore;
     private final HashMap<UUID, String> messageWithEQ = new HashMap<>();
+    private RankType rankReqForChat = RankType.getByName("GRACZ");
+    private int lvlReqForChat = 1;
+    private boolean chatEnabled = true;
 
     public ChatManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -180,5 +184,37 @@ public class ChatManager {
                 "&b/" + player.getInventory().getLeggings().getEnchantmentLevel(Enchantment.THORNS) +
                 "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.THORNS) +
                 "&8]&7";
+    }
+
+    public RankType getRankReqForChat() {
+        return this.rankReqForChat;
+    }
+
+    public void setRankReqForChat(final RankType rankReqForChat) {
+        this.rankReqForChat = rankReqForChat;
+    }
+
+    public void resetRankReqForChat() {
+        this.rankReqForChat = RankType.getByName("GRACZ");
+    }
+
+    public int getLvlReqForChat() {
+        return lvlReqForChat;
+    }
+
+    public void setLvlReqForChat(final int lvlReqForChat) {
+        this.lvlReqForChat = lvlReqForChat;
+    }
+
+    public void resetLvlReqForChat() {
+        this.lvlReqForChat = 1;
+    }
+
+    public boolean isChatEnabled() {
+        return this.chatEnabled;
+    }
+
+    public void setChatEnabled(final boolean chatEnabled) {
+        this.chatEnabled = chatEnabled;
     }
 }

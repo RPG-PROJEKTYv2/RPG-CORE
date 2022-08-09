@@ -1,21 +1,18 @@
 package rpg.rpgcore.database;
 
-import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
-import rpg.rpgcore.npc.metinolog.MetinologUser;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.utils.Utils;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -270,6 +267,9 @@ public class MongoManager {
                     deathsMap,
                     expEarnedMap,
                     lastOnlineMap);
+        }
+        if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
+            addOtherData(new ServerUser("dodatkowyExp"));
         }
 
     }
@@ -839,6 +839,22 @@ public class MongoManager {
         for (MetinologObject metinolog : rpgcore.getMetinologNPC().getMetinologObject()) {
             this.saveDataMetinolog(metinolog.getID(), metinolog);
         }
+    }
+
+    public Map<String, ServerUser> loadAllServer() {
+        Map<String, ServerUser> server = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getOther().find()) {
+            ServerUser serverUser = new ServerUser(document);
+            server.put(serverUser.getName(), serverUser);
+        }
+        return server;
+    }
+    public void addOtherData(ServerUser serverUser) {
+        this.pool.getOther().insertOne(serverUser.toDocument());
+    }
+
+    public void saveOtherData(String name) {
+        pool.getOther().findOneAndReplace(new Document("_id", "dodatkowyExp"), rpgcore.getServerManager().find(name).toDocument());
     }
 
     public void onDisable() {

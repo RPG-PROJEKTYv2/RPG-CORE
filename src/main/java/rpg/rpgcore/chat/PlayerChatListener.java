@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ranks.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
@@ -31,6 +32,30 @@ public class PlayerChatListener implements Listener {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&3Nastepna wiadomosc mozesz wyslac za &f" + TimeUnit.MILLISECONDS.toSeconds(sekundy) + "&f.&f" + mili + " &3sekund"));
             e.setCancelled(true);
             return;
+        }
+
+        if (!rpgcore.getChatManager().isChatEnabled()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie &cwylaczony&7!"));
+            e.setCancelled(true);
+            return;
+        }
+
+        if (!rpgcore.getChatManager().getRankReqForChat().equals(RankType.GRACZ)) {
+            System.out.println(rpgcore.getPlayerManager().getPlayerGroup(player));
+            System.out.println(RankType.getByName(rpgcore.getPlayerManager().getPlayerGroup(player)));
+            if (rpgcore.getChatManager().getRankReqForChat().can(RankType.getByName(rpgcore.getPlayerManager().getPlayerGroup(player)))) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie wlaczony od rangi &6" + rpgcore.getChatManager().getRankReqForChat().getName() + "&7!"));
+                e.setCancelled(true);
+                return;
+            }
+        }
+
+        if (rpgcore.getChatManager().getLvlReqForChat() != 1) {
+            if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < rpgcore.getChatManager().getLvlReqForChat()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie wlaczony od poziomu &6" + rpgcore.getChatManager().getLvlReqForChat() + "&7!"));
+                e.setCancelled(true);
+                return;
+            }
         }
 
         if (rpgcore.getPlayerManager().isMuted(player.getUniqueId())) {

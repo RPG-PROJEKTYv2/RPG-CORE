@@ -120,4 +120,13 @@ commands:
       - metki
       - metins
 
+  dodatkowyexp:
+    aliases:
+      - turboexp
+      - dexp
+
+  chat:
+    aliases:
+      - c
+
     

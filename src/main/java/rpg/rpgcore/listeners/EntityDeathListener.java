@@ -8,6 +8,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.UUID;
+
 public class EntityDeathListener implements Listener {
 
     private final RPGCORE rpgcore;
@@ -80,7 +82,16 @@ public class EntityDeathListener implements Listener {
             rpgcore.getGuildManager().updateGuildExpEarned(killerGuild, killer.getUniqueId(), 10);
             rpgcore.getGuildManager().updateGuildKills(killerGuild, killer.getUniqueId(), 1);
             rpgcore.getGuildManager().updateGuildDeaths(victimGuild, victim.getUniqueId(), 1);
+        } else  {
+
+            final Player killer = e.getEntity().getKiller();
+            final UUID uuid = killer.getUniqueId();
+            final String mobName = Utils.removeColor(e.getEntity().getCustomName());
+
+            rpgcore.getLvlManager().updateExp(killer, mobName);
+
         }
+
 
     }
 }
