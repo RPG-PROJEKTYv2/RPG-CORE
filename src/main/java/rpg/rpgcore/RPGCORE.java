@@ -8,6 +8,10 @@ import rpg.rpgcore.chat.mute.TempMute;
 import rpg.rpgcore.chat.mute.UnMute;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.klasy.KlasyHelper;
+import rpg.rpgcore.klasy.mag.MagNPC;
+import rpg.rpgcore.klasy.obronca.ObroncaNPC;
+import rpg.rpgcore.klasy.wojownik.WojownikNPC;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.Teleport;
 import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
@@ -137,6 +141,11 @@ public final class RPGCORE extends JavaPlugin {
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
+    private KlasyHelper klasyHelper;
+
+    private WojownikNPC wojownikNPC;
+    private ObroncaNPC obroncaNPC;
+    private MagNPC magNPC;
 
     private int i = 1;
 
@@ -356,6 +365,10 @@ public final class RPGCORE extends JavaPlugin {
         this.metinyManager = new MetinyManager(this);
         this.metinologNPC = new MetinologNPC(this);
         this.serverManager = new ServerManager(this);
+        this.klasyHelper = new KlasyHelper(this);
+        this.wojownikNPC = new WojownikNPC(this);
+        this.obroncaNPC = new ObroncaNPC(this);
+        this.magNPC = new MagNPC(this);
     }
 
     private void initNPCS() {
@@ -531,6 +544,22 @@ public final class RPGCORE extends JavaPlugin {
 
     public ServerManager getServerManager() {
         return serverManager;
+    }
+
+    public KlasyHelper getklasyHelper() {
+        return klasyHelper;
+    }
+
+    public WojownikNPC getWojownikNPC() {
+        return wojownikNPC;
+    }
+
+    public ObroncaNPC getObroncaNPC() {
+        return obroncaNPC;
+    }
+
+    public MagNPC getMagNPC() {
+        return magNPC;
     }
 
 }

@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.klasy.objects.KlasaUser;
+import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
@@ -209,6 +211,10 @@ public class MongoManager {
                 new MetinologObject(uuid);
             } else {
                 new MetinologObject(obj);
+            }
+            if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
+                rpgcore.getklasyHelper().add(new Klasy(uuid));
+                addKlasyData(rpgcore.getklasyHelper().find(uuid));
             }
         }
 
@@ -415,6 +421,7 @@ public class MongoManager {
         pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
 
         this.addDataMetinolog(new MetinologObject(uuid));
+        this.addKlasyData(new Klasy(uuid));
 
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
@@ -499,6 +506,7 @@ public class MongoManager {
 
             pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
+            this.saveKlasyData(uuid);
 
 
             Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
@@ -855,6 +863,22 @@ public class MongoManager {
 
     public void saveOtherData(String name) {
         pool.getOther().findOneAndReplace(new Document("_id", "dodatkowyExp"), rpgcore.getServerManager().find(name).toDocument());
+    }
+
+    public Map<UUID, Klasy> loadAllKlasy() {
+        Map<UUID, Klasy> klasy = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getKlasy().find()) {
+            Klasy klasyUser = new Klasy(document);
+            klasy.put(klasyUser.getId(), klasyUser);
+        }
+        return klasy;
+    }
+    public void addKlasyData(Klasy klasy) {
+        this.pool.getKlasy().insertOne(klasy.toDocument());
+    }
+
+    public void saveKlasyData(UUID uuid) {
+        pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getklasyHelper().find(uuid).toDocument());
     }
 
     public void onDisable() {

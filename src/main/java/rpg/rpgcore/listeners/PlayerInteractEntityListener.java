@@ -86,6 +86,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getMetinologNPC().openMetinologGUI(player);
                 return;
             }
+            // Wojownik
+            if (entityName.equalsIgnoreCase("Wojownik")) {
+                rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                return;
+            }
 
             // TRADE
             if (player.isSneaking()) {
