@@ -1,7 +1,7 @@
 package rpg.rpgcore.npc.rybak;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
@@ -22,6 +22,8 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 
+@Getter
+@Setter
 public class RybakNPC {
 
     private final RPGCORE rpgcore;
@@ -616,17 +618,14 @@ public class RybakNPC {
         }
     }
 
-    @Getter
     public String getPlayerRybakMisje(final UUID uuid) {
         return this.ryabkMisje.get(uuid);
     }
 
-    @Setter
     public void setPlayerRybakMisje(final UUID uuid, final String noweMisje) {
         this.ryabkMisje.put(uuid, noweMisje);
     }
 
-    @Setter
     public void updatePlayerRybakMisje(final UUID uuid, final String noweMisje) {
         this.ryabkMisje.replace(uuid, noweMisje);
     }
@@ -635,7 +634,6 @@ public class RybakNPC {
         return this.ryabkMisje.containsKey(uuid);
     }
 
-    @Getter
     public int getPlayerCurrentMission(final UUID uuid) {
         final String[] missions = this.ryabkMisje.get(uuid).split(",");
 
@@ -647,85 +645,69 @@ public class RybakNPC {
     }
 
 
-    @Getter
     public double getPlayerRybakSredniDMG(final UUID uuid) {
         return this.ryabkSrednieDMG.get(uuid);
     }
 
-    @Setter
     public void setPlayerRybakSredniDMG(final UUID uuid, final double nowyDMG) {
         this.ryabkSrednieDMG.put(uuid, nowyDMG);
     }
 
-    @Setter
     public void updatePlayerRybakSredniDMG(final UUID uuid, final double nowyDMG) {
         this.ryabkSrednieDMG.replace(uuid, nowyDMG);
     }
 
 
-    @Getter
     public double getPlayerRybakSredniDef(final UUID uuid) {
         return this.ryabkSredniDef.get(uuid);
     }
 
-    @Setter
     public void setPlayerRybakSredniDef(final UUID uuid, final double nowyDef) {
         this.ryabkSredniDef.put(uuid, nowyDef);
     }
 
-    @Setter
     public void updatePlayerRybakSredniDef(final UUID uuid, final double nowyDef) {
         this.ryabkSredniDef.replace(uuid, nowyDef);
     }
 
 
-    @Getter
     public double getPlayerRybakBlok(final UUID uuid) {
         return this.ryabkBlok.get(uuid);
     }
 
-    @Setter
     public void setPlayerRybakBlok(final UUID uuid, final double nowyBlok) {
         this.ryabkBlok.put(uuid, nowyBlok);
     }
 
-    @Setter
     public void updatePlayerRybakBlok(final UUID uuid, final double nowyBlok) {
         this.ryabkBlok.replace(uuid, nowyBlok);
     }
 
 
-    @Getter
     public double getPlayerRybakDodatkowyDMG(final UUID uuid) {
         return this.ryabkDodatkowyDMG.get(uuid);
     }
 
-    @Setter
     public void setPlayerRybakDodatkowyDMG(final UUID uuid, final double nowyDodatkowyDMG) {
         this.ryabkDodatkowyDMG.put(uuid, nowyDodatkowyDMG);
     }
 
-    @Setter
     public void updatePlayerRybakDodatowyDMG(final UUID uuid, final double nowyDodatkowyDMG) {
         this.ryabkDodatkowyDMG.replace(uuid, nowyDodatkowyDMG);
     }
 
-    @Getter
     public int getPlayerPostep(final UUID uuid) {
         return this.rybakPostep.get(uuid);
     }
 
-    @Setter
     public void setPlayerPostep(final UUID uuid, final int postep) {
         this.rybakPostep.put(uuid, postep);
     }
 
-    @Setter
     public void updatePlayerPostep(final UUID uuid, final int nowyPostep) {
         this.rybakPostep.replace(uuid, this.rybakPostep.get(uuid) + nowyPostep);
     }
 
-    @Getter
     public String getMisja(final int misja) {
         return this.misjeRybackie.get(misja);
     }

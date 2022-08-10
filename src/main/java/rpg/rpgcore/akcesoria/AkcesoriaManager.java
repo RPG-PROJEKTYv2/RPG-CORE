@@ -1,7 +1,7 @@
 package rpg.rpgcore.akcesoria;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class AkcesoriaManager {
 
     private final RPGCORE rpgcore;
@@ -176,23 +178,19 @@ public class AkcesoriaManager {
         }
     }
 
-    @Getter
     public Inventory getAkcesoriaGUI(final UUID uuid) {
         akcesoriaMap.computeIfAbsent(uuid, k -> this.createAkcesoriaGUINew(uuid));
         return this.akcesoriaMap.get(uuid);
     }
 
-    @Getter
     public Map<UUID, Inventory> getAkcesoriaMap() {
         return this.akcesoriaMap;
     }
 
-    @Setter
     public void updateAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
         this.akcesoriaMap.replace(uuid, inventory);
     }
 
-    @Setter
     public void setAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
         this.akcesoriaMap.put(uuid, inventory);
     }

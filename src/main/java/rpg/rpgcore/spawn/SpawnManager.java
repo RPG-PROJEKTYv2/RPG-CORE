@@ -1,10 +1,12 @@
 package rpg.rpgcore.spawn;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+@Getter
+@Setter
 public class SpawnManager {
 
     public static double defaultSpawnX = Bukkit.getWorld("world").getSpawnLocation().getX();
@@ -13,12 +15,10 @@ public class SpawnManager {
 
     private Location spawn;
 
-    @Getter
     public Location getSpawn() {
         return this.spawn;
     }
 
-    @Setter
     public void setSpawn(final Location spawn) {
         this.spawn = spawn;
     }

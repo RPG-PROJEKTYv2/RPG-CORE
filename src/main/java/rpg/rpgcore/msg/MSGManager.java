@@ -1,14 +1,16 @@
 package rpg.rpgcore.msg;
 
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class MSGManager {
 
     private final HashMap<UUID, UUID> messageMap = new HashMap<>();
@@ -20,22 +22,18 @@ public class MSGManager {
     }
 
 
-    @Getter
     public HashMap<UUID, UUID> getMessageMap() {
         return messageMap;
     }
 
-    @Getter
     public UUID getTargetUUID(final UUID sender) {
         return this.messageMap.get(sender);
     }
 
-    @Setter
     public void putInMessageMap(final UUID sender, final UUID target) {
         this.messageMap.put(sender, target);
     }
 
-    @Setter
     public void updateMessageMap(final UUID sender, final UUID target) {
         this.messageMap.replace(sender, target);
     }

@@ -1,7 +1,7 @@
 package rpg.rpgcore.trade;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,6 +13,8 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 
+@Getter
+@Setter
 public class TradeManager {
 
     private final RPGCORE rpgcore;
@@ -49,12 +51,10 @@ public class TradeManager {
         return tradeGUI;
     }
 
-    @Getter
     public UUID getTradeTarget(final UUID sender) {
         return this.tradeMap.get(sender);
     }
 
-    @Getter
     public UUID getTradeSender(final UUID target) {
         for (Map.Entry<UUID, UUID> entry : this.tradeMap.entrySet()) {
             if (entry.getValue() == target) {
@@ -81,27 +81,22 @@ public class TradeManager {
         return this.tradeAccepted.contains(inventory);
     }
 
-    @Getter
     public HashMap<UUID, UUID> getTradeMap() {
         return tradeMap;
     }
 
-    @Setter
     public void putInTradeMap(final UUID sender, final UUID target) {
         this.tradeMap.put(sender, target);
     }
 
-    @Setter
     public void addToAcceptList(final UUID target) {
         this.acceptList.add(target);
     }
 
-    @Setter
     public void removeFromAcceptList(final UUID target) {
         this.acceptList.remove(target);
     }
 
-    @Setter
     public void canceltrade(final UUID sender, final UUID target) {
         if (!this.isInAcceptList(target)) {
             return;
@@ -117,7 +112,6 @@ public class TradeManager {
     }
 
 
-    @Getter
     public ItemStack getNoAcceptItem(final UUID target) {
         noAccept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &cjeszcze nie zaakceptowal wymiany");
         noAccept.hideFlag();
@@ -125,21 +119,18 @@ public class TradeManager {
         return this.noAccept.toItemStack();
     }
 
-    @Getter
     public ItemStack getAcceptItem(final UUID target) {
         accept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &azaakceptowal wymiane");
         accept.hideFlag();
         return this.accept.toItemStack();
     }
 
-    @Getter
     public ItemStack getFinalTrade1() {
         finalTrade1.setName("&aAkceptowanie wymiany");
         finalTrade1.hideFlag();
         return this.finalTrade1.toItemStack();
     }
 
-    @Getter
     public ItemStack getFinalTrade2() {
         finalTrade2.setName("&6&aAkceptowanie wymiany");
         finalTrade2.hideFlag();

@@ -1,7 +1,7 @@
 package rpg.rpgcore.commands.admin.teleport;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -12,6 +12,8 @@ import rpg.rpgcore.utils.Utils;
 import java.util.HashMap;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class TeleportManager {
 
     private final RPGCORE rpgcore;
@@ -21,7 +23,6 @@ public class TeleportManager {
         this.rpgcore = rpgcore;
     }
 
-    @Setter
     private void setBeforeTeleportLocation(final UUID uuid, final Location loc) {
         if (!(this.beforeTeleportLocation.containsKey(uuid))) {
             this.beforeTeleportLocation.put(uuid, loc);
@@ -30,7 +31,6 @@ public class TeleportManager {
         this.beforeTeleportLocation.replace(uuid, loc);
     }
 
-    @Getter
     public Location getBeforeTeleportLocation(final UUID uuid) {
         return this.beforeTeleportLocation.get(uuid);
     }

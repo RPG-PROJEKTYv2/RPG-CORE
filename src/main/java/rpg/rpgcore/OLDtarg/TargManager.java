@@ -1,7 +1,8 @@
 package rpg.rpgcore.OLDtarg;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,6 +16,8 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 
+@Getter
+@Setter
 public class TargManager {
 
     //TODO zrobic zapis targow po edycji ich (kupienie, sprzedanie)
@@ -175,18 +178,15 @@ public class TargManager {
     }
 
 
-    @Getter
     public Inventory getPlayerTarg(final UUID uuid) {
         playerTargMap.computeIfAbsent(uuid, k -> this.createPlayerTargGUI(uuid));
         return this.playerTargMap.get(uuid);
     }
 
-    @Setter
     public void putPlayerInTargMap(final UUID uuid, final Inventory targ) {
         this.playerTargMap.put(uuid, targ);
     }
 
-    @Setter
     public void updatePlayerTarg(final UUID uuid, final Inventory targ) {
         this.playerTargMap.replace(uuid, targ);
     }
@@ -195,22 +195,18 @@ public class TargManager {
         return this.playerTargMap.containsKey(uuid);
     }
 
-    @Getter
     public int getPlayerTaskId(final UUID uuid) {
         return this.taskMap.get(uuid);
     }
 
-    @Setter
     public void updatePlayerTask(final UUID uuid, final int task) {
         this.taskMap.replace(uuid, task);
     }
 
-    @Setter
     public void putPlayerTask(final UUID uuid, final int task) {
         this.taskMap.put(uuid, task);
     }
 
-    @Setter
     public void removePlayerFromTaskMap(final UUID uuid) {
         this.taskMap.remove(uuid);
     }
@@ -219,12 +215,10 @@ public class TargManager {
         return this.taskMap.containsKey(uuid);
     }
 
-    @Setter
     public void addToWystawia(final UUID uuid) {
         this.wystawia.add(uuid);
     }
 
-    @Setter
     public void removeFromWystawia(final UUID uuid) {
         this.wystawia.remove(uuid);
     }
