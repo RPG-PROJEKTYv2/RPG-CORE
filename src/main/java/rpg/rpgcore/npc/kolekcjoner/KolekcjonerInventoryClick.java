@@ -40,6 +40,7 @@ public class KolekcjonerInventoryClick implements Listener {
 
             if (clickedSlot != 13) {
                 player.getInventory().addItem(GlobalItem.getItem("I21", 1));
+                player.getInventory().addItem(GlobalItem.getItem("I20", 1));
                 return;
             }
 

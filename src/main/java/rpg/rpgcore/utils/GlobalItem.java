@@ -28,7 +28,7 @@ public enum GlobalItem {
     I18("I18", new ItemBuilder(Material.EMERALD).setName("&4&lArtefakt &b&lMagazyniera").setLore(Arrays.asList("&8Artefakt ten pozwala na otwieranie","&8swoich magazynow nie chodzac do &b&lMagazyniera","&6Wlasciciel: &7playerName", " ","&4&lARTEFAKT")).addGlowing().toItemStack().clone()),
     I19("I19", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Blogoslawienstwa").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
     I20("I20", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&8&lC").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
-    I21("I21", new ItemBuilder(Material.STICK).setName("&7&lTestowy Patyk").setLore(Arrays.asList(" ", "&8&oChyba kolekcjoner tego potrzebuje")).hideFlag().toItemStack().clone());
+    I21("I21", new ItemBuilder(Material.STICK).setName("&6&lMythic &4&lSTICK").setLore(Arrays.asList("&8Ustawienia:","&f* expowisko 1, mobek 1-10-LEVEL1")).addGlowing().toItemStack().clone());
 
     private final ItemStack itemStack;
     private final String name;

@@ -42,14 +42,28 @@ public class TeleporterInventoryClick implements Listener {
         if (clickedInventoryTitle.equals(rpgcore.getTeleporterNPC().teleporterMAIN(player).getName())) {
             if (clickedSlot == 0) {
                 if (clickedItem.getType() == Material.IRON_FENCE) {
-                    Location locEXP1 = new Location(Bukkit.getWorld("Expowisko1"), 1, 5, 30);
+                    Location locEXP1 = new Location(Bukkit.getWorld("1-10exp"), -361, 7, 20);
                     player.teleport(locEXP1);
                     player.closeInventory();
                 }
             }
             if (clickedSlot == 1) {
                 if (clickedItem.getType() == Material.RED_MUSHROOM) {
-                    Location locEXP2 = new Location(Bukkit.getWorld("Expowisko1"), 1, 5, 30);
+                    Location locEXP2 = new Location(Bukkit.getWorld("10-20exp"), 254, 16, -248);
+                    player.teleport(locEXP2);
+                    player.closeInventory();
+                }
+            }
+            if (clickedSlot == 3) {
+                if (clickedItem.getType() == Material.IRON_BLOCK) {
+                    Location locEXP2 = new Location(Bukkit.getWorld("20-30exp"), -50, 11, 132);
+                    player.teleport(locEXP2);
+                    player.closeInventory();
+                }
+            }
+            if (clickedSlot == 4) {
+                if (clickedItem.getType() == Material.SEA_LANTERN) {
+                    Location locEXP2 = new Location(Bukkit.getWorld("30-40exp"), 254, 16, -248);
                     player.teleport(locEXP2);
                     player.closeInventory();
                 }

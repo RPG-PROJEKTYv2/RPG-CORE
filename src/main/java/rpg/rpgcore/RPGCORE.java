@@ -8,6 +8,8 @@ import rpg.rpgcore.chat.mute.TempMute;
 import rpg.rpgcore.chat.mute.UnMute;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.commands.player.bossy.BossyCommand;
+import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.klasy.choice.KlasaCommand;
 import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
@@ -15,6 +17,7 @@ import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
 import rpg.rpgcore.klasy.mag.MagNPC;
 import rpg.rpgcore.klasy.obronca.ObroncaNPC;
 import rpg.rpgcore.klasy.wojownik.WojownikNPC;
+import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.Teleport;
 import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
@@ -145,6 +148,8 @@ public final class RPGCORE extends JavaPlugin {
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
     private KlasyHelper klasyHelper;
+    private MythicstickPlayerInteract mythicstickPlayerInteract;
+    private BossyCommand bossyCommand;
 
     private WojownikNPC wojownikNPC;
     private ObroncaNPC obroncaNPC;
@@ -230,6 +235,14 @@ public final class RPGCORE extends JavaPlugin {
         // KLASY
         this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
         this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
+
+        // BOSSY
+        this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(this), this);
+
+        // INNE
+
+        // MythicSTICK
+        this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(this), this);
 
         // NPC
 
@@ -322,6 +335,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("dodatkowyexp").setExecutor(new DodatkowyExpCommand());
         this.getCommand("chat").setExecutor(new ChatCommand(this));
         this.getCommand("klasa").setExecutor(new KlasaCommand(this));
+        this.getCommand("bossy").setExecutor(new BossyCommand(this));
     }
 
     private void initGlobalEvents() {
