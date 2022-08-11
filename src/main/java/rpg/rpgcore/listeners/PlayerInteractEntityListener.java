@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.klasy.objects.KlasaUser;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -42,6 +43,21 @@ public class PlayerInteractEntityListener implements Listener {
             if (entityName.equalsIgnoreCase("Kupiec")) {
                 rpgcore.getKupiecNPC().openKupiecInventory(player);
                 return;
+            }
+        }
+
+        if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            if (rpgcore.getklasyHelper().find(uuid).getKlasaUser() != null) {
+                KlasaUser user = rpgcore.getklasyHelper().find(uuid).getKlasaUser();
+                if (entityName.equalsIgnoreCase(".")) {
+                    if (!user.getName().equals("Mag")) {
+                        player.sendMessage(Utils.format("&5&lMag &8>> &dMagia &7to nie zabawa dla tak niedojrzalych &6chlopcow &7jak ty. &7Wroc do mnie, kiedy wybierzesz wlasciwa sciezka &5mocy&7."));
+                        return;
+                    }
+                    //rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                    return;
+                }
             }
         }
 
@@ -86,10 +102,35 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getMetinologNPC().openMetinologGUI(player);
                 return;
             }
-            // Wojownik
-            if (entityName.equalsIgnoreCase("Wojownik")) {
-                rpgcore.getWojownikNPC().openWojownikMainGUI(player);
-                return;
+            // KLASY
+            if (rpgcore.getklasyHelper().find(uuid).getKlasaUser() != null) {
+                KlasaUser user = rpgcore.getklasyHelper().find(uuid).getKlasaUser();
+                if (entityName.equalsIgnoreCase("Wojownik")) {
+                    if (!user.getName().equals("Wojownik")) {
+                        player.sendMessage(Utils.format("&c&lWojownik &8>> &7Niestety nie mam nic do powiedzenia &cslabeuszom. &7Wroc do mnie jak zmezniejesz i wezmiesz &costrze &7do reki."));
+                        return;
+                    }
+                    rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                    return;
+                }
+
+                if (entityName.equalsIgnoreCase("Obronca")) {
+                    if (!user.getName().equals("Obronca")) {
+                        player.sendMessage(Utils.format("&a&lObronca &8>> &7Niestety tylko prawdziwi rycerze moga sie ode mnie uczyc. &7Wroc do mnie jak odziejesz zbroje i wezmiesz &atarcze &7do reki."));
+                        return;
+                    }
+                    //rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                    return;
+                }
+
+                if (entityName.equalsIgnoreCase("Mag")) {
+                    if (!user.getName().equals("Mag")) {
+                        player.sendMessage(Utils.format("&5&lMag &8>> &dMagia &7to nie zabawa dla tak niedojrzalych &6chlopcow &7jak ty. &7Wroc do mnie, kiedy wybierzesz wlasciwa sciezka &5mocy&7."));
+                        return;
+                    }
+                    //rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                    return;
+                }
             }
 
             // TRADE

@@ -46,7 +46,7 @@ public class WojownikNPC {
 
     public void openWojownikMainGUI(final Player player) {
         final UUID uuid = player.getUniqueId();
-        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, "&6&lWojownik");
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&6&lWojownik"));
         final KlasaUser klasaUser = this.rpgcore.getklasyHelper().find(uuid).getKlasaUser();
 
         for (int i = 0; i < gui.getSize(); i++) {

@@ -33,4 +33,9 @@ public class KlasyHelper {
     public void remove(Klasy klasy) {
         this.klasy.remove(klasy.getId(), klasy);
     }
+
+    public void reset(final UUID uuid) {
+        this.remove(this.find(uuid));
+        this.add(new Klasy(uuid));
+    }
 }

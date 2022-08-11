@@ -8,7 +8,10 @@ import rpg.rpgcore.chat.mute.TempMute;
 import rpg.rpgcore.chat.mute.UnMute;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.klasy.choice.KlasaCommand;
 import rpg.rpgcore.klasy.KlasyHelper;
+import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
+import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
 import rpg.rpgcore.klasy.mag.MagNPC;
 import rpg.rpgcore.klasy.obronca.ObroncaNPC;
 import rpg.rpgcore.klasy.wojownik.WojownikNPC;
@@ -224,6 +227,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
         this.getCommand("kosz").setExecutor(new Kosz());
 
+        // KLASY
+        this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
+        this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
 
         // NPC
 
@@ -315,6 +321,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("metin").setExecutor(new MetinCommand(this));
         this.getCommand("dodatkowyexp").setExecutor(new DodatkowyExpCommand());
         this.getCommand("chat").setExecutor(new ChatCommand(this));
+        this.getCommand("klasa").setExecutor(new KlasaCommand(this));
     }
 
     private void initGlobalEvents() {
