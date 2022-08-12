@@ -238,7 +238,7 @@ public class MetinyHelper {
         }
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         player.sendMessage(worldName);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("exp", "") + "-3 12 " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("exp", "") + "-LEVEL3 12 " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
         RPGCORE.getInstance().getPlayerManager().updatePlayerKasa(player.getUniqueId(), kasa + kasaToAdd);
         RPGCORE.getInstance().getPlayerManager().updatePlayerOsMetiny(player.getUniqueId(), RPGCORE.getInstance().getPlayerManager().getPlayerOsMetiny(player.getUniqueId()) + 1);
         player.sendMessage(Utils.format("&8+ &a" + kasaToAdd + "&2$"));

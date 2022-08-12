@@ -1,6 +1,5 @@
 package rpg.rpgcore.listeners;
 
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -110,7 +109,7 @@ public class PlayerInteractEntityListener implements Listener {
                         player.sendMessage(Utils.format("&c&lWojownik &8>> &7Niestety nie mam nic do powiedzenia &cslabeuszom. &7Wroc do mnie jak zmezniejesz i wezmiesz &costrze &7do reki."));
                         return;
                     }
-                    rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+                    rpgcore.getKlasyNPC().openMainGUI(player);
                     return;
                 }
 

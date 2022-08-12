@@ -14,9 +14,8 @@ import rpg.rpgcore.klasy.choice.KlasaCommand;
 import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
 import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
-import rpg.rpgcore.klasy.mag.MagNPC;
-import rpg.rpgcore.klasy.obronca.ObroncaNPC;
-import rpg.rpgcore.klasy.wojownik.WojownikNPC;
+import rpg.rpgcore.klasy.wojownik.KlasyNPC;
+import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.Teleport;
@@ -148,12 +147,8 @@ public final class RPGCORE extends JavaPlugin {
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
     private KlasyHelper klasyHelper;
-    private MythicstickPlayerInteract mythicstickPlayerInteract;
-    private BossyCommand bossyCommand;
 
-    private WojownikNPC wojownikNPC;
-    private ObroncaNPC obroncaNPC;
-    private MagNPC magNPC;
+    private KlasyNPC klasyNPC;
 
     private int i = 1;
 
@@ -242,7 +237,8 @@ public final class RPGCORE extends JavaPlugin {
         // INNE
 
         // MythicSTICK
-        this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(this), this);
+        this.getCommand("mythicstick").setExecutor(new MythicStick());
+        this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(), this);
 
         // NPC
 
@@ -387,9 +383,7 @@ public final class RPGCORE extends JavaPlugin {
         this.metinologNPC = new MetinologNPC(this);
         this.serverManager = new ServerManager(this);
         this.klasyHelper = new KlasyHelper(this);
-        this.wojownikNPC = new WojownikNPC(this);
-        this.obroncaNPC = new ObroncaNPC(this);
-        this.magNPC = new MagNPC(this);
+        this.klasyNPC = new KlasyNPC(this);
     }
 
     private void initNPCS() {
@@ -571,16 +565,9 @@ public final class RPGCORE extends JavaPlugin {
         return klasyHelper;
     }
 
-    public WojownikNPC getWojownikNPC() {
-        return wojownikNPC;
+    public KlasyNPC getKlasyNPC() {
+        return klasyNPC;
     }
 
-    public ObroncaNPC getObroncaNPC() {
-        return obroncaNPC;
-    }
-
-    public MagNPC getMagNPC() {
-        return magNPC;
-    }
 
 }

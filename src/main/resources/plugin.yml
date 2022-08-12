@@ -7,6 +7,10 @@ authors: [ MiresPL, ZwariowanyOrzel ]
 description: RPG-CORE
 commands:
   spawn:
+    aliases:
+      - hub
+      - lobby
+      - s
   
   teleport:
     aliases: tp
@@ -134,4 +138,9 @@ commands:
   bossy:
     aliases:
       - boss
+
+  mythicstick:
+    aliases:
+      - ms
+      - mstick
     
