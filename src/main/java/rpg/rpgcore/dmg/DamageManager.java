@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
@@ -57,6 +59,11 @@ public class DamageManager {
         final PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(stand.getId());
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(destroyPacket);
 
+    }
+
+    public  void sendDamageActionBarPacket(final Player player, final double damage, final LivingEntity entity) {
+        final String bar = "&fNazwa: " + entity.getCustomName() + " &fStan Zdrowia: &c" + String.format("%.2f", entity.getHealth()) + "&f/&c" + entity.getMaxHealth() + "&f(&c-" + String.format("%.2f", damage) + "&f)";
+        rpgcore.getNmsManager().sendActionBar(player, bar);
     }
 
     public double calculateAttackerDmgToPlayer(final Player attacker) {

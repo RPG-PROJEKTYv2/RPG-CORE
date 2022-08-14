@@ -10,6 +10,9 @@ import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
+import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
+import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
+import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
 import rpg.rpgcore.klasy.choice.KlasaCommand;
 import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
@@ -150,6 +153,8 @@ public final class RPGCORE extends JavaPlugin {
 
     private KlasyNPC klasyNPC;
 
+    private NiebiosaManager niebiosaManager;
+
     private int i = 1;
 
     public static RPGCORE getInstance() {
@@ -271,15 +276,27 @@ public final class RPGCORE extends JavaPlugin {
         // ...TRENER
         this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
 
+
+        // DUNGEONS
+
+        // ...NIEBIOSA
+        this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
+        this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
+
+
         // BACKUP
         //this.mongo.tempUpdate();
 
-        // TAB
+        // TASKA
+
+        // ...TAB
         new UpdateTabTask(this);
 
+        // ...SAVE GUILDS
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
-
+        // ...METINY
         new MetinyTask(this);
+        // ...ACTIONBAR
         new ActionBarTask(this);
     }
 
@@ -380,10 +397,8 @@ public final class RPGCORE extends JavaPlugin {
         this.newTargManager = new NewTargManager(this);
         this.backup = new BackupManager(this);
         this.metinyManager = new MetinyManager(this);
-        this.metinologNPC = new MetinologNPC(this);
         this.serverManager = new ServerManager(this);
-        this.klasyHelper = new KlasyHelper(this);
-        this.klasyNPC = new KlasyNPC(this);
+        this.niebiosaManager = new NiebiosaManager(this);
     }
 
     private void initNPCS() {
@@ -395,6 +410,9 @@ public final class RPGCORE extends JavaPlugin {
         this.kupiecNPC = new KupiecNPC(this);
         this.kowalNPC = new KowalNPC(this);
         this.trenerNPC = new TrenerNPC(this);
+        this.metinologNPC = new MetinologNPC(this);
+        this.klasyNPC = new KlasyNPC(this);
+        this.klasyHelper = new KlasyHelper(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -567,6 +585,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public KlasyNPC getKlasyNPC() {
         return klasyNPC;
+    }
+
+    public NiebiosaManager getNiebiosaManager() {
+        return niebiosaManager;
     }
 
 

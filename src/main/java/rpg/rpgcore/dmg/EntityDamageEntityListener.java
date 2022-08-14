@@ -69,6 +69,9 @@ public class EntityDamageEntityListener implements Listener {
                 e.setDamage(attackerDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", attackerDmg, victim.getLocation(), attacker));
             }
+            if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getDamage(), (LivingEntity) e.getEntity()));
+            }
         }
 
         // ATAKUJACY JEST GRACZEM

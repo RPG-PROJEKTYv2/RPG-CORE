@@ -103,7 +103,7 @@ public class LvlManager {
         final UUID killerUUID = killer.getUniqueId();
 
         if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130) {
-            rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]");
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]"));
             return;
         }
 
@@ -129,7 +129,10 @@ public class LvlManager {
         expDoDodania = expDoDodania * (dodatkowyExp / 100);
         aktualnyExpGracza += expDoDodania;
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
-        rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodania + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]");
+        final double dodatkowyExpL = dodatkowyExp;
+        final double expDoDodaniaL = expDoDodania;
+        final double aktualnyExpGraczaL = aktualnyExpGracza;
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExpL + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
     }
 
     public void updateLVL(final Player killer) {
@@ -151,7 +154,7 @@ public class LvlManager {
         }
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
-        rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
         }
