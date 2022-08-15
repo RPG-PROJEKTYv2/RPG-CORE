@@ -164,7 +164,7 @@ public class NewTargManager {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
                         for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
-                            if (item.getItemMeta().getLore().contains("&8&oMaterial")) {
+                            if (item.getItemMeta().getLore().contains("§8§oMaterial")) {
                                 allItems.add(item.clone());
                             }
                         }
@@ -193,7 +193,7 @@ public class NewTargManager {
                                     || String.valueOf(item.getType()).contains("SWORD") || String.valueOf(item.getType()).contains("AXE")
                                     || String.valueOf(item.getType()).contains("HOE") || String.valueOf(item.getType()).contains("PICKAXE")
                                     || String.valueOf(item.getType()).contains("MINECART") || item.getType().equals(Material.WATCH)
-                                    || item.getType().equals(Material.ITEM_FRAME) || item.getItemMeta().getLore().contains("&8&oMaterial"))) {
+                                    || item.getType().equals(Material.ITEM_FRAME) || item.getItemMeta().getLore().contains("§8§oMaterial"))) {
                                 allItems.add(item.clone());
                             }
                         }

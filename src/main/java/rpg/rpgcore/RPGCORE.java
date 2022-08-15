@@ -6,6 +6,8 @@ import rpg.rpgcore.chat.mute.Mute;
 import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMute;
 import rpg.rpgcore.chat.mute.UnMute;
+import rpg.rpgcore.chests.DropFromChestsListener;
+import rpg.rpgcore.chests.roznosci.RoznosciManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
@@ -154,6 +156,7 @@ public final class RPGCORE extends JavaPlugin {
     private KlasyNPC klasyNPC;
 
     private NiebiosaManager niebiosaManager;
+    private RoznosciManager roznosciManager;
 
     private int i = 1;
 
@@ -287,7 +290,7 @@ public final class RPGCORE extends JavaPlugin {
         // BACKUP
         //this.mongo.tempUpdate();
 
-        // TASKA
+        // TASKS
 
         // ...TAB
         new UpdateTabTask(this);
@@ -298,6 +301,9 @@ public final class RPGCORE extends JavaPlugin {
         new MetinyTask(this);
         // ...ACTIONBAR
         new ActionBarTask(this);
+
+        // SKRZYNIE
+        this.initSkrzynieManagers();
     }
 
     public void onDisable() {
@@ -420,6 +426,11 @@ public final class RPGCORE extends JavaPlugin {
         this.getRybakNPC().loadRybakMobs();
         this.getRybakNPC().loadRybakMisje();
         this.getMetinologNPC().loadMissions();
+    }
+
+    private void initSkrzynieManagers() {
+        this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
+        this.roznosciManager = new RoznosciManager();
     }
 
     private void autoMessage() {
@@ -589,6 +600,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public NiebiosaManager getNiebiosaManager() {
         return niebiosaManager;
+    }
+
+    public RoznosciManager getRoznosciManager() {
+        return roznosciManager;
     }
 
 
