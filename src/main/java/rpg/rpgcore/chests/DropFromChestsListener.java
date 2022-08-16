@@ -33,6 +33,7 @@ public class DropFromChestsListener implements Listener {
 
         if (player.getItemInHand().getType().equals(Material.CHEST)) {
             if (player.getItemInHand().getItemMeta().getDisplayName() == null) {
+                e.setCancelled(true);
                 player.getInventory().addItem(GlobalItem.getItem("I22", 1));
                 return;
             }

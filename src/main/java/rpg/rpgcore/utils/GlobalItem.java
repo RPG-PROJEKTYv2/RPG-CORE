@@ -29,14 +29,34 @@ public enum GlobalItem {
     I19("I19", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Blogoslawienstwa").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
     I20("I20", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&8&lC").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
     I21("I21", new ItemBuilder(Material.STICK).setName("&6&lMythic &4&lSTICK").setLore(Arrays.asList("&8Ustawienia:","&f* expowisko 1, mobek 1-10-LEVEL1")).addGlowing().toItemStack().clone()),
-    I22("I22", new ItemBuilder(Material.CHEST).setName("&7&lSkrzynia z Roznosciami").setLore(Arrays.asList("&8&oKliknij&8 i przekonaj sie co zawiera")).hideFlag().toItemStack().clone()),
-    I23("I23", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I24("I24", new ItemBuilder(Material.DIAMOND).setName("&bBrylant").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I25("I25", new ItemBuilder(Material.EMERALD).setName("&aSzmaragd").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I26("I26", new ItemBuilder(Material.REDSTONE).setName("&cPyl").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I27("I27", new ItemBuilder(Material.STONE).setName("&7Kamien").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I28("I28", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    I29("I29", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone());
+    I22("I22", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I23("I23", new ItemBuilder(Material.DIAMOND).setName("&bBrylant").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I24("I24", new ItemBuilder(Material.EMERALD).setName("&aSzmaragd").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I25("I25", new ItemBuilder(Material.REDSTONE).setName("&cPyl").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I26("I26", new ItemBuilder(Material.STONE).setName("&7Kamien").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I27("I27", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I28("I28", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+
+    // SKRZYNKI POBOCZNE
+    I29("I29", new ItemBuilder(Material.CHEST).setName("&7&lSkrzynia z Roznosciami").setLore(Arrays.asList(" ","&8&oTa skrzynia zawiera wszelakie materialy...")).hideFlag().toItemStack().clone()),
+
+    // SKRZYNKI BOSSOW
+    I30("I30", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer &9Wygnanca").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I31("I31", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer &2Elendila").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I32("I32", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer &6Lwa").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I33("I33", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I34("I34", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I35("I35", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I36("I36", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I37("I37", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I38("I38", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I39("I39", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I40("I40", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
+    I41("I41", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone());
+
+    // SKRZYNKI EXPOWISK
+
+
 
     private final ItemStack itemStack;
     private final String name;

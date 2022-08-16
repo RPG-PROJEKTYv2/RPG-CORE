@@ -55,7 +55,8 @@ public class MythicstickPlayerInteract implements Listener {
                     final String spawnerName = Utils.removeColor(eventItem.getItemMeta().getLore().get(1)).replace("Nazwa Spawnera:", "").replace(" ", "");
                     player.sendMessage(mobName + " " + spawnerName);
                     Bukkit.getServer().dispatchCommand(player, "mm s create " + spawnerName + " " + mobName  + " " + b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
-                    Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " cooldown 15");
+                    Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " cooldown 10");
+                    Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " leashrange 15");
                     int spawnerCount = Integer.parseInt(Utils.removeColor(eventItem.getItemMeta().getLore().get(1)).replace("Nazwa Spawnera:", "").replace(mobName + "-RESP-", "").replace(" ", ""));
                     player.sendMessage(spawnerCount + "");
                     spawnerCount++;
