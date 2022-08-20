@@ -44,7 +44,7 @@ public class RoznosciManager {
                 return item;
             }
         }
-        player.sendMessage(Utils.format("&8&oSkrzynia okazala sie byc pusta..."));
+        player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
         return null;
     }
 }
