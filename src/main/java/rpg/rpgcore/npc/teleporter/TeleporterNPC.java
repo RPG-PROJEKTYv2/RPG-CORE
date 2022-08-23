@@ -1,15 +1,11 @@
 package rpg.rpgcore.npc.teleporter;
 
-import io.lumine.xikage.mythicmobs.util.jnbt.ShortTag;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.potion.PotionType;
+import org.bukkit.inventory.ItemFlag;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -36,7 +32,7 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko8 = new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal());
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.BLAZE_POWDER);
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.WATER_BUCKET);
-    private final ItemBuilder expowisko11 = new ItemBuilder(Material.POTION, 1, (short)16388);
+    private final ItemBuilder expowisko11 = new ItemBuilder(Material.POTION, 1, (short)16388).addFlag(ItemFlag.HIDE_POTION_EFFECTS);
     private final ItemBuilder expowisko12 = new ItemBuilder(Material.GRASS);
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.BARRIER);
 

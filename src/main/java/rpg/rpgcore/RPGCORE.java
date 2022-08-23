@@ -1,6 +1,14 @@
 package rpg.rpgcore;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.chat.mute.Mute;
 import rpg.rpgcore.chat.mute.MuteManager;
@@ -22,6 +30,12 @@ import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
 import rpg.rpgcore.klasy.wojownik.KlasyNPC;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
+import rpg.rpgcore.npc.gornik.GornikNPC;
+import rpg.rpgcore.npc.gornik.events.GornikBlockBreak;
+import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.medyk.MedykInventoryClick;
+import rpg.rpgcore.npc.medyk.MedykNPC;
+import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.Teleport;
 import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
@@ -113,9 +127,14 @@ import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public final class RPGCORE extends JavaPlugin {
 
     private static RPGCORE instance;
+    private static ProtocolManager protocolManager;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -152,20 +171,28 @@ public final class RPGCORE extends JavaPlugin {
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
     private KlasyHelper klasyHelper;
-
     private KlasyNPC klasyNPC;
+    private MedykNPC medykNPC;
+    private GornikNPC gornikNPC;
+
+
 
     private NiebiosaManager niebiosaManager;
     private RoznosciManager roznosciManager;
 
     private int i = 1;
+    public List<UUID> diggingList = new ArrayList<>();
 
     public static RPGCORE getInstance() {
         return instance;
     }
+    public static ProtocolManager getProtocolManager() {
+        return protocolManager;
+    }
 
     public void onEnable() {
         instance = this;
+        protocolManager = ProtocolLibrary.getProtocolManager();
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
@@ -185,6 +212,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.initGlobalCommands();
         this.initGlobalEvents();
+        //this.initPacketListeners();
 
 
         // BAO
@@ -278,6 +306,16 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...TRENER
         this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
+
+        // ...METINOLOG
+        this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
+
+        // ...MEDYK
+        this.getServer().getPluginManager().registerEvents(new MedykInventoryClick(this), this);
+
+        // ...GORNIK
+        this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new GornikBlockBreak(this), this);
 
 
         // DUNGEONS
@@ -419,6 +457,8 @@ public final class RPGCORE extends JavaPlugin {
         this.metinologNPC = new MetinologNPC(this);
         this.klasyNPC = new KlasyNPC(this);
         this.klasyHelper = new KlasyHelper(this);
+        this.medykNPC = new MedykNPC(this);
+        this.gornikNPC = new GornikNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -431,6 +471,10 @@ public final class RPGCORE extends JavaPlugin {
     private void initSkrzynieManagers() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
         this.roznosciManager = new RoznosciManager();
+    }
+
+    public List<UUID> getDiggingList() {
+        return diggingList;
     }
 
     private void autoMessage() {
@@ -598,6 +642,10 @@ public final class RPGCORE extends JavaPlugin {
         return klasyNPC;
     }
 
+    public MedykNPC getMedykNPC() {
+        return medykNPC;
+    }
+
     public NiebiosaManager getNiebiosaManager() {
         return niebiosaManager;
     }
@@ -606,5 +654,8 @@ public final class RPGCORE extends JavaPlugin {
         return roznosciManager;
     }
 
+    public GornikNPC getGornikNPC() {
+        return gornikNPC;
+    }
 
 }

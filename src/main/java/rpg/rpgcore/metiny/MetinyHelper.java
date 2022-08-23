@@ -1,6 +1,5 @@
 package rpg.rpgcore.metiny;
 
-import com.mojang.authlib.yggdrasil.response.User;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -241,6 +240,6 @@ public class MetinyHelper {
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("exp", "") + "-LEVEL3 12 " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
         RPGCORE.getInstance().getPlayerManager().updatePlayerKasa(player.getUniqueId(), kasa + kasaToAdd);
         RPGCORE.getInstance().getPlayerManager().updatePlayerOsMetiny(player.getUniqueId(), RPGCORE.getInstance().getPlayerManager().getPlayerOsMetiny(player.getUniqueId()) + 1);
-        player.sendMessage(Utils.format("&8+ &a" + kasaToAdd + "&2$"));
+        player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));
     }
 }

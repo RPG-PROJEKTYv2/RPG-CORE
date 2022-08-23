@@ -14,18 +14,19 @@ public class Config {
     }
 
     public void createConfig() {
-        rpgcore.getConfig().addDefault("hostname", "hostname.pl");
-        rpgcore.getConfig().addDefault("port", "3306");
-        rpgcore.getConfig().addDefault("database", "minecraft");
-        rpgcore.getConfig().addDefault("username", "username");
-        rpgcore.getConfig().addDefault("password", "password");
-        rpgcore.getConfig().addDefault("auto_message", true);
-        rpgcore.getConfig().addDefault("auto_message_time", 5000);
+        if (rpgcore.getConfig().get("auto_message") == null) {
+            rpgcore.getConfig().addDefault("auto_message", true);
+        }
+        if (rpgcore.getConfig().get("auto_message_time") == null) {
+            rpgcore.getConfig().addDefault("auto_message_time", 5000);
+        }
         autoCfg.put("auto_message_1", "&7To jest podstawowa wiadomosc. Edytuj Plik config.yml, zeby ja zmienic!");
         if (rpgcore.getConfig().getConfigurationSection("auto_message") != null) {
             rpgcore.getConfig().createSection("auto_messages", autoCfg);
         }
-        rpgcore.getConfig().addDefault("max_lvl", 130);
+        if (rpgcore.getConfig().get("max_lvl") == null) {
+            rpgcore.getConfig().addDefault("max_lvl", 130);
+        }
         if (rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl") == null) {
             rpgcore.getConfig().createSection("wymaganyexp_na_lvl");
             double value = 500.0;
@@ -36,8 +37,10 @@ public class Config {
                 }
             }
         }
-        rpgcore.getConfig().createSection("exp_za_moby");
-        rpgcore.getConfig().getConfigurationSection("exp_za_moby").addDefault("[Lvl. 1] Podwladny Wody", 20.0);
+        if (rpgcore.getConfig().getConfigurationSection("exp_za_moby") == null) {
+            rpgcore.getConfig().createSection("exp_za_moby");
+            rpgcore.getConfig().getConfigurationSection("exp_za_moby").addDefault("[Lvl. 1] Podwladny Wody", 20.0);
+        }
 
         if (rpgcore.getConfig().getConfigurationSection("Osiagniecia") == null) {
             rpgcore.getConfig().createSection("Osiagniecia");

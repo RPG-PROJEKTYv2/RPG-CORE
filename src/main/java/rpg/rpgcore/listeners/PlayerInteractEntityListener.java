@@ -115,19 +115,27 @@ public class PlayerInteractEntityListener implements Listener {
 
                 if (entityName.equalsIgnoreCase("Obronca")) {
                     if (!user.getName().equals("Obronca")) {
-                        player.sendMessage(Utils.format("&a&lObronca &8>> &7Niestety tylko prawdziwi rycerze moga sie ode mnie uczyc. &7Wroc do mnie jak odziejesz zbroje i wezmiesz &atarcze &7do reki."));
+                        player.sendMessage(Utils.format("&a&lObronca &8>> &7Niestety tylko prawdziwi rycerze moga sie ode mnie uczyc. &7Wroc do mnie jak odziejesz zbroje i zlozysz &aprzysiege rycerska."));
                         return;
                     }
                     //rpgcore.getWojownikNPC().openWojownikMainGUI(player);
                     return;
                 }
+            }
+            // MEDYK
+            if (entityName.equalsIgnoreCase("Medyk")) {
+                rpgcore.getMedykNPC().openMedykGUI(player);
+                return;
+            }
 
-                if (entityName.equalsIgnoreCase("Mag")) {
-                    if (!user.getName().equals("Mag")) {
-                        player.sendMessage(Utils.format("&5&lMag &8>> &dMagia &7to nie zabawa dla tak niedojrzalych &6chlopcow &7jak ty. &7Wroc do mnie, kiedy wybierzesz wlasciwa sciezka &5mocy&7."));
-                        return;
-                    }
-                    //rpgcore.getWojownikNPC().openWojownikMainGUI(player);
+            // GORNIK
+            if (entityName.equalsIgnoreCase("Gornik")) {
+                if (playerRightClicked.getLocation().getWorld().getName().equals("world")) {
+                    rpgcore.getGornikNPC().onClick(player);
+                    return;
+                }
+                if (playerRightClicked.getLocation().getWorld().getName().equals("kopalnia")) {
+                    rpgcore.getGornikNPC().openGornikGUI(player);
                     return;
                 }
             }

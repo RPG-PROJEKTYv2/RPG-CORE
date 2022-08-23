@@ -7,7 +7,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -39,9 +38,11 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_other;
     private final MongoCollection<Document> hellrpg_klasy;
 
+    private final MongoCollection<Document> hellrpg_medyk;
+    private final MongoCollection<Document> hellrpg_gornik;
 
-    public MongoConnectionPoolManager(final RPGCORE rpgcore) {
-        //mongoClient = new MongoClient(new MongoClientURI("mongodb://127.0.0.1:27017/?&authSource=admin&compressors=disabled&gssapiServiceName=mongodb"));
+
+    public MongoConnectionPoolManager() {
         this.client = MongoClients.create("mongodb://u7id5em5uspjam4butns:3ws4TKngK0iIgoE0lMSY@n1-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017,n2-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017/biyowrjyqcvr1sa?replicaSet=rs0");
         MongoDatabase database = this.client.getDatabase("biyowrjyqcvr1sa");
         final ArrayList<String> collections = database.listCollectionNames().into(new ArrayList<>());
@@ -111,6 +112,12 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_klasy")) {
             database.createCollection("hellrpg_klasy");
         }
+        if (!collections.contains("hellrpg_medyk")) {
+            database.createCollection("hellrpg_medyk");
+        }
+        if (!collections.contains("hellrpg_gornik")) {
+            database.createCollection("hellrpg_gornik");
+        }
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
@@ -133,15 +140,13 @@ public class MongoConnectionPoolManager {
         this.hellrpg_metinolog = database.getCollection("hellrpg_metinolog");
         this.hellrpg_other = database.getCollection("hellrpg_other");
         this.hellrpg_klasy = database.getCollection("hellrpg_klasy");
+        this.hellrpg_medyk = database.getCollection("hellrpg_medyk");
+        this.hellrpg_gornik = database.getCollection("hellrpg_gornik");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.hasPermission("*")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
             }
         }
-    }
-
-    public MongoClient getPool() {
-        return this.client;
     }
 
     public MongoCollection<Document> getSpawn() {
@@ -230,6 +235,14 @@ public class MongoConnectionPoolManager {
 
     public MongoCollection<Document> getKlasy() {
         return this.hellrpg_klasy;
+    }
+
+    public MongoCollection<Document> getMedyk() {
+        return this.hellrpg_medyk;
+    }
+
+    public MongoCollection<Document> getGornik() {
+        return this.hellrpg_gornik;
     }
 
     public void closePool() {

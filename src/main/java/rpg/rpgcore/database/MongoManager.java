@@ -7,8 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.klasy.objects.KlasaUser;
 import rpg.rpgcore.klasy.objects.Klasy;
+import rpg.rpgcore.npc.gornik.GornikObject;
+import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
@@ -25,7 +26,7 @@ public class MongoManager {
     private final MongoConnectionPoolManager pool;
 
     public MongoManager(final RPGCORE rpgcore) {
-        this.pool = new MongoConnectionPoolManager(rpgcore);
+        this.pool = new MongoConnectionPoolManager();
         this.rpgcore = rpgcore;
     }
 
@@ -53,28 +54,13 @@ public class MongoManager {
 
     }
 
-    public void fixMires() {
-        pool.getOsiagniecia().findOneAndReplace(new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80"), new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80").append("osMoby",10000)
-                .append("osMobyAccept","true,true,true,true,true,true,true,true,true,false")
-                .append("osLudzie",1000)
-                .append("osLudzieAccept","false,false,false,false,false,false,false,false,false,false")
-                .append("osMetiny",0)
-                .append("osMetinyAccept","false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false")
-                .append("osSakwy",0)
-                .append("osSakwyAccept","false,false,false,false,false,false,false,false,false,false")
-                .append("osNiesy",0)
-                .append("osNiesyAccept","false,false,false,false,false,false,false,false,false,false")
-                .append("osRybak",0)
-                .append("osRybakAccept","false,false,false,false,false,false,false,false,false,false")
-                .append("osDrwal",0)
-                .append("osDrwalAccept","false,false,false,false,false,false,false,false,false,false")
-                .append("osGornik",0)
-                .append("osGornikAccept","false,false,false,false,false,false,false,false,false,false"));
+    public void fix() {
+
     }
 
 
     public void loadAll() {
-        this.fixMires();
+        this.fix();
         MongoCursor<Document> result;
 
         Document objSpawn = pool.getSpawn().find(new Document("_id", "spawn")).first();
@@ -203,18 +189,27 @@ public class MongoManager {
             obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
             if (obj == null) {
                 obj = rpgcore.getTrenerNPC().toDocument(uuid);
+                this.addTrenerData(uuid);
             }
             rpgcore.getTrenerNPC().fromDocument(obj);
 
             obj = pool.getMetinolog().find(new Document("_id", uuid.toString())).first();
             if (obj == null) {
-                new MetinologObject(uuid);
+                this.addDataMetinolog(new MetinologObject(uuid));
             } else {
                 new MetinologObject(obj);
             }
             if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
                 rpgcore.getklasyHelper().add(new Klasy(uuid));
                 addKlasyData(rpgcore.getklasyHelper().find(uuid));
+            }
+            if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() == null) {
+                rpgcore.getMedykNPC().add(new MedykObject(uuid));
+                addDataMedyk(rpgcore.getMedykNPC().find(uuid));
+            }
+            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
+                rpgcore.getGornikNPC().add(new GornikObject(uuid));
+                addDataGornik(rpgcore.getGornikNPC().find(uuid));
             }
         }
 
@@ -840,7 +835,7 @@ public class MongoManager {
     }
 
     public void saveDataMetinolog(final UUID id, final MetinologObject metinolog) {
-        this.pool.getMetinolog().findOneAndReplace(new Document("_id", id), metinolog.toDocument());
+        this.pool.getMetinolog().findOneAndReplace(new Document("_id", id.toString()), metinolog.toDocument());
     }
 
     public void saveAllMetinolog() {
@@ -880,6 +875,62 @@ public class MongoManager {
     public void saveKlasyData(UUID uuid) {
         pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getklasyHelper().find(uuid).toDocument());
     }
+
+    public void addTrenerData(final UUID uuid) {
+        this.pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
+    }
+
+
+    // MEDYK
+    public Map<UUID, MedykObject> loadAllMedyk() {
+        Map<UUID, MedykObject> medyk = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getMedyk().find()) {
+            MedykObject medykObject = new MedykObject(document);
+            medyk.put(medykObject.getID(), medykObject);
+        }
+        return medyk;
+    }
+
+    public void addDataMedyk(final MedykObject medyk) {
+        this.pool.getMedyk().insertOne(medyk.toDocument());
+    }
+
+    public void saveDataMedyk(final UUID id, final MedykObject medyk) {
+        this.pool.getMedyk().findOneAndReplace(new Document("_id", id.toString()), medyk.toDocument());
+    }
+
+    public void saveAllMedyk() {
+        for (MedykObject medykObject : rpgcore.getMedykNPC().getMedykObject()) {
+            this.saveDataMedyk(medykObject.getID(), medykObject);
+        }
+    }
+
+
+    // MEDYK
+    public Map<UUID, GornikObject> loadAllGornik() {
+        Map<UUID, GornikObject> gornik = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getGornik().find()) {
+            GornikObject gornikObject = new GornikObject(document);
+            gornik.put(gornikObject.getID(), gornikObject);
+        }
+        return gornik;
+    }
+
+    public void addDataGornik(final GornikObject gornikObject) {
+        this.pool.getGornik().insertOne(gornikObject.toDocument());
+    }
+
+    public void saveDataGornik(final UUID id, final GornikObject gornikObject) {
+        this.pool.getGornik().findOneAndReplace(new Document("_id", id.toString()), gornikObject.toDocument());
+    }
+
+    public void saveAllGornik() {
+        for (GornikObject gornikObject : rpgcore.getGornikNPC().getGornikObject()) {
+            this.saveDataGornik(gornikObject.getID(), gornikObject);
+        }
+    }
+
+
 
     public void onDisable() {
         pool.closePool();

@@ -24,6 +24,11 @@ public class EntityDeathListener implements Listener {
         e.getDrops().clear();
 
         if (e.getEntity() instanceof Player) {
+
+            if (e.getEntity().getKiller() == null) {
+                return;
+            }
+
             final Player victim = (Player) e.getEntity();
             final Player killer = victim.getKiller();
 
@@ -65,11 +70,11 @@ public class EntityDeathListener implements Listener {
             final int killerLvl = rpgcore.getPlayerManager().getPlayerLvl(killer.getUniqueId());
             final int victimLvl = rpgcore.getPlayerManager().getPlayerLvl(victim.getUniqueId());
 
-            if (killerLvl - victimLvl < 10 || victimLvl - killerLvl < 10) {
+            if ((killerLvl - victimLvl >= 0 && killerLvl - victimLvl < 10) || (victimLvl - killerLvl >= 0 && victimLvl - killerLvl < 10)) {
                 rpgcore.getGuildManager().updateGuildPoints(killerGuild, 30);
                 rpgcore.getGuildManager().updateGuildPoints(victimGuild, -30);
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [+30] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-30]"));
-            } else if (killerLvl - victimLvl < 20 || victimLvl - killerLvl < 20) {
+            } else if ((killerLvl - victimLvl > 10 && killerLvl - victimLvl < 20) || (victimLvl - killerLvl > 10 && victimLvl - killerLvl < 20)) {
                 rpgcore.getGuildManager().updateGuildPoints(killerGuild, 15);
                 rpgcore.getGuildManager().updateGuildPoints(victimGuild, -15);
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [+15] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-15]"));
@@ -84,8 +89,11 @@ public class EntityDeathListener implements Listener {
             rpgcore.getGuildManager().updateGuildDeaths(victimGuild, victim.getUniqueId(), 1);
         } else  {
 
+            if (e.getEntity().getKiller() == null) {
+                return;
+            }
+
             final Player killer = e.getEntity().getKiller();
-            final UUID uuid = killer.getUniqueId();
             final String mobName = Utils.removeColor(e.getEntity().getCustomName());
 
             rpgcore.getLvlManager().updateExp(killer, mobName);

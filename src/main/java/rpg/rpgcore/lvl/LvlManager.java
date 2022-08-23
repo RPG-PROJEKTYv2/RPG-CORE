@@ -1,6 +1,5 @@
 package rpg.rpgcore.lvl;
 
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,9 +11,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class LvlManager {
@@ -49,23 +46,8 @@ public class LvlManager {
     }
 
     public void loadExpForAllMobs() {
-        try {
-            List<String> allMobsToArray = new ArrayList<>(MythicMobs.inst().getMobManager().getMobNames());
-            //MythicMobs.inst().getAPIHelper().spawnMythicMob();
-            for (String s : allMobsToArray) {
-                String mob = Utils.removeColor(MythicMobs.inst().getMobManager().getMythicMob(s).getDisplayName().get());
-                double exp = 0;
-                if (rpgcore.getConfig().getConfigurationSection("exp_za_moby").contains(mob)) {
-                    exp = rpgcore.getConfig().getConfigurationSection("exp_za_moby").getDouble(mob);
-                }
-                expZaMoby.put(mob, exp);
-            }
-            allMobsToArray.clear();
-            System.out.println(expZaMoby);
-            System.out.println("[rpg.core] Pomyslnie zaladowano exp za moby");
-        } catch (final Exception e) {
-            e.printStackTrace();
-            System.out.println(Utils.format("&8[&crpg.core&8] &cCos poszlo nie tak podczas wczytywania expa za moby"));
+        for (String s : rpgcore.getConfig().getConfigurationSection("exp_za_moby").getKeys(false)) {
+            expZaMoby.put(s, rpgcore.getConfig().getConfigurationSection("exp_za_moby").getDouble(s));
         }
     }
 

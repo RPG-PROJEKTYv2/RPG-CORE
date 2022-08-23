@@ -47,8 +47,6 @@ public class NiebiosaPlayerInteract implements Listener {
                 }
                 player.getInventory().removeItem(NiebiosaItems.getItem("klucz", 1));
                 rpgcore.getNiebiosaManager().start(player);
-            } else {
-                player.getInventory().addItem(NiebiosaItems.getItem("klucz", 1));
             }
         }
     }

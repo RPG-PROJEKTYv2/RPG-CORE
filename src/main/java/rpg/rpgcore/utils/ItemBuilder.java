@@ -45,6 +45,13 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addFlag(ItemFlag flag) {
+        ItemMeta im = this.is.getItemMeta();
+        im.addItemFlags(flag);
+        this.is.setItemMeta(im);
+        return this;
+    }
+
     public ItemBuilder addEnchant(Enchantment enchant, int level) {
         ItemMeta im = this.is.getItemMeta();
         im.addEnchant(enchant, level, true);
