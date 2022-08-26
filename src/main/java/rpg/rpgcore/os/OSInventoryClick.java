@@ -1,5 +1,6 @@
 package rpg.rpgcore.os;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class OSInventoryClick implements Listener {
@@ -49,363 +49,286 @@ public class OSInventoryClick implements Listener {
 
         if (Utils.removeColor(title).equals("Osiagniecia - Zabici Gracze")) {
             e.setCancelled(true);
+
+            if (item.getType().equals(Material.AIR)) {
+                return;
+            }
+
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
+
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
+                return;
+            }
+
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
+                return;
+            }
+
+            if (osUser.getPlayerKills() < rpgcore.getOsManager().getReqForPlayerKills().get(slot + 1)) {
+                osUser.setPlayerKills(10);
+                return;
+            }
+
+            osUser.setPlayerKillsProgress(osUser.getPlayerKillsProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("P" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 0);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
+
         }
 
-        /*
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGuiMain().getName())) {
+        if (Utils.removeColor(title).equals("Osiagniecia - Zabite Stwory")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.GOLD_SWORD){
-                player.openInventory(rpgcore.getOsManager().osMobyGui(playerUUID));
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
-            if (clickedItem.getType() == Material.DIAMOND_SWORD) {
-                player.openInventory(rpgcore.getOsManager().osGraczeGUI(playerUUID));
+
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
+
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
-            if (clickedItem.getType() == Material.NETHER_STAR) {
-                player.openInventory(rpgcore.getOsManager().osMetinyGUI(playerUUID));
+
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
-            if (clickedItem.getType() == Material.EXP_BOTTLE) {
-                player.openInventory(rpgcore.getOsManager().osSakwyGUI(playerUUID));
+
+            if (osUser.getMobKills() < rpgcore.getOsManager().getReqForMobKills().get(slot + 1)) {
                 return;
             }
-            if (clickedItem.getType() == Material.DIAMOND_BLOCK) {
-                player.openInventory(rpgcore.getOsManager().osNiesyGUI(playerUUID));
-                return;
-            }
-            if (clickedItem.getType() == Material.FISHING_ROD) {
-                player.openInventory(rpgcore.getOsManager().osRybakGUI(playerUUID));
-                return;
-            }
-            if (clickedItem.getType() == Material.DIAMOND_AXE) {
-                player.openInventory(rpgcore.getOsManager().osDrwalGUI(playerUUID));
-                return;
-            }
-            if (clickedItem.getType() == Material.GOLD_PICKAXE) {
-                player.openInventory(rpgcore.getOsManager().osGornikGUI(playerUUID));
-                return;
-            }
+
+            osUser.setMobKillsProgress(osUser.getMobKillsProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("M" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 1);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
+
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osMobyGui(playerUUID).getName())) {
+
+        if (Utils.removeColor(title).equals("Osiagniecia - Spedzony Czas")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsMobyAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int killedMobs = rpgcore.getPlayerManager().getPlayerOsMoby(playerUUID);
-
-            if (killedMobs < rpgcore.getOsManager().getRequiredForOsMoby().get(clickedSlot+1)) {
+            if (osUser.getTimeSpent() < rpgcore.getOsManager().getReqForTimeSpent().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsMobyAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsMobyAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsMobyAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsMobyAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsMobyAccepted(playerUUID, String.valueOf(noweOsMobyAccepted));
+            osUser.setTimeSpentProgress(osUser.getTimeSpentProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("T" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 2);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsMobyAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGraczeGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Wykopane Bloki")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsLudzieAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int killedPlayers = rpgcore.getPlayerManager().getPlayerOsLudzie(playerUUID);
-
-            if (killedPlayers < rpgcore.getOsManager().getReqForPlayerKills().get(clickedSlot+1)) {
+            if (osUser.getMinedBlocks() < rpgcore.getOsManager().getReqForMinedBlocks().get(slot + 1)) {
                 return;
             }
 
+            osUser.setMinedBlocksProgress(osUser.getMinedBlocksProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("B" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 3);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsLudzieAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsLudzieAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsLudzieAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsLudzieAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsLudzieAccepted(playerUUID, String.valueOf(noweOsLudzieAccepted));
-
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsLudzieAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osMetinyGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Udane Polowy")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsMetinyAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int killedPlayers = rpgcore.getPlayerManager().getPlayerOsMetiny(playerUUID);
-
-            if (killedPlayers < rpgcore.getOsManager().getRequiredForOsMetiny().get(clickedSlot+1)) {
+            if (osUser.getFishedItems() < rpgcore.getOsManager().getReqForFishedItems().get(slot + 1)) {
                 return;
             }
 
+            osUser.setFishedItemsProgress(osUser.getFishedItemsProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("F" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 4);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsMetinyAccept = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsMetinyAccept.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsMetinyAccept.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsMetinyAccept));
-            rpgcore.getPlayerManager().updatePlayerOsLudzieAccepted(playerUUID, String.valueOf(noweOsMetinyAccept));
-
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osSakwyGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Otwarte Skrzynki")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsSakwyAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int dropped = rpgcore.getPlayerManager().getPlayerOsSakwy(playerUUID);
-
-            if (dropped < rpgcore.getOsManager().getRequiredForOsSakwy().get(clickedSlot+1)) {
+            if (osUser.getOpenedChests() < rpgcore.getOsManager().getReqForOpenedChests().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsSakwyAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsSakwyAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsSakwyAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsSakwyAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsSakwyAccepted(playerUUID, String.valueOf(noweOsSakwyAccepted));
+            osUser.setOpenedChestsProgress(osUser.getOpenedChestsProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("C" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 5);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsSakwyAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osNiesyGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Pomyslne Ulepszenia")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsNiesyAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int dropped = rpgcore.getPlayerManager().getPlayerOsNiesy(playerUUID);
-
-            if (dropped < rpgcore.getOsManager().getRequiredForOsNiesy().get(clickedSlot+1)) {
+            if (osUser.getPositiveUpgrades() < rpgcore.getOsManager().getReqForPositiveUpgrades().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsNiesyAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsNiesyAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsNiesyAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsNiesyAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsNiesyAccepted(playerUUID, String.valueOf(noweOsNiesyAccepted));
+            osUser.setPositiveUpgradesProgress(osUser.getPositiveUpgradesProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("U" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 6);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsNiesyAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osRybakGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Znalezione Niesy")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsRybakAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int dropped = rpgcore.getPlayerManager().getPlayerOsRybak(playerUUID);
-
-            if (dropped < rpgcore.getOsManager().getRequiredForOsRybak().get(clickedSlot+1)) {
+            if (osUser.getPickedUpNies() < rpgcore.getOsManager().getReqForPickedUpNies().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsRybakAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsRybakAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsRybakAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsRybakAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsRybakAccepted(playerUUID, String.valueOf(noweOsRybakAccepted));
+            osUser.setPickedUpNiesProgress(osUser.getPickedUpNiesProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("N" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 7);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsRybakAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osDrwalGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Zniszczone Metiny")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsDrwalAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int dropped = rpgcore.getPlayerManager().getPlayerOsDrwal(playerUUID);
-
-            if (dropped < rpgcore.getOsManager().getRequiredForOsDrwal().get(clickedSlot+1)) {
+            if (osUser.getDestroyedMetins() < rpgcore.getOsManager().getReqForDestroyedMetins().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsDrwalAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsDrwalAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsDrwalAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsDrwalAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsDrwalAccepted(playerUUID, String.valueOf(noweOsDrwalAccepted));
+            osUser.setDestroyedMetinsProgress(osUser.getDestroyedMetinsProgress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("D" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 8);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsDrwalAccepted.setLength(0);
-            return;
         }
 
-        if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGornikGUI(playerUUID).getName())) {
-
+        if (Utils.removeColor(title).equals("Osiagniecia - Wykopane Drewno")) {
             e.setCancelled(true);
-            if (clickedItem.getType() == Material.AIR) {
+
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            String[] accepted = rpgcore.getPlayerManager().getOsGornikAccept(playerUUID).split(",");
+            final OsUser osUser = rpgcore.getOsManager().find(playerUUID).getOsUser();
 
-            if (accepted[clickedSlot].equalsIgnoreCase("true")) {
+            if (item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            if (clickedSlot != 0 && accepted[clickedSlot-1].equalsIgnoreCase("false")) {
+            if (slot != 0 && !clickedInventory.getItem(slot - 1).getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) {
                 return;
             }
 
-            final int dropped = rpgcore.getPlayerManager().getPlayerOsGornik(playerUUID);
-
-            if (dropped < rpgcore.getOsManager().getRequiredForOsGornik().get(clickedSlot+1)) {
+            if (osUser.getMinedTrees() < rpgcore.getOsManager().getReqForMinedTrees().get(slot + 1)) {
                 return;
             }
 
-            accepted[clickedSlot] = "true";
-            StringBuilder noweOsGornikAccepted = new StringBuilder();
-            for (int i = 0; i < accepted.length; i++) {
-                noweOsGornikAccepted.append(accepted[i]);
-                if (!(i+1 >= accepted.length)) {
-                    noweOsGornikAccepted.append(",");
-                }
-            }
-            player.sendMessage(String.valueOf(noweOsGornikAccepted));
-            rpgcore.getPlayerManager().updatePlayerOsGornikAccepted(playerUUID, String.valueOf(noweOsGornikAccepted));
+            osUser.setMinedTreesProogress(osUser.getMinedTreesProogress() + 1);
+            player.getInventory().addItem(OsRewards.getItem("L" + slot, 1));
+            rpgcore.getOsManager().openOsGuiCategory(player, 9);
+            Bukkit.broadcastMessage(Utils.format("&6&lOsiagniecia &8>> &7Gracz &6" + player.getName() + " &7odebral osiagniecie " + item.getItemMeta().getDisplayName()));
 
-            player.closeInventory();
-            Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
-            noweOsGornikAccepted.setLength(0);
-        }*/
+        }
+
     }
 
 }

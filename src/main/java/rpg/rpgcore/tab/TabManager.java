@@ -7,6 +7,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class TabManager {
 
@@ -15,9 +16,12 @@ public class TabManager {
     public TabManager(RPGCORE rpgcore) {
         TabManager.rpgcore = rpgcore;
     }
+
     public static ArrayList<String> lista = new ArrayList<>();
     public static Map<UUID, Tab> uuidTabMap = new HashMap<>();
     public static PacketManager packetManager;
+
+    static int topki = 0;
 
     public static void addPlayer(Player player) {
         final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
@@ -69,7 +73,6 @@ public class TabManager {
             tab.set(player, 3, 19, "&7");
             int number2 = 1;
             int number3 = 2;
-            int number4 = 3;
             for (int i = 1; i < 19; i++) {
                 tab.set(player, 0, i, "&7");
                 tab.set(player, 1, i, "&7");
@@ -81,13 +84,9 @@ public class TabManager {
                 if (lista.size() >= number3) {
                     tab.set(player, 2, i, Utils.format(lista.get(number3 - 1).replaceAll("/", " ")));
                 }
-                if (lista.size() >= number4) {
-                    tab.set(player, 3, i, Utils.format(lista.get(number4 - 1).replaceAll("/", " ")));
-                }
 
                 number2 += 4;
                 number3 += 4;
-                number4 += 4;
             }
 
             final int lvl = rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId());
@@ -131,6 +130,98 @@ public class TabManager {
                 tab.set(player, 0, 14, "&7Zabojstwa: &cn/a");
                 tab.set(player, 0, 15, "&7Zgony: &cn/a");
             }
+            if (topki == 2) {
+                topki = 0;
+            }
+
+            Stream<Map.Entry<String, Integer>> sortedDesc;
+            final List<String> afterSort = new ArrayList<>();
+
+            switch (topki) {
+                case 0:
+                    tab.set(player, 3, 1, "&6Topka Poziomu");
+                    final Map<String, Integer> topki1 = new HashMap<>();
+                    for (UUID uuid1 : rpgcore.getPlayerManager().getPlayers()) {
+                        topki1.put(rpgcore.getPlayerManager().getPlayerName(uuid1), rpgcore.getPlayerManager().getPlayerLvl(uuid1));
+                    }
+                    sortedDesc = topki1.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+                    sortedDesc.forEach(e -> afterSort.add(e.getKey()));
+                    if (afterSort.size() < 18) {
+                        for (int i = 0; i < 18; i++) {
+                            afterSort.add("Brak");
+                            if (afterSort.size() == 18) {
+                                break;
+                            }
+                        }
+                    }
+                    //System.out.println(afterSort);
+                    for (int i = 2; i < 18; i++) {
+                        if (!afterSort.get(i - 2).equals("Brak")) {
+                            if (i - 1 == 1) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                            } else if (i - 1 == 2 || i - 1 == 3) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                            } else if (i - 1 == 4 || i - 1 == 5) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                            } else {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                            }
+                        } else {
+                            if (i - 1 == 1) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2));
+                            } else if (i - 1 == 2 || i - 1 == 3) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2));
+                            } else if (i - 1 == 4 || i - 1 == 5) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2));
+                            } else {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2));
+                            }
+                        }
+                    }
+                    break;
+                case 1:
+                    tab.set(player, 3, 1, "&6Topka Klanow");
+                    final Map<String, Integer> topki2 = new HashMap<>();
+                    for (String s : rpgcore.getGuildManager().getListOfGuilds()) {
+                        topki2.put(s, rpgcore.getGuildManager().getGuildPoints(s));
+                    }
+                    sortedDesc = topki2.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+                    sortedDesc.forEach(e -> afterSort.add(e.getKey()));
+                    if (afterSort.size() < 18) {
+                        for (int i = 0; i < 18; i++) {
+                            afterSort.add("Brak Klanu");
+                            if (afterSort.size() == 18) {
+                                break;
+                            }
+                        }
+                    }
+                    for (int i = 2; i < 18; i++) {
+                        if (!afterSort.get(i - 2).equals("Brak Klanu")) {
+                            if (i - 1 == 1) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                            } else if (i - 1 == 2 || i - 1 == 3) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                            } else if (i - 1 == 4 || i - 1 == 5) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                            } else {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                            }
+                        } else {
+                            if (i - 1 == 1) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2));
+                            } else if (i - 1 == 2 || i - 1 == 3) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2));
+                            } else if (i - 1 == 4 || i - 1 == 5) {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2));
+                            } else {
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2));
+                            }
+                        }
+                    }
+                    break;
+            }
+            topki++;
+
             tab.set(player,
                     "\n&7Witamy na Serwerze &cHellRPG.pl\n",
                     "\n&7Aktualnie graczy: &c" + Bukkit.getOnlinePlayers().size() +
@@ -244,9 +335,5 @@ public class TabManager {
 
 
         return list;
-    }
-
-    public static Map<UUID, Tab> getUuidTabMap() {
-        return uuidTabMap;
     }
 }

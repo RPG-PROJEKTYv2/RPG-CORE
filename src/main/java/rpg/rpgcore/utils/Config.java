@@ -56,7 +56,7 @@ public class Config {
             rpgcore.getConfig().getConfigurationSection("Osiagniecia").createSection("Trees");
 
 
-            for (int i = 1; i <= 10; i++){
+            for (int i = 1; i < 10; i++){
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Players").addDefault("Players_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Mobs").addDefault("Mobs_" + i,1 );
                 rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Time").addDefault("Time_" + i,1 );
