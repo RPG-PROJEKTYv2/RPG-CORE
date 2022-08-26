@@ -77,6 +77,18 @@ public class LvlManager {
         return exp;
     }
 
+    private double getDodatkowyExp(final UUID uuid) {
+        double dodatkowyExp = 0;
+        if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
+            dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
+        }
+        if (rpgcore.getBaoManager().getBaoBonusy(uuid).split(",")[4].equalsIgnoreCase("Dodatkowy EXP")) {
+            dodatkowyExp += Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",")[4]);
+        }
+
+        return dodatkowyExp;
+    }
+
     public void updateExp(final Player killer, final String mob) {
         if (!(this.getExpZaMoby().containsKey(mob))) {
             return;
@@ -89,13 +101,7 @@ public class LvlManager {
             return;
         }
 
-        double dodatkowyExp = 100;
-        if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
-            dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
-        }
-        if (rpgcore.getBaoManager().getBaoBonusy(killerUUID).split(",")[4].equalsIgnoreCase("Dodatkowy EXP")) {
-            dodatkowyExp += Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(killerUUID).split(",")[4]);
-        }
+        final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
 
         final int lvlGracza = rpgcore.getPlayerManager().getPlayerLvl(killerUUID);
         final int nextLvlGracza = lvlGracza + 1;
@@ -108,13 +114,12 @@ public class LvlManager {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer));
             return;
         }
-        expDoDodania = expDoDodania * (dodatkowyExp / 100);
+        expDoDodania += expDoDodania * dodatkowyExp / 100;
         aktualnyExpGracza += expDoDodania;
         rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
-        final double dodatkowyExpL = dodatkowyExp;
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExpL + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
     }
 
     public void updateLVL(final Player killer) {

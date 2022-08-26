@@ -15,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 
@@ -31,7 +30,7 @@ public class GornikBlockBreak implements Listener {
 
     public GornikBlockBreak(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        RPGCORE.getProtocolManager().addPacketListener( new PacketAdapter(RPGCORE.getInstance(),
+        RPGCORE.getProtocolManager().addPacketListener(new PacketAdapter(RPGCORE.getInstance(),
                 ListenerPriority.NORMAL,
                 PacketType.Play.Client.BLOCK_DIG) {
             @Override
@@ -62,17 +61,19 @@ public class GornikBlockBreak implements Listener {
 
         if (player.getWorld().getName().equals("kopalnia")) {
             e.setCancelled(true);
-            if (block.getType().equals(Material.STONE)) {
-                if (e.getItemInHand().getType().equals(Material.DIAMOND_PICKAXE)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, -1, false, false));
-                    digAnimation(player, e.getBlock(), 200);
-                }
 
-
-
-            }
         }
+        /*if (block.getType().equals(Material.STONE)) {
+            if (e.getItemInHand().getType().equals(Material.DIAMOND_PICKAXE)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, -1, false, false));
+                digAnimation(player, e.getBlock(), 200);
+            }
+
+
+        }*/
+
     }
+
 
 
     public boolean isDigging(final UUID uuid) {
@@ -80,7 +81,7 @@ public class GornikBlockBreak implements Listener {
     }
 
     public void digAnimation(final Player player, final Block block, final long totalTime) {
-        long time = totalTime/9;
+        long time = totalTime / 9;
         final UUID uuid = player.getUniqueId();
 
         if (!isDigging(player.getUniqueId())) {
@@ -159,12 +160,12 @@ public class GornikBlockBreak implements Listener {
             }, time);
         }, 0L);
 
-         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-             if (!Bukkit.getWorld("kopalnia").getBlockAt(block.getLocation()).getType().equals(Material.AIR)) {
-                 PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(new Random().nextInt(20000), new BlockPosition(block.getX(), block.getY(), block.getZ()), 0);
-                 ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-             }
-         }, time + 1);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            if (!Bukkit.getWorld("kopalnia").getBlockAt(block.getLocation()).getType().equals(Material.AIR)) {
+                PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(new Random().nextInt(20000), new BlockPosition(block.getX(), block.getY(), block.getZ()), 0);
+                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+            }
+        }, time + 1);
     }
 
     private void sendAnimationPacket(final Player player, final Block block, final int i) {

@@ -31,7 +31,7 @@ public class Osiagniecia implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            player.openInventory(rpgcore.getOsManager().osGuiMain());
+            rpgcore.getOsManager().osGuiMain(player);
             return false;
         }
 

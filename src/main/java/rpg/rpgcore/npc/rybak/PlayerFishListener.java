@@ -1,6 +1,5 @@
 package rpg.rpgcore.npc.rybak;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -250,7 +249,7 @@ public class PlayerFishListener implements Listener {
 
 
 
-            rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId()) + 1);
+            rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().setFishedItems(rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().getFishedItems() + 1);
         }
     }
 }

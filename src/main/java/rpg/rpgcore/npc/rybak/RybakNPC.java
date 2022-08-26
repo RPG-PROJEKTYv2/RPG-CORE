@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.os.OsUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
@@ -110,7 +111,7 @@ public class RybakNPC {
         lore.add("&8- &bBlok Ciosu: &f+ " + this.getPlayerRybakBlok(player.getUniqueId()) + "%");
         lore.add("");
         lore.add("&f&lOSIAGNIECIA");
-        lore.add("&8- &bWylowione Ryby: &f" + rpgcore.getPlayerManager().getPlayerOsRybak(player.getUniqueId()));
+        lore.add("&8- &bWylowione Ryby: &f" + rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().getFishedItems());
 
 
         stats.setName("&b&lTwoje Statystyki").addGlowing().setLore(lore);
@@ -510,6 +511,7 @@ public class RybakNPC {
         final ItemStack playerRod = player.getItemInHand();
         final ItemMeta im = playerRod.getItemMeta();
         final List<String> lore = im.getLore();
+        final OsUser osUser = rpgcore.getOsManager().find(player.getUniqueId()).getOsUser();
 
         int rodLvl = Integer.parseInt(Utils.removeColor(lore.get(1)).replace("Poziom: ", "").trim());
         double rodExp = Double.parseDouble(Utils.removeColor(lore.get(2).replace("Exp: ", "").substring(0, Utils.removeColor(lore.get(2)).indexOf('/') + 1)));
@@ -518,7 +520,7 @@ public class RybakNPC {
             lore.set(3, "&bWylowione ryby: &f" + (fished + 1));
             im.setLore(Utils.format(lore));
             playerRod.setItemMeta(im);
-            rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
+            osUser.setFishedItems(osUser.getFishedItems() + 1);
             return;
         }
 
@@ -565,7 +567,7 @@ public class RybakNPC {
 
         im.setLore(Utils.format(lore));
         playerRod.setItemMeta(im);
-        rpgcore.getPlayerManager().updatePlayerOsRybak(player.getUniqueId(), fished + 1);
+        osUser.setFishedItems(osUser.getFishedItems() + 1);
     }
 
     public ItemStack createCurrentMissionItem(final UUID uuid, final int misjaNr) {
@@ -628,10 +630,6 @@ public class RybakNPC {
 
     public void updatePlayerRybakMisje(final UUID uuid, final String noweMisje) {
         this.ryabkMisje.replace(uuid, noweMisje);
-    }
-
-    public boolean isInRybakMisjeMap(final UUID uuid) {
-        return this.ryabkMisje.containsKey(uuid);
     }
 
     public int getPlayerCurrentMission(final UUID uuid) {

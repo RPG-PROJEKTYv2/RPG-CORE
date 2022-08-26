@@ -9,7 +9,9 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.npc.gornik.GornikObject;
+import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
+import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
@@ -96,61 +98,16 @@ public class MongoManager {
             obj = pool.getMuty().find(new Document("_id", uuid.toString())).first();
             String muteInfo = (String) obj.get("muteInfo");
 
-            obj = pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first();
-            int osMoby;
-            int osLudzie;
-            int osMetiny;
-            int osSakwy;
-            int osNiesy;
-            int osRybak;
-            int osDrwal;
-            int osGornik;
-            String osMobyAccept;
-            String osLudzieAccept;
-            String osMetinyAccept;
-            String osSakwyAccept;
-            String osNiesyAccept;
-            String osRybakAccept;
-            String osDrwalAccept;
-            String osGornikAccept;
-            if (obj == null) {
-                osMoby = 0;
-                osLudzie = 0;
-                osMetiny = 0;
-                osSakwy = 0;
-                osNiesy = 0;
-                osRybak = 0;
-                osDrwal = 0;
-                osGornik = 0;
-                osMobyAccept = "false,false,false,false,false,false,false,false,false,false";
-                osLudzieAccept = "false,false,false,false,false,false,false,false,false,false";
-                osMetinyAccept = "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false";
-                osSakwyAccept = "false,false,false,false,false,false,false,false,false,false";
-                osNiesyAccept = "false,false,false,false,false,false,false,false,false,false";
-                osRybakAccept = "false,false,false,false,false,false,false,false,false,false";
-                osDrwalAccept = "false,false,false,false,false,false,false,false,false,false";
-                osGornikAccept = "false,false,false,false,false,false,false,false,false,false";
-            } else {
-                osMoby = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMoby")))));
-                osLudzie = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osLudzie")))));
-                osMetiny = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osMetiny")))));
-                osSakwy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osSakwy")))));
-                osNiesy = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osNiesy")))));
-                osRybak = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osRybak")))));
-                osDrwal = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osDrwal")))));
-                osGornik = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("osGornik")))));
-                osMobyAccept = (String) obj.get("osMobyAccept");
-                osLudzieAccept = (String) obj.get("osLudzieAccept");
-                osMetinyAccept = (String) obj.get("osMetinyAccept");
-                osSakwyAccept = (String) obj.get("osSakwyAccept");
-                osNiesyAccept = (String) obj.get("osNiesyAccept");
-                osRybakAccept = (String) obj.get("osRybakAccept");
-                osDrwalAccept = (String) obj.get("osDrwalAccept");
-                osGornikAccept = (String) obj.get("osGornikAccept");
-            }
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp, osMoby, osLudzie, osMetiny, osSakwy, osNiesy, osRybak, osDrwal, osGornik,
-                    osMobyAccept, osLudzieAccept, osMetinyAccept, osSakwyAccept, osNiesyAccept, osRybakAccept, osDrwalAccept, osGornikAccept, 0, 0, 0, 0,
+            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp,0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);
+
+
+            if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataOs(new OsObject(uuid));
+            }
+            if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataKolekcjner(new KolekcjonerObject(uuid));
+            }
 
             obj = pool.getBao().find(new Document("_id", uuid.toString())).first();
             rpgcore.getBaoManager().updateBaoBonusy(uuid, String.valueOf(obj.get("BAO_BONUSY")));
@@ -177,15 +134,6 @@ public class MongoManager {
                 e.printStackTrace();
             }
 
-            obj = pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first();
-            rpgcore.getKolekcjonerNPC().loadAll(
-                    uuid,
-                    (String) obj.get("kolekcjonerPostep"),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("postepMisji"))))),
-                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDMG"))),
-                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniDef"))),
-                    Double.parseDouble(String.valueOf(obj.get("kolekcjonerSredniKryt"))));
-
             obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
             if (obj == null) {
                 obj = rpgcore.getTrenerNPC().toDocument(uuid);
@@ -193,23 +141,17 @@ public class MongoManager {
             }
             rpgcore.getTrenerNPC().fromDocument(obj);
 
-            obj = pool.getMetinolog().find(new Document("_id", uuid.toString())).first();
-            if (obj == null) {
+            if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataMetinolog(new MetinologObject(uuid));
-            } else {
-                new MetinologObject(obj);
             }
             if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
-                rpgcore.getklasyHelper().add(new Klasy(uuid));
-                addKlasyData(rpgcore.getklasyHelper().find(uuid));
+                this.addKlasyData(new Klasy(uuid));
             }
             if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() == null) {
-                rpgcore.getMedykNPC().add(new MedykObject(uuid));
-                addDataMedyk(rpgcore.getMedykNPC().find(uuid));
+                this.addDataMedyk(new MedykObject(uuid));
             }
             if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
-                rpgcore.getGornikNPC().add(new GornikObject(uuid));
-                addDataGornik(rpgcore.getGornikNPC().find(uuid));
+                this.addDataGornik(new GornikObject(uuid));
             }
         }
 
@@ -352,25 +294,7 @@ public class MongoManager {
         document.append("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
         pool.getZbroja().insertOne(document);
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("osMoby", 0);
-        document.append("osLudzie", 0);
-        document.append("osMetiny", 0);
-        document.append("osSakwy", 0);
-        document.append("osNiesy", 0);
-        document.append("osRybak", 0);
-        document.append("osDrwal", 0);
-        document.append("osGornik", 0);
-        document.append("osMobyAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osLudzieAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osMetinyAccept", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
-        document.append("osSakwyAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osNiesyAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osRybakAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osDrwalAccept", "false,false,false,false,false,false,false,false,false,false");
-        document.append("osGornikAccept", "false,false,false,false,false,false,false,false,false,false");
-        pool.getOsiagniecia().insertOne(document);
+        this.addDataOs(new OsObject(uuid));
 
         document = new Document();
         document.append("_id", uuid.toString());
@@ -404,14 +328,7 @@ public class MongoManager {
         document.append("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
         pool.getMagazyny().insertOne(document);
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("kolekcjonerPostep", rpgcore.getKolekcjonerNPC().getKolekcjonerPostepInString(uuid));
-        document.append("postepMisji", rpgcore.getKolekcjonerNPC().getPostepMisji(uuid));
-        document.append("kolekcjonerSredniDMG", rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid));
-        document.append("kolekcjonerSredniDef", rpgcore.getKolekcjonerNPC().getKolekcjonerSredniDef(uuid));
-        document.append("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
-        pool.getKolekcjoner().insertOne(document);
+        this.addDataKolekcjner(new KolekcjonerObject(uuid));
 
         pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
 
@@ -419,7 +336,7 @@ public class MongoManager {
         this.addKlasyData(new Klasy(uuid));
 
 
-        rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0, 0, 0, 0, 0, 0, 0, 0, "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", "false,false,false,false,false,false,false,false,false,false", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
+        rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
         rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
         rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
@@ -488,10 +405,10 @@ public class MongoManager {
             this.saveBanDocument(uuid, pool.getBany());
             this.saveMuteDocument(uuid, pool.getMuty());
             //this.savePlayerInventory(uuid, database.getCollection("hellrpg_inventory"));
-            this.saveOsDocument(uuid, pool.getOsiagniecia());
+            //this.saveOsDocument(uuid, pool.getOsiagniecia());
             this.saveBaoDocument(uuid, pool.getBao());
             this.saveRybakDocument(uuid, pool.getRybak());
-            this.saveKolekcjonerDocument(uuid, pool.getKolekcjoner());
+            this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
             this.saveMagazynyDocument(uuid, pool.getMagazyny());
             this.saveTargDocument(uuid, pool.getTargi());
             this.saveAkcesoriaDocument(uuid, pool.getAkcesoria());
@@ -553,32 +470,6 @@ public class MongoManager {
         collection.findOneAndReplace(query, document);
     }
 
-    private void saveOsDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("osMoby", rpgcore.getPlayerManager().getPlayerOsMoby(uuid));
-        document.append("osMobyAccept", rpgcore.getPlayerManager().getOsMobyAccept(uuid));
-        document.append("osLudzie", rpgcore.getPlayerManager().getPlayerOsLudzie(uuid));
-        document.append("osLudzieAccept", rpgcore.getPlayerManager().getOsLudzieAccept(uuid));
-        document.append("osMetiny", rpgcore.getPlayerManager().getPlayerOsMetiny(uuid));
-        document.append("osMetinyAccept", rpgcore.getPlayerManager().getOsMetinyAccept(uuid));
-        document.append("osSakwy", rpgcore.getPlayerManager().getPlayerOsSakwy(uuid));
-        document.append("osSakwyAccept", rpgcore.getPlayerManager().getOsSakwyAccept(uuid));
-        document.append("osNiesy", rpgcore.getPlayerManager().getPlayerOsNiesy(uuid));
-        document.append("osNiesyAccept", rpgcore.getPlayerManager().getOsNiesyAccept(uuid));
-        document.append("osRybak", rpgcore.getPlayerManager().getPlayerOsRybak(uuid));
-        document.append("osRybakAccept", rpgcore.getPlayerManager().getOsRybakAccept(uuid));
-        document.append("osDrwal", rpgcore.getPlayerManager().getPlayerOsDrwal(uuid));
-        document.append("osDrwalAccept", rpgcore.getPlayerManager().getOsDrwalAccept(uuid));
-        document.append("osGornik", rpgcore.getPlayerManager().getPlayerOsGornik(uuid));
-        document.append("osGornikAccept", rpgcore.getPlayerManager().getOsGornikAccept(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
-
     private void saveBaoDocument(final UUID uuid, final MongoCollection<Document> collection) {
         Document query = new Document();
         query.append("_id", uuid.toString());
@@ -607,20 +498,6 @@ public class MongoManager {
         collection.findOneAndReplace(query, document);
     }
 
-    private void saveKolekcjonerDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("kolekcjonerPostep", rpgcore.getKolekcjonerNPC().getKolekcjonerPostepInString(uuid));
-        document.append("postepMisji", rpgcore.getKolekcjonerNPC().getPostepMisji(uuid));
-        document.append("kolekcjonerSredniDMG", rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid));
-        document.append("kolekcjonerSredniDef", rpgcore.getKolekcjonerNPC().getKolekcjonerSredniDef(uuid));
-        document.append("kolekcjonerSredniKryt", rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
 
     private void saveMagazynyDocument(final UUID uuid, final MongoCollection<Document> collection) {
         Document query = new Document();
@@ -906,7 +783,7 @@ public class MongoManager {
     }
 
 
-    // MEDYK
+    // GORNIK
     public Map<UUID, GornikObject> loadAllGornik() {
         Map<UUID, GornikObject> gornik = new ConcurrentHashMap<>();
         for (Document document : this.pool.getGornik().find()) {
@@ -927,6 +804,55 @@ public class MongoManager {
     public void saveAllGornik() {
         for (GornikObject gornikObject : rpgcore.getGornikNPC().getGornikObject()) {
             this.saveDataGornik(gornikObject.getID(), gornikObject);
+        }
+    }
+
+
+    // Osiagniecia
+    public Map<UUID, OsObject> loadAllOs() {
+        Map<UUID, OsObject> gornik = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getOsiagniecia().find()) {
+            OsObject osObject = new OsObject(document);
+            gornik.put(osObject.getID(), osObject);
+        }
+        return gornik;
+    }
+
+    public void addDataOs(final OsObject osObject) {
+        this.pool.getOsiagniecia().insertOne(osObject.toDocument());
+    }
+
+    public void saveDataOs(final UUID id, final OsObject osObject) {
+        this.pool.getOsiagniecia().findOneAndReplace(new Document("_id", id.toString()), osObject.toDocument());
+    }
+
+    public void saveAllOs() {
+        for (OsObject osObject : rpgcore.getOsManager().getOsObject()) {
+            this.saveDataOs(osObject.getID(), osObject);
+        }
+    }
+
+    // Kolekcjoner
+    public Map<UUID, KolekcjonerObject> loadAllKolekcjoner() {
+        Map<UUID, KolekcjonerObject> kolekcjoner = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getKolekcjoner().find()) {
+            KolekcjonerObject kolekcjonerObject = new KolekcjonerObject(document);
+            kolekcjoner.put(kolekcjonerObject.getID(), kolekcjonerObject);
+        }
+        return kolekcjoner;
+    }
+
+    public void addDataKolekcjner(final KolekcjonerObject kolekcjonerObject) {
+        this.pool.getKolekcjoner().insertOne(kolekcjonerObject.toDocument());
+    }
+
+    public void saveDataKolekcjoner(final UUID id, final KolekcjonerObject kolekcjonerObject) {
+        this.pool.getKolekcjoner().findOneAndReplace(new Document("_id", id.toString()), kolekcjonerObject.toDocument());
+    }
+
+    public void saveAllKolekcjoner() {
+        for (KolekcjonerObject kolekcjonerObject : rpgcore.getKolekcjonerNPC().getKolekcjonerObject()) {
+            this.saveDataKolekcjoner(kolekcjonerObject.getID(), kolekcjonerObject);
         }
     }
 

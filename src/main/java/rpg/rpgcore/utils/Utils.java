@@ -2,7 +2,6 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -437,5 +436,15 @@ public class Utils {
         }
 
         return stringBuilder.length() > 0 ? stringBuilder.toString().trim() : time + "ms";
+    }
+
+    public static double convertIntegersToPercentage(final int n1, final int n2)  {
+        return Double.parseDouble(String.valueOf((n1 / n2) * 100));
+    }
+    public static double convertLongsToPercentage(final long n1, final long n2)  {
+        return Double.parseDouble(String.valueOf((n1 / n2) * 100));
+    }
+    public static double convertDoublesToPercentage(final double n1, final double n2)  {
+        return (n1 / n2) * 100;
     }
 }

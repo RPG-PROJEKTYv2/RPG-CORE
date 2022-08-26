@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +20,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import static rpg.rpgcore.utils.Utils.random;
 
 public class DamageManager {
 
@@ -128,8 +126,8 @@ public class DamageManager {
         dmg += rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid);
         mnoznik += rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid);
         // ...KOLEKCJONER
-        mnoznik += rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid);
-        krytyk += rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid);
+        mnoznik += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue1();
+        krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue3();
 
 
         dmg = (dmg * (mnoznik / 100)) /3;
@@ -216,8 +214,8 @@ public class DamageManager {
         dmg += rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid);
         mnoznik += rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid);
         // ...KOLEKCJONER
-        mnoznik += rpgcore.getKolekcjonerNPC().getKolekcjonerSrednieDMG(uuid);
-        krytyk += rpgcore.getKolekcjonerNPC().getKolekcjonerKryt(uuid);
+        mnoznik += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue1();
+        krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue3();
 
 
         dmg = (dmg * (mnoznik / 100)) /3;

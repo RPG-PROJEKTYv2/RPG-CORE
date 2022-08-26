@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.kolekcjoner;
 
+import com.google.common.collect.ImmutableSet;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,47 +16,32 @@ import java.util.*;
 
 public class KolekcjonerNPC {
 
-    private final RPGCORE rpgcore;
-
     public KolekcjonerNPC(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
+        this.userMap = rpgcore.getMongoManager().loadAllKolekcjoner();
     }
 
     // WAZNE MAPY
+    private final Map<UUID, KolekcjonerObject> userMap;
     private final Map<Integer, String> missions = new HashMap<>(12);
-    private final Map<UUID, String> kolekcjonerPostep = new HashMap<>();
-    private final Map<UUID, Integer> postepMisji = new HashMap<>();
-    private final Map<UUID, Double> kolekcjonerSrednieDMG = new HashMap<>();
-    private final Map<UUID, Double> kolekcjonerSredniDef = new HashMap<>();
-    private final Map<UUID, Double> kolekcjonerKryt = new HashMap<>();
 
     // ITEMY DO GUI
     private final ItemBuilder fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ItemBuilder statystyki = new ItemBuilder(Material.PAPER);
     private final ItemBuilder oddajITEMY = new ItemBuilder(Material.DISPENSER);
 
-
-    public void loadAll(final UUID uuid, final String kolekcjonerPostep, final int postepMisji, final double kolekcjonerSrednieDMG, final double kolekcjonerSredniDef, final double kolekcjonerKryt) {
-        this.kolekcjonerPostep.put(uuid, kolekcjonerPostep);
-        this.postepMisji.put(uuid, postepMisji);
-        this.kolekcjonerSrednieDMG.put(uuid, kolekcjonerSrednieDMG);
-        this.kolekcjonerSredniDef.put(uuid, kolekcjonerSredniDef);
-        this.kolekcjonerKryt.put(uuid, kolekcjonerKryt);
-    }
-
     public void loadMissions() {
-        missions.put(1, "10;&7&lTestowy Patyk;2.5;2.5;1.5");
-        missions.put(2, "20;&8Item10-20;3.5;2.5;1.5");
-        missions.put(3, "30;Item20-30;4.5;2.5;1.5");
-        missions.put(4, "40;Item30-40;1.5;2.5;1.5");
-        missions.put(5, "50;Item40-50;3.5;2.5;1.5");
-        missions.put(6, "60;Item50-60;4.5;2.5;1.5");
-        missions.put(7, "70;Item60-80;2.5;2.5;1.5");
-        missions.put(8, "80;Item80-90;3.5;2.5;1.5");
-        missions.put(9, "90;Item90-100;5.5;2.5;1.5");
-        missions.put(10, "100;Item100-110;2.5;2.5;1.5");
-        missions.put(11, "110;Item110-120;1.5;2.5;1.5");
-        missions.put(12, "120;Item120-130;3.5;2.5;1.5");
+        missions.put(0, "10;&7&lTestowy Patyk;2.5;2.5;1.5");
+        missions.put(1, "20;&8Item10-20;3.5;2.5;1.5");
+        missions.put(2, "30;Item20-30;4.5;2.5;1.5");
+        missions.put(3, "40;Item30-40;1.5;2.5;1.5");
+        missions.put(4, "50;Item40-50;3.5;2.5;1.5");
+        missions.put(5, "60;Item50-60;4.5;2.5;1.5");
+        missions.put(6, "70;Item60-80;2.5;2.5;1.5");
+        missions.put(7, "80;Item80-90;3.5;2.5;1.5");
+        missions.put(8, "90;Item90-100;5.5;2.5;1.5");
+        missions.put(9, "100;Item100-110;2.5;2.5;1.5");
+        missions.put(10, "110;Item110-120;1.5;2.5;1.5");
+        missions.put(11, "120;Item120-130;3.5;2.5;1.5");
     }
 
     public final void openKolekcjonerGUI(Player player) {
@@ -66,30 +52,31 @@ public class KolekcjonerNPC {
             gui.setItem(i, fill.toItemStack());
         }
 
-        gui.setItem(10, this.getPlayerStatystykiItem(player));
+        gui.setItem(10, this.getPlayerStatystykiItem(player.getUniqueId()));
         gui.setItem(13, this.getOddajItemyItem(player.getUniqueId()));
         gui.setItem(16, this.getCurrentItemToDrop(player.getUniqueId()));
 
         player.openInventory(gui);
     }
 
-    private ItemStack getPlayerStatystykiItem(final Player player) {
+    private ItemStack getPlayerStatystykiItem(final UUID uuid) {
         final List<String> lore = new ArrayList<>();
+        final KolekcjonerUser user = this.find(uuid).getKolekcjonerUser();
 
-        if (String.valueOf(this.getKolekcjonerSrednieDMG(player.getUniqueId())).contains(".0")) {
-            lore.add("&8- &fSrednie Obrazenia&7: &b" + String.format("%.0f", this.getKolekcjonerSrednieDMG(player.getUniqueId())) + " %");
+        if (String.valueOf(user.getValue1()).contains(".0")) {
+            lore.add("&8- &fSrednie Obrazenia&7: &b" + String.format("%.0f", user.getValue1()) + " %");
         } else  {
-            lore.add("&8- &fSrednie Obrazenia&7: &b" + this.getKolekcjonerSrednieDMG(player.getUniqueId()) + " %");
+            lore.add("&8- &fSrednie Obrazenia&7: &b" + user.getValue1()+ " %");
         }
-        if (String.valueOf(this.getKolekcjonerSredniDef(player.getUniqueId())).contains(".0")) {
-            lore.add("&8- &fSrednie Obrona&7: &b" + String.format("%.0f", this.getKolekcjonerSredniDef(player.getUniqueId())) + " %");
+        if (String.valueOf(user.getValue2()).contains(".0")) {
+            lore.add("&8- &fSrednie Obrona&7: &b" + String.format("%.0f", user.getValue2()) + " %");
         } else  {
-            lore.add("&8- &fSrednie Obrona&7: &b" + this.getKolekcjonerSredniDef(player.getUniqueId()) + " %");
+            lore.add("&8- &fSrednie Obrona&7: &b" + user.getValue2() + " %");
         }
-        if (String.valueOf(this.getKolekcjonerKryt(player.getUniqueId())).contains(".0")) {
-            lore.add("&8- &fSzansa na Cios Krytyczny&7: &b" + String.format("%.0f", this.getKolekcjonerKryt(player.getUniqueId())) + " %");
+        if (String.valueOf(user.getValue3()).contains(".0")) {
+            lore.add("&8- &fSzansa na Cios Krytyczny&7: &b" + String.format("%.0f", user.getValue3()) + " %");
         } else  {
-            lore.add("&8- &fSzansa na Cios Krytyczny&7: &b" + this.getKolekcjonerKryt(player.getUniqueId()) + " %");
+            lore.add("&8- &fSzansa na Cios Krytyczny&7: &b" + user.getValue3() + " %");
         }
 
         return statystyki.setName("&b&lTwoje statystyki").setLore(lore).addGlowing().toItemStack().clone();
@@ -97,7 +84,12 @@ public class KolekcjonerNPC {
 
     private ItemStack getOddajItemyItem(final UUID uuid) {
         final List<String> lore = new ArrayList<>();
-        final int postep = this.getKolekcjonerPlayerPostep(uuid);
+        final KolekcjonerUser user = this.find(uuid).getKolekcjonerUser();
+        final int postep = user.getMission();
+
+        if (postep == 11) {
+            return new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie mozliwe misje", "&7u tego NPC!", " ", "&8Wiecej misji pojawi sie w krotce!")).addGlowing().toItemStack().clone();
+        }
 
         final String[] misjaInfo = this.missions.get(postep).split(";");
 
@@ -108,19 +100,20 @@ public class KolekcjonerNPC {
         lore.add("&8- &fSrednia Odpornosc&7: &f" + misjaInfo[3]);
         lore.add("&8- &fSzansa na cios Krytyczny&7: &f" + misjaInfo[4]);
         lore.add(" ");
-        lore.add("&7Postep: &c" + this.getPostepMisji(uuid) + "&7/ &c" + misjaInfo[0] + " &8(&c" + String.format("%.2f", ((double) this.getPostepMisji(uuid) / Double.parseDouble(misjaInfo[0])) * 100) + " &c%&8)");
+        lore.add("&7Postep: &c" + user.getMissionProgress() + "&7/ &c" + misjaInfo[0] + " &8(&c" + String.format("%.2f", Utils.convertDoublesToPercentage(user.getMissionProgress(), Double.parseDouble(misjaInfo[0]))) + " &c%&8)");
 
         return oddajITEMY.setName("&c&lAktualna Misja #" + postep).setLore(lore).addGlowing().setAmount(postep).toItemStack().clone();
     }
 
     private ItemStack getCurrentItemToDrop(final UUID uuid) {
-        final int postep = this.getKolekcjonerPlayerPostep(uuid);
+        final KolekcjonerUser user = this.find(uuid).getKolekcjonerUser();
+        final int postep = user.getMission();
 
         ItemStack currentItem;
 
         switch (postep) {
             case 1:
-                currentItem = GlobalItem.getItem("I21", 1);
+                currentItem = GlobalItem.getItem("I21", 1).clone();
                 final ItemMeta im = currentItem.getItemMeta();
                 final List<String> lore = im.getLore();
 
@@ -187,150 +180,36 @@ public class KolekcjonerNPC {
         return null;
     }
 
-    public int getKolekcjonerPlayerPostep(final UUID uuid) {
-        final String[] postep = this.getKolekcjonerPostepInString(uuid).split(",");
-        for (int i = 0; i < postep.length; i++) {
-            if (postep[i].equals("false")) {
-                return i+1;
-            }
-        }
-        return 1;
-    }
 
-    public String getKolekcjonerPostepInString(final UUID uuid) {
-        kolekcjonerPostep.computeIfAbsent(uuid, k -> "false,false,false,false,false,false,false,false,false,false,false,false");
-        return kolekcjonerPostep.get(uuid);
-    }
-    public double getKolekcjonerSrednieDMG(final UUID uuid) {
-        kolekcjonerSrednieDMG.computeIfAbsent(uuid, k -> 0.0);
-        return kolekcjonerSrednieDMG.get(uuid);
-    }
-    
-    public double getKolekcjonerSredniDef(final UUID uuid) {
-        kolekcjonerSredniDef.computeIfAbsent(uuid, k -> 0.0);
-        return kolekcjonerSredniDef.get(uuid);
-    }
-    
-    public double getKolekcjonerKryt(final UUID uuid) {
-        kolekcjonerKryt.computeIfAbsent(uuid, k -> 0.0);
-        return kolekcjonerKryt.get(uuid);
-    }
-
-    public int getPostepMisji(final UUID uuid) {
-        postepMisji.computeIfAbsent(uuid, k -> 0);
-        return postepMisji.get(uuid);
-    }
-    
-    public void setKolekcjonerSrednieDMG(final UUID uuid, final double dmg) {
-        this.kolekcjonerSrednieDMG.put(uuid, dmg);
-    }
-    
-    public void setKolekcjonerSredniDef(final UUID uuid, final double def) {
-        this.kolekcjonerSredniDef.put(uuid, def);
-    }
-    
-    public void setKolekcjonerKryt(final UUID uuid, final double kryt) {
-        this.kolekcjonerKryt.put(uuid, kryt);
-    }
-    
-    public void setKolekcjonerPostep(final UUID uuid, final String postep) {
-        this.kolekcjonerPostep.put(uuid, postep);
-    }
-
-    public void setPostepMisji(final UUID uuid, final int postep) {
-        this.postepMisji.put(uuid, postep);
-    }
-
-
-    public void updateKolekcjonerPlayerPostep(final UUID uuid, final String postep) {
-        this.kolekcjonerPostep.replace(uuid, postep);
-    }
-
-    public void updateKolekcjonerSrednieDMG(final UUID uuid, final double dmg) {
-        this.kolekcjonerSrednieDMG.replace(uuid, this.kolekcjonerSrednieDMG.get(uuid) + dmg);
-    }
-
-    public void updateKolekcjonerSredniDef(final UUID uuid, final double def) {
-        this.kolekcjonerSredniDef.replace(uuid, this.kolekcjonerSredniDef.get(uuid) + def);
-    }
-
-    public void updateKolekcjonerKryt(final UUID uuid, final double kryt) {
-        this.kolekcjonerKryt.replace(uuid, this.kolekcjonerKryt.get(uuid) + kryt);
-    }
 
     public void updatePostepMisji(final UUID uuid, final int postep) {
-        this.postepMisji.replace(uuid, this.postepMisji.get(uuid) + postep);
-        final int currentMission = this.getKolekcjonerPlayerPostep(uuid);
+        final KolekcjonerUser user = this.find(uuid).getKolekcjonerUser();
+        user.setMissionProgress(user.getMissionProgress() + postep);
+        final int currentMission = user.getMission();
         final String[] missionInfo = this.missions.get(currentMission).split(";");
-        if (this.getPostepMisji(uuid) >= Integer.parseInt(missionInfo[0])) {
-            final String[] postepGracza = this.kolekcjonerPostep.get(uuid).split(",");
-            postepGracza[currentMission - 1] = "true";
-            final StringBuilder nowyPostep = new StringBuilder();
-            for (final String s : postepGracza) {
-                nowyPostep.append(s).append(",");
-
-            }
-            nowyPostep.replace(nowyPostep.length() - 1, nowyPostep.length(), "");
-            this.updateKolekcjonerPlayerPostep(uuid, nowyPostep.toString());
-            this.setPostepMisji(uuid, 0);
-            this.updateKolekcjonerSrednieDMG(uuid, Double.parseDouble(missionInfo[2]));
-            this.updateKolekcjonerSredniDef(uuid, Double.parseDouble(missionInfo[3]));
-            this.updateKolekcjonerKryt(uuid, Double.parseDouble(missionInfo[4]));
+        if (user.getMissionProgress() >= Integer.parseInt(missionInfo[0])) {
+            user.setMission(user.getMission() + 1);
+            user.setMissionProgress(0);
+            user.setValue1(user.getValue1() + Double.parseDouble(missionInfo[2]));
+            user.setValue2(user.getValue2() + Double.parseDouble(missionInfo[3]));
+            user.setValue3(user.getValue3() + Double.parseDouble(missionInfo[4]));
         }
     }
 
-    /*
-    fillInventory.setName(" ");
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setItem(i, fillInventory.toItemStack());
-        }
-        this.itemLore.clear();
+    public void add(KolekcjonerObject kolekcjonerObject) {
+        this.userMap.put(kolekcjonerObject.getID(), kolekcjonerObject);
+    }
 
-        // statystyki
-        statystyki.setName("&b&lTwoje Statystyki");
-        this.itemLore.add("&3Statystyki gracza: &f" + player.getName());
-        this.itemLore.add(" ");
-        this.itemLore.add("&f&lMISJE");
-        this.itemLore.add("&8* &bSrednie Obrazenia: &f+");
-        this.itemLore.add("&8* &bSrednia Defensywa: &f+");
-        this.itemLore.add(" ");
-        statystyki.addGlowing();
-        statystyki.setLore(itemLore);
-        gui.setItem(26, statystyki.toItemStack());
-        this.itemLore.clear();
+    public KolekcjonerObject find(final UUID uuid) {
+        this.userMap.computeIfAbsent(uuid, k -> new KolekcjonerObject(uuid));
+        return this.userMap.get(uuid);
+    }
 
-        // oddajITEMY
-        oddajITEMY.setName("&e&lSzafa &6&lKolekcjonerska");
-        this.itemLore.add("&7Kliknij aby oddac...");
-        this.itemLore.add(" ");
-        this.itemLore.add("&f&lSTATUS");
-        this.itemLore.add("&8* &bOddane: &c5" + "&8/&a10");
-        this.itemLore.add("&f&lNAGRODA");
-        this.itemLore.add("&8* ");
-        this.itemLore.add(" ");
-        this.itemLore.clear();
+    public ImmutableSet<KolekcjonerObject> getKolekcjonerObject() {
+        return ImmutableSet.copyOf(this.userMap.values());
+    }
 
-        // aktualnaMISJA
-        final String[] playerMissionStatus = this.getPlayerKolekcjoner(player.getUniqueId()).split(",");
-        for (int i = 1; i < gui.getSize(); i++) {
-            this.itemLore.clear();
-            final String[] missionLore = rpgcore.getKolekcjonerNPC().getKolekcjonerMissions(i - 1).split(";");
-            if (missionLore.length == 3) {
-                this.itemLore.add("");
-                this.itemLore.add("&f" + missionLore[0] + " &c" + missionLore[1] + "x &6" + missionLore[2]);
-            } else {
-                this.itemLore.add("");
-                this.itemLore.add("&f" + missionLore[0] + " &c" + missionLore[1] + "x &6" + missionLore[2]);
-                this.itemLore.add("&8- &c" + missionLore[3] + "x " + missionLore[4]);
-            }
-            this.itemLore.add(" ");
-            if (playerMissionStatus[i].equals("true")) {
-                this.itemLore.add("&a&lOdblokowano");
-            } else {
-                this.itemLore.add("&c&lZablokowano");
-            }
-            gui.setItem(i, misje.setName("&c&lMisja " + i).setLore(this.itemLore).addGlowing().toItemStack().clone());
-            player.openInventory(gui);
-        }
-     */
+    public boolean isKolekcjonerObject(final UUID string) {
+        return this.userMap.containsKey(string);
+    }
 }

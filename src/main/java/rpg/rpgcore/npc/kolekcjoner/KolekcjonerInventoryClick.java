@@ -32,7 +32,6 @@ public class KolekcjonerInventoryClick implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
         if (Utils.removeColor(clickedInventoryTitle).equals("Kolekcjoner")) {
@@ -44,7 +43,7 @@ public class KolekcjonerInventoryClick implements Listener {
                 return;
             }
 
-            final int currentMission = rpgcore.getKolekcjonerNPC().getKolekcjonerPlayerPostep(playerUUID);
+            final int currentMission = rpgcore.getKolekcjonerNPC().find(playerUUID).getKolekcjonerUser().getMission();
             final ItemStack requiredItem = rpgcore.getKolekcjonerNPC().getRequiredItem(currentMission);
 
             if (!player.getInventory().containsAtLeast(requiredItem, 1)) {
@@ -55,9 +54,7 @@ public class KolekcjonerInventoryClick implements Listener {
 
             player.getInventory().removeItem(requiredItem);
             rpgcore.getKolekcjonerNPC().updatePostepMisji(playerUUID, 1);
-            player.closeInventory();
             rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
-            return;
         }
     }
 }

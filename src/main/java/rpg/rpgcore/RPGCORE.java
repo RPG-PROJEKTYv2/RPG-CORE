@@ -1,14 +1,9 @@
 package rpg.rpgcore;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.EnumWrappers;
+import net.minecraft.server.v1_8_R3.Blocks;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.chat.mute.Mute;
 import rpg.rpgcore.chat.mute.MuteManager;
@@ -127,6 +122,8 @@ import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -202,7 +199,6 @@ public final class RPGCORE extends JavaPlugin {
 
         this.getLvlManager().loadAllReqExp();
         this.getLvlManager().loadExpForAllMobs();
-        this.getOsManager().loadAllRequiredOs();
         this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
@@ -342,6 +338,8 @@ public final class RPGCORE extends JavaPlugin {
 
         // SKRZYNIE
         this.initSkrzynieManagers();
+
+        this.initTest();
     }
 
     public void onDisable() {
@@ -350,6 +348,16 @@ public final class RPGCORE extends JavaPlugin {
         this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
 
+    }
+
+    private void initTest() {
+        try {
+            Method method = net.minecraft.server.v1_8_R3.Block.class.getDeclaredMethod("c", float.class);
+            method.setAccessible(true);
+            method.invoke(Blocks.STONE, 50.0F);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void initGlobalCommands() {

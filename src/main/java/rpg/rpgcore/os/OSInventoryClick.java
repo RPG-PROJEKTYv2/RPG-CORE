@@ -1,6 +1,5 @@
 package rpg.rpgcore.os;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,16 +28,30 @@ public class OSInventoryClick implements Listener {
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {
             return;
         }
 
-        final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
-        final int clickedSlot = e.getSlot();
+        final String title = clickedInventory.getTitle();
+        final ItemStack item = e.getCurrentItem();
+        final int slot = e.getSlot();
 
+        if (Utils.removeColor(title).equals("Osiagniecia")) {
+            e.setCancelled(true);
+
+            if (item.getType().equals(Material.STAINED_GLASS_PANE)) {
+                return;
+            }
+
+            rpgcore.getOsManager().openOsGuiCategory(player, slot);
+        }
+
+        if (Utils.removeColor(title).equals("Osiagniecia - Zabici Gracze")) {
+            e.setCancelled(true);
+        }
+
+        /*
         if (clickedInventoryTitle.equals(rpgcore.getOsManager().osGuiMain().getName())) {
             e.setCancelled(true);
             if (clickedItem.getType() == Material.GOLD_SWORD){
@@ -133,7 +146,7 @@ public class OSInventoryClick implements Listener {
 
             final int killedPlayers = rpgcore.getPlayerManager().getPlayerOsLudzie(playerUUID);
 
-            if (killedPlayers < rpgcore.getOsManager().getRequiredForOsLudzie().get(clickedSlot+1)) {
+            if (killedPlayers < rpgcore.getOsManager().getReqForPlayerKills().get(clickedSlot+1)) {
                 return;
             }
 
@@ -392,7 +405,7 @@ public class OSInventoryClick implements Listener {
             player.closeInventory();
             Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&3Gracz &f" + player.getName() + " &3odebral osiagniecie &f" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName())));
             noweOsGornikAccepted.setLength(0);
-        }
+        }*/
     }
 
 }
