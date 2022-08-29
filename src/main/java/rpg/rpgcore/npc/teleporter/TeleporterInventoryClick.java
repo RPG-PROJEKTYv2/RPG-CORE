@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,20 +27,32 @@ public class TeleporterInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void teleporterInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
-        final Player player = (Player) e.getWhoClicked();
-        //final UUID playerUUID = player.getUniqueId();
-        // HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
-
         if (e.getClickedInventory() == null) {
             return;
         }
 
+        final Inventory clickedInventory = e.getClickedInventory();
+        final Player player = (Player) e.getWhoClicked();
+        final UUID playerUUID = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
-        if (clickedInventoryTitle.equals(rpgcore.getTeleporterNPC().teleporterMAIN(player).getName())) {
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER")) {
+            e.setCancelled(true);
+            rpgcore.getTeleporterNPC().openTeleporterMAIN(player);
+        }
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - MENU1")) {
+            e.setCancelled(true);
+            if (clickedSlot == 11) {
+                rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
+            }
+            if (clickedSlot == 15) {
+                rpgcore.getTeleporterNPC().openTeleporterDODATKOWEMAPY(player);
+            }
+        }
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - MENU2")) {
+            e.setCancelled(true);
             if (clickedSlot == 0) {
                 if (clickedItem.getType() == Material.IRON_FENCE) {
                     Location locEXP1 = new Location(Bukkit.getWorld("1-10exp"), -361, 7, 20);
@@ -68,7 +81,6 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                 }
             }
-            e.setCancelled(true);
         }
 
     }

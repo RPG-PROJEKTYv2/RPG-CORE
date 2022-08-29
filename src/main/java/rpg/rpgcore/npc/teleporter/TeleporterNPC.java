@@ -21,7 +21,9 @@ public class TeleporterNPC {
     }
 
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
-    private final ArrayList<String> itemLore = new ArrayList<>();
+    private final ArrayList<String> lore = new ArrayList<>();
+    private final ItemBuilder wybor1 = new ItemBuilder(Material.WATER_BUCKET);
+    private final ItemBuilder wybor2 = new ItemBuilder(Material.LAVA_BUCKET);
     private final ItemBuilder expowisko1 = new ItemBuilder(Material.IRON_FENCE);
     private final ItemBuilder expowisko2 = new ItemBuilder(Material.RED_MUSHROOM);
     private final ItemBuilder expowisko3 = new ItemBuilder(Material.IRON_BLOCK);
@@ -33,11 +35,34 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.BLAZE_POWDER);
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.WATER_BUCKET);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.POTION, 1, (short)16388).addFlag(ItemFlag.HIDE_POTION_EFFECTS);
-    private final ItemBuilder expowisko12 = new ItemBuilder(Material.GRASS);
-    private final ItemBuilder brakdostepu = new ItemBuilder(Material.BARRIER);
+    private final ItemBuilder expowisko12 = new ItemBuilder(Material.OBSIDIAN);
+    private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 , (short)14);
 
-    public Inventory teleporterMAIN(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 2 * 9, Utils.format("&9&lTELEPORTER"));
+    public void openTeleporterMAIN(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- MENU1"));
+
+        fillInventory.setName(" ");
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setItem(i, fillInventory.toItemStack());
+        }
+        lore.clear();
+        lore.add(" ");
+        lore.add("&7Kliknij aby otworzyc wybor expowisk.");
+        lore.add(" ");
+        wybor1.setName(Utils.format("&8* &f&lExpowiska &8*")).setLore(lore);
+        gui.setItem(11, wybor1.toItemStack());
+
+        lore.clear();
+        lore.add(" ");
+        lore.add("&7Kliknij aby otworzyc wybor dodatkowych miejsc.");
+        lore.add(" ");
+        wybor2.setName(Utils.format("&8* &f&lMiejsca Dodatkowe &8*")).setLore(lore);
+        gui.setItem(15, wybor2.toItemStack());
+
+        player.openInventory(gui);
+    }
+    public void openTeleporterEXPOWISKA(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&9&lTELEPORTER &7- MENU2"));
 
         fillInventory.setName(" ");
         for (int i = 0; i < gui.getSize(); i++) {
@@ -45,196 +70,203 @@ public class TeleporterNPC {
         }
 
         // expowisko 1
-        expowisko1.setName("&eGrota Wygnanców");
-        this.loreEXPOWISKA("&cOFF", "&f1", "4");
+        expowisko1.setName("&9&lTajemnicza Grota");
+        this.loreEXPOWISKA("&cOFF", "&f1", "1");
         expowisko1.addGlowing();
-        expowisko1.setLore(itemLore);
+        expowisko1.setLore(lore);
         gui.setItem(0, expowisko1.toItemStack());
 
         // expowisko 2
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 9) {
-            expowisko2.setName("&cCzerwony Las");
-            this.loreEXPOWISKA("&cOFF", "&f10", "4");
+            expowisko2.setName("&2&lLas Goblinow");
+            this.loreEXPOWISKA("&cOFF", "&f10", "1");
             expowisko2.addGlowing();
-            expowisko2.setLore(itemLore);
+            expowisko2.setLore(lore);
             gui.setItem(1, expowisko2.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a2. &8]");
             this.loreBRAKDOSTEPU("10");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(1, brakdostepu.toItemStack());
         }
 
         // expowisko 3
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 19) {
-            expowisko3.setName("&7Goryla Wyspa");
-            this.loreEXPOWISKA("&cOFF", "&f20", "5");
+            expowisko3.setName("&a&lUkryta Jungla");
+            this.loreEXPOWISKA("&cOFF", "&f20", "1");
             expowisko3.addGlowing();
-            expowisko3.setLore(itemLore);
+            expowisko3.setLore(lore);
             gui.setItem(2, expowisko3.toItemStack());
         }  else {
             brakdostepu.setName("&2Expowisko &8[ &a3. &8]");
             this.loreBRAKDOSTEPU("20");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(2, brakdostepu.toItemStack());
         }
 
         // expowisko 4
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 29) {
-            expowisko4.setName("&3Opuszczony Port");
-            this.loreEXPOWISKA("&cOFF", "&f30", "5");
+            expowisko4.setName("&7&lPrzekletny Port");
+            this.loreEXPOWISKA("&cOFF", "&f30", "1");
             expowisko4.addGlowing();
-            expowisko4.setLore(itemLore);
+            expowisko4.setLore(lore);
             gui.setItem(3, expowisko4.toItemStack());
         }   else {
             brakdostepu.setName("&2Expowisko &8[ &a4. &8]");
             this.loreBRAKDOSTEPU("30");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(3, brakdostepu.toItemStack());
         }
 
         // expowisko 5
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 39) {
-            expowisko5.setName("&5Zatopiona Twierdza");
-            this.loreEXPOWISKA("&cOFF", "&f40", "5");
+            expowisko5.setName("&b&lPodwodna Swiatynia");
+            this.loreEXPOWISKA("&cOFF", "&f40", "1");
             expowisko5.addGlowing();
-            expowisko5.setLore(itemLore);
+            expowisko5.setLore(lore);
             gui.setItem(4, expowisko5.toItemStack());
         }  else {
             brakdostepu.setName("&2Expowisko &8[ &a5. &8]");
             this.loreBRAKDOSTEPU("40");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(4, brakdostepu.toItemStack());
         }
 
         // expowisko 6
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 49) {
-            expowisko6.setName("&bLodowa Kraina");
-            this.loreEXPOWISKA("&cOFF", "&f50", "5");
+            expowisko6.setName("&f&lMrozna Dolina");
+            this.loreEXPOWISKA("&cOFF", "&f50", "1");
             expowisko6.addGlowing();
-            expowisko6.setLore(itemLore);
+            expowisko6.setLore(lore);
             gui.setItem(5, expowisko6.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a6. &8]");
             this.loreBRAKDOSTEPU("50");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(5, brakdostepu.toItemStack());
         }
 
         // expowisko 7
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 59) {
-            expowisko7.setName("&6Góra Olbrzymów");
-            this.loreEXPOWISKA("&aON", "&f60", "6");
+            expowisko7.setName("&4&lPiekielna Kraina");
+            this.loreEXPOWISKA("&aON", "&f60", "1");
             expowisko7.addGlowing();
-            expowisko7.setLore(itemLore);
+            expowisko7.setLore(lore);
             gui.setItem(6, expowisko7.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a7. &8]");
             this.loreBRAKDOSTEPU("60");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(6, brakdostepu.toItemStack());
         }
 
         // expowisko 8
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 69) {
-            expowisko8.setName("&fKrólestwo Duchów");
-            this.loreEXPOWISKA("&aON", "&f70", "6");
+            expowisko8.setName("&8&lPrzeklete Podziemia");
+            this.loreEXPOWISKA("&aON", "&f70", "1");
             expowisko8.addGlowing();
-            expowisko8.setLore(itemLore);
+            expowisko8.setLore(lore);
             gui.setItem(7, expowisko8.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a8. &8]");
             this.loreBRAKDOSTEPU("70");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(7, brakdostepu.toItemStack());
         }
 
         // expowisko 9
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 79) {
-            expowisko9.setName("&4Płomienny Las");
-            this.loreEXPOWISKA("&aON", "&f80", "6");
+            expowisko9.setName("&5&lPrzeklety Las");
+            this.loreEXPOWISKA("&aON", "&f80", "1");
             expowisko9.addGlowing();
-            expowisko9.setLore(itemLore);
+            expowisko9.setLore(lore);
             gui.setItem(8, expowisko9.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a9. &8]");
             this.loreBRAKDOSTEPU("80");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(8, brakdostepu.toItemStack());
         }
 
         // expowisko 10
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 89) {
-            expowisko10.setName("&3Atlantyda");
-            this.loreEXPOWISKA("&aON", "&f90", "6");
+            expowisko10.setName("&c&lKraina Demonow");
+            this.loreEXPOWISKA("&aON", "&f90", "1");
             expowisko10.addGlowing();
-            expowisko10.setLore(itemLore);
+            expowisko10.setLore(lore);
             gui.setItem(9, expowisko10.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a10. &8]");
             this.loreBRAKDOSTEPU("90");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(9, brakdostepu.toItemStack());
         }
 
         // expowisko 11
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 99) {
-            expowisko11.setName("&8Przeklęta Jaskinia");
-            this.loreEXPOWISKA("&aON", "&f100", "6");
+            expowisko11.setName("&8&lMroczny Wymiar");
+            this.loreEXPOWISKA("&aON", "&f100", "1");
             expowisko11.addGlowing();
-            expowisko11.setLore(itemLore);
+            expowisko11.setLore(lore);
             gui.setItem(10, expowisko11.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a11. &8]");
             this.loreBRAKDOSTEPU("100");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(10, brakdostepu.toItemStack());
         }
         // expowisko 12
         if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 109) {
-            expowisko12.setName("&aPolana");
-            this.loreEXPOWISKA("&aON", "&f110", "6");
+            expowisko12.setName("&5&lZamek Nieskonczonosci");
+            this.loreEXPOWISKA("&aON", "&f110", "1");
             expowisko12.addGlowing();
-            expowisko12.setLore(itemLore);
+            expowisko12.setLore(lore);
             gui.setItem(11, expowisko12.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a12. &8]");
             this.loreBRAKDOSTEPU("110");
             brakdostepu.addGlowing();
-            brakdostepu.setLore(itemLore);
+            brakdostepu.setLore(lore);
             gui.setItem(11, brakdostepu.toItemStack());
         }
 
 
-        return gui;
+        player.openInventory(gui);
     }
+    public void openTeleporterDODATKOWEMAPY(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- MENU3"));
 
+        fillInventory.setName(" ");
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setItem(i, fillInventory.toItemStack());
+        }
+    }
     private void loreEXPOWISKA(final String lorePVP, final String lorePOZIOM, final String loreLiczbaTP) {
-        this.itemLore.clear();
-        this.itemLore.add(" ");
-        this.itemLore.add("&8[ &e>> &8] &eInformacje:");
-        this.itemLore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
-        this.itemLore.add("&8* &4PvP: " + lorePVP );
-        this.itemLore.add("&8* &3Liczba teleportow: &9" + loreLiczbaTP);
-        this.itemLore.add(" ");
-        this.itemLore.add("&8* &9Status: &a&lODBLOKOWANE");
-        this.itemLore.add(" ");
+        this.lore.clear();
+        this.lore.add(" ");
+        this.lore.add("&8[ &e>> &8] &eInformacje:");
+        this.lore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
+        this.lore.add("&8* &4PvP: " + lorePVP );
+        this.lore.add("&8* &3Liczba teleportow: &9" + loreLiczbaTP);
+        this.lore.add(" ");
+        this.lore.add("&8* &9Status: &a&lODBLOKOWANE");
+        this.lore.add(" ");
     }
     private void loreBRAKDOSTEPU(final String lorePOZIOM) {
-        this.itemLore.clear();
-        this.itemLore.add(" ");
-        this.itemLore.add("&8* &9Status: &4&lZABLOKOWANE");
-        this.itemLore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
-        this.itemLore.add(" ");
+        this.lore.clear();
+        this.lore.add(" ");
+        this.lore.add("&8* &9Status: &4&lZABLOKOWANE");
+        this.lore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
+        this.lore.add(" ");
     }
 }
