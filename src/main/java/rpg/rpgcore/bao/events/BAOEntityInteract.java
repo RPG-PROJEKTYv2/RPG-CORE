@@ -1,4 +1,4 @@
-package rpg.rpgcore.bao;
+package rpg.rpgcore.bao.events;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -26,15 +26,18 @@ public class BAOEntityInteract implements Listener {
         final UUID uuid = player.getUniqueId();
 
 
-        if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
-            if (rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getEntityId())) {
-                e.setCancelled(true);
-                if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < 74) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGI"));
-                    return;
-                }
-                player.openInventory(rpgcore.getBaoManager().baoGUI(uuid));
-            }
+        if (e.getRightClicked().getType() != EntityType.ARMOR_STAND) {
+            return;
         }
+        if (!rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getEntityId())) {
+            return;
+        }
+
+        e.setCancelled(true);
+        if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < 74) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGI"));
+            return;
+        }
+        rpgcore.getBaoManager().openMainGUI(player, false);
     }
 }

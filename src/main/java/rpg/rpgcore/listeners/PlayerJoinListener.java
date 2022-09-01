@@ -1,10 +1,5 @@
 package rpg.rpgcore.listeners;
 
-import com.keenant.tabbed.Tabbed;
-import com.keenant.tabbed.item.TabItem;
-import com.keenant.tabbed.item.TextTabItem;
-import com.keenant.tabbed.tablist.TableTabList;
-import com.keenant.tabbed.tablist.TitledTabList;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,9 +15,7 @@ import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
@@ -63,8 +56,8 @@ public class PlayerJoinListener implements Listener {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
 
-        if (rpgcore.getBaoManager().getBaoBonusy(playerUUID) != null && rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",")[4].equalsIgnoreCase("dodatkowe hp")) {
-            p.setMaxHealth(p.getMaxHealth() + Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",")[4]) * 2);
+        if (rpgcore.getBaoManager().find(playerUUID).getBaoUser().getBonus5().equalsIgnoreCase("dodatkowe hp")) {
+            p.setMaxHealth(p.getMaxHealth() + (rpgcore.getBaoManager().find(playerUUID).getBaoUser().getValue5() * 2));
         }
 
         if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID) != null) {

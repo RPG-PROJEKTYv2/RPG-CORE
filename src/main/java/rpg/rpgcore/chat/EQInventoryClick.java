@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -140,29 +141,29 @@ public class EQInventoryClick implements Listener {
                         player.closeInventory();
                         break;
                     }
-                    final String[] baoBonusy = rpgcore.getBaoManager().getBaoBonusy(playerUUID).split(",");
-                    final String[] baoWartosci = rpgcore.getBaoManager().getBaoBonusyWartosci(playerUUID).split(",");
-                    if (baoBonusy[0].equalsIgnoreCase("brak bonusu")) {
+
+                    if (rpgcore.getBaoManager().isNotRolled(playerUUID)) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz jeszcze zrobionego bao!"));
                         player.closeInventory();
                         break;
                     }
+                    final BaoUser user = rpgcore.getBaoManager().find(playerUUID).getBaoUser();
                     TextComponent beforeMessageBao = new TextComponent(formatPrzedWiadomoscia);
                     TextComponent stolMagii = new TextComponent("§8[§bStol Magii§8]");
-                    TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + baoBonusy[0] + ": §c" + baoWartosci[0] + "% §8\n§6" + baoBonusy[1] + ": §c" + baoWartosci[1] + "% §8\n§6" + baoBonusy[2] + ": §c" + baoWartosci[2] + "% §8\n");
+                    TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + user.getBonus1() + ": §c" + user.getValue1() + "% §8\n§6" + user.getBonus2() + ": §c" + user.getValue2() + "% §8\n§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
                     TextComponent text2;
                     TextComponent text3;
 
 
-                    if (baoBonusy[3].equalsIgnoreCase("dodatkowe obrazenia")) {
-                        text2 = new TextComponent("§6" + baoBonusy[3] + ": §c" + baoWartosci[3] + " DMG §8\n");
+                    if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
+                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + " DMG §8\n");
                     } else {
-                        text2 = new TextComponent("§6" + baoBonusy[3] + ": §c" + baoWartosci[3] + "% §8\n");
+                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + "% §8\n");
                     }
-                    if (baoBonusy[4].equalsIgnoreCase("dodatkowe hp")) {
-                        text3 = new TextComponent("§6" + baoBonusy[4] + ": §c" + baoWartosci[4] + " HP");
+                    if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
+                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
                     } else {
-                        text3 = new TextComponent("§6" + baoBonusy[4] + ": §c" + baoWartosci[4] + "%");
+                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + "%");
                     }
                     text.addExtra(text2);
                     text.addExtra(text3);

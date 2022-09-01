@@ -82,8 +82,8 @@ public class LvlManager {
         if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
             dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
         }
-        if (rpgcore.getBaoManager().getBaoBonusy(uuid).split(",")[4].equalsIgnoreCase("Dodatkowy EXP")) {
-            dodatkowyExp += Double.parseDouble(rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",")[4]);
+        if (rpgcore.getBaoManager().find(uuid).getBaoUser().getBonus5().equalsIgnoreCase("Dodatkowy EXP")) {
+            dodatkowyExp += rpgcore.getBaoManager().find(uuid).getBaoUser().getValue5();
         }
 
         return dodatkowyExp;

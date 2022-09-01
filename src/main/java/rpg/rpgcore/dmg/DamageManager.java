@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
@@ -98,20 +99,18 @@ public class DamageManager {
         }
 
         // BAO
-        if (!rpgcore.getBaoManager().getBaoBonusy(uuid).contains("Brak Bonusu")) {
-            final String[] bonusy = rpgcore.getBaoManager().getBaoBonusy(uuid).split(",");
-            final String[] wartosci = rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",");
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
+            final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
 
-            if (bonusy[0].equals("Srednie obrazenia") || bonusy[0].equals("Srednie obrazenie przeciwko ludziom")) {
-                mnoznik += Double.parseDouble(wartosci[0]);
+            if (user.getBonus1().equals("Srednie obrazenia") || user.getBonus1().equals("Srednie obrazenie przeciwko ludziom")) {
+                mnoznik += user.getValue1();
             }
-            if (bonusy[2].equals("Szansa na Cios Krytyczny")) {
-                krytyk += Double.parseDouble(wartosci[2]);
+            if (user.getBonus3().equals("Szansa na Cios Krytyczny")) {
+                krytyk += user.getValue3();
             }
-            if (bonusy[3].equals("Dodatkowe Obrazenia")) {
-                dmg += Double.parseDouble(wartosci[3]);
+            if (user.getBonus4().equals("Dodatkowe Obrazenia")) {
+                dmg += user.getValue4();
             }
-
         }
 
         // GILDIA
@@ -187,20 +186,18 @@ public class DamageManager {
         }
 
         // BAO
-        if (!rpgcore.getBaoManager().getBaoBonusy(uuid).contains("Brak Bonusu")) {
-            final String[] bonusy = rpgcore.getBaoManager().getBaoBonusy(uuid).split(",");
-            final String[] wartosci = rpgcore.getBaoManager().getBaoBonusyWartosci(uuid).split(",");
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
+            final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
 
-            if (bonusy[0].equals("Srednie obrazenia") || bonusy[0].equals("Srednie obrazenie przeciwko potworom")) {
-                mnoznik += Double.parseDouble(wartosci[0]);
+            if (user.getBonus1().equals("Srednie obrazenia") || user.getBonus1().equals("Srednie obrazenie przeciwko potworom")) {
+                mnoznik += user.getValue1();
             }
-            if (bonusy[2].equals("Szansa na Cios Krytyczny")) {
-                krytyk += Double.parseDouble(wartosci[2]);
+            if (user.getBonus3().equals("Szansa na Cios Krytyczny")) {
+                krytyk += user.getValue3();
             }
-            if (bonusy[3].equals("Dodatkowe Obrazenia")) {
-                dmg += Double.parseDouble(wartosci[3]);
+            if (user.getBonus4().equals("Dodatkowe Obrazenia")) {
+                dmg += user.getValue4();
             }
-
         }
 
         // GILDIA

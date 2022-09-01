@@ -2,9 +2,12 @@ package rpg.rpgcore;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import net.minecraft.server.v1_8_R3.Blocks;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.bao.*;
+import rpg.rpgcore.bao.events.BAOEntityInteract;
+import rpg.rpgcore.bao.events.BAOInventoryClick;
+import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.chat.mute.Mute;
 import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMute;
@@ -52,10 +55,6 @@ import rpg.rpgcore.akcesoria.AKCESORIAInventoryClick;
 import rpg.rpgcore.akcesoria.AKCESORIAPlayerInteract;
 import rpg.rpgcore.akcesoria.Akcesoria;
 import rpg.rpgcore.akcesoria.AkcesoriaManager;
-import rpg.rpgcore.bao.BAOEntityInteract;
-import rpg.rpgcore.bao.BAOInventoryClick;
-import rpg.rpgcore.bao.BAOManager;
-import rpg.rpgcore.bao.BAOPlayerInteract;
 import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.player.kosz.Kosz;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
@@ -127,8 +126,6 @@ import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -149,7 +146,7 @@ public final class RPGCORE extends JavaPlugin {
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
-    private BAOManager baoManager;
+    private BaoManager baoManager;
     private OsManager osManager;
     private AkcesoriaManager akcesoriaManager;
     private PomocManager pomocManager;
@@ -209,7 +206,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
-        this.getBaoManager().getAllEntities();
         this.getMagazynierNPC().loadMagazynierMissions();
         this.getKolekcjonerNPC().loadMissions();
 
@@ -449,7 +445,6 @@ public final class RPGCORE extends JavaPlugin {
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
-        this.baoManager = new BAOManager();
         this.osManager = new OsManager(this);
         this.akcesoriaManager = new AkcesoriaManager(this);
         this.pomocManager = new PomocManager();
@@ -466,6 +461,7 @@ public final class RPGCORE extends JavaPlugin {
         this.serverManager = new ServerManager(this);
         this.niebiosaManager = new NiebiosaManager(this);
         this.listaNPCManager = new ListaNPCManager(this);
+        this.baoManager = new BaoManager(this);
     }
 
     private void initNPCS() {
@@ -567,9 +563,6 @@ public final class RPGCORE extends JavaPlugin {
         return chatManager;
     }
 
-    public BAOManager getBaoManager() {
-        return baoManager;
-    }
 
     public OsManager getOsManager() {
         return osManager;
@@ -688,5 +681,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ListaNPCManager getListaNPCManager() {
         return listaNPCManager;
+    }
+
+    public BaoManager getBaoManager() {
+        return baoManager;
     }
 }

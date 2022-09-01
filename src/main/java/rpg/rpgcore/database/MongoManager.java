@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -59,12 +60,10 @@ public class MongoManager {
     }
 
     public void fix() {
-
     }
 
 
     public void loadAll() {
-        this.fix();
         MongoCursor<Document> result;
 
         Document objSpawn = pool.getSpawn().find(new Document("_id", "spawn")).first();
@@ -111,9 +110,9 @@ public class MongoManager {
                 this.addDataKolekcjner(new KolekcjonerObject(uuid));
             }
 
-            obj = pool.getBao().find(new Document("_id", uuid.toString())).first();
-            rpgcore.getBaoManager().updateBaoBonusy(uuid, String.valueOf(obj.get("BAO_BONUSY")));
-            rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, String.valueOf(obj.get("BAO_WARTOSCI")));
+            if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataBao(new BaoObject(uuid));
+            }
 
             obj = pool.getRybak().find(new Document("_id", uuid.toString())).first();
             rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, String.valueOf(obj.get("RYBAK_MISJE")));
@@ -222,7 +221,6 @@ public class MongoManager {
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             addOtherData(new ServerUser("dodatkowyExp"));
         }
-
     }
 
     public Map<Integer, Metiny> loadMetins() {
@@ -304,11 +302,7 @@ public class MongoManager {
 
         this.addDataOs(new OsObject(uuid));
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("BAO_BONUSY", "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
-        document.append("BAO_WARTOSCI", "0,0,0,0,0");
-        pool.getBao().insertOne(document);
+        this.addDataBao(new BaoObject(uuid));
 
 
         document = new Document();
@@ -347,8 +341,6 @@ public class MongoManager {
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
 
-        rpgcore.getBaoManager().updateBaoBonusy(uuid, "Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu,Brak Bonusu");
-        rpgcore.getBaoManager().updateBaoBonusyWartosci(uuid, "0,0,0,0,0");
         rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
         rpgcore.getRybakNPC().setPlayerPostep(uuid, 0);
         rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, 0.0);
@@ -415,7 +407,6 @@ public class MongoManager {
             this.saveMuteDocument(uuid, pool.getMuty());
             //this.savePlayerInventory(uuid, database.getCollection("hellrpg_inventory"));
             //this.saveOsDocument(uuid, pool.getOsiagniecia());
-            this.saveBaoDocument(uuid, pool.getBao());
             this.saveRybakDocument(uuid, pool.getRybak());
             this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
             this.saveMagazynyDocument(uuid, pool.getMagazyny());
@@ -479,17 +470,6 @@ public class MongoManager {
         collection.findOneAndReplace(query, document);
     }
 
-    private void saveBaoDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("BAO_BONUSY", rpgcore.getBaoManager().getBaoBonusy(uuid));
-        document.append("BAO_WARTOSCI", rpgcore.getBaoManager().getBaoBonusyWartosci(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
 
     private void saveRybakDocument(final UUID uuid, final MongoCollection<Document> collection) {
         Document query = new Document();
@@ -911,6 +891,32 @@ public class MongoManager {
     public void saveAllPrzyrodnik() {
         for (PrzyrodnikObject przyrodnikObject : rpgcore.getPrzyrodnikNPC().getPrzyrodnikObjects()) {
             this.saveDataPrzyrodnik(przyrodnikObject.getId(), przyrodnikObject);
+        }
+    }
+
+
+
+    // BAO
+    public Map<UUID, BaoObject> loadAllBao() {
+        Map<UUID, BaoObject> bao = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getBao().find()) {
+            BaoObject baoObject = new BaoObject(document);
+            bao.put(baoObject.getId(), baoObject);
+        }
+        return bao;
+    }
+
+    public void addDataBao(final BaoObject baoObject) {
+        this.pool.getBao().insertOne(baoObject.toDocument());
+    }
+
+    public void saveDataBao(final UUID id, final BaoObject baoObject) {
+        this.pool.getBao().findOneAndReplace(new Document("_id", id.toString()), baoObject.toDocument());
+    }
+
+    public void saveAllBao() {
+        for (BaoObject baoObject : rpgcore.getBaoManager().getBaoObjects()) {
+            this.saveDataBao(baoObject.getId(), baoObject);
         }
     }
 
