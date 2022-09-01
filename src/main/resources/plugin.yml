@@ -143,4 +143,10 @@ commands:
     aliases:
       - ms
       - mstick
+
+  listanpc:
+    aliases:
+      - npc
+      - lnpc
+      - lista
     

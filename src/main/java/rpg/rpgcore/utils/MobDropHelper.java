@@ -51,9 +51,15 @@ public class MobDropHelper {
         // TUTAJ ZROB DROP SKRZYNNEK TYCH CO MAJA DROPIC Z KAZDEGO MOBA ( TAK JAK NA HYPE BYL DROP SKRZYNI Z MATERIALAMI Z KAZDEGO MOBA ) FUNCKJA addDropPlayer()
 
 
-        if (entityName.equals("Tulacz")) {
+        if (entityName.equals("Ghoul")) {
             if (kolekcjonerUser.getMission() == 0) {
-                addDropPlayer(player, GlobalItem.getItem("K1", 1), kolekcjonerDropChance, true, true, entity); // TU ZMIEN ITEMY I DODAJ DO GLOBAL ITEMS ALBO ZROB KOLEJNY ENUM Z ITEMAMI TYLKO OD KOLECJONERA
+                //addDropPlayer(player, GlobalItem.getItem("K1", 1), kolekcjonerDropChance, true, true, entity); // TU ZMIEN ITEMY I DODAJ DO GLOBAL ITEMS ALBO ZROB KOLEJNY ENUM Z ITEMAMI TYLKO OD KOLECJONERA
+            }
+
+            if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
+                if (DropChanceHelper.getChance(100)) {
+                    rpgcore.getDuszologNPC().spawnDusza(player, entity);
+                }
             }
 
         }

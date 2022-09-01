@@ -23,14 +23,21 @@ import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
 import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
 import rpg.rpgcore.klasy.wojownik.KlasyNPC;
+import rpg.rpgcore.listanpc.ListaNPC;
+import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
+import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
+import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
+import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikBlockBreak;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
 import rpg.rpgcore.npc.medyk.MedykInventoryClick;
 import rpg.rpgcore.npc.medyk.MedykNPC;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
+import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
+import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.Teleport;
 import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
@@ -91,7 +98,6 @@ import rpg.rpgcore.npc.magazynier.Magazyn;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
 import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
-import rpg.rpgcore.npc.duszolog.DuszologInventoryClick;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.rybak.PlayerFishListener;
@@ -100,7 +106,6 @@ import rpg.rpgcore.npc.rybak.RybakNPC;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.commands.admin.vanish.VanishManager;
-import rpg.rpgcore.npc.duszolog.DuszologPlayerInteract;
 import rpg.rpgcore.npc.trener.TrenerInventoryClick;
 import rpg.rpgcore.npc.trener.TrenerNPC;
 import rpg.rpgcore.os.OSInventoryClick;
@@ -171,6 +176,8 @@ public final class RPGCORE extends JavaPlugin {
     private KlasyNPC klasyNPC;
     private MedykNPC medykNPC;
     private GornikNPC gornikNPC;
+    private PrzyrodnikNPC przyrodnikNPC;
+    private ListaNPCManager listaNPCManager;
 
 
 
@@ -266,6 +273,9 @@ public final class RPGCORE extends JavaPlugin {
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(this), this);
 
+        // LISTANPC
+        this.getServer().getPluginManager().registerEvents(new ListaNPCInventoryClick(), this);
+
         // INNE
 
         // MythicSTICK
@@ -275,8 +285,9 @@ public final class RPGCORE extends JavaPlugin {
         // NPC
 
         // ...DUSZOLOG
-        this.getServer().getPluginManager().registerEvents(new DuszologInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new DuszologPlayerInteract(this), this);
+        this.getServer().getPluginManager().registerEvents(new DuszologDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new DuszologInteractListener(), this);
+
 
         // ...RYBAK
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
@@ -313,6 +324,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new GornikBlockBreak(this), this);
 
+        // ...PRZYRODNIK
+        this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
+
 
         // DUNGEONS
 
@@ -339,7 +353,6 @@ public final class RPGCORE extends JavaPlugin {
         // SKRZYNIE
         this.initSkrzynieManagers();
 
-        this.initTest();
     }
 
     public void onDisable() {
@@ -350,7 +363,7 @@ public final class RPGCORE extends JavaPlugin {
 
     }
 
-    private void initTest() {
+    /*private void initTest() {
         try {
             Method method = net.minecraft.server.v1_8_R3.Block.class.getDeclaredMethod("c", float.class);
             method.setAccessible(true);
@@ -358,7 +371,7 @@ public final class RPGCORE extends JavaPlugin {
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             throw new RuntimeException(ex);
         }
-    }
+    } */
 
     private void initGlobalCommands() {
         this.getCommand("teleport").setExecutor(new Teleport(this));
@@ -401,6 +414,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("chat").setExecutor(new ChatCommand(this));
         this.getCommand("klasa").setExecutor(new KlasaCommand(this));
         this.getCommand("bossy").setExecutor(new BossyCommand(this));
+        this.getCommand("listanpc").setExecutor(new ListaNPC());
     }
 
     private void initGlobalEvents() {
@@ -451,10 +465,11 @@ public final class RPGCORE extends JavaPlugin {
         this.metinyManager = new MetinyManager(this);
         this.serverManager = new ServerManager(this);
         this.niebiosaManager = new NiebiosaManager(this);
+        this.listaNPCManager = new ListaNPCManager(this);
     }
 
     private void initNPCS() {
-        this.duszologNPC = new DuszologNPC();
+        this.duszologNPC = new DuszologNPC(this);
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
         this.magazynierNPC = new MagazynierNPC(this);
@@ -467,6 +482,7 @@ public final class RPGCORE extends JavaPlugin {
         this.klasyHelper = new KlasyHelper(this);
         this.medykNPC = new MedykNPC(this);
         this.gornikNPC = new GornikNPC(this);
+        this.przyrodnikNPC = new PrzyrodnikNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -666,4 +682,11 @@ public final class RPGCORE extends JavaPlugin {
         return gornikNPC;
     }
 
+    public PrzyrodnikNPC getPrzyrodnikNPC() {
+        return przyrodnikNPC;
+    }
+
+    public ListaNPCManager getListaNPCManager() {
+        return listaNPCManager;
+    }
 }

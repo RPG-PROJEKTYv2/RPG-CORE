@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,12 @@ public class PlayerInteractEntityListener implements Listener {
 
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
+
+        if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
+            final ArmorStand as = (ArmorStand) e.getRightClicked();
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
@@ -68,7 +75,7 @@ public class PlayerInteractEntityListener implements Listener {
 
             // DUSZOLOG
             if (entityName.equalsIgnoreCase("Duszolog")) {
-                player.openInventory(rpgcore.getDuszologNPC().duszologMAIN());
+                rpgcore.getDuszologNPC().openMainGUI(player);
                 return;
             }
             // TELEPORTER
@@ -138,6 +145,12 @@ public class PlayerInteractEntityListener implements Listener {
                     rpgcore.getGornikNPC().openGornikGUI(player);
                     return;
                 }
+            }
+
+            // PRZYRODNIK
+            if (entityName.equalsIgnoreCase("przyrodnik")) {
+                rpgcore.getPrzyrodnikNPC().openMainGUI(player);
+                return;
             }
 
             // TRADE

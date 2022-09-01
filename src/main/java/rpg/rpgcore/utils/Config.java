@@ -81,6 +81,18 @@ public class Config {
 
         }
 
+        if (rpgcore.getConfig().getConfigurationSection("ListaNPC") == null) {
+            rpgcore.getConfig().createSection("ListaNPC");
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").createSection("NPC_1");
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("world", "world");
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("x", 0.0);
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("y", 0.0);
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("z", 0.0);
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("yaw", 0.0);
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("pitch", 0.0);
+            rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection("NPC_1").addDefault("Type", "POBOCZNE");
+        }
+
         rpgcore.getConfig().options().copyDefaults(true);
         rpgcore.saveConfig();
 

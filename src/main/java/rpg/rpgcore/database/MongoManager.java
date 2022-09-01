@@ -8,9 +8,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.klasy.objects.Klasy;
+import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
+import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
@@ -152,6 +154,12 @@ public class MongoManager {
             }
             if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataGornik(new GornikObject(uuid));
+            }
+            if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataDuszolog(new DuszologObject(uuid));
+            }
+            if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataPrzyrodnik(new PrzyrodnikObject(uuid));
             }
         }
 
@@ -334,6 +342,7 @@ public class MongoManager {
 
         this.addDataMetinolog(new MetinologObject(uuid));
         this.addKlasyData(new Klasy(uuid));
+        this.addDataDuszolog(new DuszologObject(uuid));
 
 
         rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
@@ -853,6 +862,55 @@ public class MongoManager {
     public void saveAllKolekcjoner() {
         for (KolekcjonerObject kolekcjonerObject : rpgcore.getKolekcjonerNPC().getKolekcjonerObject()) {
             this.saveDataKolekcjoner(kolekcjonerObject.getID(), kolekcjonerObject);
+        }
+    }
+
+    // Duszolog
+    public Map<UUID, DuszologObject> loadAllDuszolog() {
+        Map<UUID, DuszologObject> duszolog = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getDuszolog().find()) {
+            DuszologObject duszologObject = new DuszologObject(document);
+            duszolog.put(duszologObject.getID(), duszologObject);
+        }
+        return duszolog;
+    }
+
+    public void addDataDuszolog(final DuszologObject duszologObject) {
+        this.pool.getDuszolog().insertOne(duszologObject.toDocument());
+    }
+
+    public void saveDataDuszolog(final UUID id, final DuszologObject duszologObject) {
+        this.pool.getDuszolog().findOneAndReplace(new Document("_id", id.toString()), duszologObject.toDocument());
+    }
+
+    public void saveAllDuszolog() {
+        for (DuszologObject duszologObject : rpgcore.getDuszologNPC().getDuszologObject()) {
+            this.saveDataDuszolog(duszologObject.getID(), duszologObject);
+        }
+    }
+
+
+    // Przyrodnik
+    public Map<UUID, PrzyrodnikObject> loadAllPrzyrodnik() {
+        Map<UUID, PrzyrodnikObject> przyrodnik = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getPrzyrodnik().find()) {
+            PrzyrodnikObject przyrodnikObject = new PrzyrodnikObject(document);
+            przyrodnik.put(przyrodnikObject.getId(), przyrodnikObject);
+        }
+        return przyrodnik;
+    }
+
+    public void addDataPrzyrodnik(final PrzyrodnikObject przyrodnikObject) {
+        this.pool.getPrzyrodnik().insertOne(przyrodnikObject.toDocument());
+    }
+
+    public void saveDataPrzyrodnik(final UUID id, final PrzyrodnikObject przyrodnikObject) {
+        this.pool.getPrzyrodnik().findOneAndReplace(new Document("_id", id.toString()), przyrodnikObject.toDocument());
+    }
+
+    public void saveAllPrzyrodnik() {
+        for (PrzyrodnikObject przyrodnikObject : rpgcore.getPrzyrodnikNPC().getPrzyrodnikObjects()) {
+            this.saveDataPrzyrodnik(przyrodnikObject.getId(), przyrodnikObject);
         }
     }
 

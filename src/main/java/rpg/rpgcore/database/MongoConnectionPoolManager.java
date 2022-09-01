@@ -40,6 +40,8 @@ public class MongoConnectionPoolManager {
 
     private final MongoCollection<Document> hellrpg_medyk;
     private final MongoCollection<Document> hellrpg_gornik;
+    private final MongoCollection<Document> hellrpg_duszolog;
+    private final MongoCollection<Document> hellrpg_przyrodnik;
 
 
     public MongoConnectionPoolManager() {
@@ -118,6 +120,12 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_gornik")) {
             database.createCollection("hellrpg_gornik");
         }
+        if (!collections.contains("hellrpg_duszolog")) {
+            database.createCollection("hellrpg_duszolog");
+        }
+        if (!collections.contains("hellrpg_przyrodnik")) {
+            database.createCollection("hellrpg_przyrodnik");
+        }
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
@@ -142,6 +150,8 @@ public class MongoConnectionPoolManager {
         this.hellrpg_klasy = database.getCollection("hellrpg_klasy");
         this.hellrpg_medyk = database.getCollection("hellrpg_medyk");
         this.hellrpg_gornik = database.getCollection("hellrpg_gornik");
+        this.hellrpg_duszolog = database.getCollection("hellrpg_duszolog");
+        this.hellrpg_przyrodnik = database.getCollection("hellrpg_przyrodnik");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.hasPermission("*")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
@@ -243,6 +253,14 @@ public class MongoConnectionPoolManager {
 
     public MongoCollection<Document> getGornik() {
         return this.hellrpg_gornik;
+    }
+
+    public MongoCollection<Document> getDuszolog() {
+        return this.hellrpg_duszolog;
+    }
+
+    public MongoCollection<Document> getPrzyrodnik() {
+        return this.hellrpg_przyrodnik;
     }
 
     public void closePool() {

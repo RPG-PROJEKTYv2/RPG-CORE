@@ -15,6 +15,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
@@ -93,6 +94,19 @@ public class PlayerJoinListener implements Listener {
 
 
         e.setJoinMessage(Utils.joinMessage(playerName));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20,5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
+        if (!p.hasPlayedBefore()) {
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWitamy Cie, na serwerze typu &6metin2 &aw minecraft. Pod &6/pomoc &aznajdziesz najwazniejsze informacje i przydatne komendy."));
+                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziecie giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
+                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZyczymy milej gry i udanej rywalizacji! &cZespol Hellrpg.pl"));
+            }, 20L);
+            p.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 2, 0, true, false));
+            p.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 2, 0, true, false));
+            p.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 2, 0, true, false));
+            p.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 2, 0, true, false));
+            p.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 5, 1, true, false));
+        }
         p.teleport(rpgcore.getSpawnManager().getSpawn());
 
         TabManager.addPlayer(p);

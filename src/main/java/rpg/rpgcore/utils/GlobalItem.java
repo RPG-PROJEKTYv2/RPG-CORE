@@ -58,8 +58,14 @@ public enum GlobalItem {
     I41("I41", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
     I42("I42", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
     I43("I43", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
-    I44("I44", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone());
+    I44("I44", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3Kufer ").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc.")).hideFlag().toItemStack().clone()),
     // SKRZYNKI EXPOWISK
+
+
+
+
+    // KONIEC MOZLIWYCH MISJI U NPC
+    I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 
 
 

@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 
@@ -63,14 +64,14 @@ public class GornikBlockBreak implements Listener {
             e.setCancelled(true);
 
         }
-        /*if (block.getType().equals(Material.STONE)) {
+        if (block.getType().equals(Material.STONE)) {
             if (e.getItemInHand().getType().equals(Material.DIAMOND_PICKAXE)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, -1, false, false));
                 digAnimation(player, e.getBlock(), 200);
             }
 
 
-        }*/
+        }
 
     }
 
