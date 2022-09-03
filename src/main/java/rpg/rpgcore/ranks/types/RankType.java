@@ -1,4 +1,4 @@
-package rpg.rpgcore.chat.ranks;
+package rpg.rpgcore.ranks.types;
 
 public enum RankType {
 
@@ -9,10 +9,6 @@ public enum RankType {
     KIDMOD("KIDMOD", 7),
     HELPER("HELPER", 6),
     JUNIORHELPER("JUNIORHELPER", 5),
-    ELITA("ELITA", 3),
-    SVIP("SVIP", 2),
-    VIP("VIP", 1),
-    BUDOWNICZY("BUDOWNICZY", 0),
     GRACZ("GRACZ", 0);
 
     private final String name;
@@ -40,6 +36,7 @@ public enum RankType {
     public boolean can(RankType rankType) {
         return getPriority() > rankType.getPriority();
     }
+
 
     public int getPriority() {
         return priority;

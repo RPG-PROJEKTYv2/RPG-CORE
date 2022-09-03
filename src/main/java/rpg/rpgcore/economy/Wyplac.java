@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -36,7 +37,8 @@ public class Wyplac implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            final double playerKasa = rpgcore.getPlayerManager().getPlayerKasa(uuid);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final double playerKasa = user.getKasa();
             if (args[0].contains("k")) {
                 int kIndex = args[0].indexOf('k');
                 double beforeK = Double.parseDouble(args[0].substring(0, kIndex));
@@ -57,7 +59,8 @@ public class Wyplac implements CommandExecutor {
                     return false;
                 }
 
-                rpgcore.getPlayerManager().updatePlayerKasa(uuid, playerKasa - wyplac);
+                user.setKasa(playerKasa - wyplac);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                 czek.setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(wyplac)) + " &2$");
                 czek.addGlowing();
 

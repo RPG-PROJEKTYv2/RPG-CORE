@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class AKCESORIAPlayerInteract implements Listener {
         ItemStack itemToSet;
 
         if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+            final int lvl = rpgcore.getUserManager().find(uuid).getLvl();
 
             if (eventItem.getType() == Material.ITEM_FRAME) {
 
@@ -53,7 +55,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -61,9 +63,9 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
+                    /*rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
                     rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
+                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));*/
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -89,7 +91,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -97,8 +99,8 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerPrzeszywka(uuid, rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Przeszycie Bloku"));
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
+                    //rpgcore.getPlayerManager().updatePlayerPrzeszywka(uuid, rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Przeszycie Bloku"));
+                    //rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -124,7 +126,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -132,8 +134,8 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerKryt(uuid, rpgcore.getPlayerManager().getPlayerKryt(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Cios Krytyczny"));
-                    rpgcore.getPlayerManager().updatePlayerSrednie(uuid, rpgcore.getPlayerManager().getPlayerSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
+                    //rpgcore.getPlayerManager().updatePlayerKryt(uuid, rpgcore.getPlayerManager().getPlayerKryt(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Cios Krytyczny"));
+                    //rpgcore.getPlayerManager().updatePlayerSrednie(uuid, rpgcore.getPlayerManager().getPlayerSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -159,7 +161,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -167,8 +169,8 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
-                    rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
+                    //rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
+                    //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
                     player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 13, "Dodatkowe HP") * 2);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
@@ -195,7 +197,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -203,8 +205,8 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
+                    //rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
+                    //rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
                     player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 14, "Dodatkowe HP") * 2);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
@@ -231,7 +233,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -239,9 +241,9 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerMinusSrednie(uuid, rpgcore.getPlayerManager().getPlayerMinusSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
+                    //rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
+                    //rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
+                    //rpgcore.getPlayerManager().updatePlayerMinusSrednie(uuid, rpgcore.getPlayerManager().getPlayerMinusSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }
@@ -267,7 +269,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                         return;
                     }
 
-                    if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
+                    if (lvl < rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Wymagany Poziom")) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                         return;
                     }
@@ -275,9 +277,9 @@ public class AKCESORIAPlayerInteract implements Listener {
                     this.itemMapToRemove.put(0, itemToSet);
                     player.getInventory().removeItem(this.itemMapToRemove.get(0));
                     this.itemMapToRemove.clear();
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
-                    rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
-                    rpgcore.getPlayerManager().updatePlayerMinusDef(uuid, rpgcore.getPlayerManager().getPlayerMinusDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
+                    //rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
+                    //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
+                    //rpgcore.getPlayerManager().updatePlayerMinusDef(uuid, rpgcore.getPlayerManager().getPlayerMinusDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + itemToSet.getItemMeta().getDisplayName()));
                     return;
                 }

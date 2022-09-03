@@ -79,7 +79,7 @@ public class GuildsInventoryClick implements Listener {
                 return;
             }
 
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName()));
+            final UUID targetUUID = rpgcore.getUserManager().find(Utils.removeColor(clickedItem.getItemMeta().getDisplayName())).getId();
 
             if (targetUUID.equals(playerUUID)) {
                 return;

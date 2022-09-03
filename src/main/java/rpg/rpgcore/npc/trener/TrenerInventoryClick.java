@@ -123,13 +123,14 @@ public class TrenerInventoryClick implements Listener {
                     rpgcore.getTrenerNPC().updateKyt(playerUUID, 1);
                     break;
                 case 8:
-                    if (rpgcore.getPlayerManager().getPlayerKasa(playerUUID) < 5000000) {
+                    if (rpgcore.getUserManager().find(playerUUID).getKasa() < 5000000) {
                         player.sendMessage(Utils.format(Utils.TRENER + "&cNie posiadasz tylu pieniedzy, zeby zresetowac swoje statystyki"));
                         player.closeInventory();
                         return;
                     }
                     rpgcore.getTrenerNPC().reset(playerUUID);
-                    rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) - 5000000);
+                    rpgcore.getUserManager().find(playerUUID).setKasa(rpgcore.getUserManager().find(playerUUID).getKasa() - 5000000);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
                     player.closeInventory();
                     player.sendMessage(Utils.format(Utils.TRENER + "&aPomyslnie zresetowałes/as swoj postep"));
                     return;

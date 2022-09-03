@@ -42,14 +42,14 @@ public class History implements CommandExecutor {
 
 
         if (args.length == 1) {
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
 
-            if (!(rpgcore.getPlayerManager().getPlayers().contains(targetUUID))) {
+            if (!rpgcore.getUserManager().isUser(targetUUID)) {
                 player.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
-            final String punishmentsHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(targetUUID));
+            final String punishmentsHistory = rpgcore.getUserManager().find(targetUUID).getPunishmentHistory();
 
             if (punishmentsHistory.equalsIgnoreCase("")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma zadnych kar!"));
@@ -61,14 +61,14 @@ public class History implements CommandExecutor {
         }
 
         if (args.length == 2) {
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
 
-            if (!(rpgcore.getPlayerManager().getPlayers().contains(targetUUID))) {
+            if (!rpgcore.getUserManager().isUser(targetUUID)) {
                 player.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
 
-            final String punishmentsHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(targetUUID));
+            final String punishmentsHistory = rpgcore.getUserManager().find(targetUUID).getPunishmentHistory();
 
             if (punishmentsHistory.equalsIgnoreCase("")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma zadnych kar!"));
@@ -86,9 +86,9 @@ public class History implements CommandExecutor {
 
 
     private Inventory punishmentHistoryGui(final UUID uuid) {
-        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getPlayerManager().getPlayerName(uuid)));
+        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getUserManager().find(uuid).getName()));
 
-        final String[] fullPunishmentHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid)).split(",");
+        final String[] fullPunishmentHistory = rpgcore.getUserManager().find(uuid).getPunishmentHistory().split(",");
 
             int j = 0;
             for (final String onePunishment : fullPunishmentHistory) {
@@ -125,9 +125,9 @@ public class History implements CommandExecutor {
     }
 
     private Inventory punishmentHistoryGui(final UUID uuid, final String regex) {
-        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getPlayerManager().getPlayerName(uuid)));
+        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getUserManager().find(uuid).getName()));
 
-        final String[] fullPunishmentHistory = String.valueOf(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid)).split(",");
+        final String[] fullPunishmentHistory = rpgcore.getUserManager().find(uuid).getPunishmentHistory().split(",");
 
         for (final String onePunishment : fullPunishmentHistory) {
 

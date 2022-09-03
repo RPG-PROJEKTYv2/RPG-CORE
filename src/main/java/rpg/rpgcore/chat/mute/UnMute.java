@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Date;
@@ -28,7 +29,7 @@ public class UnMute implements CommandExecutor {
 
         if (args.length == 1) {
 
-            final UUID uuidToUnMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidToUnMute = rpgcore.getUserManager().find(args[0]).getId();
 
             if (uuidToUnMute == null) {
                 sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
@@ -40,7 +41,7 @@ public class UnMute implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.getPlayerManager().isMuted(uuidToUnMute))) {
+            if (!rpgcore.getUserManager().find(uuidToUnMute).isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
@@ -62,7 +63,7 @@ public class UnMute implements CommandExecutor {
                 return false;
             }
 
-            final UUID uuidToUnMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidToUnMute = rpgcore.getUserManager().find(args[0]).getId();
 
             if (uuidToUnMute == null) {
                 sender.sendMessage(Utils.format(Utils.NIEMATAKIEGOGRACZA));
@@ -74,7 +75,7 @@ public class UnMute implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.getPlayerManager().isMuted(uuidToUnMute))) {
+            if (!rpgcore.getUserManager().find(uuidToUnMute).isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
@@ -101,13 +102,13 @@ public class UnMute implements CommandExecutor {
     }
 
     private void addToPunishmentHistory(final UUID uuid, final String punishment) {
-
+        final User user = rpgcore.getUserManager().find(uuid);
         final StringBuilder newPunishment = new StringBuilder();
 
-        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        newPunishment.append(user.getPunishmentHistory());
         newPunishment.append(punishment).append(",");
 
-        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+        user.setPunishmentHistory(String.valueOf(newPunishment));
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
 

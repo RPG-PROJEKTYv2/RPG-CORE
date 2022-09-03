@@ -30,7 +30,7 @@ public class Kasa implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            player.sendMessage(Utils.format("&2Twoj aktualny stan konta wynosi: &6&o" + Utils.spaceNumber(String.valueOf(Utils.kasaFormat.format(rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId())))) + "&2$"));
+            player.sendMessage(Utils.format("&2Twoj aktualny stan konta wynosi: &6&o" + Utils.spaceNumber(String.valueOf(Utils.kasaFormat.format(rpgcore.getUserManager().find(player.getUniqueId()).getKasa()))) + "&2$"));
             return false;
         }
 
@@ -40,7 +40,8 @@ public class Kasa implements CommandExecutor {
                     player.sendMessage(Utils.permisje("admin.rpg.dajkase"));
                     return false;
                 }
-                rpgcore.getPlayerManager().updatePlayerKasa(player.getUniqueId(), 100000000000.0);
+                rpgcore.getUserManager().find(player.getUniqueId()).setKasa(100000000000.0);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(player.getUniqueId(), rpgcore.getUserManager().find(player.getUniqueId())));
                 return false;
             }
         }

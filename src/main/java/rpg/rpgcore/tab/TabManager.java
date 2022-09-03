@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class TabManager {
     static int topki = 0;
 
     public static void addPlayer(Player player) {
-        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
         String prefix = "";
         if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
             prefix = "&8[&3" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8] ";
@@ -61,7 +62,8 @@ public class TabManager {
         Tab tab = uuidTabMap.get(uuid);
         Player player = Bukkit.getPlayer(uuid);
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
-        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
         if (tab != null) {
             tab.set(player, 0, 0, "&7Informacje");
             tab.set(player, 1, 0, "&7Lista Graczy:");
@@ -89,10 +91,10 @@ public class TabManager {
                 number3 += 4;
             }
 
-            final int lvl = rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId());
-            final String exp = String.format("%.2f", rpgcore.getPlayerManager().getPlayerExp(player.getUniqueId()));
-            final String expNextLvl = String.format("%.2f", rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) + 1));
-            final String procenty = String.format("%.2f", (rpgcore.getPlayerManager().getPlayerExp(player.getUniqueId()) / rpgcore.getLvlManager().getExpForLvl(lvl + 1)) * 100);
+            final int lvl = user.getLvl();
+            final String exp = String.format("%.2f", user.getExp());
+            final String expNextLvl = String.format("%.2f", rpgcore.getLvlManager().getExpForLvl(lvl + 1));
+            final String procenty = String.format("%.2f", (user.getExp() / rpgcore.getLvlManager().getExpForLvl(lvl + 1)) * 100);
 
             tab.set(player, 0, 2, "&7Gracz: &c" + player.getName());
             if (Utils.getGroupColor(playerGroup).equals("&7")) {
@@ -108,7 +110,7 @@ public class TabManager {
                 tab.set(player, 0, 5, "&7Poziom: &c" + lvl);
                 tab.set(player, 0, 6, "&7EXP: &b" + exp + " &7/ &b" + expNextLvl + " &8(&b" + procenty + " %&8)");
             }
-            tab.set(player, 0, 7, "&7Kasa: &6" + Utils.spaceNumber(String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(player.getUniqueId()))) + " &2$");
+            tab.set(player, 0, 7, "&7Kasa: &6" + Utils.spaceNumber(String.format("%.2f", user.getKasa())) + " &2$");
             tab.set(player, 0, 8, "&7                                ");
             tab.set(player, 0, 9, "&4&lKLAN");
             if (!tag.equals("Brak Klanu")) {
@@ -141,8 +143,8 @@ public class TabManager {
                 case 0:
                     tab.set(player, 3, 1, "&6Topka Poziomu");
                     final Map<String, Integer> topki1 = new HashMap<>();
-                    for (UUID uuid1 : rpgcore.getPlayerManager().getPlayers()) {
-                        topki1.put(rpgcore.getPlayerManager().getPlayerName(uuid1), rpgcore.getPlayerManager().getPlayerLvl(uuid1));
+                    for (User user1 : rpgcore.getUserManager().getUserObjects()) {
+                        topki1.put(user1.getName(), user1.getLvl());
                     }
                     sortedDesc = topki1.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
                     sortedDesc.forEach(e -> afterSort.add(e.getKey()));
@@ -157,14 +159,15 @@ public class TabManager {
                     //System.out.println(afterSort);
                     for (int i = 2; i < 18; i++) {
                         if (!afterSort.get(i - 2).equals("Brak")) {
+                            final User user1 = rpgcore.getUserManager().find(afterSort.get(i - 2));
                             if (i - 1 == 1) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
                             } else if (i - 1 == 2 || i - 1 == 3) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
                             } else if (i - 1 == 4 || i - 1 == 5) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
                             } else {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getPlayerManager().getPlayerLvl(rpgcore.getPlayerManager().getPlayerUUID(afterSort.get(i - 2))) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
                             }
                         } else {
                             if (i - 1 == 1) {

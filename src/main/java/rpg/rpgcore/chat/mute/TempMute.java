@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -37,8 +38,8 @@ public class TempMute implements CommandExecutor {
                 player.sendMessage(Utils.poprawneUzycie("tempmute <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
                 return false;
             }
-
-            final UUID uuidPlayerToTempMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempMute = user.getId();
 
             if (uuidPlayerToTempMute == null) {
                 sender.sendMessage(Utils.MUTEPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -50,7 +51,7 @@ public class TempMute implements CommandExecutor {
                 return false;
             }*/
 
-            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToTempMute)) {
+            if (user.isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
@@ -70,8 +71,8 @@ public class TempMute implements CommandExecutor {
                 return false;
             }
             final String jednostka = args[2];
-
-            final UUID uuidPlayerToTempMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempMute = user.getId();
 
             if (uuidPlayerToTempMute == null) {
                 sender.sendMessage(Utils.MUTEPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -83,7 +84,7 @@ public class TempMute implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToTempMute)) {
+            if (user.isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
@@ -114,7 +115,8 @@ public class TempMute implements CommandExecutor {
                 return false;
             }
             final String jednostka = args[2];
-            final UUID uuidPlayerToTempMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempMute = user.getId();
 
             if (uuidPlayerToTempMute == null) {
                 sender.sendMessage(Utils.MUTEPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -126,7 +128,7 @@ public class TempMute implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToTempMute)) {
+            if (user.isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }

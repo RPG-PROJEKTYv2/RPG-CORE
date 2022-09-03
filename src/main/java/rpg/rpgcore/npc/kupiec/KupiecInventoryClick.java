@@ -69,7 +69,8 @@ public class KupiecInventoryClick implements Listener {
                 }
 
                 final double moneyToAdd = rpgcore.getKupiecNPC().getPlayerSellValueItems(playerUUID);
-                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) + moneyToAdd);
+                rpgcore.getUserManager().find(playerUUID).setKasa(rpgcore.getUserManager().find(playerUUID).getKasa() + moneyToAdd);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID,rpgcore.getUserManager().find(playerUUID)));
 
                 for (ItemStack is : playerItems) {
                     clickedInventory.remove(is);

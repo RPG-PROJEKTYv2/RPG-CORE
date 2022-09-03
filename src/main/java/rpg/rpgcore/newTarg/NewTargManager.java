@@ -335,7 +335,7 @@ public class NewTargManager {
 
 
     public void openPlayerTarg(final String playerName, final Player player) {
-        final UUID uuid = rpgcore.getPlayerManager().getPlayerUUID(playerName);
+        final UUID uuid = rpgcore.getUserManager().find(playerName).getId();
         final Inventory gui = this.getPlayerTarg(playerName, uuid);
 
         player.openInventory(gui);

@@ -9,6 +9,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -95,18 +96,19 @@ public class LvlManager {
         }
 
         final UUID killerUUID = killer.getUniqueId();
+        final User user = rpgcore.getUserManager().find(killerUUID);
 
-        if (rpgcore.getPlayerManager().getPlayerLvl(killerUUID) == 130) {
+        if (user.getLvl() == 130) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]"));
             return;
         }
 
         final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
 
-        final int lvlGracza = rpgcore.getPlayerManager().getPlayerLvl(killerUUID);
+        final int lvlGracza = user.getLvl();
         final int nextLvlGracza = lvlGracza + 1;
 
-        double aktualnyExpGracza = rpgcore.getPlayerManager().getPlayerExp(killerUUID);
+        double aktualnyExpGracza = user.getExp();
         final double expNaNextLvlGracza = this.getExpForLvl(nextLvlGracza);
         double expDoDodania = this.getExp(mob);
 
@@ -116,7 +118,7 @@ public class LvlManager {
         }
         expDoDodania += expDoDodania * dodatkowyExp / 100;
         aktualnyExpGracza += expDoDodania;
-        rpgcore.getPlayerManager().updatePlayerExp(killerUUID, aktualnyExpGracza);
+        user.setExp(aktualnyExpGracza);
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
@@ -124,7 +126,8 @@ public class LvlManager {
 
     public void updateLVL(final Player killer) {
         final UUID killerUUID = killer.getUniqueId();
-        int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(killerUUID);
+        final User user = rpgcore.getUserManager().find(killerUUID);
+        int aktualnyLvlGracza = user.getLvl();
         int nextLvlGracza = aktualnyLvlGracza + 1;
 
         if (nextLvlGracza == 2) {
@@ -132,8 +135,8 @@ public class LvlManager {
         } else {
             rpgcore.getTrenerNPC().updatePoints(killerUUID, 1);
         }
-        rpgcore.getPlayerManager().updatePlayerLvl(killerUUID, nextLvlGracza);
-        rpgcore.getPlayerManager().updatePlayerExp(killerUUID, 0);
+        user.setLvl(nextLvlGracza);
+        user.setExp(0);
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
         if (nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) {
@@ -141,16 +144,20 @@ public class LvlManager {
         }
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+            rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle);
+            rpgcore.getMongoManager().saveDataUser(killerUUID, user);
+        });
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
         }
     }
 
     public void getPlayerLvl(final Player sender, final UUID uuid) {
-        final String playerName = rpgcore.getPlayerManager().getPlayerName(uuid);
-        final int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(uuid);
-        final double aktualnyExpGracza = rpgcore.getPlayerManager().getPlayerExp(uuid);
+        final User user = rpgcore.getUserManager().find(uuid);
+        final String playerName = user.getName();
+        final int aktualnyLvlGracza = user.getLvl();
+        final double aktualnyExpGracza = user.getExp();
         sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&c&lLVL&8}-_-_-_-_-_-_-_-_-"));
         sender.sendMessage(Utils.format("&7Informacje odnoscie gracza &c" + playerName));
         sender.sendMessage(Utils.format("&7Poziom: &c" + aktualnyLvlGracza));
@@ -166,44 +173,50 @@ public class LvlManager {
     }
 
     public void setPlayerLvl(final String adminName, final UUID uuid, int nowyLvl) {
+        final User user = rpgcore.getUserManager().find(uuid);
         if (nowyLvl > Utils.MAXLVL) {
             nowyLvl = Utils.MAXLVL;
         }
-        rpgcore.getPlayerManager().getPlayerLvl().replace(uuid, nowyLvl);
-        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, 0.0);
+        user.setLvl(nowyLvl);
+        user.setExp(0);
         final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
+        final String playerToKickName = user.getName();
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana lvla"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana lvla"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
     public void setPlayerExp(final String adminName, final UUID uuid, double nowyExp) {
-        if (nowyExp > rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)) {
-            nowyExp = rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1);
+        final User user = rpgcore.getUserManager().find(uuid);
+        if (nowyExp > rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) {
+            nowyExp = rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1);
         }
-        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExp);
+        user.setExp(nowyExp);
         final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
+        final String playerToKickName = user.getName();
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana ilosci expa"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana ilosci expa"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
     public void setPlayerProcent(final String adminName, final UUID uuid, final double procent) {
-        final int aktualnyLvlGracza = rpgcore.getPlayerManager().getPlayerLvl(uuid);
+        final User user = rpgcore.getUserManager().find(uuid);
+        final int aktualnyLvlGracza = user.getLvl();
         final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
         final double nowyExpGracza = (procent * expNaNextLvl) / 100;
 
-        rpgcore.getPlayerManager().getPlayerExp().replace(uuid, nowyExpGracza);
+        user.setExp(nowyExpGracza);
         final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = rpgcore.getPlayerManager().getPlayerName(uuid);
+        final String playerToKickName = user.getName();
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
         }
         rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana postepu do nastepnego lvla"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
     public void updateLvlBelowName(final Player p, final String name1, final int lvl) {

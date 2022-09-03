@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -63,7 +64,7 @@ public class TeleporterNPC {
     }
     public void openTeleporterEXPOWISKA(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&9&lTELEPORTER &7- MENU2"));
-
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
         fillInventory.setName(" ");
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, fillInventory.toItemStack());
@@ -77,7 +78,7 @@ public class TeleporterNPC {
         gui.setItem(0, expowisko1.toItemStack());
 
         // expowisko 2
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 9) {
+        if (user.getLvl() > 9) {
             expowisko2.setName("&2&lLas Goblinow");
             this.loreEXPOWISKA("&cOFF", "&f10", "1");
             expowisko2.addGlowing();
@@ -92,7 +93,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 3
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 19) {
+        if (user.getLvl() > 19) {
             expowisko3.setName("&a&lUkryta Jungla");
             this.loreEXPOWISKA("&cOFF", "&f20", "1");
             expowisko3.addGlowing();
@@ -107,7 +108,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 4
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 29) {
+        if (user.getLvl() > 29) {
             expowisko4.setName("&7&lPrzekletny Port");
             this.loreEXPOWISKA("&cOFF", "&f30", "1");
             expowisko4.addGlowing();
@@ -122,7 +123,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 5
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 39) {
+        if (user.getLvl() > 39) {
             expowisko5.setName("&b&lPodwodna Swiatynia");
             this.loreEXPOWISKA("&cOFF", "&f40", "1");
             expowisko5.addGlowing();
@@ -137,7 +138,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 6
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 49) {
+        if (user.getLvl() > 49) {
             expowisko6.setName("&f&lMrozna Dolina");
             this.loreEXPOWISKA("&cOFF", "&f50", "1");
             expowisko6.addGlowing();
@@ -152,7 +153,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 7
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 59) {
+        if (user.getLvl() > 59) {
             expowisko7.setName("&4&lPiekielna Kraina");
             this.loreEXPOWISKA("&aON", "&f60", "1");
             expowisko7.addGlowing();
@@ -167,7 +168,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 8
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 69) {
+        if (user.getLvl() > 69) {
             expowisko8.setName("&8&lPrzeklete Podziemia");
             this.loreEXPOWISKA("&aON", "&f70", "1");
             expowisko8.addGlowing();
@@ -182,7 +183,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 9
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 79) {
+        if (user.getLvl() > 79) {
             expowisko9.setName("&5&lPrzeklety Las");
             this.loreEXPOWISKA("&aON", "&f80", "1");
             expowisko9.addGlowing();
@@ -197,7 +198,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 10
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 89) {
+        if (user.getLvl() > 89) {
             expowisko10.setName("&c&lKraina Demonow");
             this.loreEXPOWISKA("&aON", "&f90", "1");
             expowisko10.addGlowing();
@@ -212,7 +213,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 11
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 99) {
+        if (user.getLvl() > 99) {
             expowisko11.setName("&8&lMroczny Wymiar");
             this.loreEXPOWISKA("&aON", "&f100", "1");
             expowisko11.addGlowing();
@@ -226,7 +227,7 @@ public class TeleporterNPC {
             gui.setItem(10, brakdostepu.toItemStack());
         }
         // expowisko 12
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) > 109) {
+        if (user.getLvl() > 109) {
             expowisko12.setName("&5&lZamek Nieskonczonosci");
             this.loreEXPOWISKA("&aON", "&f110", "1");
             expowisko12.addGlowing();

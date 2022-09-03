@@ -64,7 +64,7 @@ public class Fly implements CommandExecutor {
 
             final Player target = Bukkit.getPlayer(args[0]);
 
-            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+            if (!rpgcore.getUserManager().isUserName(args[0])) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }

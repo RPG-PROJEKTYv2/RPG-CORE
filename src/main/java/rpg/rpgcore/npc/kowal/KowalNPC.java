@@ -64,7 +64,7 @@ public class KowalNPC {
         lore.add(" ");
         lore.add("&7Wymagania: ");
         lore.add("&8>> &61 000 000&2$");
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 75) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 75) {
             lore.add("&8>> &c75 &7Lvl");
         } else {
             lore.add("&8>> &a75 &7Lvl");

@@ -123,6 +123,7 @@ import rpg.rpgcore.tasks.MetinyTask;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
+import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
@@ -142,7 +143,6 @@ public final class RPGCORE extends JavaPlugin {
     private VanishManager vanishManager;
     private NMSManager nmsManager;
     private GodManager godManager;
-    private PlayerManager playerManager;
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
@@ -175,6 +175,7 @@ public final class RPGCORE extends JavaPlugin {
     private GornikNPC gornikNPC;
     private PrzyrodnikNPC przyrodnikNPC;
     private ListaNPCManager listaNPCManager;
+    private UserManager userManager;
 
 
 
@@ -354,7 +355,6 @@ public final class RPGCORE extends JavaPlugin {
     public void onDisable() {
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
-        this.playerManager.removeAllPlayers();
         this.getLvlManager().unLoadAll();
 
     }
@@ -435,13 +435,13 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void initManagers() {
+        this.userManager = new UserManager(this);
         this.spawn = new SpawnManager();
         this.teleportManager = new TeleportManager(this);
         this.banManager = new BanManager(this);
         this.vanishManager = new VanishManager(this);
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager(this);
-        this.playerManager = new PlayerManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
@@ -547,9 +547,6 @@ public final class RPGCORE extends JavaPlugin {
         return godManager;
     }
 
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
 
     public LvlManager getLvlManager() {
         return lvlManager;
@@ -685,5 +682,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public BaoManager getBaoManager() {
         return baoManager;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
     }
 }

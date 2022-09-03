@@ -6,7 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.ranks.RankType;
+import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
@@ -25,6 +26,7 @@ public class PlayerChatListener implements Listener {
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
         final String message = e.getMessage().replaceAll("%", "%%");
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
         if (rpgcore.getCooldownManager().hasChatCooldown(player.getUniqueId())) {
             final long sekundy = rpgcore.getCooldownManager().getPlayerChatCooldown(player.getUniqueId()) - System.currentTimeMillis();
@@ -41,9 +43,7 @@ public class PlayerChatListener implements Listener {
         }
 
         if (!rpgcore.getChatManager().getRankReqForChat().equals(RankType.GRACZ)) {
-            System.out.println(rpgcore.getPlayerManager().getPlayerGroup(player));
-            System.out.println(RankType.getByName(rpgcore.getPlayerManager().getPlayerGroup(player)));
-            if (rpgcore.getChatManager().getRankReqForChat().can(RankType.getByName(rpgcore.getPlayerManager().getPlayerGroup(player)))) {
+            if (rpgcore.getChatManager().getRankReqForChat().can(RankType.getByName(rpgcore.getUserManager().getPlayerGroup(player)))) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie wlaczony od rangi &6" + rpgcore.getChatManager().getRankReqForChat().getName() + "&7!"));
                 e.setCancelled(true);
                 return;
@@ -51,15 +51,15 @@ public class PlayerChatListener implements Listener {
         }
 
         if (rpgcore.getChatManager().getLvlReqForChat() != 1) {
-            if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < rpgcore.getChatManager().getLvlReqForChat()) {
+            if (user.getLvl() < rpgcore.getChatManager().getLvlReqForChat()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie wlaczony od poziomu &6" + rpgcore.getChatManager().getLvlReqForChat() + "&7!"));
                 e.setCancelled(true);
                 return;
             }
         }
 
-        if (rpgcore.getPlayerManager().isMuted(player.getUniqueId())) {
-            final String[] muteInfo = rpgcore.getPlayerManager().getPlayerMuteInfo(player.getUniqueId()).split(";");
+        if (user.isMuted()) {
+            final String[] muteInfo = user.getMuteInfo().split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
                 Utils.youAreMuted(player, muteInfo[0], muteInfo[1], muteInfo[2]);
                 e.setCancelled(true);
@@ -72,7 +72,7 @@ public class PlayerChatListener implements Listener {
                 if (teraz.after(dataMuta)) {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unMutePlayer(player.getUniqueId()));
                     formatuj(e, message, player);
-                    if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
+                    if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
                         return;
                     }
                     rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());
@@ -88,7 +88,7 @@ public class PlayerChatListener implements Listener {
         }
         //TODO zrobic klany xd
         formatuj(e, message, player);
-        if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
+        if (rpgcore.getUserManager().getPlayerGroup(player).equalsIgnoreCase("H@")) {
             return;
         }
         rpgcore.getCooldownManager().givePlayerChatCooldown(player.getUniqueId());

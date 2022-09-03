@@ -32,7 +32,7 @@ public class Teleport implements CommandExecutor {
 
         if (args.length == 1) {
 
-            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+            if (!rpgcore.getUserManager().isUserName(args[0])) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
@@ -59,7 +59,7 @@ public class Teleport implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0])) && !(rpgcore.getPlayerManager().getPlayersNames().contains(args[1]))) {
+            if (!rpgcore.getUserManager().isUserName(args[0]) || !rpgcore.getUserManager().isUserName(args[1])) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }

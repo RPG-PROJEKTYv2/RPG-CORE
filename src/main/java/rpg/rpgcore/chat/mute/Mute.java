@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -30,8 +31,8 @@ public class Mute implements CommandExecutor {
 
 
         if (args.length == 1){
-
-            final UUID uuidPlayerToMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToMute = user.getId();
 
             if (uuidPlayerToMute == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -43,7 +44,7 @@ public class Mute implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToMute)) {
+            if (user.isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }
@@ -56,8 +57,8 @@ public class Mute implements CommandExecutor {
 
 
         if (args.length >= 2) {
-
-            final UUID uuidPlayerToMute = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToMute = user.getId();
             args[0] = "";
 
             if (uuidPlayerToMute == null) {
@@ -70,7 +71,7 @@ public class Mute implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isMuted(uuidPlayerToMute)) {
+            if (user.isMuted()) {
                 sender.sendMessage(Utils.ALREADYMUTED);
                 return false;
             }

@@ -131,7 +131,7 @@ public class KlasyNPC {
     }
 
     private String getMobName(final UUID uuid) {
-        final int lvl = rpgcore.getPlayerManager().getPlayerLvl(uuid);
+        final int lvl = rpgcore.getUserManager().find(uuid).getLvl();
         if (lvl < 10) {
             return "&6Mobek 1-10";
         }

@@ -3,6 +3,7 @@ package rpg.rpgcore.chat.mute;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Calendar;
@@ -18,13 +19,13 @@ public class MuteManager {
     }
 
     private void addToPunishmentHistory(final UUID uuid, final String punishment) {
-
+        final User user = rpgcore.getUserManager().find(uuid);
         final StringBuilder newPunishment = new StringBuilder();
 
-        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        newPunishment.append(user.getPunishmentHistory());
         newPunishment.append(punishment).append(",");
 
-        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+        user.setPunishmentHistory(String.valueOf(newPunishment));
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
 
@@ -32,7 +33,7 @@ public class MuteManager {
 
     public void unMutePlayer(final String senderName, final UUID uuidToUnMute, final boolean silent) {
 
-        final String nameOfPlayerToUnMute = rpgcore.getPlayerManager().getPlayerName(uuidToUnMute);
+        final String nameOfPlayerToUnMute = rpgcore.getUserManager().find(uuidToUnMute).getName();
 
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.unMuteBroadcast(nameOfPlayerToUnMute, senderName));
@@ -44,7 +45,7 @@ public class MuteManager {
     public void mutePlayer(final String muteSender, final UUID uuidPlayerToMute, final String reason, final boolean silent, final String muteExpiry) {
         final Date muteDate = new Date();
         final Player playerToMute = Bukkit.getPlayer(uuidPlayerToMute);
-        final String nameOfPlayerToMute = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToMute);
+        final String nameOfPlayerToMute = rpgcore.getUserManager().find(uuidPlayerToMute).getName();
 
         if (playerToMute != null) {
             Utils.youAreMuted(playerToMute, muteSender, reason, muteExpiry);
@@ -88,7 +89,7 @@ public class MuteManager {
         }
         final Date tempMuteExpireDate = new Date(cal.getTime().getTime());
         final Player playerToTempMute = Bukkit.getPlayer(uuidPlayerToTempMute);
-        final String nameOfThePlayerToTempMute = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToTempMute);
+        final String nameOfThePlayerToTempMute = rpgcore.getUserManager().find(uuidPlayerToTempMute).getName();
         final String expiryDateInString = Utils.convertDatesToTimeLeft(tempMuteDate, tempMuteExpireDate);
 
         if (playerToTempMute != null) {

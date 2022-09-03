@@ -122,9 +122,9 @@ public class NewTargInventoryClick implements Listener {
             }
 
             final String itemOwnwer = this.getItemOwner(clickedItem);
-            final UUID itemOwnerUUID = rpgcore.getPlayerManager().getPlayerUUID(itemOwnwer);
+            final UUID itemOwnerUUID = rpgcore.getUserManager().find(itemOwnwer).getId();
             final double itemPrice = this.getItemPrice(clickedItem);
-            final double playerMoney = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+            final double playerMoney = rpgcore.getUserManager().find(playerUUID).getKasa();
 
             if (player.getName().equals(itemOwnwer)) {
                 rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
@@ -177,7 +177,7 @@ public class NewTargInventoryClick implements Listener {
                 }
 
                 final double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
-                final double kasa = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+                final double kasa = rpgcore.getUserManager().find(playerUUID).getKasa();
 
                 if (kasa < podatekInDouble) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz pieniedzy, zeby wystawic ten przedmiot"));
@@ -187,7 +187,8 @@ public class NewTargInventoryClick implements Listener {
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
                     return;
                 }
-                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasa - podatekInDouble);
+                rpgcore.getUserManager().find(playerUUID).setKasa(kasa - podatekInDouble);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
 
                 final ItemMeta meta = item.getItemMeta();
                 final List<String> lore = meta.getLore();
@@ -238,7 +239,7 @@ public class NewTargInventoryClick implements Listener {
             }
 
             final String targetName = Utils.removeColor(clickedInventoryTitle).replace("Targ gracza ", "").trim();
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(targetName);
+            final UUID targetUUID = rpgcore.getUserManager().find(targetName).getId();
 
             if (player.getName().equals(targetName)) {
                 rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
@@ -260,7 +261,7 @@ public class NewTargInventoryClick implements Listener {
 
 
 
-            final double kasaGracza = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+            final double kasaGracza = rpgcore.getUserManager().find(playerUUID).getKasa();
             final double itemCena = this.getItemPrice(clickedItem);
 
             if (kasaGracza < itemCena) {
@@ -325,8 +326,12 @@ public class NewTargInventoryClick implements Listener {
 
     private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final Inventory clickedInventory, final ItemStack clickedItem) {
         final UUID playerUUID = player.getUniqueId();
-        rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasaGracza - itemCena);
-        rpgcore.getPlayerManager().updatePlayerKasa(targetUUID, rpgcore.getPlayerManager().getPlayerKasa(targetUUID) + itemCena);
+        rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
+        rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+           rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID));
+           rpgcore.getMongoManager().saveDataUser(targetUUID, rpgcore.getUserManager().find(targetUUID));
+        });
         rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
 
         rpgcore.getNewTargManager().removePlayerTargItem(targetUUID, clickedItem.clone());
@@ -349,8 +354,12 @@ public class NewTargInventoryClick implements Listener {
 
     private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final Inventory clickedInventory, final ItemStack clickedItem, final int category) {
         final UUID playerUUID = player.getUniqueId();
-        rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasaGracza - itemCena);
-        rpgcore.getPlayerManager().updatePlayerKasa(targetUUID, rpgcore.getPlayerManager().getPlayerKasa(targetUUID) + itemCena);
+        rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
+        rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+            rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID));
+            rpgcore.getMongoManager().saveDataUser(targetUUID, rpgcore.getUserManager().find(targetUUID));
+        });
         rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
 
         rpgcore.getNewTargManager().removePlayerTargItem(targetUUID, clickedItem.clone());
@@ -408,7 +417,7 @@ public class NewTargInventoryClick implements Listener {
                 }
                 if (Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targ gracza")) {
                     final String targetName = Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).replace("Targ gracza", "").replaceAll(" ", "").trim();
-                    if (rpgcore.getNewTargManager().getPlayerTargItems(rpgcore.getPlayerManager().getPlayerUUID(targetName)).isEmpty()) {
+                    if (rpgcore.getNewTargManager().getPlayerTargItems(rpgcore.getUserManager().find(targetName).getId()).isEmpty()) {
                         p.closeInventory();
                         p.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma wystawionych zadnych przedmiotow"));
                         return;

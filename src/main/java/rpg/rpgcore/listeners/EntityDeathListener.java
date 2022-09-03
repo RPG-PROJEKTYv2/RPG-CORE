@@ -66,8 +66,8 @@ public class EntityDeathListener implements Listener {
             return;
         }
 
-        final int killerLvl = rpgcore.getPlayerManager().getPlayerLvl(killer.getUniqueId());
-        final int victimLvl = rpgcore.getPlayerManager().getPlayerLvl(victim.getUniqueId());
+        final int killerLvl = rpgcore.getUserManager().find(killer.getUniqueId()).getLvl();
+        final int victimLvl = rpgcore.getUserManager().find(victim.getUniqueId()).getLvl();
 
         if ((killerLvl - victimLvl >= 0 && killerLvl - victimLvl < 10) || (victimLvl - killerLvl >= 0 && victimLvl - killerLvl < 10)) {
             rpgcore.getGuildManager().updateGuildPoints(killerGuild, 30);

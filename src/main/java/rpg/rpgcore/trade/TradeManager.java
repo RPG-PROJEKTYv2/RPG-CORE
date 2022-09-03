@@ -32,7 +32,7 @@ public class TradeManager {
     }
 
     public Inventory createTradeGUI(final UUID sender, final UUID target) {
-        final Inventory tradeGUI = Bukkit.createInventory(null, 54, Utils.format("&4&lWymiana &6&l" + rpgcore.getPlayerManager().getPlayerName(sender) + " &4&l- &6&l" + rpgcore.getPlayerManager().getPlayerName(target)));
+        final Inventory tradeGUI = Bukkit.createInventory(null, 54, Utils.format("&4&lWymiana &6&l" + rpgcore.getUserManager().find(sender).getName() + " &4&l- &6&l" + rpgcore.getUserManager().find(target).getName()));
 
         fill.setName(" ");
         fill.hideFlag();
@@ -104,23 +104,23 @@ public class TradeManager {
         this.acceptList.remove(target);
         this.tradeMap.remove(sender, target);
         if (Bukkit.getPlayer(sender) != null) {
-            Bukkit.getPlayer(sender).sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Gracz &6" + rpgcore.getPlayerManager().getPlayerName(target) + " &7nie zaakceptowal wymiany na czas!"));
+            Bukkit.getPlayer(sender).sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Gracz &6" + rpgcore.getUserManager().find(target).getName() + " &7nie zaakceptowal wymiany na czas!"));
         }
         if (Bukkit.getPlayer(target) != null) {
-            Bukkit.getPlayer(target).sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Czas na zaakceptowanie wymiany od gracza &6" + rpgcore.getPlayerManager().getPlayerName(sender) + " &7wylasnie minal!"));
+            Bukkit.getPlayer(target).sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Czas na zaakceptowanie wymiany od gracza &6" + rpgcore.getUserManager().find(sender).getName() + " &7wylasnie minal!"));
         }
     }
 
 
     public ItemStack getNoAcceptItem(final UUID target) {
-        noAccept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &cjeszcze nie zaakceptowal wymiany");
+        noAccept.setName("&6" + rpgcore.getUserManager().find(target).getName() + " &cjeszcze nie zaakceptowal wymiany");
         noAccept.hideFlag();
 
         return this.noAccept.toItemStack();
     }
 
     public ItemStack getAcceptItem(final UUID target) {
-        accept.setName("&6" + rpgcore.getPlayerManager().getPlayerName(target) + " &azaakceptowal wymiane");
+        accept.setName("&6" + rpgcore.getUserManager().find(target).getName() + " &azaakceptowal wymiane");
         accept.hideFlag();
         return this.accept.toItemStack();
     }

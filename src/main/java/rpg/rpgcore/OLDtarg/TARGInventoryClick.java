@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public class TARGInventoryClick implements Listener {
                 return;
             }
 
-            final UUID playerTargUUID = rpgcore.getPlayerManager().getPlayerUUID(Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim()));
+            final UUID playerTargUUID = rpgcore.getUserManager().find(Utils.removeColor(clickedItem.getItemMeta().getDisplayName().trim())).getId();
             if (rpgcore.getTargManager().getPlayerTarg(playerTargUUID).getViewers().size() != 0) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cKtos aktualnie przeglada ten OLDtarg, sprobuj ponownie za chwile"));
                 return;
@@ -107,7 +108,7 @@ public class TARGInventoryClick implements Listener {
             }
 
             final String targetName = Utils.removeColor(clickedInventoryTitle).replace("Targ gracza ", "").trim();
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(targetName);
+            final UUID targetUUID = rpgcore.getUserManager().find(targetName).getId();
 
             if (player.getName().equals(targetName)) {
                 rpgcore.getTargManager().updatePlayerTarg(player, clickedSlot);
@@ -127,8 +128,10 @@ public class TARGInventoryClick implements Listener {
             }
 
 
+            final User playerUser = rpgcore.getUserManager().find(playerUUID);
+            final User targetUser = rpgcore.getUserManager().find(targetUUID);
 
-            final double kasaGracza = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+            final double kasaGracza = rpgcore.getUserManager().find(playerUUID).getKasa();
             final double itemCena = rpgcore.getTargManager().getItemCena(clickedItem);
 
             if (kasaGracza < itemCena) {
@@ -141,8 +144,12 @@ public class TARGInventoryClick implements Listener {
                 return;
             }
 
-            rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasaGracza - itemCena);
-            rpgcore.getPlayerManager().updatePlayerKasa(targetUUID, rpgcore.getPlayerManager().getPlayerKasa(targetUUID) + itemCena);
+            playerUser.setKasa(kasaGracza - itemCena);
+            targetUser.setKasa(targetUser.getKasa() + itemCena);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataUser(playerUUID, playerUser);
+                rpgcore.getMongoManager().saveDataUser(targetUUID, targetUser);
+            });
             rpgcore.getTargManager().givePlayerBoughtItem(player, clickedItem);
 
             rpgcore.getTargManager().updatePlayerTarg(Bukkit.getPlayer(targetUUID), clickedSlot);
@@ -183,10 +190,9 @@ public class TARGInventoryClick implements Listener {
                     }
                 }
 
-                System.out.println(cena);
-                System.out.println(podatek);
+                final User user = rpgcore.getUserManager().find(playerUUID);
                 final double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
-                final double kasa = rpgcore.getPlayerManager().getPlayerKasa(playerUUID);
+                final double kasa = user.getKasa();
 
                 if (kasa < podatekInDouble) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz pieniedzy, zeby wystawic ten przedmiot"));
@@ -196,7 +202,8 @@ public class TARGInventoryClick implements Listener {
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
                     return;
                 }
-                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, kasa - podatekInDouble);
+                user.setKasa(kasa - podatekInDouble);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, user));
 
                 final ItemMeta meta = item.getItemMeta();
                 final List<String> lore = meta.getLore();

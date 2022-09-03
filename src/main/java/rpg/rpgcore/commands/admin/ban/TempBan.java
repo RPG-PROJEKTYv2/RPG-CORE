@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -36,8 +37,8 @@ public class TempBan implements CommandExecutor {
                 player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
                 return false;
             }
-
-            final UUID uuidPlayerToTempBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempBan = user.getId();
 
             if (uuidPlayerToTempBan == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -49,7 +50,7 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToTempBan)) {
+            if (user.isBanned()) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }
@@ -69,8 +70,8 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
             final String jednostka = args[2];
-
-            final UUID uuidPlayerToTempBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempBan = user.getId();
 
             if (uuidPlayerToTempBan == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -82,7 +83,7 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToTempBan)) {
+            if (user.isBanned()) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }
@@ -113,7 +114,8 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
             final String jednostka = args[2];
-            final UUID uuidPlayerToTempBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToTempBan = user.getId();
 
             if (uuidPlayerToTempBan == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -125,7 +127,7 @@ public class TempBan implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToTempBan)) {
+            if (user.isBanned()) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }

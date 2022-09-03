@@ -15,10 +15,15 @@ import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.os.OsObject;
+import rpg.rpgcore.ranks.RankPlayerUser;
+import rpg.rpgcore.ranks.RankUser;
+import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.spawn.SpawnManager;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
@@ -59,12 +64,50 @@ public class MongoManager {
 
     }
 
-    public void fix() {
+    public void fixMires() {
+        this.pool.getGracze().insertOne(new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80")
+                .append("nick", "Mires_")
+                        .append("punishmentHistory", "")
+                        .append("level", 130)
+                        .append("exp", 0)
+                        .append("kasa", "98792746249.98")
+                        .append("hellcoins", 0)
+                        .append("pierscien_doswiadczenia", false)
+                        .append("pierscien_doswiadczenia_czas", 0));
+
+    }
+
+    public void fix(Document document) {
+        final Document obj = document;
+        this.pool.getGracze().deleteOne(document);
+
+        this.pool.getGracze().insertOne(
+                new Document("_id", obj.getString("_id"))
+                        .append("name", obj.getString("nick"))
+                        .append("banInfo", this.pool.getBany().find(new Document("_id", obj.getString("_id"))).first().getString("banInfo"))
+                        .append("muteInfo", this.pool.getMuty().find(new Document("_id", obj.getString("_id"))).first().getString("muteInfo"))
+                        .append("punishmentHistory", obj.getString("punishmentHistory"))
+                        .append("rankName", new RankUser(RankType.GRACZ).getRankType().getName())
+                        .append("rankPlayerName", new RankPlayerUser(RankTypePlayer.GRACZ, 0L).getRankType().getName())
+                        .append("rankPlayerTime", 0L)
+                        .append("rankChestCooldown", 0L)
+                        .append("lvl", obj.getInteger("level"))
+                        .append("exp", obj.getDouble("exp"))
+                        .append("kasa", Double.parseDouble(obj.getString("kasa")))
+                        .append("hellcoins", 0)
+                        .append("msgOff", false)
+                        .append("adminCode", "")
+                        .append("hellCode", "")
+                        .append("inventory", "")
+                        .append("enderchest", "")
+                        .append("armor", "")
+                        .append("pierscienDoswiadczenia", 0)
+                        .append("pierscienDoswiadczeniaTime", 0L)
+        );
     }
 
 
     public void loadAll() {
-        MongoCursor<Document> result;
 
         Document objSpawn = pool.getSpawn().find(new Document("_id", "spawn")).first();
         if (objSpawn != null) {
@@ -79,12 +122,15 @@ public class MongoManager {
             this.setFirstSpawn();
         }
 
-        result = pool.getGracze().find().cursor();
-        while (result.hasNext()) {
-            Document obj = result.next();
-            String nick = (String) obj.get("nick");
+
+        for (Document doc : pool.getGracze().find()){
+            Document obj = doc;
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
+            /*
+            String nick = (String) obj.get("nick");
+            UUID uuid = UUID.fromString(obj.get("_id").toString());
+
             String punishmentHistory = (String) obj.get("punishmentHistory");
             int lvl = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level")))));
             double exp = Double.parseDouble(String.valueOf(obj.get("exp")));
@@ -100,7 +146,8 @@ public class MongoManager {
             String muteInfo = (String) obj.get("muteInfo");
 
             rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp,0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);*/
+
 
 
             if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() == null) {
@@ -127,7 +174,7 @@ public class MongoManager {
                 rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64(String.valueOf(obj.get("Akcesoria"))));
 
                 obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
-                rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+                rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
 
                 obj = pool.getMagazyny().find(new Document("_id", uuid.toString())).first();
                 rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
@@ -162,57 +209,55 @@ public class MongoManager {
             }
         }
 
-        result = pool.getGildie().find().cursor();
-        while (result.hasNext()) {
-            Document obj = result.next();
-            final String guildName = obj.get("_id").toString();
+        for (Document document : pool.getGildie().find()){
+            final String guildName = document.get("_id").toString();
 
             final List<UUID> members = new ArrayList<>();
 
-            for (final String member : String.valueOf(obj.get("membersList")).split(",")) {
+            for (final String member : String.valueOf(document.get("membersList")).split(",")) {
                 members.add(UUID.fromString(member));
             }
 
             final Map<UUID, Integer> killsMap = new HashMap<>();
-            Document kills = (Document) obj.get("killsMap");
+            Document kills = (Document) document.get("killsMap");
             for (final String key : kills.keySet()) {
                 killsMap.put(UUID.fromString(key), kills.getInteger(key));
             }
 
             final Map<UUID, Integer> deathsMap = new HashMap<>();
-            Document deaths = (Document) obj.get("deathsMap");
+            Document deaths = (Document) document.get("deathsMap");
             for (final String key : deaths.keySet()) {
                 deathsMap.put(UUID.fromString(key), deaths.getInteger(key));
             }
 
             final Map<UUID, Double> expEarnedMap = new HashMap<>();
-            Document expEarned = (Document) obj.get("expEarnedMap");
+            Document expEarned = (Document) document.get("expEarnedMap");
             for (final String key : expEarned.keySet()) {
                 expEarnedMap.put(UUID.fromString(key), expEarned.getDouble(key));
             }
 
             final Map<UUID, Date> lastOnlineMap = new HashMap<>();
-            Document lastOnline = (Document) obj.get("lastOnlineMap");
+            Document lastOnline = (Document) document.get("lastOnlineMap");
             for (final String key : lastOnline.keySet()) {
                 lastOnlineMap.put(UUID.fromString(key), new Date(lastOnline.getLong(key)));
             }
 
             rpgcore.getGuildManager().loadGuild(
                     guildName,
-                    (String) obj.get("description"),
-                    UUID.fromString((String) obj.get("owner")),
-                    (String) obj.get("coOwner"),
+                    (String) document.get("description"),
+                    UUID.fromString((String) document.get("owner")),
+                    (String) document.get("coOwner"),
                     members,
-                    Boolean.parseBoolean(String.valueOf(obj.get("pvp"))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("points"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("lvl"))))),
-                    Double.parseDouble(String.valueOf(obj.get("exp"))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("balance"))))),
-                    Double.parseDouble(String.valueOf(obj.get("dodatkowyExp"))),
-                    Double.parseDouble(String.valueOf(obj.get("sredniDmg"))),
-                    Double.parseDouble(String.valueOf(obj.get("sredniDef"))),
-                    Double.parseDouble(String.valueOf(obj.get("silnyNaLudzi"))),
-                    Double.parseDouble(String.valueOf(obj.get("defNaLudzi"))),
+                    Boolean.parseBoolean(String.valueOf(document.get("pvp"))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("points"))))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("lvl"))))),
+                    Double.parseDouble(String.valueOf(document.get("exp"))),
+                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("balance"))))),
+                    Double.parseDouble(String.valueOf(document.get("dodatkowyExp"))),
+                    Double.parseDouble(String.valueOf(document.get("sredniDmg"))),
+                    Double.parseDouble(String.valueOf(document.get("sredniDef"))),
+                    Double.parseDouble(String.valueOf(document.get("silnyNaLudzi"))),
+                    Double.parseDouble(String.valueOf(document.get("defNaLudzi"))),
                     killsMap,
                     deathsMap,
                     expEarnedMap,
@@ -339,8 +384,6 @@ public class MongoManager {
         this.addDataDuszolog(new DuszologObject(uuid));
 
 
-        rpgcore.getPlayerManager().createPlayer(nick, uuid, "false", "false", "", 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0);
-
         rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
         rpgcore.getRybakNPC().setPlayerPostep(uuid, 0);
         rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, 0.0);
@@ -355,34 +398,46 @@ public class MongoManager {
         Document query = new Document();
         query.append("_id", uuid.toString());
 
-        pool.getBany().findOneAndReplace(query, new Document("_id", uuid.toString()).append("banInfo", banInfo));
-        rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, banInfo);
+        Document update = new Document("$set", new Document("banInfo", banInfo));
+
+
+        pool.getGracze().findOneAndUpdate(query, update);
+        rpgcore.getUserManager().find(uuid).setBanInfo(banInfo);
     }
 
     public void mutePlayer(final UUID uuid, final String muteInfo) {
         Document query = new Document();
         query.append("_id", uuid.toString());
 
-        pool.getMuty().findOneAndReplace(query, new Document("_id", uuid.toString()).append("muteInfo", muteInfo));
-        rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, muteInfo);
+        Document update = new Document("$set", new Document("muteInfo", muteInfo));
+
+
+        pool.getGracze().findOneAndUpdate(query, update);
+        rpgcore.getUserManager().find(uuid).setMuteInfo(muteInfo);
     }
 
     public void unBanPlayer(final UUID uuid) {
         Document query = new Document();
         query.append("_id", uuid.toString());
 
-        pool.getBany().findOneAndReplace(query, new Document("_id", uuid.toString()).append("banInfo", "false"));
+        Document update = new Document("$set", new Document("banInfo", "false"));
 
-        rpgcore.getPlayerManager().updatePlayerBanInfo(uuid, "false");
+
+        pool.getGracze().findOneAndUpdate(query, update);
+
+        rpgcore.getUserManager().find(uuid).setBanInfo("false");
     }
 
     public void unMutePlayer(final UUID uuid) {
         Document query = new Document();
         query.append("_id", uuid.toString());
 
-        pool.getMuty().findOneAndReplace(query, new Document("_id", uuid.toString()).append("muteInfo", "false"));
+        Document update = new Document("$set", new Document("muteInfo", "false"));
 
-        rpgcore.getPlayerManager().updatePlayerMuteInfo(uuid, "false");
+
+        pool.getGracze().findOneAndUpdate(query, update);
+
+        rpgcore.getUserManager().find(uuid).setMuteInfo("false");
 
 
     }
@@ -396,186 +451,25 @@ public class MongoManager {
 
         pool.getGracze().findOneAndUpdate(query, update);
 
-        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, punishmentHistory);
+        rpgcore.getUserManager().find(uuid).setPunishmentHistory(punishmentHistory);
 
     }
 
     public void savePlayer(final Player player, final UUID uuid) {
         try {
-            this.savePlayerDocument(uuid, pool.getGracze());
-            this.saveBanDocument(uuid, pool.getBany());
-            this.saveMuteDocument(uuid, pool.getMuty());
-            //this.savePlayerInventory(uuid, database.getCollection("hellrpg_inventory"));
-            //this.saveOsDocument(uuid, pool.getOsiagniecia());
-            this.saveRybakDocument(uuid, pool.getRybak());
             this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
-            this.saveMagazynyDocument(uuid, pool.getMagazyny());
-            this.saveTargDocument(uuid, pool.getTargi());
-            this.saveAkcesoriaDocument(uuid, pool.getAkcesoria());
-            this.saveEkwipunekDocument(player, pool.getEkwipunek());
-            this.saveEnderchestDocument(player, pool.getEnderchest());
-            this.saveZbrojaDocument(player, pool.getZbroja());
 
             pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
             this.saveKlasyData(uuid);
 
 
-            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
+            System.out.println("[HellRPGCore] Pomyslnie zapisano gracza: " + rpgcore.getUserManager().find(uuid).getName());
         } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getPlayerManager().getPlayerName(uuid));
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu gracza: §6" + rpgcore.getPlayerManager().getPlayerName(uuid));
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
+            System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
             e.printStackTrace();
-        }
-    }
-
-    private void savePlayerDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("nick", rpgcore.getPlayerManager().getPlayerName(uuid));
-        document.append("punishmentHistory", rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
-        document.append("level", rpgcore.getPlayerManager().getPlayerLvl(uuid));
-        document.append("exp", rpgcore.getPlayerManager().getPlayerExp(uuid));
-        document.append("kasa", String.format("%.2f", rpgcore.getPlayerManager().getPlayerKasa(uuid)));
-        document.append("hellcoins", 0);
-        document.append("pierscien_doswiadczenia", false);
-        document.append("pierscien_doswiadczenia_czas", 0);
-
-        collection.findOneAndReplace(query, document);
-    }
-
-    private void saveBanDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("banInfo", rpgcore.getPlayerManager().getPlayerBanInfo(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-    private void saveMuteDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("muteInfo", rpgcore.getPlayerManager().getPlayerMuteInfo(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-
-    private void saveRybakDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("RYBAK_MISJE", rpgcore.getRybakNPC().getPlayerRybakMisje(uuid));
-        document.append("RYBAK_POSTEP", rpgcore.getRybakNPC().getPlayerPostep(uuid));
-        document.append("RYBAK_SRDMG", rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid));
-        document.append("RYBAK_SRDEF", rpgcore.getRybakNPC().getPlayerRybakSredniDef(uuid));
-        document.append("RYBAK_DDMG", rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid));
-        document.append("RYBAK_BLOK", rpgcore.getRybakNPC().getPlayerRybakBlok(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-
-    private void saveMagazynyDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-    private void saveTargDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-    private void saveAkcesoriaDocument(final UUID uuid, final MongoCollection<Document> collection) {
-        Document query = new Document();
-        query.append("_id", uuid.toString());
-
-        Document document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-
-        collection.findOneAndReplace(query, document);
-    }
-
-    private void saveEkwipunekDocument(final Player player, final MongoCollection<Document> collection) {
-        Document obj = collection.find(new Document("_id", player.getUniqueId().toString())).first();
-        if (obj != null) {
-            Document query = new Document();
-            query.append("_id", player.getUniqueId().toString());
-
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("ekwipunek", Utils.toBase64(player.getInventory()));
-
-            collection.findOneAndReplace(query, document);
-        } else {
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("ekwipunek", Utils.toBase64(player.getInventory()));
-            collection.insertOne(document);
-        }
-        System.out.println("Zapisano ekwipunek gracza " + player.getName());
-    }
-
-    private void saveEnderchestDocument(final Player player, final MongoCollection<Document> collection) {
-        Document obj = collection.find(new Document("_id", player.getUniqueId().toString())).first();
-        if (obj != null) {
-            Document query = new Document();
-            query.append("_id", player.getUniqueId().toString());
-
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("enderchest", Utils.toBase64(player.getEnderChest()));
-
-            collection.findOneAndReplace(query, document);
-        } else {
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("enderchest", Utils.toBase64(player.getEnderChest()));
-            collection.insertOne(document);
-        }
-    }
-
-    private void saveZbrojaDocument(final Player player, final MongoCollection<Document> collection) {
-        Document obj = collection.find(new Document("_id", player.getUniqueId().toString())).first();
-        if (obj != null) {
-            Document query = new Document();
-            query.append("_id", player.getUniqueId().toString());
-
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
-
-            collection.findOneAndReplace(query, document);
-        } else {
-            Document document = new Document();
-            document.append("_id", player.getUniqueId().toString());
-            document.append("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
-            collection.insertOne(document);
         }
     }
 
@@ -898,7 +792,7 @@ public class MongoManager {
 
     // BAO
     public Map<UUID, BaoObject> loadAllBao() {
-        Map<UUID, BaoObject> bao = new ConcurrentHashMap<>();
+        Map<UUID, BaoObject> bao = new HashMap<>();
         for (Document document : this.pool.getBao().find()) {
             BaoObject baoObject = new BaoObject(document);
             bao.put(baoObject.getId(), baoObject);
@@ -917,6 +811,31 @@ public class MongoManager {
     public void saveAllBao() {
         for (BaoObject baoObject : rpgcore.getBaoManager().getBaoObjects()) {
             this.saveDataBao(baoObject.getId(), baoObject);
+        }
+    }
+
+
+    // USERS
+    public Map<UUID, User> loadAllUsers() {
+        Map<UUID, User> users = new HashMap<>();
+        for (Document document : this.pool.getGracze().find()) {
+            User user = new User(document);
+            users.put(user.getId(), user);
+        }
+        return users;
+    }
+
+    public void addDataUser(final User user) {
+        this.pool.getGracze().insertOne(user.toDocument());
+    }
+
+    public void saveDataUser(final UUID id, final User user) {
+        this.pool.getGracze().findOneAndReplace(new Document("_id", id.toString()), user.toDocument());
+    }
+
+    public void saveAllUsers() {
+        for (User user : rpgcore.getUserManager().getUserObjects()) {
+            this.saveDataUser(user.getId(), user);
         }
     }
 

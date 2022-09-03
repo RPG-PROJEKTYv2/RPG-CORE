@@ -29,7 +29,7 @@ public class AkcesoriaManager {
     }
 
     private Inventory createAkcesoriaGUINew(final UUID uuid) {
-        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getPlayerManager().getPlayerName(uuid)));
+        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getUserManager().find(uuid).getName()));
 
         fillGUI.setName(" ");
 
@@ -49,7 +49,7 @@ public class AkcesoriaManager {
     }
 
     public Inventory createAkcesoriaGUI(final UUID uuid, final ItemStack[] akcesoria) {
-        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getPlayerManager().getPlayerName(uuid)));
+        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getUserManager().find(uuid).getName()));
 
         fillGUI.setName(" ");
 
@@ -114,14 +114,7 @@ public class AkcesoriaManager {
 
     public void loadAllAkceBonus(final UUID uuid) {
 
-        // TODO     ZROBIC IF CHECKA CZY TABELE ZAWIERAJA JUZ GRACZA
-        if (rpgcore.getPlayerManager().getPlayerSrednie(uuid) != 0 || rpgcore.getPlayerManager().getPlayerMinusSrednie(uuid) != 0 || rpgcore.getPlayerManager().getPlayerDef(uuid) != 0 ||
-                rpgcore.getPlayerManager().getPlayerMinusDef(uuid) != 0 || rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) != 0 || rpgcore.getPlayerManager().getPlayerDefNaLudzi(uuid) != 0 ||
-                rpgcore.getPlayerManager().getPlayerSilnyNaMoby(uuid) != 0 || rpgcore.getPlayerManager().getPlayerDefNaMoby(uuid) != 0 || rpgcore.getPlayerManager().getPlayerDamage(uuid) != 0 ||
-                rpgcore.getPlayerManager().getPlayerBlok(uuid) != 0 || rpgcore.getPlayerManager().getPlayerKryt(uuid) != 0 || rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) != 0 || rpgcore.getPlayerManager().getPlayerHP(uuid) != 0) {
-            return;
-        }
-
+/*
         final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
         ItemStack akce;
 
@@ -175,7 +168,7 @@ public class AkcesoriaManager {
                 }
 
             }
-        }
+        }*/
     }
 
     public Inventory getAkcesoriaGUI(final UUID uuid) {

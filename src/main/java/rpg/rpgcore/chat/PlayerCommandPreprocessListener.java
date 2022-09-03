@@ -29,7 +29,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        if (rpgcore.getPlayerManager().getPlayerGroup(player).equals("H@") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("Admin") || rpgcore.getPlayerManager().getPlayerGroup(player).equals("GM")) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             return;
         }
         rpgcore.getCooldownManager().givePlayerCommandCooldown(player.getUniqueId());

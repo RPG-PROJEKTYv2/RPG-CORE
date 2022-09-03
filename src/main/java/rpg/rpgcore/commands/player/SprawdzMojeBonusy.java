@@ -30,7 +30,7 @@ public class SprawdzMojeBonusy implements CommandExecutor {
 
         if (args.length == 0){
 
-            player.sendMessage(Utils.format(this.createMessage(player.getUniqueId())));
+            //player.sendMessage(Utils.format(this.createMessage(player.getUniqueId())));
 
             return false;
         }
@@ -40,7 +40,7 @@ public class SprawdzMojeBonusy implements CommandExecutor {
     }
 
 
-    private String createMessage(final UUID uuid) {
+    /*private String createMessage(final UUID uuid) {
         return "&8--------------->> &6Twoje Bonusy &8<<---------------" +
                                "\n&7Nick: &6" + rpgcore.getPlayerManager().getPlayerName(uuid) +
                                "\n&7Ranga: &6" + rpgcore.getPlayerManager().getPlayerGroup(Bukkit.getPlayer(uuid)) +
@@ -56,5 +56,5 @@ public class SprawdzMojeBonusy implements CommandExecutor {
                                "\n&7Przeszycie Bloku: &6" + rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) +
                                "\n&7Dodatkowe HP: &6" + rpgcore.getPlayerManager().getPlayerHP(uuid) +
                                "\n&8--------------->> &6Twoje Bonusy &8<<---------------";
-    }
+    }*/
 }

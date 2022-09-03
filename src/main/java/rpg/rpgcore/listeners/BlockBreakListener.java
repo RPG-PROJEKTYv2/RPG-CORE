@@ -20,7 +20,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(final BlockBreakEvent e) {
         final Player player = e.getPlayer();
 
-        if (!(rpgcore.getPlayerManager().getPlayerGroup(player).equalsIgnoreCase("H@"))) {
+        if (!(rpgcore.getUserManager().getPlayerGroup(player).equalsIgnoreCase("H@"))) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow!"));
 

@@ -136,7 +136,7 @@ public class EQInventoryClick implements Listener {
                     Bukkit.broadcastMessage(formatPrzedWiadomoscia + finalMessage);
                     break;
                 case 2:
-                    if (rpgcore.getPlayerManager().getPlayerLvl(playerUUID) < 74) {
+                    if (rpgcore.getUserManager().find(playerUUID).getLvl() < 74) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c75 &7poziom, zeby pokazac bao na chacie"));
                         player.closeInventory();
                         break;
@@ -172,8 +172,8 @@ public class EQInventoryClick implements Listener {
                     Bukkit.getServer().spigot().broadcast(beforeMessageBao);
                     break;
                 case 3:
-                    final int lvlGracza = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
-                    final double expGracza = rpgcore.getPlayerManager().getPlayerExp(playerUUID);
+                    final int lvlGracza = rpgcore.getUserManager().find(playerUUID).getLvl();
+                    final double expGracza = rpgcore.getUserManager().find(playerUUID).getExp();
                     final double expNaNextLvlGracza = rpgcore.getLvlManager().getExpForLvl(lvlGracza + 1);
 
                     if (!(msg.isEmpty())) {

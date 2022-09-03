@@ -1,25 +1,15 @@
 package rpg.rpgcore.chat;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.ranks.RankType;
+import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -49,9 +39,9 @@ public class ChatManager {
     }
 
     public String formatujChat(final Player player, String format, String message) {
-        final int playerLVL = rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId());
+        final int playerLVL = rpgcore.getUserManager().find(player.getUniqueId()).getLvl();
         String playerName = player.getName();
-        String playerRank = rpgcore.getPlayerManager().getPlayerGroup(player);
+        String playerRank = rpgcore.getUserManager().getPlayerGroup(player);
         String playerGuild = "";
 
         switch (playerRank) {
@@ -92,7 +82,7 @@ public class ChatManager {
         if (playerRank.equals("Gracz")) {
             return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", "").replace("<player-name>", playerName).replace("<message>", message));
         }
-        if (rpgcore.getPlayerManager().isPlayerHighStaff(player)) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", Utils.format(message)));
         }
         return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));

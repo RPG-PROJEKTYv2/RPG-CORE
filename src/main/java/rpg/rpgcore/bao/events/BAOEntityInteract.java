@@ -34,7 +34,7 @@ public class BAOEntityInteract implements Listener {
         }
 
         e.setCancelled(true);
-        if (rpgcore.getPlayerManager().getPlayerLvl(uuid) < 74) {
+        if (rpgcore.getUserManager().find(uuid).getLvl() < 74) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGI"));
             return;
         }

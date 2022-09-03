@@ -35,7 +35,7 @@ public class BAOPlayerInteract implements Listener {
             return;
         }
         e.setCancelled(true);
-        if (rpgcore.getPlayerManager().getPlayerLvl(player.getUniqueId()) < 80) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 80) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
             return;
         }

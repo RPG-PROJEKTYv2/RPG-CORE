@@ -3,6 +3,7 @@ package rpg.rpgcore.commands.admin.ban;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Calendar;
@@ -20,11 +21,11 @@ public class BanManager {
     private void addToPunishmentHistory(final UUID uuid, final String punishment) {
 
         final StringBuilder newPunishment = new StringBuilder();
-
-        newPunishment.append(rpgcore.getPlayerManager().getPlayerPunishmentHistory(uuid));
+        final User user = rpgcore.getUserManager().find(uuid);
+        newPunishment.append(user.getPunishmentHistory());
         newPunishment.append(punishment).append(",");
 
-        rpgcore.getPlayerManager().updatePlayerPunishmentHistory(uuid, String.valueOf(newPunishment));
+        user.setPunishmentHistory(String.valueOf(newPunishment));
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().setPunishmentHistory(uuid, String.valueOf(newPunishment)));
 
@@ -32,7 +33,7 @@ public class BanManager {
 
     public void unBanPlayer(final String senderName, final UUID uuidToUnBan, final boolean silent) {
 
-        final String nameOfPlayerToBan = rpgcore.getPlayerManager().getPlayerName(uuidToUnBan);
+        final String nameOfPlayerToBan = rpgcore.getUserManager().find(uuidToUnBan).getName();
 
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.unBanBroadcast(nameOfPlayerToBan, senderName));
@@ -46,7 +47,7 @@ public class BanManager {
         final String dateOfBan = Utils.dateFormat.format(new Date());
 
         final Player playerToBan = Bukkit.getPlayer(uuidPlayerToBan);
-        final String nameOfPlayerToBan = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToBan);
+        final String nameOfPlayerToBan = rpgcore.getUserManager().find(uuidPlayerToBan).getName();
 
         if (playerToBan != null) {
             playerToBan.kickPlayer(Utils.banMessage(banSender, reason, banExpiry, dateOfBan));
@@ -106,7 +107,7 @@ public class BanManager {
         }
         final Date tempBanExpireDate = new Date(cal.getTime().getTime());
         final Player playerToTempBan = Bukkit.getPlayer(uuidPlayerToTempBan);
-        final String nameOfThePlayerToTempBan = rpgcore.getPlayerManager().getPlayerName(uuidPlayerToTempBan);
+        final String nameOfThePlayerToTempBan = rpgcore.getUserManager().find(uuidPlayerToTempBan).getName();;
 
         if (playerToTempBan != null) {
             playerToTempBan.kickPlayer(Utils.banMessage(adminName, reason, Utils.dateFormat.format(tempBanExpireDate), Utils.dateFormat.format(tempBanDate)));

@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -43,7 +44,7 @@ public class Lvl implements CommandExecutor {
                 return false;
             }
 
-            final UUID uuidPlayerToSeeInfo = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID uuidPlayerToSeeInfo = rpgcore.getUserManager().find(args[0]).getId();
 
             if (uuidPlayerToSeeInfo == null) {
                 player.sendMessage(Utils.LVLPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -71,8 +72,8 @@ public class Lvl implements CommandExecutor {
                 player.sendMessage(Utils.permisje("rpg.lvl.admin.set"));
                 return false;
             }
-
-            final UUID uuidPlayerToSet = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToSet = user.getId();
 
 
             if (uuidPlayerToSet == null) {
@@ -84,7 +85,7 @@ public class Lvl implements CommandExecutor {
                 try {
                     final int nowyLvl = Integer.parseInt(args[2]);
                     rpgcore.getLvlManager().setPlayerLvl(player.getName(), uuidPlayerToSet, nowyLvl);
-                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono poziom gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyLvl));
+                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono poziom gracza &6" + user.getName() + " &ana &6" + nowyLvl));
                 } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe calkowita"));
                     return false;
@@ -94,7 +95,7 @@ public class Lvl implements CommandExecutor {
                 try {
                     final double nowyExp = Double.parseDouble(args[2]);
                     rpgcore.getLvlManager().setPlayerExp(player.getName(), uuidPlayerToSet, nowyExp);
-                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono exp gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyExp + " &aexp"));
+                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono exp gracza &6" + user.getName() + " &ana &6" + nowyExp + " &aexp"));
                 } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe"));
                     return false;
@@ -104,7 +105,7 @@ public class Lvl implements CommandExecutor {
                 try {
                     final double nowyProcent = Double.parseDouble(args[2]);
                     rpgcore.getLvlManager().setPlayerProcent(player.getName(), uuidPlayerToSet, nowyProcent);
-                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono postep gracza &6" + rpgcore.getPlayerManager().getPlayerName(uuidPlayerToSet) + " &ana &6" + nowyProcent + "&a%"));
+                    player.sendMessage(Utils.format(Utils.LVLPREFIX + "&aPomyslnie ustawiono postep gracza &6" + user.getName() + " &ana &6" + nowyProcent + "&a%"));
                 } catch (final NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.LVLPREFIX + "&cMusisz podac liczbe"));
                     return false;

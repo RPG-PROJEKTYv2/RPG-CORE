@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.ranks.RankType;
+import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;

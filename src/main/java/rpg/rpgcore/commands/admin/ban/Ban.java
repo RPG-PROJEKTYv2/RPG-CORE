@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -34,8 +35,8 @@ public class Ban implements CommandExecutor {
         final String banExpiry = "Pernamentny";
 
         if (args.length == 1) {
-
-            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToBan = user.getId();
 
             if (uuidPlayerToBan == null) {
                 sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -47,7 +48,7 @@ public class Ban implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
+            if (user.isBanned()) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }
@@ -58,8 +59,8 @@ public class Ban implements CommandExecutor {
         }
 
         if (args.length >= 2) {
-
-            final UUID uuidPlayerToBan = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final User user = rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToBan = user.getId();
             args[0] = "";
 
             if (uuidPlayerToBan == null) {
@@ -72,7 +73,7 @@ public class Ban implements CommandExecutor {
                 return false;
             }
 
-            if (rpgcore.getPlayerManager().isBanned(uuidPlayerToBan)) {
+            if (user.isBanned()) {
                 sender.sendMessage(Utils.ALREADYBANNED);
                 return false;
             }

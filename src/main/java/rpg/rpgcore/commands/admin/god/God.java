@@ -44,7 +44,7 @@ public class God implements CommandExecutor {
                 return false;
             }
 
-            if (!(rpgcore.getPlayerManager().getPlayersNames().contains(args[0]))) {
+            if (!rpgcore.getUserManager().isUserName(args[0])) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }

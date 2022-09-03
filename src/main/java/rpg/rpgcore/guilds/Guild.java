@@ -45,7 +45,7 @@ public class Guild implements CommandExecutor {
         }
 
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
-        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
 
         if (args.length == 1){
             //TODO statystyki i sortowanie od najwyzszej
@@ -133,7 +133,7 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                final UUID uuidToInvite = rpgcore.getPlayerManager().getPlayerUUID(args[1]);
+                final UUID uuidToInvite = rpgcore.getUserManager().find(args[1]).getId();
 
                 if (uuidToInvite == null) {
                     player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -199,7 +199,7 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                final UUID uuidToKick = rpgcore.getPlayerManager().getPlayerUUID(args[1]);
+                final UUID uuidToKick = rpgcore.getUserManager().find(args[1]).getId();
 
                 if (uuidToKick == null) {
                     player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -220,7 +220,7 @@ public class Guild implements CommandExecutor {
                     rpgcore.getGuildManager().removePlayerFromGuild(tag, uuidToKick);
                     return false;
                 } else {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToKick) + " &cnie jest czlonkiem twojego klanu"));
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToKick).getName() + " &cnie jest czlonkiem twojego klanu"));
                     return false;
                 }
             }
@@ -237,7 +237,7 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                final UUID uuidToSet = rpgcore.getPlayerManager().getPlayerUUID(args[1]);
+                final UUID uuidToSet = rpgcore.getUserManager().find(args[1]).getId();
 
                 if (uuidToSet == null) {
                     player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -254,10 +254,10 @@ public class Guild implements CommandExecutor {
                     if (rpgcore.getGuildManager().getGuildCoOwner(tag) != null && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuidToSet)) {
                         rpgcore.getGuildManager().setGuildCoOwner(tag, null);
                     }
-                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToSet) + " &awlasnie zostal nowym liderem klanu &6" + tag));
+                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &awlasnie zostal nowym liderem klanu &6" + tag));
                     return false;
                 } else {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToSet) + " &cnie jest czlonkiem twojego klanu"));
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &cnie jest czlonkiem twojego klanu"));
                     return false;
                 }
             }
@@ -274,7 +274,7 @@ public class Guild implements CommandExecutor {
                     return false;
                 }
 
-                final UUID uuidToSet = rpgcore.getPlayerManager().getPlayerUUID(args[1]);
+                final UUID uuidToSet = rpgcore.getUserManager().find(args[1]).getId();
 
                 if (uuidToSet == null) {
                     player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
@@ -293,10 +293,10 @@ public class Guild implements CommandExecutor {
 
                 if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToSet)) {
                     rpgcore.getGuildManager().setGuildCoOwner(tag, uuidToSet);
-                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToSet) + " &awlasnie zostal nowym zastepca klanu &6" + tag));
+                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &awlasnie zostal nowym zastepca klanu &6" + tag));
                     return false;
                 } else {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getPlayerManager().getPlayerName(uuidToSet) + " &cnie jest czlonkiem twojego klanu"));
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &cnie jest czlonkiem twojego klanu"));
                     return false;
                 }
 
@@ -365,7 +365,7 @@ public class Guild implements CommandExecutor {
         for (final UUID uuid1 : rpgcore.getGuildManager().getGuildMembers(tag)) {
             final Player p = Bukkit.getPlayer(uuid1);
             if (p != null && p.isOnline()) {
-                final String group = rpgcore.getPlayerManager().getPlayerGroup(p);
+                final String group = rpgcore.getUserManager().getPlayerGroup(p);
                 NameTagUtil.setPlayerDisplayNameNoGuild(p, group);
                 TabManager.removePlayer(p);
                 members.add(uuid1);

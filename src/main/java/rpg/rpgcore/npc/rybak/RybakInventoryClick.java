@@ -61,13 +61,14 @@ public class RybakInventoryClick implements Listener {
             //                  KUPOWANIE WEDKI             \\
             if (clickedSlot == 0) {
                 final double cenaWedki = Double.parseDouble(Utils.removeColor(clickedItem.getItemMeta().getLore().get(clickedItem.getItemMeta().getLore().size() - 1)).replace("Cena:", "").replace(" ", "").replace("$", "").trim());
-                if (rpgcore.getPlayerManager().getPlayerKasa(playerUUID) < cenaWedki) {
+                if (rpgcore.getUserManager().find(playerUUID).getKasa() < cenaWedki) {
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cCzy ty probujesz mnie oszukac? Nie stac cie na moja wedke"));
                     player.closeInventory();
                     return;
                 }
 
-                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) - cenaWedki);
+                rpgcore.getUserManager().find(playerUUID).setKasa(rpgcore.getUserManager().find(playerUUID).getKasa() - cenaWedki);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
 
                 player.getInventory().addItem(rpgcore.getRybakNPC().givePlayerRod(player));
                 player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie zakupiles moja wedka. &6Udanych lowow!"));
@@ -117,7 +118,8 @@ public class RybakInventoryClick implements Listener {
                         break;
                     }
                 }
-                rpgcore.getPlayerManager().updatePlayerKasa(playerUUID, rpgcore.getPlayerManager().getPlayerKasa(playerUUID) + (cena * amount));
+                rpgcore.getUserManager().find(playerUUID).setKasa(rpgcore.getUserManager().find(playerUUID).getKasa() + (cena * amount));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
                 player.sendMessage(Utils.format(Utils.RYBAK + "&aSprzedales &6&o" + amount + " &a&orybek za &6&o" + (cena * amount) + " &a$"));
                 player.closeInventory();
                 final int mission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);

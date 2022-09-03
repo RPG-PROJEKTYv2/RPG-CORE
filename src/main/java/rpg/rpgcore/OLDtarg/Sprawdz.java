@@ -37,7 +37,7 @@ public class Sprawdz implements CommandExecutor {
 
         if (args.length == 1) {
 
-            final UUID targetUUID = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
+            final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
 
             if (targetUUID == null) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza"));

@@ -117,7 +117,7 @@ public class MetinyHelper {
         final MetinologObject metinolog = RPGCORE.getInstance().getMetinologNPC().find(player.getUniqueId());
         //MobDropHelper.addDropPlayer(player, "I183", 1, 100.0, true, true, entity);
         double kasaToAdd = 0;
-        final double kasa = RPGCORE.getInstance().getPlayerManager().getPlayerKasa(player.getUniqueId());
+        final double kasa = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa();
         if ((id >= 1 && id <= 10) || (id >= 10001 && id <= 10010)) {
             kasaToAdd = 250;
             if (metinolog.getMetinologUser().getPostepGive() == 0) {
@@ -238,7 +238,7 @@ public class MetinyHelper {
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         player.sendMessage(worldName);
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("exp", "") + "-LEVEL3 12 " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
-        RPGCORE.getInstance().getPlayerManager().updatePlayerKasa(player.getUniqueId(), kasa + kasaToAdd);
+        RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(kasa + kasaToAdd);
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().setDestroyedMetins(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().getDestroyedMetins() + 1);
         player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));
     }

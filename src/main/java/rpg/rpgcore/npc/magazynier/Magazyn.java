@@ -32,7 +32,7 @@ public class Magazyn implements CommandExecutor {
         }
 
         final UUID uuid = player.getUniqueId();
-        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(player);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
 
 
 

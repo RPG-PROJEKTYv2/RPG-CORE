@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -27,10 +28,10 @@ public class Kick implements CommandExecutor {
 
         final String senderName = sender.getName();
         if (args.length == 1) {
+            final User user = this.rpgcore.getUserManager().find(args[0]);
+            final UUID uuidPlayerToKick = user.getId();
 
-            final UUID uuidPlayerToKick = rpgcore.getPlayerManager().getPlayerUUID(args[0]);
-
-            if (!(rpgcore.getPlayerManager().getPlayers().contains(uuidPlayerToKick))) {
+            if (!rpgcore.getUserManager().isUser(uuidPlayerToKick)) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }
@@ -57,9 +58,10 @@ public class Kick implements CommandExecutor {
             final String playerToKickName = args[0];
             args[0] = "";
 
-            final UUID uuidPlayerToKick = rpgcore.getPlayerManager().getPlayerUUID(playerToKickName);
+            final User user = this.rpgcore.getUserManager().find(playerToKickName);
+            final UUID uuidPlayerToKick = user.getId();
 
-            if (!(rpgcore.getPlayerManager().getPlayers().contains(uuidPlayerToKick))) {
+            if (!rpgcore.getUserManager().isUser(uuidPlayerToKick)) {
                 sender.sendMessage(Utils.NIEMATAKIEGOGRACZA);
                 return false;
             }

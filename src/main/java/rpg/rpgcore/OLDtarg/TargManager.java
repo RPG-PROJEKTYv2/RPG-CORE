@@ -91,7 +91,7 @@ public class TargManager {
     }
 
     private Inventory createPlayerTargGUI(final UUID uuid) {
-        final Inventory targ = Bukkit.createInventory(null, 54, Utils.format("&f&lTarg gracza &3") + rpgcore.getPlayerManager().getPlayerName(uuid));
+        final Inventory targ = Bukkit.createInventory(null, 54, Utils.format("&f&lTarg gracza &3") + rpgcore.getUserManager().find(uuid).getName());
 
         fill.setName(" ");
         fill.addGlowing();

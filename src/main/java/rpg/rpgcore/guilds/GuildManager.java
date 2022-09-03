@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
@@ -103,11 +104,11 @@ public class GuildManager {
         }
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
         player.sendMessage(Utils.format("&6Opis: &7" + guildDescription.get(tag)));
-        player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getPlayerManager().getPlayerName(guildOwner.get(tag))));
+        player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guildOwner.get(tag)).getName()));
         if (guildCoOwner.get(tag) == null) {
             player.sendMessage(Utils.format("&6Zastepca: &7Brak Zastepcy"));
         } else {
-            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getPlayerManager().getPlayerName(guildCoOwner.get(tag))));
+            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(guildCoOwner.get(tag)).getName()));
         }
         if (guildPvPStatus.get(tag)) {
             player.sendMessage(Utils.format("&6PvP: &a&lON"));
@@ -124,9 +125,9 @@ public class GuildManager {
         player.sendMessage(Utils.format("&6Czlonkowie: "));
         for (UUID uuid : guildMembers.get(tag)) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
-                player.sendMessage(Utils.format("&8- &a" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+                player.sendMessage(Utils.format("&8- &a" + rpgcore.getUserManager().find(uuid).getName()));
             } else {
-                player.sendMessage(Utils.format("&8- &c" + rpgcore.getPlayerManager().getPlayerName(uuid)));
+                player.sendMessage(Utils.format("&8- &c" + rpgcore.getUserManager().find(uuid).getName()));
             }
         }
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
@@ -210,7 +211,7 @@ public class GuildManager {
 
         final Player player = Bukkit.getPlayer(uuid);
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
-        final String group = rpgcore.getPlayerManager().getPlayerGroup(Bukkit.getPlayer(uuid));
+        final String group = rpgcore.getUserManager().getPlayerGroup(player);
         if (player.isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(player, group));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
@@ -302,22 +303,23 @@ public class GuildManager {
 
         for (int i = 0; i < members.size(); i++) {
             final UUID uuid = members.get(i);
+            final User user = rpgcore.getUserManager().find(uuid);
 
             if (this.getGuildOwner(tag).equals(uuid)) {
-                memberItem.setName("&4&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+                memberItem.setName("&4&l" + user.getName());
             } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
-                memberItem.setName("&c&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+                memberItem.setName("&c&l" + user.getName());
             } else {
-                memberItem.setName("&6&l" + rpgcore.getPlayerManager().getPlayerName(uuid));
+                memberItem.setName("&6&l" + user.getName());
             }
 
             lore.clear();
-            lore.add("&6Lvl: &7" + rpgcore.getPlayerManager().getPlayerLvl(uuid));
-            if (rpgcore.getPlayerManager().getPlayerLvl(uuid) == 130) {
+            lore.add("&6Lvl: &7" + user.getLvl());
+            if (user.getLvl() == 130) {
                 lore.add("&6Exp: &4&lMAX &6/ &4&lMAX &8(&4&lMAX &7%&8)");
             } else {
-                lore.add("&6Exp: &7" + rpgcore.getPlayerManager().getPlayerExp(uuid) + " &6/ &7" + rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)
-                        + " &8(&6" + Utils.procentFormat.format((rpgcore.getPlayerManager().getPlayerExp(uuid) / rpgcore.getLvlManager().getExpForLvl(rpgcore.getPlayerManager().getPlayerLvl(uuid) + 1)) * 100) + "&7%&8)");
+                lore.add("&6Exp: &7" + user.getExp() + " &6/ &7" + rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)
+                        + " &8(&6" + Utils.procentFormat.format((user.getExp() / rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) * 100) + "&7%&8)");
             }
             lore.add("&6Zabojstwa: &7" + this.getGuildKills(tag).get(uuid));
             lore.add("&6Zgony: &7" + this.getGuildDeaths(tag).get(uuid));
@@ -335,7 +337,7 @@ public class GuildManager {
                 lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }
 
-            membersPanel.setItem(i, memberItem.setSkullOwner(rpgcore.getPlayerManager().getPlayerName(uuid)).setLore(lore).toItemStack().clone());
+            membersPanel.setItem(i, memberItem.setSkullOwner(user.getName()).setLore(lore).toItemStack().clone());
 
         }
 

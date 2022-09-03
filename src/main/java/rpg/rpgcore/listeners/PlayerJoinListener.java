@@ -8,8 +8,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
@@ -33,23 +35,18 @@ public class PlayerJoinListener implements Listener {
         final UUID playerUUID = p.getUniqueId();
         final String playerName = p.getName();
 
+        if (!rpgcore.getUserManager().isUser(playerUUID)) {
+            p.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
+            return;
+        }
+        final User user = rpgcore.getUserManager().find(playerUUID);
         rpgcore.getBackupManager().savePlayer(p, playerUUID);
 
         p.setMaxHealth(20);
 
-        int playerLvl;
-        double playerExp;
-        if (!(rpgcore.getPlayerManager().getPlayerLvl().containsKey(playerUUID)) || !(rpgcore.getPlayerManager().getPlayerExp().containsKey(playerUUID))) {
-            playerLvl = 1;
-            playerExp = 0 / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
-        } else {
-            playerLvl = rpgcore.getPlayerManager().getPlayerLvl(playerUUID);
-            playerExp = rpgcore.getPlayerManager().getPlayerExp(playerUUID) / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
-        }
+        final int playerLvl = user.getLvl();
+        final double playerExp = user.getExp() / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
 
-        if (playerLvl == 0) {
-            playerLvl = 1;
-        }
         p.setLevel(playerLvl);
         p.setExp((float) playerExp);
         for (Player rest : Bukkit.getOnlinePlayers()) {
@@ -75,7 +72,7 @@ public class PlayerJoinListener implements Listener {
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
 
-        final String playerGroup = rpgcore.getPlayerManager().getPlayerGroup(p);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(p);
 
         if (rpgcore.getGuildManager().hasGuild(playerUUID)) {
             final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
@@ -87,7 +84,7 @@ public class PlayerJoinListener implements Listener {
 
 
         e.setJoinMessage(Utils.joinMessage(playerName));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20,5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
         if (!p.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWitamy Cie, na serwerze typu &6metin2 &aw minecraft. Pod &6/pomoc &aznajdziesz najwazniejsze informacje i przydatne komendy."));
@@ -112,31 +109,32 @@ public class PlayerJoinListener implements Listener {
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
 
-        if (!(rpgcore.getPlayerManager().getPlayers().contains(uuid))) {
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().createPlayer(Bukkit.getPlayer(e.getUniqueId()), e.getName(), uuid, "false", "false"));
+        if (!rpgcore.getUserManager().isUser(uuid)) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL000)"));
+            return;
         }
 
-        if (rpgcore.getPlayerManager().getPlayers().contains(uuid)) {
-            if (rpgcore.getPlayerManager().isBanned(uuid)) {
+        final User user = rpgcore.getUserManager().find(uuid);
 
-                final String[] banInfo = rpgcore.getPlayerManager().getPlayerBanInfo(uuid).split(";");
+        if (user.isBanned()) {
 
-                try {
-                    final Date teraz = new Date();
-                    final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
+            final String[] banInfo = user.getBanInfo().split(";");
 
-                    if (teraz.after(dataWygasnieciaBana)) {
-                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
-                        return;
-                    }
+            try {
+                final Date teraz = new Date();
+                final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
 
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+                if (teraz.after(dataWygasnieciaBana)) {
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
+                    return;
                 }
 
-
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
+            } catch (ParseException ex) {
+                ex.printStackTrace();
             }
+
+
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
         }
 
     }
