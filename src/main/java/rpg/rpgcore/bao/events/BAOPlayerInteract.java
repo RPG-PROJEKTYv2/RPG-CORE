@@ -31,6 +31,10 @@ public class BAOPlayerInteract implements Listener {
             return;
         }
 
+        if (eventItem == null) {
+            return;
+        }
+
         if (!eventItem.equals(rpgcore.getBaoManager().getItemDoZmianki())) {
             return;
         }

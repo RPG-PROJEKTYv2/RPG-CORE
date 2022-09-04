@@ -18,6 +18,7 @@ import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
+import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
@@ -127,6 +128,7 @@ import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
+import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -135,6 +137,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private static RPGCORE instance;
     private static ProtocolManager protocolManager;
+    private static DiscordBot discordBot;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -183,13 +186,16 @@ public final class RPGCORE extends JavaPlugin {
     private RoznosciManager roznosciManager;
 
     private int i = 1;
-    public List<UUID> diggingList = new ArrayList<>();
 
     public static RPGCORE getInstance() {
         return instance;
     }
     public static ProtocolManager getProtocolManager() {
         return protocolManager;
+    }
+
+    public static DiscordBot getDiscordBot() {
+        return discordBot;
     }
 
     public void onEnable() {
@@ -350,6 +356,11 @@ public final class RPGCORE extends JavaPlugin {
         // SKRZYNIE
         this.initSkrzynieManagers();
 
+        try {
+            discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY");
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onDisable() {
@@ -493,9 +504,6 @@ public final class RPGCORE extends JavaPlugin {
         this.roznosciManager = new RoznosciManager();
     }
 
-    public List<UUID> getDiggingList() {
-        return diggingList;
-    }
 
     private void autoMessage() {
 

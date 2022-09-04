@@ -38,6 +38,7 @@ public class NiebiosaPlayerInteract implements Listener {
                 return;
             }
 
+
             if (e.getClickedBlock().getType().equals(Material.DROPPER) && e.getClickedBlock().getLocation().getWorld().getName().equals("60-70exp")
                     && eventItem.isSimilar(NiebiosaItems.getItem("klucz", 1))) {
                 e.setCancelled(true);

@@ -122,8 +122,8 @@ public class DamageManager {
 
         // NPC
         // ...RYBAK
-        dmg += rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid);
-        mnoznik += rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid);
+        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
+        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
         // ...KOLEKCJONER
         mnoznik += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue1();
         krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue3();
@@ -208,8 +208,8 @@ public class DamageManager {
 
         // NPC
         // ...RYBAK
-        dmg += rpgcore.getRybakNPC().getPlayerRybakDodatkowyDMG(uuid);
-        mnoznik += rpgcore.getRybakNPC().getPlayerRybakSredniDMG(uuid);
+        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
+        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
         // ...KOLEKCJONER
         mnoznik += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue1();
         krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getValue3();

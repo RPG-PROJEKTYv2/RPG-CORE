@@ -7,7 +7,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 public enum NiebiosaItems {
 
     I1("klucz", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&bKlucz do Bramy Niebios").addGlowing().toItemStack().clone()),
-    I2("skrzynia", new ItemBuilder(Material.CHEST).setName("&b&lSkrzynia Wladcy Niebios").hideFlag().toItemStack().clone());
+    I2("skrzynia", new ItemBuilder(Material.ENDER_CHEST).setName("&b&lSkrzynia Wladcy Niebios").hideFlag().toItemStack().clone());
 
     //TODO Zrobic drop ze skrzynki
 

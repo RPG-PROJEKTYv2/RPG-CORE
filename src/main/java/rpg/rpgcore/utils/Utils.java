@@ -313,7 +313,7 @@ public class Utils {
         }
 
         for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("❣ Obrona: ")) {
+            if (removeColor(s).contains("Obrona: ")) {
                 return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
             }
         }
@@ -328,7 +328,7 @@ public class Utils {
         }
 
         for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("✪ Thorns: ")) {
+            if (removeColor(s).contains("Thorns: ")) {
                 return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
             }
         }
@@ -343,7 +343,7 @@ public class Utils {
         }
 
         for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("⚔ Obrazenia: ")) {
+            if (removeColor(s).contains("Obrazenia: ")) {
                 return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
             }
         }
@@ -358,7 +358,7 @@ public class Utils {
         }
 
         for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("☠ Obrazenia na potwory: ")) {
+            if (removeColor(s).contains("Obrazenia na potwory: ")) {
                 return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
             }
         }

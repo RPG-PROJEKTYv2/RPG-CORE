@@ -1,5 +1,7 @@
 package rpg.rpgcore.newTarg;
 
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -13,9 +15,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -208,6 +212,14 @@ public class NewTargInventoryClick implements Listener {
                     p.updateInventory();
                 }
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wystawiles przedmiot za &6&o" + cena + " &2$"));
+                RPGCORE.getDiscordBot().sendChannelMessage("targ-log", (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create("**Targ - Wystaw**",
+                        "**Gracz: **`" + player.getName() + "` **pomyslnie wystawil przedmiot na swoj targ.**\n" +
+                                "**Nazwa Przedmiotu: **" + Utils.removeColor(item.getItemMeta().getDisplayName()) + "\n" +
+                                "**Ilosc Przedmiotu: **" + item.getAmount() + "\n" +
+                                "**Cena Przedmiotu: **" + cena + "\n" +
+                                "**Zapłacony Podatek: **" + podatek + "$\n" +
+                                "**Typ Przedmiotu: **`" + item.getType().toString() + "`\n" +
+                                "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) + "\n", Color.GREEN).build()}).build());
                 rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
                 player.closeInventory();
                 return;
@@ -217,6 +229,12 @@ public class NewTargInventoryClick implements Listener {
             rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAnulowales wystawianie przedmiotu"));
+            RPGCORE.getDiscordBot().sendChannelMessage("targ-log", (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create("**Targ - Wystaw**",
+                    "**Gracz: **`" + player.getName() + "` **anulowal wystawianie przedmiotu.**\n" +
+                            "**Nazwa Przedmiotu: **" + Utils.removeColor(clickedInventory.getItem(4).getItemMeta().getDisplayName()) + "\n" +
+                            "**Ilosc Przedmiotu: **" + clickedInventory.getItem(4).getAmount() + "\n" +
+                            "**Typ Przedmiotu: **`" + clickedInventory.getItem(4).getType().toString() + "`\n" +
+                            "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedInventory.getItem(4).getItemMeta().getLore()) + "\n", Color.RED).build()}).build());
 
         }
 

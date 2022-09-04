@@ -120,5 +120,10 @@
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>
         </dependency>
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-alpha.11</version>
+        </dependency>
     </dependencies>
 </project>

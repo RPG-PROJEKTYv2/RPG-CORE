@@ -44,7 +44,6 @@ public class DropFromChestsListener implements Listener {
                 if (!player.getCanPickupItems()) {
                     player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
                     final Items item = rpgcore.getRoznosciManager().getDrawnItems(player);
-                    // TODO ZROBIC OS ZA SKRZYNKI XD
                     if (item == null) {
                         return;
                     }

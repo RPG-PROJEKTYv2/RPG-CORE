@@ -34,8 +34,8 @@ public class PlayerFishListener implements Listener {
             firstRoll.add(0.3, "empty");
 
             String result = firstRoll.next();
-
-            int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(player.getUniqueId());
+            final RybakUser rybakUser = rpgcore.getRybakNPC().find(player.getUniqueId()).getRybakUser();
+            int currentMission = rybakUser.getMission() + 1;
             switch (result) {
                 case "empty":
                     player.sendMessage(Utils.format(Utils.RYBAK + "&cNiestety ryba zerwala sie z linki"));
@@ -81,80 +81,80 @@ public class PlayerFishListener implements Listener {
                     if (is.getItemMeta().getDisplayName().contains("Sledz")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 5);
                         if (currentMission == 1 || currentMission == 35) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorsz")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 5);
                         if (currentMission == 2 || currentMission == 36) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Losos")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 5);
                         if (currentMission == 3 || currentMission == 37) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Krasnopiorka")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 7);
                         if (currentMission == 5 || currentMission == 38) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorsz Czarny")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 7);
                         if (currentMission == 6 || currentMission == 39) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Dorada")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 7);
                         if (currentMission == 7 || currentMission == 40) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Cierniczek")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 9);
                         if (currentMission == 11) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Fladra")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 9);
                         if (currentMission == 12) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Karas")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 12);
                         if (currentMission == 18) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Karp")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 12);
                         if (currentMission == 19) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
@@ -162,62 +162,62 @@ public class PlayerFishListener implements Listener {
                     if (is.getItemMeta().getDisplayName().contains("Leszcz")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 12);
                         if (currentMission == 23) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Makrela")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 15);
                         if (currentMission == 24) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Mintaj")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 15);
                         if (currentMission == 26) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Okon")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 20);
                         if (currentMission == 30) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Plotka")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 20);
                         if (currentMission == 31) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Skrzynia Rybaka")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 25);
                         if (currentMission == 15 || currentMission == 29) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (is.getItemMeta().getDisplayName().contains("Niesamowity przedmiot rybacki")) {
                         rpgcore.getRybakNPC().addStatsToRod(player, 100);
                         if (currentMission == 16 || currentMission == 21 || currentMission == 32 || currentMission == 44) {
-                            rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                            return;
+                            rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                            break;
                         }
                     }
 
                     if (currentMission == 42) {
-                        rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), is.getAmount());
-                        return;
+                        rybakUser.setProgress(rybakUser.getProgress() + is.getAmount());
+                        break;
                     }
                     break;
                 case "mob":
@@ -228,8 +228,8 @@ public class PlayerFishListener implements Listener {
 
                             rpgcore.getRybakNPC().addStatsToRod(player, 100);
                             if (currentMission == 9) {
-                                rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
-                                return;
+                                rybakUser.setProgress(rybakUser.getProgress() + 1);
+                                break;
                             }
 
                             break;
@@ -238,8 +238,8 @@ public class PlayerFishListener implements Listener {
 
                             rpgcore.getRybakNPC().addStatsToRod(player, 350);
                             if (currentMission == 18 || currentMission == 28 || currentMission == 45) {
-                                rpgcore.getRybakNPC().updatePlayerPostep(player.getUniqueId(), 1);
-                                return;
+                                rybakUser.setProgress(rybakUser.getProgress() + 1);
+                                break;
                             }
 
                             break;
@@ -247,9 +247,11 @@ public class PlayerFishListener implements Listener {
                     break;
             }
 
-
-
             rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().setFishedItems(rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().getFishedItems() + 1);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+               rpgcore.getMongoManager().saveDataOs(player.getUniqueId(), rpgcore.getOsManager().find(player.getUniqueId()));
+               rpgcore.getMongoManager().saveDataRybak(player.getUniqueId(), rpgcore.getRybakNPC().find(player.getUniqueId()));
+            });
         }
     }
 }

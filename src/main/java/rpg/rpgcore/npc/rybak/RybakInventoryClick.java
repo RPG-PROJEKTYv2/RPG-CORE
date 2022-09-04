@@ -122,9 +122,10 @@ public class RybakInventoryClick implements Listener {
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
                 player.sendMessage(Utils.format(Utils.RYBAK + "&aSprzedales &6&o" + amount + " &a&orybek za &6&o" + (cena * amount) + " &a$"));
                 player.closeInventory();
-                final int mission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);
+                final int mission = rpgcore.getRybakNPC().find(playerUUID).getRybakUser().getMission();
                 if (mission == 41 || mission == 43) {
-                    rpgcore.getRybakNPC().updatePlayerPostep(playerUUID, amount);
+                    rpgcore.getRybakNPC().find(playerUUID).getRybakUser().setProgress(rpgcore.getRybakNPC().find(playerUUID).getRybakUser().getProgress() + amount);
+                   rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(playerUUID, rpgcore.getRybakNPC().find(playerUUID)));
                 }
                 return;
             }
@@ -139,18 +140,16 @@ public class RybakInventoryClick implements Listener {
             if (!clickedItem.getType().equals(Material.BOOK_AND_QUILL)){
                 return;
             }
+            final RybakUser rybakUser = rpgcore.getRybakNPC().find(playerUUID).getRybakUser();
+            final int currentMission = rybakUser.getMission();
 
-            final String[] misjeGracza = rpgcore.getRybakNPC().getPlayerRybakMisje(playerUUID).split(",");
-
-            if (misjeGracza[clickedSlot].equalsIgnoreCase("true")) {
+            if (clickedSlot < currentMission) {
                 return;
             }
 
             final String[] misja = rpgcore.getRybakNPC().getMisja(clickedSlot).split(";");
 
-            final int currentMission = rpgcore.getRybakNPC().getPlayerCurrentMission(playerUUID);
-
-            if (currentMission == 4) {
+            if (currentMission + 1 == 4) {
                 final ItemBuilder sledz = new ItemBuilder(Material.RAW_FISH, 256);
                 final ItemBuilder dorsz = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
                 final ItemBuilder losos = new ItemBuilder(Material.RAW_FISH, 256, (short) 1);
@@ -171,7 +170,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(losos.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 8) {
@@ -195,7 +194,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(dorada.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 13) {
@@ -215,7 +214,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(cierniczek.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 14) {
@@ -232,7 +231,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(fladra.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 20) {
@@ -247,7 +246,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(chest.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 22) {
@@ -265,7 +264,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(karp.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 27) {
@@ -287,7 +286,7 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(mintaj.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             } else if (currentMission == 33) {
@@ -305,32 +304,24 @@ public class RybakInventoryClick implements Listener {
                     player.getInventory().removeItem(plotka.toItemStack());
                 } else {
                     player.closeInventory();
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                     return;
                 }
             }
 
-            if (rpgcore.getRybakNPC().getPlayerPostep(playerUUID) < Integer.parseInt(misja[1])) {
+            if (rybakUser.getProgress() < Integer.parseInt(misja[1])) {
                 player.closeInventory();
-                player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rpgcore.getRybakNPC().getPlayerPostep(playerUUID)) + " " + misja[2]));
+                player.sendMessage(Utils.format(Utils.RYBAK + "&7Nie probuj mnie tutaj oszukiwac. Musisz jeszcze &6" + misja[0].replace("Wylow", "Wylowic").replace("Zabij", "Zabic").replace("Oddaj", "Oddac") + " &c" + (Integer.parseInt(misja[1]) - rybakUser.getProgress()) + " " + misja[2]));
                 return;
             }
 
-            misjeGracza[clickedSlot] = "true";
+            rybakUser.setMission(currentMission + 1);
+            rybakUser.setProgress(0);
             rpgcore.getRybakNPC().addReward(playerUUID, misja[3], misja[4]);
             rpgcore.getRybakNPC().addReward(playerUUID, misja[5], misja[6]);
 
-            final StringBuilder builder = new StringBuilder();
 
-            for (int i = 0; i < misjeGracza.length; i++) {
-                builder.append(misjeGracza[i]);
-                if (!(i+1 > misjeGracza.length)) {
-                    builder.append(",");
-                }
-            }
 
-            rpgcore.getRybakNPC().updatePlayerRybakMisje(playerUUID, String.valueOf(builder));
-            rpgcore.getRybakNPC().setPlayerPostep(playerUUID, 0);
 
             player.closeInventory();
             if (clickedSlot == 44) {

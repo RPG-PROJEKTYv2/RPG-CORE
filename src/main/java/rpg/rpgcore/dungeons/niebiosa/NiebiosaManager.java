@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -12,6 +13,7 @@ public class NiebiosaManager {
 
     private final RPGCORE rpgcore;
     private boolean isActive;
+    private final BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
     public NiebiosaManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -26,24 +28,40 @@ public class NiebiosaManager {
 
 
     private void removeGate(final World w) {
-        w.getBlockAt(new Location(w, 1, 4, 0)).setType(Material.AIR);
-        w.getBlockAt(new Location(w, 0, 4, 0)).setType(Material.AIR);
-        w.getBlockAt(new Location(w, 1, 5, 0)).setType(Material.AIR);
-        w.getBlockAt(new Location(w, 0, 5, 0)).setType(Material.AIR);
-        w.getBlockAt(new Location(w, 1, 6, 0)).setType(Material.AIR);
-        w.getBlockAt(new Location(w, 0, 6, 0)).setType(Material.AIR);
-        this.setActive(true);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.setGate(w), 200L);
+        scheduler.runTaskLater(rpgcore, () -> {
+            w.getBlockAt(new Location(w, 3, 4, 1)).setType(Material.AIR);
+            w.getBlockAt(new Location(w, 2, 4, 1)).setType(Material.AIR);
+            scheduler.runTaskLater(rpgcore, () -> {
+                w.getBlockAt(new Location(w, 3, 5, 1)).setType(Material.AIR);
+                w.getBlockAt(new Location(w, 2, 5, 1)).setType(Material.AIR);
+                scheduler.runTaskLater(rpgcore, () -> {
+                    w.getBlockAt(new Location(w, 3, 6, 1)).setType(Material.AIR);
+                    w.getBlockAt(new Location(w, 2, 6, 1)).setType(Material.AIR);
+                    //this.setActive(true);
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.setGate(w), 200L);
+                }, 20L);
+            }, 20L);
+        }, 20L);
     }
 
+    @Deprecated
     private void setGate(final World w) {
-        w.getBlockAt(new Location(w, 1, 4, 0)).setType(Material.COBBLE_WALL);
-        w.getBlockAt(new Location(w, 0, 4, 0)).setType(Material.COBBLE_WALL);
-        w.getBlockAt(new Location(w, 1, 5, 0)).setType(Material.COBBLE_WALL);
-        w.getBlockAt(new Location(w, 0, 5, 0)).setType(Material.COBBLE_WALL);
-        w.getBlockAt(new Location(w, 1, 6, 0)).setType(Material.COBBLE_WALL);
-        w.getBlockAt(new Location(w, 0, 6, 0)).setType(Material.COBBLE_WALL);
-        Bukkit.broadcastMessage(Utils.format("&b&lBrama do Niebios zostala zamknieta"));
+        scheduler.runTaskLater(rpgcore, () -> {
+            w.getBlockAt(new Location(w, 3, 6, 1)).setType(Material.COBBLE_WALL);
+            w.getBlockAt(new Location(w, 3, 6, 1)).setData((byte) 1);
+            w.getBlockAt(new Location(w, 2, 6, 1)).setType(Material.COBBLE_WALL);
+            scheduler.runTaskLater(rpgcore, () -> {
+                w.getBlockAt(new Location(w, 3, 5, 1)).setType(Material.COBBLE_WALL);
+                w.getBlockAt(new Location(w, 3, 5, 1)).setData((byte) 1);
+                w.getBlockAt(new Location(w, 2, 5, 1)).setType(Material.COBBLE_WALL);
+                scheduler.runTaskLater(rpgcore, () -> {
+                    w.getBlockAt(new Location(w, 3, 4, 1)).setType(Material.COBBLE_WALL);
+                    w.getBlockAt(new Location(w, 2, 4, 1)).setType(Material.COBBLE_WALL);
+                    w.getBlockAt(new Location(w, 2, 4, 1)).setData((byte) 1);
+                    Bukkit.broadcastMessage(Utils.format("&b&lBrama do Niebios zostala zamknieta"));
+                }, 20L);
+            }, 20L);
+        }, 20L);
     }
 
     public boolean isActive() {

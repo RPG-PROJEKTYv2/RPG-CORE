@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.rybak;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.v1_8_R3.EntityLiving;
@@ -28,17 +29,12 @@ import java.util.*;
 public class RybakNPC {
 
     private final RPGCORE rpgcore;
+    private final Map<UUID, RybakObject> usersMap;
 
     public RybakNPC(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.usersMap = rpgcore.getMongoManager().loadAllRybak();
     }
-
-    private final HashMap<UUID, String> ryabkMisje = new HashMap<>();
-    private final HashMap<UUID, Double> ryabkSrednieDMG = new HashMap<>();
-    private final HashMap<UUID, Double> ryabkDodatkowyDMG = new HashMap<>();
-    private final HashMap<UUID, Double> ryabkBlok = new HashMap<>();
-    private final HashMap<UUID, Double> ryabkSredniDef = new HashMap<>();
-    private final HashMap<UUID, Integer> rybakPostep = new HashMap<>();
     private final HashMap<Integer, String> misjeRybackie = new HashMap<>(45);
     private final HashMap<Integer, Double> wymaganyExpWedki = new HashMap<>(50);
 
@@ -75,7 +71,7 @@ public class RybakNPC {
 
     public void openRybakGUI(final Player player) {
         final Inventory rybakGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lMenu Rybaka"));
-
+        final RybakUser rybakUser = this.find(player.getUniqueId()).getRybakUser();
         fill.setName(" ").hideFlag();
 
         for (int i = 0; i < rybakGUI.getSize(); i++) {
@@ -105,10 +101,10 @@ public class RybakNPC {
         lore.add("&3Statystyki gracza: &f" + player.getName());
         lore.add("&8Ponizej znajduja sie twoje statystki z lowienia");
         lore.add("&f&lMISJE");
-        lore.add("&8- &bSrednie Obrazenia: &f+ " + this.getPlayerRybakSredniDMG(player.getUniqueId()) + "%");
-        lore.add("&8- &bSrednia Defensywa: &f+ " + this.getPlayerRybakSredniDef(player.getUniqueId()) + "%");
-        lore.add("&8- &bDodatkowe Obrazenia: &f+ " + (int) this.getPlayerRybakDodatkowyDMG(player.getUniqueId()));
-        lore.add("&8- &bBlok Ciosu: &f+ " + this.getPlayerRybakBlok(player.getUniqueId()) + "%");
+        lore.add("&8- &bSrednie Obrazenia: &f+ " + rybakUser.getValue1() + "%");
+        lore.add("&8- &bSrednia Defensywa: &f+ " + rybakUser.getValue2() + "%");
+        lore.add("&8- &bDodatkowe Obrazenia: &f+ " + rybakUser.getValue3());
+        lore.add("&8- &bBlok Ciosu: &f+ " + rybakUser.getValue4() + "%");
         lore.add("");
         lore.add("&f&lOSIAGNIECIA");
         lore.add("&8- &bWylowione Ryby: &f" + rpgcore.getOsManager().find(player.getUniqueId()).getOsUser().getFishedItems());
@@ -200,13 +196,13 @@ public class RybakNPC {
         final ItemBuilder misjeDone = new ItemBuilder(Material.BOOK);
         final ItemBuilder previousNotDone = new ItemBuilder(Material.BARRIER);
 
-        final String[] playerMisje = rpgcore.getRybakNPC().getPlayerRybakMisje(player.getUniqueId()).split(",");
+        final int playerMisje = this.find(player.getUniqueId()).getRybakUser().getMission();
         final List<String> lore = new ArrayList<>();
 
         fill.setName(" ").hideFlag();
 
         for (int i = 0; i < kampaniaGui.getSize(); i++) {
-            if (playerMisje[i].equals("true")) {
+            if (i < playerMisje) {
                 lore.clear();
                 lore.add("&a&lUKONCZONE");
                 kampaniaGui.setItem(i, misjeDone.setName("&c&lMisja #" + (i + 1)).setLore(lore).addGlowing().toItemStack().clone());
@@ -594,7 +590,7 @@ public class RybakNPC {
         lore.add(" ");
         if (!(misjaNr == 3 || misjaNr == 7 || misjaNr == 12 || misjaNr == 13 || misjaNr == 19 || misjaNr == 21 || misjaNr == 26 || misjaNr == 32)) {
             lore.add("&f&lPostep:");
-            lore.add("&b" + this.rybakPostep.get(uuid) + " &f/&b " + misja[1] + " &8(&b" + String.format("%.2f", ((double) rybakPostep.get(uuid) / Integer.parseInt(misja[1])) * 100) + "%&8)");
+            lore.add("&b" + this.find(uuid).getRybakUser().getProgress() + " &f/&b " + misja[1] + " &8(&b" + String.format("%.2f", ((double) this.find(uuid).getRybakUser().getProgress() / Integer.parseInt(misja[1])) * 100) + "%&8)");
         }
 
         return misjeItem.setName("&c&lMisja #" + (misjaNr + 1)).setLore(lore).toItemStack();
@@ -603,110 +599,38 @@ public class RybakNPC {
     public void addReward(final UUID uuid, final String nagroda, final String bonus) {
 
         double toAdd = Double.parseDouble(bonus);
-
+        final RybakUser rybakUser = this.find(uuid).getRybakUser();
         switch (nagroda.toLowerCase(Locale.ROOT)) {
             case "srednie obrazenia":
-                this.updatePlayerRybakSredniDMG(uuid, this.getPlayerRybakSredniDMG(uuid) + toAdd);
+                rybakUser.setValue1(rybakUser.getValue1() + toAdd);
                 break;
             case "srednia defensywa":
-                this.updatePlayerRybakSredniDef(uuid, this.getPlayerRybakSredniDef(uuid) + toAdd);
+                rybakUser.setValue2(rybakUser.getValue2() + toAdd);
                 break;
             case "dodatkowe obrazenia":
-                this.updatePlayerRybakDodatowyDMG(uuid, this.getPlayerRybakDodatkowyDMG(uuid) + toAdd);
+                rybakUser.setValue3(rybakUser.getValue3() + toAdd);
                 break;
             case "blok ciosu":
-                this.updatePlayerRybakBlok(uuid, this.getPlayerRybakBlok(uuid) + toAdd);
+                rybakUser.setValue4(rybakUser.getValue4() + toAdd);
                 break;
         }
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(uuid, this.find(uuid)));
     }
 
-    public String getPlayerRybakMisje(final UUID uuid) {
-        return this.ryabkMisje.get(uuid);
+    public String getMisja(final int misjaNr) {
+        return this.misjeRybackie.get(misjaNr);
     }
 
-    public void setPlayerRybakMisje(final UUID uuid, final String noweMisje) {
-        this.ryabkMisje.put(uuid, noweMisje);
+    public void add(final RybakObject rybakObject) {
+        this.usersMap.put(rybakObject.getId(), rybakObject);
     }
 
-    public void updatePlayerRybakMisje(final UUID uuid, final String noweMisje) {
-        this.ryabkMisje.replace(uuid, noweMisje);
+    public RybakObject find(final UUID uuid) {
+        usersMap.computeIfAbsent(uuid, k -> new RybakObject(uuid));
+        return this.usersMap.get(uuid);
     }
 
-    public int getPlayerCurrentMission(final UUID uuid) {
-        final String[] missions = this.ryabkMisje.get(uuid).split(",");
-
-        int i = 0;
-        while (missions[i].equalsIgnoreCase("true")) {
-            i++;
-        }
-        return i + 1;
-    }
-
-
-    public double getPlayerRybakSredniDMG(final UUID uuid) {
-        return this.ryabkSrednieDMG.get(uuid);
-    }
-
-    public void setPlayerRybakSredniDMG(final UUID uuid, final double nowyDMG) {
-        this.ryabkSrednieDMG.put(uuid, nowyDMG);
-    }
-
-    public void updatePlayerRybakSredniDMG(final UUID uuid, final double nowyDMG) {
-        this.ryabkSrednieDMG.replace(uuid, nowyDMG);
-    }
-
-
-    public double getPlayerRybakSredniDef(final UUID uuid) {
-        return this.ryabkSredniDef.get(uuid);
-    }
-
-    public void setPlayerRybakSredniDef(final UUID uuid, final double nowyDef) {
-        this.ryabkSredniDef.put(uuid, nowyDef);
-    }
-
-    public void updatePlayerRybakSredniDef(final UUID uuid, final double nowyDef) {
-        this.ryabkSredniDef.replace(uuid, nowyDef);
-    }
-
-
-    public double getPlayerRybakBlok(final UUID uuid) {
-        return this.ryabkBlok.get(uuid);
-    }
-
-    public void setPlayerRybakBlok(final UUID uuid, final double nowyBlok) {
-        this.ryabkBlok.put(uuid, nowyBlok);
-    }
-
-    public void updatePlayerRybakBlok(final UUID uuid, final double nowyBlok) {
-        this.ryabkBlok.replace(uuid, nowyBlok);
-    }
-
-
-    public double getPlayerRybakDodatkowyDMG(final UUID uuid) {
-        return this.ryabkDodatkowyDMG.get(uuid);
-    }
-
-    public void setPlayerRybakDodatkowyDMG(final UUID uuid, final double nowyDodatkowyDMG) {
-        this.ryabkDodatkowyDMG.put(uuid, nowyDodatkowyDMG);
-    }
-
-    public void updatePlayerRybakDodatowyDMG(final UUID uuid, final double nowyDodatkowyDMG) {
-        this.ryabkDodatkowyDMG.replace(uuid, nowyDodatkowyDMG);
-    }
-
-    public int getPlayerPostep(final UUID uuid) {
-        return this.rybakPostep.get(uuid);
-    }
-
-    public void setPlayerPostep(final UUID uuid, final int postep) {
-        this.rybakPostep.put(uuid, postep);
-    }
-
-    public void updatePlayerPostep(final UUID uuid, final int nowyPostep) {
-        this.rybakPostep.replace(uuid, this.rybakPostep.get(uuid) + nowyPostep);
-    }
-
-    public String getMisja(final int misja) {
-        return this.misjeRybackie.get(misja);
+    public ImmutableSet<RybakObject> getRybakObjects() {
+        return ImmutableSet.copyOf(this.usersMap.values());
     }
 }

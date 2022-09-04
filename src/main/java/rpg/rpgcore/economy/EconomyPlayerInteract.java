@@ -37,6 +37,10 @@ public class EconomyPlayerInteract implements Listener {
             return;
         }
 
+        if (eventItem == null) {
+            return;
+        }
+
         if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
             final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
             final User user = rpgcore.getUserManager().find(uuid);

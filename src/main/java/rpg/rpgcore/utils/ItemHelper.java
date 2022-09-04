@@ -15,8 +15,8 @@ public class ItemHelper {
         final List<String> lore = new ArrayList<>();
 
         set.setName(name);
-        lore.add("&b❣ &7Obrona: &f" + prot);
-        lore.add("&6✪ &7Thorns: &f" + thorns);
+        lore.add("&7Obrona: &f" + prot);
+        lore.add("&7Thorns: &f" + thorns);
         set.setLore(lore);
 
         if (hideFlags) {
@@ -36,8 +36,8 @@ public class ItemHelper {
 
         sword.setName(name);
 
-        lore.add("&4⚔ &7Obrazenia: &c" + sharp);
-        lore.add("&f☠ &7Obrazenia na potwory: &c" + bane);
+        lore.add("&7Obrazenia: &c" + sharp);
+        lore.add("&7Obrazenia na potwory: &c" + bane);
         sword.setLore(lore);
 
         if (hideFlags) {

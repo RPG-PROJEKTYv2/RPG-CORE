@@ -23,35 +23,6 @@ public class Test implements CommandExecutor {
 
         player.getInventory().addItem(GlobalItem.getItem("I16", 1));
 
-        if (strings.length == 1) {
-            try {
-                int misja = Integer.parseInt(strings[0]);
-
-                String[] misje = rpgcore.getRybakNPC().getPlayerRybakMisje(player.getUniqueId()).split(",");
-
-                Arrays.fill(misje, "false");
-
-                for (int i=0; i < misja; i++) {
-                    misje[i] = "true";
-                }
-                StringBuilder builder = new StringBuilder();
-
-                for (int i = 0; i < misje.length; i++) {
-                    builder.append(misje[i]);
-                    if (!(i+1 > misje.length)) {
-                        builder.append(",");
-                    }
-                }
-
-                rpgcore.getRybakNPC().setPlayerRybakMisje(player.getUniqueId(), String.valueOf(builder));
-                return false;
-
-
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-
         return false;
     }
 }

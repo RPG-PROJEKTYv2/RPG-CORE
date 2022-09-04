@@ -14,6 +14,7 @@ import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
+import rpg.rpgcore.npc.rybak.RybakObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.ranks.RankPlayerUser;
 import rpg.rpgcore.ranks.RankUser;
@@ -81,28 +82,15 @@ public class MongoManager {
         final Document obj = document;
         this.pool.getGracze().deleteOne(document);
 
-        this.pool.getGracze().insertOne(
+        this.pool.getRybak().insertOne(
                 new Document("_id", obj.getString("_id"))
-                        .append("name", obj.getString("nick"))
-                        .append("banInfo", this.pool.getBany().find(new Document("_id", obj.getString("_id"))).first().getString("banInfo"))
-                        .append("muteInfo", this.pool.getMuty().find(new Document("_id", obj.getString("_id"))).first().getString("muteInfo"))
-                        .append("punishmentHistory", obj.getString("punishmentHistory"))
-                        .append("rankName", new RankUser(RankType.GRACZ).getRankType().getName())
-                        .append("rankPlayerName", new RankPlayerUser(RankTypePlayer.GRACZ, 0L).getRankType().getName())
-                        .append("rankPlayerTime", 0L)
-                        .append("rankChestCooldown", 0L)
-                        .append("lvl", obj.getInteger("level"))
-                        .append("exp", obj.getDouble("exp"))
-                        .append("kasa", Double.parseDouble(obj.getString("kasa")))
-                        .append("hellcoins", 0)
-                        .append("msgOff", false)
-                        .append("adminCode", "")
-                        .append("hellCode", "")
-                        .append("inventory", "")
-                        .append("enderchest", "")
-                        .append("armor", "")
-                        .append("pierscienDoswiadczenia", 0)
-                        .append("pierscienDoswiadczeniaTime", 0L)
+                        .append("mission", 0)
+                        .append("progress", 0)
+                        .append("value1", 0.0)
+                        .append("value2", 0.0)
+                        .append("value3", 0.0)
+                        .append("value4", 0.0)
+
         );
     }
 
@@ -123,30 +111,9 @@ public class MongoManager {
         }
 
 
-        for (Document doc : pool.getGracze().find()){
-            Document obj = doc;
+        for (Document obj : pool.getGracze().find()){
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
-            /*
-            String nick = (String) obj.get("nick");
-            UUID uuid = UUID.fromString(obj.get("_id").toString());
-
-            String punishmentHistory = (String) obj.get("punishmentHistory");
-            int lvl = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("level")))));
-            double exp = Double.parseDouble(String.valueOf(obj.get("exp")));
-            double kasa = Double.parseDouble(String.valueOf(obj.get("kasa")));
-            int hellCoins = Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("hellcoins")))));
-            boolean pierscienDoswiadczenia = Boolean.parseBoolean(String.valueOf(obj.get("pierscien_doswiadczenia")));
-            Date pierscienDoswiadczeniaCzas = new Date(Long.parseLong(String.valueOf(obj.get("pierscien_doswiadczenia_czas"))));
-
-            obj = pool.getBany().find(new Document("_id", uuid.toString())).first();
-            String banInfo = (String) obj.get("banInfo");
-
-            obj = pool.getMuty().find(new Document("_id", uuid.toString())).first();
-            String muteInfo = (String) obj.get("muteInfo");
-
-            rpgcore.getPlayerManager().createPlayer(nick, uuid, banInfo, muteInfo, punishmentHistory, lvl, exp,0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, kasa);*/
 
 
 
@@ -161,13 +128,9 @@ public class MongoManager {
                 this.addDataBao(new BaoObject(uuid));
             }
 
-            obj = pool.getRybak().find(new Document("_id", uuid.toString())).first();
-            rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, String.valueOf(obj.get("RYBAK_MISJE")));
-            rpgcore.getRybakNPC().setPlayerPostep(uuid, Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(obj.get("RYBAK_POSTEP"))))));
-            rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_SRDMG"))));
-            rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_SRDEF"))));
-            rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_DDMG"))));
-            rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, Double.parseDouble(String.valueOf(obj.get("RYBAK_BLOK"))));
+            if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataRybak(new RybakObject(uuid));
+            }
 
             try {
                 obj = pool.getAkcesoria().find(new Document("_id", uuid.toString())).first();
@@ -383,13 +346,6 @@ public class MongoManager {
         this.addKlasyData(new Klasy(uuid));
         this.addDataDuszolog(new DuszologObject(uuid));
 
-
-        rpgcore.getRybakNPC().setPlayerRybakMisje(uuid, "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
-        rpgcore.getRybakNPC().setPlayerPostep(uuid, 0);
-        rpgcore.getRybakNPC().setPlayerRybakSredniDMG(uuid, 0.0);
-        rpgcore.getRybakNPC().setPlayerRybakSredniDef(uuid, 0.0);
-        rpgcore.getRybakNPC().setPlayerRybakBlok(uuid, 0.0);
-        rpgcore.getRybakNPC().setPlayerRybakDodatkowyDMG(uuid, 0.0);
 
 
     }
@@ -836,6 +792,31 @@ public class MongoManager {
     public void saveAllUsers() {
         for (User user : rpgcore.getUserManager().getUserObjects()) {
             this.saveDataUser(user.getId(), user);
+        }
+    }
+
+
+    // RYBAK
+    public Map<UUID, RybakObject> loadAllRybak() {
+        Map<UUID, RybakObject> rybak = new HashMap<>();
+        for (Document document : this.pool.getRybak().find()) {
+            RybakObject rybakObject = new RybakObject(document);
+            rybak.put(rybakObject.getId(), rybakObject);
+        }
+        return rybak;
+    }
+
+    public void addDataRybak(final RybakObject rybakObject) {
+        this.pool.getRybak().insertOne(rybakObject.toDocument());
+    }
+
+    public void saveDataRybak(final UUID id, final RybakObject rybakObject) {
+        this.pool.getRybak().findOneAndReplace(new Document("_id", id.toString()), rybakObject.toDocument());
+    }
+
+    public void saveAllRybak() {
+        for (RybakObject rybakObject : rpgcore.getRybakNPC().getRybakObjects()) {
+            this.saveDataRybak(rybakObject.getId(), rybakObject);
         }
     }
 

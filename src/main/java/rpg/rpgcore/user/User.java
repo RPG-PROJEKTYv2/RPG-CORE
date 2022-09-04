@@ -53,7 +53,7 @@ public class User {
         this.msgOff = false;
         this.adminCode = "";
         this.hellCode = "";
-        this.inventoriesUser = new InventoriesUser("", "", "");
+        this.inventoriesUser = new InventoriesUser("", "", "", "", "", "", "", "");
         this.pierscienDoswiadczenia = 0;
         this.pierscienDoswiadczeniaTime = 0L;
     }
@@ -74,7 +74,7 @@ public class User {
         this.msgOff = document.getBoolean("msgOff");
         this.adminCode = document.getString("adminCode");
         this.hellCode = document.getString("hellCode");
-        this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"));
+        this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"), document.getString("magazyn1"), document.getString("magazyn2"), document.getString("magazyn3"), document.getString("magazyn4"), document.getString("magazyn5"));
         this.pierscienDoswiadczenia = document.getInteger("pierscienDoswiadczenia");
         this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
     }
