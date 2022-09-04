@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
@@ -26,6 +27,14 @@ public class PlayerJoinListener implements Listener {
 
     public PlayerJoinListener(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onJooinWhiteList(final PlayerLoginEvent e) {
+        if (!e.getPlayer().isWhitelisted() && Bukkit.hasWhitelist()) {
+            String msg = Utils.getWhiteListMessage().replace("@p", e.getPlayer().getName());
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(msg), 1L);
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

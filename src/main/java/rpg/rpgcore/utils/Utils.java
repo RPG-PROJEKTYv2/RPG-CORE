@@ -131,6 +131,16 @@ public class Utils {
         return (SERVERNAME + format("&cNie mozesz " + type + " samego siebie!"));
     }
 
+    public static String getWhiteListMessage() {
+        return format(WHITELIST + "\n" +
+                "&6Witaj &f@p&6!\n" +
+                "&6Aktualnie serwer jest &cniedostepny &6dla graczy\n" +
+                "&6Wiecej informacji znajdziesz\n" +
+                "&6Na naszych social mediach\n" +
+                "&6Discord: &fdc.hellrpg.pl\n" +
+                "&6Facebook: &ffb.hellrpg.com");
+    }
+
     public static String removeColor(String toRemove) {
         char znakToLook;
         if (toRemove.contains("§")) {
