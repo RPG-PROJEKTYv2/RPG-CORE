@@ -66,17 +66,7 @@ public class PlayerJoinListener implements Listener {
             p.setMaxHealth(p.getMaxHealth() + (rpgcore.getBaoManager().find(playerUUID).getBaoUser().getValue5() * 2));
         }
 
-        if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID) != null) {
-            if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(13).getType() != Material.BARRIER) {
-                p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
-            }
-
-            if (rpgcore.getAkcesoriaManager().getAkcesoriaGUI(playerUUID).getItem(14).getType() != Material.BARRIER) {
-                p.setMaxHealth(p.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
-            }
-
-            rpgcore.getAkcesoriaManager().loadAllAkceBonus(playerUUID);
-        }
+        //TODO Zrobic ladowanie z klasy BONUSES dodatkowegohp
 
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);

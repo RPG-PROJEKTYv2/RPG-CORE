@@ -79,24 +79,7 @@ public class DamageManager {
         }
 
         // Akcesoria
-        if (rpgcore.getAkcesoriaManager().isTarczaEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 10, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isNaszyjnikEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 11, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isBransoletaEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 12, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isKolczykiEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 13, "Silny przeciwko Ludziom");
-        }
-        if (rpgcore.getAkcesoriaManager().isEnergiaEquiped(uuid)) {
-            mnoznik -= rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 15, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isZegarekEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Obrazenia");
-        }
+        //TODO Zrobic podpiecie Akcesori do klasy BONUSES
 
         // BAO
         if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
@@ -167,23 +150,7 @@ public class DamageManager {
         }
 
         // Akcesoria
-        if (rpgcore.getAkcesoriaManager().isTarczaEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 10, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isNaszyjnikEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 11, "Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isBransoletaEquiped(uuid)) {
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 12, "Srednie Obrazenia");
-            krytyk += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 12, "Cios Krytyczny");
-        }
-        if (rpgcore.getAkcesoriaManager().isEnergiaEquiped(uuid)) {
-            mnoznik -= rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 15, "Srednie Obrazenia");
-        }
-        if (rpgcore.getAkcesoriaManager().isZegarekEquiped(uuid)) {
-            dmg += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Obrazenia");
-            mnoznik += rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 16, "Silny przeciwko potworom");
-        }
+        //TODO Zrobic podpiecie Akceosir do klasy BONUSES
 
         // BAO
         if (!rpgcore.getBaoManager().isNotRolled(uuid)) {

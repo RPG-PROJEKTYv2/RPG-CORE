@@ -1,9 +1,11 @@
 package rpg.rpgcore.akcesoria;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
@@ -19,98 +21,69 @@ import java.util.UUID;
 public class AkcesoriaManager {
 
     private final RPGCORE rpgcore;
+    private final Map<UUID, AkcesoriaObject> userMap;
 
     private final Map<UUID, Inventory> akcesoriaMap = new HashMap<>();
-    private final ItemBuilder noAkcesoria = new ItemBuilder(Material.BARRIER, 1);
-    private final ItemBuilder fillGUI = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
 
     public AkcesoriaManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.userMap = rpgcore.getMongoManager().loadAllAkcesoria();
     }
 
-    private Inventory createAkcesoriaGUINew(final UUID uuid) {
-        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getUserManager().find(uuid).getName()));
+    public void openAkcesoriaGUI(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        final AkcesoriaUser user = rpgcore.getAkcesoriaManager().find(uuid).getAkcesoriaUser();
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lAkcesoria"));
 
-        fillGUI.setName(" ");
-
-        for (int i = 0 ; i < akcesoriaGUI.getSize(); i++) {
-            akcesoriaGUI.setItem(i, fillGUI.toItemStack());
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
         }
-        akcesoriaGUI.setItem(10, noAkcesoriaItem("Tarczy"));
-        akcesoriaGUI.setItem(11, noAkcesoriaItem("Naszyjnika"));
-        akcesoriaGUI.setItem(12, noAkcesoriaItem("Bransolety"));
-        akcesoriaGUI.setItem(13, noAkcesoriaItem("Kolczykow"));
-        akcesoriaGUI.setItem(14, noAkcesoriaItem("Pierscienia"));
-        akcesoriaGUI.setItem(15, noAkcesoriaItem("Energii"));
-        akcesoriaGUI.setItem(16, noAkcesoriaItem("Zegarka"));
 
-        this.updateAkcesoriaGUI(uuid, akcesoriaGUI);
-        return akcesoriaGUI;
+        if (user.getTarcza().length() > 0) {
+            gui.setItem(1, Utils.deserializeItem(user.getTarcza()));
+        } else {
+            gui.setItem(1, this.noAkcesoriaItem("Tarczy"));
+        }
+        if (user.getMedalion().length() > 0) {
+            gui.setItem(2, Utils.deserializeItem(user.getMedalion()));
+        } else {
+            gui.setItem(2, this.noAkcesoriaItem("Medalionu"));
+        }
+        if (user.getPas().length() > 0) {
+            gui.setItem(3, Utils.deserializeItem(user.getPas()));
+        } else {
+            gui.setItem(3, this.noAkcesoriaItem("Pasa"));
+        }
+        if (user.getKolczyki().length() > 0) {
+            gui.setItem(4, Utils.deserializeItem(user.getKolczyki()));
+        } else {
+            gui.setItem(4, this.noAkcesoriaItem("Kolczykow"));
+        }
+        if (user.getSygnet().length() > 0) {
+            gui.setItem(5, Utils.deserializeItem(user.getSygnet()));
+        } else {
+            gui.setItem(5, this.noAkcesoriaItem("Syngetu"));
+        }
+        if (user.getEnergia().length() > 0) {
+            gui.setItem(6, Utils.deserializeItem(user.getEnergia()));
+        } else {
+            gui.setItem(6, this.noAkcesoriaItem("Energii"));
+        }
+        if (user.getZegarek().length() > 0) {
+            gui.setItem(7, Utils.deserializeItem(user.getZegarek()));
+        } else {
+            gui.setItem(7, this.noAkcesoriaItem("Zegarka"));
+        }
+
+        player.openInventory(gui);
     }
 
-    public Inventory createAkcesoriaGUI(final UUID uuid, final ItemStack[] akcesoria) {
-        final Inventory akcesoriaGUI = Bukkit.createInventory(null, 27, Utils.format("&6&lAkcesoria gracza " + rpgcore.getUserManager().find(uuid).getName()));
-
-        fillGUI.setName(" ");
-
-        for (int i = 0 ; i < akcesoriaGUI.getSize(); i++) {
-            akcesoriaGUI.setItem(i, fillGUI.toItemStack());
-        }
-
-        for (int i = 0; i < akcesoria.length; i++) {
-            akcesoriaGUI.setItem(10 + i, akcesoria[i]);
-        }
-
-
-        this.setAkcesoriaGUI(uuid, akcesoriaGUI);
-        return akcesoriaGUI;
-    }
 
     public final ItemStack noAkcesoriaItem(final String nazwaAkcesorium) {
-        noAkcesoria.setName("&c&lBrak " + nazwaAkcesorium);
-        noAkcesoria.addGlowing();
-        return noAkcesoria.toItemStack();
+        return new ItemBuilder(Material.IRON_FENCE).setName("&c&lBrak " + nazwaAkcesorium).addGlowing().toItemStack().clone();
     }
 
-    public final ItemStack[] getAllAkcesoria(final UUID uuid) {
-        ItemStack[] akcesoria = new ItemStack[7];
-        if (!(rpgcore.getAkcesoriaManager().getAkcesoriaMap().containsKey(uuid))) {
-            rpgcore.getAkcesoriaManager().createAkcesoriaGUINew(uuid);
-        }
-        Inventory gui = this.getAkcesoriaGUI(uuid);
 
-        for (int i = 0; i < akcesoria.length; i++) {
-            akcesoria[i] = gui.getItem(10 + i);
-        }
-
-        return akcesoria;
-    }
-
-    public final double getAkcesoriaBonus(final UUID uuid, final int slotAkcesorium , final String nazwaBonusu) {
-
-        Inventory akcesoria = this.getAkcesoriaGUI(uuid);
-
-        ItemStack akce = akcesoria.getItem(slotAkcesorium);
-
-        for (int i = 0; i < akce.getItemMeta().getLore().size(); i++) {
-            if (akce.getItemMeta().getLore().get(i).trim().contains(nazwaBonusu)) {
-                return Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "")));
-            }
-        }
-
-        return 0.0;
-    }
-
-    public final double getAkcesoriaBonus(final ItemStack akce , final String nazwaBonusu) {
-
-        for (int i = 0; i < akce.getItemMeta().getLore().size(); i++) {
-            if (akce.getItemMeta().getLore().get(i).trim().contains(nazwaBonusu)) {
-                return Integer.parseInt(Utils.removeColor(akce.getItemMeta().getLore().get(i).trim().replace(nazwaBonusu + ": ", "").replace("%", "").replace("-", "")));
-            }
-        }
-
-        return 0.0;
-    }
 
     public void loadAllAkceBonus(final UUID uuid) {
 
@@ -171,56 +144,18 @@ public class AkcesoriaManager {
         }*/
     }
 
-    public Inventory getAkcesoriaGUI(final UUID uuid) {
-        akcesoriaMap.computeIfAbsent(uuid, k -> this.createAkcesoriaGUINew(uuid));
-        return this.akcesoriaMap.get(uuid);
+
+    public AkcesoriaObject find(final UUID uuid) {
+        userMap.computeIfAbsent(uuid,k -> new AkcesoriaObject(uuid));
+        return this.userMap.get(uuid);
     }
 
-    public Map<UUID, Inventory> getAkcesoriaMap() {
-        return this.akcesoriaMap;
+    public void add(final UUID uuid, final AkcesoriaObject akcesoriaObject) {
+        this.userMap.put(uuid, akcesoriaObject);
     }
 
-    public void updateAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
-        this.akcesoriaMap.replace(uuid, inventory);
-    }
-
-    public void setAkcesoriaGUI(final UUID uuid, final Inventory inventory) {
-        this.akcesoriaMap.put(uuid, inventory);
-    }
-
-    public boolean isTarczaEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(10).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isNaszyjnikEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(11).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isBransoletaEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(12).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isKolczykiEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(13).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isPierscienEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(14).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isEnergiaEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(15).getType().equals(Material.BARRIER);
-    }
-
-    public boolean isZegarekEquiped(final UUID uuid) {
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        return !akceGUI.getItem(16).getType().equals(Material.BARRIER);
+    public ImmutableSet<AkcesoriaObject> getAkcesoriaObjects() {
+        return ImmutableSet.copyOf(this.userMap.values());
     }
 
 }

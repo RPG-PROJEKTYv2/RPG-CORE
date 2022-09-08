@@ -7,7 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.akcesoria.AkcesoriaObject;
 import rpg.rpgcore.bao.BaoObject;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -132,10 +134,11 @@ public class MongoManager {
                 this.addDataRybak(new RybakObject(uuid));
             }
 
-            try {
-                obj = pool.getAkcesoria().find(new Document("_id", uuid.toString())).first();
-                rpgcore.getAkcesoriaManager().createAkcesoriaGUI(uuid, Utils.itemStackArrayFromBase64(String.valueOf(obj.get("Akcesoria"))));
+            if (this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataAkcesoria(new AkcesoriaObject(uuid));
+            }
 
+            try {
                 obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
 
@@ -272,26 +275,6 @@ public class MongoManager {
 
         Document document = new Document();
 
-        document.append("_id", uuid.toString());
-        document.append("nick", nick);
-        document.append("punishmentHistory", nick);
-        document.append("level", 1);
-        document.append("exp", 0.0);
-        document.append("kasa", 100.0);
-        document.append("hellcoins", 0);
-        document.append("pierscien_doswiadczenia", false);
-        document.append("pierscien_doswiadczenia_czas", 0);
-        pool.getGracze().insertOne(document);
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("banInfo", banInfo);
-        pool.getBany().insertOne(document);
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("muteInfo", muteInfo);
-        pool.getMuty().insertOne(document);
 
         document = new Document();
         document.append("_id", uuid.toString());
@@ -312,21 +295,6 @@ public class MongoManager {
 
         this.addDataBao(new BaoObject(uuid));
 
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("RYBAK_MISJE", "false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false");
-        document.append("RYBAK_POSTEP", 0);
-        document.append("RYBAK_SRDMG", 0.0);
-        document.append("RYBAK_SRDEF", 0.0);
-        document.append("RYBAK_DDMG", 0.0);
-        document.append("RYBAK_BLOK", 0.0);
-        pool.getRybak().insertOne(document);
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Akcesoria", Utils.itemStackArrayToBase64(rpgcore.getAkcesoriaManager().getAllAkcesoria(uuid)));
-        pool.getAkcesoria().insertOne(document);
 
         document = new Document();
         document.append("_id", uuid.toString());
@@ -770,6 +738,30 @@ public class MongoManager {
         }
     }
 
+    // AKCEOSRIA
+    public Map<UUID, AkcesoriaObject> loadAllAkcesoria() {
+        Map<UUID, AkcesoriaObject> akcesoria = new HashMap<>();
+        for (Document document : this.pool.getAkcesoria().find()) {
+            AkcesoriaObject akcesoriaObject = new AkcesoriaObject(document);
+            akcesoria.put(akcesoriaObject.getId(), akcesoriaObject);
+        }
+        return akcesoria;
+    }
+
+    public void addDataAkcesoria(final AkcesoriaObject akcesoriaObject) {
+        this.pool.getAkcesoria().insertOne(akcesoriaObject.toDocument());
+    }
+
+    public void saveDataAkcesoria(final UUID id, final AkcesoriaObject akcesoriaObject) {
+        this.pool.getAkcesoria().findOneAndReplace(new Document("_id", id.toString()), akcesoriaObject.toDocument());
+    }
+
+    public void saveAllAkcesoria() {
+        for (AkcesoriaObject akcesoriaObject : rpgcore.getAkcesoriaManager().getAkcesoriaObjects()) {
+            this.saveDataAkcesoria(akcesoriaObject.getId(), akcesoriaObject);
+        }
+    }
+
 
     // USERS
     public Map<UUID, User> loadAllUsers() {
@@ -817,6 +809,31 @@ public class MongoManager {
     public void saveAllRybak() {
         for (RybakObject rybakObject : rpgcore.getRybakNPC().getRybakObjects()) {
             this.saveDataRybak(rybakObject.getId(), rybakObject);
+        }
+    }
+
+
+    // BONUSES
+    public Map<UUID, Bonuses> loadAllBonuses() {
+        Map<UUID, Bonuses> bonuses1 = new HashMap<>();
+        for (Document document : this.pool.getBonuses().find()) {
+            Bonuses bonuses = new Bonuses(document);
+            bonuses1.put(bonuses.getId(), bonuses);
+        }
+        return bonuses1;
+    }
+
+    public void addDataBonuses(final Bonuses bonuses) {
+        this.pool.getBonuses().insertOne(bonuses.toDocument());
+    }
+
+    public void saveDataBonuses(final UUID id, final Bonuses bonuses) {
+        this.pool.getBonuses().findOneAndReplace(new Document("_id", id.toString()), bonuses.toDocument());
+    }
+
+    public void saveAllBonuses() {
+        for (Bonuses bonuses : rpgcore.getBonusesManager().getBonusesObjects()) {
+            this.saveDataBonuses(bonuses.getId(), bonuses);
         }
     }
 

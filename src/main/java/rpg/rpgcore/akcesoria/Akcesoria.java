@@ -31,11 +31,10 @@ public class Akcesoria implements CommandExecutor {
         }
 
         final Player player = (Player) sender;
-        final UUID uuid = player.getUniqueId();
 
         if (args.length == 0) {
-            player.openInventory(rpgcore.getAkcesoriaManager().getAkcesoriaGUI(uuid));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Testowa Zbroja", Material.DIAMOND_CHESTPLATE, 100, 20, false, true), ItemHelper.createSword("&7&lTestowy Miecz", Material.STONE_SWORD, 250, 100, false, true));
+            rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+            //player.getInventory().addItem(ItemHelper.createArmor("&8Testowa Zbroja", Material.DIAMOND_CHESTPLATE, 100, 20, false, true), ItemHelper.createSword("&7&lTestowy Miecz", Material.STONE_SWORD, 250, 100, false, true));
             return false;
         }
 

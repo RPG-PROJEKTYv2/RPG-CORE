@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -254,6 +255,37 @@ public class Utils {
         } catch (final ClassNotFoundException e) {
             throw new IOException("Unable to decode class type.", e);
         }
+    }
+
+    public static String serializeItem(ItemStack item) {
+        String encodedObject;
+        try {
+            ByteArrayOutputStream io = new ByteArrayOutputStream();
+            BukkitObjectOutputStream os = new BukkitObjectOutputStream(io);
+            os.writeObject(item);
+            os.flush();
+            byte[] serializedObject = io.toByteArray();
+            encodedObject = new String(Base64.getEncoder().encode(serializedObject));
+            return encodedObject;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ItemStack deserializeItem(String encodedObject) {
+        try {
+            ByteArrayOutputStream io = new ByteArrayOutputStream();
+            byte[] serializedObject = io.toByteArray();
+            serializedObject = Base64.getDecoder().decode(encodedObject);
+            ByteArrayInputStream in = new ByteArrayInputStream(serializedObject);
+            BukkitObjectInputStream is = new BukkitObjectInputStream(in);
+            ItemStack newItem = (ItemStack) is.readObject();
+            return newItem;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void youAreMuted(final Player player, final String adminNick, final String reason, final String expiry) {

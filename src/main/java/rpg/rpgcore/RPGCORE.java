@@ -4,10 +4,13 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.akcesoria.*;
+import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
 import rpg.rpgcore.bao.events.BAOPlayerInteract;
+import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.chat.mute.Mute;
 import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMute;
@@ -52,10 +55,6 @@ import rpg.rpgcore.commands.admin.ban.TempBan;
 import rpg.rpgcore.commands.admin.ban.UnBan;
 import rpg.rpgcore.commands.admin.god.God;
 import rpg.rpgcore.commands.admin.vanish.Vanish;
-import rpg.rpgcore.akcesoria.AKCESORIAInventoryClick;
-import rpg.rpgcore.akcesoria.AKCESORIAPlayerInteract;
-import rpg.rpgcore.akcesoria.Akcesoria;
-import rpg.rpgcore.akcesoria.AkcesoriaManager;
 import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.player.kosz.Kosz;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
@@ -184,6 +183,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private NiebiosaManager niebiosaManager;
     private RoznosciManager roznosciManager;
+    private BonusesManager bonusesManager;
 
     private int i = 1;
 
@@ -422,6 +422,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("klasa").setExecutor(new KlasaCommand(this));
         this.getCommand("bossy").setExecutor(new BossyCommand(this));
         this.getCommand("listanpc").setExecutor(new ListaNPC());
+        CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoria());
     }
 
     private void initGlobalEvents() {
@@ -473,6 +474,7 @@ public final class RPGCORE extends JavaPlugin {
         this.niebiosaManager = new NiebiosaManager(this);
         this.listaNPCManager = new ListaNPCManager(this);
         this.baoManager = new BaoManager(this);
+        this.bonusesManager = new BonusesManager(this);
     }
 
     private void initNPCS() {
@@ -694,5 +696,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public UserManager getUserManager() {
         return userManager;
+    }
+
+    public BonusesManager getBonusesManager() {
+        return bonusesManager;
     }
 }
