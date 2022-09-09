@@ -2,7 +2,8 @@ package rpg.rpgcore.ranks.types;
 
 public enum RankType {
 
-    HA("H@", 99),
+    DEV("DEV", 99),
+    HA("HA", 90),
     ADMIN("ADMIN", 10),
     GM("GM", 9),
     MOD("MOD", 8),

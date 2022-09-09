@@ -5,11 +5,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.BonusesUser;
+import rpg.rpgcore.discord.EmbedUtil;
+import rpg.rpgcore.utils.Utils;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -21,13 +26,25 @@ public class AKCESORIAInventoryClick implements Listener {
         this.rpgcore = rpgcore;
     }
 
+    public int getIntFromString(String string) {
+        String string1 = string.replaceAll("%", "");
+        String[] items = string1.split(" ");
+        for (final String item : items) {
+            try {
+                return Integer.parseInt(Utils.removeColor(item));
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        return 0;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void akcesoriaInventoryClick(final InventoryClickEvent e) {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {
             return;
@@ -40,79 +57,148 @@ public class AKCESORIAInventoryClick implements Listener {
 
 
         if (clickedInventoryTitle.contains("Akcesoria gracza ")) {
-            ItemStack itemToGiveBack;
-
             e.setCancelled(true);
 
-            if (clickedItem.getType() == Material.BARRIER) {
+            if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
                 return;
             }
 
-            if (clickedSlot == 10) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
-                //rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
-                //rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
+            if (clickedItem.getType() == Material.IRON_FENCE || clickedItem.getType() == Material.STAINED_GLASS_PANE) {
+                return;
+            }
+
+            final AkcesoriaUser user = rpgcore.getAkcesoriaManager().find(playerUUID).getAkcesoriaUser();
+            final BonusesUser bonusUser = rpgcore.getBonusesManager().find(playerUUID).getBonusesUser();
+
+            if (clickedSlot == 1) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setSrednieobrazenia(bonusUser.getSrednieobrazenia() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setBlokciosu(bonusUser.getBlokciosu() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                bonusUser.setDodatkoweobrazenia(bonusUser.getDodatkoweobrazenia() - getIntFromString(clickedItem.getItemMeta().getLore().get(2)));
+                user.setTarcza("");
                 e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Tarczy"));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                          "**Typ: **`"  + clickedItem.getType() + "`\n"
+                        + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 11) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerPrzeszywka(playerUUID, rpgcore.getPlayerManager().getPlayerPrzeszywka(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Przeszycie Bloku"));
-                //rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
-                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Naszyjnika"));
+            if (clickedSlot == 2) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setPrzeszyciebloku(bonusUser.getPrzeszyciebloku() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setDodatkoweobrazenia(bonusUser.getDodatkoweobrazenia() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Medalionu"));
+                user.setMedalion("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 12) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerKryt(playerUUID, rpgcore.getPlayerManager().getPlayerKryt(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Cios Krytyczny"));
-                //rpgcore.getPlayerManager().updatePlayerSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
-                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Bransolety"));
+            if (clickedSlot == 3) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setSzansanakryta(bonusUser.getSzansanakryta() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSrednieobrazenia(bonusUser.getSrednieobrazenia() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pasa"));
+                user.setPas("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 13) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
-                //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
-                //player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 13, "Dodatkowe HP") * 2);
+            if (clickedSlot == 4) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setDodatkowehp(bonusUser.getDodatkowehp() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynaludzi(bonusUser.getSilnynaludzi() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                player.setMaxHealth((double) bonusUser.getDodatkowehp() * 2);
+                player.setHealth(player.getMaxHealth());
                 e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Kolczykow"));
+                user.setKolczyki("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 14) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
-                //rpgcore.getPlayerManager().updatePlayerHP(playerUUID, rpgcore.getPlayerManager().getPlayerHP(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Dodatkowe HP"));
-                //player.setMaxHealth(player.getMaxHealth() - (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(playerUUID, 14, "Dodatkowe HP") * 2);
-                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Pierscienia"));
+            if (clickedSlot == 5) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setDodatkowehp(bonusUser.getDodatkowehp() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                player.setMaxHealth((double) bonusUser.getDodatkowehp() * 2);
+                player.setHealth(player.getMaxHealth());
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Sygnetu"));
+                user.setSygnet("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 15) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerDef(playerUUID, rpgcore.getPlayerManager().getPlayerDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
-                //rpgcore.getPlayerManager().updatePlayerBlok(playerUUID, rpgcore.getPlayerManager().getPlayerBlok(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Blok Ciosu"));
-                //rpgcore.getPlayerManager().updatePlayerMinusSrednie(playerUUID, rpgcore.getPlayerManager().getPlayerMinusSrednie(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Srednie Obrazenia"));
+            if (clickedSlot == 6) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setSredniadefensywa(bonusUser.getSredniadefensywa() - getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setBlokciosu(bonusUser.getBlokciosu() - getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
+                bonusUser.setMinussrednieobrazenia(bonusUser.getMinussrednieobrazenia() - getIntFromString(clickedItem.getItemMeta().getLore().get(2)));
                 e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Energii"));
+                user.setEnergia("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
                 return;
             }
 
-            if (clickedSlot == 16) {
-                itemToGiveBack = clickedItem;
-                e.getWhoClicked().getInventory().addItem(itemToGiveBack);
-                //rpgcore.getPlayerManager().updatePlayerDamage(playerUUID, rpgcore.getPlayerManager().getPlayerDamage(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrazenia"));
-                //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(playerUUID, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Silny przeciwko Ludziom"));
-                //rpgcore.getPlayerManager().updatePlayerMinusDef(playerUUID, rpgcore.getPlayerManager().getPlayerMinusDef(playerUUID) - rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToGiveBack, "Obrona"));
+            if (clickedSlot == 7) {
+                e.getWhoClicked().getInventory().addItem(clickedItem);
+                bonusUser.setDefnamoby(bonusUser.getDefnamoby() + getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() + getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
                 e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
+                user.setZegarek("");
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
+                    rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));
+                });
+                rpgcore.getAkcesoriaManager().openAkcesoriaGUI(player);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zdjal jedno ze swoich akcesoriow!**",
+                        "**Typ: **`"  + clickedItem.getType() + "`\n"
+                                + "**Akcesorium:** " + clickedItem.getItemMeta(), Color.getHSBColor(354, 74, 39)));
             }
         }
 

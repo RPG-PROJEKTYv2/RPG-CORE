@@ -68,16 +68,9 @@ public class MongoManager {
     }
 
     public void fixMires() {
-        this.pool.getGracze().insertOne(new Document("_id", "7193813f-c9c3-37e6-b72b-4272a3898b80")
-                .append("nick", "Mires_")
-                        .append("punishmentHistory", "")
-                        .append("level", 130)
-                        .append("exp", 0)
-                        .append("kasa", "98792746249.98")
-                        .append("hellcoins", 0)
-                        .append("pierscien_doswiadczenia", false)
-                        .append("pierscien_doswiadczenia_czas", 0));
-
+        final User user = rpgcore.getUserManager().find("Mires_");
+        user.getRankUser().setRank(RankType.DEV);
+        this.saveDataUser(UUID.fromString("7193813f-c9c3-37e6-b72b-4272a3898b80"), user);
     }
 
     public void fix(Document document) {
@@ -117,7 +110,9 @@ public class MongoManager {
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
 
-
+            if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataBonuses(new Bonuses(uuid));
+            }
 
             if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataOs(new OsObject(uuid));

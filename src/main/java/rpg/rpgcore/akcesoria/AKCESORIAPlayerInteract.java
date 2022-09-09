@@ -9,8 +9,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.BonusesUser;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
 
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class AKCESORIAPlayerInteract implements Listener {
@@ -21,12 +26,25 @@ public class AKCESORIAPlayerInteract implements Listener {
         this.rpgcore = rpgcore;
     }
 
+    public int getIntFromString(final List<String> lore) {
+        for (final String item : lore) {
+            try {
+                if (Utils.removeColor(item).contains("Wymagany Poziom: ")) {
+                    return Integer.parseInt(Utils.removeColor(item).replace("Wymagany Poziom: ", ""));
+                }
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        return 0;
+    }
+
     public int getIntFromString(String string) {
         String string1 = string.replaceAll("%", "");
         String[] items = string1.split(" ");
         for (final String item : items) {
             try {
-                return Integer.parseInt(item);
+                return Integer.parseInt(Utils.removeColor(item));
             } catch (NumberFormatException e) {
                 continue;
             }
@@ -49,6 +67,10 @@ public class AKCESORIAPlayerInteract implements Listener {
         final int lvl = rpgcore.getUserManager().find(uuid).getLvl();
         final AkcesoriaUser user = rpgcore.getAkcesoriaManager().find(uuid).getAkcesoriaUser();
 
+        if (eventItem == null) {
+            return;
+        }
+
         if (eventItem.getType() == Material.ITEM_FRAME) {
 
             if (eventItem.getItemMeta().getDisplayName() == null) {
@@ -56,8 +78,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Tarcza")) {
+                e.setCancelled(true);
 
-                if (user.getTarcza().length() == 0) {
+                if (user.getTarcza().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cTarcze"));
                     return;
                 }
@@ -67,30 +90,36 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setTarcza(Utils.serializeItem(eventItem));
-                    /*rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));*/
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setSredniadefensywa(bonusUser.getSredniadefensywa() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setBlokciosu(bonusUser.getBlokciosu() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
+                bonusUser.setDodatkoweobrazenia(bonusUser.getDodatkoweobrazenia() + getIntFromString(eventItem.getItemMeta().getLore().get(2)));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
             return;
         }
 
-        if (eventItem.getType() == Material.STORAGE_MINECART) {
+        if (eventItem.getType() == Material.FIREBALL) {
             if (eventItem.getItemMeta().getDisplayName() == null) {
                 return;
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Medalion")) {
+                e.setCancelled(true);
 
-                if (user.getMedalion().length() == 0) {
+                if (user.getMedalion().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cMedalion"));
                     return;
                 }
@@ -100,15 +129,20 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setMedalion(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerPrzeszywka(uuid, rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Przeszycie Bloku"));
-                //rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setPrzeszyciebloku(bonusUser.getPrzeszyciebloku() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setDodatkoweobrazenia(bonusUser.getDodatkoweobrazenia() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
@@ -121,8 +155,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Pas")) {
+                e.setCancelled(true);
 
-                if (user.getPas().length() == 0) {
+                if (user.getPas().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cPas"));
                     return;
                 }
@@ -132,15 +167,20 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setPas(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerKryt(uuid, rpgcore.getPlayerManager().getPlayerKryt(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Cios Krytyczny"));
-                //rpgcore.getPlayerManager().updatePlayerSrednie(uuid, rpgcore.getPlayerManager().getPlayerSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setSzansanakryta(bonusUser.getSzansanakryta() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSrednieobrazenia(bonusUser.getSrednieobrazenia() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
@@ -153,8 +193,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Kolczyki")) {
+                e.setCancelled(true);
 
-                if (user.getKolczyki().length() == 0) {
+                if (user.getKolczyki().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazone &cKolczyki"));
                     return;
                 }
@@ -164,16 +205,22 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setKolczyki(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
-                //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
-                //player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 13, "Dodatkowe HP") * 2);
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setDodatkowehp(bonusUser.getDodatkowehp() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynaludzi(bonusUser.getSilnynaludzi() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
+                player.setMaxHealth((double) bonusUser.getDodatkowehp() * 2);
+                player.setHealth(player.getMaxHealth());
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
@@ -186,8 +233,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Sygnet")) {
+                e.setCancelled(true);
 
-                if (user.getSygnet().length() == 0) {
+                if (user.getSygnet().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cSygnet"));
                     return;
                 }
@@ -197,16 +245,22 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setSygnet(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                //rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Dodatkowe HP"));
-                //player.setMaxHealth(player.getMaxHealth() + (double) rpgcore.getAkcesoriaManager().getAkcesoriaBonus(uuid, 14, "Dodatkowe HP") * 2);
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setDodatkowehp(bonusUser.getDodatkowehp() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
+                player.setMaxHealth((double) bonusUser.getDodatkowehp() * 2);
+                player.setHealth(player.getMaxHealth());
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
@@ -219,8 +273,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Energia")) {
+                e.setCancelled(true);
 
-                if (user.getEnergia().length() == 0) {
+                if (user.getEnergia().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazona &cEnergie"));
                     return;
                 }
@@ -230,16 +285,21 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(4))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setEnergia(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
-                //rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Blok Ciosu"));
-                //rpgcore.getPlayerManager().updatePlayerMinusSrednie(uuid, rpgcore.getPlayerManager().getPlayerMinusSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Srednie Obrazenia"));
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setSredniadefensywa(bonusUser.getSredniadefensywa() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setBlokciosu(bonusUser.getBlokciosu() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
+                bonusUser.setMinussrednieobrazenia(bonusUser.getMinussrednieobrazenia() + getIntFromString(eventItem.getItemMeta().getLore().get(2)));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));
@@ -252,8 +312,9 @@ public class AKCESORIAPlayerInteract implements Listener {
             }
 
             if (eventItem.getItemMeta().getDisplayName().contains("Zegarek")) {
+                e.setCancelled(true);
 
-                if (user.getZegarek().length() == 0) {
+                if (user.getZegarek().length() > 0) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cZegarek"));
                     return;
                 }
@@ -263,16 +324,20 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
 
-                if (lvl < getIntFromString(eventItem.getItemMeta().getLore().get(3))) {
+                if (lvl < getIntFromString(eventItem.getItemMeta().getLore())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
                 user.setZegarek(Utils.serializeItem(eventItem));
-                //rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrazenia"));
-                //rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Silny przeciwko Ludziom"));
-                //rpgcore.getPlayerManager().updatePlayerMinusDef(uuid, rpgcore.getPlayerManager().getPlayerMinusDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(itemToSet, "Obrona"));
+                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                bonusUser.setDefnamoby(bonusUser.getDefnamoby() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
+                bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalozono " + eventItem.getItemMeta().getDisplayName()));
                 player.setItemInHand(null);
+                RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
+                        "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
+                        "**Typ: **`"  + eventItem.getType() + "`\n"
+                                + "**Akcesorium:** " + eventItem.getItemMeta(), Color.getHSBColor(114, 90, 47)));
                 return;
             }
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego zalozyc :)"));

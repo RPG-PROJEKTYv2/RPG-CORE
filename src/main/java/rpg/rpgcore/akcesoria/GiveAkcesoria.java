@@ -59,8 +59,8 @@ public class GiveAkcesoria extends CommandAPI {
                 return;
         }
         player.getInventory().addItem(item);
-        RPGCORE.getDiscordBot().sendChannelMessage("admin-akcesoria-logs", (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create("**Stworzono Akcesorium**",
-                "**Przez: **`" + player.getName() + "`\n**Item: **" + item.getItemMeta() + "\n", Color.red).build()}).build());
+        RPGCORE.getDiscordBot().sendChannelMessage("admin-akcesoria-logs", EmbedUtil.create("**Stworzono Akcesorium**",
+                "**Przez: **`" + player.getName() + "`\n**Item: **" + item.getItemMeta() + "\n", Color.RED));
 
     }
 }

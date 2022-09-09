@@ -10,7 +10,7 @@ public class Bonuses {
 
     public Bonuses(final UUID uuid) {
         this.uuid = uuid;
-        this.bonusesUser = new BonusesUser(0,0,0,0,
+        this.bonusesUser = new BonusesUser(10,0,0,0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
                 0.0,0.0,0.0,0.0,0.0);

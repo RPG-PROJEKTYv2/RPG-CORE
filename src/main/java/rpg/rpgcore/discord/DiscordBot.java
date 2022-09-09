@@ -1,14 +1,14 @@
 package rpg.rpgcore.discord;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import rpg.rpgcore.utils.Utils;
 
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.util.List;
 
 public class DiscordBot {
@@ -19,8 +19,8 @@ public class DiscordBot {
         System.out.println("[HellRPGCore] Pomyslnie zalogowanoo jako: " + jda.getSelfUser().getName());
     }
 
-    public void sendChannelMessage(final String channelName, final Message message) {
-        this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage(message).queue();
+    public void sendChannelMessage(final String channelName, final EmbedBuilder embed) {
+        this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage((new MessageBuilder()).setEmbeds(new MessageEmbed[]{embed.build()}).build()).queue();
     }
 
     public String buildStringFromLore(final List<String> lore) {
