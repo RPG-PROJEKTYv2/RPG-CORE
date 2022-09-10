@@ -42,7 +42,7 @@ public class TeleporterInventoryClick implements Listener {
             e.setCancelled(true);
             rpgcore.getTeleporterNPC().openTeleporterMAIN(player);
         }
-        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - MENU1")) {
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - WYBOR")) {
             e.setCancelled(true);
             if (clickedSlot == 11) {
                 rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
@@ -51,38 +51,47 @@ public class TeleporterInventoryClick implements Listener {
                 rpgcore.getTeleporterNPC().openTeleporterDODATKOWEMAPY(player);
             }
         }
-        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - MENU2")) {
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - EXPOWISKA")) {
             e.setCancelled(true);
             if (clickedSlot == 0) {
-                if (clickedItem.getType() == Material.IRON_FENCE) {
-                    Location locEXP1 = new Location(Bukkit.getWorld("1-10exp"), -361, 7, 20);
-                    player.teleport(locEXP1);
-                    player.closeInventory();
-                }
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("1-10exp"), -363.540, 7, 20.539, (float)-57.3, (float)0.6));
             }
             if (clickedSlot == 1) {
-                if (clickedItem.getType() == Material.RED_MUSHROOM) {
-                    Location locEXP2 = new Location(Bukkit.getWorld("10-20exp"), 254, 16, -248);
-                    player.teleport(locEXP2);
-                    player.closeInventory();
-                }
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("10-20exp"), 257.382, 16, -247.783, (float)-2.4, (float)0.2));
             }
             if (clickedSlot == 3) {
-                if (clickedItem.getType() == Material.IRON_BLOCK) {
-                    Location locEXP2 = new Location(Bukkit.getWorld("20-30exp"), -50, 11, 132);
-                    player.teleport(locEXP2);
-                    player.closeInventory();
-                }
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("20-30exp"), -206.493, 11, 30.590, (float)-16.5, (float)1.2));
             }
             if (clickedSlot == 4) {
-                if (clickedItem.getType() == Material.SEA_LANTERN) {
-                    Location locEXP2 = new Location(Bukkit.getWorld("30-40exp"), 254, 16, -248);
-                    player.teleport(locEXP2);
-                    player.closeInventory();
-                }
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("30-40exp"), -258, 14, 107, (float)-82.9, (float)0.4));
+            }
+            if (clickedSlot == 5) {
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("40-50exp"), -258, 14, 107, (float)-82.9, (float)0.4));
+            }
+            if (clickedSlot == 6) {
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("50-60exp"), -258, 14, 107, (float)-82.9, (float)0.4));
+            }
+            if (clickedSlot == 7) {
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("60-70exp"), -258, 14, 107, (float)-82.9, (float)0.4));
             }
         }
-
+        if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - INNE")) {
+            e.setCancelled(true);
+            if (clickedSlot == 11) {
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("miasto1"), -258, 14, 107, (float)-82.9, (float)0.4));
+            }
+            if (clickedSlot == 15) {
+                player.closeInventory();
+                player.teleport(new Location(Bukkit.getWorld("demontower"), -258, 14, 107, (float)-82.9, (float)0.4));
+            }
+        }
     }
-
 }
