@@ -10,7 +10,6 @@ import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.Arrays;
 
 public class SetAdminRankCommand extends CommandAPI {
@@ -23,7 +22,11 @@ public class SetAdminRankCommand extends CommandAPI {
     }
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
-        if (args == null || args[0] == null || args[1] == null || args[2] == null) {
+        if (args.length < 3) {
+            sender.sendMessage(Utils.poprawneUzycie("setadminrank <nick> <gracz/juniorhelper/helper/kidmod/mod/gm/admmin/ha/dev> <broadcast?>"));
+            return;
+        }
+        if (args[0] == null || args[1] == null || args[2] == null) {
             sender.sendMessage(Utils.poprawneUzycie("setadminrank <nick> <gracz/juniorhelper/helper/kidmod/mod/gm/admmin/ha/dev> <broadcast?>"));
             return;
         }

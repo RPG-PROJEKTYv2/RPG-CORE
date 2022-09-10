@@ -1,7 +1,5 @@
 package rpg.rpgcore.database;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,8 +17,6 @@ import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.RybakObject;
 import rpg.rpgcore.os.OsObject;
-import rpg.rpgcore.ranks.RankPlayerUser;
-import rpg.rpgcore.ranks.RankUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
@@ -74,20 +70,14 @@ public class MongoManager {
         this.saveDataUser(UUID.fromString("7193813f-c9c3-37e6-b72b-4272a3898b80"), user);
     }
 
-    public void fix(Document document) {
-        final Document obj = document;
-        this.pool.getGracze().deleteOne(document);
+    public void fix() {
+        for (Document document : this.pool.getGracze().find()) {
+            final UUID uuid = UUID.fromString(document.getString("_id"));
 
-        this.pool.getRybak().insertOne(
-                new Document("_id", obj.getString("_id"))
-                        .append("mission", 0)
-                        .append("progress", 0)
-                        .append("value1", 0.0)
-                        .append("value2", 0.0)
-                        .append("value3", 0.0)
-                        .append("value4", 0.0)
+            document.append("adminCodeLogin", false).append("hellCodeLogin", false);
 
-        );
+            this.pool.getGracze().findOneAndReplace(new Document("_id", uuid.toString()), document);
+        }
     }
 
 

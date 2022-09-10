@@ -125,9 +125,6 @@ import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public final class RPGCORE extends JavaPlugin {
 
@@ -423,6 +420,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SetPremiumCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new RankTimeCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetAdminRankCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new HellCodeCommand(this));
     }
 
     private void initGlobalEvents() {

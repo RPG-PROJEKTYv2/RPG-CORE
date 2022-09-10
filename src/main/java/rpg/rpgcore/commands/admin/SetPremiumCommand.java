@@ -2,7 +2,6 @@ package rpg.rpgcore.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
@@ -12,7 +11,6 @@ import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -26,7 +24,12 @@ public class SetPremiumCommand extends CommandAPI {
     }
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
-        if (args == null || args[0] == null || args[1] == null || args[2] == null || args[3] == null) {
+        if (args.length < 4) {
+            sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Svip/Elita/Budwniczy> <czas/-1> <broadcast?>"));
+            return;
+        }
+
+        if (args[0] == null || args[1] == null || args[2] == null || args[3] == null) {
             sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Svip/Elita/Budwniczy> <czas/-1> <broadcast?>"));
             return;
         }

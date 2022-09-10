@@ -32,7 +32,9 @@ public class User {
     private double polimorfiabonus = 0.0;
     private long polimorfiaTime = 0L;
     private String adminCode;
+    private boolean adminCodeLogin;
     private String hellCode;
+    private boolean hellCodeLogin;
     private final InventoriesUser inventoriesUser;
     private int pierscienDoswiadczenia;
     private long pierscienDoswiadczeniaTime;
@@ -52,8 +54,10 @@ public class User {
         this.hellcoins = 0;
         this.msgOff = false;
         this.adminCode = "";
+        this.adminCodeLogin = false;
         this.hellCode = "";
-        this.inventoriesUser = new InventoriesUser("", "", "", "", "", "", "", "");
+        this.hellCodeLogin = false;
+        this.inventoriesUser = new InventoriesUser("", "", "");
         this.pierscienDoswiadczenia = 0;
         this.pierscienDoswiadczeniaTime = 0L;
     }
@@ -73,8 +77,10 @@ public class User {
         this.hellcoins = document.getInteger("hellcoins");
         this.msgOff = document.getBoolean("msgOff");
         this.adminCode = document.getString("adminCode");
+        this.adminCodeLogin = document.getBoolean("adminCodeLogin");
         this.hellCode = document.getString("hellCode");
-        this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"), document.getString("magazyn1"), document.getString("magazyn2"), document.getString("magazyn3"), document.getString("magazyn4"), document.getString("magazyn5"));
+        this.hellCodeLogin = document.getBoolean("hellCodeLogin");
+        this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"));
         this.pierscienDoswiadczenia = document.getInteger("pierscienDoswiadczenia");
         this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
     }
@@ -103,7 +109,9 @@ public class User {
                 .append("hellcoins", this.hellcoins)
                 .append("msgOff", this.msgOff)
                 .append("adminCode", this.adminCode)
+                .append("adminCodeLogin", this.adminCodeLogin)
                 .append("hellCode", this.hellCode)
+                .append("hellCodeLogin", this.hellCodeLogin)
                 .append("inventory", this.inventoriesUser.getInventory())
                 .append("enderchest", this.inventoriesUser.getEnderchest())
                 .append("armor", this.inventoriesUser.getArmor())
