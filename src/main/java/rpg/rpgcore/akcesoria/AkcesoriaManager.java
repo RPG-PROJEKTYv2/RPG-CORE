@@ -68,10 +68,10 @@ public class AkcesoriaManager {
         } else {
             gui.setItem(6, this.noAkcesoriaItem("Energii"));
         }
-        if (user.getZegarek().length() > 0) {
-            gui.setItem(7, Utils.deserializeItem(user.getZegarek()));
+        if (user.getDiadem().length() > 0) {
+            gui.setItem(7, Utils.deserializeItem(user.getDiadem()));
         } else {
-            gui.setItem(7, this.noAkcesoriaItem("Zegarka"));
+            gui.setItem(7, this.noAkcesoriaItem("Diademu"));
         }
 
         player.openInventory(gui);
@@ -83,74 +83,13 @@ public class AkcesoriaManager {
     }
 
 
-
-    public void loadAllAkceBonus(final UUID uuid) {
-
-/*
-        final Inventory akceGUI = this.getAkcesoriaGUI(uuid);
-        ItemStack akce;
-
-        for (int i = 0; i < 7 ; i++) {
-            akce = akceGUI.getItem(10 + i);
-            if (akce.getType() != Material.BARRIER) {
-
-                if (akce.getType() == Material.ITEM_FRAME) {
-                    rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrona"));
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                    System.out.println("Tarcza blok - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                    System.out.println("Tarcza dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                }
-
-                if (akce.getType() == Material.STORAGE_MINECART) {
-                    rpgcore.getPlayerManager().updatePlayerPrzeszywka(uuid, rpgcore.getPlayerManager().getPlayerPrzeszywka(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Przeszycie Bloku"));
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                    System.out.println("Naszyjnik dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                }
-
-
-                if (akce.getType() == Material.POWERED_MINECART) {
-                    rpgcore.getPlayerManager().updatePlayerKryt(uuid, rpgcore.getPlayerManager().getPlayerKryt(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Cios Krytyczny"));
-                    rpgcore.getPlayerManager().updatePlayerSrednie(uuid, rpgcore.getPlayerManager().getPlayerSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Srednie Obrazenia"));
-                }
-
-                if (akce.getType() == Material.HOPPER_MINECART) {
-                    rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Dodatkowe HP"));
-                    rpgcore.getPlayerManager().updatePlayerSilnyNaLudzi(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaLudzi(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Silny przeciwko Ludziom"));
-                }
-
-                if (akce.getType() == Material.EXPLOSIVE_MINECART) {
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerHP(uuid, rpgcore.getPlayerManager().getPlayerHP(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Dodatkowe HP"));
-                    System.out.println("Pierek blok -" + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                }
-
-                if (akce.getType() == Material.MINECART) {
-                    rpgcore.getPlayerManager().updatePlayerDef(uuid, rpgcore.getPlayerManager().getPlayerDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrona"));
-                    rpgcore.getPlayerManager().updatePlayerBlok(uuid, rpgcore.getPlayerManager().getPlayerBlok(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                    rpgcore.getPlayerManager().updatePlayerMinusSrednie(uuid, rpgcore.getPlayerManager().getPlayerMinusSrednie(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Srednie Obrazenia"));
-                    System.out.println("energia blok - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Blok Ciosu"));
-                }
-
-                if (akce.getType() == Material.WATCH) {
-                    rpgcore.getPlayerManager().updatePlayerDamage(uuid, rpgcore.getPlayerManager().getPlayerDamage(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                    rpgcore.getPlayerManager().updatePlayerSilnyNaMoby(uuid, rpgcore.getPlayerManager().getPlayerSilnyNaMoby(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Silny przeciwko Potworom"));
-                    rpgcore.getPlayerManager().updatePlayerMinusDef(uuid, rpgcore.getPlayerManager().getPlayerMinusDef(uuid) + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrona"));
-                    System.out.println("Zegarek dmg - " + rpgcore.getAkcesoriaManager().getAkcesoriaBonus(akce, "Obrazenia"));
-                }
-
-            }
-        }*/
-    }
-
-
     public AkcesoriaObject find(final UUID uuid) {
         userMap.computeIfAbsent(uuid,k -> new AkcesoriaObject(uuid));
         return this.userMap.get(uuid);
     }
 
-    public void add(final UUID uuid, final AkcesoriaObject akcesoriaObject) {
-        this.userMap.put(uuid, akcesoriaObject);
+    public void add(final AkcesoriaObject akcesoriaObject) {
+        this.userMap.put(akcesoriaObject.getId(), akcesoriaObject);
     }
 
     public ImmutableSet<AkcesoriaObject> getAkcesoriaObjects() {

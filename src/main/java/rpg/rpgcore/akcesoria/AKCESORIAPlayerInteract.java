@@ -311,11 +311,11 @@ public class AKCESORIAPlayerInteract implements Listener {
                 return;
             }
 
-            if (eventItem.getItemMeta().getDisplayName().contains("Zegarek")) {
+            if (eventItem.getItemMeta().getDisplayName().contains("Diadem")) {
                 e.setCancelled(true);
 
-                if (user.getZegarek().length() > 0) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cZegarek"));
+                if (user.getDiadem().length() > 0) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Masz juz zalazony &cDiadem"));
                     return;
                 }
 
@@ -328,7 +328,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego lvl'a zeby zalozyc ten przedmiot"));
                     return;
                 }
-                user.setZegarek(Utils.serializeItem(eventItem));
+                user.setDiadem(Utils.serializeItem(eventItem));
                 BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
                 bonusUser.setDefnamoby(bonusUser.getDefnamoby() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
                 bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));

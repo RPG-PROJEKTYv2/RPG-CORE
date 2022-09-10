@@ -30,10 +30,38 @@ public class PlayerJoinListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onJooinWhiteList(final PlayerLoginEvent e) {
+    public void onJoinWhiteList(final PlayerLoginEvent e) {
         if (!e.getPlayer().isWhitelisted() && Bukkit.hasWhitelist()) {
             String msg = Utils.getWhiteListMessage().replace("@p", e.getPlayer().getName());
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(msg), 1L);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onJoin(final PlayerJoinEvent e) {
+        if (!rpgcore.getUserManager().isUser(e.getPlayer().getUniqueId())) {
+            if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.SERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_EXISTING_DATABASE&8)")), 1L);
+                return;
+            }
+            final Player player = e.getPlayer();
+            final UUID uuid = player.getUniqueId();
+
+            player.getInventory().clear();
+            player.getInventory().setArmorContents(null);
+            player.getEnderChest().clear();
+
+            rpgcore.getMongoManager().createPlayer(uuid, player.getName());
+            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 2, 0, true, false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 2, 0, true, false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 2, 0, true, false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 2, 0, true, false));
+            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 5, 1, true, false));
+
+            player.setLevel(1);
+            player.setExp(0);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
+            return;
         }
     }
 
@@ -51,7 +79,6 @@ public class PlayerJoinListener implements Listener {
         final User user = rpgcore.getUserManager().find(playerUUID);
         rpgcore.getBackupManager().savePlayer(p, playerUUID);
 
-        p.setMaxHealth(20);
 
         final int playerLvl = user.getLvl();
         final double playerExp = user.getExp() / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
@@ -62,12 +89,9 @@ public class PlayerJoinListener implements Listener {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
 
-        if (rpgcore.getBaoManager().find(playerUUID).getBaoUser().getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-            p.setMaxHealth(p.getMaxHealth() + (rpgcore.getBaoManager().find(playerUUID).getBaoUser().getValue5() * 2));
-        }
 
         //TODO Zrobic ladowanie z klasy BONUSES dodatkowegohp
-
+        p.setMaxHealth(rpgcore.getBonusesManager().find(playerUUID).getBonusesUser().getDodatkowehp() * 2);
         p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
 
@@ -82,7 +106,7 @@ public class PlayerJoinListener implements Listener {
         }
 
 
-        e.setJoinMessage(Utils.joinMessage(playerName));
+        e.setJoinMessage(null);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
         if (!p.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
@@ -90,11 +114,7 @@ public class PlayerJoinListener implements Listener {
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziecie giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
                 p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZyczymy milej gry i udanej rywalizacji! &cZespol Hellrpg.pl"));
             }, 20L);
-            p.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 2, 0, true, false));
-            p.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 2, 0, true, false));
-            p.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 2, 0, true, false));
-            p.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 2, 0, true, false));
-            p.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 5, 1, true, false));
+
         }
         p.teleport(rpgcore.getSpawnManager().getSpawn());
 

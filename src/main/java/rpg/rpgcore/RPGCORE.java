@@ -19,6 +19,7 @@ import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.roznosci.RoznosciManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.discord.DiscordBot;
@@ -59,10 +60,6 @@ import rpg.rpgcore.chat.*;
 import rpg.rpgcore.commands.player.kosz.Kosz;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
-import rpg.rpgcore.commands.player.HelpOP;
-import rpg.rpgcore.commands.player.SprawdzMojeBonusy;
-import rpg.rpgcore.commands.player.Test;
-import rpg.rpgcore.commands.player.TestAnimation;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.dmg.DamageManager;
 import rpg.rpgcore.dmg.EntityDamageEntityListener;
@@ -423,6 +420,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("bossy").setExecutor(new BossyCommand(this));
         this.getCommand("listanpc").setExecutor(new ListaNPC());
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoria());
+        CommandAPI.getCommand().register("HellRPGCore", new SetPremiumCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new RankTimeCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new SetAdminRankCommand(this));
     }
 
     private void initGlobalEvents() {

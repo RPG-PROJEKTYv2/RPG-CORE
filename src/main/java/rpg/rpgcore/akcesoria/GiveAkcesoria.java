@@ -1,8 +1,5 @@
 package rpg.rpgcore.akcesoria;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +8,6 @@ import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.AkcesoriaHelper;
-import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
 import java.io.IOException;
@@ -52,8 +48,8 @@ public class GiveAkcesoria extends CommandAPI {
             case "energia":
                 item = AkcesoriaHelper.createEnergia(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
                 break;
-            case "zegarek":
-                item = AkcesoriaHelper.createZegarek(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+            case "diadem":
+                item = AkcesoriaHelper.createDiadem(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
                 break;
             default:
                 return;

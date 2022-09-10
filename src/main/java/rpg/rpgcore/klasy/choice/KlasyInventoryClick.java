@@ -74,7 +74,7 @@ public class KlasyInventoryClick implements Listener {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aWybrales klase: &6Wojownik"));
             player.getActivePotionEffects().clear();
             player.closeInventory();
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveKlasyData(uuid));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid)));
         }
     }
 }
