@@ -15,7 +15,7 @@ public class AkcesoriaObject {
 
     public AkcesoriaObject(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.akcesoriaUser = new AkcesoriaUser(document.getString("tarcza"), document.getString("medalion"), document.getString("pas"), document.getString("kolczyki"), document.getString("sygnet"), document.getString("energia"), document.getString("zegarek"));
+        this.akcesoriaUser = new AkcesoriaUser(document.getString("tarcza"), document.getString("medalion"), document.getString("pas"), document.getString("kolczyki"), document.getString("sygnet"), document.getString("energia"), document.getString("diadem"));
     }
 
 
@@ -35,6 +35,6 @@ public class AkcesoriaObject {
                 .append("kolczyki", getAkcesoriaUser().getKolczyki())
                 .append("sygnet", getAkcesoriaUser().getSygnet())
                 .append("energia", getAkcesoriaUser().getEnergia())
-                .append("zegarek", getAkcesoriaUser().getZegarek());
+                .append("diadem", getAkcesoriaUser().getDiadem());
     }
 }

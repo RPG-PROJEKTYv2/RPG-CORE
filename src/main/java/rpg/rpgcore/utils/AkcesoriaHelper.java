@@ -1,7 +1,6 @@
 package rpg.rpgcore.utils;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -9,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AkcesoriaHelper {
-
-    private static final List<String> lore = new ArrayList<>();
 
     public static ItemStack createTarcza(final String name, final int obrona, final int blok, final int dmg, final int wymaganyPoziom) {
         return new ItemBuilder(Material.ITEM_FRAME).setName(name.replaceAll("_", " ")).setLore(Arrays.asList("&3Obrona: &f" + obrona + "%", "&3Blok Ciosu: &f" + blok + "%", "&3Obrazenia: &f" + dmg, "&c&oWymagany Poziom: &6" + wymaganyPoziom)).toItemStack().clone();
@@ -36,7 +33,7 @@ public class AkcesoriaHelper {
         return new ItemBuilder(Material.MINECART).setName(name.replaceAll("_", " ")).setLore(Arrays.asList("&3Obrona: &f" + obrona + "%", "&3Blok Ciosu: &f" + blok + "%", "&3Srednie Obrazenia: &f-" + sredniDmg + "%", "&c&oWymagany Poziom: &6" + wymaganyPoziom)).toItemStack().clone();
     }
 
-    public static ItemStack createZegarek(final String name, final int odpoNaMoby, final int silnyNaMoby, final int wymaganyPoziom) {
+    public static ItemStack createDiadem(final String name, final int odpoNaMoby, final int silnyNaMoby, final int wymaganyPoziom) {
         return new ItemBuilder(Material.WATCH).setName(name.replaceAll("_", " ")).setLore(Arrays.asList("&3Odpornosc na Potwory: &f" + odpoNaMoby + "%", "&3Silny na Potwory: &f" + silnyNaMoby + "%", "&c&oWymagany Poziom: &6" + wymaganyPoziom)).toItemStack().clone();
     }
 

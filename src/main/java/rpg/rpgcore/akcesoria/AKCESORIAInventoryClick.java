@@ -188,8 +188,8 @@ public class AKCESORIAInventoryClick implements Listener {
                 e.getWhoClicked().getInventory().addItem(clickedItem);
                 bonusUser.setDefnamoby(bonusUser.getDefnamoby() + getIntFromString(clickedItem.getItemMeta().getLore().get(0)));
                 bonusUser.setSilnynapotwory(bonusUser.getSilnynapotwory() + getIntFromString(clickedItem.getItemMeta().getLore().get(1)));
-                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Zegarka"));
-                user.setZegarek("");
+                e.getInventory().setItem(clickedSlot, rpgcore.getAkcesoriaManager().noAkcesoriaItem("Diademu"));
+                user.setDiadem("");
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataAkcesoria(playerUUID, rpgcore.getAkcesoriaManager().find(playerUUID));
                     rpgcore.getMongoManager().saveDataBonuses(playerUUID, rpgcore.getBonusesManager().find(playerUUID));

@@ -51,7 +51,7 @@ public class KlasyNPC {
 
         rpgcore.getklasyHelper().find(uuid).getKlasaUser().setMission(toSellect.get(random));
         rpgcore.getklasyHelper().find(uuid).getKlasaUser().setMissionProgress(0);
-        rpgcore.getMongoManager().saveKlasyData(uuid);
+        rpgcore.getMongoManager().saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
 
         return toSellect.get(random);
     }

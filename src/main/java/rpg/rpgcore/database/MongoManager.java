@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.akcesoria.AkcesoriaObject;
 import rpg.rpgcore.bao.BaoObject;
@@ -265,31 +266,57 @@ public class MongoManager {
         rpgcore.getSpawnManager().setSpawn(spawn);
     }
 
-    public void createPlayer(final Player player, final String nick, final UUID uuid, final String banInfo, final String muteInfo) {
-        rpgcore.getMagazynierNPC().createAll(uuid);
+    public void createPlayer(final UUID uuid, final String nick) {
 
-        Document document = new Document();
+        final User user = new User(uuid, nick);
+        this.addDataUser(user);
+        rpgcore.getUserManager().add(user);
 
+        final AkcesoriaObject akcesoriaObject = new AkcesoriaObject(uuid);
+        this.addDataAkcesoria(akcesoriaObject);
+        rpgcore.getAkcesoriaManager().add(akcesoriaObject);
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("ekwipunek", Utils.toBase64(player.getInventory()));
-        pool.getEkwipunek().insertOne(document);
+        final Bonuses bonuses = new Bonuses(uuid);
+        this.addDataBonuses(bonuses);
+        rpgcore.getBonusesManager().add(bonuses);
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("enderchest", Utils.toBase64(player.getEnderChest()));
-        pool.getEnderchest().insertOne(document);
+        final BaoObject baoObject = new BaoObject(uuid);
+        this.addDataBao(baoObject);
+        rpgcore.getBaoManager().add(baoObject);
 
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("zbroja", Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
-        pool.getZbroja().insertOne(document);
+        final Klasy klasy = new Klasy(uuid);
+        this.addKlasyData(klasy);
+        rpgcore.getklasyHelper().add(klasy);
 
-        this.addDataOs(new OsObject(uuid));
+        final DuszologObject duszologObject = new DuszologObject(uuid);
+        this.addDataDuszolog(duszologObject);
+        rpgcore.getDuszologNPC().add(duszologObject);
 
-        this.addDataBao(new BaoObject(uuid));
+        final KolekcjonerObject kolekcjonerObject = new KolekcjonerObject(uuid);
+        this.addDataKolekcjner(kolekcjonerObject);
+        rpgcore.getKolekcjonerNPC().add(kolekcjonerObject);
 
+        final MedykObject medykObject = new MedykObject(uuid);
+        this.addDataMedyk(medykObject);
+        rpgcore.getMedykNPC().add(medykObject);
+
+        final MetinologObject metinologObject = new MetinologObject(uuid);
+        this.addDataMetinolog(metinologObject);
+        rpgcore.getMetinologNPC().add(metinologObject);
+
+        final PrzyrodnikObject przyrodnikObject = new PrzyrodnikObject(uuid);
+        this.addDataPrzyrodnik(przyrodnikObject);
+        rpgcore.getPrzyrodnikNPC().add(przyrodnikObject);
+
+        final RybakObject rybakObject = new RybakObject(uuid);
+        this.addDataRybak(rybakObject);
+        rpgcore.getRybakNPC().add(rybakObject);
+
+        final OsObject osObject = new OsObject(uuid);
+        this.addDataOs(osObject);
+        rpgcore.getOsManager().add(osObject);
+
+        Document document;
 
         document = new Document();
         document.append("_id", uuid.toString());
@@ -300,17 +327,54 @@ public class MongoManager {
         document.append("_id", uuid.toString());
         document.append("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
         pool.getMagazyny().insertOne(document);
+    }
 
-        this.addDataKolekcjner(new KolekcjonerObject(uuid));
+    public void savePlayer(final Player player, final UUID uuid) {
+        try {
+            final long start = System.currentTimeMillis();
+            final User user = rpgcore.getUserManager().find(uuid);
+            ItemStack[] inventory = player.getInventory().getContents();
+            ItemStack[] armor = player.getInventory().getArmorContents();
+            ItemStack[] enderchest = player.getEnderChest().getContents();
 
-        pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
+            user.getInventoriesUser().setInventory(Utils.itemStackArrayToBase64(inventory));
+            user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(armor));
+            user.getInventoriesUser().setEnderchest(Utils.itemStackArrayToBase64(enderchest));
 
-        this.addDataMetinolog(new MetinologObject(uuid));
-        this.addKlasyData(new Klasy(uuid));
-        this.addDataDuszolog(new DuszologObject(uuid));
+            if (!user.getRankPlayerUser().getRankType().equals(RankTypePlayer.GRACZ)) {
+                if (user.getRankPlayerUser().getTime() != -1) {
+                    if (user.getRankPlayerUser().getTime() <= System.currentTimeMillis()) {
+                        user.getRankPlayerUser().setRank(RankTypePlayer.GRACZ);
+                        user.getRankPlayerUser().setTime(0L);
+                        rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&8&l[&4&l!&8&l]", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&cTwoja ranga wlasnie wygasla!", 5, 20, 5));
+                    }
+                }
+            }
+
+            this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
+            this.saveDataAkcesoria(uuid, rpgcore.getAkcesoriaManager().find(uuid));
+            this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
+            this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
+            this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
+            this.saveDataDuszolog(uuid, rpgcore.getDuszologNPC().find(uuid));
+            this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
+            this.saveDataMedyk(uuid, rpgcore.getMedykNPC().find(uuid));
+            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
+            this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
+            this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
+            this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
+
+            pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
+            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
 
 
-
+            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
+            System.out.println("[HellRPGCore] Pomyslnie zapisano gracza: " + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
+        } catch (final Exception e) {
+            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
+            System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
+            e.printStackTrace();
+        }
     }
 
     public void banPlayer(final UUID uuid, final String banInfo) {
@@ -374,23 +438,6 @@ public class MongoManager {
 
     }
 
-    public void savePlayer(final Player player, final UUID uuid) {
-        try {
-            this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
-
-            pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
-            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
-            this.saveKlasyData(uuid);
-
-
-            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
-            System.out.println("[HellRPGCore] Pomyslnie zapisano gracza: " + rpgcore.getUserManager().find(uuid).getName());
-        } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
-            System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
-            e.printStackTrace();
-        }
-    }
 
     public void saveGuildFirst(final String tag) {
         Document guild = createGuildDocument(tag);
@@ -551,8 +598,8 @@ public class MongoManager {
         this.pool.getKlasy().insertOne(klasy.toDocument());
     }
 
-    public void saveKlasyData(UUID uuid) {
-        pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getklasyHelper().find(uuid).toDocument());
+    public void saveKlasyData(UUID uuid, Klasy klasy) {
+        pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), klasy.toDocument());
     }
 
     public void addTrenerData(final UUID uuid) {

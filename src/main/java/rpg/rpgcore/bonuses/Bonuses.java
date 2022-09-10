@@ -13,7 +13,7 @@ public class Bonuses {
         this.bonusesUser = new BonusesUser(10,0,0,0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
-                0.0,0.0,0.0,0.0,0.0);
+                0.0,0.0,0.0,0.0,0.0, 0, 0);
     }
 
     public Bonuses(final Document document) {
@@ -21,7 +21,7 @@ public class Bonuses {
         this.bonusesUser = new BonusesUser(document.getInteger("dodatkowehp"), document.getInteger("dodatkowezlotehp"), document.getInteger("dodatkoweobrazenia"), document.getInteger("truedamage"),
                 document.getDouble("srednieobrazenia"), document.getDouble("silnynaludzi"), document.getDouble("silnynapotwory"), document.getDouble("sredniadefensywa"), document.getDouble("defnaludzi"), document.getDouble("defnamoby"),
                 document.getDouble("szansanakryta"), document.getDouble("szansanawzmocnieniekryta"), document.getDouble("blokciosu"), document.getDouble("przeszyciebloku"), document.getDouble("szansanakrwawienie"), document.getDouble("minussrednieobrazenia"),
-                document.getDouble("minussredniadefensywa"), document.getDouble("minusdefnaludzi"), document.getDouble("minusdefnamoby"), document.getDouble("minusobrazenianaludzi"), document.getDouble("minusobrazenianamoby"));
+                document.getDouble("minussredniadefensywa"), document.getDouble("minusdefnaludzi"), document.getDouble("minusdefnamoby"), document.getDouble("minusobrazenianaludzi"), document.getDouble("minusobrazenianamoby"), document.getInteger("szczescie"), document.getInteger("szybkosc"));
     }
 
     public UUID getId() {
@@ -54,6 +54,9 @@ public class Bonuses {
                 .append("minusdefnaludzi", this.bonusesUser.getMinusdefnaludzi())
                 .append("minusdefnamoby", this.bonusesUser.getMinusdefnamoby())
                 .append("minusobrazenianaludzi", this.bonusesUser.getMinusobrazenianaludzi())
-                .append("minusobrazenianamoby", this.bonusesUser.getMinusobrazenianamoby());
+                .append("minusobrazenianamoby", this.bonusesUser.getMinusobrazenianamoby())
+                .append("szczescie", this.bonusesUser.getSzczescie())
+                .append("szybkosc", this.bonusesUser.getSzybkosc());
+
     }
 }
