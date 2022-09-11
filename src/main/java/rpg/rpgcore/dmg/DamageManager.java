@@ -78,7 +78,7 @@ public class DamageManager {
             dmg += Utils.getSharpnessLevel(weapon);
         }
 
-        // Akcesoria
+        // AkcesoriaCommand
         //TODO Zrobic podpiecie Akcesori do klasy BONUSES
 
         // BAO
@@ -149,7 +149,7 @@ public class DamageManager {
             dmg += Utils.getObrazeniaMobyLevel(weapon);
         }
 
-        // Akcesoria
+        // AkcesoriaCommand
         //TODO Zrobic podpiecie Akceosir do klasy BONUSES
 
         // BAO

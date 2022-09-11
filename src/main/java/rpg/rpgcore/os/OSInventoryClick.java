@@ -38,7 +38,7 @@ public class OSInventoryClick implements Listener {
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
-        if (Utils.removeColor(title).equals("Osiagniecia")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.STAINED_GLASS_PANE)) {
@@ -48,7 +48,7 @@ public class OSInventoryClick implements Listener {
             rpgcore.getOsManager().openOsGuiCategory(player, slot);
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Zabici Gracze")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Zabici Gracze")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -77,7 +77,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Zabite Stwory")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Zabite Stwory")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -106,7 +106,7 @@ public class OSInventoryClick implements Listener {
         }
 
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Spedzony Czas")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Spedzony Czas")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -134,7 +134,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Wykopane Bloki")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Wykopane Bloki")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -162,7 +162,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Udane Polowy")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Udane Polowy")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -190,7 +190,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Otwarte Skrzynki")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Otwarte Skrzynki")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -218,7 +218,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Pomyslne Ulepszenia")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Pomyslne Ulepszenia")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -246,7 +246,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Znalezione Niesy")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Znalezione Niesy")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -274,7 +274,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Zniszczone Metiny")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Zniszczone Metiny")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {
@@ -302,7 +302,7 @@ public class OSInventoryClick implements Listener {
 
         }
 
-        if (Utils.removeColor(title).equals("Osiagniecia - Wykopane Drewno")) {
+        if (Utils.removeColor(title).equals("OsiagnieciaCommand - Wykopane Drewno")) {
             e.setCancelled(true);
 
             if (item.getType().equals(Material.AIR)) {

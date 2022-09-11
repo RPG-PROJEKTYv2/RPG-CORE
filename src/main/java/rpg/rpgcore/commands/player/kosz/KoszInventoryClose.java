@@ -23,9 +23,8 @@ public class KoszInventoryClose implements Listener {
         final Inventory closedInventory = e.getInventory();
         final String closedInventoryTitle = closedInventory.getTitle();
         final Player player = (Player) e.getPlayer();
-        final UUID uuid = player.getUniqueId();
 
-        if (Utils.removeColor(closedInventoryTitle).equals("Kosz")) {
+        if (Utils.removeColor(closedInventoryTitle).equals("KoszCommand")) {
             e.getInventory().clear();
         }
     }

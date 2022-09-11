@@ -165,7 +165,7 @@ public class MagazynierInventoryClick implements Listener {
             return;
         }
 
-        if (clickedInventoryTitle.contains("Magazyn #")) {
+        if (clickedInventoryTitle.contains("MagazynCommand #")) {
             if (clickedSlot == 49) {
                 e.setCancelled(true);
                 rpgcore.getMagazynierNPC().openMagazynierMagazyny(player);

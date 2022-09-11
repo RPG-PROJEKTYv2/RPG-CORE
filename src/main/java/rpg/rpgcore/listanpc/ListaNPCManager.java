@@ -13,7 +13,6 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ListaNPCManager {
     private final RPGCORE rpgcore;
@@ -26,15 +25,15 @@ public class ListaNPCManager {
     public Map<Integer, NpcObject> loadAll() {
         final Map<Integer, NpcObject> toLoad = new HashMap<>();
         int i = 1;
-        for (String s : rpgcore.getConfig().getConfigurationSection("ListaNPC").getKeys(false)) {
+        for (String s : rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getKeys(false)) {
             toLoad.put(i, new NpcObject(s, new Location(
-                    Bukkit.getWorld(rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getString("world")),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("x"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("y"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("z"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getLong("yaw"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getLong("pitch")
-                    ), rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getString("type")));
+                    Bukkit.getWorld(rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getString("world")),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("x"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("y"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("z"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getLong("yaw"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getLong("pitch")
+                    ), rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getString("type")));
             i++;
         }
 

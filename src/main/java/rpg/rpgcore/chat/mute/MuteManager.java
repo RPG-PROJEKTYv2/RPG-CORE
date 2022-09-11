@@ -59,7 +59,7 @@ public class MuteManager {
         final String muteInfo = muteSender + ";" + reason + ";" + muteExpiry + ";" + Utils.dateFormat.format(muteDate);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().mutePlayer(uuidPlayerToMute, muteInfo));
 
-        this.addToPunishmentHistory(uuidPlayerToMute, "Mute;" + muteInfo);
+        this.addToPunishmentHistory(uuidPlayerToMute, "MuteCommand;" + muteInfo);
     }
 
 
@@ -102,7 +102,7 @@ public class MuteManager {
         final String tempMuteInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempMuteExpireDate) + ";" + Utils.dateFormat.format(tempMuteDate);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().mutePlayer(uuidPlayerToTempMute, tempMuteInfo));
 
-        this.addToPunishmentHistory(uuidPlayerToTempMute, "TempMute;" + tempMuteInfo);
+        this.addToPunishmentHistory(uuidPlayerToTempMute, "TempMuteCommand;" + tempMuteInfo);
     }
 
 }

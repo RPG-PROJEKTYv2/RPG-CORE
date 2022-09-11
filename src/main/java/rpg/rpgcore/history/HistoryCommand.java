@@ -1,0 +1,147 @@
+package rpg.rpgcore.history;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.Utils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+public class HistoryCommand extends CommandAPI {
+
+    private final RPGCORE rpgcore;
+    private final ItemBuilder itemBuilder = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
+    private final List<String> lore = new ArrayList<>();
+
+    public HistoryCommand(RPGCORE rpgcore) {
+        super("history");
+        this.setRankLevel(RankType.KIDMOD);
+        this.setRestrictedForPlayer(true);
+        this.rpgcore = rpgcore;
+    }
+
+    @Override
+    public void executeCommand(CommandSender sender, String[] args) throws IOException {
+        final Player player = (Player) sender;
+        if (args.length < 1) {
+            player.sendMessage(Utils.poprawneUzycie("history <gracz> [un-/mute/tempmute/ban/tempban/]"));
+            return;
+        }
+
+        if (args.length == 1) {
+            if (!rpgcore.getUserManager().isUserName(args[0])) {
+                player.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return;
+            }
+            final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
+            final String punishmentsHistory = rpgcore.getUserManager().find(targetUUID).getPunishmentHistory();
+            if (punishmentsHistory.equalsIgnoreCase("")) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma zadnych kar!"));
+                return;
+            }
+            this.punishmentHistoryGui(player, targetUUID);
+            return;
+        }
+
+        if (args.length == 2) {
+            if (!rpgcore.getUserManager().isUserName(args[0])) {
+                player.sendMessage(Utils.NIEMATAKIEGOGRACZA);
+                return;
+            }
+            final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
+            final String punishmentsHistory = rpgcore.getUserManager().find(targetUUID).getPunishmentHistory();
+            if (punishmentsHistory.equalsIgnoreCase("")) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma zadnych kar!"));
+                return;
+            }
+            this.punishmentHistoryGui(player, targetUUID, args[1]);
+        }
+    }
+
+    private void punishmentHistoryGui(final Player player, final UUID uuid) {
+        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getUserManager().find(uuid).getName()));
+
+        final String[] fullPunishmentHistory = rpgcore.getUserManager().find(uuid).getPunishmentHistory().split(",");
+
+        int j = 0;
+        for (final String onePunishment : fullPunishmentHistory) {
+
+            if (!(onePunishment.equalsIgnoreCase( ""))){
+
+                final String[] splitPunishment = onePunishment.split(";");
+
+
+                itemBuilder.setSkullOwner(splitPunishment[1]);
+
+                itemBuilder.setName("&4&l" + splitPunishment[0].toUpperCase(Locale.ROOT));
+
+                if (splitPunishment.length == 3) {
+                    lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                    lore.add("&cNadany dnia:&7 " + splitPunishment[2]);
+                } else if (splitPunishment.length == 4) {
+                    lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                    lore.add("&cPowod:&7 " + splitPunishment[2]);
+                    lore.add("&cNadany dnia:&7 " + splitPunishment[3]);
+                } else {
+                    lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                    lore.add("&cPowod:&7 " + splitPunishment[2]);
+                    lore.add("&cWygasa:&7 " + splitPunishment[3]);
+                    lore.add("&cNadany dnia:&7 " + splitPunishment[4]);
+                }
+                itemBuilder.setLore(lore);
+                lore.clear();
+                punishmentHistory.setItem(j, itemBuilder.toItemStack());
+                j++;
+            }
+        }
+        player.openInventory(punishmentHistory);
+    }
+
+    private void punishmentHistoryGui(final Player player, final UUID uuid, final String regex) {
+        final Inventory punishmentHistory = Bukkit.createInventory(null, 54, Utils.format("&4&lHistoria kar gracza " + rpgcore.getUserManager().find(uuid).getName()));
+
+        final String[] fullPunishmentHistory = rpgcore.getUserManager().find(uuid).getPunishmentHistory().split(",");
+
+        for (final String onePunishment : fullPunishmentHistory) {
+
+            if (!(onePunishment.equalsIgnoreCase( ""))){
+
+                final String[] splitPunishment = onePunishment.split(";");
+
+                if (splitPunishment[0].equalsIgnoreCase(regex)) {
+                    itemBuilder.setSkullOwner(splitPunishment[1]);
+
+                    itemBuilder.setName("&4&l" + splitPunishment[0].toUpperCase(Locale.ROOT));
+
+                    if (splitPunishment.length == 3) {
+                        lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                        lore.add("&cNadany dnia:&7 " + splitPunishment[2]);
+                    } else if (splitPunishment.length == 4) {
+                        lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                        lore.add("&cPowod:&7 " + splitPunishment[2]);
+                        lore.add("&cNadany dnia:&7 " + splitPunishment[3]);
+                    } else {
+                        lore.add("&cNadany przez:&7 " + splitPunishment[1]);
+                        lore.add("&cPowod:&7 " + splitPunishment[2]);
+                        lore.add("&cWygasa:&7 " + splitPunishment[3]);
+                        lore.add("&cNadany dnia:&7 " + splitPunishment[4]);
+                    }
+                    itemBuilder.setLore(lore);
+                    lore.clear();
+                    punishmentHistory.setItem(punishmentHistory.firstEmpty(), itemBuilder.toItemStack());
+                }
+            }
+        }
+        player.openInventory(punishmentHistory);
+    }
+}

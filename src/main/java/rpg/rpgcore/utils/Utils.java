@@ -9,6 +9,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+import rpg.rpgcore.RPGCORE;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -68,15 +69,6 @@ public class Utils {
 
     public static String offline(final String targetName) {
         return format(SERVERNAME + format("&7Gracz &c" + targetName + " &7jest aktualnie &coffline!"));
-    }
-
-    public static String firstJoinMessage(final String name) {
-        return format(" &8[&a+&8] &7" + name);
-    }
-
-
-    public static String joinMessage(final String name) {
-        return format(" &8[&a+&8] &7" + name);
     }
 
     public static String quitMessage(final String name) {
@@ -335,10 +327,17 @@ public class Utils {
         }
     }
 
-    public static void sendToAdministration(final String message) {
+    public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (player.hasPermission("admin.rpg.seeDataBaseMessages")) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
                 player.sendMessage(format("&4&lHell&6&lDB " + message));
+            }
+        }
+    }
+    public static void sendToStaff(final String message) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+                player.sendMessage(format(message));
             }
         }
     }
@@ -415,7 +414,6 @@ public class Utils {
         StringBuilder stringBuilder = new StringBuilder();
         long time = now ? System.currentTimeMillis() : 0L;
         char[] var5 = string.toCharArray();
-        int var6 = var5.length;
 
         for (char character : var5) {
             if (Character.isDigit(character)) {

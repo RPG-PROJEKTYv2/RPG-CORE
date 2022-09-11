@@ -15,7 +15,6 @@ import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class AKCESORIAInventoryClick implements Listener {
@@ -56,7 +55,7 @@ public class AKCESORIAInventoryClick implements Listener {
 
 
 
-        if (clickedInventoryTitle.contains("Akcesoria gracza ")) {
+        if (clickedInventoryTitle.contains("AkcesoriaCommand gracza ")) {
             e.setCancelled(true);
 
             if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {

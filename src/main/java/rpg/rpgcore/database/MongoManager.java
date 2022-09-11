@@ -358,10 +358,10 @@ public class MongoManager {
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
 
 
-            Utils.sendToAdministration("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
+            Utils.sendToHighStaff("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
             System.out.println("[HellRPGCore] Pomyslnie zapisano gracza: " + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
         } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
+            Utils.sendToHighStaff("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
             System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
             e.printStackTrace();
         }
@@ -446,11 +446,11 @@ public class MongoManager {
 
                 pool.getGildie().findOneAndReplace(query, guild);
 
-                Utils.sendToAdministration("&aPomyslnie zapisano gilde: &6" + tag);
+                Utils.sendToHighStaff("&aPomyslnie zapisano gilde: &6" + tag);
                 System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
             }
         } catch (final Exception e) {
-            Utils.sendToAdministration("&cWystapil blad podczas zapisu klanu &6:" + tag2);
+            Utils.sendToHighStaff("&cWystapil blad podczas zapisu klanu &6:" + tag2);
             System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag2);
             e.printStackTrace();
         }
@@ -647,7 +647,7 @@ public class MongoManager {
     }
 
 
-    // Osiagniecia
+    // OsiagnieciaCommand
     public Map<UUID, OsObject> loadAllOs() {
         Map<UUID, OsObject> gornik = new ConcurrentHashMap<>();
         for (Document document : this.pool.getOsiagniecia().find()) {

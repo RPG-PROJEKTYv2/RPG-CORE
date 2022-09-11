@@ -2,45 +2,43 @@ package rpg.rpgcore.metiny;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.LocationHelper;
 import rpg.rpgcore.utils.Utils;
 
-public class MetinCommand implements CommandExecutor {
+import java.io.IOException;
+
+public class MetinCommand extends CommandAPI {
 
     private final RPGCORE rpgcore;
 
     public MetinCommand(RPGCORE rpgcore) {
+        super("metin");
+        this.setRankLevel(RankType.ADMIN);
+        this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }
 
-    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Utils.NIEGRACZ);
-            return false;
-        }
-
+    @Override
+    public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
 
-        if (!(player.hasPermission("admin.rpg.metin"))) {
-            player.sendMessage(Utils.permisje("admin.rpg.metin"));
-            return false;
+        if (args.length < 1) {
+            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
+            return;
         }
-
-
         if (args.length == 4) {
             if (args[0].equals("create")) {
                 if (args[1] != null) {
                     int id = Integer.parseInt(args[1]);
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o ID:&6 " + id + " &cjest juz utworzony."));
-                        return false;
+                        return;
                     }
                     int health = Integer.parseInt(args[2]);
                     int resp = Integer.parseInt(args[3]);
@@ -61,11 +59,11 @@ public class MetinCommand implements CommandExecutor {
                             + Utils.SERVERNAME + "&aKordy metina:&6 " + metiny.getMetins().getCoordinates() + "\n"
                             + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth()));
                     MetinyHelper.spawnMetin(id);
-                    return false;
+                    return;
                 }
             }
             player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
-            return false;
+            return;
         }
         if (args.length == 2) {
             if (args[0].equals("spawn")) {
@@ -78,7 +76,7 @@ public class MetinCommand implements CommandExecutor {
                     if (!this.rpgcore.getMetinyManager().isMetin(id)) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
                     }
-                    return false;
+                    return;
                 }
             }
             if (args[0].equals("tp")) {
@@ -91,7 +89,7 @@ public class MetinCommand implements CommandExecutor {
                         Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
                         player.teleport(location);
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales pomyslnie przeteleportowany na lokacje metina ID:&6 " + id + "&a."));
-                        return false;
+                        return;
                     }
                 }
             }
@@ -108,28 +106,25 @@ public class MetinCommand implements CommandExecutor {
                     } else {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
                     }
-                    return false;
+                    return;
                 }
             }
             player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
-            return false;
+            return;
         }
         if (args.length == 1) {
             if (args[0].equals("spawnall")) {
                 MetinyHelper.respAllMetins();
-                return false;
+                return;
             }
             if (args[0].equalsIgnoreCase("list")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista metin:"));
                 for (final Metiny metin : this.rpgcore.getMetinyManager().getMetins()) {
                     player.sendMessage(Utils.format("&8- &6" + metin.getId() + "&8: &6" + metin.getMetins().getWorld() + "&8: &6" + metin.getMetins().getCoordinates()));
                 }
-                return false;
+                return;
             }
             player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
-            return false;
         }
-        player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
-        return false;
     }
 }

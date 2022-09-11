@@ -120,7 +120,7 @@ public class KlasyNPC {
 
     public ItemStack getMission(final KlasaUser klasaUser, final UUID uuid) {
         if (!rpgcore.getklasyHelper().isKlasy(uuid)) {
-            Utils.sendToAdministration("&4&lWystapil blad podczas otwierania gui Mentora klasowego gracza: &6&l" + uuid + "&4&l - MISSION");
+            Utils.sendToHighStaff("&4&lWystapil blad podczas otwierania gui Mentora klasowego gracza: &6&l" + uuid + "&4&l - MISSION");
             return new ItemBuilder(Material.DIRT).setName("&4c&lCos sie popsulo :<").setLore(Arrays.asList("&4&lJesli widzisz ten item, niezwlocznie zglos", "&4&lsie do wyzszej administracji!")).toItemStack().clone();
         }
         String[] mission = klasaUser.getMission().split(";");
