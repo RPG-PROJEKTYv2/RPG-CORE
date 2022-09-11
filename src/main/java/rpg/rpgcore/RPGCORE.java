@@ -47,8 +47,8 @@ import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.server.ServerManager;
-import rpg.rpgcore.commands.admin.teleport.Teleport;
-import rpg.rpgcore.commands.admin.teleport.TeleportCoords;
+import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
+import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportManager;
 import rpg.rpgcore.commands.admin.ban.Ban;
 import rpg.rpgcore.commands.admin.ban.BanManager;
@@ -110,7 +110,7 @@ import rpg.rpgcore.os.Osiagniecia;
 import rpg.rpgcore.pomoc.POMOCInventoryClick;
 import rpg.rpgcore.pomoc.Pomoc;
 import rpg.rpgcore.pomoc.PomocManager;
-import rpg.rpgcore.spawn.Spawn;
+import rpg.rpgcore.spawn.SpawnCommand;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
@@ -211,125 +211,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getKolekcjonerNPC().loadMissions();
 
         this.initGlobalCommands();
-        this.initGlobalEvents();
+        this.initEvents();
         //this.initPacketListeners();
 
 
-        // BAO
-        this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
-        this.getServer().getPluginManager().registerEvents(new BAOPlayerInteract(this), this);
-
-        // OS
-        this.getServer().getPluginManager().registerEvents(new OSInventoryClick(this), this);
-
-        // TRADE
-        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
-
-        // TARG
-        this.getServer().getPluginManager().registerEvents(new NewTargInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new TARGInventoryClose(this), this);
-
-        // POMOC
-        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
-
-        // EQ
-        this.getServer().getPluginManager().registerEvents(new EQInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
-
-        // AKCESORIA
-        this.getServer().getPluginManager().registerEvents(new AKCESORIAInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new AKCESORIAPlayerInteract(this), this);
-
-        // HISTORY
-        this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
-
-        // POMOC
-        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
-
-        // ECONOMY
-        this.getServer().getPluginManager().registerEvents(new EconomyPlayerInteract(this), this);
-
-        // GUILDS
-        this.getCommand("klan").setExecutor(new Guild(this));
-        this.getServer().getPluginManager().registerEvents(new GuildsInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new GuildsPlayerDamage(this), this);
-        this.getServer().getPluginManager().registerEvents(new GuildEntityDeath(this), this);
-
-
-        // KOSZ
-        this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);
-        this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
-        this.getCommand("kosz").setExecutor(new Kosz());
-
-        // KLASY
-        this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
-        this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
-
-        // BOSSY
-        this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(this), this);
-
-        // LISTANPC
-        this.getServer().getPluginManager().registerEvents(new ListaNPCInventoryClick(), this);
-
-        // INNE
-
-        // MythicSTICK
-        this.getCommand("mythicstick").setExecutor(new MythicStick());
-        this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(), this);
-
-        // NPC
-
-        // ...DUSZOLOG
-        this.getServer().getPluginManager().registerEvents(new DuszologDamageListener(), this);
-        this.getServer().getPluginManager().registerEvents(new DuszologInteractListener(), this);
-
-
-        // ...RYBAK
-        this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
-
-        // ...MAGAZYNIER
-        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClose(this), this);
-        this.getCommand("magazyn").setExecutor(new Magazyn(this));
-
-        // ...TELEPORTER
-        this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
-
-        // ...KUPIEC
-        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
-
-        // ...KOWAL
-        this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
-
-        // ...KOLEKCJONER
-        this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
-
-        // ...TRENER
-        this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
-
-        // ...METINOLOG
-        this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
-
-        // ...MEDYK
-        this.getServer().getPluginManager().registerEvents(new MedykInventoryClick(this), this);
-
-        // ...GORNIK
-        this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
-        this.getServer().getPluginManager().registerEvents(new GornikBlockBreak(this), this);
-
-        // ...PRZYRODNIK
-        this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
-
-
-        // DUNGEONS
-
-        // ...NIEBIOSA
-        this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
-        this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
 
 
         // BACKUP
@@ -375,9 +260,9 @@ public final class RPGCORE extends JavaPlugin {
     } */
 
     private void initGlobalCommands() {
-        this.getCommand("teleport").setExecutor(new Teleport(this));
-        this.getCommand("teleportcoords").setExecutor(new TeleportCoords(this));
-        this.getCommand("spawn").setExecutor(new Spawn(this));
+        CommandAPI.getCommand().register("HellRPGCore", new TeleportCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new TeleportHereCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new SpawnCommand(this));
         this.getCommand("ban").setExecutor(new Ban(this));
         this.getCommand("unban").setExecutor(new UnBan(this));
         this.getCommand("kick").setExecutor(new Kick(this));
@@ -416,14 +301,19 @@ public final class RPGCORE extends JavaPlugin {
         this.getCommand("klasa").setExecutor(new KlasaCommand(this));
         this.getCommand("bossy").setExecutor(new BossyCommand(this));
         this.getCommand("listanpc").setExecutor(new ListaNPC());
+        this.getCommand("klan").setExecutor(new Guild(this));
+        this.getCommand("kosz").setExecutor(new Kosz());
+        this.getCommand("mythicstick").setExecutor(new MythicStick());
+        this.getCommand("magazyn").setExecutor(new Magazyn(this));
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoria());
         CommandAPI.getCommand().register("HellRPGCore", new SetPremiumCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new RankTimeCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetAdminRankCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new HellCodeCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new AdminCodeCommand(this));
     }
 
-    private void initGlobalEvents() {
+    private void initEvents() {
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
@@ -438,6 +328,117 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
+        // BAO
+        this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
+        this.getServer().getPluginManager().registerEvents(new BAOPlayerInteract(this), this);
+
+        // OS
+        this.getServer().getPluginManager().registerEvents(new OSInventoryClick(this), this);
+
+        // TRADE
+        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
+
+        // TARG
+        this.getServer().getPluginManager().registerEvents(new NewTargInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new TARGInventoryClose(this), this);
+
+        // POMOC
+        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
+
+        // EQ
+        this.getServer().getPluginManager().registerEvents(new EQInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
+
+        // AKCESORIA
+        this.getServer().getPluginManager().registerEvents(new AKCESORIAInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new AKCESORIAPlayerInteract(this), this);
+
+        // HISTORY
+        this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
+
+        // POMOC
+        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
+
+        // ECONOMY
+        this.getServer().getPluginManager().registerEvents(new EconomyPlayerInteract(this), this);
+
+        // GUILDS
+        this.getServer().getPluginManager().registerEvents(new GuildsInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new GuildsPlayerDamage(this), this);
+        this.getServer().getPluginManager().registerEvents(new GuildEntityDeath(this), this);
+
+
+        // KOSZ
+        this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
+
+        // KLASY
+        this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
+        this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
+
+        // BOSSY
+        this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(this), this);
+
+        // LISTANPC
+        this.getServer().getPluginManager().registerEvents(new ListaNPCInventoryClick(), this);
+
+        // INNE
+
+        // MythicSTICK
+        this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(), this);
+
+        // NPC
+
+        // ...DUSZOLOG
+        this.getServer().getPluginManager().registerEvents(new DuszologDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new DuszologInteractListener(), this);
+
+
+        // ...RYBAK
+        this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
+
+        // ...MAGAZYNIER
+        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClose(this), this);
+
+        // ...TELEPORTER
+        this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
+
+        // ...KUPIEC
+        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
+
+        // ...KOWAL
+        this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
+
+        // ...KOLEKCJONER
+        this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
+
+        // ...TRENER
+        this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
+
+        // ...METINOLOG
+        this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
+
+        // ...MEDYK
+        this.getServer().getPluginManager().registerEvents(new MedykInventoryClick(this), this);
+
+        // ...GORNIK
+        this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new GornikBlockBreak(this), this);
+
+        // ...PRZYRODNIK
+        this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
+
+
+        // DUNGEONS
+
+        // ...NIEBIOSA
+        this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
+        this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
     }
 
     private void initDatabase() {

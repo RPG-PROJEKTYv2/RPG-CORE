@@ -84,7 +84,7 @@ public class HellCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
-            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**Stworzenie HellCode**",
+            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode Create**",
                     "**Gracz:** `" + player.getName() + "` **stworzyl swoj hellcode!**\n"
                             + "**Nowy Kod: **||" + args[2] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
@@ -93,6 +93,11 @@ public class HellCodeCommand extends CommandAPI {
         }
 
         if (args[0].equalsIgnoreCase("zmien")) {
+
+            if (user.getHellCode().isEmpty()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw stworzyc hellcode, zeby moc go zmienic!"));
+                return;
+            }
 
             if (!user.isHellCodeLogin()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy muszisz sie zalgowac! Uzyj: &c/hellcode <kod>"));
@@ -137,7 +142,7 @@ public class HellCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
-            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**Zmiana HellCode**",
+            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode Change**",
                     "**Gracz:** `" + player.getName() + "` **zmienil swoj hellcode!**\n"
                             + "**Kod Przed Zmiana: **||" + args[1] + "||\n"
                             + "**Kod Po Zmianie: **||" + args[2] + "||\n"
@@ -167,11 +172,16 @@ public class HellCodeCommand extends CommandAPI {
             user.setHellCodeLogin(false);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wylaczyles hellcode!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
-            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**Wylaczanie HellCode**",
+            RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode OFF**",
                     "**Gracz:** `" + player.getName() + "` **wylaczyl swoj hellcode!**\n"
                             + "**Kod Przed wylaczeniem: **||" + args[1] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.red));
+            return;
+        }
+
+        if (user.isHellCodeLogin()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Juz jestes zalogowany!"));
             return;
         }
 
@@ -187,7 +197,9 @@ public class HellCodeCommand extends CommandAPI {
                     "**Gracz:** `" + player.getName() + "` **zalogowal sie swoim hellcode!**\n"
                             + "**Kod: **||" + args[0] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
-                            + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.red));
+                            + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.GREEN));
+        } else {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podany HellCode jest nieprawidlowy!"));
         }
 
 

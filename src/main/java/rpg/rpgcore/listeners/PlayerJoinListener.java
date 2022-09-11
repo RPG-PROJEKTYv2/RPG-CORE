@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
@@ -61,7 +60,6 @@ public class PlayerJoinListener implements Listener {
             player.setLevel(1);
             player.setExp(0);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
-            return;
         }
     }
 
@@ -77,6 +75,8 @@ public class PlayerJoinListener implements Listener {
             return;
         }
         final User user = rpgcore.getUserManager().find(playerUUID);
+        user.setHellCodeLogin(false);
+        user.setAdminCodeLogin(false);
         rpgcore.getBackupManager().savePlayer(p, playerUUID);
 
 

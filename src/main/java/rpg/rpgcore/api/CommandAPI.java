@@ -8,12 +8,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
+import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public abstract class CommandAPI extends Command {
@@ -67,15 +70,15 @@ public abstract class CommandAPI extends Command {
                     return false;
                 }
             }
-            if (!s.contains("pin") && !s.contains("hypecode")  && !s.equals("punktyrangi") && !s.contains("hc") && !s.contains("expiciel") && !s.contains("expiciel+") && !s.contains("oldplayer") && !s.contains("poziom") && !s.contains("money") && !s.contains("magazyn") && !s.contains("msg") && !s.contains("r") && !s.contains("akcesoria") && !s.contains("bony") && !s.contains("targ") && !s.contains("kosz") && !s.contains("spawn")) {
+            if (!s.contains("ac") && !s.contains("admincode") && !s.equals("punktyrangi") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.contains("expiciel") && !s.contains("expiciel+") && !s.contains("oldplayer") && !s.contains("poziom") && !s.contains("money") && !s.contains("magazyn") && !s.contains("msg") && !s.contains("r") && !s.contains("akcesoria") && !s.contains("bony") && !s.contains("targ") && !s.contains("kosz") && !s.contains("spawn")) {
                 if (userProfile.getRankUser().isStaff()) {
-                    /*if (userProfile.getHypeCodePin().getHypepinlogin() == 0) {
-                        MessageHelper.build("&8[&4!&8] &cMusisz wpisac &fPin Administracyjny&c, zeby wpisywac komendy.").send(userProfile);
+                    if (!userProfile.isAdminCodeLogin()) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));
                         return false;
-                    }*/
+                    }
                 }
             }
-            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc")  && !s.equals("spawn")) {
+            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn")) {
                 if (!userProfile.isHellCodeLogin()) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim HellCode! Uzyj: &c/hellcode <kod>"));
                     return false;
@@ -85,10 +88,16 @@ public abstract class CommandAPI extends Command {
         }
         this.executeCommand(sender, strings);
         if (sender instanceof Player) {
-            /*final User userProfile = Main.getInstance().getUserManager().find(((Player) sender).getUniqueId());
-            if (userProfile.getRankUser().getRankType().getPriority() < 100 && userProfile.getRankUser().getRankType().getPriority() > 96) {
-                DiscordHelper.discordWebHook("933441026880839770/fpbcKVVrz_6P1z0Un1UwAFP0fI15xnJaZIJL1xHPP8vQOLWZVVN20g18OtV9M62G0owO", "Wysylanie komend przez administracje", "Player: " + sender.getName() + "\n" + "\n" + "\n" + s + " " + strings);
-            }*/
+            final User userProfile = RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId());
+            if (userProfile.getRankUser().isStaff() && userProfile.getRankUser().getRankType().getPriority() < 95) {
+                RPGCORE.getDiscordBot().sendChannelMessage("admin-commands-logs", EmbedUtil.create(
+                        "**" + s.toUpperCase() + "**",
+                        "**Administrator: **" + sender.getName() + "\n"
+                                + "**Ranga: **" + userProfile.getRankUser().getRankType().getName() + "\n"
+                                + "**Komenda: **" + s + "\n"
+                                + "**Argumenty: **" + String.join(" ", strings) + "\n"
+                                + "**Data: **" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(System.currentTimeMillis()), Color.BLUE));
+            }
         }
         return true;
     }
