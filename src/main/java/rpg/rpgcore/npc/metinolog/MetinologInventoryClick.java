@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.GlobalItems.MetinologItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;

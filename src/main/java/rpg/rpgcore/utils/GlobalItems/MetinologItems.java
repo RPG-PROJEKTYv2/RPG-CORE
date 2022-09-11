@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.metinolog;
+package rpg.rpgcore.utils.GlobalItems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,8 +21,8 @@ public enum MetinologItems {
     I12("I110-120", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 110-120").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
     I13("I120-130", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 120-130").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone());
 
-    private String name;
-    private ItemStack itemStack;
+    private final String name;
+    private final ItemStack itemStack;
 
     MetinologItems(String name, ItemStack itemStack) {
         this.itemStack = itemStack;

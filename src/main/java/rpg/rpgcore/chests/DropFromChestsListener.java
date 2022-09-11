@@ -9,7 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItem;
+import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;

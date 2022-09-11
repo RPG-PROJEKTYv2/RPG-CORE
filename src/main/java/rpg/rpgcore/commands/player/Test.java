@@ -5,9 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItem;
-
-import java.util.Arrays;
+import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 
 public class Test implements CommandExecutor {
 

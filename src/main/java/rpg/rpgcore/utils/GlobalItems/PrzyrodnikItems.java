@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.przyrodnik;
+package rpg.rpgcore.utils.GlobalItems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,8 +21,8 @@ public enum PrzyrodnikItems {
     I10("100-110", new ItemBuilder(Material.RED_ROSE, 1, (short) 1).setName("&5Przeklety Kwiat").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I11("110-120", new ItemBuilder(Material.GOLD_NUGGET).setName("&3Astralny Fragment").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone());
 
-    private String name;
-    private ItemStack item;
+    private final String name;
+    private final ItemStack item;
 
     PrzyrodnikItems(String name, ItemStack item){
         this.name = name;

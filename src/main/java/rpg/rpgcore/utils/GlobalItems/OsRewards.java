@@ -1,4 +1,4 @@
-package rpg.rpgcore.os;
+package rpg.rpgcore.utils.GlobalItems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +19,8 @@ public enum OsRewards {
     L0("L0", new ItemBuilder(Material.DIAMOND_SWORD).setName("&7&lTestowy Miecz10").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
     I_ERROR("ERROR", new ItemBuilder(Material.DIRT).setName("&c&lNie znaleziono Nagrody").toItemStack().clone());
 
-    private String name;
-    private ItemStack itemStack;
+    private final String name;
+    private final ItemStack itemStack;
 
     OsRewards(String name, ItemStack itemStack) {
         this.itemStack = itemStack;

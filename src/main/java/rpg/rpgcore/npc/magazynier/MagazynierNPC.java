@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItem;
+import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 

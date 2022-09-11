@@ -10,10 +10,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItem;
+import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class KowalInventoryClick implements Listener {
