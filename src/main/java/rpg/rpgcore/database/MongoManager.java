@@ -9,6 +9,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.akcesoria.AkcesoriaObject;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -158,6 +159,9 @@ public class MongoManager {
             }
             if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataPrzyrodnik(new PrzyrodnikObject(uuid));
+            }
+            if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataChatUsers(new ChatUser(uuid));
             }
         }
 
@@ -866,6 +870,30 @@ public class MongoManager {
     public void saveAllBonuses() {
         for (Bonuses bonuses : rpgcore.getBonusesManager().getBonusesObjects()) {
             this.saveDataBonuses(bonuses.getId(), bonuses);
+        }
+    }
+
+    // CHAT
+    public Map<UUID, ChatUser> loadAllChatUsers() {
+        Map<UUID, ChatUser> chat = new HashMap<>();
+        for (Document document : this.pool.getChatUsers().find()) {
+            ChatUser chatUser = new ChatUser(document);
+            chat.put(chatUser.getUuid(), chatUser);
+        }
+        return chat;
+    }
+
+    public void addDataChatUsers(final ChatUser chatUser) {
+        this.pool.getChatUsers().insertOne(chatUser.toDocument());
+    }
+
+    public void saveDataChatUsers(final UUID id, final ChatUser chatUser) {
+        this.pool.getChatUsers().findOneAndReplace(new Document("_id", id.toString()), chatUser.toDocument());
+    }
+
+    public void saveAllChatUsers() {
+        for (ChatUser chatUser : rpgcore.getChatManager().getChatUsersObjects()) {
+            this.saveDataChatUsers(chatUser.getUuid(), chatUser);
         }
     }
 

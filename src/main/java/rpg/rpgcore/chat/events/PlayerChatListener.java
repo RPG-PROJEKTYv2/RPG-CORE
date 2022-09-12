@@ -1,4 +1,4 @@
-package rpg.rpgcore.chat;
+package rpg.rpgcore.chat.events;
 
 
 import org.bukkit.entity.Player;

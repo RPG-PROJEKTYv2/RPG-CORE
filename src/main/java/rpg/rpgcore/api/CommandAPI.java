@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public abstract class CommandAPI extends Command {
     private RankType rankLevel;
@@ -66,7 +67,7 @@ public abstract class CommandAPI extends Command {
             final User userProfile = RPGCORE.getInstance().getUserManager().find(uuid);
             if (userProfile.getRankUser().getRankType().getPriority() < 9) {
                 if (RPGCORE.getInstance().getCooldownManager().hasCommandCooldown(uuid)) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cOdczekaj chwile przed wyslaniem kolejnej komendy."));
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nastepnej komendy mozesz uzyc za &c" + Utils.durationToString(RPGCORE.getInstance().getCooldownManager().getPlayerCommandCooldown(uuid), false) + "&7."));
                     return false;
                 }
             }

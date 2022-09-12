@@ -1,4 +1,4 @@
-package rpg.rpgcore.chat;
+package rpg.rpgcore.chat.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +34,7 @@ public class AsyncPlayerChatListener implements Listener {
 
         if (rpgcore.getCooldownManager().hasChatCooldown(uuid)) {
             e.setCancelled(true);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nastepna wiadomosc mozesz wyslac za &c" + Utils.durationToString(rpgcore.getCooldownManager().getPlayerChatCooldown(uuid), true)));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nastepna wiadomosc mozesz wyslac za &c" + Utils.durationToString(rpgcore.getCooldownManager().getPlayerChatCooldown(uuid), false)));
             return;
         }
 

@@ -1,4 +1,4 @@
-package rpg.rpgcore.chat;
+package rpg.rpgcore.chat.events;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -17,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class EQInventoryClick implements Listener {
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
         if (e.getClickedInventory() == null) {
             return;
@@ -208,6 +208,44 @@ public class EQInventoryClick implements Listener {
             rpgcore.getChatManager().updateMessageWithEQ(e.getWhoClicked().getUniqueId(), "");
             e.setCancelled(true);
             e.getWhoClicked().closeInventory();
+        }
+
+        if (Utils.removeColor(clickedInventoryTitle).equals("Chat Panel")) {
+            e.setCancelled(true);
+            final ChatUser user = rpgcore.getChatManager().find(playerUUID);
+
+            if (clickedSlot == 2) {
+                if (user.isChestDropEnabled()) {
+                    user.setChestDropEnabled(false);
+                    return;
+                }
+                user.setChestDropEnabled(true);
+                return;
+            }
+            if (clickedSlot == 3) {
+                if (user.isPingsEnabled()) {
+                    user.setPingsEnabled(false);
+                    return;
+                }
+                user.setPingsEnabled(true);
+                return;
+            }
+            if (clickedSlot == 4) {
+                if (user.isNiesDropEnabled()) {
+                    user.setNiesDropEnabled(false);
+                    return;
+                }
+                user.setNiesDropEnabled(true);
+                return;
+            }
+            if (clickedSlot == 5) {
+                if (user.isItemDropEnabled()) {
+                    user.setItemDropEnabled(false);
+                    return;
+                }
+                user.setItemDropEnabled(true);
+                return;
+            }
         }
     }
 

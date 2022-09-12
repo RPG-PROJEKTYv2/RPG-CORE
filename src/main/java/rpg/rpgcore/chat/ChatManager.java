@@ -1,5 +1,6 @@
 package rpg.rpgcore.chat;
 
+import com.google.common.collect.ImmutableSet;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,6 +20,7 @@ import java.util.*;
 public class ChatManager {
 
     private final RPGCORE rpgcore;
+    private final Map<UUID, ChatUser> chatUsers;
     private final HashMap<UUID, String> messageWithEQ = new HashMap<>();
     private RankType rankReqForChat = RankType.getByName("GRACZ");
     private int lvlReqForChat = 1;
@@ -26,6 +28,7 @@ public class ChatManager {
 
     public ChatManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.chatUsers = rpgcore.getMongoManager().loadAllChatUsers();
     }
 
     public String getMessageWithEQ(final UUID uuid) {
@@ -182,5 +185,18 @@ public class ChatManager {
 
     public void setChatEnabled(final boolean chatEnabled) {
         this.chatEnabled = chatEnabled;
+    }
+
+    public void add(final ChatUser chatUser) {
+        this.chatUsers.put(chatUser.getUuid(), chatUser);
+    }
+
+    public ChatUser find(final UUID uuid) {
+        chatUsers.computeIfAbsent(uuid, k -> new ChatUser(uuid));
+        return this.chatUsers.get(uuid);
+    }
+
+    public ImmutableSet<ChatUser> getChatUsersObjects() {
+        return ImmutableSet.copyOf(this.chatUsers.values());
     }
 }
