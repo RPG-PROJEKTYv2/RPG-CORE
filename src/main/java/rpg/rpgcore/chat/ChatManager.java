@@ -10,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -40,52 +42,26 @@ public class ChatManager {
 
     public String formatujChat(final Player player, String format, String message) {
         final int playerLVL = rpgcore.getUserManager().find(player.getUniqueId()).getLvl();
-        String playerName = player.getName();
-        String playerRank = rpgcore.getUserManager().getPlayerGroup(player);
-        String playerGuild = "";
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
+        final String playerName = player.getName();
+        String playerRank = user.getRankPlayerUser().getRankType().getPrefix();
+        final String playerGuild = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
 
-        switch (playerRank) {
-            case "H@":
-                playerName = Utils.format("&c" + playerName);
-                break;
-            case "Admin":
-                playerName = Utils.format("&c" + playerName);
-                break;
-            case "GM":
-                playerName = Utils.format("&a" + playerName);
-                break;
-            case "Mod":
-                message = Utils.removeColor(message);
-                playerName = Utils.format("&a" + playerName);
-                break;
-            case "KidMod":
-                message = Utils.removeColor(message);
-                playerName = Utils.format("&a" + playerName);
-                break;
-            case "Helper":
-                message = Utils.removeColor(message);
-                playerName = Utils.format("&b" + playerName);
-                break;
-            case "JuniorHelper":
-                message = Utils.removeColor(message);
-                playerName = Utils.format("&b" + playerName);
-                break;
-            default:
-                message = Utils.removeColor(message);
-                playerName = Utils.format("&7" + playerName);
-                break;
+        if (!user.getRankUser().isHighStaff()) {
+            message = Utils.removeColor(message);
         }
-        if (!rpgcore.getGuildManager().getGuildTag(player.getUniqueId()).equals("Brak Klanu")) {
-            playerGuild = Utils.format("&8(&e" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8) ");
+
+        if (user.getRankUser().isStaff()) {
+            playerRank = user.getRankUser().getRankType().getPrefix();
         }
-        format = format.replace("<player-klan>", playerGuild).replace("<player-lvl>", String.valueOf(playerLVL));
-        if (playerRank.equals("Gracz")) {
-            return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", "").replace("<player-name>", playerName).replace("<message>", message));
+
+        if (playerGuild.equals("Brak Klanu")) {
+            format = format.replace("<player-klan>", "");
+        } else {
+            format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8]"));
         }
-        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
-            return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", Utils.format(message)));
-        }
-        return PlaceholderAPI.setPlaceholders(player, format.replace("<player-group>", " %uperms_prefixes%").replace("<player-name>", playerName).replace("<message>", message));
+
+        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-name>", playerName).replace("<message>", message);
     }
 
 
@@ -165,14 +141,14 @@ public class ChatManager {
     }
 
     public String getEnchantemntLvlForEQ(final Player player) {
-        return " &8[&3&lP: &b" + player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
-                "&b/" + player.getInventory().getChestplate().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
-                "&b/" + player.getInventory().getLeggings().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
-                "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) +
-                " &3&lT: &b " + player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.THORNS) +
-                "&b/" + player.getInventory().getChestplate().getEnchantmentLevel(Enchantment.THORNS) +
-                "&b/" + player.getInventory().getLeggings().getEnchantmentLevel(Enchantment.THORNS) +
-                "&b/" + player.getInventory().getBoots().getEnchantmentLevel(Enchantment.THORNS) +
+        return " &8[&3&lP: &b" + Utils.getProtectionLevel(player.getInventory().getHelmet()) +
+                "&b/" + Utils.getProtectionLevel(player.getInventory().getChestplate()) +
+                "&b/" + Utils.getProtectionLevel(player.getInventory().getLeggings()) +
+                "&b/" + Utils.getProtectionLevel(player.getInventory().getBoots()) +
+                " &3&lT: &b " + Utils.getThornsLevel(player.getInventory().getHelmet()) +
+                "&b/" + Utils.getThornsLevel(player.getInventory().getChestplate()) +
+                "&b/" + Utils.getThornsLevel(player.getInventory().getLeggings()) +
+                "&b/" + Utils.getThornsLevel(player.getInventory().getBoots()) +
                 "&8]&7";
     }
 

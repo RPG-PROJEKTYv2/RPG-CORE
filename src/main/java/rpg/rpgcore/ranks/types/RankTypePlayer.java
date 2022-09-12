@@ -1,7 +1,7 @@
 package rpg.rpgcore.ranks.types;
 
 public enum RankTypePlayer {
-    GRACZ("GRACZ", "&7", 0),
+    GRACZ("GRACZ", "&7 ", 0),
     BUDOWNICZY("BUDOWNICZY", "&d&lBud &7", 0),
     VIP("VIP", "&e&lVip &7", 1),
     SVIP("SVIP", "&6&lS&e&lvip &7", 2),
