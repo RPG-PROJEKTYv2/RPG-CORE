@@ -1,18 +1,17 @@
 package rpg.rpgcore.chat;
 
 import com.google.common.collect.ImmutableSet;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -74,7 +73,7 @@ public class ChatManager {
     }
 
     public Inventory createEQGUI() {
-        final Inventory eqGUI = Bukkit.createInventory(null, 9, Utils.format("&4&lEQ GUI"));
+        final Inventory eqGUI = Bukkit.createInventory(null, 9, Utils.format("&4&lGui Interakcji z Chatem"));
 
         ItemStack item;
         ItemMeta itemMeta;
@@ -141,6 +140,55 @@ public class ChatManager {
         eqGUI.addItem(item);
 
         return eqGUI;
+    }
+
+    public void openChatPanel(Player player) {
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lChat Panel"));
+
+        if (user.isItemDropEnabled()) {
+            gui.setItem(2, new ItemBuilder(Material.STICK).setName("&a&lWiadomosci o dropie").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(2, new ItemBuilder(Material.STICK).setName("&c&lWiadomosci o dropie").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+        }
+        if (user.isPingsEnabled()) {
+            gui.setItem(3, new ItemBuilder(Material.ANVIL).setName("&a&lWiadomosci o zaczepkach").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(3, new ItemBuilder(Material.ANVIL).setName("&c&lWiadomosci o zaczepkach").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+        }
+        if (user.isNiesDropEnabled()) {
+            gui.setItem(4, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&a&lWiadomosci o Niesamowitych Przedmiotach").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(4, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&c&lWiadomosci o Niesamowitych Przedmiotach").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+        }
+        if (user.isChestDropEnabled()) {
+            gui.setItem(5, new ItemBuilder(Material.CHEST).setName("&a&lWiadomosci o dropie ze skrzynek").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(5, new ItemBuilder(Material.TRAPPED_CHEST).setName("&c&lWiadomosci o dropie ze skrzynek").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+        }
+        gui.setItem(6, new ItemBuilder(Material.BARRIER).setName("&c&lCos tu kiedys jeszcze bedzie").addGlowing().toItemStack().clone());
+
+
+        player.openInventory(gui);
+    }
+
+    public void pingPlayer(final Player player, final String message) {
+        final String[] args = message.split(" ");
+        for (String s : args) {
+            if (s.contains("@")) {
+                final String nick = s.replace("@", "");
+                if (!nick.isEmpty()) {
+                    final Player p = Bukkit.getPlayer(nick);
+                    if (p != null) {
+                        final ChatUser atUser = rpgcore.getChatManager().find(p.getUniqueId());
+                        if (atUser.isPingsEnabled()) {
+                            rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&cHej " + p.getName() + "!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&3" + player.getName() + " &7zaczepia Cie!", 5, 20, 5));
+                            p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 100);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public String getEnchantemntLvlForEQ(final Player player) {

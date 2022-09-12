@@ -16,6 +16,7 @@ import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
@@ -50,12 +51,12 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().setArmorContents(null);
             player.getEnderChest().clear();
 
-            rpgcore.getMongoManager().createPlayer(uuid, player.getName());
             player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 2, 0, true, false));
             player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 2, 0, true, false));
             player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 2, 0, true, false));
             player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 2, 0, true, false));
             player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 5, 1, true, false));
+            rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
 
             player.setLevel(1);
             player.setExp(0);
@@ -77,6 +78,13 @@ public class PlayerJoinListener implements Listener {
         final User user = rpgcore.getUserManager().find(playerUUID);
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
+        try {
+            p.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
+            p.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
+            p.getEnderChest().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest()));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
         rpgcore.getBackupManager().savePlayer(p, playerUUID);
 
 

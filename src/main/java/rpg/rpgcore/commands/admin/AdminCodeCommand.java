@@ -42,7 +42,7 @@ public class AdminCodeCommand extends CommandAPI {
         }
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         if (args[0].equalsIgnoreCase("stworz")) {
-            if (args[1] == null || args[2] == null) {
+            if (args.length < 3 || args[1] == null || args[2] == null) {
                 player.sendMessage(Utils.poprawneUzycie("admincode stworz <kod> <kod>"));
                 return;
             }
@@ -95,7 +95,7 @@ public class AdminCodeCommand extends CommandAPI {
                 return;
             }
 
-            if (args[1] == null || args[2] == null || args[3] == null) {
+            if (args.length < 4 || args[1] == null || args[2] == null || args[3] == null) {
                 player.sendMessage(Utils.poprawneUzycie("admincode zmien <stary kod> <nowy kod> <nowy kod>"));
                 return;
             }

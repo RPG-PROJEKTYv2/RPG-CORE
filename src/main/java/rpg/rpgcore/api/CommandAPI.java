@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public abstract class CommandAPI extends Command {
     private RankType rankLevel;
@@ -91,13 +90,20 @@ public abstract class CommandAPI extends Command {
         if (sender instanceof Player) {
             final User userProfile = RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId());
             if (userProfile.getRankUser().isStaff() && userProfile.getRankUser().getRankType().getPriority() < 95) {
-                RPGCORE.getDiscordBot().sendChannelMessage("admin-commands-logs", EmbedUtil.create(
-                        "**" + s.toUpperCase() + "**",
-                        "**Administrator: **" + sender.getName() + "\n"
-                                + "**Ranga: **" + userProfile.getRankUser().getRankType().getName() + "\n"
-                                + "**Komenda: **" + s + "\n"
-                                + "**Argumenty: **" + String.join(" ", strings) + "\n"
-                                + "**Data: **" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(System.currentTimeMillis()), Color.BLUE));
+                if (!s.contains("ac") && !s.contains("admincode") && !s.equals("punktyrangi") && !s.equals("hellcode") &&
+                        !s.equals("code") && !s.equals("hc") && !s.contains("expiciel") && !s.contains("balance") &&
+                        !s.contains("bal") && !s.contains("kasa") && !s.contains("money") && !s.contains("magazyn") &&
+                        !s.contains("mag") && !s.contains("msg") && !s.contains("r") && !s.contains("akcesoria") &&
+                        !s.contains("mag") && !s.contains("bony") && !s.contains("targ") && !s.contains("kosz") &&
+                        !s.contains("spawn")) {
+                    RPGCORE.getDiscordBot().sendChannelMessage("admin-commands-logs", EmbedUtil.create(
+                            "**" + s.toUpperCase() + "**",
+                            "**Administrator: **" + sender.getName() + "\n"
+                                    + "**Ranga: **" + userProfile.getRankUser().getRankType().getName() + "\n"
+                                    + "**Komenda: **" + s + "\n"
+                                    + "**Argumenty: **" + String.join(" ", strings) + "\n"
+                                    + "**Data: **" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(System.currentTimeMillis()), Color.BLUE));
+                }
             }
         }
         return true;

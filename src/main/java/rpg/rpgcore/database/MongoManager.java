@@ -260,9 +260,12 @@ public class MongoManager {
         rpgcore.getSpawnManager().setSpawn(spawn);
     }
 
-    public void createPlayer(final UUID uuid, final String nick) {
+    public void createPlayer(final Player player, final UUID uuid, final String nick) {
 
         final User user = new User(uuid, nick);
+        user.getInventoriesUser().setInventory(Utils.itemStackArrayToBase64(player.getInventory().getContents()));
+        user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
+        user.getInventoriesUser().setEnderchest(Utils.itemStackArrayToBase64(player.getEnderChest().getContents()));
         this.addDataUser(user);
         rpgcore.getUserManager().add(user);
 

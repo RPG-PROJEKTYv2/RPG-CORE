@@ -97,7 +97,9 @@ public class AsyncPlayerChatListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        final String przedFormatem = Utils.format("<player-klan>&8[&bLvl. &f<player-lvl>&8] <player-group><player-name>:&f <message>");
-        e.setFormat(rpgcore.getChatManager().formatujChat(player, przedFormatem, message));
+        if (message.contains("@")) {
+            rpgcore.getChatManager().pingPlayer(player, message);
+        }
+        e.setFormat(rpgcore.getChatManager().formatujChat(player, Utils.CHAT_FORMAT, message));
     }
 }

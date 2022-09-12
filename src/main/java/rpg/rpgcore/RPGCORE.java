@@ -12,8 +12,8 @@ import rpg.rpgcore.bao.events.BAOInventoryClick;
 import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
-import rpg.rpgcore.chat.events.EQInventoryClick;
 import rpg.rpgcore.chat.events.EQInventoryClose;
+import rpg.rpgcore.chat.events.ChatInventoryClickListener;
 import rpg.rpgcore.chat.mute.MuteCommand;
 import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
@@ -314,6 +314,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SetAdminRankCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new HellCodeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new AdminCodeCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new ChatPanelCommand());
     }
 
     private void initEvents() {
@@ -350,8 +351,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
 
         // EQ
-        this.getServer().getPluginManager().registerEvents(new EQInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
+        this.getServer().getPluginManager().registerEvents(new ChatInventoryClickListener(this), this);
 
         // AKCESORIA
         this.getServer().getPluginManager().registerEvents(new AKCESORIAInventoryClick(this), this);

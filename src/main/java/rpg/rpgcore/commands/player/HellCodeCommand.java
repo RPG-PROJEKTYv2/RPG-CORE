@@ -29,7 +29,7 @@ public class HellCodeCommand extends CommandAPI {
         this.rpgcore = rpgcore;
     }
 
-    private final List<String> obvPass = Arrays.asList("gowno", "dupa", "chuj", "haslo", "essa", "1234", "4321", "cycki", "pizda", "code", "kodzik", "kod1234");
+    private final List<String> obvPass = Arrays.asList("gowno", "dupa", "chuj", "haslo", "essa", "1234", "12345", "54321", "4321", "cycki", "pizda", "code", "kodzik", "kod1234");
 
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
@@ -56,7 +56,7 @@ public class HellCodeCommand extends CommandAPI {
                 return;
             }
 
-            if (args[1] == null || args[2] == null) {
+            if (args.length < 3 || args[1] == null || args[2] == null) {
                 player.sendMessage(Utils.poprawneUzycie("hellcode stworz <kod> <kod>"));
                 return;
             }
@@ -109,7 +109,7 @@ public class HellCodeCommand extends CommandAPI {
                 return;
             }
 
-            if (args[1] == null || args[2] == null || args[3] == null) {
+            if (args.length < 4 || args[1] == null || args[2] == null || args[3] == null) {
                 player.sendMessage(Utils.poprawneUzycie("hellcode zmien <stary kod> <nowy kod> <nowy kod>"));
                 return;
             }
@@ -158,7 +158,7 @@ public class HellCodeCommand extends CommandAPI {
                 return;
             }
 
-            if (args[1] == null) {
+            if (args.length < 2 || args[1] == null) {
                 player.sendMessage(Utils.poprawneUzycie("hellcode wylacz <kod>"));
                 return;
             }

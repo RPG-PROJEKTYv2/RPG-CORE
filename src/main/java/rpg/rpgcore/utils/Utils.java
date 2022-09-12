@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
-    public static final Random random = new Random();
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+    public static final String CHAT_FORMAT = format("<player-klan>&8[&bLvl. &f<player-lvl>&8] <player-group><player-name>:&f <message>");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 ");
     public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 ");
@@ -272,8 +272,7 @@ public class Utils {
             serializedObject = Base64.getDecoder().decode(encodedObject);
             ByteArrayInputStream in = new ByteArrayInputStream(serializedObject);
             BukkitObjectInputStream is = new BukkitObjectInputStream(in);
-            ItemStack newItem = (ItemStack) is.readObject();
-            return newItem;
+            return (ItemStack) is.readObject();
         } catch (Exception e) {
             e.printStackTrace();
         }
