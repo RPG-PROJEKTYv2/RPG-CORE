@@ -36,11 +36,6 @@ public class PlayerInteractEntityListener implements Listener {
 
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // MAGAZYNIER
-            if (entityName.equalsIgnoreCase("Magazynier")) {
-                rpgcore.getMagazynierNPC().openMagazynierMain(player);
-                return;
-            }
         }
 
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {

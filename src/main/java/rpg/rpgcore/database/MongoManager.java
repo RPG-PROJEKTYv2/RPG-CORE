@@ -11,6 +11,7 @@ import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.klasy.objects.Klasy;
+import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
@@ -130,7 +131,6 @@ public class MongoManager {
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
 
                 obj = pool.getMagazyny().find(new Document("_id", uuid.toString())).first();
-                rpgcore.getMagazynierNPC().loadAll(uuid, (String) obj.get("Magazyny"));
             } catch (final IOException e) {
                 e.printStackTrace();
             }
@@ -162,6 +162,9 @@ public class MongoManager {
             }
             if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataChatUsers(new ChatUser(uuid));
+            }
+            if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataMagazyny(new MagazynObject(uuid));
             }
         }
 
@@ -313,17 +316,16 @@ public class MongoManager {
         this.addDataOs(osObject);
         rpgcore.getOsManager().add(osObject);
 
+        final MagazynObject magazynObject = new MagazynObject(uuid);
+        this.addDataMagazyny(magazynObject);
+        rpgcore.getMagazynManager().add(magazynObject);
+
         Document document;
 
         document = new Document();
         document.append("_id", uuid.toString());
         document.append("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
         pool.getTargi().insertOne(document);
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Magazyny", rpgcore.getMagazynierNPC().getPlayerAllMagazyny(uuid));
-        pool.getMagazyny().insertOne(document);
     }
 
     public void savePlayer(final Player player, final UUID uuid) {
@@ -360,6 +362,7 @@ public class MongoManager {
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
+            this.saveDataMagazyny(uuid, rpgcore.getMagazynManager().find(uuid));
 
             pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
@@ -897,6 +900,30 @@ public class MongoManager {
     public void saveAllChatUsers() {
         for (ChatUser chatUser : rpgcore.getChatManager().getChatUsersObjects()) {
             this.saveDataChatUsers(chatUser.getUuid(), chatUser);
+        }
+    }
+
+    // CHAT
+    public Map<UUID, MagazynObject> loadAllMagazyny() {
+        Map<UUID, MagazynObject> magazyny = new HashMap<>();
+        for (Document document : this.pool.getMagazyny().find()) {
+            MagazynObject magazynObject = new MagazynObject(document);
+            magazyny.put(magazynObject.getId(), magazynObject);
+        }
+        return magazyny;
+    }
+
+    public void addDataMagazyny(final MagazynObject magazynObject) {
+        this.pool.getMagazyny().insertOne(magazynObject.toDocument());
+    }
+
+    public void saveDataMagazyny(final UUID id, final MagazynObject magazynObject) {
+        this.pool.getMagazyny().findOneAndReplace(new Document("_id", id.toString()), magazynObject.toDocument());
+    }
+
+    public void saveAllMagazyny() {
+        for (MagazynObject magazynObject : rpgcore.getMagazynManager().getMagazynObjects()) {
+            this.saveDataMagazyny(magazynObject.getId(), magazynObject);
         }
     }
 

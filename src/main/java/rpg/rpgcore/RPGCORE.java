@@ -39,6 +39,7 @@ import rpg.rpgcore.klasy.wojownik.KlasyNPC;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
+import rpg.rpgcore.magazyn.MagazynManager;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
@@ -94,10 +95,9 @@ import rpg.rpgcore.npc.kowal.KowalNPC;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClick;
 import rpg.rpgcore.npc.kupiec.KupiecInventoryClose;
 import rpg.rpgcore.npc.kupiec.KupiecNPC;
-import rpg.rpgcore.npc.magazynier.MagazynCommand;
-import rpg.rpgcore.npc.magazynier.MagazynierInventoryClick;
-import rpg.rpgcore.npc.magazynier.MagazynierInventoryClose;
-import rpg.rpgcore.npc.magazynier.MagazynierNPC;
+import rpg.rpgcore.magazyn.MagazynCommand;
+import rpg.rpgcore.magazyn.MagazynierInventoryClick;
+import rpg.rpgcore.magazyn.MagazynierInventoryClose;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.rybak.PlayerFishListener;
@@ -156,8 +156,8 @@ public final class RPGCORE extends JavaPlugin {
     private TargManager targManager;
     private TeleporterNPC teleporterNPC;
     private CooldownManager cooldownManager;
+    private MagazynManager magazynManager;
     private RybakNPC rybakNPC;
-    private MagazynierNPC magazynierNPC;
     private GuildManager guildManager;
     private BackupManager backup;
     private KupiecNPC kupiecNPC;
@@ -210,7 +210,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
-        this.getMagazynierNPC().loadMagazynierMissions();
         this.getKolekcjonerNPC().loadMissions();
 
         this.initGlobalCommands();
@@ -477,13 +476,13 @@ public final class RPGCORE extends JavaPlugin {
         this.listaNPCManager = new ListaNPCManager(this);
         this.baoManager = new BaoManager(this);
         this.bonusesManager = new BonusesManager(this);
+        this.magazynManager = new MagazynManager(this);
     }
 
     private void initNPCS() {
         this.duszologNPC = new DuszologNPC(this);
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
-        this.magazynierNPC = new MagazynierNPC(this);
         this.kolekcjonerNPC = new KolekcjonerNPC(this);
         this.kupiecNPC = new KupiecNPC(this);
         this.kowalNPC = new KowalNPC(this);
@@ -617,8 +616,8 @@ public final class RPGCORE extends JavaPlugin {
         return rybakNPC;
     }
 
-    public MagazynierNPC getMagazynierNPC() {
-        return magazynierNPC;
+    public MagazynManager getMagazynManager() {
+        return magazynManager;
     }
     public KolekcjonerNPC getKolekcjonerNPC() {
         return kolekcjonerNPC;

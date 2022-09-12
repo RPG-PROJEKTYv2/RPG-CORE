@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.magazynier;
+package rpg.rpgcore.magazyn;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -8,7 +8,6 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class MagazynCommand extends CommandAPI {
 
@@ -24,20 +23,10 @@ public class MagazynCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (args.length != 1) {
-            player.sendMessage(Utils.poprawneUzycie("magazyn <nr magazynu>"));
+        if (args.length != 0) {
+            player.sendMessage(Utils.poprawneUzycie("magazyn"));
             return;
         }
-        try {
-            final int nrMagazynu = Integer.parseInt(args[0]);
-
-            if (nrMagazynu > 5) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz podac numer od 1 do 5"));
-                return;
-            }
-            rpgcore.getMagazynierNPC().openMagazynierMagazyny(player);
-        } catch (final NumberFormatException e) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz podac numer od 1 do 5"));
-        }
+        rpgcore.getMagazynManager().openMagazynyList(player);
     }
 }
