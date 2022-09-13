@@ -16,14 +16,14 @@ public class CustomZombie extends EntityZombie {
 
         this.goalSelector.a(0, new PathfinderGoalFloat(this));
         this.goalSelector.a(2, new PathfinderGoalMeleeAttack(this, EntityIronGolem.class, 1.0D, false));
-        this.goalSelector.a(4, new PathfinderGoalMeleeAttack(this, EntityZombie.class, 1.0D, true));
+        this.goalSelector.a(4, new PathfinderGoalMeleeAttack(this, EntitySpider.class, 1.0D, true));
         this.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(this, 1.0D));
         this.goalSelector.a(6, new PathfinderGoalMoveThroughVillage(this, 1.0D, false));
         this.goalSelector.a(7, new PathfinderGoalRandomStroll(this, 1.0D));
+        this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
-        //this.goalSelector.a(9, new PathFinderGoalWalkToLoc(this, new Location(Bukkit.getWorld("world"), 10, 6, 0), 2.0));
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
-        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, false, true));
-        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityVillager.class, false, false));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntitySpider.class, false, true));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityIronGolem.class, false, false));
     }
 }

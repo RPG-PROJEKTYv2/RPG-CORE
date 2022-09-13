@@ -3,6 +3,7 @@ package rpg.rpgcore.entities;
 import net.minecraft.server.v1_8_R3.Entity;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import rpg.rpgcore.entities.CustomZombie.CustomZombie;
 import rpg.rpgcore.utils.Utils;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public enum EntityTypes {
     //NAME("Entity name", Entity ID, yourcustomclass.class);
-    CUSTOM_ZOMBIE("Zombie", 1000, CustomZombie.class); //You can add as many as you want.
+    CUSTOM_ZOMBIE("Zombie", 54, CustomZombie.class); //You can add as many as you want.
 
     EntityTypes(String name, int id, Class<? extends Entity> custom)
     {
@@ -21,9 +22,24 @@ public enum EntityTypes {
         entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
         entity.setCustomName(Utils.format(name));
         entity.setCustomNameVisible(true);
-        entity.setInvisible(false);
-        ((CraftWorld)loc.getWorld()).getHandle().addEntity(entity);
-        System.out.println("Zrespiono!");
+        System.out.println(entity.length);
+        System.out.println(entity.width);
+        System.out.println(entity.getBoundingBox().a);
+        System.out.println(entity.getBoundingBox().b);
+        System.out.println(entity.getBoundingBox().c);
+        System.out.println(entity.getBoundingBox().d);
+        System.out.println(entity.getBoundingBox().e);
+        System.out.println(entity.getBoundingBox().f);
+        entity.setSize(2, 1);
+        System.out.println(" ");
+        System.out.println(entity.getBoundingBox().a);
+        System.out.println(entity.getBoundingBox().b);
+        System.out.println(entity.getBoundingBox().c);
+        System.out.println(entity.getBoundingBox().d);
+        System.out.println(entity.getBoundingBox().e);
+        System.out.println(entity.getBoundingBox().f);
+        //entity.world.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((CraftWorld)loc.getWorld()).getHandle().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
     private static void addToMaps(Class clazz, String name, int id) {

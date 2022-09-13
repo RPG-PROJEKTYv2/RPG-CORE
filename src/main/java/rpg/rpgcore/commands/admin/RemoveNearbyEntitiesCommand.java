@@ -1,7 +1,6 @@
 package rpg.rpgcore.commands.admin;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.api.CommandAPI;
@@ -29,7 +28,7 @@ public class RemoveNearbyEntitiesCommand extends CommandAPI {
         try {
             final double radius = Double.parseDouble(args[0]);
             for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), radius, radius, radius)) {
-                if (entity instanceof ArmorStand) {
+                if (!(entity instanceof Player)) {
                     entity.remove();
                 }
             }
