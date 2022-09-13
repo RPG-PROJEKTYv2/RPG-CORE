@@ -14,6 +14,7 @@ import rpg.rpgcore.RPGCORE;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -485,5 +486,23 @@ public class Utils {
     }
     public static double convertDoublesToPercentage(final double n1, final double n2)  {
         return (n1 / n2) * 100;
+    }
+
+    public static Object getPrivateField(String fieldName, Class clazz, Object object) {
+        Field field;
+        Object o = null;
+
+        try {
+            field = clazz.getDeclaredField(fieldName);
+
+            field.setAccessible(true);
+
+            o = field.get(object);
+        }
+        catch(NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return o;
     }
 }
