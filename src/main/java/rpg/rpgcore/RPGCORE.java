@@ -31,6 +31,8 @@ import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
+import rpg.rpgcore.inventories.InvseeInventoryCloseListener;
+import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.klasy.choice.KlasaCommand;
 import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
@@ -317,6 +319,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new AdminCodeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ChatPanelCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PartyCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new InventoryCommand());
     }
 
     private void initEvents() {
@@ -444,6 +447,9 @@ public final class RPGCORE extends JavaPlugin {
         // ...NIEBIOSA
         this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
         this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
+
+        // INVSEE
+        this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
     }
 
     private void initDatabase() {
