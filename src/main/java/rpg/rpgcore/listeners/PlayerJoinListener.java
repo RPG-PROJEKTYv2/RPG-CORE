@@ -79,9 +79,12 @@ public class PlayerJoinListener implements Listener {
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
         try {
-            p.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
-            p.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
-            p.getEnderChest().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest()));
+            if (user.getInventoriesUser().getArmor() != null && user.getInventoriesUser().getInventory() != null && user.getInventoriesUser().getEnderchest() != null
+                    && !user.getInventoriesUser().getInventory().isEmpty() && !user.getInventoriesUser().getEnderchest().isEmpty() && !user.getInventoriesUser().getArmor().isEmpty()) {
+                p.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
+                p.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
+                p.getEnderChest().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest()));
+            }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

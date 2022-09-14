@@ -53,6 +53,7 @@ import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.os.OsiagnieciaCommand;
+import rpg.rpgcore.party.PartyManager;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -175,6 +176,7 @@ public final class RPGCORE extends JavaPlugin {
     private PrzyrodnikNPC przyrodnikNPC;
     private ListaNPCManager listaNPCManager;
     private UserManager userManager;
+    private PartyManager partyManager;
 
 
 
@@ -314,6 +316,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new HellCodeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new AdminCodeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ChatPanelCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new PartyCommand(this));
     }
 
     private void initEvents() {
@@ -477,6 +480,7 @@ public final class RPGCORE extends JavaPlugin {
         this.baoManager = new BaoManager(this);
         this.bonusesManager = new BonusesManager(this);
         this.magazynManager = new MagazynManager(this);
+        this.partyManager = new PartyManager();
     }
 
     private void initNPCS() {
@@ -701,5 +705,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public BonusesManager getBonusesManager() {
         return bonusesManager;
+    }
+    public PartyManager getPartyManager() {
+        return partyManager;
     }
 }
