@@ -43,13 +43,17 @@ public class InventoryCommand extends CommandAPI {
         final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&cEkwipunek gracza &6" + target));
         if (Bukkit.getPlayer(target) != null && Bukkit.getPlayer(target).isOnline()) {
             final Player p = Bukkit.getPlayer(target);
-            gui.setContents(p.getInventory().getContents());
+            player.openInventory(p.getInventory());
+            player.sendMessage(p.getInventory().getName());
+            player.sendMessage(p.getInventory().getHolder().getName());
+            return;
+            /*gui.setContents(p.getInventory().getContents());
             gui.setItem(36, p.getInventory().getHelmet());
             gui.setItem(37, p.getInventory().getChestplate());
             gui.setItem(38, p.getInventory().getLeggings());
             gui.setItem(39, p.getInventory().getBoots());
             player.openInventory(gui);
-            return;
+            return;*/
         }
         final User user = RPGCORE.getInstance().getUserManager().find(target);
         try {

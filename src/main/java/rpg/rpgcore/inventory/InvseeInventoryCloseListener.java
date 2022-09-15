@@ -1,4 +1,4 @@
-package rpg.rpgcore.inventories;
+package rpg.rpgcore.inventory;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,12 +12,9 @@ import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class InvseeInventoryCloseListener implements Listener {
     private final RPGCORE rpgcore;
@@ -45,27 +42,38 @@ public class InvseeInventoryCloseListener implements Listener {
 
                 user.getInventoriesUser().setInventory(Utils.itemStackArrayToBase64(contents));
                 user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(armor));
-                List<ItemStack> difference = new ArrayList<>();
+                List<ItemStack> differenceAdded = new ArrayList<>(Arrays.asList(contents));
+                differenceAdded.removeAll(Arrays.asList(contentsBefore));
 
-                for (ItemStack item : contentsBefore) {
-                    if (item != null) {
-                        if (!Arrays.asList(contents).contains(item)) {
-                            difference.add(item);
-                        }
-                    }
-                }
+
+                List<ItemStack> differenceRemoved = new ArrayList<>(Arrays.asList(contentsBefore));
+                differenceRemoved.removeAll(Arrays.asList(contents));
+
+                e.getPlayer().sendMessage("Contents before: " + Arrays.asList(contentsBefore));
+                e.getPlayer().sendMessage("Contents after: " + Arrays.asList(contents));
+                e.getPlayer().sendMessage("Difference: " + differenceRemoved);
 
                 StringBuilder sb = new StringBuilder();
-                for (ItemStack item : difference) {
-                    sb.append("- ").append("x " + item.getAmount()).append(" ").append(item.getItemMeta()).append("\n");
+                for (ItemStack item : differenceRemoved) {
+                    sb.append("- ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name()+ "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
+                }
+
+                StringBuilder sb2 = new StringBuilder();
+                for (ItemStack item : differenceAdded) {
+                    sb2.append("+ ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name()+ "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
                 }
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
                 e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zapisano ekwipunek gracza &6" + playerName));
+                if (differenceRemoved.isEmpty() && differenceRemoved.isEmpty()) {
+                    return;
+                }
                 RPGCORE.getDiscordBot().sendChannelMessage("invsee-logs", EmbedUtil.create("**Modyfikowano Ekwipunek**",
                         "**Gracz:** `" + e.getPlayer().getName() + "` **modyfikowal ekwipunek innego gracza!**\n" +
                                 "**Modyfikowany Gracz: **`" + playerName + "`\n" +
-                                "**Zmodyfikowane przedmioty:**\n" + sb, Color.RED));
+                                "**Dodane przedmioty:**\n" + (sb2.toString().isEmpty() ? "+ Brak" : sb2.toString()) + "\n\n" +
+                                "**Wyjete przedmioty:**\n" + (sb.toString().isEmpty() ? "- Brak" : sb.toString())
+                        , Color.RED));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
