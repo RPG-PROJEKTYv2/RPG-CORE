@@ -2,6 +2,7 @@ package rpg.rpgcore.npc.kolekcjoner;
 
 import org.bson.Document;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class KolekcjonerObject {
@@ -10,16 +11,16 @@ public class KolekcjonerObject {
 
     public KolekcjonerObject(final UUID uuid) {
         this.uuid = uuid;
-        this.kolekcjonerUser = new KolekcjonerUser(0,0, 0, 0,0);
+        this.kolekcjonerUser = new KolekcjonerUser(1, Arrays.asList(false, false, false, false), 0, 0,0);
     }
 
     public KolekcjonerObject(final Document document) {
         this.uuid = UUID.fromString((String) document.get("_id"));
         this.kolekcjonerUser = new KolekcjonerUser(document.getInteger("mission"),
-                document.getInteger("missionProgress"),
-                document.getDouble("value1"),
-                document.getDouble("value2"),
-                document.getDouble("value3"));
+                document.getList("missionProgress", Boolean.class),
+                document.getInteger("szczescie"),
+                document.getDouble("silnyNaLudzi"),
+                document.getInteger("dodatkowe"));
     }
 
     public UUID getID() {
@@ -34,8 +35,8 @@ public class KolekcjonerObject {
         return new Document("_id", this.uuid.toString())
                 .append("mission", this.getKolekcjonerUser().getMission())
                 .append("missionProgress", this.getKolekcjonerUser().getMissionProgress())
-                .append("value1", this.getKolekcjonerUser().getValue1())
-                .append("value2", this.getKolekcjonerUser().getValue2())
-                .append("value3", this.getKolekcjonerUser().getValue3());
+                .append("szczescie", this.getKolekcjonerUser().getSzczescie())
+                .append("silnyNaLudzi", this.getKolekcjonerUser().getSilnyNaLudzi())
+                .append("dodatkowe", this.getKolekcjonerUser().getDodatkowe());
     }
 }

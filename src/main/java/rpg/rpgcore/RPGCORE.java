@@ -214,7 +214,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
-        this.getKolekcjonerNPC().loadMissions();
 
         this.initGlobalCommands();
         this.initEvents();
