@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.GlobalItems.GlobalItem;
+import rpg.rpgcore.utils.GlobalItems.expowiska.Map1Items;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -34,15 +35,15 @@ public class DropFromChestsListener implements Listener {
         if (player.getItemInHand().getType().equals(Material.CHEST)) {
             if (player.getItemInHand().getItemMeta().getDisplayName() == null) {
                 e.setCancelled(true);
-                player.getInventory().addItem(GlobalItem.getItem("I22", 1));
                 return;
             }
 
             final ItemStack playerItem = player.getItemInHand();
 
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
+            // SKRZYNIA Z ROZNOSCIAMI
+            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                 if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
+                    player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
                     final Items item = rpgcore.getRoznosciManager().getDrawnItems(player);
                     if (item == null) {
                         return;
@@ -53,8 +54,54 @@ public class DropFromChestsListener implements Listener {
                     return;
                 }
             }
+            // TAJEMNICZA SKRZYNIA
+            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (!player.getCanPickupItems()) {
+                    player.getInventory().removeItem(GlobalItem.getItem("I4", 1));
+                    final Items item = rpgcore.getTajemniczaManager().getDrawnItems(player);
+                    if (item == null) {
+                        return;
+                    }
+                    final ItemStack is = item.getRewardItem();
+                    is.setAmount(item.getAmount());
+                    player.getInventory().addItem(is);
+                    return;
+                }
+            }
+            // unikatowe...
+            // soon...
+            // Expowisko 1
+            //  Skrzynia Wygnanca
+            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
+                if (!player.getCanPickupItems()) {
+                    player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
+                    final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                    if (item == null) {
+                        return;
+                    }
+                    final ItemStack is = item.getRewardItem();
+                    is.setAmount(item.getAmount());
+                    player.getInventory().addItem(is);
+                    return;
+                }
+            }
+            // Skrzynia Najemnika
+            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
+                if (!player.getCanPickupItems()) {
+                    player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
+                    final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
+                    if (item == null) {
+                        return;
+                    }
+                    final ItemStack is = item.getRewardItem();
+                    is.setAmount(item.getAmount());
+                    player.getInventory().addItem(is);
+                    return;
+                }
+            }
+            // Expowisko 2
+            // soon...
 
-            // I TU DAJESZ KOLEJNE IF'Y
         }
     }
 }

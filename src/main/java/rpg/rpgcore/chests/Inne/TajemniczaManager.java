@@ -1,4 +1,4 @@
-package rpg.rpgcore.chests.ulepszacze;
+package rpg.rpgcore.chests.Inne;
 
 import com.google.common.collect.Sets;
 import org.bukkit.entity.Player;
@@ -9,17 +9,19 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class UlepszaczeManager {
+public class TajemniczaManager {
 
 
-    private final Set<Items> ulepszacze = Sets.newConcurrentHashSet();
+    private final Set<Items> tajemnicza = Sets.newConcurrentHashSet();
 
-    public UlepszaczeManager() {
-        this.ulepszacze.add(new Items("1", 8.0, GlobalItem.getItem("I23", 1), 1));
+    public TajemniczaManager() {
+        this.tajemnicza.add(new Items("1", 8.0, GlobalItem.getItem("I20", 1), 1));
     }
 
+
+
     public Items getDrawnItems(final Player player) {
-        for (Items item : this.ulepszacze) {
+        for (Items item : this.tajemnicza) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;

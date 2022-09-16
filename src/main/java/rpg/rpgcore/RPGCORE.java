@@ -19,7 +19,10 @@ import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
-import rpg.rpgcore.chests.roznosci.RoznosciManager;
+import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
+import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
+import rpg.rpgcore.chests.Inne.RoznosciManager;
+import rpg.rpgcore.chests.Inne.TajemniczaManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
@@ -183,8 +186,14 @@ public final class RPGCORE extends JavaPlugin {
 
 
     private NiebiosaManager niebiosaManager;
-    private RoznosciManager roznosciManager;
     private BonusesManager bonusesManager;
+    // SKRZYNKI
+    // inne
+    private RoznosciManager roznosciManager;
+    private TajemniczaManager tajemniczaManager;
+    // exp1
+    private NajemnikManager najemnikManager;
+    private WygnaniecManager wygnaniecManager;
 
     private int i = 1;
 
@@ -513,7 +522,13 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initSkrzynieManagers() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
+        // SKRZYNKI
+        // inne
         this.roznosciManager = new RoznosciManager();
+        this.tajemniczaManager = new TajemniczaManager();
+        // exp1
+        this.najemnikManager = new NajemnikManager();
+        this.wygnaniecManager = new WygnaniecManager();
     }
 
 
@@ -684,8 +699,20 @@ public final class RPGCORE extends JavaPlugin {
         return niebiosaManager;
     }
 
+    // SKRZYNKI ALL
+    // inne
     public RoznosciManager getRoznosciManager() {
         return roznosciManager;
+    }
+    public TajemniczaManager getTajemniczaManager() {
+        return tajemniczaManager;
+    }
+    // exp1
+    public NajemnikManager getNajemnikManager() {
+        return najemnikManager;
+    }
+    public WygnaniecManager getWygnaniecManager() {
+        return wygnaniecManager;
     }
 
     public GornikNPC getGornikNPC() {
