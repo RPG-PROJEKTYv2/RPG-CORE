@@ -17,10 +17,10 @@ public class WygnaniecManager {
     private final Set<Items> wygnaniec = Sets.newConcurrentHashSet();
 
     public WygnaniecManager() {
-        this.wygnaniec.add(new Items("1", 8.0, ItemHelper.createArmor("&8&lHelm Wygnanca", Material.LEATHER_HELMET, 4, 1, true, false), 1));
-        this.wygnaniec.add(new Items("2", 8.0, ItemHelper.createArmor("&8&lZbroja Wygnanca", Material.LEATHER_CHESTPLATE, 4, 1, true, false), 1));
-        this.wygnaniec.add(new Items("3", 8.0, ItemHelper.createArmor("&8&lSpodnie Wygnanca", Material.LEATHER_LEGGINGS, 4, 1, true, false), 1));
-        this.wygnaniec.add(new Items("4", 8.0, ItemHelper.createArmor("&8&lButy Wygnanca", Material.LEATHER_BOOTS, 4, 1, true, false), 1));
+        this.wygnaniec.add(new Items("1", 8.0, ItemHelper.createArmor("&8&lHelm Wygnanca", Material.LEATHER_HELMET, 4, 0, true, false), 1));
+        this.wygnaniec.add(new Items("2", 8.0, ItemHelper.createArmor("&8&lZbroja Wygnanca", Material.LEATHER_CHESTPLATE, 4, 0, true, false), 1));
+        this.wygnaniec.add(new Items("3", 8.0, ItemHelper.createArmor("&8&lSpodnie Wygnanca", Material.LEATHER_LEGGINGS, 4, 0, true, false), 1));
+        this.wygnaniec.add(new Items("4", 8.0, ItemHelper.createArmor("&8&lButy Wygnanca", Material.LEATHER_BOOTS, 4, 0, true, false), 1));
         this.wygnaniec.add(new Items("5", 6.0, ItemHelper.createSword("&9&lMiecz Wygnanego", Material.WOOD_SWORD, 5, 2, true, false), 1));
         this.wygnaniec.add(new Items("6", 4.0, AkcesoriaHelper.createTarcza("&fTarcza Wygnanca", 2, 1, 5, 4),1 ));
         this.wygnaniec.add(new Items("7", 4.0, AkcesoriaHelper.createMedalion("&fMedalion Wygnanca", 2, 3, 5),1 ));

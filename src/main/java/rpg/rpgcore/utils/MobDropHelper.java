@@ -65,11 +65,11 @@ public class MobDropHelper {
                 //  (player, );
                 //addDropPlayer(player, GlobalItem.getItem("K1", 1), kolekcjonerDropChance, true, true, entity); // TU ZMIEN ITEMY I DODAJ DO GLOBAL ITEMS ALBO ZROB KOLEJNY ENUM Z ITEMAMI TYLKO OD KOLECJONERA
             }
-            /*if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
+            if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (DropChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);
                 }
-            }*/
+            }
         }
 
 

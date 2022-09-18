@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.GlobalItems;
+package rpg.rpgcore.utils.GlobalItems.npc;
 
 
 import org.bukkit.Material;

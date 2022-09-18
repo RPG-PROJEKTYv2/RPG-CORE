@@ -2,7 +2,7 @@ package rpg.rpgcore.npc.przyrodnik;
 
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.GlobalItems.GlobalItem;
-import rpg.rpgcore.utils.GlobalItems.PrzyrodnikItems;
+import rpg.rpgcore.utils.GlobalItems.npc.PrzyrodnikItems;
 
 public enum Missions {
 

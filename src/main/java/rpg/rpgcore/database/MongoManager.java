@@ -15,6 +15,7 @@ import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
+import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.RybakObject;
@@ -165,6 +166,10 @@ public class MongoManager {
             }
             if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataMagazyny(new MagazynObject(uuid));
+            }
+
+            if (pool.getLowca().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataLowca(new LowcaObject(uuid));
             }
         }
 
@@ -320,6 +325,10 @@ public class MongoManager {
         this.addDataMagazyny(magazynObject);
         rpgcore.getMagazynManager().add(magazynObject);
 
+        final LowcaObject lowcaObject = new LowcaObject(uuid);
+        this.addDataLowca(lowcaObject);
+        rpgcore.getLowcaNPC().add(lowcaObject);
+
         Document document;
 
         document = new Document();
@@ -363,6 +372,7 @@ public class MongoManager {
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
             this.saveDataMagazyny(uuid, rpgcore.getMagazynManager().find(uuid));
+            this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
 
             pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
@@ -924,6 +934,30 @@ public class MongoManager {
     public void saveAllMagazyny() {
         for (MagazynObject magazynObject : rpgcore.getMagazynManager().getMagazynObjects()) {
             this.saveDataMagazyny(magazynObject.getId(), magazynObject);
+        }
+    }
+
+    // CHAT
+    public Map<UUID, LowcaObject> loadAllLowca() {
+        Map<UUID, LowcaObject> lowca = new HashMap<>();
+        for (Document document : this.pool.getLowca().find()) {
+            LowcaObject lowcaObject = new LowcaObject(document);
+            lowca.put(lowcaObject.getId(), lowcaObject);
+        }
+        return lowca;
+    }
+
+    public void addDataLowca(final LowcaObject lowcaObject) {
+        this.pool.getLowca().insertOne(lowcaObject.toDocument());
+    }
+
+    public void saveDataLowca(final UUID id, final LowcaObject lowcaObject) {
+        this.pool.getLowca().findOneAndReplace(new Document("_id", id.toString()), lowcaObject.toDocument());
+    }
+
+    public void saveAllLowca() {
+        for (LowcaObject lowcaObject : rpgcore.getLowcaNPC().getLowcaObjects()) {
+            this.saveDataLowca(lowcaObject.getId(), lowcaObject);
         }
     }
 

@@ -1,7 +1,7 @@
 package rpg.rpgcore.npc.kolekcjoner.enums;
 
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.KolekcjonerItems;
+import rpg.rpgcore.utils.GlobalItems.npc.KolekcjonerItems;
 
 public enum KolekcjonerMissions {
 
