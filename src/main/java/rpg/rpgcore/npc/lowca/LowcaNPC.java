@@ -35,7 +35,7 @@ public class LowcaNPC {
 
         for (int i = 0; i < LowcaMissions.getSize(); i++) {
             if (lowcaUser.getMission() > i + 1) {
-                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&4&lMisja " + (i + 1)).setLore(Arrays.asList(" ", "&a&lWykonane!")).toItemStack().clone());
+                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&4&lMisja " + (i + 1)).setLore(Arrays.asList(" ", "&a&lWykonane!")).addGlowing().toItemStack().clone());
             } else if (lowcaUser.getMission() == i + 1) {
                 if (lowcaMissions == LowcaMissions.M99) {
                     gui.setItem(i, lowcaMissions.getReqItem().clone());
@@ -48,9 +48,9 @@ public class LowcaNPC {
         }
 
         gui.setItem(26, new ItemBuilder(Material.PAPER).setName("&c&lStatystyki").setLore(Arrays.asList(
-                "&7Szczescie: &c" + lowcaUser.getSzczescie(),
-                "&7Szybkosc: &c" + lowcaUser.getSzybkosc(),
-                "&7TrueDMG: &c" + lowcaUser.getTruedmg()
+                "&7Szczescie: &c" + lowcaUser.getSzczescie() + " &7pkt",
+                "&7Szybkosc: &c" + lowcaUser.getSzybkosc() + " &7pkt",
+                "&7True dmg: &c" + lowcaUser.getTruedmg() + " &7dmg"
         )).toItemStack().clone());
 
         player.openInventory(gui);

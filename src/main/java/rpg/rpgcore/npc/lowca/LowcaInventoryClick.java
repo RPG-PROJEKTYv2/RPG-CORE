@@ -38,7 +38,7 @@ public class LowcaInventoryClick implements Listener {
             final LowcaUser user = object.getLowcaUser();
             //TODO Nie dziala sprawdzanie lore !
 
-            if (item.getType().equals(Material.BARRIER) || item.getType().equals(Material.BOOK_AND_QUILL) || item.getItemMeta().getLore().contains(Utils.format("&a&lWykonano"))) {
+            if (item.getType().equals(Material.BARRIER) || item.getType().equals(Material.BOOK_AND_QUILL) || Utils.checkIfLoreContainsString(item.getItemMeta().getLore(), "Wykonane")) {
                 return;
             }
 

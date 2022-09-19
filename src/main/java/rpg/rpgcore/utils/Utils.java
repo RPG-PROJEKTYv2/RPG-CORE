@@ -505,4 +505,13 @@ public class Utils {
 
         return o;
     }
+
+    public static boolean checkIfLoreContainsString(final List<String> lore, final String toCheck){
+        for (final String s : lore) {
+            if (removeColor(s).contains(toCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
