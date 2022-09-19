@@ -59,8 +59,8 @@ public class MobDropHelper {
 
 
 
-        if (entityName.equals("Najemnik")) {
-            addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
+        if (entityName.equals("&8Najemnik")) {
+            addDropPlayer(player, Map1Items.getItem("I2", 1), 50, true, true, entity);
             if (kolekcjonerUser.getMission() == 0) {
                 //  (player, );
                 //addDropPlayer(player, GlobalItem.getItem("K1", 1), kolekcjonerDropChance, true, true, entity); // TU ZMIEN ITEMY I DODAJ DO GLOBAL ITEMS ALBO ZROB KOLEJNY ENUM Z ITEMAMI TYLKO OD KOLECJONERA

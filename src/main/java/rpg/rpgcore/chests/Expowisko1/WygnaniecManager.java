@@ -22,13 +22,13 @@ public class WygnaniecManager {
         this.wygnaniec.add(new Items("3", 8.0, ItemHelper.createArmor("&8&lSpodnie Wygnanca", Material.LEATHER_LEGGINGS, 4, 0, true, false), 1));
         this.wygnaniec.add(new Items("4", 8.0, ItemHelper.createArmor("&8&lButy Wygnanca", Material.LEATHER_BOOTS, 4, 0, true, false), 1));
         this.wygnaniec.add(new Items("5", 6.0, ItemHelper.createSword("&9&lMiecz Wygnanego", Material.WOOD_SWORD, 5, 2, true, false), 1));
-        this.wygnaniec.add(new Items("6", 4.0, AkcesoriaHelper.createTarcza("&fTarcza Wygnanca", 2, 1, 5, 4),1 ));
-        this.wygnaniec.add(new Items("7", 4.0, AkcesoriaHelper.createMedalion("&fMedalion Wygnanca", 2, 3, 5),1 ));
-        this.wygnaniec.add(new Items("8", 4.0, AkcesoriaHelper.createPas("&fSzal Wygnanca", 3, 2, 8),1 ));
-        this.wygnaniec.add(new Items("9", 4.0, AkcesoriaHelper.createKolczyki("&fKolczyki Wygnanca", 2, 1, 8),1 ));
-        this.wygnaniec.add(new Items("10", 4.0, AkcesoriaHelper.createSygnet("&fSygnet Wygnanca", 2, 3, 10),1 ));
-        this.wygnaniec.add(new Items("10", 4.0, AkcesoriaHelper.createSygnet("&fKolczyki Wygnanca", 2, 3, 10),1 ));
-        this.wygnaniec.add(new Items("10", 4.0, AkcesoriaHelper.createDiadem("&fKolczyki Wygnanca", 1, 1, 10),1 ));
+        this.wygnaniec.add(new Items("6", 2.0, AkcesoriaHelper.createTarcza("&fTarcza Wygnanca", 2, 1, 5, 4),1 ));
+        this.wygnaniec.add(new Items("7", 2.0, AkcesoriaHelper.createMedalion("&fMedalion Wygnanca", 2, 3, 5),1 ));
+        this.wygnaniec.add(new Items("8", 2.0, AkcesoriaHelper.createPas("&fSzal Wygnanca", 3, 2, 8),1 ));
+        this.wygnaniec.add(new Items("9", 2.0, AkcesoriaHelper.createKolczyki("&fKolczyki Wygnanca", 2, 1, 8),1 ));
+        this.wygnaniec.add(new Items("10", 2.0, AkcesoriaHelper.createSygnet("&fSygnet Wygnanca", 2, 3, 10),1 ));
+        this.wygnaniec.add(new Items("11", 2.0, AkcesoriaHelper.createSygnet("&fKolczyki Wygnanca", 2, 3, 10),1 ));
+        this.wygnaniec.add(new Items("12", 2.0, AkcesoriaHelper.createDiadem("&fKolczyki Wygnanca", 1, 1, 10),1 ));
     }
 
 

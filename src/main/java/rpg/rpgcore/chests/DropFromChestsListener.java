@@ -32,7 +32,7 @@ public class DropFromChestsListener implements Listener {
             return;
         }
 
-        if (player.getItemInHand().getType().equals(Material.CHEST)) {
+        if (player.getItemInHand().getType().equals(Material.CHEST) || player.getItemInHand().getType().equals(Material.ENDER_CHEST)) {
             if (player.getItemInHand().getItemMeta().getDisplayName() == null) {
                 e.setCancelled(true);
                 return;
@@ -74,7 +74,7 @@ public class DropFromChestsListener implements Listener {
             //  Skrzynia Wygnanca
             if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                 if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
+                    player.getInventory().removeItem(Map1Items.getItem("I1", 1));
                     final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
                     if (item == null) {
                         return;
@@ -88,7 +88,7 @@ public class DropFromChestsListener implements Listener {
             // Skrzynia Najemnika
             if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                 if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
+                    player.getInventory().removeItem(Map1Items.getItem("I2", 1));
                     final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
                     if (item == null) {
                         return;

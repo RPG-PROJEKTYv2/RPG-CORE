@@ -3,7 +3,6 @@ package rpg.rpgcore.utils.GlobalItems.expowiska;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -23,6 +22,15 @@ public enum Map1Items {
         this.name = name;
     }
 
+    public static void getList(Player player) {
+        int i = 1;
+        for (Map1Items rank : values()) {
+            ItemStack itemStack = rank.getItemStack();
+            player.sendMessage(Utils.format(i + ". " + itemStack.getItemMeta().getDisplayName()));
+            i = i + 1;
+        }
+    }
+
     public static Map1Items getByName(String name) {
         for (Map1Items rank : values()) {
             if (rank.getName().equalsIgnoreCase(name)) {
@@ -33,7 +41,7 @@ public enum Map1Items {
     }
 
     public static ItemStack getItem(String string, int amount) {
-        ItemStack itemStack = GlobalItem.getByName(string).getItemStack();
+        ItemStack itemStack = Map1Items.getByName(string).getItemStack();
         itemStack.setAmount(amount);
         return itemStack;
     }
