@@ -52,6 +52,7 @@ import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikBlockBreak;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.medyk.MedykInventoryClick;
 import rpg.rpgcore.npc.medyk.MedykNPC;
@@ -450,6 +451,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
+
+        // ...LOWCA
+        this.getServer().getPluginManager().registerEvents(new LowcaInventoryClick(this), this);
 
 
         // DUNGEONS

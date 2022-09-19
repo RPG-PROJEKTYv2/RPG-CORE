@@ -1,7 +1,12 @@
 package rpg.rpgcore.npc.lowca;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.GlobalItems.npc.LowcaItems;
+import rpg.rpgcore.utils.ItemBuilder;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum LowcaMissions {
 
@@ -16,8 +21,9 @@ public enum LowcaMissions {
     M9(9, LowcaItems.getItem("80-90", 1), 2, 3, 0),
     M10(10, LowcaItems.getItem("90-100", 1), 2, 3, 1),
     M11(11, LowcaItems.getItem("100-110", 1), 2, 3, 0),
-    M12(12, LowcaItems.getItem("110-120", 1), 2, 3, 0),
-    M13(13, LowcaItems.getItem("120-130", 1), 2, 3, 1);
+    M12(12,  LowcaItems.getItem("110-120", 1), 2, 3, 0),
+    M13(13, LowcaItems.getItem("120-130", 1), 2, 3, 1),
+    M99(99, new ItemBuilder(Material.BARRIER).setName("&c&lBrak misji").setLore(Arrays.asList("", "&7Wykonales/as juz wszystkie misje u Tego NPC!", "&8Kiedys moze jeszcze tu cos bedzie...")).toItemStack(), 0, 0, 0);
 
     private final int mission;
     private final ItemStack reqItem;
@@ -33,6 +39,15 @@ public enum LowcaMissions {
 
     public ItemStack getReqItem() {
         return this.reqItem;
+    }
+    public List<String> getLore() {
+        return Arrays.asList(
+                "&7Przynies mi jeszcze &6%leftItem% %itemName%",
+                "",
+                "&f&lNagroda",
+                "&7Szczescie: &c%szczescie%",
+                "&7Szybkosc: &c%szybkosc%",
+                "&7TrueDMG: &c%trueDMG%");
     }
 
     public int getSzczescie() {
@@ -55,12 +70,16 @@ public enum LowcaMissions {
         return 50.0;
     }
 
+    public static int getSize() {
+        return LowcaMissions.values().length;
+    }
+
     public static LowcaMissions getMission(int mission) {
         for (LowcaMissions lowcaMissions : LowcaMissions.values()) {
             if (lowcaMissions.mission == mission) {
                 return lowcaMissions;
             }
         }
-        return null;
+        return M99;
     }
 }

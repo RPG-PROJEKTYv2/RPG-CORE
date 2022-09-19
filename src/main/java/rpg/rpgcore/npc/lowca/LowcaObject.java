@@ -10,7 +10,7 @@ public class LowcaObject {
 
     public LowcaObject(final UUID uuid) {
         this.uuid = uuid;
-        this.lowcaUser = new LowcaUser(0, 0, 0, 0, 0);
+        this.lowcaUser = new LowcaUser(1, 0, 0, 0, 0);
     }
 
     public LowcaObject(Document document) {

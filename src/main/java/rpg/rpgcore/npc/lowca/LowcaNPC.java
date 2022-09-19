@@ -5,12 +5,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class LowcaNPC {
     private final RPGCORE rpgcore;
@@ -25,6 +25,7 @@ public class LowcaNPC {
     public void openLowcaGUI(final Player player) {
         final UUID uuid = player.getUniqueId();
         final LowcaUser lowcaUser = this.userMap.get(uuid).getLowcaUser();
+        final LowcaMissions lowcaMissions = LowcaMissions.getMission(lowcaUser.getMission());
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&4&lLowca"));
 
         for (int i = 0; i < gui.getSize(); i++) {
@@ -32,6 +33,43 @@ public class LowcaNPC {
         }
 
 
+        for (int i = 0; i < LowcaMissions.getSize(); i++) {
+            if (lowcaUser.getMission() > i + 1) {
+                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&4&lMisja " + (i + 1)).setLore(Arrays.asList(" ", "&a&lWykonane!")).toItemStack().clone());
+            } else if (lowcaUser.getMission() == i + 1) {
+                if (lowcaMissions == LowcaMissions.M99) {
+                    gui.setItem(i, lowcaMissions.getReqItem().clone());
+                } else {
+                    gui.setItem(i, this.getMissionItem(lowcaMissions, lowcaUser));
+                }
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&4&lMisja " + (i + 1)).setLore(Arrays.asList("&c&lWykonaj najpierw poprzednia misje!")).toItemStack().clone());
+            }
+        }
+
+        gui.setItem(26, new ItemBuilder(Material.PAPER).setName("&c&lStatystyki").setLore(Arrays.asList(
+                "&7Szczescie: &c" + lowcaUser.getSzczescie(),
+                "&7Szybkosc: &c" + lowcaUser.getSzybkosc(),
+                "&7TrueDMG: &c" + lowcaUser.getTruedmg()
+        )).toItemStack().clone());
+
+        player.openInventory(gui);
+    }
+
+    private ItemStack getMissionItem(final LowcaMissions lowcaMissions, final LowcaUser lowcaUser) {
+        return new ItemBuilder(Material.BOOK).setName("&4&lMisja " + lowcaUser.getMission()).setLore(getlore(lowcaMissions.getLore(), lowcaUser, lowcaMissions)).toItemStack().clone();
+    }
+
+    private List<String> getlore(final List<String> lore, final LowcaUser lowcaUser, final LowcaMissions lowcaMissions) {
+        final List<String> newLore = new ArrayList<>();
+        for (String s : lore) {
+            newLore.add(s.replace("%leftItem%", (lowcaMissions.getReqAmount() - lowcaUser.getProgress()) + "")
+                    .replace("%itemName%", lowcaMissions.getReqItem().getItemMeta().getDisplayName())
+                    .replace("%szczescie%", lowcaMissions.getSzczescie() + "")
+                    .replace("%szybkosc%", lowcaMissions.getSzybkosc() + "")
+                    .replace("%trueDMG%", lowcaMissions.getTruedmg() + ""));
+        }
+        return newLore;
     }
 
 

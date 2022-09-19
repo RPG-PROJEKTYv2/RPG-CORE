@@ -148,6 +148,12 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
 
+            // LOWCA
+            if (entityName.equalsIgnoreCase("Lowca")) {
+                rpgcore.getLowcaNPC().openLowcaGUI(player);
+                return;
+            }
+
             // TRADE
             if (player.isSneaking()) {
                 if (entityName.equalsIgnoreCase("trener") || entityName.equalsIgnoreCase("kolekcjoner") ||
