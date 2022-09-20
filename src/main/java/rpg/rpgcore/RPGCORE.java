@@ -52,6 +52,7 @@ import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikBlockBreak;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.lesnik.LesnikNPC;
 import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.medyk.MedykInventoryClick;
@@ -185,6 +186,7 @@ public final class RPGCORE extends JavaPlugin {
     private UserManager userManager;
     private PartyManager partyManager;
     private LowcaNPC lowcaNPC;
+    private LesnikNPC lesnikNPC;
 
 
 
@@ -518,6 +520,7 @@ public final class RPGCORE extends JavaPlugin {
         this.gornikNPC = new GornikNPC(this);
         this.przyrodnikNPC = new PrzyrodnikNPC(this);
         this.lowcaNPC = new LowcaNPC(this);
+        this.lesnikNPC = new LesnikNPC(this);
 
 
         this.getRybakNPC().loadExpWedka();
@@ -751,5 +754,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public LowcaNPC getLowcaNPC() {
         return lowcaNPC;
+    }
+
+    public LesnikNPC getLesnikNPC() {
+        return lesnikNPC;
     }
 }

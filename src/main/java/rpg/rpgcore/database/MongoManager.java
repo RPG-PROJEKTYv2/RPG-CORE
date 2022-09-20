@@ -15,6 +15,7 @@ import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
+import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
@@ -167,9 +168,11 @@ public class MongoManager {
             if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataMagazyny(new MagazynObject(uuid));
             }
-
             if (pool.getLowca().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataLowca(new LowcaObject(uuid));
+            }
+            if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataLesnik(new LesnikObject(uuid));
             }
         }
 
@@ -329,6 +332,10 @@ public class MongoManager {
         this.addDataLowca(lowcaObject);
         rpgcore.getLowcaNPC().add(lowcaObject);
 
+        final LesnikObject lesnikObject = new LesnikObject(uuid);
+        this.addDataLesnik(lesnikObject);
+        rpgcore.getLesnikNPC().add(lesnikObject);
+
         Document document;
 
         document = new Document();
@@ -376,6 +383,7 @@ public class MongoManager {
 
             pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
+            this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
 
 
             Utils.sendToHighStaff("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
@@ -958,6 +966,30 @@ public class MongoManager {
     public void saveAllLowca() {
         for (LowcaObject lowcaObject : rpgcore.getLowcaNPC().getLowcaObjects()) {
             this.saveDataLowca(lowcaObject.getId(), lowcaObject);
+        }
+    }
+
+    // LESNIK
+    public Map<UUID, LesnikObject> loadAllLesnik() {
+        Map<UUID, LesnikObject> lesnik = new HashMap<>();
+        for (Document document : this.pool.getLesnik().find()) {
+            LesnikObject lesnikObject = new LesnikObject(document);
+            lesnik.put(lesnikObject.getId(), lesnikObject);
+        }
+        return lesnik;
+    }
+
+    public void addDataLesnik(final LesnikObject lesnikObject) {
+        this.pool.getLesnik().insertOne(lesnikObject.toDocument());
+    }
+
+    public void saveDataLesnik(final UUID id, final LesnikObject lesnikObject) {
+        this.pool.getLesnik().findOneAndReplace(new Document("_id", id.toString()), lesnikObject.toDocument());
+    }
+
+    public void saveAllLesnik() {
+        for (LesnikObject lesnikObject : rpgcore.getLesnikNPC().getLesnikObjects()) {
+            this.saveDataLesnik(lesnikObject.getId(), lesnikObject);
         }
     }
 
