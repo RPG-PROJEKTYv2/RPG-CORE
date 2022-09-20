@@ -7,6 +7,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerUser;
 import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.GlobalItems.expowiska.Map1Items;
+import rpg.rpgcore.utils.GlobalItems.npc.KolekcjonerItems;
 
 import java.util.UUID;
 
@@ -42,7 +43,6 @@ public class MobDropHelper {
 
         double niesDropChance = 0.01;
         double sakwaDropChance = 0.03;
-        double kolekcjonerDropChance = 1.0;
         double chestDropChance = 1;
         double ulepszaczDropChance = 0.5;
 
@@ -58,12 +58,19 @@ public class MobDropHelper {
         addDropPlayer(player, GlobalItem.getItem("I5", 1), 1.5, true, true, entity);
 
 
-
-        if (entityName.equals("&8Najemnik")) {
-            addDropPlayer(player, Map1Items.getItem("I2", 1), 50, true, true, entity);
+        // EXPOWISKO 1
+        // BOSS
+        if (entityName.equals("[BOSS] Krol Wygnancow")) {
+            addDropPlayer(player, Map1Items.getItem("I1", 1), 100, true, true, entity);
+        }
+        // MOB
+        if (entityName.equals("Najemnik")) {
+            addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
             if (kolekcjonerUser.getMission() == 0) {
-                //  (player, );
-                //addDropPlayer(player, GlobalItem.getItem("K1", 1), kolekcjonerDropChance, true, true, entity); // TU ZMIEN ITEMY I DODAJ DO GLOBAL ITEMS ALBO ZROB KOLEJNY ENUM Z ITEMAMI TYLKO OD KOLECJONERA
+                addDropPlayer(player, KolekcjonerItems.getItem("1-10-1", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("1-10-2", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("1-10-3", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("1-10-4", 1), 1, true, true, entity);
             }
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (DropChanceHelper.getChance(100)) {
@@ -71,6 +78,9 @@ public class MobDropHelper {
                 }
             }
         }
+        // EXPOWISKO 2
+        // BOSS
+        // MOB
 
 
 
