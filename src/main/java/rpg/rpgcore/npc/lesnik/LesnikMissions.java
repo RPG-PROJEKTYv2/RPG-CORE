@@ -34,7 +34,7 @@ public enum LesnikMissions {
                 return mission;
             }
         }
-        return null;
+        return M99;
     }
 
     public int getNumber() {

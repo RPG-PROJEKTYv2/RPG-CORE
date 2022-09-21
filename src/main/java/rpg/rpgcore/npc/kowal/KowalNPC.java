@@ -29,7 +29,6 @@ public class KowalNPC {
     // WAZNE MAPY I LISTY
     private final List<UUID> upgradeList = new ArrayList<>();
     private final Map<UUID, List<ItemStack>> ostatniUlepszonyItem = new HashMap<>();
-    private final RandomItems<String> ulepszanie = new RandomItems<>();
     private final List<UUID> animationList = new ArrayList<>();
 
     // ITEMY DO GUI
@@ -123,7 +122,7 @@ public class KowalNPC {
                 }
             }
         }*/
-
+        final RandomItems<String> ulepszanie = new RandomItems<>();
         ulepszanie.add(0.5, "udane");
         ulepszanie.add(0.5, "nieudane");
 

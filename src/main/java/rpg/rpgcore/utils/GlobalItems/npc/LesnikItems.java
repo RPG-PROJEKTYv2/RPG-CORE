@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 public enum LesnikItems {
 
-    I1("I1", new ItemBuilder(Material.GRASS).setName("&bMietowa Trawa").setLore(Arrays.asList("&8Chyba Lesnik tego potrzebuje...")).toItemStack().clone());
+    I1("I1", new ItemBuilder(Material.GRASS).setName("&bMietowa Trawa").setLore(Arrays.asList("&8Chyba Lesnik tego potrzebuje...")).toItemStack().clone()),
+    POTION("Potion", new ItemBuilder(Material.GLASS_BOTTLE).setName("&2Potka Lesnika").setLore(Arrays.asList("&8Dzieki tej potce posiadasz", "&8100% szans na przyjecie przedmiotu u Lesnika")).toItemStack());
 
     private final String name;
     private final ItemStack item;

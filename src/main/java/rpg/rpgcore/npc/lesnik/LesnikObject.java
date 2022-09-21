@@ -10,12 +10,12 @@ public class LesnikObject {
 
     public LesnikObject(UUID uuid) {
         this.uuid = uuid;
-        this.user = new LesnikUser(1, 0, 0, 0, 0);
+        this.user = new LesnikUser(1, 0, 0, 0, 0, 0);
     }
 
     public LesnikObject(Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.user = new LesnikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("przeszycie"), document.getDouble("wzmKryta"), document.getDouble("defNaLudzi"));
+        this.user = new LesnikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("przeszycie"), document.getDouble("wzmKryta"), document.getDouble("defNaLudzi"), document.getLong("cooldown"));
     }
 
     public UUID getId() {
@@ -32,6 +32,7 @@ public class LesnikObject {
                 .append("progress", user.getProgress())
                 .append("przeszycie", user.getPrzeszycie())
                 .append("wzmKryta", user.getWzmKryta())
-                .append("defNaLudzi", user.getDefNaLudzi());
+                .append("defNaLudzi", user.getDefNaLudzi())
+                .append("cooldown", user.getCooldown());
     }
 }

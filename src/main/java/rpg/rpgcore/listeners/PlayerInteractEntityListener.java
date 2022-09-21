@@ -154,6 +154,12 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
 
+            // LESNIK
+            if (entityName.equalsIgnoreCase("Lesnik")) {
+                rpgcore.getLesnikNPC().openLesnikGUI(player);
+                return;
+            }
+
             // TRADE
             if (player.isSneaking()) {
                 if (entityName.equalsIgnoreCase("trener") || entityName.equalsIgnoreCase("kolekcjoner") ||
