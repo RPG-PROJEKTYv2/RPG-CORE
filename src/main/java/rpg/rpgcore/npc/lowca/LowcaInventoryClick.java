@@ -37,7 +37,6 @@ public class LowcaInventoryClick implements Listener {
             final UUID uuid = player.getUniqueId();
             final LowcaObject object = rpgcore.getLowcaNPC().find(uuid);
             final LowcaUser user = object.getLowcaUser();
-            //TODO Nie dziala sprawdzanie lore !
 
             if (item.getType().equals(Material.BARRIER) || item.getType().equals(Material.BOOK_AND_QUILL) || Utils.checkIfLoreContainsString(item.getItemMeta().getLore(), "Wykonane")) {
                 return;

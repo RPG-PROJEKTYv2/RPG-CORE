@@ -28,6 +28,10 @@ public class LesnikNPC {
         final LesnikUser user = this.find(uuid).getUser();
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&2&lLesnik"));
 
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+        }
+
         gui.setItem(10, new ItemBuilder(Material.PAPER).setName("&c&lStatystyki").setLore(Arrays.asList(
                 "&7Przeszycie Bloku Ciosu: &c" + user.getPrzeszycie() + "&7%",
                 "&7Szansa Na Wzocnienie Ciosu Krytycznego: &c" + user.getWzmKryta() + "&7%",
@@ -41,7 +45,7 @@ public class LesnikNPC {
             gui.setItem(16, new ItemBuilder(Material.WATCH).setName("&aGotowe do oddania!").toItemStack().clone());
         }
 
-        gui.setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Potki Lesnika").toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Mikstury Lesnika").toItemStack().clone());
 
         player.openInventory(gui);
     }

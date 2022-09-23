@@ -41,7 +41,7 @@ public class KowalNPC {
 
     public void openKowalMainGui(final Player player) {
 
-        player.getInventory().addItem(GlobalItem.getItem("I19", 1));
+        player.getInventory().addItem(GlobalItem.getItem("I9", 1));
 
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&4&lKowal"));
         final List<String> lore = new ArrayList<>();
