@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.os.OsUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
@@ -600,21 +601,29 @@ public class RybakNPC {
 
         double toAdd = Double.parseDouble(bonus);
         final RybakUser rybakUser = this.find(uuid).getRybakUser();
+        final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
         switch (nagroda.toLowerCase(Locale.ROOT)) {
             case "srednie obrazenia":
                 rybakUser.setValue1(rybakUser.getValue1() + toAdd);
+                bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + toAdd);
                 break;
             case "srednia defensywa":
                 rybakUser.setValue2(rybakUser.getValue2() + toAdd);
+                bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + toAdd);
                 break;
             case "dodatkowe obrazenia":
                 rybakUser.setValue3(rybakUser.getValue3() + toAdd);
+                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + Integer.parseInt(bonus));
                 break;
             case "blok ciosu":
                 rybakUser.setValue4(rybakUser.getValue4() + toAdd);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + toAdd);
                 break;
         }
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(uuid, this.find(uuid)));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+            rpgcore.getMongoManager().saveDataRybak(uuid, this.find(uuid));
+            rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
+        });
     }
 
     public String getMisja(final int misjaNr) {

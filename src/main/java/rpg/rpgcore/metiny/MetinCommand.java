@@ -29,10 +29,10 @@ public class MetinCommand extends CommandAPI {
         final Player player = (Player) sender;
 
         if (args.length < 1) {
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
+            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
             return;
         }
-        if (args.length == 4) {
+        if (args.length == 5) {
             if (args[0].equals("create")) {
                 if (args[1] != null) {
                     int id = Integer.parseInt(args[1]);
@@ -41,7 +41,8 @@ public class MetinCommand extends CommandAPI {
                         return;
                     }
                     int health = Integer.parseInt(args[2]);
-                    int resp = Integer.parseInt(args[3]);
+                    int moby = Integer.parseInt(args[3]);
+                    int resp = Integer.parseInt(args[4]);
                     if (!this.rpgcore.getMetinyManager().isMetin(id)) {
                         final Metiny newMetiny = new Metiny(id);
                         this.rpgcore.getMetinyManager().add(newMetiny);
@@ -53,11 +54,13 @@ public class MetinCommand extends CommandAPI {
                     metiny.getMetins().setMaxhealth(health);
                     metiny.getMetins().setHealth(0);
                     metiny.getMetins().setResp(resp);
+                    metiny.getMetins().setMoby(moby);
                     this.rpgcore.getMongoManager().saveDataMetins(id, metiny);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie stowrzyles lokacje metina ID:&6 " + args[1] + "\n"
                             + Utils.SERVERNAME + "&aSwiat metina:&6 " + metiny.getMetins().getWorld() + "\n"
                             + Utils.SERVERNAME + "&aKordy metina:&6 " + metiny.getMetins().getCoordinates() + "\n"
-                            + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth()));
+                            + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth() + "\n"
+                            + Utils.SERVERNAME + "&Ilosc potworow:&6 " + metiny.getMetins().getMoby() + "\n"));
                     MetinyHelper.spawnMetin(id);
                     return;
                 }
@@ -124,7 +127,7 @@ public class MetinCommand extends CommandAPI {
                 }
                 return;
             }
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
+            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
         }
     }
 }

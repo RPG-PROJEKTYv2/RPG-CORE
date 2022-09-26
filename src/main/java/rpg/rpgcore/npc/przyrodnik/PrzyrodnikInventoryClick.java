@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -50,7 +51,13 @@ public class PrzyrodnikInventoryClick implements Listener {
                 user.setProgress(0);
                 user.setDmg(user.getDmg() + mission.getDmg());
                 user.setDef(user.getDef() + mission.getDef());
-                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataPrzyrodnik(uuid, RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid)));
+                final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
+                bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + mission.getDmg());
+                bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + mission.getDef());
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+                    RPGCORE.getInstance().getMongoManager().saveDataPrzyrodnik(uuid, RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid));
+                    RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
+                });
                 RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&2&lPrzyrodnik &8>> &6" + player.getName() + " &7ukonczyl moja &6" + user.getMission() + " &7misje "));
                 RPGCORE.getInstance().getPrzyrodnikNPC().openMainGUI(player);
                 return;

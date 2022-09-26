@@ -11,12 +11,14 @@ public class MetinsObject {
     private int maxhealth;
     private int health;
     private int resp;
+    private int moby;
 
-    public MetinsObject(String world, String coordinates, int maxhealth, int health, int resp) {
+    public MetinsObject(String world, String coordinates, int maxhealth, int health, int resp, int moby) {
         this.world = world;
         this.coordinates = coordinates;
         this.maxhealth = maxhealth;
         this.health = health;
         this.resp = resp;
+        this.moby = moby;
     }
 }
