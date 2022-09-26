@@ -20,6 +20,7 @@ import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.RybakObject;
+import rpg.rpgcore.npc.trener.TrenerObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -990,6 +991,31 @@ public class MongoManager {
     public void saveAllLesnik() {
         for (LesnikObject lesnikObject : rpgcore.getLesnikNPC().getLesnikObjects()) {
             this.saveDataLesnik(lesnikObject.getId(), lesnikObject);
+        }
+    }
+
+
+    // TRENER
+    public Map<UUID, TrenerObject> loadAllTrener() {
+        Map<UUID, TrenerObject> lesnik = new HashMap<>();
+        for (Document document : this.pool.getTrener().find()) {
+            TrenerObject trenerObject = new TrenerObject(document);
+            lesnik.put(trenerObject.getId(), trenerObject);
+        }
+        return lesnik;
+    }
+
+    public void addDataTrener(final TrenerObject trenerObject) {
+        this.pool.getTrener().insertOne(trenerObject.toDocument());
+    }
+
+    public void saveDataTrener(final UUID id, final TrenerObject trenerObject) {
+        this.pool.getTrener().findOneAndReplace(new Document("_id", id.toString()), trenerObject.toDocument());
+    }
+
+    public void saveAllTrener() {
+        for (TrenerObject trenerObject : rpgcore.getTrenerNPC().getTrenerObjects()) {
+            this.saveDataTrener(trenerObject.getId(), trenerObject);
         }
     }
 

@@ -1,5 +1,7 @@
 package rpg.rpgcore.npc.trener;
 
+import com.google.common.collect.ImmutableSet;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
@@ -18,9 +20,11 @@ import java.util.*;
 public class TrenerNPC {
 
     private final RPGCORE rpgcore;
+    private final Map<UUID, TrenerObject> userMap;
 
     public TrenerNPC(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.userMap = rpgcore.getMongoManager().loadAllTrener();
     }
 
     private final Map<UUID, Integer> points = new HashMap<>();
@@ -275,5 +279,9 @@ public class TrenerNPC {
                 .append("silnynaludzi", this.getSilnynaludzi(uuid))
                 .append("defnaludzi", this.getDefnaludzi(uuid))
                 .append("kyt", this.getKyt(uuid));
+    }
+
+    public ImmutableSet<TrenerObject> getTrenerObjects() {
+        return ImmutableSet.copyOf(userMap.values());
     }
 }
