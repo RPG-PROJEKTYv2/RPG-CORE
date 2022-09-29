@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems.niesy.Map1_10;
+import rpg.rpgcore.utils.globalitems.niesy.Map1_10;
 import rpg.rpgcore.utils.Utils;
 
 public class PlayerItemPickUpListener implements Listener {

@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 

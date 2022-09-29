@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.utils.GlobalItems.npc.MetinologItems;
+import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;

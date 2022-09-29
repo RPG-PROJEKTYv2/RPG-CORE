@@ -1,14 +1,12 @@
 package rpg.rpgcore.commands.admin;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.entities.CustomZombie.CustomZombie;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.io.IOException;
 

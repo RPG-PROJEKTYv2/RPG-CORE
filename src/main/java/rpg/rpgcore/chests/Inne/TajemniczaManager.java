@@ -3,7 +3,7 @@ package rpg.rpgcore.chests.Inne;
 import com.google.common.collect.Sets;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Set;

@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerUser;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
-import rpg.rpgcore.utils.GlobalItems.expowiska.Map1Items;
-import rpg.rpgcore.utils.GlobalItems.npc.KolekcjonerItems;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
+import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
 import java.util.UUID;
 
@@ -56,6 +56,10 @@ public class MobDropHelper {
         addDropPlayer(player, GlobalItem.getItem("I3", 1), 0.001, true, true, entity);
         addDropPlayer(player, GlobalItem.getItem("I4", 1), 1, true, true, entity);
         addDropPlayer(player, GlobalItem.getItem("I5", 1), 1.5, true, true, entity);
+
+
+
+        addDropPlayer(player, GlobalItem.getItem("I3", 1), 100, true, true, entity);
 
 
         // EXPOWISKO 1

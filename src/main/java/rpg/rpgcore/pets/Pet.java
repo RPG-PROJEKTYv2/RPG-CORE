@@ -24,7 +24,7 @@ public class Pet {
         this.ultimateAbility = ultimateAbility;
     }
 
-    public void reset() {
+    public void despawn() {
         this.item = null;
         this.name = "";
         this.rarity = "";

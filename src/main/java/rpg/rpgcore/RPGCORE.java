@@ -24,6 +24,7 @@ import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
 import rpg.rpgcore.chests.Inne.RoznosciManager;
 import rpg.rpgcore.chests.Inne.TajemniczaManager;
+import rpg.rpgcore.chests.Inne.ZwierzakiManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
@@ -67,6 +68,8 @@ import rpg.rpgcore.os.OsiagnieciaCommand;
 import rpg.rpgcore.party.PartyManager;
 import rpg.rpgcore.pets.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
+import rpg.rpgcore.pets.listeners.PetInteractListener;
+import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -205,6 +208,7 @@ public final class RPGCORE extends JavaPlugin {
     // exp1
     private NajemnikManager najemnikManager;
     private WygnaniecManager wygnaniecManager;
+    private ZwierzakiManager zwierzakiManager;
 
     private int i = 1;
 
@@ -258,7 +262,7 @@ public final class RPGCORE extends JavaPlugin {
         new ActionBarTask(this);
 
         // SKRZYNIE
-        this.initSkrzynieManagers();
+        this.initChests();
 
         try {
             discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY");
@@ -479,6 +483,10 @@ public final class RPGCORE extends JavaPlugin {
         // INVSEE
         this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KeyClickListener(), this);
+
+        // PETY
+        this.getServer().getPluginManager().registerEvents(new PetInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PetInteractListener(this), this);
     }
 
     private void initDatabase() {
@@ -544,7 +552,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getMetinologNPC().loadMissions();
     }
 
-    private void initSkrzynieManagers() {
+    private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
         // SKRZYNKI
         // inne
@@ -553,6 +561,7 @@ public final class RPGCORE extends JavaPlugin {
         // exp1
         this.najemnikManager = new NajemnikManager();
         this.wygnaniecManager = new WygnaniecManager();
+        this.zwierzakiManager = new ZwierzakiManager();
     }
 
 
@@ -776,5 +785,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public PetyManager getPetyManager() {
         return petyManager;
+    }
+
+    public ZwierzakiManager getZwierzakiManager() {
+        return zwierzakiManager;
     }
 }

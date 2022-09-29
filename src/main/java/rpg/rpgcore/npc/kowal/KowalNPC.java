@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.*;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.*;
 

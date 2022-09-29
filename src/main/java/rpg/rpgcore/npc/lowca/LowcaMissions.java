@@ -2,7 +2,7 @@ package rpg.rpgcore.npc.lowca;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.npc.LowcaItems;
+import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
 import rpg.rpgcore.utils.ItemBuilder;
 
 import java.util.Arrays;

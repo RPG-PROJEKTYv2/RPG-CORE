@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.GlobalItems.expowiska;
+package rpg.rpgcore.utils.globalitems.expowiska;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

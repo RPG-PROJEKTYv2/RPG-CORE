@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.GlobalItems.niesy;
+package rpg.rpgcore.utils.globalitems.niesy;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;

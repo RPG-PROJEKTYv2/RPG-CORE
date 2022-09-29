@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems.npc.MetinologItems;
+import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.utils.LocationHelper;
 import rpg.rpgcore.utils.MobDropHelper;

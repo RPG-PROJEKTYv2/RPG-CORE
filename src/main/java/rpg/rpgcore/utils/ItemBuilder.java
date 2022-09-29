@@ -99,16 +99,8 @@ public class ItemBuilder {
 
     public ItemBuilder setLoreCrafting(List<String> lore, List<String> lore1) {
         ItemMeta im = this.is.getItemMeta();
-        List<String> lore3 = new ArrayList<>();
-        int loree = 0;
-        for (String string : lore) {
-            loree = loree + 1;
-            lore3.add(string);
-        }
-        for (String string : lore1) {
-            loree = loree + 1;
-            lore3.add(string);
-        }
+        List<String> lore3 = new ArrayList<>(lore);
+        lore3.addAll(lore1);
         im.setLore(Utils.format(lore3));
         this.is.setItemMeta(im);
         return this;

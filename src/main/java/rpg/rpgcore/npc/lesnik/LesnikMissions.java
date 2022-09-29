@@ -2,11 +2,10 @@ package rpg.rpgcore.npc.lesnik;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.npc.LesnikItems;
+import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.ItemBuilder;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum LesnikMissions {
 

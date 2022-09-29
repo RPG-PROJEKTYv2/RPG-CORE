@@ -1,8 +1,8 @@
-package rpg.rpgcore.utils.GlobalItems;
+package rpg.rpgcore.utils.globalitems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.npc.PrzyrodnikItems;
+import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 import rpg.rpgcore.utils.ItemBuilder;
 
 public enum NiesyItems {

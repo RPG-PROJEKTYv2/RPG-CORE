@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.utils.GlobalItems.npc.LesnikItems;
+import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
@@ -32,7 +32,6 @@ public class LesnikInventoryClick implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final String title = Utils.removeColor(e.getClickedInventory().getTitle());
-        final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
        /* if (e.getClickedInventory().getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Lesnik")

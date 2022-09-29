@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import rpg.rpgcore.utils.GlobalItems.npc.LesnikItems;
+import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.Utils;
 
 public class LesnikInventoryClose implements Listener {

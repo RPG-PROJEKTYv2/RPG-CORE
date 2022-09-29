@@ -1,8 +1,8 @@
 package rpg.rpgcore.npc.kolekcjoner.enums;
 
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.niesy.Map1_10;
-import rpg.rpgcore.utils.GlobalItems.npc.KolekcjonerItems;
+import rpg.rpgcore.utils.globalitems.niesy.Map1_10;
+import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
 public enum KolekcjonerMissions {
 

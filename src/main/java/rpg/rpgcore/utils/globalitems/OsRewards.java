@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.GlobalItems;
+package rpg.rpgcore.utils.globalitems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

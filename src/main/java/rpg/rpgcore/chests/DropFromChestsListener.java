@@ -9,8 +9,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
-import rpg.rpgcore.utils.GlobalItems.expowiska.Map1Items;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -69,6 +69,31 @@ public class DropFromChestsListener implements Listener {
                 }
             }
             // unikatowe...
+
+            // ... ZE ZWIERZAKAMI
+            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                if (!player.getCanPickupItems()) {
+                    player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
+                    final Items item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                    if (item == null) {
+                        return;
+                    }
+                    final ItemStack is = item.getRewardItem();
+                    is.setAmount(item.getAmount());
+                    player.getInventory().addItem(is);
+
+
+                    net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
+                    player.sendMessage("Lvl - " + nmsStack.getTag().getInt("PetLevel"));
+                    player.sendMessage("PetExp - " + nmsStack.getTag().getDouble("PetExp"));
+                    player.sendMessage("ReqExp - " + nmsStack.getTag().getDouble("ReqPetExp"));
+                    player.sendMessage("TotalExp - " + nmsStack.getTag().getDouble("TotalPetExp"));
+
+
+
+                    return;
+                }
+            }
             // soon...
             // Expowisko 1
             //  Skrzynia Wygnanca

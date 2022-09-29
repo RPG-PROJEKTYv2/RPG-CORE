@@ -109,7 +109,7 @@ public class MongoManager {
 
 
         for (Document obj : pool.getGracze().find()){
-            fix();
+            //fix();
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
 
@@ -182,7 +182,7 @@ public class MongoManager {
                 this.addDataActivePets(new PetObject(uuid));
             }
             if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataUserPets(new UserPets(uuid, rpgcore.getPetyManager().createNewPetInventory(uuid)));
+                this.addDataUserPets(new UserPets(uuid));
             }
         }
 
@@ -350,7 +350,7 @@ public class MongoManager {
         this.addDataActivePets(petObject);
         rpgcore.getPetyManager().addToActivePet(petObject);
 
-        final UserPets userPets = new UserPets(uuid, rpgcore.getPetyManager().createNewPetInventory(uuid));
+        final UserPets userPets = new UserPets(uuid);
         this.addDataUserPets(userPets);
         rpgcore.getPetyManager().addToUserPets(userPets);
 

@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.GlobalItems;
+package rpg.rpgcore.utils.globalitems;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,12 +12,12 @@ import java.util.Arrays;
 public enum GlobalItem {
     // SKRZYNKI //
     // RARE
-    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&6&lWartosciowy Kufer").setLore(Arrays.asList(" ","&8&oCiekawe co ta skrzynia w sobie ma...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Kowala").setLore(Arrays.asList(" ","&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
-    I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia z Zwierzakami").setLore(Arrays.asList(" ","&8&oOtworz i zobacz co kryje ta skrzynia...")).hideFlag().toItemStack().clone()),
+    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&6&lWartosciowy Kufer").setLore(Arrays.asList("&8&oCiekawe co ta skrzynia w sobie ma...")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
+    I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co kryje ta skrzynia...")).hideFlag().toItemStack().clone()),
    // INNE
-    I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList(" ","&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
-    I5("I5", new ItemBuilder(Material.CHEST).setName("&2Skrzynia z Roznosciami").setLore(Arrays.asList(" ","&8&oSkrzynia ta zawiera rozne materialy...")).hideFlag().toItemStack().clone()),
+    I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
+    I5("I5", new ItemBuilder(Material.CHEST).setName("&2Skrzynia z Roznosciami").setLore(Arrays.asList("&8&oSkrzynia ta zawiera rozne materialy...")).hideFlag().toItemStack().clone()),
 
 
     I6("I6", new ItemBuilder(Material.EXP_BOTTLE, 1).setName("&8• &eSakwa &8•").addGlowing().toItemStack().clone()),

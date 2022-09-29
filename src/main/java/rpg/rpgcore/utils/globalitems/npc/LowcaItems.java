@@ -1,9 +1,8 @@
-package rpg.rpgcore.utils.GlobalItems.npc;
+package rpg.rpgcore.utils.globalitems.npc;
 
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.GlobalItems.GlobalItem;
 import rpg.rpgcore.utils.ItemBuilder;
 
 import java.util.Arrays;

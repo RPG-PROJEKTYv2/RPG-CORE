@@ -11,8 +11,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class PetyManager {
     private final RPGCORE rpgcore;
@@ -25,12 +24,6 @@ public class PetyManager {
         this.allPets = rpgcore.getMongoManager().loadAllUserPets();
     }
 
-
-    public void openPetyGUI(final @NotNull Player player) {
-        //TODO Zrobic glowing na aktywnym pecie!
-        player.openInventory(this.findUserPets(player.getUniqueId()).getPetyGui());
-    }
-
     public void changeActivePet(final ItemStack newPet, final @NotNull Player player) {
         final UUID uuid = player.getUniqueId();
         final PetObject petObject = this.findActivePet(uuid);
@@ -39,7 +32,7 @@ public class PetyManager {
         final ItemStack activePet = petObject.getPet().getItem();
 
         if (activePet != null && activePet == newPet) {
-            petObject.getPet().reset();
+            petObject.getPet().despawn();
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(petObject.getId(), petObject));
             //TODO zroobic usuwanie statystyk z peta po desawnwowaniu
             player.sendMessage(Utils.format("&cPomyslnie zdespawnowano   " + activePet.getItemMeta().getDisplayName()));
@@ -51,17 +44,98 @@ public class PetyManager {
 
     }
 
-    public Inventory createNewPetInventory(final UUID uuid) {
-        final Player player = Bukkit.getOfflinePlayer(uuid).getPlayer();
+    public void openPetyGUI(final @NotNull Player player) {
+        final UUID uuid = player.getUniqueId();
+        final UserPets userPets = this.findUserPets(uuid);
+        final Pet pet = this.findActivePet(uuid).getPet();
         final Inventory gui = Bukkit.createInventory(player, 45, Utils.format("&c&lMenu Petow"));
         for (int i = 0; i < gui.getSize(); i++) {
             if (!((i > 9 && i < 17) || (i > 18 && i < 26) || (i > 27 && i < 35))) {
                 gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
             }
         }
+        for (ItemStack item : sortPety(userPets.getPety())) {
+            gui.setItem(gui.firstEmpty(), item);
+        }
 
-        gui.setItem(40, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
-        return gui;
+        if (pet != null && gui.contains(pet.getItem())) {
+            System.out.println("1");
+            for (int i = 0; i < gui.getSize(); i++) {
+                if (gui.getItem(i) == null || gui.getItem(i).getType().equals(Material.AIR) || gui.getItem(i).getType().equals(Material.STAINED_GLASS_PANE)) continue;
+                if (gui.getItem(i).equals(pet.getItem())) {
+                    System.out.println("2");
+                    gui.setItem(i, new ItemBuilder(pet.getItem()).setLoreCrafting(pet.getItem().getItemMeta().getLore(), Arrays.asList(" ", "&a&lPrzywolany")).toItemStack().clone());
+                }
+            }
+        }
+
+        gui.setItem(40, new ItemBuilder(Material.ARMOR_STAND).setName("&cZamien Na Item").toItemStack());
+        player.openInventory(gui);
+    }
+
+    public List<ItemStack> sortPety(final ItemStack[] pety) {
+        if (pety == null || pety.length == 0) {
+            return new ArrayList<>();
+        }
+        final List<ItemStack> sorted = new ArrayList<>();
+
+        for (ItemStack item : pety) {
+            if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+                continue;
+            }
+            for (String s : item.getItemMeta().getLore()) {
+                if (s.contains("Mityczny")) {
+                    sorted.add(item);
+                }
+            }
+        }
+
+        for (ItemStack item : pety) {
+            if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+                continue;
+            }
+            for (String s : item.getItemMeta().getLore()) {
+                if (s.contains("Legendarny")) {
+                    sorted.add(item);
+                }
+            }
+        }
+
+        for (ItemStack item : pety) {
+            if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+                continue;
+            }
+            for (String s : item.getItemMeta().getLore()) {
+                if (s.contains("Epicki")) {
+                    sorted.add(item);
+                }
+            }
+        }
+
+        for (ItemStack item : pety) {
+            if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+                continue;
+            }
+            for (String s : item.getItemMeta().getLore()) {
+                if (s.contains("Rzadki")) {
+                    sorted.add(item);
+                }
+            }
+        }
+
+        for (ItemStack item : pety) {
+            if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+                continue;
+            }
+            for (String s : item.getItemMeta().getLore()) {
+                if (s.contains("Zwykly")) {
+                    sorted.add(item);
+                }
+            }
+        }
+
+
+        return sorted;
     }
 
 
@@ -73,7 +147,7 @@ public class PetyManager {
     }
 
     public UserPets findUserPets(final UUID uuid) {
-        this.allPets.computeIfAbsent(uuid, k -> new UserPets(uuid, this.createNewPetInventory(uuid)));
+        this.allPets.computeIfAbsent(uuid, k -> new UserPets(uuid));
         return this.allPets.get(uuid);
     }
 
