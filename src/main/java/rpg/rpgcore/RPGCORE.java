@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.abilities.KeyClickListener;
 import rpg.rpgcore.akcesoria.*;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bao.*;
@@ -64,6 +65,8 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.os.OsiagnieciaCommand;
 import rpg.rpgcore.party.PartyManager;
+import rpg.rpgcore.pets.PetCommand;
+import rpg.rpgcore.pets.PetyManager;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -189,6 +192,7 @@ public final class RPGCORE extends JavaPlugin {
     private PartyManager partyManager;
     private LowcaNPC lowcaNPC;
     private LesnikNPC lesnikNPC;
+    private PetyManager petyManager;
 
 
 
@@ -335,6 +339,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new ChatPanelCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PartyCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new InventoryCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new PetCommand(this));
     }
 
     private void initEvents() {
@@ -473,6 +478,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // INVSEE
         this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new KeyClickListener(), this);
     }
 
     private void initDatabase() {
@@ -510,6 +516,7 @@ public final class RPGCORE extends JavaPlugin {
         this.bonusesManager = new BonusesManager(this);
         this.magazynManager = new MagazynManager(this);
         this.partyManager = new PartyManager();
+        this.petyManager = new PetyManager(this);
     }
 
     private void initNPCS() {
@@ -765,5 +772,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public LesnikNPC getLesnikNPC() {
         return lesnikNPC;
+    }
+
+    public PetyManager getPetyManager() {
+        return petyManager;
     }
 }

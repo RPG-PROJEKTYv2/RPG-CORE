@@ -2,14 +2,19 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.user.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,10 +23,7 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -301,32 +303,6 @@ public class Utils {
         return reverseString(numberInString) + afterDot;
     }
 
-    public static String getGroupColor(final String group) {
-        switch (group) {
-            case "H@":
-            case "Admin":
-                return "&4&l" + group + "&c ";
-            case "GM":
-            case "Mod":
-            case "KidMod":
-                return "&2&l" + group + "&a ";
-            case "Helper":
-                return "&3&l" + group + "&b ";
-            case "JuniorHelper":
-                return "&3&lJrHelper" + "&b ";
-            case "ELITA":
-                return "&5&lELITA &7";
-            case "Svip":
-                return "&6&lS&e&lvip &7";
-            case "Vip":
-                return "&e&lVip &7";
-            case "Budowniczy":
-                return "&d&lBud &7";
-            default:
-                return "&7";
-        }
-    }
-
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
@@ -334,6 +310,7 @@ public class Utils {
             }
         }
     }
+
     public static void sendToStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
@@ -478,13 +455,15 @@ public class Utils {
         return stringBuilder.length() > 0 ? stringBuilder.toString().trim() : time + "ms";
     }
 
-    public static double convertIntegersToPercentage(final int n1, final int n2)  {
+    public static double convertIntegersToPercentage(final int n1, final int n2) {
         return Double.parseDouble(String.valueOf((n1 / n2) * 100));
     }
-    public static double convertLongsToPercentage(final long n1, final long n2)  {
+
+    public static double convertLongsToPercentage(final long n1, final long n2) {
         return Double.parseDouble(String.valueOf((n1 / n2) * 100));
     }
-    public static double convertDoublesToPercentage(final double n1, final double n2)  {
+
+    public static double convertDoublesToPercentage(final double n1, final double n2) {
         return (n1 / n2) * 100;
     }
 
@@ -498,15 +477,14 @@ public class Utils {
             field.setAccessible(true);
 
             o = field.get(object);
-        }
-        catch(NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
         return o;
     }
 
-    public static boolean checkIfLoreContainsString(final List<String> lore, final String toCheck){
+    public static boolean checkIfLoreContainsString(final List<String> lore, final String toCheck) {
         for (final String s : lore) {
             if (removeColor(s).contains(toCheck)) {
                 return true;
@@ -514,4 +492,80 @@ public class Utils {
         }
         return false;
     }
+
+    public static String getLoreLineNoColor(final ItemStack item, final int line) {
+        try {
+            return removeColor(item.getItemMeta().getLore().get(line));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
+    }
+
+    public static String getLoreLineColored(final ItemStack item, final int line) {
+        try {
+            return format(item.getItemMeta().getLore().get(line));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
+    }
+
+    public static void removeBonuses(final UUID uuid, final String bonus) {
+        final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
+        final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+        final String bonusName = bonus.substring(0, bonus.lastIndexOf(" ")).replace(":", "");
+        final double bonusValue = Double.parseDouble(bonus.substring(bonus.lastIndexOf(" ") + 1).replace(" ", "").trim());
+
+        switch (bonusName) {
+            case "Srednie Obrazenia":
+                bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - bonusValue);
+                break;
+            case "Dodatkowe Obrazenia":
+                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() - (int) bonusValue);
+                break;
+            case "Silny Na Ludzi":
+                bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() - bonusValue);
+                break;
+            case "Silny Przeciwko Potworom":
+                bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() - bonusValue);
+                break;
+            case "Srednia Defensywa":
+                bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - bonusValue);
+                break;
+            case "Odpornosc Na Ludzi":
+                bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() - bonusValue);
+                break;
+            case "Odpornosc Przeciwko Potworom":
+                bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() - bonusValue);
+                break;
+            case "Szybkosc":
+                bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - (int) bonusValue);
+                break;
+            case "Szczescie":
+                bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() - (int) bonusValue);
+                break;
+            case "Dodatkowe HP":
+                bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - (int) bonusValue);
+                break;
+            case "Szansa Na Cios Krytyczny":
+                bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - bonusValue);
+                break;
+            case "Szansa Na Wzmocnienie Ciosu Krytycznego":
+                bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() - bonusValue);
+                break;
+            case "Dodatkowy EXP":
+                bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - bonusValue);
+            case "Szansa Na Przebicie Pancerza":
+                bonuses.getBonusesUser().setPrzebiciePancerza(bonuses.getBonusesUser().getPrzebiciePancerza() - bonusValue);
+                break;
+            case "Szansa Na Spowolnienie":
+                bonuses.getBonusesUser().setSpowolnienie(bonuses.getBonusesUser().getSpowolnienie() - bonusValue);
+                break;
+            case "Szansa Na Oslepienie":
+                bonuses.getBonusesUser().setOslepienie(bonuses.getBonusesUser().getOslepienie() - bonusValue);
+                break;
+
+        }
+    }
+
+
 }

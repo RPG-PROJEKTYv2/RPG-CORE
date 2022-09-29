@@ -24,6 +24,7 @@ public class PathFinderGoalWalkToLoc extends PathfinderGoal {
         return false;
     }
 
+
     public void c() {
         if (this.loc.distance(this.entity.getBukkitEntity().getLocation()) > 20) {
             System.out.println("[HellRPGCore] Can not spawn the entity because the location was more than 20 block away");

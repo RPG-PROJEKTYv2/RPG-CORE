@@ -41,6 +41,8 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_chatUsers;
     private final MongoCollection<Document> hellrpg_lowca;
     private final MongoCollection<Document> hellrpg_lesnik;
+    private final MongoCollection<Document> hellrpg_pety;
+    private final MongoCollection<Document> hellrpg_userPets;
 
 
     public MongoConnectionPoolManager() {
@@ -122,6 +124,12 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_lesnik")) {
             database.createCollection("hellrpg_lesnik");
         }
+        if (!collections.contains("hellrpg_pety")) {
+            database.createCollection("hellrpg_pety");
+        }
+        if (!collections.contains("hellrpg_userPets")) {
+            database.createCollection("hellrpg_userPets");
+        }
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
@@ -147,6 +155,8 @@ public class MongoConnectionPoolManager {
         this.hellrpg_chatUsers = database.getCollection("hellrpg_chatUsers");
         this.hellrpg_lowca = database.getCollection("hellrpg_lowca");
         this.hellrpg_lesnik = database.getCollection("hellrpg_lesnik");
+        this.hellrpg_pety = database.getCollection("hellrpg_pety");
+        this.hellrpg_userPets = database.getCollection("hellrpg_userPets");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.hasPermission("*")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
@@ -251,6 +261,12 @@ public class MongoConnectionPoolManager {
 
     public MongoCollection<Document> getLesnik() {
         return this.hellrpg_lesnik;
+    }
+    public MongoCollection<Document> getPety() {
+        return this.hellrpg_pety;
+    }
+    public MongoCollection<Document> getUserPets() {
+        return this.hellrpg_userPets;
     }
 
     public void closePool() {

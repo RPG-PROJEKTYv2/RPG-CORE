@@ -131,9 +131,9 @@ public class LvlManager {
         int nextLvlGracza = aktualnyLvlGracza + 1;
 
         if (nextLvlGracza == 2) {
-            rpgcore.getTrenerNPC().updatePoints(killerUUID, 2);
+            rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().setPoints(2);
         } else {
-            rpgcore.getTrenerNPC().updatePoints(killerUUID, 1);
+            rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().setPoints(rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().getPoints() + 1);
         }
         user.setLvl(nextLvlGracza);
         user.setExp(0);

@@ -25,12 +25,20 @@ public class TabManager {
     static int topki = 0;
 
     public static void addPlayer(Player player) {
-        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
+        String rankName = "";
         String prefix = "";
-        if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
-            prefix = "&8[&3" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8] ";
+        String guild = "";
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+            rankName = rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getName();
+            prefix = rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getPrefix();
+        } else {
+            rankName = rpgcore.getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType().getName();
+            prefix = rpgcore.getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType().getPrefix();
         }
-        lista.add(prefix + Utils.getGroupColor(playerGroup) + player.getName());
+        if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
+            guild = "&8[&3" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8] ";
+        }
+        lista.add(guild + prefix + rankName + player.getName());
         lista = sortList(lista);
     }
 
@@ -62,8 +70,16 @@ public class TabManager {
         Tab tab = uuidTabMap.get(uuid);
         Player player = Bukkit.getPlayer(uuid);
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
-        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
+        String group = "";
+        String prefix = "";
+        if (user.getRankUser().isStaff()) {
+            group = user.getRankUser().getRankType().getName();
+            prefix = user.getRankUser().getRankType().getPrefix();
+        } else {
+            group = user.getRankPlayerUser().getRankType().getName();
+            prefix = user.getRankPlayerUser().getRankType().getPrefix();
+        }
         if (tab != null) {
             tab.set(player, 0, 0, "&7Informacje");
             tab.set(player, 1, 0, "&7Lista Graczy:");
@@ -97,11 +113,7 @@ public class TabManager {
             final String procenty = String.format("%.2f", (user.getExp() / rpgcore.getLvlManager().getExpForLvl(lvl + 1)) * 100);
 
             tab.set(player, 0, 2, "&7Gracz: &c" + player.getName());
-            if (Utils.getGroupColor(playerGroup).equals("&7")) {
-                tab.set(player, 0, 3, "&7Ranga: &7Gracz");
-            } else {
-                tab.set(player, 0, 3, "&7Ranga: " + Utils.getGroupColor(playerGroup));
-            }
+            tab.set(player, 0, 3, "&7Ranga: " + prefix + group);
             tab.set(player, 0, 4, "&7Gildia: &3" + tag);
             if (lvl == Utils.MAXLVL) {
                 tab.set(player, 0, 5, "&7Poziom: &4&lMAX LVL");

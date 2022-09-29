@@ -22,6 +22,8 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.RybakObject;
 import rpg.rpgcore.npc.trener.TrenerObject;
 import rpg.rpgcore.os.OsObject;
+import rpg.rpgcore.pets.PetObject;
+import rpg.rpgcore.pets.UserPets;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
@@ -76,12 +78,16 @@ public class MongoManager {
     }
 
     public void fix() {
-        for (Document document : this.pool.getGracze().find()) {
+        for (Document document : this.pool.getBonuses().find()) {
             final UUID uuid = UUID.fromString(document.getString("_id"));
 
-            document.append("adminCodeLogin", false).append("hellCodeLogin", false);
+            document.append("spowolnienie", 0.0)
+                    .append("dodatkowyExp", 0.0)
+                    .append("oslepienie", 0.0)
+                    .append("przebiciePancerza", 0.0)
+                    .append("wampiryzm", 0.0);
 
-            this.pool.getGracze().findOneAndReplace(new Document("_id", uuid.toString()), document);
+            this.pool.getBonuses().findOneAndReplace(new Document("_id", uuid.toString()), document);
         }
     }
 
@@ -103,6 +109,7 @@ public class MongoManager {
 
 
         for (Document obj : pool.getGracze().find()){
+            fix();
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
 
@@ -138,13 +145,9 @@ public class MongoManager {
                 e.printStackTrace();
             }
 
-            obj = pool.getTrener().find(new Document("_id", uuid.toString())).first();
-            if (obj == null) {
-                obj = rpgcore.getTrenerNPC().toDocument(uuid);
-                this.addTrenerData(uuid);
+            if (pool.getTrener().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataTrener(new TrenerObject(uuid));
             }
-            rpgcore.getTrenerNPC().fromDocument(obj);
-
             if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataMetinolog(new MetinologObject(uuid));
             }
@@ -174,6 +177,12 @@ public class MongoManager {
             }
             if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataLesnik(new LesnikObject(uuid));
+            }
+            if (pool.getPety().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataActivePets(new PetObject(uuid));
+            }
+            if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataUserPets(new UserPets(uuid, rpgcore.getPetyManager().createNewPetInventory(uuid)));
             }
         }
 
@@ -337,6 +346,18 @@ public class MongoManager {
         this.addDataLesnik(lesnikObject);
         rpgcore.getLesnikNPC().add(lesnikObject);
 
+        final PetObject petObject = new PetObject(uuid);
+        this.addDataActivePets(petObject);
+        rpgcore.getPetyManager().addToActivePet(petObject);
+
+        final UserPets userPets = new UserPets(uuid, rpgcore.getPetyManager().createNewPetInventory(uuid));
+        this.addDataUserPets(userPets);
+        rpgcore.getPetyManager().addToUserPets(userPets);
+
+        final TrenerObject trenerObject = new TrenerObject(uuid);
+        this.addDataTrener(trenerObject);
+        rpgcore.getTrenerNPC().add(trenerObject);
+
         Document document;
 
         document = new Document();
@@ -382,9 +403,11 @@ public class MongoManager {
             this.saveDataMagazyny(uuid, rpgcore.getMagazynManager().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
 
-            pool.getTrener().findOneAndReplace(new Document("_id", uuid.toString()), rpgcore.getTrenerNPC().toDocument(uuid));
+            this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
+            this.saveDataUserPets(uuid, rpgcore.getPetyManager().findUserPets(uuid));
+            this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
 
 
             Utils.sendToHighStaff("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
@@ -619,10 +642,6 @@ public class MongoManager {
 
     public void saveKlasyData(UUID uuid, Klasy klasy) {
         pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), klasy.toDocument());
-    }
-
-    public void addTrenerData(final UUID uuid) {
-        this.pool.getTrener().insertOne(rpgcore.getTrenerNPC().toDocument(uuid));
     }
 
 
@@ -997,12 +1016,12 @@ public class MongoManager {
 
     // TRENER
     public Map<UUID, TrenerObject> loadAllTrener() {
-        Map<UUID, TrenerObject> lesnik = new HashMap<>();
+        Map<UUID, TrenerObject> trener = new HashMap<>();
         for (Document document : this.pool.getTrener().find()) {
             TrenerObject trenerObject = new TrenerObject(document);
-            lesnik.put(trenerObject.getId(), trenerObject);
+            trener.put(trenerObject.getId(), trenerObject);
         }
-        return lesnik;
+        return trener;
     }
 
     public void addDataTrener(final TrenerObject trenerObject) {
@@ -1016,6 +1035,54 @@ public class MongoManager {
     public void saveAllTrener() {
         for (TrenerObject trenerObject : rpgcore.getTrenerNPC().getTrenerObjects()) {
             this.saveDataTrener(trenerObject.getId(), trenerObject);
+        }
+    }
+
+
+    // PETY
+    public Map<UUID, PetObject> loadAllActivePets() {
+        Map<UUID, PetObject> pety = new HashMap<>();
+        for (Document document : this.pool.getPety().find()) {
+            PetObject petObject = new PetObject(document);
+            pety.put(petObject.getId(), petObject);
+        }
+        return pety;
+    }
+
+    public void addDataActivePets(final PetObject petObject) {
+        this.pool.getPety().insertOne(petObject.toDocument());
+    }
+
+    public void saveDataActivePets(final UUID id, final PetObject petObject) {
+        this.pool.getPety().findOneAndReplace(new Document("_id", id.toString()), petObject.toDocument());
+    }
+
+    public void saveAllActivePets() {
+        for (PetObject petObject : rpgcore.getPetyManager().getAllActivePets()) {
+            this.saveDataActivePets(petObject.getId(), petObject);
+        }
+    }
+
+    public Map<UUID, UserPets> loadAllUserPets() {
+        Map<UUID, UserPets> pety = new HashMap<>();
+        for (Document document : this.pool.getUserPets().find()) {
+            UserPets userPets = new UserPets(document);
+            pety.put(userPets.getUuid(), userPets);
+        }
+        return pety;
+    }
+
+    public void addDataUserPets(final UserPets userPets) {
+        this.pool.getUserPets().insertOne(userPets.toDocument());
+    }
+
+    public void saveDataUserPets(final UUID id, final UserPets userPets) {
+        this.pool.getUserPets().findOneAndReplace(new Document("_id", id.toString()), userPets.toDocument());
+    }
+
+    public void saveAllUserPets() {
+        for (UserPets userPets : rpgcore.getPetyManager().getAllUserPets()) {
+            this.saveDataUserPets(userPets.getUuid(), userPets);
         }
     }
 

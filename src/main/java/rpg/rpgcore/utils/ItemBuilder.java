@@ -31,6 +31,10 @@ public class ItemBuilder {
         this.is = new ItemStack(material, amount, data);
     }
 
+    public ItemBuilder(ItemStack item) {
+        this.is = item;
+    }
+
     public ItemBuilder setDurability(short durability) {
         this.is.setDurability(durability);
         return this;
@@ -65,6 +69,16 @@ public class ItemBuilder {
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        this.is.setItemMeta(im);
+        return this;
+    }
+
+    public ItemBuilder removeGlowing() {
+        is.removeEnchantment(Enchantment.DURABILITY);
+        ItemMeta im = this.is.getItemMeta();
+        im.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+        im.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.removeItemFlags(ItemFlag.HIDE_DESTROYS);
         this.is.setItemMeta(im);
         return this;
     }

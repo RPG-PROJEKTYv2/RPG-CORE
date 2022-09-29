@@ -15,7 +15,9 @@ public class TrenerObject {
 
     public TrenerObject(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.trenerUser = new TrenerUser(document.getInteger("points"), document.getDouble("sredniDmg"), document.getDouble("sredniDef"), document.getDouble("blokCiosu"), document.getDouble("szczescie"), document.getDouble("silnyNaLudzi"), document.getDouble("defNaLudzi"), document.getDouble("kryt"), document.getInteger("dodatkoweHp"));
+        this.trenerUser = new TrenerUser(document.getInteger("points"), document.getDouble("sredniDmg"),
+                document.getDouble("sredniDef"), document.getDouble("blokCiosu"), document.getInteger("szczescie"),
+                document.getDouble("silnyNaLudzi"), document.getDouble("defNaLudzi"), document.getDouble("kryt"), document.getInteger("dodatkoweHp"));
     }
 
     public UUID getId() {
