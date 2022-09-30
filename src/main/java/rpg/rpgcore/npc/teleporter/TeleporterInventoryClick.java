@@ -61,23 +61,23 @@ public class TeleporterInventoryClick implements Listener {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("10-20exp"), 257.382, 16, -247.783, (float)-2.4, (float)0.2));
             }
-            if (clickedSlot == 3) {
+            if (clickedSlot == 2) {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("20-30exp"), -206.493, 11, 30.590, (float)-16.5, (float)1.2));
             }
-            if (clickedSlot == 4) {
+            if (clickedSlot == 3) {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("30-40exp"), -258, 14, 107, (float)-82.9, (float)0.4));
             }
-            if (clickedSlot == 5) {
+            if (clickedSlot == 4) {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("40-50exp"), -258, 14, 107, (float)-82.9, (float)0.4));
             }
-            if (clickedSlot == 6) {
+            if (clickedSlot == 5) {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("50-60exp"), -258, 14, 107, (float)-82.9, (float)0.4));
             }
-            if (clickedSlot == 7) {
+            if (clickedSlot == 6) {
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("60-70exp"), -258, 14, 107, (float)-82.9, (float)0.4));
             }

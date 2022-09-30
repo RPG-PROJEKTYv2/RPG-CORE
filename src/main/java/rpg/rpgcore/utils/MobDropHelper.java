@@ -54,8 +54,8 @@ public class MobDropHelper {
         addDropPlayer(player, GlobalItem.getItem("I1", 1), 0.1, true, true, entity);
         addDropPlayer(player, GlobalItem.getItem("I2", 1), 0.05, true, true, entity);
         addDropPlayer(player, GlobalItem.getItem("I3", 1), 0.001, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), 1, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I5", 1), 1.5, true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I4", 1), 0.7, true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I5", 1), 0.5, true, true, entity);
 
 
 
@@ -71,10 +71,10 @@ public class MobDropHelper {
         if (entityName.equals("Najemnik")) {
             addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
             if (kolekcjonerUser.getMission() == 0) {
-                addDropPlayer(player, KolekcjonerItems.getItem("1-10-1", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("1-10-2", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("1-10-3", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("1-10-4", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-1", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-2", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-3", 1), 1, true, true, entity);
+                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-4", 1), 1, true, true, entity);
             }
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (DropChanceHelper.getChance(100)) {
