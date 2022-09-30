@@ -56,13 +56,13 @@ public class PetInventoryClickListener implements Listener {
 
             if (e.getClickedInventory().getItem(40).getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
 
-                if (item.isSimilar(pet.getItem())) {
+                if (removeFromLore(item).isSimilar(pet.getItem())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz najpierw zdespawnowac swojego zwierzaka!"));
                     return;
                 }
 
                 final UserPets userPets = rpgcore.getPetyManager().findUserPets(uuid);
-                player.getInventory().addItem(addExpToLore(item.clone()));
+                player.getInventory().addItem(rpgcore.getPetyManager().addExpToLore(item.clone()));
                 userPets.removePet(item);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUserPets(userPets.getUuid(), userPets));
                 e.getClickedInventory().setItem(40, new ItemBuilder(e.getClickedInventory().getItem(40)).removeGlowing().toItemStack());
@@ -73,57 +73,38 @@ public class PetInventoryClickListener implements Listener {
 
             if (pet.getItem() != null) {
                 final ItemStack prevPet = pet.getItem();
-                if (pet.getRarity().equals("Mityczny")) {
-                    Utils.removeBonuses(uuid, prevPet.getItemMeta().getLore().get(1));
-                    Utils.removeBonuses(uuid, prevPet.getItemMeta().getLore().get(2));
-                    Utils.removeBonuses(uuid, prevPet.getItemMeta().getLore().get(3));
-                } else {
-                    Utils.removeBonuses(uuid, prevPet.getItemMeta().getLore().get(1));
-                    Utils.removeBonuses(uuid, prevPet.getItemMeta().getLore().get(2));
-                }
-                if (new ItemBuilder(item).removeGlowing().toItemStack().equals(prevPet)) {
+                if (removeFromLore(item.clone()).equals(prevPet)) {
+                    pet.despawn(prevPet, uuid);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPomyslnie zdespawnowales " + prevPet.getItemMeta().getDisplayName() + "&c!"));
                     player.closeInventory();
-                    pet.despawn();
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
                     return;
                 }
-            }
-            pet.setItem(item);
-            pet.setName(Utils.removeColor(item.getItemMeta().getDisplayName()));
-            pet.setRarity(getRarity(item));
-            if (pet.getRarity().equals("Mityczny")) {
-                pet.setValue1(Utils.addBonuses(uuid, item.getItemMeta().getLore().get(1)));
-                pet.setValue2(Utils.addBonuses(uuid, item.getItemMeta().getLore().get(2)));
-                pet.setValue3(Utils.addBonuses(uuid, item.getItemMeta().getLore().get(3)));
+                pet.spawn(item.clone(), uuid);
+
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
+                player.closeInventory();
+
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
             } else {
-                pet.setValue1(Utils.addBonuses(uuid, item.getItemMeta().getLore().get(1)));
-                pet.setValue2(Utils.addBonuses(uuid, item.getItemMeta().getLore().get(2)));
+                pet.spawn(item.clone(), uuid);
+
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
+                player.closeInventory();
+
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
             }
-
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
-            player.closeInventory();
-
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
         }
     }
 
-    private ItemStack addExpToLore(final ItemStack is) {
+    private ItemStack removeFromLore(final ItemStack is) {
         final ItemMeta im = is.getItemMeta();
         final List<String> lore = im.getLore();
-        net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
-        lore.add(Utils.format("&8Exp: &6" + nmsStack.getTag().getDouble("PetExp") + "&8/&6" + nmsStack.getTag().getDouble("ReqPetExp")));
+        lore.remove(lore.size() - 1);
+        lore.remove(lore.size() - 1);
         im.setLore(lore);
         is.setItemMeta(im);
+        System.out.println(lore);
         return is;
-    }
-
-    private String getRarity(final ItemStack is) {
-        for (String s : is.getItemMeta().getLore()) {
-            if (s.contains(" Zwierzak")) {
-                return Utils.removeColor(s).replace("Zwierzak", "").replaceAll(" ", "");
-            }
-        }
-        return "";
     }
 }

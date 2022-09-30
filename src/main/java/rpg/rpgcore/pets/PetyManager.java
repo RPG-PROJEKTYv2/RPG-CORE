@@ -1,47 +1,28 @@
 package rpg.rpgcore.pets;
 
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.pets.enums.PetLevels;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 
 public class PetyManager {
-    private final RPGCORE rpgcore;
     private final Map<UUID, PetObject> activePet;
     private final Map<UUID, UserPets> allPets;
-
     public PetyManager(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.activePet = rpgcore.getMongoManager().loadAllActivePets();
         this.allPets = rpgcore.getMongoManager().loadAllUserPets();
-    }
-
-    public void changeActivePet(final ItemStack newPet, final @NotNull Player player) {
-        final UUID uuid = player.getUniqueId();
-        final PetObject petObject = this.findActivePet(uuid);
-        final UserPets userPets = this.findUserPets(uuid);
-
-        final ItemStack activePet = petObject.getPet().getItem();
-
-        if (activePet != null && activePet == newPet) {
-            petObject.getPet().despawn();
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(petObject.getId(), petObject));
-            //TODO zroobic usuwanie statystyk z peta po desawnwowaniu
-            player.sendMessage(Utils.format("&cPomyslnie zdespawnowano   " + activePet.getItemMeta().getDisplayName()));
-            return;
-        }
-
-        //TODO zrobic dodawanie statystyk po respie peta i dokonczyc jego ustawianie
-
-
     }
 
     public void openPetyGUI(final @NotNull Player player) {
@@ -57,14 +38,19 @@ public class PetyManager {
         for (ItemStack item : sortPety(userPets.getPety())) {
             gui.setItem(gui.firstEmpty(), item);
         }
+        if (pet.getItem() != null) {
+            System.out.println(pet.getItem().getItemMeta().getDisplayName());
+        }
 
-        if (pet != null && gui.contains(pet.getItem())) {
+        if (pet.getItem() != null && gui.contains(pet.getItem())) {
             System.out.println("1");
             for (int i = 0; i < gui.getSize(); i++) {
                 if (gui.getItem(i) == null || gui.getItem(i).getType().equals(Material.AIR) || gui.getItem(i).getType().equals(Material.STAINED_GLASS_PANE)) continue;
                 if (gui.getItem(i).equals(pet.getItem())) {
                     System.out.println("2");
-                    gui.setItem(i, new ItemBuilder(pet.getItem()).setLoreCrafting(pet.getItem().getItemMeta().getLore(), Arrays.asList(" ", "&a&lPrzywolany")).toItemStack().clone());
+                    gui.setItem(i, new ItemBuilder(pet.getItem().clone()).setLoreCrafting(pet.getItem().getItemMeta().getLore(), Arrays.asList(" ", "&a&lPrzywolany")).toItemStack());
+                    gui.setItem(44, addExpToLore(pet.getItem().clone()));
+                    System.out.println(pet.getItem().getType().name());
                 }
             }
         }
@@ -73,8 +59,8 @@ public class PetyManager {
         player.openInventory(gui);
     }
 
-    public List<ItemStack> sortPety(final ItemStack[] pety) {
-        if (pety == null || pety.length == 0) {
+    public List<ItemStack> sortPety(final List<ItemStack> pety) {
+        if (pety == null || pety.isEmpty()) {
             return new ArrayList<>();
         }
         final List<ItemStack> sorted = new ArrayList<>();
@@ -136,6 +122,88 @@ public class PetyManager {
 
 
         return sorted;
+    }
+
+    public int getPetLvl(final ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        return compound.getInt("PetLevel");
+    }
+
+    public double getPetExp(final ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        return compound.getDouble("PetExp");
+    }
+
+    public double getPetReqExp(final ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        return compound.getDouble("PetReqExp");
+    }
+
+    public double getPetTotalExp(final ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        return compound.getDouble("PetTotalExp");
+    }
+
+    public String getPetRarity(final ItemStack is) {
+        for (String s : is.getItemMeta().getLore()) {
+            if (s.contains(" Zwierzak")) {
+                return Utils.removeColor(s).replace("Zwierzak", "").replaceAll(" ", "");
+            }
+        }
+        return "";
+    }
+
+
+    public ItemStack addExpToLore(final ItemStack is) {
+        final ItemMeta im = is.getItemMeta();
+        final List<String> lore = im.getLore();
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
+        lore.add(Utils.format("&8Exp: &6" + nmsStack.getTag().getDouble("PetExp") + "&8/&6" + nmsStack.getTag().getDouble("ReqPetExp")));
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return is;
+    }
+
+
+    public ItemStack increaseAbility(final ItemStack is, final double toAdd) {
+        final String ability = Utils.getLoreLineColored(is, 1);
+        String newAbility = ability.substring(0, ability.lastIndexOf(" ") -1);
+        double abilityBonuse = Double.parseDouble(Utils.removeColor(ability.substring(ability.lastIndexOf(" "))).replace("%", "").trim());
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = im.getLore();
+        lore.set(1, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd) + "%"));
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public ItemStack increasePetLvl(final ItemStack is) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        compound.setInt("PetLevel", compound.getInt("PetLevel") + 1);
+        compound.setDouble("PetReqExp", PetLevels.getExp(compound.getInt("PetLevel") + 1, getPetRarity(is)));
+        compound.setDouble("PetExp", 0);
+        nmsStack.setTag(compound);
+        final ItemStack newItem = CraftItemStack.asBukkitCopy(nmsStack);
+        final String name = is.getItemMeta().getDisplayName();
+        String newName = name.substring(0, name.lastIndexOf(" ") -1);
+        final ItemMeta im = newItem.getItemMeta();
+        im.setDisplayName(Utils.format(newName + " " + compound.getInt("PetLevel") + "&8]"));
+        newItem.setItemMeta(im);
+        return newItem;
+    }
+
+    public ItemStack increasePetExp(final ItemStack is, final double expToAdd) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        compound.setDouble("PetExp", compound.getDouble("PetExp") + expToAdd);
+        compound.setDouble("PetTotalExp", compound.getDouble("PetTotalExp") + expToAdd);
+        nmsStack.setTag(compound);
+        return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
 
