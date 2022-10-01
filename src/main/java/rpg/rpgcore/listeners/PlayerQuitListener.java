@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.Utils;
 
@@ -40,6 +41,10 @@ public class PlayerQuitListener implements Listener {
 
         e.setQuitMessage(Utils.quitMessage(name));
         TabManager.removePlayer(p);
+
+        if (EntityTypes.isPetSpawned(pUUID)) {
+            EntityTypes.despawnPet(pUUID);
+        }
 
     }
 

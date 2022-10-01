@@ -19,7 +19,7 @@ public class SetPremiumCommand extends CommandAPI {
     public SetPremiumCommand(final RPGCORE rpgcore) {
         super("setpremium");
         this.setRankLevel(RankType.HA);
-        this.setAliases(Arrays.asList("spremium","setp"));
+        this.setAliases(Arrays.asList("spremium","setp", "setpremium"));
         this.rpgcore = rpgcore;
     }
     @Override

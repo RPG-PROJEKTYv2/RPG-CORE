@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerUser;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
-import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
 import java.util.UUID;
 
@@ -35,7 +35,6 @@ public class MobDropHelper {
         final RPGCORE rpgcore = RPGCORE.getInstance();
         final UUID uuid = player.getUniqueId();
         final String entityName = Utils.removeColor(entity.getName());
-        final KolekcjonerUser kolekcjonerUser = rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser();
 
         if (rpgcore.getMedykNPC().find(uuid).getMedykUser().getBonus() < 50) {
             rpgcore.getMedykNPC().find(uuid).getMedykUser().setProgress(rpgcore.getMedykNPC().find(uuid).getMedykUser().getProgress() + 1);
@@ -57,11 +56,6 @@ public class MobDropHelper {
         addDropPlayer(player, GlobalItem.getItem("I4", 1), 0.7, true, true, entity);
         addDropPlayer(player, GlobalItem.getItem("I5", 1), 0.5, true, true, entity);
 
-
-
-        addDropPlayer(player, GlobalItem.getItem("I3", 1), 100, true, true, entity);
-
-
         // EXPOWISKO 1
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
@@ -70,12 +64,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Najemnik")) {
             addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
-            if (kolekcjonerUser.getMission() == 0) {
-                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-1", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-2", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-3", 1), 1, true, true, entity);
-                addDropPlayer(player, KolekcjonerItems.getItem("I1-10-4", 1), 1, true, true, entity);
-            }
+            addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (DropChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);

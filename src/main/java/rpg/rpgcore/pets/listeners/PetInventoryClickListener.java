@@ -1,6 +1,7 @@
 package rpg.rpgcore.pets.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,6 +11,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.entities.EntityTypes;
+import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.pets.Pet;
 import rpg.rpgcore.pets.UserPets;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -56,7 +59,7 @@ public class PetInventoryClickListener implements Listener {
 
             if (e.getClickedInventory().getItem(40).getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
 
-                if (removeFromLore(item).isSimilar(pet.getItem())) {
+                if (Utils.checkIfLoreContainsString(item.clone().getItemMeta().getLore(), "Przywolany") && removeFromLore(item.clone()).equals(pet.getItem().clone())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz najpierw zdespawnowac swojego zwierzaka!"));
                     return;
                 }
@@ -75,12 +78,16 @@ public class PetInventoryClickListener implements Listener {
                 final ItemStack prevPet = pet.getItem();
                 if (removeFromLore(item.clone()).equals(prevPet)) {
                     pet.despawn(prevPet, uuid);
+                    EntityTypes.despawnPet(uuid);
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPomyslnie zdespawnowales " + prevPet.getItemMeta().getDisplayName() + "&c!"));
                     player.closeInventory();
                     return;
                 }
+                EntityTypes.despawnPet(uuid);
                 pet.spawn(item.clone(), uuid);
+                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
+                EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), item.clone());
 
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
                 player.closeInventory();
@@ -88,6 +95,9 @@ public class PetInventoryClickListener implements Listener {
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
             } else {
                 pet.spawn(item.clone(), uuid);
+                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName());
+                EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), item.clone());
+
 
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
                 player.closeInventory();

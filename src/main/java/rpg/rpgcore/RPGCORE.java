@@ -36,6 +36,7 @@ import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
+import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.klasy.choice.KlasaCommand;
@@ -70,6 +71,7 @@ import rpg.rpgcore.pets.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
 import rpg.rpgcore.pets.listeners.PetInteractListener;
 import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
+import rpg.rpgcore.pets.listeners.PetWorldChangeListener;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -275,7 +277,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         this.getLvlManager().unLoadAll();
-
+        EntityTypes.despawnAllEntities();
     }
 
     /*private void initTest() {
@@ -487,6 +489,7 @@ public final class RPGCORE extends JavaPlugin {
         // PETY
         this.getServer().getPluginManager().registerEvents(new PetInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PetWorldChangeListener(), this);
     }
 
     private void initDatabase() {

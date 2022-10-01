@@ -22,6 +22,6 @@ public class TestCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         player.getInventory().addItem(GlobalItem.getItem("I16", 1));
-        EntityTypes.spawnEntity(new CustomZombie(player.getWorld()), player.getLocation(), "&c&lCustom Zombie");
+        EntityTypes.spawnEntity(new CustomZombie(player.getWorld()), player.getUniqueId(), player.getLocation(), "&c&lCustom Zombie");
     }
 }

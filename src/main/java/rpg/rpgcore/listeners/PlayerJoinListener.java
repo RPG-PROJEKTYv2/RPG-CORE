@@ -2,6 +2,7 @@ package rpg.rpgcore.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,6 +11,9 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.entities.EntityTypes;
+import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
+import rpg.rpgcore.pets.Pet;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemHelper;
@@ -67,71 +71,82 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoinListener(final PlayerJoinEvent e) {
 
-        final Player p = e.getPlayer();
-        final UUID playerUUID = p.getUniqueId();
-        final String playerName = p.getName();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
+        final String playerName = player.getName();
 
-        if (!rpgcore.getUserManager().isUser(playerUUID)) {
-            p.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
+        if (!rpgcore.getUserManager().isUser(uuid)) {
+            player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
             return;
         }
-        final User user = rpgcore.getUserManager().find(playerUUID);
+        final User user = rpgcore.getUserManager().find(uuid);
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
         try {
             if (user.getInventoriesUser().getArmor() != null && user.getInventoriesUser().getInventory() != null && user.getInventoriesUser().getEnderchest() != null
                     && !user.getInventoriesUser().getInventory().isEmpty() && !user.getInventoriesUser().getEnderchest().isEmpty() && !user.getInventoriesUser().getArmor().isEmpty()) {
-                p.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
-                p.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
-                p.getEnderChest().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest()));
+                player.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
+                player.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
+                player.getEnderChest().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest()));
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        rpgcore.getBackupManager().savePlayer(p, playerUUID);
+        rpgcore.getBackupManager().savePlayer(player, uuid);
 
 
         final int playerLvl = user.getLvl();
         final double playerExp = user.getExp() / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);
 
-        p.setLevel(playerLvl);
-        p.setExp((float) playerExp);
+        player.setLevel(playerLvl);
+        player.setExp((float) playerExp);
         for (Player rest : Bukkit.getOnlinePlayers()) {
             rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
         }
 
 
         //TODO Zrobic ladowanie z klasy BONUSES dodatkowegohp
-        p.setMaxHealth(rpgcore.getBonusesManager().find(playerUUID).getBonusesUser().getDodatkowehp() * 2);
-        p.setHealth(p.getMaxHealth());
-        p.setFoodLevel(20);
+        player.setMaxHealth(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowehp() * 2);
+        player.setHealth(player.getMaxHealth());
+        player.setFoodLevel(20);
 
-        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(p);
+        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
 
-        if (rpgcore.getGuildManager().hasGuild(playerUUID)) {
-            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
-            NameTagUtil.setPlayerDisplayNameGuild(p, playerGroup, tag);
-            rpgcore.getGuildManager().getGuildLastOnline(tag).remove(playerUUID);
+        if (rpgcore.getGuildManager().hasGuild(uuid)) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tag);
+            rpgcore.getGuildManager().getGuildLastOnline(tag).remove(uuid);
         } else {
-            NameTagUtil.setPlayerDisplayNameNoGuild(p, playerGroup);
+            NameTagUtil.setPlayerDisplayNameNoGuild(player, playerGroup);
         }
 
 
         e.setJoinMessage(null);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
-        if (!p.hasPlayedBefore()) {
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
+        if (!player.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWitamy Cie, na serwerze typu &6metin2 &aw minecraft. Pod &6/pomoc &aznajdziesz najwazniejsze informacje i przydatne komendy."));
-                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziecie giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
-                p.sendMessage(Utils.format(Utils.SERVERNAME + "&aZyczymy milej gry i udanej rywalizacji! &cZespol Hellrpg.pl"));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aWitamy Cie, na serwerze typu &6metin2 &aw minecraft. Pod &6/pomoc &aznajdziesz najwazniejsze informacje i przydatne komendy."));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziecie giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZyczymy milej gry i udanej rywalizacji! &cZespol Hellrpg.pl"));
             }, 20L);
 
         }
-        p.teleport(rpgcore.getSpawnManager().getSpawn());
+        player.teleport(rpgcore.getSpawnManager().getSpawn());
 
-        TabManager.addPlayer(p);
-        TabManager.add(p);
-        TabManager.update(p.getUniqueId());
+        TabManager.addPlayer(player);
+        TabManager.add(player);
+        TabManager.update(player.getUniqueId());
+
+        final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
+
+        if (pet.getItem() != null) {
+            EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), pet.getItem().clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), pet.getItem().clone());
+                System.out.println("Dodano item");
+            }, 20L);
+            System.out.println(pet.getItem().getItemMeta());
+        }
     }
 
 

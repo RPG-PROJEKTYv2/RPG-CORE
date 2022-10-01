@@ -17,7 +17,7 @@ public class SetAdminRankCommand extends CommandAPI {
     public SetAdminRankCommand(final RPGCORE rpgcore) {
         super("setadminrank");
         this.setRankLevel(RankType.HA);
-        this.setAliases(Arrays.asList("admin", "setadmin"));
+        this.setAliases(Arrays.asList("admin", "setadmin", "setrank"));
         this.rpgcore = rpgcore;
     }
     @Override
