@@ -74,14 +74,9 @@ public class PetInteractListener implements Listener {
                     if (is == null || is.getType().equals(Material.AIR) || !is.hasItemMeta() || !is.getItemMeta().hasLore()) {
                         continue;
                     }
-                    // TODO DOOKONCZYC SPRAWDZANIE CZY JEST TAKI SAM
-                    System.out.println("Lore - " + Utils.checkIfLoreContainsString(is.getItemMeta().getLore(), "Przywolany"));
-                    if (Utils.checkIfLoreContainsString(is.getItemMeta().getLore(), "Przywolany")) {
-                        System.out.println("Taki sam item - " + removeFromLore(is).isSimilar(removeExpFromLore(eventItem.clone())));
-                    }
-                    System.out.println("Suma - " + (Utils.checkIfLoreContainsString(is.getItemMeta().getLore(), "Przywolany") && removeFromLore(is).isSimilar(removeExpFromLore(eventItem.clone())))); // TU COS NIE DZIALA
-                    System.out.println(is.equals(removeExpFromLore(eventItem.clone()))); // TA SEKCJA DZIALA
-                    if ((Utils.checkIfLoreContainsString(is.getItemMeta().getLore(), "Przywolany") && removeFromLore(is).isSimilar(removeExpFromLore(eventItem.clone()))) || is.isSimilar(removeExpFromLore(eventItem.clone()))) {
+
+                    if ((Utils.checkIfLoreContainsString(is.getItemMeta().getLore(), "Przywolany") && removeFromLore(is).isSimilar(removeExpFromLore(eventItem.clone()))) || is.isSimilar(removeExpFromLore(eventItem.clone()))
+                            || (rpgcore.getPetyManager().getPetRarity(is).equals(rpgcore.getPetyManager().getPetRarity(eventItem)) && is.getItemMeta().getDisplayName().substring(0, is.getItemMeta().getDisplayName().indexOf(" ")).equals(eventItem.getItemMeta().getDisplayName().substring(0, eventItem.getItemMeta().getDisplayName().indexOf(" "))))) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPosiadasz juz tego zwierzaka w swojej kolekcji!"));
                         return;
                     }

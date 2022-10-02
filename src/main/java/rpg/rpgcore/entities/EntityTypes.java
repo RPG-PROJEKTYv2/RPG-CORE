@@ -3,14 +3,15 @@ package rpg.rpgcore.entities;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.CustomZombie.CustomZombie;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.utils.Utils;
@@ -83,19 +84,30 @@ public enum EntityTypes {
         }
     }
 
+    /*public static void updatePet(final Player player, final ItemStack item) {
+        despawnPet(player.getUniqueId());
+        spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
+        addEquipment(EntityTypes.getEntity(player.getUniqueId()), item.clone());
+    }*/
+
     public static void addEquipment(final Entity entity, final ItemStack item) {
-        //final PacketPlayOutEntityEquipment itemPacketItemArmorStand = new PacketPlayOutEntityEquipment(entity.getId(), 0, CraftItemStack.asNMSCopy(item));
         final PacketPlayOutEntityEquipment itemPacketItemArmorStand1 = new PacketPlayOutEntityEquipment(entity.getId(), 1, CraftItemStack.asNMSCopy(item));
         final PacketPlayOutEntityEquipment itemPacketItemArmorStand2 = new PacketPlayOutEntityEquipment(entity.getId(), 2, CraftItemStack.asNMSCopy(item));
         final PacketPlayOutEntityEquipment itemPacketItemArmorStand3 = new PacketPlayOutEntityEquipment(entity.getId(), 3, CraftItemStack.asNMSCopy(item));
         final PacketPlayOutEntityEquipment itemPacketItemArmorStand4 = new PacketPlayOutEntityEquipment(entity.getId(), 4, CraftItemStack.asNMSCopy(item));
-        //((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand);
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getWorld().equals(entity.getBukkitEntity().getWorld())) {
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand1);
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand2);
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand3);
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand4);
+        for (Player player : entity.getWorld().getWorld().getPlayers()) {
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand1);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand2);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand3);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemPacketItemArmorStand4);
+        }
+    }
+
+    public static void reloadAllPetsOnWorld(final World world) {
+        for (Player player : world.getPlayers()) {
+            final UUID uuid = player.getUniqueId();
+            if (isPetSpawned(uuid)) {
+                addEquipment(getEntity(uuid), RPGCORE.getInstance().getPetyManager().findActivePet(uuid).getPet().getItem().clone());
             }
         }
     }

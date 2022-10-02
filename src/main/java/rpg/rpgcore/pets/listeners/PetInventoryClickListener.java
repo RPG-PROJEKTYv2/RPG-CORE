@@ -30,15 +30,16 @@ public class PetInventoryClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(final InventoryClickEvent e) {
-        if (e.getClickedInventory() == null) return;
-        final String title = Utils.removeColor(e.getClickedInventory().getTitle());
+        if (e.getInventory() == null) return;
+        final String title = Utils.removeColor(e.getInventory().getTitle());
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final ItemStack item = e.getCurrentItem();
 
-        if (title.equals("Menu Petow")) {
+        if (title.contains("Menu Petow - ")) {
             e.setCancelled(true);
-            if (!e.getClickedInventory().getHolder().equals(player)) {
+            int page = Integer.parseInt(title.replace("Menu Petow - ", ""));
+            if (!e.getInventory().getHolder().equals(player)) {
                 return;
             }
 
@@ -46,18 +47,35 @@ public class PetInventoryClickListener implements Listener {
                 return;
             }
 
-            if (item.getType().equals(Material.ARMOR_STAND)) {
-                if (item.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
-                    e.getClickedInventory().setItem(40, new ItemBuilder(e.getClickedInventory().getItem(40)).removeGlowing().toItemStack());
+            if (item.getType().equals(Material.ARROW) && item.getItemMeta().getDisplayName().contains("§a")) {
+                if (e.getSlot() == 47) {
+                    rpgcore.getPetyManager().openPetyGUI(player, page - 1);
                     return;
                 }
-                e.getClickedInventory().setItem(40, new ItemBuilder(e.getClickedInventory().getItem(40)).addGlowing().toItemStack());
+                if (e.getSlot() == 53) {
+                    rpgcore.getPetyManager().openPetyGUI(player, page + 1);
+                    return;
+                }
+                return;
+            }
+
+            if (item.getType().equals(Material.ARMOR_STAND)) {
+                if (item.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+                    e.getClickedInventory().setItem(49, new ItemBuilder(e.getClickedInventory().getItem(49)).removeGlowing().toItemStack());
+                    return;
+                }
+                e.getClickedInventory().setItem(49, new ItemBuilder(e.getClickedInventory().getItem(49)).addGlowing().toItemStack());
                 return;
             }
 
             final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
 
-            if (e.getClickedInventory().getItem(40).getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+            if (e.getClickedInventory().getItem(49).getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+
+                if (e.getSlot() == 50 || item.getType().equals(Material.ARROW)) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego tak zrobic! :)"));
+                    return;
+                }
 
                 if (Utils.checkIfLoreContainsString(item.clone().getItemMeta().getLore(), "Przywolany") && removeFromLore(item.clone()).equals(pet.getItem().clone())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz najpierw zdespawnowac swojego zwierzaka!"));
@@ -68,14 +86,20 @@ public class PetInventoryClickListener implements Listener {
                 player.getInventory().addItem(rpgcore.getPetyManager().addExpToLore(item.clone()));
                 userPets.removePet(item);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUserPets(userPets.getUuid(), userPets));
-                e.getClickedInventory().setItem(40, new ItemBuilder(e.getClickedInventory().getItem(40)).removeGlowing().toItemStack());
-                rpgcore.getPetyManager().openPetyGUI(player);
+                e.getClickedInventory().setItem(49, new ItemBuilder(e.getClickedInventory().getItem(49)).removeGlowing().toItemStack());
+                rpgcore.getPetyManager().openPetyGUI(player, 1);
                 return;
             }
 
 
             if (pet.getItem() != null) {
                 final ItemStack prevPet = pet.getItem();
+
+                if (e.getSlot() == 50 || item.getType().equals(Material.ARROW)) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie przywolac tego zwierzaka!"));
+                    return;
+                }
+
                 if (removeFromLore(item.clone()).equals(prevPet)) {
                     pet.despawn(prevPet, uuid);
                     EntityTypes.despawnPet(uuid);
@@ -86,7 +110,7 @@ public class PetInventoryClickListener implements Listener {
                 }
                 EntityTypes.despawnPet(uuid);
                 pet.spawn(item.clone(), uuid);
-                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
+                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
                 EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), item.clone());
 
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przywolales " + item.getItemMeta().getDisplayName() + "&a!"));
@@ -95,7 +119,7 @@ public class PetInventoryClickListener implements Listener {
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid)));
             } else {
                 pet.spawn(item.clone(), uuid);
-                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName());
+                EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), item.clone().getItemMeta().getDisplayName());
                 EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), item.clone());
 
 

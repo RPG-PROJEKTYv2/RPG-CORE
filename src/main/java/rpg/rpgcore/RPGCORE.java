@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.abilities.KeyClickListener;
 import rpg.rpgcore.akcesoria.*;
+import rpg.rpgcore.akcesoria.listeners.AKCESORIAInventoryClick;
+import rpg.rpgcore.akcesoria.listeners.AKCESORIAPlayerInteract;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
@@ -139,6 +141,7 @@ import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
 import rpg.rpgcore.tasks.ActionBarTask;
 import rpg.rpgcore.tasks.MetinyTask;
+import rpg.rpgcore.tasks.ReloadPetsTask;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
@@ -262,6 +265,8 @@ public final class RPGCORE extends JavaPlugin {
         new MetinyTask(this);
         // ...ACTIONBAR
         new ActionBarTask(this);
+        // ...PETY
+        new ReloadPetsTask(this);
 
         // SKRZYNIE
         this.initChests();

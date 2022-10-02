@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.TargUtils;
+import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -62,7 +62,7 @@ public class TargManager {
             targMain.setItem(i, fill.toItemStack());
         }
 
-        if (TargUtils.isPageValid(allItems, page - 1, 45)) {
+        if (PageUtils.isPageValid(allItems, page - 1, 45)) {
             goLeftAllow.setName("&aPrzejdz na poprzednia strone");
             goLeftAllow.hideFlag();
             targMain.setItem(45, goLeftAllow.toItemStack());
@@ -72,7 +72,7 @@ public class TargManager {
             targMain.setItem(45, goLeftDisallow.toItemStack());
         }
 
-        if (TargUtils.isPageValid(allItems, page + 1, 45)) {
+        if (PageUtils.isPageValid(allItems, page + 1, 45)) {
             goRightAllow.setName("&aPrzejdz na nastepna strone");
             goRightAllow.hideFlag();
             targMain.setItem(53, goRightAllow.toItemStack());
@@ -83,7 +83,7 @@ public class TargManager {
         }
 
 
-        for (ItemStack is : TargUtils.getPageItems(allItems, page, 45)) {
+        for (ItemStack is : PageUtils.getPageItems(allItems, page, 45)) {
             targMain.setItem(targMain.firstEmpty(), is);
         }
 

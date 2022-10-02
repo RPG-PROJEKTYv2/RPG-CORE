@@ -59,7 +59,7 @@ public class Pet {
         this.name = Utils.removeColor(is.getItemMeta().getDisplayName());
         this.lvl = RPGCORE.getInstance().getPetyManager().getPetLvl(is);
         this.exp = RPGCORE.getInstance().getPetyManager().getPetExp(is);
-        this.reqExp = RPGCORE.getInstance().getPetyManager().getPetReqExp(is);
+        this.reqExp = RPGCORE.getInstance().getPetyManager().getReqPetExp(is);
         this.totalExp = RPGCORE.getInstance().getPetyManager().getPetTotalExp(is);
         this.rarity = RPGCORE.getInstance().getPetyManager().getPetRarity(is);
         if (this.rarity.equals("Mityczny")) {

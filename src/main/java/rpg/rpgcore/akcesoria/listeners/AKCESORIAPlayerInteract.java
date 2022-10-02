@@ -1,4 +1,4 @@
-package rpg.rpgcore.akcesoria;
+package rpg.rpgcore.akcesoria.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,12 +9,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.akcesoria.AkcesoriaUser;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 

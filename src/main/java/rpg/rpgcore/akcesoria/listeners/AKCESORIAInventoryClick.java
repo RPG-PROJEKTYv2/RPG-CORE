@@ -1,4 +1,4 @@
-package rpg.rpgcore.akcesoria;
+package rpg.rpgcore.akcesoria.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.akcesoria.AkcesoriaUser;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
@@ -55,7 +56,7 @@ public class AKCESORIAInventoryClick implements Listener {
 
 
 
-        if (clickedInventoryTitle.contains("AkcesoriaCommand gracza ")) {
+        if (clickedInventoryTitle.contains("Akcesoria")) {
             e.setCancelled(true);
 
             if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {

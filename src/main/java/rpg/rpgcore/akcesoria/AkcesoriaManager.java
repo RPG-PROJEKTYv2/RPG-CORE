@@ -33,7 +33,7 @@ public class AkcesoriaManager {
     public void openAkcesoriaGUI(final Player player) {
         final UUID uuid = player.getUniqueId();
         final AkcesoriaUser user = rpgcore.getAkcesoriaManager().find(uuid).getAkcesoriaUser();
-        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lAkcesoria gracza " + player.getName()));
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lAkcesoria"));
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
         }

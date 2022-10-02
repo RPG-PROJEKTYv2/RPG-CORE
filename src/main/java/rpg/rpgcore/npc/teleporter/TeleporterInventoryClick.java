@@ -2,7 +2,6 @@ package rpg.rpgcore.npc.teleporter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class TeleporterInventoryClick implements Listener {
@@ -33,9 +31,7 @@ public class TeleporterInventoryClick implements Listener {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
         if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER")) {
@@ -71,11 +67,11 @@ public class TeleporterInventoryClick implements Listener {
             }
             if (clickedSlot == 4) {
                 player.closeInventory();
-                player.teleport(new Location(Bukkit.getWorld("40-50exp"), -258, 14, 107, (float)-82.9, (float)0.4));
+                player.teleport(new Location(Bukkit.getWorld("40-50exp"), -22.547, 4, 187.617, (float)-180.0, (float)0.3));
             }
             if (clickedSlot == 5) {
                 player.closeInventory();
-                player.teleport(new Location(Bukkit.getWorld("50-60exp"), -258, 14, 107, (float)-82.9, (float)0.4));
+                player.teleport(new Location(Bukkit.getWorld("50-60exp"), -42.490, 8, -48.476, (float)-110.7, (float)0.2));
             }
             if (clickedSlot == 6) {
                 player.closeInventory();

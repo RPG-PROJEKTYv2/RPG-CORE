@@ -140,12 +140,8 @@ public class PlayerJoinListener implements Listener {
         final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
 
         if (pet.getItem() != null) {
-            EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), pet.getItem().clone().getItemMeta().getDisplayName() + " " + pet.getItem().clone().getItemMeta().getDisplayName().substring(0, 2) + player.getName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), pet.getItem().clone());
-                System.out.println("Dodano item");
-            }, 20L);
-            System.out.println(pet.getItem().getItemMeta());
+            EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), pet.getItem().clone().getItemMeta().getDisplayName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), pet.getItem().clone()), 20L);
         }
     }
 

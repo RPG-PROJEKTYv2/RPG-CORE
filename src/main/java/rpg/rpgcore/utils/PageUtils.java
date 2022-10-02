@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TargUtils {
+public class PageUtils {
 
     public static List<ItemStack> getPageItems(final List<ItemStack> items, int page, int freeSpace) {
         final List<ItemStack> pageItems = new ArrayList<>();

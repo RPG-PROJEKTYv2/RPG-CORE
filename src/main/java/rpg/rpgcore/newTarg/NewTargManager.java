@@ -10,11 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.TargUtils;
+import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class NewTargManager {
@@ -213,20 +212,20 @@ public class NewTargManager {
 
         final List<ItemStack> finalAllItems = this.sortList(allItems, sort);
 
-        if (TargUtils.isPageValid(finalAllItems, page - 1, 38)) {
+        if (PageUtils.isPageValid(finalAllItems, page - 1, 38)) {
             gui.setItem(47, goLeft.setName("&aPoprzednia").toItemStack());
         } else {
             gui.setItem(47, goLeft.setName("&cPoprzednia").toItemStack());
         }
 
 
-        if (TargUtils.isPageValid(finalAllItems, page + 1, 38)) {
+        if (PageUtils.isPageValid(finalAllItems, page + 1, 38)) {
             gui.setItem(53, goRight.setName("&aNastepna").toItemStack());
         } else {
             gui.setItem(53, goRight.setName("&cNastepna").toItemStack());
         }
 
-        for (ItemStack is : TargUtils.getPageItems(finalAllItems, page, 38)) {
+        for (ItemStack is : PageUtils.getPageItems(finalAllItems, page, 38)) {
             gui.setItem(gui.firstEmpty(), is);
         }
 

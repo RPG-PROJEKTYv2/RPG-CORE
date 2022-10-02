@@ -4,10 +4,8 @@ import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.Vector3f;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.util.UUID;
 
@@ -29,6 +27,7 @@ public class PetArmorStand extends EntityArmorStand {
         double x = Math.cos(Math.toRadians(p.yaw - 180));
         double z = Math.sin(Math.toRadians(p.yaw - 180));
         setPosition(p.locX + x, p.locY + 0.8, p.locZ + z);
+        this.world = p.getWorld();
         //Setting the yaw and pitch of the armor stand. If it fails we get another change to set it with the codes below.
         this.yaw = p.yaw;
         this.pitch = p.pitch;
