@@ -204,7 +204,12 @@ public class PetyManager {
         final String ability = Utils.getLoreLineColored(is, slot);
         String newAbility = ability.substring(0, ability.lastIndexOf(" "));
         double abilityBonuse = Double.parseDouble(Utils.removeColor(ability.substring(ability.lastIndexOf(" "))).replace("%", "").trim());
-        lore.set(slot, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd) + "%"));
+
+        if (ability.contains("%")) {
+            lore.set(slot, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd) + "%"));
+        } else {
+            lore.set(slot, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd)));
+        }
 
         im.setLore(lore);
         is.setItemMeta(im);

@@ -403,7 +403,7 @@ public enum PetItems {
             .setName("&fOgnisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0%",
+                    "&7Dodatkowe Obrażenia: &c0",
                     "",
                     "&7&&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -419,7 +419,7 @@ public enum PetItems {
             .setName("&1Ognisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0%",
+                    "&7Dodatkowe Obrażenia: &c0",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -435,7 +435,7 @@ public enum PetItems {
             .setName("&5Ognisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0%",
+                    "&7Dodatkowe Obrażenia: &c0",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -451,7 +451,7 @@ public enum PetItems {
             .setName("&6Ognisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrazenia: &c0%",
+                    "&7Dodatkowe Obrazenia: &c0",
                     "",
                     "&6&lLegendarny Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Legendarny")
@@ -536,7 +536,7 @@ public enum PetItems {
             .setName("&fWampir &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wampirym: &c0%",
-                    "&7Dodtkowe HP: &c0%",
+                    "&7Dodtkowe HP: &c0",
                     "",
                     "&7&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -553,7 +553,7 @@ public enum PetItems {
             .setName("&1Wampir &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wampirym: &c0%",
-                    "&7Dodtkowe HP: &c0%",
+                    "&7Dodtkowe HP: &c0",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -570,7 +570,7 @@ public enum PetItems {
             .setName("&5Wampir &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wampirym: &c0%",
-                    "&7Dodtkowe HP: &c0%",
+                    "&7Dodtkowe HP: &c0",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -587,7 +587,7 @@ public enum PetItems {
             .setName("&6Wampir &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wampirym: &c0%",
-                    "&7Dodtkowe HP: &c0%",
+                    "&7Dodtkowe HP: &c0",
                     "",
                     "&6&lLegendarny Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Legendarny")
