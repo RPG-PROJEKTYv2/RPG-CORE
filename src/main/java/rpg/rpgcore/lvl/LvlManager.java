@@ -122,6 +122,9 @@ public class LvlManager {
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
+        if (rpgcore.getPetyManager().findActivePet(killerUUID).getPet().getItem() != null) {
+            rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), expDoDodania / 100);
+        }
     }
 
     public void updateLVL(final Player killer) {
