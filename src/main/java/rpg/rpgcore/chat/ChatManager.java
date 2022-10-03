@@ -63,7 +63,7 @@ public class ChatManager {
             format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8]"));
         }
 
-        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-name>", playerName).replace("<message>", message);
+        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-name>", playerName).replace("<message>", Utils.format(message));
     }
 
 

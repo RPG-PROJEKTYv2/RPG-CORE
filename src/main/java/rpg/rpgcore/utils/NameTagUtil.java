@@ -34,46 +34,18 @@ public class NameTagUtil {
     }
 
     public static void setPlayerDisplayNameNoGuild(final Player p, final String playerGroup) {
-        if (playerGroup.equals("H@") || playerGroup.equals("Admin")) {
-            NameTagUtil.changePlayerName(p, "&4&l" + playerGroup + " &c", "updatePrefix");
-        } else if (playerGroup.equals("GM") || playerGroup.equals("Mod") || playerGroup.equals("KidMod")) {
-            NameTagUtil.changePlayerName(p, "&2&l" + playerGroup + " &a", "updatePrefix");
-        } else if (playerGroup.equals("Helper")) {
-            NameTagUtil.changePlayerName(p, "&3&l" + playerGroup + " &b", "updatePrefix");
-        } else if (playerGroup.equals("JuniorHelper")) {
-            NameTagUtil.changePlayerName(p, "&3&lJrHelper &b", "updatePrefix");
-        }else if (playerGroup.equals("ELITA")) {
-            NameTagUtil.changePlayerName(p, "&5&l" + playerGroup + " &7", "updatePrefix");
-        } else if (playerGroup.equals("Svip")) {
-            NameTagUtil.changePlayerName(p, "&6&lS&e&lvip &7", "updatePrefix");
-        } else if (playerGroup.equals("Vip")) {
-            NameTagUtil.changePlayerName(p, "&e&lVip &7", "updatePrefix");
-        } else if (playerGroup.equals("Budowniczy")) {
-            NameTagUtil.changePlayerName(p, "&d&lBud &7", "updatePrefix");
+        if (RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().isStaff()) {
+            NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
         } else {
-            NameTagUtil.changePlayerName(p, "&7", "updatePrefix");
+            NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankPlayerUser().getRankType().getPrefix(), "updatePrefix");
         }
     }
 
     public static void setPlayerDisplayNameGuild(final Player p, final String playerGroup, final String tag) {
-        if (playerGroup.equals("H@") || playerGroup.equals("Admin")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &4&l" + playerGroup + " &c", "updatePrefix");
-        } else if (playerGroup.equals("GM") || playerGroup.equals("Mod") || playerGroup.equals("KidMod")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &2&l" + playerGroup + " &a", "updatePrefix");
-        } else if (playerGroup.equals("Helper")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &3&l" + playerGroup + " &b", "updatePrefix");
-        } else if (playerGroup.equals("JuniorHelper")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &3&lJrHelper &b", "updatePrefix");
-        }else if (playerGroup.equals("ELITA")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &5&l" + playerGroup + " &7", "updatePrefix");
-        } else if (playerGroup.equals("Svip")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &6&lS&e&lvip &7", "updatePrefix");
-        } else if (playerGroup.equals("Vip")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &e&lVip &7", "updatePrefix");
-        } else if (playerGroup.equals("Budowniczy")) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &d&lBud &7", "updatePrefix");
+        if (RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().isStaff()) {
+            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] " + RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
         } else {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] &7", "updatePrefix");
+            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] " + RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankPlayerUser().getRankType().getPrefix(), "updatePrefix");
         }
     }
 

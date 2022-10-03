@@ -56,8 +56,6 @@ public class PetyManager {
         }
         int j = 1;
         for (ItemStack is : PageUtils.getPageItems(finalAllItems, page, 28)) {
-            System.out.println(gui.firstEmpty());
-            System.out.println(j);
             gui.setItem(gui.firstEmpty(), is);
             j++;
         }

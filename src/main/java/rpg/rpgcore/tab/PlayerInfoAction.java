@@ -1,7 +1,8 @@
 package rpg.rpgcore.tab;
 
 public enum PlayerInfoAction {
-    ADD_PLAYER(0), UPDATE_DISPLAY_NAME(3);
+    ADD_PLAYER(0),
+    UPDATE_DISPLAY_NAME(3);
 
     private final int actionID;
 

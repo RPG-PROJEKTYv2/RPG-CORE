@@ -637,4 +637,4 @@ public enum PetItems {
 
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
-    }
+}

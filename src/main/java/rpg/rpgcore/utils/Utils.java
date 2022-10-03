@@ -302,7 +302,7 @@ public class Utils {
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
-                player.sendMessage(format("&4&lHell&6&lDB " + message));
+                player.sendMessage(format("&4&lHell&6&lINFO " + message));
             }
         }
     }
