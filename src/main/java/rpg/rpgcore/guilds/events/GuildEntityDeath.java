@@ -1,4 +1,4 @@
-package rpg.rpgcore.guilds;
+package rpg.rpgcore.guilds.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

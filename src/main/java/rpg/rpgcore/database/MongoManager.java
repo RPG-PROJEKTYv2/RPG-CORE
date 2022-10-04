@@ -10,6 +10,7 @@ import rpg.rpgcore.akcesoria.AkcesoriaObject;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
@@ -184,61 +185,6 @@ public class MongoManager {
             if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataUserPets(new UserPets(uuid));
             }
-        }
-
-        for (Document document : pool.getGildie().find()){
-            final String guildName = document.get("_id").toString();
-
-            final List<UUID> members = new ArrayList<>();
-
-            for (final String member : String.valueOf(document.get("membersList")).split(",")) {
-                members.add(UUID.fromString(member));
-            }
-
-            final Map<UUID, Integer> killsMap = new HashMap<>();
-            Document kills = (Document) document.get("killsMap");
-            for (final String key : kills.keySet()) {
-                killsMap.put(UUID.fromString(key), kills.getInteger(key));
-            }
-
-            final Map<UUID, Integer> deathsMap = new HashMap<>();
-            Document deaths = (Document) document.get("deathsMap");
-            for (final String key : deaths.keySet()) {
-                deathsMap.put(UUID.fromString(key), deaths.getInteger(key));
-            }
-
-            final Map<UUID, Double> expEarnedMap = new HashMap<>();
-            Document expEarned = (Document) document.get("expEarnedMap");
-            for (final String key : expEarned.keySet()) {
-                expEarnedMap.put(UUID.fromString(key), expEarned.getDouble(key));
-            }
-
-            final Map<UUID, Date> lastOnlineMap = new HashMap<>();
-            Document lastOnline = (Document) document.get("lastOnlineMap");
-            for (final String key : lastOnline.keySet()) {
-                lastOnlineMap.put(UUID.fromString(key), new Date(lastOnline.getLong(key)));
-            }
-
-            rpgcore.getGuildManager().loadGuild(
-                    guildName,
-                    (String) document.get("description"),
-                    UUID.fromString((String) document.get("owner")),
-                    (String) document.get("coOwner"),
-                    members,
-                    Boolean.parseBoolean(String.valueOf(document.get("pvp"))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("points"))))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("lvl"))))),
-                    Double.parseDouble(String.valueOf(document.get("exp"))),
-                    Integer.parseInt(String.format("%.0f", Double.valueOf(String.valueOf(document.get("balance"))))),
-                    Double.parseDouble(String.valueOf(document.get("dodatkowyExp"))),
-                    Double.parseDouble(String.valueOf(document.get("sredniDmg"))),
-                    Double.parseDouble(String.valueOf(document.get("sredniDef"))),
-                    Double.parseDouble(String.valueOf(document.get("silnyNaLudzi"))),
-                    Double.parseDouble(String.valueOf(document.get("defNaLudzi"))),
-                    killsMap,
-                    deathsMap,
-                    expEarnedMap,
-                    lastOnlineMap);
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             addOtherData(new ServerUser("dodatkowyExp"));
@@ -478,96 +424,6 @@ public class MongoManager {
 
         rpgcore.getUserManager().find(uuid).setPunishmentHistory(punishmentHistory);
 
-    }
-
-
-    public void saveGuildFirst(final String tag) {
-        Document guild = createGuildDocument(tag);
-        pool.getGildie().insertOne(guild);
-    }
-
-    public void saveGuild() {
-        String tag2 = "";
-        try {
-            for (String tag : rpgcore.getGuildManager().getListOfGuilds()) {
-                tag2 = tag;
-                Document query = new Document();
-                query.append("_id", tag);
-
-                Document guild = createGuildDocument(tag);
-
-                pool.getGildie().findOneAndReplace(query, guild);
-
-                Utils.sendToHighStaff("&aPomyslnie zapisano gilde: &6" + tag);
-                System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §aPomyslnie zapisano klan: §6" + tag);
-            }
-        } catch (final Exception e) {
-            Utils.sendToHighStaff("&cWystapil blad podczas zapisu klanu &6:" + tag2);
-            System.out.println("§8[§4lHell§8§lRPG§c§lCore§8] §cWystapil blad podczas zapisu klanu: §6" + tag2);
-            e.printStackTrace();
-        }
-    }
-
-    private Document createGuildDocument(final String tag) {
-        final StringBuilder sb = new StringBuilder();
-        Document guild = new Document();
-
-        guild.put("_id", tag);
-        guild.put("description", rpgcore.getGuildManager().getGuildDescription(tag));
-        guild.put("owner", rpgcore.getGuildManager().getGuildOwner(tag).toString());
-        guild.put("coOwner", rpgcore.getGuildManager().getGuildCoOwner(tag));
-        for (UUID uuid : rpgcore.getGuildManager().getGuildMembers(tag)) {
-            sb.append(uuid.toString());
-            sb.append(",");
-        }
-        String members = String.valueOf(sb);
-        int lastIndex = members.lastIndexOf(",");
-        members = members.substring(0, lastIndex);
-        guild.put("membersList", members);
-        guild.put("pvp", rpgcore.getGuildManager().getGuildPvPStatus(tag));
-        guild.put("points", rpgcore.getGuildManager().getGuildPoints(tag));
-        guild.put("lvl", rpgcore.getGuildManager().getGuildLvl(tag));
-        guild.put("exp", rpgcore.getGuildManager().getGuildExp(tag));
-        guild.put("balance", rpgcore.getGuildManager().getGuildBalance(tag));
-        guild.put("dodatkowyExp", rpgcore.getGuildManager().getGuildDodatkowyExp(tag));
-        guild.put("sredniDmg", rpgcore.getGuildManager().getGuildSredniDmg(tag));
-        guild.put("sredniDef", rpgcore.getGuildManager().getGuildSredniDef(tag));
-        guild.put("silnyNaLudzi", rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag));
-        guild.put("defNaLudzi", rpgcore.getGuildManager().getGuildDefNaLudzi(tag));
-
-        Document killsMap = new Document();
-        for (Map.Entry<UUID, Integer> entry : rpgcore.getGuildManager().getGuildKills(tag).entrySet()) {
-            killsMap.put(String.valueOf(entry.getKey()), entry.getValue());
-        }
-
-        guild.put("killsMap", killsMap);
-
-        Document deathsMap = new Document();
-        for (Map.Entry<UUID, Integer> entry : rpgcore.getGuildManager().getGuildDeaths(tag).entrySet()) {
-            deathsMap.put(String.valueOf(entry.getKey()), entry.getValue());
-        }
-
-        guild.put("deathsMap", deathsMap);
-
-        Document expEarnedMap = new Document();
-        for (Map.Entry<UUID, Double> entry : rpgcore.getGuildManager().getGuildExpEarned(tag).entrySet()) {
-            expEarnedMap.put(String.valueOf(entry.getKey()), entry.getValue());
-        }
-
-        guild.put("expEarnedMap", expEarnedMap);
-
-        Document lastOnlineMap = new Document();
-        for (Map.Entry<UUID, Date> entry : rpgcore.getGuildManager().getGuildLastOnline(tag).entrySet()) {
-            lastOnlineMap.put(String.valueOf(entry.getKey()), entry.getValue().getTime());
-        }
-
-        guild.put("lastOnlineMap", lastOnlineMap);
-        return guild;
-    }
-
-    public void removeGuild(final String tag) {
-        Document toRemove = new Document("_id", tag);
-        pool.getGildie().deleteOne(toRemove);
     }
 
     public void addDataMetins(Metiny metiny) {
@@ -1083,6 +939,34 @@ public class MongoManager {
     public void saveAllUserPets() {
         for (UserPets userPets : rpgcore.getPetyManager().getAllUserPets()) {
             this.saveDataUserPets(userPets.getUuid(), userPets);
+        }
+    }
+
+    // GILDIE
+    public Map<String, GuildObject> loadAllGuilds() {
+        Map<String, GuildObject> guilds = new HashMap<>();
+        for (Document document : this.pool.getGildie().find()) {
+            GuildObject guildObject = new GuildObject(document);
+            guilds.put(guildObject.getTag(), guildObject);
+        }
+        return guilds;
+    }
+
+    public void addDataGuild(final GuildObject guildObject) {
+        this.pool.getGildie().insertOne(guildObject.toDocument());
+    }
+
+    public void removeDataGuild(final String tag) {
+        this.pool.getGildie().findOneAndDelete(new Document("_id", tag));
+    }
+
+    public void saveDataGuild(final String tag, final GuildObject guildObject) {
+        this.pool.getGildie().findOneAndReplace(new Document("_id", tag), guildObject.toDocument());
+    }
+
+    public void saveAllGuilds() {
+        for (GuildObject guildObject : rpgcore.getGuildManager().getGuilds()) {
+            this.saveDataGuild(guildObject.getTag(), guildObject);
         }
     }
 

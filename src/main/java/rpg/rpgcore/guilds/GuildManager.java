@@ -1,5 +1,6 @@
 package rpg.rpgcore.guilds;
 
+import com.google.common.collect.ImmutableSet;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,37 +18,12 @@ import java.util.*;
 public class GuildManager {
 
     private final RPGCORE rpgcore;
+    private final Map<String, GuildObject> guildMap;
 
     public GuildManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.guildMap = rpgcore.getMongoManager().loadAllGuilds();
     }
-
-    // LISTA GILDII
-    private final List<String> guildList = new ArrayList<>();
-    private final Map<String, String> guildDescription = new HashMap<>();
-    private final Map<String, UUID> guildOwner = new HashMap<>();
-    private final Map<String, UUID> guildCoOwner = new HashMap<>();
-    private final Map<String, List<UUID>> guildMembers = new HashMap<>();
-
-    // GŁÓWNE ZMIENNE
-    private final Map<String, Integer> guildPoints = new HashMap<>();
-    private final Map<String, Integer> guildLvl = new HashMap<>();
-    private final Map<String, Double> guildExp = new HashMap<>();
-    private final Map<String, Integer> guildBalance = new HashMap<>();
-    private final Map<String, Boolean> guildPvPStatus = new HashMap<>();
-
-    // BONUSY
-    private final Map<String, Double> guildDodatkowyExp = new HashMap<>();
-    private final Map<String, Double> guildSredniDmg = new HashMap<>();
-    private final Map<String, Double> guildSredniDef = new HashMap<>();
-    private final Map<String, Double> guildSilnyNaLudzi = new HashMap<>();
-    private final Map<String, Double> guildDefNaLudzi = new HashMap<>();
-
-    // STATYSTYKI
-    private final Map<String, Map<UUID, Integer>> guildKills = new HashMap<>();
-    private final Map<String, Map<UUID, Integer>> guildDeaths = new HashMap<>();
-    private final Map<String, Map<UUID, Double>> guildExpEarned = new HashMap<>();
-    private final Map<String, Map<UUID, Date>> guildLastOnline = new HashMap<>();
 
     // INVITES
     private final Map<UUID, Map<String, Integer>> guildInvites = new HashMap<>();
@@ -98,32 +74,35 @@ public class GuildManager {
     }
 
     public void showInfo(final String tag, final Player player) {
-        if (!guildList.contains(tag)) {
-            player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
-            return;
+        for (GuildObject guildObject : this.getGuilds()){
+            if (!guildObject.getTag().equals(tag)) {
+                player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
+                return;
+            }
         }
+        final Guild guild = this.find(tag).getGuild();
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
-        player.sendMessage(Utils.format("&6Opis: &7" + guildDescription.get(tag)));
-        player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guildOwner.get(tag)).getName()));
-        if (guildCoOwner.get(tag) == null) {
+        player.sendMessage(Utils.format("&6Opis: &7" + guild.getDescription()));
+        player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guild.getOwner()).getName()));
+        if (guild.getCoOwner() == null) {
             player.sendMessage(Utils.format("&6Zastepca: &7Brak Zastepcy"));
         } else {
-            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(guildCoOwner.get(tag)).getName()));
+            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(guild.getCoOwner()).getName()));
         }
-        if (guildPvPStatus.get(tag)) {
+        if (guild.isPvp()) {
             player.sendMessage(Utils.format("&6PvP: &a&lON"));
         } else {
             player.sendMessage(Utils.format("&6PvP: &c&lOFF"));
         }
-        player.sendMessage(Utils.format("&6Punkty: &7" + guildPoints.get(tag)));
-        player.sendMessage(Utils.format("&6Lvl: &7" + guildLvl.get(tag)));
+        player.sendMessage(Utils.format("&6Punkty: &7" + guild.getPoints()));
+        player.sendMessage(Utils.format("&6Lvl: &7" + guild.getLevel()));
         if (this.getGuildLvl(tag) == 50) {
             player.sendMessage(Utils.format("&6Exp: &4&lMAX &7/ &4&lMAX"));
         } else  {
-            player.sendMessage(Utils.format("&6Exp: &7" + guildExp.get(tag) + " &6/&7 " + this.getGuildNextLvlExp(tag)));
+            player.sendMessage(Utils.format("&6Exp: &7" + guild.getExp() + " &6/&7 " + this.getGuildNextLvlExp(tag)));
         }
         player.sendMessage(Utils.format("&6Czlonkowie: "));
-        for (UUID uuid : guildMembers.get(tag)) {
+        for (UUID uuid : guild.getMembers()) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
                 player.sendMessage(Utils.format("&8- &a" + rpgcore.getUserManager().find(uuid).getName()));
             } else {
@@ -134,76 +113,27 @@ public class GuildManager {
     }
 
     public void createGuild(final String tag, final String description, final UUID owner) {
-        guildList.add(tag);
-        guildDescription.put(tag, description);
-        guildOwner.put(tag, owner);
-        guildCoOwner.put(tag, null);
-        guildMembers.put(tag, new ArrayList<>());
-        guildPvPStatus.put(tag, false);
-        guildPoints.put(tag, 0);
-        guildLvl.put(tag, 1);
-        guildExp.put(tag, 0.0);
-        guildBalance.put(tag, 0);
-        guildDodatkowyExp.put(tag, 0.0);
-        guildSredniDmg.put(tag, 0.0);
-        guildSredniDef.put(tag, 0.0);
-        guildSilnyNaLudzi.put(tag, 0.0);
-        guildDefNaLudzi.put(tag, 0.0);
-        guildKills.put(tag, new HashMap<>());
-        guildDeaths.put(tag, new HashMap<>());
-        guildExpEarned.put(tag, new HashMap<>());
-        guildLastOnline.put(tag, new HashMap<>());
-
-        guildMembers.get(tag).add(owner);
-        guildKills.get(tag).put(owner, 0);
-        guildDeaths.get(tag).put(owner, 0);
-        guildExpEarned.get(tag).put(owner, 0.0);
-
-
-        rpgcore.getMongoManager().saveGuildFirst(tag);
+        final GuildObject guildObject = new GuildObject(tag, description, owner);
+        this.add(guildObject);
+        rpgcore.getMongoManager().addDataGuild(guildObject);
     }
 
-    public void loadGuild(final String tag, final String description,  final UUID owner, final String coOwner, final List<UUID> members, final boolean pvp, final int points, final int lvl,
-                          final double exp, final int balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef,
-                          final double silnyNaLudzi, final double defNaLudzi, final Map<UUID, Integer> kills, final Map<UUID, Integer> deaths,
-                          final Map<UUID, Double> expEarned, final Map<UUID, Date> lastOnline) {
-        guildList.add(tag);
-        guildDescription.put(tag, description);
-        guildOwner.put(tag, owner);
-        if (coOwner == null) {
-            guildCoOwner.put(tag, null);
-        } else {
-            guildCoOwner.put(tag, UUID.fromString(coOwner));
-        }
-        guildMembers.put(tag, members);
-        guildPvPStatus.put(tag, pvp);
-        guildPoints.put(tag, points);
-        guildLvl.put(tag, lvl);
-        guildExp.put(tag, exp);
-        guildBalance.put(tag, balance);
-        guildDodatkowyExp.put(tag, dodatkowyExp);
-        guildSredniDmg.put(tag, sredniDmg);
-        guildSredniDef.put(tag, sredniDef);
-        guildSilnyNaLudzi.put(tag, silnyNaLudzi);
-        guildDefNaLudzi.put(tag, defNaLudzi);
-        guildKills.put(tag, kills);
-        guildDeaths.put(tag, deaths);
-        guildExpEarned.put(tag, expEarned);
-        guildLastOnline.put(tag, lastOnline);
-    }
 
     public void addPlayerToGuild(final String tag, final UUID uuid) {
-        guildMembers.get(tag).add(uuid);
-        guildKills.get(tag).put(uuid, 0);
-        guildDeaths.get(tag).put(uuid, 0);
-        guildExpEarned.get(tag).put(uuid, 0.0);
+        final GuildObject guildObject = this.find(tag);
+        guildObject.getGuild().getMembers().add(uuid);
+        guildObject.getGuild().getKills().put(uuid, 0);
+        guildObject.getGuild().getDeaths().put(uuid, 0);
+        guildObject.getGuild().getExpEarned().put(uuid, 0.0);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject));
     }
 
     public void removePlayerFromGuild(final String tag, final UUID uuid) {
-        guildMembers.get(tag).remove(uuid);
-        guildKills.get(tag).remove(uuid);
-        guildDeaths.get(tag).remove(uuid);
-        guildExpEarned.get(tag).remove(uuid);
+        final GuildObject guildObject = this.find(tag);
+        guildObject.getGuild().getMembers().remove(uuid);
+        guildObject.getGuild().getKills().remove(uuid);
+        guildObject.getGuild().getDeaths().remove(uuid);
+        guildObject.getGuild().getExpEarned().remove(uuid);
 
         if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
             this.setGuildCoOwner(tag, null);
@@ -213,8 +143,9 @@ public class GuildManager {
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
         final String group = rpgcore.getUserManager().getPlayerGroup(player);
         if (player.isOnline()) {
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(player, group));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject);
+                NameTagUtil.setPlayerDisplayNameNoGuild(player, group);
                 TabManager.removePlayer(player);
                 TabManager.addPlayer(player);
                 for (Player restOfServer : Bukkit.getOnlinePlayers()) {
@@ -226,36 +157,14 @@ public class GuildManager {
     }
 
     public void deleteGuild(final String tag) {
-        guildList.remove(tag);
-        guildDescription.remove(tag);
-        guildOwner.remove(tag);
-        guildCoOwner.remove(tag);
-        guildMembers.get(tag).clear();
-        guildPvPStatus.remove(tag);
-        guildMembers.remove(tag);
-        guildPoints.remove(tag);
-        guildLvl.remove(tag);
-        guildExp.remove(tag);
-        guildBalance.remove(tag);
-        guildDodatkowyExp.remove(tag);
-        guildSredniDmg.remove(tag);
-        guildSredniDef.remove(tag);
-        guildSilnyNaLudzi.remove(tag);
-        guildDefNaLudzi.remove(tag);
-        guildKills.get(tag).clear();
-        guildKills.remove(tag);
-        guildDeaths.get(tag).clear();
-        guildDeaths.remove(tag);
-        guildExpEarned.get(tag).clear();
-        guildExpEarned.remove(tag);
-        guildLastOnline.get(tag).clear();
-        guildLastOnline.remove(tag);
+        this.guildMap.remove(tag);
+        rpgcore.getMongoManager().removeDataGuild(tag);
     }
 
     public String getGuildTag(final UUID uuid) {
-        for (String tag : guildList) {
-            if (guildMembers.get(tag).contains(uuid)) {
-                return tag;
+        for (final GuildObject guildObject : this.getGuilds()) {
+            if (guildObject.getGuild().getMembers().contains(uuid)) {
+                return guildObject.getTag();
             }
         }
         return "Brak Klanu";
@@ -263,7 +172,7 @@ public class GuildManager {
 
     public void showPanel(final String tag, final Player player) {
         final Inventory panel = Bukkit.createInventory(null, 27, Utils.format("&6&lPanel Klanu " + tag));
-
+        final Guild guild = this.find(tag).getGuild();
         fill.setName(" ");
         for (int i = 0; i < panel.getSize(); i++) {
             panel.setItem(i, fill.toItemStack());
@@ -276,14 +185,14 @@ public class GuildManager {
         panel.setItem(10, members.setName("&6&lCzlonkowie").setLore(lore).toItemStack());
 
         lore.clear();
-        lore.add("&6Punkty: &7" + guildPoints.get(tag));
-        lore.add("&6Lvl: &7" + guildLvl.get(tag));
+        lore.add("&6Punkty: &7" + guild.getPoints());
+        lore.add("&6Lvl: &7" + guild.getLevel());
         if (this.getGuildLvl(tag) == 50) {
             lore.add("&6Exp: &4&lMAX &6/ &4&lMAX");
         } else {
-            lore.add("&6Exp: &7" + guildExp.get(tag) + "&6/&7 " + this.getGuildNextLvlExp(tag));
+            lore.add("&6Exp: &7" + guild.getExp() + "&6/&7 " + this.getGuildNextLvlExp(tag));
         }
-        lore.add("&6Stan Konta: &7" + guildBalance.get(tag) + " &6kredytow");
+        lore.add("&6Stan Konta: &7" + guild.getBalance() + " &6kredytow");
 
         panel.setItem(13, info.setName("&6&lStatystyki").setLore(lore).toItemStack());
 
@@ -516,199 +425,174 @@ public class GuildManager {
         }
     }
 
-
-    public void setAll(final String tag, final UUID owner, final UUID coOwner, final List<UUID> members, final boolean pvp, final int points, final int lvl, final double exp,
-                       final int balance, final double dodatkowyExp, final double sredniDmg, final double sredniDef, final double silnyNaLudzi, final double defNaLudzi,
-                       final Map<UUID, Integer> kills, final Map<UUID, Integer> deaths, final Map<UUID, Double> expEarned) {
-        setGuildOwner(tag, owner);
-        setGuildCoOwner(tag, coOwner);
-        setGuildMembers(tag, members);
-        setGuildPoints(tag, points);
-        setGuildPvPStatus(tag, pvp);
-        setGuildLvl(tag, lvl);
-        setGuildExp(tag, exp);
-        setGuildBalance(tag, balance);
-        setGuildDodatkowyExp(tag, dodatkowyExp);
-        setGuildSredniDmg(tag, sredniDmg);
-        setGuildSredniDef(tag, sredniDef);
-        setGuildSilnyNaLudzi(tag, silnyNaLudzi);
-        setGuildDefNaLudzi(tag, defNaLudzi);
-        setGuildKills(tag, kills);
-        setGuildDeaths(tag, deaths);
-        setGuildExpEarned(tag, expEarned);
-    }
-
-
     public String getGuildDescription(final String tag) {
-        return guildDescription.get(tag);
+        return this.find(tag).getDescription();
     }
 
     public UUID getGuildOwner(final String tag) {
-        return guildOwner.get(tag);
+        return this.find(tag).getOwner();
     }
 
     public UUID getGuildCoOwner(final String tag) {
-        return guildCoOwner.get(tag);
+        return this.find(tag).getGuild().getCoOwner();
     }
 
     public List<UUID> getGuildMembers(final String tag) {
-        return guildMembers.get(tag);
+        return this.find(tag).getGuild().getMembers();
     }
 
     public int getGuildPoints(final String tag) {
-        return guildPoints.get(tag);
+        return this.find(tag).getGuild().getPoints();
     }
 
     public int getGuildLvl(final String tag) {
-        return guildLvl.get(tag);
+        return this.find(tag).getGuild().getLevel();
     }
 
     public double getGuildExp(final String tag) {
-        return guildExp.get(tag);
+        return this.find(tag).getGuild().getExp();
     }
 
     public int getGuildBalance(final String tag) {
-        return guildBalance.get(tag);
+        return this.find(tag).getGuild().getBalance();
     }
 
     public double getGuildDodatkowyExp(final String tag) {
-        return guildDodatkowyExp.get(tag);
+        return this.find(tag).getGuild().getDodatkowyExp();
     }
 
     public double getGuildSredniDmg(final String tag) {
-        return guildSredniDmg.get(tag);
+        return this.find(tag).getGuild().getSredniDmg();
     }
 
     public double getGuildSredniDef(final String tag) {
-        return guildSredniDef.get(tag);
+        return this.find(tag).getGuild().getSredniDef();
     }
 
     public double getGuildSilnyNaLudzi(final String tag) {
-        return guildSilnyNaLudzi.get(tag);
+        return this.find(tag).getGuild().getSilnyNaLudzi();
     }
 
     public double getGuildDefNaLudzi(final String tag) {
-        return guildDefNaLudzi.get(tag);
+        return this.find(tag).getGuild().getDefNaLudzi();
     }
 
     public Map<UUID, Integer> getGuildKills(final String tag) {
-        return guildKills.get(tag);
+        return this.find(tag).getGuild().getKills();
     }
 
     public Map<UUID, Integer> getGuildDeaths(final String tag) {
-        return guildDeaths.get(tag);
+        return this.find(tag).getGuild().getDeaths();
     }
 
     public Map<UUID, Double> getGuildExpEarned(final String tag) {
-        return guildExpEarned.get(tag);
+        return this.find(tag).getGuild().getExpEarned();
     }
 
     public Map<UUID, Date> getGuildLastOnline(final String tag) {
-        return guildLastOnline.get(tag);
+        return this.find(tag).getGuild().getLastOnline();
     }
 
     public void setGuildDescription(final String tag, final String description) {
-        guildDescription.put(tag, description);
+        this.find(tag).setDescription(description);
+        this.find(tag).getGuild().setDescription(description);
     }
 
     public void setGuildOwner(final String tag, final UUID owner) {
-        guildOwner.put(tag, owner);
+        //this.find(tag).setOwner(owner);
+        this.find(tag).getGuild().setOwner(owner);
     }
 
     public void setGuildCoOwner(final String tag, final UUID coOwner) {
-        guildCoOwner.put(tag, coOwner);
-    }
-
-    public void setGuildMembers(final String tag, final List<UUID> members) {
-        guildMembers.put(tag, members);
+        this.find(tag).getGuild().setCoOwner(coOwner);
     }
 
     public void setGuildPvPStatus(final String tag, final boolean pvp) {
-        guildPvPStatus.put(tag, pvp);
+        this.find(tag).getGuild().setPvp(pvp);
     }
 
     public void setGuildPoints(final String tag, final int points) {
-        guildPoints.put(tag, points);
+        this.find(tag).getGuild().setPoints(points);
     }
 
     public void setGuildLvl(final String tag, final int lvl) {
-        guildLvl.put(tag, lvl);
+        this.find(tag).getGuild().setLevel(lvl);
     }
 
     public void setGuildExp(final String tag, final double exp) {
-        guildExp.put(tag, exp);
+        this.find(tag).getGuild().setExp(exp);
     }
 
     public void setGuildBalance(final String tag, final int balance) {
-        guildBalance.put(tag, balance);
+        this.find(tag).getGuild().setBalance(balance);
     }
 
     public void setGuildDodatkowyExp(final String tag, final double dodatkowyExp) {
-        guildDodatkowyExp.put(tag, dodatkowyExp);
+        this.find(tag).getGuild().setDodatkowyExp(dodatkowyExp);
     }
 
     public void setGuildSredniDmg(final String tag, final double sredniDmg) {
-        guildSredniDmg.put(tag, sredniDmg);
+        this.find(tag).getGuild().setSredniDmg(sredniDmg);
     }
 
     public void setGuildSredniDef(final String tag, final double sredniDef) {
-        guildSredniDef.put(tag, sredniDef);
+        this.find(tag).getGuild().setSredniDef(sredniDef);
     }
 
     public void setGuildSilnyNaLudzi(final String tag, final double silnyNaLudzi) {
-        guildSilnyNaLudzi.put(tag, silnyNaLudzi);
+        this.find(tag).getGuild().setSilnyNaLudzi(silnyNaLudzi);
     }
 
     public void setGuildDefNaLudzi(final String tag, final double defNaLudzi) {
-        guildDefNaLudzi.put(tag, defNaLudzi);
+        this.find(tag).getGuild().setDefNaLudzi(defNaLudzi);
     }
 
     public void setGuildKills(final String tag, final Map<UUID, Integer> kills) {
-        guildKills.put(tag, kills);
+        this.find(tag).getGuild().setKills(kills);
     }
 
     public void setGuildDeaths(final String tag, final Map<UUID, Integer> deaths) {
-        guildDeaths.put(tag, deaths);
+        this.find(tag).getGuild().setDeaths(deaths);
     }
 
     public void setGuildExpEarned(final String tag, final Map<UUID, Double> expEarned) {
-        guildExpEarned.put(tag, expEarned);
+        this.find(tag).getGuild().setExpEarned(expEarned);
     }
 
     public void setGuildLastOnline(final String tag, final Map<UUID, Date> lastOnline) {
-        guildLastOnline.put(tag, lastOnline);
+        this.find(tag).getGuild().setLastOnline(lastOnline);
     }
 
     public void addGuildMember(final String tag, final UUID member) {
-        guildMembers.get(tag).add(member);
+        this.find(tag).getGuild().getMembers().add(member);
     }
 
     public void removeGuildMember(final String tag, final UUID member) {
-        guildMembers.get(tag).remove(member);
+        this.find(tag).getGuild().getMembers().remove(member);
     }
 
     public void addGuildKill(final String tag, final UUID player, final int kills) {
-        guildKills.get(tag).put(player, kills);
+        this.find(tag).getGuild().getKills().put(player, kills);
     }
 
     public void addGuildDeath(final String tag, final UUID player, final int deaths) {
-        guildDeaths.get(tag).put(player, deaths);
+        this.find(tag).getGuild().getDeaths().put(player, deaths);
     }
 
     public void addGuildExpEarned(final String tag, final UUID player, final double expEarned) {
-        guildExpEarned.get(tag).put(player, expEarned);
+        this.find(tag).getGuild().getExpEarned().put(player, expEarned);
     }
 
     public void updateGuildPoints(final String tag, final int points) {
-        guildPoints.put(tag, guildPoints.get(tag) + points);
+        this.find(tag).getGuild().setPoints(this.find(tag).getGuild().getPoints() + points);
     }
 
     public void updateGuildLvl(final String tag, final int lvl) {
-        guildLvl.replace(tag, guildLvl.get(tag) + lvl);
+        this.find(tag).getGuild().setLevel(this.find(tag).getGuild().getLevel() + lvl);
     }
 
     public void updateGuildExp(final String tag, final double exp) {
-        guildExp.replace(tag, guildExp.get(tag) + exp);
+        this.find(tag).getGuild().setExp(this.find(tag).getGuild().getExp() + exp);
         if (this.getGuildExp(tag) >= this.getGuildNextLvlExp(tag)) {
             this.updateGuildLvl(tag, 1);
             this.setGuildExp(tag, 0);
@@ -719,56 +603,56 @@ public class GuildManager {
     }
 
     public void updateGuildBalance(final String tag, final int balance) {
-        guildBalance.replace(tag, guildBalance.get(tag) + balance);
+        this.find(tag).getGuild().setBalance(this.find(tag).getGuild().getBalance() + balance);
     }
 
     public void updateGuildDodatkowyExp(final String tag, final double dodatkowyExp) {
-        guildDodatkowyExp.replace(tag, guildDodatkowyExp.get(tag) + dodatkowyExp);
+        this.find(tag).getGuild().setDodatkowyExp(this.find(tag).getGuild().getDodatkowyExp() + dodatkowyExp);
     }
 
     public void updateGuildSredniDmg(final String tag, final double sredniDmg) {
-        guildSredniDmg.replace(tag, guildSredniDmg.get(tag) + sredniDmg);
+        this.find(tag).getGuild().setSredniDmg(this.find(tag).getGuild().getSredniDmg() + sredniDmg);
     }
 
     public void updateGuildSredniDef(final String tag, final double sredniDef) {
-        guildSredniDef.replace(tag, guildSredniDef.get(tag) + sredniDef);
+        this.find(tag).getGuild().setSredniDef(this.find(tag).getGuild().getSredniDef() + sredniDef);
     }
 
     public void updateGuildSilnyNaLudzi(final String tag, final double silnyNaLudzi) {
-        guildSilnyNaLudzi.replace(tag, guildSilnyNaLudzi.get(tag) + silnyNaLudzi);
+        this.find(tag).getGuild().setSilnyNaLudzi(this.find(tag).getGuild().getSilnyNaLudzi() + silnyNaLudzi);
     }
 
     public void updateGuildDefNaLudzi(final String tag, final double defNaLudzi) {
-        guildDefNaLudzi.replace(tag, guildDefNaLudzi.get(tag) + defNaLudzi);
+        this.find(tag).getGuild().setDefNaLudzi(this.find(tag).getGuild().getDefNaLudzi() + defNaLudzi);
     }
 
     public void updateGuildKills(final String tag, final UUID player, final int kills) {
-        guildKills.get(tag).replace(player, this.getGuildKills(tag).get(player) + kills);
+        this.find(tag).getGuild().getKills().replace(player, this.find(tag).getGuild().getKills().get(player) + kills);
     }
 
     public void updateGuildDeaths(final String tag, final UUID player, final int deaths) {
-        guildDeaths.get(tag).replace(player, this.getGuildDeaths(tag).get(player) + deaths);
+        this.find(tag).getGuild().getDeaths().replace(player, this.find(tag).getGuild().getDeaths().get(player) + deaths);
     }
 
     public void updateGuildExpEarned(final String tag, final UUID player, final double expEarned) {
-        guildExpEarned.get(tag).replace(player, this.getGuildExpEarned(tag).get(player) + expEarned);
+        this.find(tag).getGuild().getExpEarned().replace(player, this.find(tag).getGuild().getExpEarned().get(player) + expEarned);
     }
 
     public void updateGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
-        guildLastOnline.get(tag).replace(player, lastOnline);
+        this.find(tag).getGuild().getLastOnline().replace(player, lastOnline);
     }
 
     public void putGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
-        guildLastOnline.get(tag).put(player, lastOnline);
+        this.find(tag).getGuild().getLastOnline().put(player, lastOnline);
     }
 
     public String getLastSeenDateInString(final String tag, final UUID uuid) {
-        return Utils.dateFormat.format(guildLastOnline.get(tag).get(uuid));
+        return Utils.dateFormat.format(this.find(tag).getGuild().getLastOnline().get(uuid));
     }
 
     public boolean hasGuild(final UUID uuid) {
-        for (String tag : guildList) {
-            if (guildMembers.get(tag).contains(uuid)) {
+        for (final GuildObject guildObject : this.getGuilds()) {
+            if (guildObject.getGuild().getMembers().contains(uuid)) {
                 return true;
             }
         }
@@ -786,13 +670,13 @@ public class GuildManager {
 
     public List<String> getGuildInviteTag(final UUID uuid) {
         List<String> tags = new ArrayList<>();
-        for (String tag : guildList) {
+        for (final GuildObject guildObject : this.getGuilds()) {
             if (guildInvites.get(uuid) == null) {
                 guildInvites.computeIfAbsent(uuid, k -> new HashMap<>());
                 return new ArrayList<>();
             }
-            if (guildInvites.get(uuid).containsKey(tag)) {
-                tags.add(tag);
+            if (guildInvites.get(uuid).containsKey(guildObject.getTag())) {
+                tags.add(guildObject.getTag());
             }
         }
         return tags;
@@ -820,30 +704,49 @@ public class GuildManager {
     }
 
     public List<String> getListOfGuilds() {
-        return guildList;
+        List<String> tags = new ArrayList<>();
+        for (final GuildObject guildObject : this.getGuilds()) {
+            tags.add(guildObject.getTag());
+        }
+        return tags;
     }
 
     public boolean getGuildPvPStatus(final String tag) {
-        return guildPvPStatus.get(tag);
+        return this.find(tag).getGuild().isPvp();
     }
 
     public int getGuildKillsAll(final String tag) {
         int kills = 0;
-        for (UUID uuid : guildMembers.get(tag)) {
-            kills += guildKills.get(tag).get(uuid);
+        for (UUID uuid : this.find(tag).getGuild().getMembers()) {
+            kills += this.find(tag).getGuild().getKills().get(uuid);
         }
         return kills;
     }
 
     public int getGuildDeathsAll(final String tag) {
         int deaths = 0;
-        for (UUID uuid : guildMembers.get(tag)) {
-            deaths += guildDeaths.get(tag).get(uuid);
+        for (UUID uuid : this.find(tag).getGuild().getMembers()) {
+            deaths += this.find(tag).getGuild().getDeaths().get(uuid);
         }
         return deaths;
     }
 
     public double getGuildNextLvlExp(final String tag) {
         return this.guildLvlMap.get(this.getGuildLvl(tag) + 1);
+    }
+
+    public GuildObject find(final String tag) {
+        if (this.guildMap.containsKey(tag)) {
+            return this.guildMap.get(tag);
+        } else {
+            return null;
+        }
+    }
+    public void add(final GuildObject guildObject) {
+        this.guildMap.put(guildObject.getTag(), guildObject);
+    }
+
+    public ImmutableSet<GuildObject> getGuilds() {
+        return ImmutableSet.copyOf(this.guildMap.values());
     }
 }

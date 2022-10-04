@@ -65,7 +65,7 @@ public class GuildCommand extends CommandAPI {
 
                 rpgcore.getGuildManager().deleteGuild(tag);
                 final String toRemove = tag;
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().removeGuild(toRemove));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().removeDataGuild(toRemove));
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cKlan &6" + toRemove + "&c zostal usuniety przez &6" + player.getName()));
                 return;
             }
@@ -215,7 +215,7 @@ public class GuildCommand extends CommandAPI {
                 }
             }
 
-            if (args[0].equalsIgnoreCase("lider")) {
+            /*if (args[0].equalsIgnoreCase("lider")) {
 
                 if (tag.equals("Brak Klanu")) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
@@ -250,7 +250,7 @@ public class GuildCommand extends CommandAPI {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &cnie jest czlonkiem twojego klanu"));
                     return;
                 }
-            }
+            }*/
 
             if (args[0].equalsIgnoreCase("zastepca")) {
 

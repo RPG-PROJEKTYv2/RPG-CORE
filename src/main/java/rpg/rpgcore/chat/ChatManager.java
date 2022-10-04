@@ -44,10 +44,15 @@ public class ChatManager {
 
     public String formatujChat(final Player player, String format, String message) {
         final int playerLVL = rpgcore.getUserManager().find(player.getUniqueId()).getLvl();
+        String lvlInString = String.valueOf(playerLVL);
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         final String playerName = player.getName();
         String playerRank = user.getRankPlayerUser().getRankType().getPrefix();
         final String playerGuild = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
+
+        if (playerLVL == Utils.MAXLVL) {
+            lvlInString = "&4&lMAX";
+        }
 
         if (!user.getRankUser().isHighStaff()) {
             message = Utils.removeColor(message);
@@ -63,7 +68,7 @@ public class ChatManager {
             format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8]"));
         }
 
-        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", String.valueOf(playerLVL)).replace("<player-name>", playerName).replace("<message>", Utils.format(message));
+        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", Utils.format(lvlInString)).replace("<player-name>", playerName).replace("<message>", Utils.format(message));
     }
 
 

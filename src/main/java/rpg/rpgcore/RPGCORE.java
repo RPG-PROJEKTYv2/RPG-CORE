@@ -39,6 +39,9 @@ import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
 import rpg.rpgcore.entities.EntityTypes;
+import rpg.rpgcore.guilds.events.GuildEntityDeath;
+import rpg.rpgcore.guilds.events.GuildsInventoryClick;
+import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.klasy.choice.KlasaCommand;
@@ -591,7 +594,7 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void saveGuilds() {
-        this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveGuild());
+        this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveAllGuilds());
     }
     
 
