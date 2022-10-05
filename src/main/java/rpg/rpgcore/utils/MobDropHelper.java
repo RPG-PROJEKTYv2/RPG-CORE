@@ -4,7 +4,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.npc.kolekcjoner.KolekcjonerUser;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
@@ -15,14 +14,14 @@ public class MobDropHelper {
 
     public static void addDropPlayer(Player player, ItemStack is, double chance, boolean message, boolean pickup, Entity entity) {
         if (pickup) {
-            if (DropChanceHelper.getChance(chance)) {
+            if (ChanceHelper.getChance(chance)) {
                 player.getInventory().addItem(is);
                 if (message) {
                     player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
                 }
             }
         } else {
-            if (DropChanceHelper.getChance(chance)) {
+            if (ChanceHelper.getChance(chance)) {
                 entity.getWorld().dropItem(entity.getLocation(), is);
                 if (message) {
                     player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
@@ -66,7 +65,7 @@ public class MobDropHelper {
             addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
-                if (DropChanceHelper.getChance(100)) {
+                if (ChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);
                 }
             }

@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
@@ -117,8 +118,6 @@ public class GuildsInventoryClick implements Listener {
                 player.closeInventory();
                 return;
             }
-
-
             switch (clickedSlot) {
                 case 0:
                     if (rpgcore.getGuildManager().getGuildSredniDmg(tag) >= 50) {
@@ -177,6 +176,9 @@ public class GuildsInventoryClick implements Listener {
                     break;
             }
             rpgcore.getGuildManager().updateGuildBalance(tag, -1);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataGuild(tag, rpgcore.getGuildManager().find(tag));
+            });
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + clickedItem.getItemMeta().getDisplayName()));
             rpgcore.getGuildManager().showUpgrades(tag, player);
         }

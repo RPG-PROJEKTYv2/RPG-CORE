@@ -150,16 +150,10 @@ public class PlayerJoinListener implements Listener {
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
 
-        if (!rpgcore.getUserManager().isUser(uuid)) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL000)"));
-            return;
-        }
 
-        final User user = rpgcore.getUserManager().find(uuid);
+        if (rpgcore.getUserManager().find(uuid) != null && rpgcore.getUserManager().find(uuid).isBanned()) {
 
-        if (user.isBanned()) {
-
-            final String[] banInfo = user.getBanInfo().split(";");
+            final String[] banInfo = rpgcore.getUserManager().find(uuid).getBanInfo().split(";");
 
             try {
                 final Date teraz = new Date();

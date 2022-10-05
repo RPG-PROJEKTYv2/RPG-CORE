@@ -60,7 +60,7 @@ public class GuildObject {
     private List<UUID> getMemebrsFromDocument(final Document document) {
         final List<UUID> members = new ArrayList<>();
 
-        for (final String member : String.valueOf(document.get("membersList")).split(",")) {
+        for (final String member : String.valueOf(document.get("members")).split(",")) {
             members.add(UUID.fromString(member));
         }
         return members;

@@ -83,9 +83,7 @@ public class LvlManager {
         if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
             dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
         }
-        if (rpgcore.getBaoManager().find(uuid).getBaoUser().getBonus5().equalsIgnoreCase("Dodatkowy EXP")) {
-            dodatkowyExp += rpgcore.getBaoManager().find(uuid).getBaoUser().getValue5();
-        }
+        dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 
         return dodatkowyExp;
     }
@@ -97,34 +95,35 @@ public class LvlManager {
 
         final UUID killerUUID = killer.getUniqueId();
         final User user = rpgcore.getUserManager().find(killerUUID);
+        final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
+        double expDoDodania = this.getExp(mob);
+        expDoDodania += expDoDodania * dodatkowyExp / 100;
+
+        if (rpgcore.getPetyManager().findActivePet(killerUUID).getPet().getItem() != null) {
+            rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), expDoDodania / 100);
+        }
 
         if (user.getLvl() == 130) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]"));
             return;
         }
 
-        final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
 
         final int lvlGracza = user.getLvl();
         final int nextLvlGracza = lvlGracza + 1;
 
         double aktualnyExpGracza = user.getExp();
         final double expNaNextLvlGracza = this.getExpForLvl(nextLvlGracza);
-        double expDoDodania = this.getExp(mob);
 
         if (aktualnyExpGracza >= expNaNextLvlGracza) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer));
             return;
         }
-        expDoDodania += expDoDodania * dodatkowyExp / 100;
         aktualnyExpGracza += expDoDodania;
         user.setExp(aktualnyExpGracza);
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
-        if (rpgcore.getPetyManager().findActivePet(killerUUID).getPet().getItem() != null) {
-            rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), expDoDodania / 100);
-        }
     }
 
     public void updateLVL(final Player killer) {

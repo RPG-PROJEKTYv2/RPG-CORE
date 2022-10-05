@@ -95,7 +95,7 @@ public class AKCESORIAPlayerInteract implements Listener {
                     return;
                 }
                 user.setTarcza(Utils.serializeItem(eventItem));
-                BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+                final BonusesUser bonusUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
                 bonusUser.setSredniadefensywa(bonusUser.getSredniadefensywa() + getIntFromString(eventItem.getItemMeta().getLore().get(0)));
                 bonusUser.setBlokciosu(bonusUser.getBlokciosu() + getIntFromString(eventItem.getItemMeta().getLore().get(1)));
                 bonusUser.setDodatkoweobrazenia(bonusUser.getDodatkoweobrazenia() + getIntFromString(eventItem.getItemMeta().getLore().get(2)));

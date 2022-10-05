@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
+import rpg.rpgcore.bonuses.BonusesUser;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
@@ -69,7 +71,7 @@ public class DamageManager {
         final RandomItems<String> krytykChance = new RandomItems<>();
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
-        double dmg = 1;
+        double dmg = 10.5;
         double mnoznik = 100;
         double krytyk = 10;
 
@@ -136,12 +138,13 @@ public class DamageManager {
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker) {
-        final RandomItems<String> krytykChance = new RandomItems<>();
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
-        double dmg = 1;
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+        double dmg = 10.5;
         double mnoznik = 100;
         double krytyk = 10;
+        double wzmKryt = 1;
 
         // MIECZ DMG
         if (!weapon.getType().equals(Material.AIR)) {
@@ -153,19 +156,13 @@ public class DamageManager {
         //TODO Zrobic podpiecie Akceosir do klasy BONUSES
 
         // BAO
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
-
-            if (user.getBonus1().equals("Srednie obrazenia") || user.getBonus1().equals("Srednie obrazenie przeciwko potworom")) {
-                mnoznik += user.getValue1();
-            }
-            if (user.getBonus3().equals("Szansa na Cios Krytyczny")) {
-                krytyk += user.getValue3();
-            }
-            if (user.getBonus4().equals("Dodatkowe Obrazenia")) {
-                dmg += user.getValue4();
-            }
-        }
+        mnoznik += bonuses.getSrednieobrazenia();
+        mnoznik += bonuses.getSilnynapotwory();
+        mnoznik -= bonuses.getMinussrednieobrazenia();
+        mnoznik -= bonuses.getMinusobrazenianamoby(); //TODO DOdac zapis bonusow po zalozeniu/zdjeciu akce
+        dmg += bonuses.getDodatkoweobrazenia();
+        krytyk += bonuses.getSzansanakryta();
+        wzmKryt += bonuses.getSzansanawzmocnieniekryta();
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
@@ -178,11 +175,9 @@ public class DamageManager {
         dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
         mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
         // ...KOLEKCJONER
-        krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getDodatkowe();
-
 
         dmg = (dmg * (mnoznik / 100)) /3;
-        rpgcore.getServer().broadcastMessage("Dmg przed krytem: " + dmg);
+        attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
         }
@@ -191,17 +186,18 @@ public class DamageManager {
             krytyk -= 100;
             dmg = dmg * 2;
         }
-        krytykChance.add(krytyk / 100, "tak");
-        krytykChance.add(1 - (krytyk / 100), "nie");
-        String test = krytykChance.next();
-        if (test.equals("tak")) {
+        if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
+            attacker.sendMessage("Krytyk!");
+            attacker.sendMessage("DMG po krycie - " + dmg);
+            if (ChanceHelper.getChance(wzmKryt)) {
+                dmg = dmg * 1.5;
+                attacker.sendMessage("Wzmocniony krytyk!");
+                attacker.sendMessage("DMG po wzmocnionym krycie - " + dmg);
+            }
         }
-        rpgcore.getServer().broadcastMessage("Dmg po krycie: " + dmg);
-        rpgcore.getServer().broadcastMessage("krytyk: " +test);
-        rpgcore.getServer().broadcastMessage("krytykChance: " + (krytyk / 100));
 
-        return dmg;
+        return Double.parseDouble(String.format("%.2f", dmg));
     }
 
     public void updateKryt(UUID uuid, double kryt) {

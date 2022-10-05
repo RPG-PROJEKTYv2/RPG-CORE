@@ -3,7 +3,7 @@ package rpg.rpgcore.utils;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public final class DropChanceHelper {
+public final class ChanceHelper {
     private final static Random rand = new Random();
 
     public static int getRandInt(final int min, final int max) throws IllegalArgumentException {
