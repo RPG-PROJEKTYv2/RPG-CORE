@@ -85,7 +85,7 @@ public class GuildCommand extends CommandAPI {
             }
 
             if (args[0].equalsIgnoreCase("usunzastepce")) {
-                rpgcore.getGuildManager().setGuildCoOwner(tag, null);
+                rpgcore.getGuildManager().setGuildCoOwner(tag, "");
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie usunieto zastepce klanu"));
                 return;
             }
@@ -118,7 +118,7 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
-                if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid))) {
+                if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid.toString()))) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem / zastepca klanu"));
                     return;
                 }
@@ -184,7 +184,7 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
-                if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid))) {
+                if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid.toString()))) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem / zastepca klanu"));
                     return;
                 }
@@ -276,13 +276,13 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
-                if (rpgcore.getGuildManager().getGuildCoOwner(tag) != null && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuidToSet)) {
+                if (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuidToSet.toString())) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cTen gracz jest juz zastepca twojego klanu"));
                     return;
                 }
 
                 if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToSet)) {
-                    rpgcore.getGuildManager().setGuildCoOwner(tag, uuidToSet);
+                    rpgcore.getGuildManager().setGuildCoOwner(tag, uuidToSet.toString());
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &awlasnie zostal nowym zastepca klanu &6" + tag));
                     return;
                 } else {

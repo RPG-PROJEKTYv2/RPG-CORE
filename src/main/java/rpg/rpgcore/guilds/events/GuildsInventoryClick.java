@@ -50,7 +50,7 @@ public class GuildsInventoryClick implements Listener {
 
             if (clickedSlot == 16) {
                 if (rpgcore.getGuildManager().getGuildOwner(playerGuild).equals(playerUUID) ||
-                        (rpgcore.getGuildManager().getGuildCoOwner(playerGuild) != null && rpgcore.getGuildManager().getGuildCoOwner(playerGuild).equals(playerUUID))) {
+                        (!rpgcore.getGuildManager().getGuildCoOwner(playerGuild).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(playerGuild).equals(playerUUID.toString()))) {
                     rpgcore.getGuildManager().showUpgrades(playerGuild, player);
                     return;
                 }
@@ -66,7 +66,7 @@ public class GuildsInventoryClick implements Listener {
             e.setCancelled(true);
             final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
 
-            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID))) {
+            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID.toString()))) {
                 return;
             }
 
@@ -86,7 +86,7 @@ public class GuildsInventoryClick implements Listener {
             }
 
             if (clickedSlot == 1) {
-                if (rpgcore.getGuildManager().getGuildCoOwner(tag) != null) {
+                if (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty()) {
                     if (rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID)) {
                         rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
                         player.closeInventory();
@@ -105,7 +105,7 @@ public class GuildsInventoryClick implements Listener {
             e.setCancelled(true);
             final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
             if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) ||
-                    (rpgcore.getGuildManager().getGuildCoOwner(tag) != null && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID)))) {
+                    (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID.toString())))) {
                 player.closeInventory();
                 return;
             }

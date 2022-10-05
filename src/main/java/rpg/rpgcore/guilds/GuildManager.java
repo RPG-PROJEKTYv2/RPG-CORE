@@ -135,8 +135,8 @@ public class GuildManager {
         guildObject.getGuild().getDeaths().remove(uuid);
         guildObject.getGuild().getExpEarned().remove(uuid);
 
-        if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
-            this.setGuildCoOwner(tag, null);
+        if (!this.getGuildCoOwner(tag).isEmpty() && this.getGuildCoOwner(tag).equals(uuid.toString())) {
+            this.setGuildCoOwner(tag, "");
         }
 
         final Player player = Bukkit.getPlayer(uuid);
@@ -216,7 +216,7 @@ public class GuildManager {
 
             if (this.getGuildOwner(tag).equals(uuid)) {
                 memberItem.setName("&4&l" + user.getName());
-            } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid)) {
+            } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(uuid.toString())) {
                 memberItem.setName("&c&l" + user.getName());
             } else {
                 memberItem.setName("&6&l" + user.getName());
@@ -241,7 +241,7 @@ public class GuildManager {
                 lore.add("&7Ostatnio widziany: &c" + this.getLastSeenDateInString(tag, uuid));
             }
 
-            if (this.getGuildCoOwner(tag) != null && (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId()))) {
+            if (this.getGuildCoOwner(tag) != null && (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId().toString()))) {
                 lore.add(" ");
                 lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }
@@ -257,8 +257,8 @@ public class GuildManager {
         final List<UUID> members = new ArrayList<>();
 
         members.add(this.getGuildOwner(tag));
-        if (this.getGuildCoOwner(tag) != null) {
-            members.add(this.getGuildCoOwner(tag));
+        if (!this.getGuildCoOwner(tag).isEmpty()) {
+            members.add(UUID.fromString(this.getGuildCoOwner(tag)));
         }
 
         for (UUID uuid : this.getGuildMembers(tag)) {
@@ -413,7 +413,7 @@ public class GuildManager {
         if (this.getGuildOwner(tag).equals(sender.getUniqueId())) {
             prefix = "&4";
             messagePrefix = "&c";
-        } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(sender.getUniqueId())) {
+        } else if (this.getGuildCoOwner(tag) != null && this.getGuildCoOwner(tag).equals(sender.getUniqueId().toString())) {
             prefix = "&c";
             messagePrefix = "&c";
         }
@@ -433,7 +433,7 @@ public class GuildManager {
         return this.find(tag).getOwner();
     }
 
-    public UUID getGuildCoOwner(final String tag) {
+    public String getGuildCoOwner(final String tag) {
         return this.find(tag).getGuild().getCoOwner();
     }
 
@@ -503,7 +503,7 @@ public class GuildManager {
         this.find(tag).getGuild().setOwner(owner);
     }
 
-    public void setGuildCoOwner(final String tag, final UUID coOwner) {
+    public void setGuildCoOwner(final String tag, final String coOwner) {
         this.find(tag).getGuild().setCoOwner(coOwner);
     }
 

@@ -1,6 +1,5 @@
 package rpg.rpgcore.guilds;
 
-import com.google.common.collect.Maps;
 import org.bson.Document;
 
 import java.util.*;
@@ -24,7 +23,7 @@ public class GuildObject {
         kills.put(owner, 0);
         deaths.put(owner, 0);
         expEarned.put(owner, 0.0);
-        this.guild = new Guild(tag, description, owner, null, members, 0, 1, 0.0, 0, false, 0.0, 0.0,
+        this.guild = new Guild(tag, description, owner, "", members, 0, 1, 0.0, 0, false, 0.0, 0.0,
                 0.0, 0.0, 0.0, kills, deaths, expEarned, lastSeen);
     }
 
@@ -34,11 +33,7 @@ public class GuildObject {
         this.tag = document.getString("_id");
         this.description = document.getString("description");
         this.owner = UUID.fromString(document.getString("owner"));
-        UUID coOwnerUUID  = null;
-        if (document.getString("coOwner") != null){
-            coOwnerUUID = UUID.fromString(document.getString("coOwner"));
-        }
-        this.guild = new Guild(tag, description, owner, coOwnerUUID,
+        this.guild = new Guild(tag, description, owner, document.getString("coOwner"),
                 getMemebrsFromDocument(document), document.getInteger("points"), document.getInteger("level"), document.getDouble("exp"),
                 document.getInteger("balance"), document.getBoolean("pvp"), document.getDouble("dodatkowyExp"), document.getDouble("sredniDmg"),
                 document.getDouble("sredniDef"), document.getDouble("silnyNaLudzi"), document.getDouble("defNaLudzi"), getKillsMapFromDocument(document), getDeathsMapFromDocument(document),
@@ -110,12 +105,8 @@ public class GuildObject {
     public Document toDocument() {
         Document document = new Document("_id", tag)
         .append("description", description)
-        .append("owner", String.valueOf(owner));
-        if (guild.getCoOwner() != null){
-            document.append("coOwner", String.valueOf(guild.getCoOwner()));
-        } else {
-            document.append("coOwner", null);
-        }
+        .append("owner", String.valueOf(owner))
+        .append("coOwner", guild.getCoOwner());
         final StringBuilder sb = new StringBuilder();
         for (UUID uuid : guild.getMembers()) {
             sb.append(uuid.toString());

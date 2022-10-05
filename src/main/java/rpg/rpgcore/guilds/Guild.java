@@ -14,7 +14,7 @@ public class Guild {
     private String tag;
     private String description;
     private UUID owner;
-    private UUID coOwner;
+    private String coOwner;
     private List<UUID> members;
     private int points;
     private int level;
@@ -31,7 +31,7 @@ public class Guild {
     private Map<UUID, Double> expEarned;
     private Map<UUID, Date> lastOnline;
 
-    public Guild(String tag, String description, UUID owner, UUID coOwner, List<UUID> members, int points, int level, double exp, int balance, boolean pvp, double dodatkowyExp, double sredniDmg, double sredniDef, double silnyNaLudzi, double defNaLudzi, Map<UUID, Integer> kills, Map<UUID, Integer> deaths, Map<UUID, Double> expEarned, Map<UUID, Date> lastOnline) {
+    public Guild(String tag, String description, UUID owner, String coOwner, List<UUID> members, int points, int level, double exp, int balance, boolean pvp, double dodatkowyExp, double sredniDmg, double sredniDef, double silnyNaLudzi, double defNaLudzi, Map<UUID, Integer> kills, Map<UUID, Integer> deaths, Map<UUID, Double> expEarned, Map<UUID, Date> lastOnline) {
         this.tag = tag;
         this.description = description;
         this.owner = owner;
