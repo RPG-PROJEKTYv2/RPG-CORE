@@ -2,11 +2,14 @@ package rpg.rpgcore.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -40,6 +43,13 @@ public class SetAdminRankCommand extends CommandAPI {
         final RankType rankTypeBefore = user.getRankUser().getRankType();
         final RankType rankTypeAfter = RankType.valueOf(args[1].toUpperCase());
 
+        if (sender instanceof Player) {
+            if (rpgcore.getUserManager().find(((Player) sender).getUniqueId()).getRankUser().getRankType().getPriority() <= rankTypeBefore.getPriority() && !sender.getName().equals("Mires_") && !args[0].equalsIgnoreCase("Mires_")) {
+                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz zmienic rangi gracza z ranga wyzsza lub rowna jak twoja!"));
+                return;
+            }
+        }
+
         if (rankTypeBefore == rankTypeAfter) {
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz posiada juz ta ranga!"));
             return;
@@ -48,7 +58,16 @@ public class SetAdminRankCommand extends CommandAPI {
         user.getRankUser().setRank(rankTypeAfter);
 
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zmieniles ranga gracza &6" + user.getName() + " &az &6" + rankTypeBefore.getName() + " &ana &6" + rankTypeAfter.getName() + "&a!"));
-
+        if (Bukkit.getPlayer(user.getId()) != null && Bukkit.getPlayer(user.getId()).isOnline()) {
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()));
+                TabManager.removePlayer(Bukkit.getPlayer(user.getId()));
+                TabManager.addPlayer(Bukkit.getPlayer(user.getId()));
+                for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                    TabManager.update(restOfServer.getUniqueId());
+                }
+            });
+        }
         if (rankTypeAfter.getName().equalsIgnoreCase("gracz")) {
             if (args[2].equals("true")) {
                 rpgcore.getServer().broadcastMessage(" ");

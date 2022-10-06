@@ -145,7 +145,7 @@ public class GuildManager {
         if (player.isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject);
-                NameTagUtil.setPlayerDisplayNameNoGuild(player, group);
+                NameTagUtil.setPlayerNameTag(player);
                 TabManager.removePlayer(player);
                 TabManager.addPlayer(player);
                 for (Player restOfServer : Bukkit.getOnlinePlayers()) {

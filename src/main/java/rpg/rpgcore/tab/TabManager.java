@@ -20,9 +20,9 @@ public class TabManager {
 
     public static ArrayList<String> lista = new ArrayList<>();
     public static Map<UUID, Tab> uuidTabMap = new HashMap<>();
+    private static Map<UUID, Integer> topki = new HashMap<>();
     public static PacketManager packetManager;
 
-    static int topki = 0;
 
     public static void addPlayer(Player player) {
         String prefix = "";
@@ -35,6 +35,9 @@ public class TabManager {
         if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
             guild = "&8[&3" + rpgcore.getGuildManager().getGuildTag(player.getUniqueId()) + "&8] ";
         }
+        if (prefix.equals("&7 ")) {
+            prefix = "&7";
+        }
         lista.add(guild + prefix + player.getName());
         lista = sortList(lista);
     }
@@ -43,9 +46,7 @@ public class TabManager {
         List<Integer> occruence = new ArrayList<>();
         for (String s : lista) {
             String test = s.substring(s.lastIndexOf(" ") + 1).trim();
-            player.sendMessage(test);
             if (Utils.removeColor(test).equals(player.getName())) {
-                player.sendMessage("Dodano do listy");
                 occruence.add(lista.indexOf(s));
             }
         }
@@ -61,11 +62,12 @@ public class TabManager {
         final UUID uuid = player.getUniqueId();
         uuidTabMap.remove(uuid);
         uuidTabMap.put(uuid, new Tab(player, packetManager));
+        topki.put(uuid, 0);
     }
 
     public static void update(UUID uuid) {
-        Tab tab = uuidTabMap.get(uuid);
-        Player player = Bukkit.getPlayer(uuid);
+        final Tab tab = uuidTabMap.get(uuid);
+        final Player player = Bukkit.getPlayer(uuid);
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         String prefix = "";
@@ -110,7 +112,7 @@ public class TabManager {
             tab.set(player, 0, 3, "&7Ranga: " + prefix);
             tab.set(player, 0, 4, "&7Gildia: &3" + tag);
             if (lvl == Utils.MAXLVL) {
-                tab.set(player, 0, 5, "&7Poziom: &4&lMAX LVL");
+                tab.set(player, 0, 5, "&7Poziom: &4&lMAX");
                 tab.set(player, 0, 6, "&7EXP: &4&lMAX &7/ &4&lMAX &8(&4&lMAX&8)");
             } else {
                 tab.set(player, 0, 5, "&7Poziom: &c" + lvl);
@@ -138,14 +140,14 @@ public class TabManager {
                 tab.set(player, 0, 14, "&7Zabojstwa: &cn/a");
                 tab.set(player, 0, 15, "&7Zgony: &cn/a");
             }
-            if (topki == 2) {
-                topki = 0;
+            if (topki.get(uuid) == 2) {
+                topki.replace(uuid, 0);
             }
 
             Stream<Map.Entry<String, Integer>> sortedDesc;
             final List<String> afterSort = new ArrayList<>();
 
-            switch (topki) {
+            switch (topki.get(uuid)) {
                 case 0:
                     tab.set(player, 3, 1, "&6Topka Poziomu");
                     final Map<String, Integer> topki1 = new HashMap<>();
@@ -228,7 +230,7 @@ public class TabManager {
                     }
                     break;
             }
-            topki++;
+            topki.replace(uuid, topki.get(uuid) + 1);
 
             tab.set(player,
                     "\n&7Witamy na Serwerze &cHellRPG.pl\n",
@@ -240,6 +242,12 @@ public class TabManager {
 
     private static ArrayList<String> sortList(final ArrayList<String> listGiven) {
         final ArrayList<String> list = new ArrayList<>();
+
+        for (String s : listGiven) {
+            if (s.contains("DEV")) {
+                list.add(s);
+            }
+        }
 
         for (String s : listGiven) {
             if (s.contains("H@")) {

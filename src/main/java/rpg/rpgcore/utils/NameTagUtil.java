@@ -5,6 +5,7 @@ import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 
 public class NameTagUtil {
     private static Team team;
@@ -33,19 +34,16 @@ public class NameTagUtil {
         }
     }
 
-    public static void setPlayerDisplayNameNoGuild(final Player p, final String playerGroup) {
-        if (RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().isStaff()) {
+    public static void setPlayerNameTag(final Player p) {
+        final User user = RPGCORE.getInstance().getUserManager().find(p.getUniqueId());
+        if (user.getRankUser().isStaff()) {
             NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
         } else {
-            NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankPlayerUser().getRankType().getPrefix(), "updatePrefix");
-        }
-    }
-
-    public static void setPlayerDisplayNameGuild(final Player p, final String playerGroup, final String tag) {
-        if (RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().isStaff()) {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] " + RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
-        } else {
-            NameTagUtil.changePlayerName(p, "&8[&3" + tag + "&8] " + RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankPlayerUser().getRankType().getPrefix(), "updatePrefix");
+            if (RPGCORE.getInstance().getGuildManager().hasGuild(p.getUniqueId())) {
+                NameTagUtil.changePlayerName(p, "&8[&3" + RPGCORE.getInstance().getGuildManager().getGuildTag(p.getUniqueId()) + "&8] ", "updatePrefix");
+            } else {
+                NameTagUtil.changePlayerName(p, "&7", "updatePrefix");
+            }
         }
     }
 

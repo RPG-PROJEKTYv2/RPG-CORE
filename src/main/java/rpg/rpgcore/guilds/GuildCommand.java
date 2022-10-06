@@ -79,7 +79,7 @@ public class GuildCommand extends CommandAPI {
 
                 rpgcore.getGuildManager().removePlayerFromGuild(tag, uuid);
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + "&c opuscil klan &6" + tag));
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameNoGuild(player, playerGroup));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                 return;
             }
@@ -168,7 +168,7 @@ public class GuildCommand extends CommandAPI {
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
                     final String tagForLambda = tag;
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tagForLambda));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                     return;
                 } else {
@@ -320,7 +320,7 @@ public class GuildCommand extends CommandAPI {
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
                 final String tagForLambda = tag;
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerDisplayNameGuild(player, playerGroup, tagForLambda));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                 return;
             }
@@ -350,7 +350,7 @@ public class GuildCommand extends CommandAPI {
             final Player p = Bukkit.getPlayer(uuid1);
             if (p != null && p.isOnline()) {
                 final String group = rpgcore.getUserManager().getPlayerGroup(p);
-                NameTagUtil.setPlayerDisplayNameNoGuild(p, group);
+                NameTagUtil.setPlayerNameTag(p);
                 TabManager.removePlayer(p);
                 members.add(uuid1);
             }
@@ -358,7 +358,9 @@ public class GuildCommand extends CommandAPI {
         rpgcore.getGuildManager().getGuildMembers(tag).clear();
 
         for (UUID uuid1 : members) {
-            TabManager.addPlayer(Bukkit.getPlayer(uuid1));
+            if (Bukkit.getPlayer(uuid1) != null && Bukkit.getPlayer(uuid1).isOnline()) {
+                TabManager.addPlayer(Bukkit.getPlayer(uuid1));
+            }
         }
         members.clear();
         for (Player restOfServer : Bukkit.getOnlinePlayers()) {
