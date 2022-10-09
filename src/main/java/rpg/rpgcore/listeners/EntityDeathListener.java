@@ -1,10 +1,14 @@
 package rpg.rpgcore.listeners;
 
+import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
@@ -24,12 +28,27 @@ public class EntityDeathListener implements Listener {
         e.setDeathMessage(null);
         e.setKeepInventory(true);
 
-        if (e.getEntity().getKiller() == null) {
+        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
+        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
+
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
+
+        final EntityDamageByEntityEvent e2 = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
+
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(e.getEntity(),
+                rpgcore.getNmsManager().makeTitle("&4&lZGINALES!", 5, 20, 5),
+                rpgcore.getNmsManager().makeSubTitle("&7Zostales zabity przez &c" + e2.getDamager().getName() + " &8(&c" +
+                        String.format("%.2f", ((LivingEntity) e2.getDamager()).getHealth()) + "♥&8)", 5, 20, 5)));
+        if (e2.getDamager() == null && !(e2.getDamager() instanceof Player)) {
             return;
         }
 
         final Player victim = e.getEntity();
-        final Player killer = victim.getKiller();
+        final Player killer = (Player) e2.getDamager();
+
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer,
+                rpgcore.getNmsManager().makeTitle("&a&lZABOJSTWO!", 5, 20, 5),
+                rpgcore.getNmsManager().makeSubTitle("&7Zabijasz &c" + victim.getName(), 5, 20, 5)));
 
         if (rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()).equals("Brak Klanu") || rpgcore.getGuildManager().getGuildTag(victim.getUniqueId()).equals("Brak Klanu")) {
 

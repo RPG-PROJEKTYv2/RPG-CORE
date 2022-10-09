@@ -1,19 +1,15 @@
 package rpg.rpgcore.user;
 
 import com.google.common.collect.ImmutableSet;
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class UserManager {
-    private final RPGCORE rpgcore;
     private final Map<UUID, User> usersUUIDMap;
 
     public UserManager(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.usersUUIDMap = rpgcore.getMongoManager().loadAllUsers();
     }
 
@@ -30,10 +26,6 @@ public class UserManager {
             }
         }
         return false;
-    }
-
-    public String getPlayerGroup(final Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%uperms_rank%");
     }
 
     public User find(final UUID uuid) {

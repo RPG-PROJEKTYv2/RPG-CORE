@@ -79,7 +79,7 @@ public abstract class CommandAPI extends Command {
                 }
             }
             if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn")) {
-                if (!userProfile.isHellCodeLogin()) {
+                if (!userProfile.isHellCodeLogin() && !userProfile.getHellCode().equals("off")) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim HellCode! Uzyj: &c/hellcode <kod>"));
                     return false;
                 }

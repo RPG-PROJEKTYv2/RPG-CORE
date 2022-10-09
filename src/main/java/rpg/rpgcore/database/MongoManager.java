@@ -140,8 +140,6 @@ public class MongoManager {
             try {
                 obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
                 rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
-
-                obj = pool.getMagazyny().find(new Document("_id", uuid.toString())).first();
             } catch (final IOException e) {
                 e.printStackTrace();
             }

@@ -12,10 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.utils.ChanceHelper;
-import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -68,35 +66,26 @@ public class DamageManager {
     }
 
     public double calculateAttackerDmgToPlayer(final Player attacker) {
-        final RandomItems<String> krytykChance = new RandomItems<>();
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double dmg = 10.5;
         double mnoznik = 100;
-        double krytyk = 10;
+        double krytyk = 1;
+        double wzmKryt = 1;
 
-        // MIECZ
         if (weapon != null) {
             dmg += Utils.getSharpnessLevel(weapon);
         }
 
-        // AkcesoriaCommand
-        //TODO Zrobic podpiecie Akcesori do klasy BONUSES
-
         // BAO
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
-
-            if (user.getBonus1().equals("Srednie obrazenia") || user.getBonus1().equals("Srednie obrazenie przeciwko ludziom")) {
-                mnoznik += user.getValue1();
-            }
-            if (user.getBonus3().equals("Szansa na Cios Krytyczny")) {
-                krytyk += user.getValue3();
-            }
-            if (user.getBonus4().equals("Dodatkowe Obrazenia")) {
-                dmg += user.getValue4();
-            }
-        }
+        mnoznik += bonuses.getSrednieobrazenia();
+        mnoznik += bonuses.getSilnynaludzi();
+        mnoznik -= bonuses.getMinussrednieobrazenia();
+        mnoznik -= bonuses.getMinusobrazenianaludzi();
+        dmg += bonuses.getDodatkoweobrazenia();
+        krytyk += bonuses.getSzansanakryta();
+        wzmKryt += bonuses.getSzansanawzmocnieniekryta();
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
@@ -104,18 +93,12 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
-
-        // NPC
         // ...RYBAK
         dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
         mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
-        // ...KOLEKCJONER
-        mnoznik += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getSilnyNaLudzi();
-        krytyk += rpgcore.getKolekcjonerNPC().find(uuid).getKolekcjonerUser().getDodatkowe();
-
 
         dmg = (dmg * (mnoznik / 100)) /3;
-        rpgcore.getServer().broadcastMessage("Dmg przed krytem: " + dmg);
+        attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
         }
@@ -124,17 +107,38 @@ public class DamageManager {
             krytyk -= 100;
             dmg = dmg * 2;
         }
-        krytykChance.add(krytyk / 100, "tak");
-        krytykChance.add(1 - (krytyk / 100), "nie");
-        String test = krytykChance.next();
-        if (test.equals("tak")) {
+        if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
+            attacker.sendMessage("Krytyk!");
+            attacker.sendMessage("DMG po krycie - " + dmg);
+            if (ChanceHelper.getChance(wzmKryt)) {
+                dmg = dmg * 1.5;
+                attacker.sendMessage("Wzmocniony krytyk!");
+                attacker.sendMessage("DMG po wzmocnionym krycie - " + dmg);
+            }
         }
-        rpgcore.getServer().broadcastMessage("Dmg po krycie: " + dmg);
-        rpgcore.getServer().broadcastMessage("krytyk: " +test);
-        rpgcore.getServer().broadcastMessage("krytykChance: " + (krytyk / 100));
 
-        return dmg;
+        return Double.parseDouble(String.format("%.2f", dmg));
+    }
+
+    public double calculateDef(final Player player, final String type) {
+        final UUID uuid = player.getUniqueId();
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+        double def = 10;
+
+        def += bonuses.getSredniadefensywa();
+
+        if (type.equalsIgnoreCase("ludzie")) {
+            def += bonuses.getDefnaludzi();
+            if (rpgcore.getGuildManager().hasGuild(uuid)) {
+                def += rpgcore.getGuildManager().getGuildDefNaLudzi(rpgcore.getGuildManager().getGuildTag(uuid));
+            }
+        } else if (type.equalsIgnoreCase("moby")) {
+            def += bonuses.getDefnamoby();
+
+        }
+
+        return Double.parseDouble(String.format("%.2f", def/(def + 100)));
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker) {
@@ -143,7 +147,7 @@ public class DamageManager {
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double dmg = 10.5;
         double mnoznik = 100;
-        double krytyk = 10;
+        double krytyk = 1;
         double wzmKryt = 1;
 
         // MIECZ DMG
@@ -152,14 +156,10 @@ public class DamageManager {
             dmg += Utils.getObrazeniaMobyLevel(weapon);
         }
 
-        // AkcesoriaCommand
-        //TODO Zrobic podpiecie Akceosir do klasy BONUSES
-
-        // BAO
         mnoznik += bonuses.getSrednieobrazenia();
         mnoznik += bonuses.getSilnynapotwory();
         mnoznik -= bonuses.getMinussrednieobrazenia();
-        mnoznik -= bonuses.getMinusobrazenianamoby(); //TODO DOdac zapis bonusow po zalozeniu/zdjeciu akce
+        mnoznik -= bonuses.getMinusobrazenianamoby();
         dmg += bonuses.getDodatkoweobrazenia();
         krytyk += bonuses.getSzansanakryta();
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
@@ -169,12 +169,9 @@ public class DamageManager {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
-
-        // NPC
         // ...RYBAK
         dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
         mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
-        // ...KOLEKCJONER
 
         dmg = (dmg * (mnoznik / 100)) /3;
         attacker.sendMessage("Dmg - " + dmg);

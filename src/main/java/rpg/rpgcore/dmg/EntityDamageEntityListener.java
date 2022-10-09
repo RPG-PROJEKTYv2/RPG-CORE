@@ -1,8 +1,6 @@
 package rpg.rpgcore.dmg;
 
-import com.mojang.authlib.yggdrasil.response.User;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -12,14 +10,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.metiny.MetinyHelper;
-import rpg.rpgcore.utils.AkcesoriaHelper;
-import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
 
 public class EntityDamageEntityListener implements Listener {
 
@@ -59,7 +53,15 @@ public class EntityDamageEntityListener implements Listener {
                 final Player victim = (Player) e.getEntity();
 
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
-                e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
+                final double victimDef = rpgcore.getDamageManager().calculateDef(victim, "ludzie");
+
+                double finalDmg = Double.parseDouble(String.format("%.2f", (attackerDmg * (100 - victimDef))/100));
+                if (finalDmg < 0) {
+                    finalDmg = 0;
+                }
+                attacker.sendMessage("Final dmg - " + finalDmg);
+                victim.sendMessage("Def: " + victimDef);
+                e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
 
             } else {

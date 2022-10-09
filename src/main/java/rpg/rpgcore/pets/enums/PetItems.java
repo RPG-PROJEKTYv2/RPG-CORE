@@ -274,8 +274,8 @@ public enum PetItems {
                             "nwfE9n3EqcdSNeVGMEukP8xLQvqF5T9/ReOrKyjXif2u/XWvrfh6HkJUotBJeeY70zvulHPsTlt80bwDrLOJEaRdrTr75pu6m2YI9TqDSNT//SaiII/TGij86A1X3MSsnweg=")
             .setName("&fNietoperz &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na Ulepszenie przedmiotu: &c0%",
-                    "&7Zmniejszenie Cen Craftingu przedmiotów u Kowala: &c0%",
+                    "&7Zmniejszenie Szansy Na Spalenie: &c0%",
+                    "&7Szansa na Ulepszenie Krysztalu: &c0%",
                     "",
                     "&7&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -290,8 +290,8 @@ public enum PetItems {
                             "nwfE9n3EqcdSNeVGMEukP8xLQvqF5T9/ReOrKyjXif2u/XWvrfh6HkJUotBJeeY70zvulHPsTlt80bwDrLOJEaRdrTr75pu6m2YI9TqDSNT//SaiII/TGij86A1X3MSsnweg=")
             .setName("&1Nietoperz &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na Ulepszenie przedmiotu: &c0%",
-                    "&7Zmniejszenie Cen Craftingu przedmiotów u Kowala: &c0%",
+                    "&7Zmniejszenie Szansy Na Spalenie: &c0%",
+                    "&7Szansa na Ulepszenie Krysztalu: &c0%",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -306,8 +306,8 @@ public enum PetItems {
                             "nwfE9n3EqcdSNeVGMEukP8xLQvqF5T9/ReOrKyjXif2u/XWvrfh6HkJUotBJeeY70zvulHPsTlt80bwDrLOJEaRdrTr75pu6m2YI9TqDSNT//SaiII/TGij86A1X3MSsnweg=")
             .setName("&5Nietoperz &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na Ulepszenie przedmiotu: &c0%",
-                    "&7Zmniejszenie Cen Craftingu przedmiotów u Kowala: &c0%",
+                    "&7Zmniejszenie Szansy Na Spalenie: &c0%",
+                    "&7Szansa na Ulepszenie Krysztalu: &c0%",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -322,8 +322,8 @@ public enum PetItems {
                             "nwfE9n3EqcdSNeVGMEukP8xLQvqF5T9/ReOrKyjXif2u/XWvrfh6HkJUotBJeeY70zvulHPsTlt80bwDrLOJEaRdrTr75pu6m2YI9TqDSNT//SaiII/TGij86A1X3MSsnweg=")
             .setName("&6Nietoperz &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na Ulepszenie przedmiotu: &c0%",
-                    "&7Zmniejszenie Cen Craftingu przedmiotów u Kowala: &c0%",
+                    "&7Zmniejszenie Szansy Na Spalenie: &c0%",
+                    "&7Szansa na Ulepszenie Krysztalu: &c0%",
                     "",
                     "&6&lLegendarny Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Legendarny")
@@ -338,8 +338,8 @@ public enum PetItems {
                             "LwM008TlYxVjoY/kMyfes2nrGXkjOKbE+pfjvXFZFumNZwWq7AelZv/FLbu/6eVkU=")
             .setName("&fBobr &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na przyjecie u Lesnika: &c0%",
-                    "&7Zwiekszenie szansy na znalezienie przedmiotu do Lesnika: &c0%",
+                    "&7Zwiekszona Szansa u Lesznika: &c0%",
+                    "&7Zwiekszony Drop Lesnika: &c0%",
                     "",
                     "&7&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -354,8 +354,8 @@ public enum PetItems {
                             "LwM008TlYxVjoY/kMyfes2nrGXkjOKbE+pfjvXFZFumNZwWq7AelZv/FLbu/6eVkU=")
             .setName("&1Bobr &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na przyjecie u Lesnika: &c0%",
-                    "&7Zwiekszenie szansy na znalezienie przedmiotu do Lesnika: &c0%",
+                    "&7Zwiekszona Szansa u Lesznika: &c0%",
+                    "&7Zwiekszony Drop Lesnika: &c0%",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -370,8 +370,8 @@ public enum PetItems {
                             "LwM008TlYxVjoY/kMyfes2nrGXkjOKbE+pfjvXFZFumNZwWq7AelZv/FLbu/6eVkU=")
             .setName("&5Bobr &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na przyjecie u Lesnika: &c0%",
-                    "&7Zwiekszenie szansy na znalezienie przedmiotu do Lesnika: &c0%",
+                    "&7Zwiekszona Szansa u Lesznika: &c0%",
+                    "&7Zwiekszony Drop Lesnika: &c0%",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -386,8 +386,8 @@ public enum PetItems {
                             "LwM008TlYxVjoY/kMyfes2nrGXkjOKbE+pfjvXFZFumNZwWq7AelZv/FLbu/6eVkU=")
             .setName("&6Bobr &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Magiczny",
-                    "&7Zwiekszenie sznasy na przyjecie u Lesnika: &c0%",
-                    "&7Zwiekszenie szansy na znalezienie przedmiotu do Lesnika: &c0%",
+                    "&7Zwiekszona Szansa u Lesznika: &c0%",
+                    "&7Zwiekszony Drop Lesnika: &c0%",
                     "",
                     "&6&lLegendarny Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Legendarny")
@@ -403,7 +403,7 @@ public enum PetItems {
             .setName("&fOgnisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0",
+                    "&7Dodatkowe Obrazenia: &c0",
                     "",
                     "&7&&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -419,7 +419,7 @@ public enum PetItems {
             .setName("&1Ognisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0",
+                    "&7Dodatkowe Obrazenia: &c0",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -435,7 +435,7 @@ public enum PetItems {
             .setName("&5Ognisty Smok &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Wzmocnienie Krytyka: &c0%",
-                    "&7Dodatkowe Obrażenia: &c0",
+                    "&7Dodatkowe Obrazenia: &c0",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -468,7 +468,7 @@ public enum PetItems {
             .setName("&fDemon &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Srednie Obrazenia: &c0%",
-                    "&7Wzmocnienie Krytyka: &c0%",
+                    "&7Szansa Na Cios Krytyczny: &c0%",
                     "",
                     "&7&lZwykly Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Zwykly")
@@ -485,7 +485,7 @@ public enum PetItems {
             .setName("&1Demon &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Srednie Obrazenia: &c0%",
-                    "&7Wzmocnienie Krytyka: &c0%",
+                    "&7Szansa Na Cios Krytyczny: &c0%",
                     "",
                     "&1&lRzadki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Rzadki")
@@ -502,7 +502,7 @@ public enum PetItems {
             .setName("&5Demon &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Srednie Obrazenia: &c0%",
-                    "&7Wzmocnienie Krytyka: &c0%",
+                    "&7Szansa Na Cios Krytyczny: &c0%",
                     "",
                     "&5&lEpicki Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Epicki")
@@ -519,7 +519,7 @@ public enum PetItems {
             .setName("&6Demon &8[&7Lvl. &61&8]").setLore(Arrays.asList(
                     "&8Typ: Walczacy",
                     "&7Srednie Obrazenia: &c0%",
-                    "&7Wzmocnienie Krytyka: &c0%",
+                    "&7Szansa Na Cios Krytyczny: &c0%",
                     "",
                     "&6&lLegendarny Zwierzak",
                     "&8Exp: &60&8/&6" + PetLevels.getExp(2, "Legendarny")

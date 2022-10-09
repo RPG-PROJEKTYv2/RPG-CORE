@@ -84,10 +84,10 @@ public class GuildManager {
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
         player.sendMessage(Utils.format("&6Opis: &7" + guild.getDescription()));
         player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guild.getOwner()).getName()));
-        if (guild.getCoOwner() == null) {
+        if (guild.getCoOwner().isEmpty()) {
             player.sendMessage(Utils.format("&6Zastepca: &7Brak Zastepcy"));
         } else {
-            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(guild.getCoOwner()).getName()));
+            player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(UUID.fromString(guild.getCoOwner())).getName()));
         }
         if (guild.isPvp()) {
             player.sendMessage(Utils.format("&6PvP: &a&lON"));
@@ -141,7 +141,6 @@ public class GuildManager {
 
         final Player player = Bukkit.getPlayer(uuid);
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
-        final String group = rpgcore.getUserManager().getPlayerGroup(player);
         if (player.isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject);
@@ -425,9 +424,6 @@ public class GuildManager {
         }
     }
 
-    public String getGuildDescription(final String tag) {
-        return this.find(tag).getDescription();
-    }
 
     public UUID getGuildOwner(final String tag) {
         return this.find(tag).getOwner();
@@ -489,20 +485,6 @@ public class GuildManager {
         return this.find(tag).getGuild().getExpEarned();
     }
 
-    public Map<UUID, Date> getGuildLastOnline(final String tag) {
-        return this.find(tag).getGuild().getLastOnline();
-    }
-
-    public void setGuildDescription(final String tag, final String description) {
-        this.find(tag).setDescription(description);
-        this.find(tag).getGuild().setDescription(description);
-    }
-
-    public void setGuildOwner(final String tag, final UUID owner) {
-        //this.find(tag).setOwner(owner);
-        this.find(tag).getGuild().setOwner(owner);
-    }
-
     public void setGuildCoOwner(final String tag, final String coOwner) {
         this.find(tag).getGuild().setCoOwner(coOwner);
     }
@@ -511,76 +493,12 @@ public class GuildManager {
         this.find(tag).getGuild().setPvp(pvp);
     }
 
-    public void setGuildPoints(final String tag, final int points) {
-        this.find(tag).getGuild().setPoints(points);
-    }
-
-    public void setGuildLvl(final String tag, final int lvl) {
-        this.find(tag).getGuild().setLevel(lvl);
-    }
-
     public void setGuildExp(final String tag, final double exp) {
         this.find(tag).getGuild().setExp(exp);
     }
 
     public void setGuildBalance(final String tag, final int balance) {
         this.find(tag).getGuild().setBalance(balance);
-    }
-
-    public void setGuildDodatkowyExp(final String tag, final double dodatkowyExp) {
-        this.find(tag).getGuild().setDodatkowyExp(dodatkowyExp);
-    }
-
-    public void setGuildSredniDmg(final String tag, final double sredniDmg) {
-        this.find(tag).getGuild().setSredniDmg(sredniDmg);
-    }
-
-    public void setGuildSredniDef(final String tag, final double sredniDef) {
-        this.find(tag).getGuild().setSredniDef(sredniDef);
-    }
-
-    public void setGuildSilnyNaLudzi(final String tag, final double silnyNaLudzi) {
-        this.find(tag).getGuild().setSilnyNaLudzi(silnyNaLudzi);
-    }
-
-    public void setGuildDefNaLudzi(final String tag, final double defNaLudzi) {
-        this.find(tag).getGuild().setDefNaLudzi(defNaLudzi);
-    }
-
-    public void setGuildKills(final String tag, final Map<UUID, Integer> kills) {
-        this.find(tag).getGuild().setKills(kills);
-    }
-
-    public void setGuildDeaths(final String tag, final Map<UUID, Integer> deaths) {
-        this.find(tag).getGuild().setDeaths(deaths);
-    }
-
-    public void setGuildExpEarned(final String tag, final Map<UUID, Double> expEarned) {
-        this.find(tag).getGuild().setExpEarned(expEarned);
-    }
-
-    public void setGuildLastOnline(final String tag, final Map<UUID, Date> lastOnline) {
-        this.find(tag).getGuild().setLastOnline(lastOnline);
-    }
-
-    public void addGuildMember(final String tag, final UUID member) {
-        this.find(tag).getGuild().getMembers().add(member);
-    }
-
-    public void removeGuildMember(final String tag, final UUID member) {
-        this.find(tag).getGuild().getMembers().remove(member);
-    }
-
-    public void addGuildKill(final String tag, final UUID player, final int kills) {
-        this.find(tag).getGuild().getKills().put(player, kills);
-    }
-
-    public void addGuildDeath(final String tag, final UUID player, final int deaths) {
-        this.find(tag).getGuild().getDeaths().put(player, deaths);
-    }
-
-    public void addGuildExpEarned(final String tag, final UUID player, final double expEarned) {
-        this.find(tag).getGuild().getExpEarned().put(player, expEarned);
     }
 
     public void updateGuildPoints(final String tag, final int points) {
@@ -659,11 +577,6 @@ public class GuildManager {
         return false;
     }
 
-    public void addToGuildInvites(final UUID uuid, final String tag, final int taskId) {
-        guildInvites.put(uuid, new HashMap<>());
-        guildInvites.get(uuid).put(tag, taskId);
-    }
-
     public void updateInviteTaskId(final UUID uuid, final String tag, final int taskId) {
         guildInvites.get(uuid).replace(tag, taskId);
     }
@@ -695,12 +608,6 @@ public class GuildManager {
         if (guildInvites.get(uuid).containsKey(tag)) {
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cZaproszenie od klanu &6" + tag + "&c wygaslo."));
         }
-    }
-
-    public void removeFromGuildInvitesAccepted(final UUID uuid, final String tag) {
-        final int i = guildInvites.get(uuid).get(tag);
-        Bukkit.getScheduler().cancelTask(i);
-        guildInvites.get(uuid).remove(tag);
     }
 
     public List<String> getListOfGuilds() {

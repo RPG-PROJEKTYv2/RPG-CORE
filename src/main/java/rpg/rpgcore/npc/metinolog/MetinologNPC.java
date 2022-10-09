@@ -20,41 +20,39 @@ public class MetinologNPC {
     private final Map<UUID, MetinologObject> userMap;
     private final Map<Integer, String> killMissions = new HashMap<>();
     private final Map<Integer, String> giveMissions = new HashMap<>();
-    private final RPGCORE rpgcore;
 
     public MetinologNPC(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllMetinolog();
     }
 
     public void loadMissions() {
-        killMissions.put(1, "1-10;10;0.5;0.5;0;0");
-        killMissions.put(2, "10-20;20;1;1;0;0");
-        killMissions.put(3, "20-30;35;1;1;0;0");
-        killMissions.put(4, "30-40;50;1;1;0;0");
-        killMissions.put(5, "40-50;65;1.5;1.5;0;0");
-        killMissions.put(6, "50-60;80;1.5;1.5;0;0");
-        killMissions.put(7, "60-70;95;1.5;1.5;0;0");
-        killMissions.put(8, "70-80;110;2;2;0;0");
-        killMissions.put(9, "80-90;130;3;3;0;0");
-        killMissions.put(10, "90-100;150;3.5;3.5;0;0");
-        killMissions.put(11, "100-110;170;3.5;3.5;0;0");
-        killMissions.put(12, "110-120;190;4;4;0;0");
-        killMissions.put(13, "120-130;210;4.5;4.5;0;0");
+        killMissions.put(1, "1-10;10;1.5;0.5;0;0");
+        killMissions.put(2, "10-20;20;1.5;0.5;0;0");
+        killMissions.put(3, "20-30;35;1.5;0.5;0;0");
+        killMissions.put(4, "30-40;50;1.5;0.5;0;0");
+        killMissions.put(5, "40-50;65;1.5;0.5;0;0");
+        killMissions.put(6, "50-60;80;1.5;0.5;0;0");
+        killMissions.put(7, "60-70;95;1.5;0.5;0;0");
+        killMissions.put(8, "70-80;110;1.5;0.5;0;0");
+        killMissions.put(9, "80-90;130;1.5;0.5;0;0");
+        killMissions.put(10, "90-100;150;1.5;0.5;0;0");
+        killMissions.put(11, "100-110;170;1.5;0.5;0;0");
+        killMissions.put(12, "110-120;190;1.5;0.5;0;0");
+        killMissions.put(13, "120-130;210;2;1.5;0;0");
 
-        giveMissions.put(1, "1-10;20;0;0;15;0.5");
-        giveMissions.put(2, "10-20;40;0;0;25;1");
-        giveMissions.put(3, "20-30;60;0;0;25;1");
-        giveMissions.put(4, "30-40;80;0;0;25;1");
-        giveMissions.put(5, "40-50;100;0;0;50;1.5");
-        giveMissions.put(6, "50-60;120;0;0;50;1.5");
-        giveMissions.put(7, "60-70;140;0;0;75;1.5");
-        giveMissions.put(8, "70-80;160;0;0;100;2");
-        giveMissions.put(9, "80-90;180;0;0;150;3");
-        giveMissions.put(10, "90-100;200;0;0;255;3.5");
-        giveMissions.put(11, "100-110;220;0;0;330;3.5");
-        giveMissions.put(12, "110-120;240;0;0;370;4");
-        giveMissions.put(13, "120-130;260;0;0;430;4.5");
+        giveMissions.put(1, "1-10;20;0;0;25;1.5");
+        giveMissions.put(2, "10-20;40;0;0;25;1.5");
+        giveMissions.put(3, "20-30;60;0;0;25;1.5");
+        giveMissions.put(4, "30-40;80;0;0;25;1.5");
+        giveMissions.put(5, "40-50;100;0;0;25;1.5");
+        giveMissions.put(6, "50-60;120;0;0;25;1.5");
+        giveMissions.put(7, "60-70;140;0;0;25;1.5");
+        giveMissions.put(8, "70-80;160;0;0;25;1.5");
+        giveMissions.put(9, "80-90;180;0;0;25;1.5");
+        giveMissions.put(10, "90-100;200;0;0;25;1.5");
+        giveMissions.put(11, "100-110;220;0;0;25;1.5");
+        giveMissions.put(12, "110-120;240;0;0;25;1.5");
+        giveMissions.put(13, "120-130;260;0;0;50;2");
     }
 
     public void openMetinologGUI(final Player player) {
@@ -125,10 +123,6 @@ public class MetinologNPC {
 
     public ImmutableSet<MetinologObject> getMetinologObject() {
         return ImmutableSet.copyOf(this.userMap.values());
-    }
-
-    public boolean isMetinologObject(final UUID string) {
-        return this.userMap.containsKey(string);
     }
 
     public Map<Integer, String> getKillMissions() {

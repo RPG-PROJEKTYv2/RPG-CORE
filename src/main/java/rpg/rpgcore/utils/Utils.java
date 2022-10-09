@@ -1,5 +1,7 @@
 package rpg.rpgcore.utils;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -621,6 +623,15 @@ public class Utils {
         System.out.println("Dodano " + bonusName + " " + bonusValue);
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataBonuses(bonuses.getId(), bonuses));
         return bonusValue;
+    }
+
+    public static void sendPlayerToServer(final Player player, final String serverName) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(serverName);
+        player.sendPluginMessage(RPGCORE.getInstance(), "BungeeCord", out.toByteArray());
+        player.sendMessage(Utils.format(SERVERNAME + "&cSerwer jest aktualnie restartowany..."));
+        player.sendMessage(Utils.format(SERVERNAME + "&cZa wszelkie utrudnienia przepraszamy. &4Administracja Hellrpg.pl"));
     }
 
 }

@@ -41,6 +41,11 @@ public class HellCodeCommand extends CommandAPI {
             return;
         }
 
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getHellCode().isEmpty()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw stworzyc swoj hellcode! Uzyj: &c/hellcode stworz <kod> <kod>"));
+            return;
+        }
+
         if (args.length < 1) {
             player.sendMessage(Utils.poprawneUzycie("hellcode <stworz/zmien/wylacz/twoj kod> [kod]"));
             return;

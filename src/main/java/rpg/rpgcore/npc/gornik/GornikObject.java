@@ -6,27 +6,34 @@ import java.util.UUID;
 
 public class GornikObject {
     private final UUID uuid;
-    private final GornikUser gornikObject;
+    private final GornikUser gornikUser;
 
     public GornikObject(final UUID uuid) {
         this.uuid = uuid;
-        this.gornikObject = new GornikUser(0,0, 0, 0,0,0);
+        this.gornikUser = new GornikUser(0, 0, 0, 0, 0, 0);
     }
 
-    public GornikObject(Document document) {
-        this.uuid = UUID.fromString((String) document.get("_id"));
-        this.gornikObject = new GornikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("bonus1"), document.getDouble("bonus2"), document.getDouble("bonus3"), document.getDouble("bonus4"));
+    public GornikObject(final Document document) {
+        this.uuid = UUID.fromString(document.getString("_id"));
+        this.gornikUser = new GornikUser(document.getInteger("mission"), document.getInteger("progress"),
+                document.getDouble("przebiciePancerza"), document.getDouble("szybkosc"), document.getDouble("szansaNaWzmocnienieKrytyka"), document.getDouble("sredniaOdpornosc"));
     }
 
     public UUID getID() {
-        return uuid;
+        return this.uuid;
     }
 
     public GornikUser getGornikUser() {
-        return this.gornikObject;
+        return this.gornikUser;
     }
 
     public Document toDocument() {
-        return new Document("_id", this.uuid.toString()).append("mission", this.getGornikUser().getMission()).append("progress", this.getGornikUser().getProgress()).append("bonus1", this.getGornikUser().getBonus1()).append("bonus2", this.getGornikUser().getBonus2()).append("bonus3", this.getGornikUser().getBonus3()).append("bonus4", this.getGornikUser().getBonus4());
+        return new Document("_id", this.uuid.toString())
+                .append("mission", this.gornikUser.getMission())
+                .append("progress", this.gornikUser.getProgress())
+                .append("przebiciePancerza", this.gornikUser.getPrzebiciePancerza())
+                .append("szybkosc", this.gornikUser.getSzybkosc())
+                .append("szansaNaWzmocnienieKrytyka", this.gornikUser.getSzansaNaWzmocnienieKrytyka())
+                .append("sredniaOdpornosc", this.gornikUser.getSredniaOdpornosc());
     }
 }

@@ -3,6 +3,10 @@ package rpg.rpgcore;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.abilities.KeyClickListener;
 import rpg.rpgcore.akcesoria.*;
@@ -58,7 +62,6 @@ import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
-import rpg.rpgcore.npc.gornik.events.GornikBlockBreak;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
@@ -279,9 +282,44 @@ public final class RPGCORE extends JavaPlugin {
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
+
+        for (final World w : Bukkit.getWorlds()) {
+            for (final Entity e : w.getEntities()) {
+                if (e instanceof ArmorStand) {
+                    if (e.getName().contains("Duszek") || e.getName().contains("Zlota Rybka") ||e.getName().contains("Pancernik") ||e.getName().contains("Foka") ||
+                            e.getName().contains("Nietoperz") ||e.getName().contains("Bobr") ||e.getName().contains("Ognisty Smok") ||e.getName().contains("Demon") ||
+                            e.getName().contains("Wampir")) {
+                        e.remove();
+                    }
+                } else if (e instanceof EnderCrystal) {
+                    e.remove();
+                }
+            }
+        }
     }
 
     public void onDisable() {
+        this.mongo.saveAllUsers();
+        this.mongo.saveAllMetins();
+        this.mongo.saveAllBao();
+        this.mongo.saveAllDuszolog();
+        this.mongo.saveAllGuilds();
+        this.mongo.saveAllGornik();
+        this.mongo.saveAllMedyk();
+        this.mongo.saveAllKolekcjoner();
+        this.mongo.saveAllMetinolog();
+        this.mongo.saveAllOs();
+        this.mongo.saveAllPrzyrodnik();
+        this.mongo.saveAllActivePets();
+        this.mongo.saveAllAkcesoria();
+        this.mongo.saveAllBonuses();
+        this.mongo.saveAllUserPets();
+        this.mongo.saveAllChatUsers();
+        this.mongo.saveAllRybak();
+        this.mongo.saveAllMagazyny();
+        this.mongo.saveAllLowca();
+        this.mongo.saveAllLesnik();
+        this.mongo.saveAllTrener();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         this.getLvlManager().unLoadAll();
@@ -471,7 +509,6 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...GORNIK
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
-        this.getServer().getPluginManager().registerEvents(new GornikBlockBreak(this), this);
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);

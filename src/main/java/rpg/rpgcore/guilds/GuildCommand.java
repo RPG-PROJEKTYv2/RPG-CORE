@@ -36,7 +36,6 @@ public class GuildCommand extends CommandAPI {
         final UUID uuid = player.getUniqueId();
 
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
-        final String playerGroup = rpgcore.getUserManager().getPlayerGroup(player);
 
         if (args.length == 1){
             //TODO statystyki i sortowanie od najwyzszej
@@ -167,7 +166,6 @@ public class GuildCommand extends CommandAPI {
                 if (rpgcore.getGuildManager().getGuildInviteTag(uuid).contains(tag)) {
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
-                    final String tagForLambda = tag;
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                     return;
@@ -319,7 +317,6 @@ public class GuildCommand extends CommandAPI {
                 final String description = sb.toString().trim();
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
-                final String tagForLambda = tag;
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                 return;
@@ -349,7 +346,6 @@ public class GuildCommand extends CommandAPI {
         for (final UUID uuid1 : rpgcore.getGuildManager().getGuildMembers(tag)) {
             final Player p = Bukkit.getPlayer(uuid1);
             if (p != null && p.isOnline()) {
-                final String group = rpgcore.getUserManager().getPlayerGroup(p);
                 NameTagUtil.setPlayerNameTag(p);
                 TabManager.removePlayer(p);
                 members.add(uuid1);

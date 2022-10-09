@@ -26,7 +26,7 @@ public class AsyncPlayerChatListener implements Listener {
         final String message = e.getMessage().replaceAll("%", "%%");
         final User user = rpgcore.getUserManager().find(uuid);
 
-        if (!user.isHellCodeLogin()) {
+        if (!user.isHellCodeLogin() && !user.getHellCode().equals("off")) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zeby pisac na chacie musisz sie najpierw zalogowac swoim HellCode. Uzyj: &c/hellcode <kod>"));
             return;

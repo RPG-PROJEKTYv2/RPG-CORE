@@ -26,107 +26,92 @@ public class DropFromChestsListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onRightClick(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
-        final UUID uuid = player.getUniqueId();
 
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
             return;
         }
 
         if (player.getItemInHand().getType().equals(Material.CHEST) || player.getItemInHand().getType().equals(Material.ENDER_CHEST)) {
-            if (player.getItemInHand().getItemMeta().getDisplayName() == null) {
-                e.setCancelled(true);
-                return;
-            }
 
             final ItemStack playerItem = player.getItemInHand();
 
             // SKRZYNIA Z ROZNOSCIAMI
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
-                if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
-                    final Items item = rpgcore.getRoznosciManager().getDrawnItems(player);
-                    if (item == null) {
+            if (playerItem.getItemMeta().hasDisplayName()) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
+                        final Items item = rpgcore.getRoznosciManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
-                    final ItemStack is = item.getRewardItem();
-                    is.setAmount(item.getAmount());
-                    player.getInventory().addItem(is);
-                    return;
                 }
-            }
-            // TAJEMNICZA SKRZYNIA
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
-                if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I4", 1));
-                    final Items item = rpgcore.getTajemniczaManager().getDrawnItems(player);
-                    if (item == null) {
+                // TAJEMNICZA SKRZYNIA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I4", 1));
+                        final Items item = rpgcore.getTajemniczaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
-                    final ItemStack is = item.getRewardItem();
-                    is.setAmount(item.getAmount());
-                    player.getInventory().addItem(is);
-                    return;
                 }
-            }
-            // unikatowe...
+                // unikatowe...
 
-            // ... ZE ZWIERZAKAMI
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
-                if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
-                    final Items item = rpgcore.getZwierzakiManager().getDrawnItems(player);
-                    if (item == null) {
+                // ... ZE ZWIERZAKAMI
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
+                        final ItemStack item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        player.getInventory().addItem(item);
                         return;
                     }
-                    final ItemStack is = item.getRewardItem();
-                    is.setAmount(item.getAmount());
-                    player.getInventory().addItem(is);
-
-
-                    net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
-                    player.sendMessage("Lvl - " + nmsStack.getTag().getInt("PetLevel"));
-                    player.sendMessage("PetExp - " + nmsStack.getTag().getDouble("PetExp"));
-                    player.sendMessage("ReqExp - " + nmsStack.getTag().getDouble("ReqPetExp"));
-                    player.sendMessage("TotalExp - " + nmsStack.getTag().getDouble("TotalPetExp"));
-
-
-
-                    return;
                 }
-            }
-            // soon...
-            // Expowisko 1
-            //  Skrzynia Wygnanca
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
-                if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(Map1Items.getItem("I1", 1));
-                    final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
-                    if (item == null) {
+                // soon...
+                // Expowisko 1
+                //  Skrzynia Wygnanca
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Map1Items.getItem("I1", 1));
+                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
-                    final ItemStack is = item.getRewardItem();
-                    is.setAmount(item.getAmount());
-                    player.getInventory().addItem(is);
-                    return;
                 }
-            }
-            // Skrzynia Najemnika
-            if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
-                if (!player.getCanPickupItems()) {
-                    player.getInventory().removeItem(Map1Items.getItem("I2", 1));
-                    final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
-                    if (item == null) {
+                // Skrzynia Najemnika
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Map1Items.getItem("I2", 1));
+                        final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
-                    final ItemStack is = item.getRewardItem();
-                    is.setAmount(item.getAmount());
-                    player.getInventory().addItem(is);
-                    return;
                 }
-            }
-            // Expowisko 2
-            // soon...
+                // Expowisko 2
+                // soon...
 
+            }
         }
     }
 }

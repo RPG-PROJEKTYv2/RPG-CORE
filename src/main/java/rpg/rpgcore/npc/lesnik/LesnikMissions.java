@@ -10,6 +10,15 @@ import java.util.Arrays;
 public enum LesnikMissions {
 
     M1(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M2(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M3(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M4(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M5(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M6(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M7(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M8(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M9(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
+    M10(1,10, LesnikItems.getByName("I1").getItem(), 1, 1, 1),
     M99(99, 1, new ItemBuilder(Material.BARRIER).setName("&c&lBrak misji").setLore(Arrays.asList("", "&7Wykonales/as juz wszystkie misje u Tego NPC!", "&8Kiedys moze jeszcze tu cos bedzie...")).toItemStack(), 0, 0, 0);
 
 
