@@ -34,8 +34,8 @@ public enum GornikMissions {
     M24(24, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 1, 0,0),
     M25(25, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 1, 0,0),
     M26(26, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 1, 0,0),
-    M27(27, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 1, 0,0),
-    M28(28, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 1, 5,5),
+    M27(27, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 2, 0,0),
+    M28(28, Arrays.asList("&7Test lore"), GlobalItem.getItem("I2", 1), 2, 5,5),
     M99(99, Arrays.asList("&7Test lore"), null, 0, 0,0);
 
     private final int number;
