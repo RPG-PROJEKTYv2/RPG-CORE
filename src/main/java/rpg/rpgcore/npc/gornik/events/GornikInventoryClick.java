@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -30,10 +31,10 @@ public class GornikInventoryClick implements Listener {
 
         if (Utils.removeColor(title).equals("Gornik")) {
             e.setCancelled(true);
-
-
-
-
+            if (slot == 11) {
+                RPGCORE.getInstance().getGornikNPC().openKampania(player);
+                return;
+            }
         }
     }
 }

@@ -10,13 +10,13 @@ public class GornikObject {
 
     public GornikObject(final UUID uuid) {
         this.uuid = uuid;
-        this.gornikUser = new GornikUser(0, 0, 0, 0, 0, 0);
+        this.gornikUser = new GornikUser(1, 0, 0, 0, 0, false);
     }
 
     public GornikObject(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.gornikUser = new GornikUser(document.getInteger("mission"), document.getInteger("progress"),
-                document.getDouble("przebiciePancerza"), document.getDouble("szybkosc"), document.getDouble("szansaNaWzmocnienieKrytyka"), document.getDouble("sredniaOdpornosc"));
+        this.gornikUser = new GornikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("sredniaOdpornosc"),
+                document.getDouble("blokCiosu"), document.getDouble("przeszycieBloku"), document.getBoolean("dalszeDone"));
     }
 
     public UUID getID() {
@@ -31,9 +31,9 @@ public class GornikObject {
         return new Document("_id", this.uuid.toString())
                 .append("mission", this.gornikUser.getMission())
                 .append("progress", this.gornikUser.getProgress())
-                .append("przebiciePancerza", this.gornikUser.getPrzebiciePancerza())
-                .append("szybkosc", this.gornikUser.getSzybkosc())
-                .append("szansaNaWzmocnienieKrytyka", this.gornikUser.getSzansaNaWzmocnienieKrytyka())
-                .append("sredniaOdpornosc", this.gornikUser.getSredniaOdpornosc());
+                .append("sredniaOdpornosc", this.gornikUser.getSredniaOdpornosc())
+                .append("blokCiosu", this.gornikUser.getBlokCiosu())
+                .append("przeszycieBloku", this.gornikUser.getPrzeszycieBloku())
+                .append("dalszeDone", this.gornikUser.isDalszeDone());
     }
 }

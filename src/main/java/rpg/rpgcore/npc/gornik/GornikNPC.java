@@ -18,7 +18,6 @@ import java.util.*;
 public class GornikNPC {
     private final RPGCORE rpgcore;
     private final Map<UUID, GornikObject> userMap;
-    private final Map<Integer, String> missionMap = new HashMap<>(40);
 
     public GornikNPC(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -41,24 +40,54 @@ public class GornikNPC {
             return;
         }
 
-        player.teleport(new Location(Bukkit.getWorld("Gornik"), 0, 4, 0));
+        player.teleport(new Location(Bukkit.getWorld("Gornik"), -49.5, 9, 29.5, 180, 0));
         player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Witaj w mojej kopalni. Mam nadzieje, ze zostaniesz tu na dluzej."));
 
-
-
+        //TODO Ogarnac ta funkcje, bo moze duzo lagowac (Moze async???), ewentualnie po prostu zrobic hardcoded rudy i tyle
+        //rollOres();
     }
 
     public void openGornikGUI(final Player player) {
         final UUID uuid = player.getUniqueId();
         final GornikUser user = this.find(uuid).getGornikUser();
-        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lGornik"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lGornik"));
 
-        gui.setItem(0, new ItemBuilder(Material.BOOK).setName("&cKampania Gornika").addGlowing().toItemStack().clone());
+        for (int i = 0; i < 27; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        }
+
+        gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&4&lKampania Gornika").setLore(Arrays.asList("&f&lBonusy", "&7Srednia Odpornosc: &c" + user.getSredniaOdpornosc() + "%",
+                "&7Przeszycie Bloku Ciosu: &c" + user.getPrzeszycieBloku() + "%", "&7Blok Ciosu: &c" + user.getBlokCiosu() + "%")).addGlowing().toItemStack().clone());
+        gui.setItem(13, new ItemBuilder(Material.ANVIL).setName("&a&lUlepszanie").toItemStack().clone()); //TODO Dodac sprawdzanie dalszego dt do ulepszania gemow (nie wiem czy to od tego?)
+        gui.setItem(15, new ItemBuilder(Material.WORKBENCH).setName("&6&lCraftingi").toItemStack());
 
         player.openInventory(gui);
-        //TODO Ogarnac ta funkcje, bo moze duzo lagowac (Moze async???), ewentualnie po prostu zrobic hardcoded rudy i tyle
-        //rollOres();
+    }
 
+    public void openKampania(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        final GornikUser user = this.find(uuid).getGornikUser();
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lKampania Gornika"));
+
+        for (int i = 0; i < 54; i++) {
+            if (!((i > 9 && i < 17) || (i > 18 && i < 26) || (i > 27 && i < 35) || (i > 36 && i < 44))) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+            }
+        }
+
+
+        for (int i = 1; i < 29; i++) {
+            if (i < user.getMission()) {
+                gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&c&lMisja " + i).setLore(Arrays.asList("&a&lUkonczone!")).addGlowing().toItemStack().clone());
+            } else if (i == user.getMission()) {
+                gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&c&lMisja " + i).setLore(GornikMissions.getMission(i).getLore()).toItemStack().clone());
+            } else {
+                gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BARRIER).setName("&c&lMisja " + i).setLore(Arrays.asList("&c&lZeby odblkowac, ukoncz poprzednie zadanie")).toItemStack().clone());
+            }
+        }
+
+
+        player.openInventory(gui);
     }
 
 
@@ -70,7 +99,7 @@ public class GornikNPC {
         chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(5, 0));
         chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(4, 0));
         chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(3, 0));
-        List <Block> blockList = new ArrayList<>();
+        List<Block> blockList = new ArrayList<>();
 
         for (Chunk chunk : chunkList) {
             final int bx = chunk.getX() << 4;
@@ -112,7 +141,4 @@ public class GornikNPC {
         return ImmutableSet.copyOf(this.userMap.values());
     }
 
-    public boolean isGornikObject(final UUID string) {
-        return this.userMap.containsKey(string);
-    }
 }

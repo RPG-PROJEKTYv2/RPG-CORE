@@ -15,6 +15,7 @@ import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
+import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
@@ -965,6 +966,35 @@ public class MongoManager {
     public void saveAllGuilds() {
         for (GuildObject guildObject : rpgcore.getGuildManager().getGuilds()) {
             this.saveDataGuild(guildObject.getTag(), guildObject);
+        }
+    }
+
+
+    // RUDY DO GORNIKA
+    public Map<Integer, Ore> loadAllOreLocations() {
+        Map<Integer, Ore> oreMap = new HashMap<>();
+        for (Document document : this.pool.getOreLocations().find()) {
+            Ore ore = new Ore(document);
+            oreMap.put(ore.getId(), ore);
+        }
+        return oreMap;
+    }
+
+    public void addDataOreLocation(final Ore ore) {
+        this.pool.getOreLocations().insertOne(ore.toDocument());
+    }
+
+    public void removeDataOreLocation(final Ore ore) {
+        this.pool.getOreLocations().findOneAndDelete(new Document("_id", ore.getId()));
+    }
+
+    public void saveDataOreLocation(final Ore ore) {
+        this.pool.getGildie().findOneAndReplace(new Document("_id", ore.getId()), ore.toDocument());
+    }
+
+    public void saveAllOreLocations() {
+        for (Ore ore : rpgcore.getOreManager().getOreLocations()) {
+            this.saveDataOreLocation(ore);
         }
     }
 

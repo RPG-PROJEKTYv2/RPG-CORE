@@ -63,6 +63,7 @@ import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
@@ -220,6 +221,7 @@ public final class RPGCORE extends JavaPlugin {
     private NajemnikManager najemnikManager;
     private WygnaniecManager wygnaniecManager;
     private ZwierzakiManager zwierzakiManager;
+    private OreManager oreManager;
 
     private int i = 1;
 
@@ -320,6 +322,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllLowca();
         this.mongo.saveAllLesnik();
         this.mongo.saveAllTrener();
+        this.mongo.saveAllOreLocations();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         this.getLvlManager().unLoadAll();
@@ -573,6 +576,7 @@ public final class RPGCORE extends JavaPlugin {
         this.magazynManager = new MagazynManager(this);
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
+        this.oreManager = new OreManager(this);
     }
 
     private void initNPCS() {
@@ -837,5 +841,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ZwierzakiManager getZwierzakiManager() {
         return zwierzakiManager;
+    }
+
+    public OreManager getOreManager() {
+        return oreManager;
     }
 }
