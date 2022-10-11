@@ -1,33 +1,39 @@
 package rpg.rpgcore.npc.gornik.ore;
 
 import com.google.common.collect.ImmutableSet;
+import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
 
 import java.util.Map;
 
 public class OreManager {
 
-    private final Map<Integer, Ore> oreMap;
+    private final Map<Location, Ore> oreMap;
 
     public OreManager(final RPGCORE rpgcore) {
         this.oreMap = rpgcore.getMongoManager().loadAllOreLocations();
     }
 
 
-    public void add(Ore ore) {
-        this.oreMap.put(ore.getId(), ore);
+    public void add(Location location, Ore ore) {
+        this.oreMap.put(location, ore);
     }
 
-    public Ore find(int id) {
-        return this.oreMap.get(id);
+    public Ore find(Location location) {
+        return this.oreMap.get(location);
     }
 
-    public boolean isOre(int id) {
-        return this.oreMap.containsKey(id);
+    public boolean isOre(Location location) {
+        for (final Ore ore : this.oreMap.values()) {
+            if (ore.getLocation().equals(location)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void remove(Ore ore) {
-        this.oreMap.remove(ore.getId(), ore);
+        this.oreMap.remove(ore.getLocation(), ore);
     }
 
     public ImmutableSet<Ore> getOreLocations() {

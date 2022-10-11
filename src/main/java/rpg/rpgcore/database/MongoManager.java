@@ -971,11 +971,11 @@ public class MongoManager {
 
 
     // RUDY DO GORNIKA
-    public Map<Integer, Ore> loadAllOreLocations() {
-        Map<Integer, Ore> oreMap = new HashMap<>();
+    public Map<Location, Ore> loadAllOreLocations() {
+        Map<Location, Ore> oreMap = new HashMap<>();
         for (Document document : this.pool.getOreLocations().find()) {
             Ore ore = new Ore(document);
-            oreMap.put(ore.getId(), ore);
+            oreMap.put(ore.getLocation(), ore);
         }
         return oreMap;
     }

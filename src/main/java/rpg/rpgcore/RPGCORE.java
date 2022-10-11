@@ -62,7 +62,9 @@ import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
+import rpg.rpgcore.npc.gornik.events.GornikBlockBreakListener;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.gornik.ore.OreCommand;
 import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
@@ -147,6 +149,7 @@ import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
 import rpg.rpgcore.tasks.ActionBarTask;
+import rpg.rpgcore.tasks.KopalniaTask;
 import rpg.rpgcore.tasks.MetinyTask;
 import rpg.rpgcore.tasks.ReloadPetsTask;
 import rpg.rpgcore.trade.TRADEInventoryClick;
@@ -275,6 +278,8 @@ public final class RPGCORE extends JavaPlugin {
         new ActionBarTask(this);
         // ...PETY
         new ReloadPetsTask(this);
+        // ...KOPALNIA
+        new KopalniaTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -395,6 +400,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new PartyCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new InventoryCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PetCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new OreCommand());
     }
 
     private void initEvents() {
@@ -512,6 +518,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...GORNIK
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new GornikBlockBreakListener(this), this);
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
