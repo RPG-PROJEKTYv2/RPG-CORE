@@ -1,6 +1,8 @@
 package rpg.rpgcore.utils.globalitems.npc;
 
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 
@@ -14,7 +16,8 @@ public enum GornikItems {
     G4("G4", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("&1Krysztal Wody").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
     G5("G5", new ItemBuilder(Material.EMERALD).setName("&2Krysztal Lasu").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
     G6("G6", new ItemBuilder(Material.DIAMOND).setName("&bKrysztal Lodu").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
-    G7("G7", new ItemBuilder(Material.REDSTONE).setName("&cKrysztal Ognia").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack());
+    G7("G7", new ItemBuilder(Material.REDSTONE).setName("&cKrysztal Ognia").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
+    KILOF("KILOF", new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100")).toItemStack());
     private final String name;
     private final ItemStack is;
 
@@ -44,5 +47,17 @@ public enum GornikItems {
         ItemStack is = GornikItems.getByName(name).getItemStack();
         is.setAmount(amount);
         return is;
+    }
+
+    public static ItemStack getKilof() {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(KILOF.getItemStack());
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Lvl", 1);
+        tag.setInt("Exp", 0);
+        tag.setInt("ReqExp", 100);
+        tag.setBoolean("Unbreakable", true);
+
+        nmsStack.setTag(tag);
+        return CraftItemStack.asBukkitCopy(nmsStack);
     }
 }

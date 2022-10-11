@@ -116,7 +116,7 @@ public class KowalInventoryClick implements Listener {
             }
 
             if (clickedSlot == 22 && !clickedInventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
-                boolean hasZwoj = clickedInventory.getItem(14).equals(GlobalItem.getItem("I19", 1));
+                boolean hasZwoj = clickedInventory.getItem(14).equals(GlobalItem.getItem("I9", 1));
 
                 rpgcore.getKowalNPC().upgradeItem(player, clickedInventory.getItem(12).clone(), hasZwoj);
                 player.closeInventory();

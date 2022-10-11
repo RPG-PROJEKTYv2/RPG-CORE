@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.gornik.events;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,11 +23,11 @@ public class GornikInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
 
-        if (e.getClickedInventory() == null) {
+        if (e.getInventory() == null) {
             return;
         }
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final String title = Utils.removeColor(clickedInventory.getTitle());
@@ -36,6 +37,10 @@ public class GornikInventoryClick implements Listener {
 
         if (title.equals("Gornik")) {
             e.setCancelled(true);
+            if (slot == 4) {
+                RPGCORE.getInstance().getGornikNPC().openSklep(player);
+                return;
+            }
             if (slot == 11) {
                 RPGCORE.getInstance().getGornikNPC().openKampania(player);
                 return;
@@ -43,6 +48,24 @@ public class GornikInventoryClick implements Listener {
             if (slot == 22) {
                 RPGCORE.getInstance().getGornikNPC().openDrzewko(player);
                 return;
+            }
+        }
+
+        if (title.equals("Sklep Gorniczy")) {
+            if (item == null || item.getType() == Material.AIR) {
+                return;
+            }
+            final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+            if (slot == 0) {
+                if (user.getKasa() < 100000000) {
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie masz wystarczajaco pieniedzy zeby kupic moj kilof!"));
+                    return;
+                }
+                user.setKasa(user.getKasa() - 100000000);
+                player.getInventory().addItem(GornikItems.getKilof());
+                player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj... Mam nadzieje, ze bedzie ci dobrze sluzyl."));
+                player.sendMessage(Utils.format("&8Pssst... Kilof ten posiada niesamowite wlasciowsci przemiany."));
+                player.closeInventory();
             }
         }
 

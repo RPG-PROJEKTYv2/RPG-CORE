@@ -1,15 +1,21 @@
 package rpg.rpgcore.npc.gornik;
 
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.gornik.enums.GornikLevels;
+import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -31,9 +37,7 @@ public class GornikNPC {
 
     public void onClick(final Player player) {
         final UUID uuid = player.getUniqueId();
-        if (!this.userMap.containsKey(uuid)) {
-            this.userMap.put(uuid, new GornikObject(uuid));
-        }
+        final GornikUser user = find(uuid).getGornikUser();
 
         if (rpgcore.getUserManager().find(uuid).getLvl() < 75) {
             player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Musisz zdobyc jescze troche doswiadczenia aby uzyskac dostep do mojej kopalni."));
@@ -42,9 +46,35 @@ public class GornikNPC {
 
         player.teleport(new Location(Bukkit.getWorld("Gornik"), -49.5, 9, 29.5, 180, 0));
         player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Witaj w mojej kopalni. Mam nadzieje, ze zostaniesz tu na dluzej."));
+        int slowness = 3;
+        int miningFatique = 3;
+        int haste = 0;
+        if (user.isD2()) {
+            slowness -= 1;
+        }
+        if (user.isD6_2()) {
+            miningFatique -= 1;
+        }
+        if (user.isD6_5()) {
+            slowness -= 2;
+        }
+        if (user.isD6_4()) {
+            haste += 1;
+        }
+        if (user.isD9_2()) {
+            haste += 1;
+        }
 
-        //TODO Ogarnac ta funkcje, bo moze duzo lagowac (Moze async???), ewentualnie po prostu zrobic hardcoded rudy i tyle
-        //rollOres();
+        if (slowness != 0) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, slowness));
+        }
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, miningFatique));
+        if (haste != 0) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, haste));
+        }
+
+
+
     }
 
     public void openGornikGUI(final Player player) {
@@ -59,7 +89,7 @@ public class GornikNPC {
         gui.setItem(4, new ItemBuilder(Material.EMERALD).setName("&2&lSklep").addGlowing().toItemStack());
         gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&4&lKampania Gornika").setLore(Arrays.asList("&f&lBonusy", "&7Srednia Odpornosc: &c" + user.getSredniaOdpornosc() + "%",
                 "&7Przeszycie Bloku Ciosu: &c" + user.getPrzeszycieBloku() + "%", "&7Blok Ciosu: &c" + user.getBlokCiosu() + "%")).addGlowing().toItemStack().clone());
-        gui.setItem(13, new ItemBuilder(Material.ANVIL).setName("&a&lUlepszanie").toItemStack().clone()); //TODO Dodac sprawdzanie dalszego dt do ulepszania gemow (nie wiem czy to od tego?)
+        gui.setItem(13, new ItemBuilder(Material.ANVIL).setName("&a&lOsadzanie Krysztalow").toItemStack().clone()); //TODO Dodac sprawdzanie dalszego dt do ulepszania gemow (nie wiem czy to od tego?)
         gui.setItem(15, new ItemBuilder(Material.WORKBENCH).setName("&6&lCraftingi").toItemStack());
         if (user.getMission() < 14) {
             gui.setItem(22, new ItemBuilder(Material.BEACON).setName("&6&lDrzewko Umiejetnosci").setLore(Arrays.asList("&8W tym miejscu rozwiniesz swoje", "&8prawdziwe umiejetnosci gornicze oraz", "&8uzyskasz kilka ciekawych bonusow", "", "&c&lZablokowano! &8(Ukoncz 14 misje w kampanii, zeby odblokowac)")).addGlowing().toItemStack().clone());
@@ -67,6 +97,13 @@ public class GornikNPC {
             gui.setItem(22, new ItemBuilder(Material.BEACON).setName("&6&lDrzewko Umiejetnosci").setLore(Arrays.asList("&8W tym miejscu rozwiniesz swoje", "&8prawdziwe umiejetnosci gornicze oraz", "&8uzyskasz kilka ciekawych bonusow")).addGlowing().toItemStack().clone());
 
         }
+        player.openInventory(gui);
+    }
+
+    public void openSklep(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lSklep Gorniczy"));
+        gui.setItem(0, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100", "", "&7Koszt: &6100,000,000&2$")).toItemStack());
+
         player.openInventory(gui);
     }
 
@@ -269,42 +306,53 @@ public class GornikNPC {
         player.openInventory(gui);
     }
 
+    public ItemStack updateKilofExp(final ItemStack itemStack, final int exp) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Exp", tag.getInt("Exp") + exp);
 
-    public void rollOres() {
-        List<Chunk> chunkList = new ArrayList<>();
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(5, -1));
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(4, -1));
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(3, -1));
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(5, 0));
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(4, 0));
-        chunkList.add(Bukkit.getWorld("Gornik").getChunkAt(3, 0));
-        List<Block> blockList = new ArrayList<>();
+        final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6100"));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        if (tag.getInt("Exp") >= tag.getInt("ReqExp")) {
+            return this.updateLevel(item);
+        }
+        return item;
+    }
 
-        for (Chunk chunk : chunkList) {
-            final int bx = chunk.getX() << 4;
-            final int bz = chunk.getZ() << 4;
-            for (int x = bx; x < bx + 16; x++) {
-                for (int z = bz; z < bz + 16; z++) {
-                    for (int y = 4; y < 13; y++) {
-                        if (chunk.getBlock(x, y, z).getType() != Material.AIR && chunk.getBlock(x, y, z).getType() != Material.BEDROCK && chunk.getBlock(x, y, z).getType() != Material.GRASS
-                                && chunk.getBlock(x, y, z).getType() != Material.DIRT) {
-                            blockList.add(chunk.getBlock(x, y, z));
-                        }
-                    }
-                }
+    public ItemStack updateLevel(final ItemStack itemStack) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Lvl", tag.getInt("Lvl") + 1);
+        tag.setInt("Exp", 0);
+        tag.setInt("ReqExp", tag.getInt("ReqExp") + GornikLevels.getByLvl(tag.getInt("Lvl")).getExp());
+        final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.set(0, Utils.format("&7Poziom: &6" + tag.getInt("Lvl")));
+        lore.set(1, Utils.format("&7Exp: &60&7/&6" + tag.getInt("ReqExp")));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        if (tag.getInt("Lvl") == 10 || tag.getInt("Lvl") == 20 || tag.getInt("Lvl") == 30) {
+            switch (itemStack.getType()) {
+                case STONE_PICKAXE:
+                    item.setType(Material.GOLD_PICKAXE);
+                    break;
+                case GOLD_PICKAXE:
+                    item.setType(Material.IRON_PICKAXE);
+                    break;
+                case IRON_PICKAXE:
+                    item.setType(Material.DIAMOND_PICKAXE);
+                    break;
             }
         }
-        int changed = 0;
-        final Random random = new Random();
-        while (changed < 10) {
-            final int index = random.nextInt(blockList.size());
-            if (blockList.get(index).getRelative(BlockFace.DOWN).getType() == Material.AIR || blockList.get(index).getRelative(BlockFace.UP).getType() == Material.AIR ||
-                    blockList.get(index).getRelative(BlockFace.NORTH).getType() == Material.AIR || blockList.get(index).getRelative(BlockFace.SOUTH).getType() == Material.AIR ||
-                    blockList.get(index).getRelative(BlockFace.EAST).getType() == Material.AIR || blockList.get(index).getRelative(BlockFace.WEST).getType() == Material.AIR) {
-                blockList.get(index).setType(Material.COAL_ORE);
-                changed++;
-            }
+        if (tag.getInt("Lvl") == 40 || tag.getInt("Lvl") == 50) {
+            item.addEnchantment(Enchantment.DIG_SPEED, 1);
         }
+        return item;
     }
 
     public void add(GornikObject gornikObject) {

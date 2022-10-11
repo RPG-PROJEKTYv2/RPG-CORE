@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
@@ -28,6 +29,15 @@ public class SpawnCommand extends CommandAPI {
         if (args.length == 0) {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));
+            if (player.hasPotionEffect(PotionEffectType.SLOW)) {
+                player.removePotionEffect(PotionEffectType.SLOW);
+            }
+            if (player.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
+                player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+            }
+            if (player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+                player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+            }
             return;
         }
         if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.ADMIN || rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV) {
@@ -55,6 +65,15 @@ public class SpawnCommand extends CommandAPI {
             this.rpgcore.getTeleportManager().setBeforeTeleportLocation(target.getUniqueId(), target.getLocation());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano gracza &6" + target.getName() + " &ana spawna!"));
             target.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales przeteleportowany na spawna!"));
+            if (target.hasPotionEffect(PotionEffectType.SLOW)) {
+                target.removePotionEffect(PotionEffectType.SLOW);
+            }
+            if (target.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
+                target.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+            }
+            if (target.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+                target.removePotionEffect(PotionEffectType.FAST_DIGGING);
+            }
             target.teleport(rpgcore.getSpawnManager().getSpawn());
         }
 

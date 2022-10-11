@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
@@ -39,8 +40,12 @@ public class OreCommand extends CommandAPI {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz patrzec na rude!"));
                     return;
                 }
+                if (GornikOres.getOre(block.getType()) == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie ma takiej rudy!"));
+                    return;
+                }
                 final int id = Integer.parseInt(args[1]);
-                final int hp = this.getOreHp(block.getType());
+                final int hp = GornikOres.getOre(block.getType()).getMaxHp();
                 if (RPGCORE.getInstance().getOreManager().isOre(block.getLocation())) {
                     player.sendMessage(Utils.poprawneUzycie("/ore <list/add/remove> [id]"));
                     return;
@@ -53,24 +58,4 @@ public class OreCommand extends CommandAPI {
         }
     }
 
-    private int getOreHp(final Material material) {
-        switch (material) {
-            case COAL_ORE:
-                return 10;
-            case IRON_ORE:
-                return 12;
-            case GOLD_ORE:
-                return 14;
-            case LAPIS_ORE:
-                return 15;
-            case EMERALD_ORE:
-                return 20;
-            case DIAMOND_ORE:
-                return 25;
-            case REDSTONE_ORE:
-                return 30;
-            default:
-                return 0;
-        }
-    }
 }

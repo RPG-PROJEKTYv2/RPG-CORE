@@ -5,11 +5,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.globalitems.npc.GornikItems;
+import rpg.rpgcore.utils.Utils;
 
 public class GornikBlockBreakListener implements Listener {
     private final RPGCORE rpgcore;
@@ -25,6 +26,9 @@ public class GornikBlockBreakListener implements Listener {
             if (!String.valueOf(e.getPlayer().getItemInHand().getType()).contains("_PICKAXE")) {
                 return;
             }
+            if (!String.valueOf(e.getBlock().getType()).contains("_ORE")) {
+                return;
+            }
             if (!e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
                 e.getPlayer().getInventory().addItem(new ItemBuilder(Material.WOOD_PICKAXE).setName("&6Kilof Gornika").toItemStack().clone());
                 return;
@@ -34,60 +38,23 @@ public class GornikBlockBreakListener implements Listener {
                 return;
             }
             final Ore ore = rpgcore.getOreManager().find(e.getBlock().getLocation());
+            final GornikOres gornikOre = GornikOres.getOre(e.getBlock().getType());
             final int oreHp = ore.getHp();
             final int oreMaxHP = ore.getMaxHp();
 
-            e.setCancelled(true);
             ore.setHp(oreHp - 1);
-            rpgcore.getNmsManager().sendActionBar(e.getPlayer(), this.getOreName(e.getBlock().getType()) + " &7HP: &c" + ore.getHp() + "&7/&c" + oreMaxHP);
+            rpgcore.getNmsManager().sendActionBar(e.getPlayer(), gornikOre.getName() + " &7HP: &c" + ore.getHp() + "&7/&c" + oreMaxHP);
 
             if (ore.getHp() == 0) {
-                e.setCancelled(true);
-                e.getPlayer().getInventory().addItem(getDrop(e.getBlock().getType()));
+                if (!ChanceHelper.getChance(gornikOre.getDropChance())) {
+                    e.getPlayer().sendMessage(Utils.format("&cNiestety ta ruda sie rozpadla"));
+                    e.getBlock().setType(Material.BEDROCK);
+                    return;
+                }
+                e.getPlayer().getInventory().addItem(gornikOre.getDrop());
+                e.getPlayer().setItemInHand(RPGCORE.getInstance().getGornikNPC().updateKilofExp(e.getPlayer().getItemInHand(), gornikOre.getExp()));
                 e.getBlock().setType(Material.BEDROCK);
             }
-        }
-    }
-
-    private String getOreName(final Material material) {
-        switch (material) {
-            case COAL_ORE:
-                return "&1&lRuda Mroku";
-            case IRON_ORE:
-                return "&b&lRuda Cyrkonu";
-            case GOLD_ORE:
-                return "&e&lRuda Blasku";
-            case DIAMOND_ORE:
-                return "&1&lRuda Tanzanitu";
-            case EMERALD_ORE:
-                return "&2&lRuda Jadeitu";
-            case REDSTONE_ORE:
-                return "&c&lRuda Rubinu";
-            case LAPIS_ORE:
-                return "&3&lRuda Szafiru";
-            default:
-                return "Unknown!";
-        }
-    }
-
-    private ItemStack getDrop(final Material material) {
-        switch (material) {
-            case COAL_ORE:
-                return GornikItems.getItem("G1", 1);
-            case IRON_ORE:
-                return GornikItems.getItem("G2", 1);
-            case GOLD_ORE:
-                return GornikItems.getItem("G3", 1);
-            case DIAMOND_ORE:
-                return GornikItems.getItem("G6", 1);
-            case EMERALD_ORE:
-                return GornikItems.getItem("G5", 1);
-            case REDSTONE_ORE:
-                return GornikItems.getItem("G7", 1);
-            case LAPIS_ORE:
-                return GornikItems.getItem("G4", 1);
-            default:
-                return null;
         }
     }
 }
