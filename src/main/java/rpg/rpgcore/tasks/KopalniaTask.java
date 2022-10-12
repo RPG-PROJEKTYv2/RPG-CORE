@@ -1,8 +1,8 @@
 package rpg.rpgcore.tasks;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.utils.Utils;
 
@@ -27,34 +27,31 @@ public class KopalniaTask implements Runnable{
 
     private void setRandomOreMaterial(Ore ore) {
         final int random = new Random().nextInt(7);
+        GornikOres gornikOres = null;
         switch (random) {
             case 0:
-                ore.setOreMaterial(Material.COAL_ORE);
-                ore.setMaxHp(10);
-                return;
+                gornikOres = GornikOres.O1;
+                break;
             case 1:
-                ore.setOreMaterial(Material.IRON_ORE);
-                ore.setMaxHp(12);
-                return;
+                gornikOres = GornikOres.O2;
+                break;
             case 2:
-                ore.setOreMaterial(Material.GOLD_ORE);
-                ore.setMaxHp(14);
-                return;
+                gornikOres = GornikOres.O3;
+                break;
             case 3:
-                ore.setOreMaterial(Material.DIAMOND_ORE);
-                ore.setMaxHp(25);
-                return;
+                gornikOres = GornikOres.O6;
+                break;
             case 4:
-                ore.setOreMaterial(Material.EMERALD_ORE);
-                ore.setMaxHp(20);
-                return;
+                gornikOres = GornikOres.O5;
+                break;
             case 5:
-                ore.setOreMaterial(Material.REDSTONE_ORE);
-                ore.setMaxHp(30);
-                return;
+                gornikOres = GornikOres.O7;
+                break;
             case 6:
-                ore.setOreMaterial(Material.LAPIS_ORE);
-                ore.setMaxHp(15);
+                gornikOres = GornikOres.O4;
+                break;
         }
+        ore.setOreMaterial(gornikOres.getMaterial());
+        ore.setMaxHp(gornikOres.getMaxHp());
     }
 }

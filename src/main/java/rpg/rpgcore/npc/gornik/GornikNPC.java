@@ -47,13 +47,13 @@ public class GornikNPC {
         player.teleport(new Location(Bukkit.getWorld("Gornik"), -49.5, 9, 29.5, 180, 0));
         player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Witaj w mojej kopalni. Mam nadzieje, ze zostaniesz tu na dluzej."));
         int slowness = 3;
-        int miningFatique = 3;
-        int haste = 0;
+        int miningFatigue = 0;
+        int haste = -1;
         if (user.isD2()) {
             slowness -= 1;
         }
         if (user.isD6_2()) {
-            miningFatique -= 1;
+            miningFatigue -= 1;
         }
         if (user.isD6_5()) {
             slowness -= 2;
@@ -68,8 +68,10 @@ public class GornikNPC {
         if (slowness != 0) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, slowness));
         }
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, miningFatique));
-        if (haste != 0) {
+        if (miningFatigue == 0) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, miningFatigue));
+        }
+        if (haste > 0) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, haste));
         }
 
@@ -123,7 +125,7 @@ public class GornikNPC {
             if (i < user.getMission()) {
                 gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&c&lMisja " + i).setLore(Arrays.asList("&a&lUkonczone!")).addGlowing().toItemStack().clone());
             } else if (i == user.getMission()) {
-                gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&c&lMisja " + i).setLore(GornikMissions.getMission(i).getLore()).toItemStack().clone());
+                gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&c&lMisja " + i).setLoreCrafting(GornikMissions.getMission(i).getLore(), Arrays.asList(" ", "&7Postep: &6" + user.getProgress() + "&7/&6" + GornikMissions.getMission(i).getReqAmount())).toItemStack().clone());
             } else {
                 gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BARRIER).setName("&c&lMisja " + i).setLore(Arrays.asList("&c&lZeby odblkowac, ukoncz poprzednie zadanie")).toItemStack().clone());
             }

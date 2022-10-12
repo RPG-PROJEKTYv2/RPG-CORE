@@ -261,7 +261,6 @@ public final class RPGCORE extends JavaPlugin {
 
 
 
-
         // BACKUP
         //this.mongo.tempUpdate();
 
@@ -333,16 +332,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getLvlManager().unLoadAll();
         EntityTypes.despawnAllEntities();
     }
-
-    /*private void initTest() {
-        try {
-            Method method = net.minecraft.server.v1_8_R3.Block.class.getDeclaredMethod("c", float.class);
-            method.setAccessible(true);
-            method.invoke(Blocks.STONE, 50.0F);
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-            throw new RuntimeException(ex);
-        }
-    } */
 
     private void initGlobalCommands() {
         CommandAPI.getCommand().register("HellRPGCore", new TeleportCommand(this));

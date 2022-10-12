@@ -6,6 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.gornik.GornikObject;
+import rpg.rpgcore.npc.gornik.GornikUser;
 import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.utils.ChanceHelper;
@@ -51,6 +53,32 @@ public class GornikBlockBreakListener implements Listener {
                     e.getBlock().setType(Material.BEDROCK);
                     return;
                 }
+                final GornikObject object = rpgcore.getGornikNPC().find(e.getPlayer().getUniqueId());
+                final GornikUser user = object.getGornikUser();
+                switch (e.getBlock().getType()) {
+                    case COAL_ORE:
+                        if (user.getMission() == 1 || user.getMission() == 6 || user.getMission() == 13) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
+                        break;
+                    case IRON_ORE:
+                        if (user.getMission() == 2) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
+                        break;
+                    case GOLD_ORE:
+                        break;
+                    case LAPIS_ORE:
+                        break;
+                    case EMERALD_ORE:
+                        break;
+                    case DIAMOND_ORE:
+                        break;
+                    case REDSTONE_ORE:
+                        break;
+                }
+                
+                
                 e.getPlayer().getInventory().addItem(gornikOre.getDrop());
                 e.getPlayer().setItemInHand(RPGCORE.getInstance().getGornikNPC().updateKilofExp(e.getPlayer().getItemInHand(), gornikOre.getExp()));
                 e.getBlock().setType(Material.BEDROCK);
