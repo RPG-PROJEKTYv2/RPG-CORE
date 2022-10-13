@@ -49,7 +49,7 @@ public class GornikBlockBreakListener implements Listener {
 
             if (ore.getHp() == 0) {
                 if (!ChanceHelper.getChance(gornikOre.getDropChance())) {
-                    e.getPlayer().sendMessage(Utils.format("&cNiestety ta ruda sie rozpadla"));
+                    e.getPlayer().sendMessage(Utils.format("&cNiestety nie udalo Ci sie wydobyc tej rudy."));
                     e.getBlock().setType(Material.BEDROCK);
                     return;
                 }

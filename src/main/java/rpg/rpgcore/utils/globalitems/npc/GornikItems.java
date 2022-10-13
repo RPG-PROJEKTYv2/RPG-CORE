@@ -17,6 +17,13 @@ public enum GornikItems {
     G5("G5", new ItemBuilder(Material.EMERALD).setName("&2Krysztal Lasu").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
     G6("G6", new ItemBuilder(Material.DIAMOND).setName("&bKrysztal Lodu").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
     G7("G7", new ItemBuilder(Material.REDSTONE).setName("&cKrysztal Ognia").setLore(Arrays.asList("&8Chyba Gornik tego potrzebuje")).toItemStack()),
+    R1("R1", new ItemBuilder(Material.COAL_ORE).setName("&0Ruda Mroku").toItemStack()),
+    R2("R2", new ItemBuilder(Material.IRON_ORE).setName("&7Ruda Cyrkonu").toItemStack()),
+    R3("R3", new ItemBuilder(Material.GOLD_ORE).setName("&eRuda Blasku").toItemStack()),
+    R4("R4", new ItemBuilder(Material.LAPIS_ORE).setName("&1Ruda Szafiru").toItemStack()),
+    R5("R5", new ItemBuilder(Material.EMERALD_ORE).setName("&2Ruda Jadeitu").toItemStack()),
+    R6("R6", new ItemBuilder(Material.DIAMOND_ORE).setName("&bRuda Tanzanitu").toItemStack()),
+    R7("R7", new ItemBuilder(Material.REDSTONE_ORE).setName("&cRuda Rubinu").toItemStack()),
     KILOF("KILOF", new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100")).toItemStack());
     private final String name;
     private final ItemStack is;

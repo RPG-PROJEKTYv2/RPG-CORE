@@ -5,14 +5,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.GornikUser;
+import rpg.rpgcore.npc.gornik.enums.GornikExchange;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
@@ -23,7 +28,7 @@ public class GornikInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
 
-        if (e.getInventory() == null) {
+        if (e.getInventory() == null || e.getClickedInventory() == null) {
             return;
         }
 
@@ -33,6 +38,29 @@ public class GornikInventoryClick implements Listener {
         final String title = Utils.removeColor(clickedInventory.getTitle());
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
+
+        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (e.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
+                if (String.valueOf(e.getCursor().getType()).contains("_PICKAXE") && e.getCursor().getItemMeta().hasDisplayName()
+                        && e.getCursor().getItemMeta().getDisplayName().equals(Utils.format("&6Kilof Gornika"))) {
+                    if (item != null && (item.getType() == Material.COAL_ORE || item.getType() == Material.IRON_ORE || item.getType() == Material.GOLD_ORE || item.getType() == Material.DIAMOND_ORE
+                    || item.getType() == Material.EMERALD_ORE || item.getType() == Material.REDSTONE_ORE || item.getType() == Material.LAPIS_ORE) && item.getItemMeta().hasDisplayName()
+                            && item.getItemMeta().getDisplayName().contains("Ruda")) {
+                        e.setCancelled(true);
+                        final ItemStack toRemove = new ItemBuilder(item.clone()).setAmount(1).toItemStack();
+                        for (int i = 0; i < item.getAmount() + 1; i++) {
+                            if (ChanceHelper.getChance(GornikExchange.getExchange(item.getType()).getDropChance())) {
+                                player.getInventory().removeItem(toRemove);
+                                player.getInventory().addItem(GornikExchange.getExchange(item.getType()).getItem());
+                            } else {
+                                player.getInventory().removeItem(toRemove);
+                                player.sendMessage(Utils.format("&cNiestety nie udalo sie wydobyc krysztalu z tej rudy."));
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
         if (title.equals("Gornik")) {
