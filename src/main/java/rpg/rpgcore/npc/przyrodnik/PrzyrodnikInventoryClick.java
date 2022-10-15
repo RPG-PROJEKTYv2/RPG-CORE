@@ -1,7 +1,6 @@
 package rpg.rpgcore.npc.przyrodnik;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,11 +19,11 @@ public class PrzyrodnikInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCLick(final InventoryClickEvent e) {
-        final Inventory gui = e.getClickedInventory();
+        final Inventory gui = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

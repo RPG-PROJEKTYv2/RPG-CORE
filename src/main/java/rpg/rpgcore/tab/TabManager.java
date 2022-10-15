@@ -25,7 +25,7 @@ public class TabManager {
 
 
     public static void addPlayer(Player player) {
-        String prefix = "";
+        String prefix;
         String guild = "";
         if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
             prefix = rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getPrefix();
@@ -70,7 +70,7 @@ public class TabManager {
         final Player player = Bukkit.getPlayer(uuid);
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
-        String prefix = "";
+        String prefix;
         if (user.getRankUser().isStaff()) {
             prefix = user.getRankUser().getRankType().getPrefix();
         } else {
@@ -93,14 +93,14 @@ public class TabManager {
                 tab.set(player, 2, i, "&7");
                 tab.set(player, 3, i, "&7");
                 if (lista.size() >= number2) {
-                    tab.set(player, 1, i, Utils.format(lista.get(number2 - 1).replaceAll("/", " ")));
+                    tab.set(player, 1, i, Utils.format(lista.get(number2 - 1).replaceAll("/", " "))); //0, 2
                 }
                 if (lista.size() >= number3) {
-                    tab.set(player, 2, i, Utils.format(lista.get(number3 - 1).replaceAll("/", " ")));
+                    tab.set(player, 2, i, Utils.format(lista.get(number3 - 1).replaceAll("/", " "))); // 1, 3
                 }
 
-                number2 += 4;
-                number3 += 4;
+                number2 += 2;
+                number3 += 2;
             }
 
             final int lvl = user.getLvl();

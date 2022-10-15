@@ -344,7 +344,7 @@ public class Utils {
         }
 
         for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("Thorns: ")) {
+            if (removeColor(s).contains("Ciernie: ")) {
                 return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
             }
         }

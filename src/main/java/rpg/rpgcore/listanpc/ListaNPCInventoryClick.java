@@ -12,16 +12,13 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
-
 public class ListaNPCInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(final InventoryClickEvent e){
-        final Inventory gui = e.getClickedInventory();
+        final Inventory gui = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID uuid = player.getUniqueId();
 
-        if (gui == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

@@ -12,10 +12,9 @@ public class HISTORYInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void historyInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
-        final Player player = (Player) e.getWhoClicked();
+        final Inventory clickedInventory = e.getInventory();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

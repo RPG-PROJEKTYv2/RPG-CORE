@@ -14,10 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.gornik.enums.GornikDlutoLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
 import java.util.*;
 
@@ -76,7 +78,6 @@ public class GornikNPC {
         }
 
 
-
     }
 
     public void openGornikGUI(final Player player) {
@@ -95,7 +96,7 @@ public class GornikNPC {
         gui.setItem(15, new ItemBuilder(Material.WORKBENCH).setName("&6&lCraftingi").toItemStack());
         if (user.getMission() < 14) {
             gui.setItem(22, new ItemBuilder(Material.BEACON).setName("&6&lDrzewko Umiejetnosci").setLore(Arrays.asList("&8W tym miejscu rozwiniesz swoje", "&8prawdziwe umiejetnosci gornicze oraz", "&8uzyskasz kilka ciekawych bonusow", "", "&c&lZablokowano! &8(Ukoncz 14 misje w kampanii, zeby odblokowac)")).addGlowing().toItemStack().clone());
-        } else  {
+        } else {
             gui.setItem(22, new ItemBuilder(Material.BEACON).setName("&6&lDrzewko Umiejetnosci").setLore(Arrays.asList("&8W tym miejscu rozwiniesz swoje", "&8prawdziwe umiejetnosci gornicze oraz", "&8uzyskasz kilka ciekawych bonusow")).addGlowing().toItemStack().clone());
 
         }
@@ -105,6 +106,35 @@ public class GornikNPC {
     public void openSklep(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lSklep Gorniczy"));
         gui.setItem(0, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100", "", "&7Koszt: &6100,000,000&2$")).toItemStack());
+
+        player.openInventory(gui);
+    }
+
+    public void openCrafting(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lReceptury Gornika"));
+
+        gui.setItem(0, new ItemBuilder(GornikItems.getZmiotka("T0").clone()).setLoreCrafting(GornikItems.getZmiotka("T0").clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&8Pozwala oczyscic rudy z kamienia",
+                "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
+                " ",
+                "&7Koszt:",
+                "&8- &6150,000,000&2$",
+                "&8- &6x128 &0Ruda Mroku",
+                "&8- &6x128 &7&lRuda Cyrkonu",
+                "&8- &6x128 &e&lRuda Blasku",
+                "&8- &6x128 &3&lRuda Szafiru",
+                "&8- &6x128 &2&lRuda Jadeitu",
+                "&8- &6x128 &b&lRuda Tanzanitu",
+                "&8- &6x128 &c&lRuda Rubinu")).addGlowing().toItemStack());
+        gui.setItem(1, new ItemBuilder(GornikItems.getItem("WODA", 1).clone()).setLoreCrafting(GornikItems.getItem("WODA", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&7Koszt:",
+                "&8- &62,500,000&2$",
+                "&8- &6x8 &0Ruda Mroku",
+                "&8- &6x8 &7&lRuda Cyrkonu",
+                "&8- &6x8 &3&lRuda Szafiru"
+        )).addGlowing().toItemStack());
 
         player.openInventory(gui);
     }
@@ -247,7 +277,6 @@ public class GornikNPC {
         }
 
 
-
         // LEWO
         if (user.isD3_1()) {
             gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca I").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
@@ -316,26 +345,38 @@ public class GornikNPC {
         final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
-        lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6100"));
+        if (tag.getInt("Lvl") == 50) {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6MAX"));
+        } else {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6" + tag.getInt("ReqExp")));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
         if (tag.getInt("Exp") >= tag.getInt("ReqExp")) {
-            return this.updateLevel(item);
+            return this.updateKilofLevel(item);
         }
         return item;
     }
 
-    public ItemStack updateLevel(final ItemStack itemStack) {
+    public ItemStack updateKilofLevel(final ItemStack itemStack) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", tag.getInt("Lvl") + 1);
         tag.setInt("Exp", 0);
-        tag.setInt("ReqExp", tag.getInt("ReqExp") + GornikLevels.getByLvl(tag.getInt("Lvl")).getExp());
+        if (GornikLevels.getByLvl(tag.getInt("Lvl")) == null) {
+            tag.setInt("ReqExp", 0);
+        } else {
+            tag.setInt("ReqExp", tag.getInt("ReqExp") + GornikLevels.getByLvl(tag.getInt("Lvl")).getExp());
+        }
         final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
         lore.set(0, Utils.format("&7Poziom: &6" + tag.getInt("Lvl")));
-        lore.set(1, Utils.format("&7Exp: &60&7/&6" + tag.getInt("ReqExp")));
+        if (tag.getInt("Lvl") == 50) {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6MAX"));
+        } else {
+            lore.set(1, Utils.format("&7Exp: &60&7/&6" + tag.getInt("ReqExp")));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
         if (tag.getInt("Lvl") == 10 || tag.getInt("Lvl") == 20 || tag.getInt("Lvl") == 30) {
@@ -354,6 +395,48 @@ public class GornikNPC {
         if (tag.getInt("Lvl") == 40 || tag.getInt("Lvl") == 50) {
             item.addEnchantment(Enchantment.DIG_SPEED, 1);
         }
+        return item;
+    }
+
+    public ItemStack updateDlutoExp(final ItemStack itemStack, final int exp) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Exp", tag.getInt("Exp") + exp);
+
+        final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        if (tag.getInt("Lvl") == 50) {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6MAX"));
+        } else {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6" + tag.getInt("ReqExp")));
+        }
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        if (tag.getInt("Exp") >= tag.getInt("ReqExp")) {
+            return this.updateDlutoLevel(item);
+        }
+        return item;
+    }
+
+    public ItemStack updateDlutoLevel(final ItemStack itemStack) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Lvl", tag.getInt("Lvl") + 1);
+        tag.setInt("Exp", 0);
+        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(tag.getInt("Lvl")+1, tag.getString("Tier")));
+        final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.set(0, Utils.format("&7Poziom: &6" + tag.getInt("Lvl")));
+        if (tag.getInt("Lvl") == 50) {
+            lore.set(1, Utils.format("&7Exp: &6" + tag.getInt("Exp") + "&7/&6MAX"));
+        } else {
+            lore.set(1, Utils.format("&7Exp: &60&7/&6" + tag.getInt("ReqExp")));
+        }
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
         return item;
     }
 

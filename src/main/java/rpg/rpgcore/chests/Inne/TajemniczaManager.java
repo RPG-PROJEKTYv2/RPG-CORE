@@ -15,7 +15,7 @@ public class TajemniczaManager {
     private final Set<Items> tajemnicza = Sets.newConcurrentHashSet();
 
     public TajemniczaManager() {
-        this.tajemnicza.add(new Items("1", 8.0, GlobalItem.getItem("I20", 1), 1));
+        this.tajemnicza.add(new Items("1", 8.0, GlobalItem.getItem("I17", 1), 1));
     }
 
 

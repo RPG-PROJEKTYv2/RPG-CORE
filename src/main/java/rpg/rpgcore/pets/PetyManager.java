@@ -54,10 +54,8 @@ public class PetyManager {
         } else {
             gui.setItem(53, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
         }
-        int j = 1;
         for (ItemStack is : PageUtils.getPageItems(finalAllItems, page, 28)) {
             gui.setItem(gui.firstEmpty(), is);
-            j++;
         }
 
 
@@ -204,9 +202,9 @@ public class PetyManager {
         double abilityBonuse = Double.parseDouble(Utils.removeColor(ability.substring(ability.lastIndexOf(" "))).replace("%", "").trim());
 
         if (ability.contains("%")) {
-            lore.set(slot, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd) + "%"));
+            lore.set(slot, Utils.format(newAbility + " &c" + String.format("%.3f", (abilityBonuse + toAdd)) + "%"));
         } else {
-            lore.set(slot, Utils.format(newAbility + " &c" + (abilityBonuse + toAdd)));
+            lore.set(slot, Utils.format(newAbility + " &c" + String.format("%.3f", (abilityBonuse + toAdd))));
         }
 
         im.setLore(lore);

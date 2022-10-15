@@ -55,7 +55,7 @@ public class EntityDamageEntityListener implements Listener {
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
                 final double victimDef = rpgcore.getDamageManager().calculateDef(victim, "ludzie");
 
-                double finalDmg = Double.parseDouble(String.format("%.2f", (attackerDmg * (100 - victimDef))/100));
+                double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - victimDef));
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }

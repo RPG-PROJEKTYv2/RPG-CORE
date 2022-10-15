@@ -16,7 +16,6 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,12 +30,11 @@ public class RybakInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void rybakInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

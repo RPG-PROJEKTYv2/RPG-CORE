@@ -22,11 +22,11 @@ public class LowcaInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
-        final Inventory inv = e.getClickedInventory();
+        final Inventory inv = e.getInventory();
         final String title = Utils.removeColor(inv.getTitle());
         final Player player = (Player) e.getWhoClicked();
         final int slot = e.getSlot();

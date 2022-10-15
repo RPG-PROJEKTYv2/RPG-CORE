@@ -3,10 +3,15 @@ package rpg.rpgcore.utils.globalitems.npc;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import rpg.rpgcore.npc.gornik.enums.GornikDlutoLevels;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum GornikItems {
     I1("I1", new ItemBuilder(Material.NETHER_STAR).setName("&6&lLegendarny Krysztal Wzmocnienia").setLore(Arrays.asList("&8Posiada niesamowita moc, ktora pozwala na", "&8rozwiniecie swoich umiejetnosci", "&8w dziedzinie gornictwa")).toItemStack()),
@@ -24,7 +29,13 @@ public enum GornikItems {
     R5("R5", new ItemBuilder(Material.EMERALD_ORE).setName("&2Ruda Jadeitu").toItemStack()),
     R6("R6", new ItemBuilder(Material.DIAMOND_ORE).setName("&bRuda Tanzanitu").toItemStack()),
     R7("R7", new ItemBuilder(Material.REDSTONE_ORE).setName("&cRuda Rubinu").toItemStack()),
-    KILOF("KILOF", new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100")).toItemStack());
+    KILOF("KILOF", new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100")).toItemStack()),
+    ZMIOTKA_T0("ZMIOTKA_T0", new ItemBuilder(Material.WOOD_SPADE).setName("&8Drewniane Dluto").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&620", "&7Szansa na znalezienie Krysztalu: +&60&7%", "&7Szansa na dodatkowy Krysztal: &60&7%")).toItemStack()),
+    ZMIOTKA_T1("ZMIOTKA_T1", new ItemBuilder(Material.STONE_SPADE).setName("&8Kamienne Dluto").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&620", "&7Szansa na znalezienie Krysztalu: +&65&7%", "&7Szansa na dodatkowy Krysztal: &65&7%")).toItemStack()),
+    ZMIOTKA_T2("ZMIOTKA_T2", new ItemBuilder(Material.IRON_SPADE).setName("&8Metalowe Dluto").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&620", "&7Szansa na znalezienie Krysztalu: +&67.5&7%", "&7Szansa na dodatkowy Krysztal: &67.5&7%")).toItemStack()),
+    ZMIOTKA_T3("ZMIOTKA_T3", new ItemBuilder(Material.GOLD_SPADE).setName("&8Zlote Dluto").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&620", "&7Szansa na znalezienie Krysztalu: +&610&7%", "&7Szansa na dodatkowy Krysztal: &612.5&7%")).toItemStack()),
+    ZMIOTKA_T4("ZMIOTKA_T4", new ItemBuilder(Material.DIAMOND_SPADE).setName("&8Diamentowe Dluto").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&620", "&7Szansa na znalezienie Krysztalu: +&615&7%", "&7Szansa na dodatkowy Krysztal: &617.5&7%")).toItemStack()),
+    WODA("WODA", new ItemBuilder(Material.WATER_BUCKET).setName("&1Wiadro Wody").setLore(Arrays.asList("&8Potrzebne do oczyszczenia &6Rud &8z kamienia,", "&8zeby otrzymac cenne &5Krysztaly")).toItemStack());
     private final String name;
     private final ItemStack is;
 
@@ -65,6 +76,40 @@ public enum GornikItems {
         tag.setBoolean("Unbreakable", true);
 
         nmsStack.setTag(tag);
-        return CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemStack newItem = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = newItem.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        newItem.setItemMeta(meta);
+        return newItem;
+    }
+
+    public static ItemStack getZmiotka(String tier) {
+        ItemStack is = getByName("ZMIOTKA_" + tier.toUpperCase()).getItemStack();
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        tag.setInt("Lvl", 1);
+        tag.setInt("Exp", 0);
+        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(2, tier));
+        tag.setBoolean("Unbreakable", true);
+        tag.setDouble("Chance", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(2).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));
+        tag.setDouble("DubleDrop", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(3).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));
+        tag.setString("Tier", tier);
+        nmsStack.setTag(tag);
+
+        final ItemStack newItem = CraftItemStack.asBukkitCopy(nmsStack);
+
+        final ItemMeta meta = newItem.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.set(1, "&7Exp: &60&7/&6" + tag.getInt("ReqExp"));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+        newItem.setItemMeta(meta);
+
+        return newItem;
     }
 }

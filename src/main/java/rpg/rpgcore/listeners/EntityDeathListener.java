@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
@@ -32,6 +33,9 @@ public class EntityDeathListener implements Listener {
         ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
+        if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
+            return;
+        }
 
         final EntityDamageByEntityEvent e2 = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
 

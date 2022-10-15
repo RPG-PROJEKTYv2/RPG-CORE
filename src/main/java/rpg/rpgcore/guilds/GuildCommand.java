@@ -164,6 +164,10 @@ public class GuildCommand extends CommandAPI {
                 }
 
                 if (rpgcore.getGuildManager().getGuildInviteTag(uuid).contains(tag)) {
+                    if (rpgcore.getGuildManager().getGuildMembers(tag).size() >= 15) {
+                        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cKlan jest juz pelny"));
+                        return;
+                    }
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));

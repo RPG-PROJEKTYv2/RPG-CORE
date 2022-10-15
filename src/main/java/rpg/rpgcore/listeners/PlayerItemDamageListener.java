@@ -7,9 +7,8 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 
 public class PlayerItemDamageListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onitemDamage(PlayerItemDamageEvent e) {
         e.setCancelled(true);
-        return;
     }
 }

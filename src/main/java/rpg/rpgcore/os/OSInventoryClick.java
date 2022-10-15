@@ -26,11 +26,11 @@ public class OSInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void osInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

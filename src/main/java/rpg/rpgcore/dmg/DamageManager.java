@@ -125,20 +125,35 @@ public class DamageManager {
         final UUID uuid = player.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double def = 10;
+        double mnoznik = 100;
 
-        def += bonuses.getSredniadefensywa();
+        mnoznik += bonuses.getSredniadefensywa();
+
+        if (player.getInventory().getHelmet() != null) {
+            def += Utils.getProtectionLevel(player.getInventory().getHelmet());
+        }
+        if (player.getInventory().getChestplate() != null) {
+            def += Utils.getProtectionLevel(player.getInventory().getChestplate());
+        }
+        if (player.getInventory().getLeggings() != null) {
+            def += Utils.getProtectionLevel(player.getInventory().getLeggings());
+        }
+        if (player.getInventory().getBoots() != null) {
+            def += Utils.getProtectionLevel(player.getInventory().getBoots());
+        }
+
 
         if (type.equalsIgnoreCase("ludzie")) {
-            def += bonuses.getDefnaludzi();
+            mnoznik += bonuses.getDefnaludzi();
             if (rpgcore.getGuildManager().hasGuild(uuid)) {
-                def += rpgcore.getGuildManager().getGuildDefNaLudzi(rpgcore.getGuildManager().getGuildTag(uuid));
+                mnoznik += rpgcore.getGuildManager().getGuildDefNaLudzi(rpgcore.getGuildManager().getGuildTag(uuid));
             }
         } else if (type.equalsIgnoreCase("moby")) {
-            def += bonuses.getDefnamoby();
+            mnoznik += bonuses.getDefnamoby();
 
         }
 
-        return Double.parseDouble(String.format("%.2f", def/(def + 100)));
+        return Double.parseDouble(String.format("%.2f", def * (mnoznik / 100)));
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker) {

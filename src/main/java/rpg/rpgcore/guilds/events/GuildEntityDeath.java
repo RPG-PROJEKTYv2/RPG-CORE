@@ -6,7 +6,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.Utils;
 
 public class GuildEntityDeath implements Listener {
 
@@ -21,6 +20,7 @@ public class GuildEntityDeath implements Listener {
         if (e.getEntity().getKiller() == null) {
             return;
         }
+
 
         if (!(e.getEntity() instanceof Player)) {
             final Player killer = e.getEntity().getKiller();

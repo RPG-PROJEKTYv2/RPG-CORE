@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class TRADEInventoryClick implements Listener {
@@ -23,17 +22,14 @@ public class TRADEInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void tradeInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
         final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
         if (clickedInventoryTitle.contains("Wymiana ")) {

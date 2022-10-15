@@ -32,13 +32,13 @@ public class ChatInventoryClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
-        final String title = Utils.removeColor(e.getClickedInventory().getTitle());
+        final String title = Utils.removeColor(e.getInventory().getTitle());
         final int slot = e.getSlot();
         final ItemStack item = e.getCurrentItem();
 

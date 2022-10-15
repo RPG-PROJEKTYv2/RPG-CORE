@@ -1,14 +1,13 @@
 package rpg.rpgcore;
 
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
+import net.minecraft.server.v1_8_R3.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
-import rpg.rpgcore.abilities.KeyClickListener;
 import rpg.rpgcore.akcesoria.*;
 import rpg.rpgcore.akcesoria.listeners.AKCESORIAInventoryClick;
 import rpg.rpgcore.akcesoria.listeners.AKCESORIAPlayerInteract;
@@ -31,6 +30,7 @@ import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
 import rpg.rpgcore.chests.Inne.RoznosciManager;
 import rpg.rpgcore.chests.Inne.TajemniczaManager;
 import rpg.rpgcore.chests.Inne.ZwierzakiManager;
+import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
@@ -160,11 +160,11 @@ import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 
 import javax.security.auth.login.LoginException;
+import java.lang.reflect.Field;
 
 public final class RPGCORE extends JavaPlugin {
 
     private static RPGCORE instance;
-    private static ProtocolManager protocolManager;
     private static DiscordBot discordBot;
     private final Config config = new Config(this);
     private SpawnManager spawn;
@@ -231,9 +231,6 @@ public final class RPGCORE extends JavaPlugin {
     public static RPGCORE getInstance() {
         return instance;
     }
-    public static ProtocolManager getProtocolManager() {
-        return protocolManager;
-    }
 
     public static DiscordBot getDiscordBot() {
         return discordBot;
@@ -241,7 +238,6 @@ public final class RPGCORE extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
-        protocolManager = ProtocolLibrary.getProtocolManager();
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
@@ -283,6 +279,8 @@ public final class RPGCORE extends JavaPlugin {
         // SKRZYNIE
         this.initChests();
 
+        this.fixBuckets();
+
         try {
             discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY");
         } catch (LoginException e) {
@@ -302,6 +300,7 @@ public final class RPGCORE extends JavaPlugin {
                 }
             }
         }
+        Bukkit.clearRecipes();
     }
 
     public void onDisable() {
@@ -390,6 +389,9 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new InventoryCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PetCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new OreCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new EnchantCustomCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new EnchantCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new MemoryCommand());
     }
 
     private void initEvents() {
@@ -437,9 +439,6 @@ public final class RPGCORE extends JavaPlugin {
         // HISTORY
         this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
 
-        // POMOC
-        this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
-
         // ECONOMY
         this.getServer().getPluginManager().registerEvents(new EconomyPlayerInteract(this), this);
 
@@ -458,7 +457,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
 
         // BOSSY
-        this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(), this);
 
         // LISTANPC
         this.getServer().getPluginManager().registerEvents(new ListaNPCInventoryClick(), this);
@@ -528,7 +527,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // INVSEE
         this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new KeyClickListener(), this);
+        //this.getServer().getPluginManager().registerEvents(new KeyClickListener(), this);
 
         // PETY
         this.getServer().getPluginManager().registerEvents(new PetInventoryClickListener(this), this);
@@ -610,6 +609,17 @@ public final class RPGCORE extends JavaPlugin {
         this.najemnikManager = new NajemnikManager();
         this.wygnaniecManager = new WygnaniecManager();
         this.zwierzakiManager = new ZwierzakiManager();
+    }
+
+    private void fixBuckets() {
+        try {
+            Field f = Item.class.getDeclaredField("maxStackSize");
+            f.setAccessible(true);
+            f.setInt(Item.REGISTRY.a(326), 16);
+            f.setInt(Item.REGISTRY.a(327), 16);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -28,11 +28,11 @@ public class KolekcjonerInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void kolekcjonerInventoryClick(final InventoryClickEvent e) {
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();

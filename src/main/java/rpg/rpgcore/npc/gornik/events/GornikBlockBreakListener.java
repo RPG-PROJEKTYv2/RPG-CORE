@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.GornikUser;
 import rpg.rpgcore.npc.gornik.enums.GornikOres;
@@ -13,6 +14,7 @@ import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public class GornikBlockBreakListener implements Listener {
     private final RPGCORE rpgcore;
@@ -53,28 +55,54 @@ public class GornikBlockBreakListener implements Listener {
                     e.getBlock().setType(Material.BEDROCK);
                     return;
                 }
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(e.getPlayer().getUniqueId());
                 final GornikObject object = rpgcore.getGornikNPC().find(e.getPlayer().getUniqueId());
                 final GornikUser user = object.getGornikUser();
+                final double szczescie = ((double) bonuses.getBonusesUser().getSzczescie()) / 100;
+                e.getPlayer().sendMessage("" + szczescie);
+                if (ChanceHelper.getChance(0.025 + (0.025 * szczescie / 100))) {
+                    e.getPlayer().getInventory().addItem(GlobalItem.getItem("I21", 1));
+                    e.getPlayer().sendMessage(Utils.format("&8[&2+&8] &fx1 &8Skrzynia Gornika"));
+                    if (user.getMission() == 8 || user.getMission() == 15 || user.getMission() == 22 || user.getMission() == 27) {
+                        user.setProgress(user.getProgress() + 1);
+                    }
+                }
                 switch (e.getBlock().getType()) {
                     case COAL_ORE:
-                        if (user.getMission() == 1 || user.getMission() == 6 || user.getMission() == 13) {
+                        if (user.getMission() == 1 || user.getMission() == 6) {
                             user.setProgress(user.getProgress() + 1);
                         }
                         break;
                     case IRON_ORE:
-                        if (user.getMission() == 2) {
+                        if (user.getMission() == 2 || user.getMission() == 13) {
                             user.setProgress(user.getProgress() + 1);
                         }
                         break;
                     case GOLD_ORE:
+                        if (user.getMission() == 5) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
                         break;
                     case LAPIS_ORE:
+                        if (user.getMission() == 7) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
                         break;
                     case EMERALD_ORE:
+                        if (user.getMission() == 11 || user.getMission() == 19) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
                         break;
                     case DIAMOND_ORE:
+                        if (user.getMission() == 21) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
                         break;
+                    case GLOWING_REDSTONE_ORE:
                     case REDSTONE_ORE:
+                        if (user.getMission() == 24) {
+                            user.setProgress(user.getProgress() + 1);
+                        }
                         break;
                 }
                 

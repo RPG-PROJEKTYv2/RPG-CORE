@@ -13,7 +13,6 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
 
 public class DropFromChestsListener implements Listener {
 
@@ -78,6 +77,9 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
+
+                //TODO Skrzynia Gornika
+
                 // soon...
                 // Expowisko 1
                 //  Skrzynia Wygnanca
@@ -105,7 +107,6 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
-                        return;
                     }
                 }
                 // Expowisko 2

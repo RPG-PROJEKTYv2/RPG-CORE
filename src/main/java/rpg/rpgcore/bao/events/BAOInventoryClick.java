@@ -6,12 +6,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class BAOInventoryClick implements Listener {
@@ -24,11 +22,11 @@ public class BAOInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void baoInventoryClickEvent(final InventoryClickEvent e) {
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 

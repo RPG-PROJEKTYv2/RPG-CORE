@@ -9,7 +9,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
@@ -26,11 +25,11 @@ public class GuildsInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void guildInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
@@ -176,9 +175,7 @@ public class GuildsInventoryClick implements Listener {
                     break;
             }
             rpgcore.getGuildManager().updateGuildBalance(tag, -1);
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().saveDataGuild(tag, rpgcore.getGuildManager().find(tag));
-            });
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataGuild(tag, rpgcore.getGuildManager().find(tag)));
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + clickedItem.getItemMeta().getDisplayName()));
             rpgcore.getGuildManager().showUpgrades(tag, player);
         }

@@ -14,7 +14,7 @@ public class RoznosciManager {
     private final Set<Items> roznosci = Sets.newConcurrentHashSet();
 
     public RoznosciManager() {
-        this.roznosci.add(new Items("1", 8.0, GlobalItem.getItem("I20", 1), 1));
+        this.roznosci.add(new Items("1", 8.0, GlobalItem.getItem("I17", 1), 1));
     }
 
 

@@ -2,13 +2,13 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemHelper {
 
-    private final List<String> lore = new ArrayList<>();
 
     public static ItemStack createArmor(final String name, final Material itemType, final int prot, final int thorns, final boolean hideFlags, final boolean addGlint) {
         final ItemBuilder set = new ItemBuilder(itemType);
@@ -16,7 +16,7 @@ public class ItemHelper {
 
         set.setName(name);
         lore.add("&7Obrona: &f" + prot);
-        lore.add("&7Thorns: &f" + thorns);
+        lore.add("&7Ciernie: &f" + thorns);
         set.setLore(lore);
 
         if (hideFlags) {
@@ -49,5 +49,30 @@ public class ItemHelper {
         }
 
         return sword.toItemStack();
+    }
+
+    public static void setEnchants(final ItemStack is, final String type, final int v1, final int v2) {
+        final ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        if (im.hasLore()) {
+            lore = im.getLore();
+            if (type.equalsIgnoreCase("zbroja")) {
+                lore.set(0, Utils.format("&7Obrona: &f" + v1));
+                lore.set(1, Utils.format("&7Ciernie: &f" + v2));
+            } else if (type.equalsIgnoreCase("miecz")) {
+                lore.set(0, Utils.format("&7Obrazenia: &c" + v1));
+                lore.set(1, Utils.format("&7Obrazenia na potwory: &c" + v2));
+            }
+        } else {
+            if (type.equalsIgnoreCase("zbroja")) {
+                lore.add(Utils.format("&7Obrona: &f" + v1));
+                lore.add(Utils.format("&7Ciernie: &f" + v2));
+            } else if (type.equalsIgnoreCase("miecz")) {
+                lore.add(Utils.format("&7Obrazenia: &c" + v1));
+                lore.add(Utils.format("&7Obrazenia na potwory: &c" + v2));
+            }
+        }
+        im.setLore(lore);
+        is.setItemMeta(im);
     }
 }

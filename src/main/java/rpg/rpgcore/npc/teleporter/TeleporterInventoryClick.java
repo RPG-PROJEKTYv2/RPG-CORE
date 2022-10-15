@@ -8,11 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
-
-import java.util.UUID;
 
 public class TeleporterInventoryClick implements Listener {
 
@@ -25,11 +22,11 @@ public class TeleporterInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void teleporterInventoryClick(final InventoryClickEvent e) {
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final int clickedSlot = e.getSlot();

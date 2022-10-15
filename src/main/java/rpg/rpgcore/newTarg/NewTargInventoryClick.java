@@ -1,10 +1,7 @@
 package rpg.rpgcore.newTarg;
 
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,11 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.discord.EmbedUtil;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,12 +29,11 @@ public class NewTargInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void newTargInventoryClick(final InventoryClickEvent e) {
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory clickedInventory = e.getInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
-        final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
-        if (e.getClickedInventory() == null) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
@@ -153,7 +147,7 @@ public class NewTargInventoryClick implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cBrakuje ci &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemPrice - playerMoney)) + " &2$"));
                 return;
             }
-            this.finalizeTradeCategory(player, itemOwnerUUID, itemOwnwer, playerMoney, itemPrice, clickedInventory, clickedItem, category);
+            this.finalizeTradeCategory(player, itemOwnerUUID, itemOwnwer, playerMoney, itemPrice, clickedItem);
             return;
         }
 
@@ -291,7 +285,7 @@ public class NewTargInventoryClick implements Listener {
                 return;
             }
 
-            this.finalizeTradeTarg(player, targetUUID, targetName, kasaGracza, itemCena, clickedInventory, clickedItem);
+            this.finalizeTradeTarg(player, targetUUID, targetName, kasaGracza, itemCena, clickedItem);
         }
 
     }
@@ -342,7 +336,7 @@ public class NewTargInventoryClick implements Listener {
         return 0.0;
     }
 
-    private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final Inventory clickedInventory, final ItemStack clickedItem) {
+    private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
         final UUID playerUUID = player.getUniqueId();
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
         rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
@@ -370,7 +364,7 @@ public class NewTargInventoryClick implements Listener {
         Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
     }
 
-    private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final Inventory clickedInventory, final ItemStack clickedItem, final int category) {
+    private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
         final UUID playerUUID = player.getUniqueId();
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
         rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
