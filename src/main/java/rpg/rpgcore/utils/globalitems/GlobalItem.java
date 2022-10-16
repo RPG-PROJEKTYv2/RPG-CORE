@@ -14,7 +14,7 @@ public enum GlobalItem {
     // RARE
     I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&6&lWartosciowy Kufer").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
     I2("I2", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
-    I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
+    I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "Normal").hideFlag().toItemStack().clone()),
    // INNE
     I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
     I5("I5", new ItemBuilder(Material.CHEST).setName("&2Skrzynia z Roznosciami").setLore(Arrays.asList("&8&oSkrzynia ta zawiera rozne materialy...")).hideFlag().toItemStack().clone()),
@@ -36,6 +36,8 @@ public enum GlobalItem {
 
     // SKRZYNKI CIAG DALSZY BO ORZEL KURWA NIE UMIE ZROBIC DOBRZE...........
     I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSzkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
+    I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
+
 
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());

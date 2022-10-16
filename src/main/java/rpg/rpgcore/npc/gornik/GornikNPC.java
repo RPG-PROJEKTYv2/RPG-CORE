@@ -113,7 +113,15 @@ public class GornikNPC {
     public void openCrafting(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lReceptury Gornika"));
 
-        gui.setItem(0, new ItemBuilder(GornikItems.getZmiotka("T0").clone()).setLoreCrafting(GornikItems.getZmiotka("T0").clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(0, new ItemBuilder(GornikItems.getItem("WODA", 1).clone()).setLoreCrafting(GornikItems.getItem("WODA", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&7Koszt:",
+                "&8- &62,500,000&2$",
+                "&8- &6x8 &0Ruda Mroku",
+                "&8- &6x8 &7&lRuda Cyrkonu",
+                "&8- &6x8 &3&lRuda Szafiru"
+        )).addGlowing().toItemStack());
+        gui.setItem(1, new ItemBuilder(GornikItems.getZmiotka("T0", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T0", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -127,14 +135,66 @@ public class GornikNPC {
                 "&8- &6x128 &2&lRuda Jadeitu",
                 "&8- &6x128 &b&lRuda Tanzanitu",
                 "&8- &6x128 &c&lRuda Rubinu")).addGlowing().toItemStack());
-        gui.setItem(1, new ItemBuilder(GornikItems.getItem("WODA", 1).clone()).setLoreCrafting(GornikItems.getItem("WODA", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(2, new ItemBuilder(GornikItems.getZmiotka("T1", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
+                "&8Pozwala oczyscic rudy z kamienia",
+                "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
+                " ",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
-                "&8- &6x8 &0Ruda Mroku",
-                "&8- &6x8 &7&lRuda Cyrkonu",
-                "&8- &6x8 &3&lRuda Szafiru"
-        )).addGlowing().toItemStack());
+                "&8- &8Drewniane Dluto &7Lvl. &650",
+                "&8- &6200,000,000&2$",
+                "&8- &6x8 &0Krysztal Mroku &8(x64)",
+                "&8- &6x8 &7Krysztal Powietrza &8(x64)",
+                "&8- &6x8 &eKrysztal Blasku &8(x64)",
+                "&8- &6x8 &1Krysztal Wody &8(x64)",
+                "&8- &6x8 &2Krysztal Lasu &8(x64)",
+                "&8- &6x8 &bKrysztal Lodu &8(x64)",
+                "&8- &6x8 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
+        gui.setItem(3, new ItemBuilder(GornikItems.getZmiotka("T2", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T2", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&8Pozwala oczyscic rudy z kamienia",
+                "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
+                " ",
+                "&7Koszt:",
+                "&8- &8Kamienne Dluto &7Lvl. &650",
+                "&8- &6350,000,000&2$",
+                "&8- &6x16 &0Krysztal Mroku &8(x64)",
+                "&8- &6x16 &7Krysztal Powietrza &8(x64)",
+                "&8- &6x16 &eKrysztal Blasku &8(x64)",
+                "&8- &6x16 &1Krysztal Wody &8(x64)",
+                "&8- &6x16 &2Krysztal Lasu &8(x64)",
+                "&8- &6x16 &bKrysztal Lodu &8(x64)",
+                "&8- &6x16 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
+        gui.setItem(4, new ItemBuilder(GornikItems.getZmiotka("T3", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T3", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&8Pozwala oczyscic rudy z kamienia",
+                "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
+                " ",
+                "&7Koszt:",
+                "&8- &8Metalowe Dluto &7Lvl. &650",
+                "&8- &6500,000,000&2$",
+                "&8- &6x24 &0Krysztal Mroku &8(x64)",
+                "&8- &6x24 &7Krysztal Powietrza &8(x64)",
+                "&8- &6x24 &eKrysztal Blasku &8(x64)",
+                "&8- &6x24 &1Krysztal Wody &8(x64)",
+                "&8- &6x24 &2Krysztal Lasu &8(x64)",
+                "&8- &6x24 &bKrysztal Lodu &8(x64)",
+                "&8- &6x24 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
+        gui.setItem(5, new ItemBuilder(GornikItems.getZmiotka("T4", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T4", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&8Pozwala oczyscic rudy z kamienia",
+                "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
+                " ",
+                "&7Koszt:",
+                "&8- &8Zlote Dluto &7Lvl. &650",
+                "&8- &6750,000,000&2$",
+                "&8- &6x32 &0Krysztal Mroku &8(x64)",
+                "&8- &6x32 &7Krysztal Powietrza &8(x64)",
+                "&8- &6x32 &eKrysztal Blasku &8(x64)",
+                "&8- &6x32 &1Krysztal Wody &8(x64)",
+                "&8- &6x32 &2Krysztal Lasu &8(x64)",
+                "&8- &6x32 &bKrysztal Lodu &8(x64)",
+                "&8- &6x32 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
 
         player.openInventory(gui);
     }

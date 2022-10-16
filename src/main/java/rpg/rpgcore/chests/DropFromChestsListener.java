@@ -36,6 +36,7 @@ public class DropFromChestsListener implements Listener {
 
             // SKRZYNIA Z ROZNOSCIAMI
             if (playerItem.getItemMeta().hasDisplayName()) {
+                e.setCancelled(true);
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
@@ -69,11 +70,15 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
-                        final ItemStack item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                        ItemStack item = null;
+                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
+                            item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                        }
                         if (item == null) {
                             return;
                         }
                         player.getInventory().addItem(item);
+                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
                         return;
                     }
                 }

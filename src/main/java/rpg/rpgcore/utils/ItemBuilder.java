@@ -2,8 +2,10 @@ package rpg.rpgcore.utils;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -161,6 +163,42 @@ public class ItemBuilder {
 
     public ItemBuilder setAmount(int amount) {
         this.is.setAmount(amount);
+        return this;
+    }
+
+    public ItemBuilder addTagInt(final String tag, final int val) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
+        NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        tagCompound.setInt(tag, val);
+        nmsStack.setTag(tagCompound);
+        this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+        return this;
+    }
+
+    public ItemBuilder addTagString(final String tag, final String val) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
+        NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        tagCompound.setString(tag, val);
+        nmsStack.setTag(tagCompound);
+        this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+        return this;
+    }
+
+    public ItemBuilder addTagBoolean(final String tag, final boolean val) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
+        NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        tagCompound.setBoolean(tag, val);
+        nmsStack.setTag(tagCompound);
+        this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+        return this;
+    }
+
+    public ItemBuilder addTagDouble(final String tag, final double val) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
+        NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        tagCompound.setDouble(tag, val);
+        nmsStack.setTag(tagCompound);
+        this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
         return this;
     }
 

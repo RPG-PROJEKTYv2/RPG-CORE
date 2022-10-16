@@ -45,7 +45,6 @@ public class GornikInventoryClick implements Listener {
 
         if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
             if (e.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
-                //TODO Dodac wiaderka z woda jako paliwo do mycia rud
                 if (String.valueOf(e.getCursor().getType()).contains("_SPADE") && e.getCursor().getItemMeta().hasDisplayName()
                         && e.getCursor().getItemMeta().getDisplayName().contains(" Dluto") && player.getInventory().containsAtLeast(GornikItems.getItem("WODA", 1), 1)) {
                     if (item != null && (item.getType() == Material.COAL_ORE || item.getType() == Material.IRON_ORE || item.getType() == Material.GOLD_ORE || item.getType() == Material.DIAMOND_ORE
@@ -591,22 +590,8 @@ public class GornikInventoryClick implements Listener {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
             switch (slot) {
                 case 0:
-                    if (!(player.getInventory().containsAtLeast(GornikItems.getItem("R1", 128), 1) || player.getInventory().containsAtLeast(GornikItems.getItem("R2", 128), 1) ||
-                            player.getInventory().containsAtLeast(GornikItems.getItem("R3", 128), 1) || player.getInventory().containsAtLeast(GornikItems.getItem("R4", 128), 1) ||
-                            player.getInventory().containsAtLeast(GornikItems.getItem("R5", 128), 1) || player.getInventory().containsAtLeast(GornikItems.getItem("R6", 128), 1) ||
-                            player.getInventory().containsAtLeast(GornikItems.getItem("R7", 128), 1) || user.getKasa() < 100000000)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
-                        return;
-                    }
-                    player.getInventory().removeItem(GornikItems.getItem("R1", 128), GornikItems.getItem("R2", 128), GornikItems.getItem("R3", 128), GornikItems.getItem("R4", 128),
-                            GornikItems.getItem("R5", 128), GornikItems.getItem("R6", 128), GornikItems.getItem("R7", 128));
-                    user.setKasa(user.getKasa() - 100000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T0"));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Drewniane Dluto&a!"));
-                    break;
-                case 1:
-                    if (!(player.getInventory().containsAtLeast(GornikItems.getItem("R1", 8), 1) || player.getInventory().containsAtLeast(GornikItems.getItem("R2", 8), 1) ||
-                            player.getInventory().containsAtLeast(GornikItems.getItem("R4", 8), 1) || user.getKasa() < 2500000)) {
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("R1", 8), 1) || !player.getInventory().containsAtLeast(GornikItems.getItem("R2", 8), 1) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getItem("R4", 8), 1) || user.getKasa() < 2500000) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
                         return;
                     }
@@ -614,6 +599,115 @@ public class GornikInventoryClick implements Listener {
                     user.setKasa(user.getKasa() - 2500000);
                     player.getInventory().addItem(GornikItems.getItem("WODA", 1));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &1Wiadro Wody&a!"));
+                    break;
+                case 1:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("R1", 128), 1) || !player.getInventory().containsAtLeast(GornikItems.getItem("R2", 128), 1) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getItem("R3", 128), 1) || !player.getInventory().containsAtLeast(GornikItems.getItem("R4", 128), 1) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getItem("R5", 128), 1) || !player.getInventory().containsAtLeast(GornikItems.getItem("R6", 128), 1) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getItem("R7", 128), 1) || user.getKasa() < 100000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("R1", 128), GornikItems.getItem("R2", 128), GornikItems.getItem("R3", 128), GornikItems.getItem("R4", 128),
+                            GornikItems.getItem("R5", 128), GornikItems.getItem("R6", 128), GornikItems.getItem("R7", 128));
+                    user.setKasa(user.getKasa() - 100000000);
+                    player.getInventory().addItem(GornikItems.getZmiotka("T0", 1));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Drewniane Dluto&a!"));
+                    break;
+                case 2:
+                    if (!player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G1", 1).clone()).setName(GornikItems.getItem("G1", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G2", 1).clone()).setName(GornikItems.getItem("G2", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G3", 1).clone()).setName(GornikItems.getItem("G3", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G4", 1).clone()).setName(GornikItems.getItem("G4", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G5", 1).clone()).setName(GornikItems.getItem("G5", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G6", 1).clone()).setName(GornikItems.getItem("G6", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G7", 1).clone()).setName(GornikItems.getItem("G7", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 8) ||
+                            !player.getInventory().contains(GornikItems.getZmiotka("T0", 50)) || user.getKasa() < 200000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T0", 50), new ItemBuilder(GornikItems.getItem("G1", 8).clone()).setName(GornikItems.getItem("G1", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G2", 8).clone()).setName(GornikItems.getItem("G2", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G3", 8).clone()).setName(GornikItems.getItem("G3", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G4", 8).clone()).setName(GornikItems.getItem("G4", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G5", 8).clone()).setName(GornikItems.getItem("G5", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G6", 8).clone()).setName(GornikItems.getItem("G6", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G7", 8).clone()).setName(GornikItems.getItem("G7", 8).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack());
+                    user.setKasa(user.getKasa() - 200000000);
+                    player.getInventory().addItem(GornikItems.getZmiotka("T1", 1));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Kamienne Dluto&a!"));
+                    break;
+                case 3:
+                    if (!player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G1", 1).clone()).setName(GornikItems.getItem("G1", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G2", 1).clone()).setName(GornikItems.getItem("G2", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G3", 1).clone()).setName(GornikItems.getItem("G3", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G4", 1).clone()).setName(GornikItems.getItem("G4", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G5", 1).clone()).setName(GornikItems.getItem("G5", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G6", 1).clone()).setName(GornikItems.getItem("G6", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G7", 1).clone()).setName(GornikItems.getItem("G7", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 16) ||
+                            !player.getInventory().contains(GornikItems.getZmiotka("T1", 50)) || user.getKasa() < 350000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        player.getInventory().addItem(GornikItems.getZmiotka("T1", 50));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T1", 50), new ItemBuilder(GornikItems.getItem("G1", 16).clone()).setName(GornikItems.getItem("G1", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G2", 16).clone()).setName(GornikItems.getItem("G2", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G3", 16).clone()).setName(GornikItems.getItem("G3", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G4", 16).clone()).setName(GornikItems.getItem("G4", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G5", 16).clone()).setName(GornikItems.getItem("G5", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G6", 16).clone()).setName(GornikItems.getItem("G6", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G7", 16).clone()).setName(GornikItems.getItem("G7", 16).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack());
+                    user.setKasa(user.getKasa() - 350000000);
+                    player.getInventory().addItem(GornikItems.getZmiotka("T2", 1));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Metalowe Dluto&a!"));
+                    break;
+                case 4:
+                    if (!player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G1", 1).clone()).setName(GornikItems.getItem("G1", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G2", 1).clone()).setName(GornikItems.getItem("G2", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G3", 1).clone()).setName(GornikItems.getItem("G3", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G4", 1).clone()).setName(GornikItems.getItem("G4", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G5", 1).clone()).setName(GornikItems.getItem("G5", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G6", 1).clone()).setName(GornikItems.getItem("G6", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G7", 1).clone()).setName(GornikItems.getItem("G7", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 24) ||
+                            !player.getInventory().contains(GornikItems.getZmiotka("T2", 50)) || user.getKasa() < 500000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        player.getInventory().addItem(GornikItems.getZmiotka("T2", 50));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T2", 50), new ItemBuilder(GornikItems.getItem("G1", 24).clone()).setName(GornikItems.getItem("G1", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G2", 24).clone()).setName(GornikItems.getItem("G2", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G3", 24).clone()).setName(GornikItems.getItem("G3", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G4", 24).clone()).setName(GornikItems.getItem("G4", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G5", 24).clone()).setName(GornikItems.getItem("G5", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G6", 24).clone()).setName(GornikItems.getItem("G6", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G7", 24).clone()).setName(GornikItems.getItem("G7", 24).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack());
+                    user.setKasa(user.getKasa() - 500000000);
+                    player.getInventory().addItem(GornikItems.getZmiotka("T3", 1));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Zlote Dluto&a!"));
+                    break;
+                case 5:
+                    if (!player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G1", 1).clone()).setName(GornikItems.getItem("G1", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G2", 1).clone()).setName(GornikItems.getItem("G2", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G3", 1).clone()).setName(GornikItems.getItem("G3", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G4", 1).clone()).setName(GornikItems.getItem("G4", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G5", 1).clone()).setName(GornikItems.getItem("G5", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G6", 1).clone()).setName(GornikItems.getItem("G6", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().containsAtLeast(new ItemBuilder(GornikItems.getItem("G7", 1).clone()).setName(GornikItems.getItem("G7", 1).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(), 32) ||
+                            !player.getInventory().contains(GornikItems.getZmiotka("T3", 50)) || user.getKasa() < 750000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        player.getInventory().addItem(GornikItems.getZmiotka("T3", 50));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T3", 50), new ItemBuilder(GornikItems.getItem("G1", 32).clone()).setName(GornikItems.getItem("G1", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G2", 32).clone()).setName(GornikItems.getItem("G2", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G3", 32).clone()).setName(GornikItems.getItem("G3", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G4", 32).clone()).setName(GornikItems.getItem("G4", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G5", 32).clone()).setName(GornikItems.getItem("G5", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G6", 32).clone()).setName(GornikItems.getItem("G6", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack(),
+                            new ItemBuilder(GornikItems.getItem("G7", 32).clone()).setName(GornikItems.getItem("G7", 32).clone().getItemMeta().getDisplayName() + " &8(x64)").toItemStack());
+                    user.setKasa(user.getKasa() - 750000000);
+                    player.getInventory().addItem(GornikItems.getZmiotka("T4", 1), GornikItems.getZmiotka("T4", 50));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Diamentowe Dluto&a!"));
                     break;
             }
 

@@ -1,7 +1,6 @@
 package rpg.rpgcore.mythicstick;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,7 +11,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
@@ -53,10 +51,11 @@ public class MythicstickPlayerInteract implements Listener {
                     }
                     final String mobName = Utils.removeColor(eventItem.getItemMeta().getLore().get(0)).replace("Aktualnie ustawiasz spawner mobow:", "").replace(" ", "");
                     final String spawnerName = Utils.removeColor(eventItem.getItemMeta().getLore().get(1)).replace("Nazwa Spawnera:", "").replace(" ", "");
-                    player.sendMessage(mobName + " " + spawnerName);
+                    final int leashRange = Integer.parseInt(Utils.removeColor(eventItem.getItemMeta().getLore().get(2)).replace("Leashrange:", "").replace(" ", ""));
+                    player.sendMessage(mobName + " " + spawnerName + " " + leashRange);
                     Bukkit.getServer().dispatchCommand(player, "mm s create " + spawnerName + " " + mobName  + " " + b.getWorld().getName() + "," + b.getX() + "," + b.getY() + "," + b.getZ());
                     Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " cooldown 10");
-                    Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " leashrange 15");
+                    Bukkit.getServer().dispatchCommand(player, "mm s set " + spawnerName + " leashrange " + leashRange);
                     int spawnerCount = Integer.parseInt(Utils.removeColor(eventItem.getItemMeta().getLore().get(1)).replace("Nazwa Spawnera:", "").replace(mobName + "-RESP-", "").replace(" ", ""));
                     player.sendMessage(spawnerCount + "");
                     spawnerCount++;

@@ -1,5 +1,6 @@
 package rpg.rpgcore.chests.Inne;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.pets.enums.PetItems;
@@ -19,8 +20,8 @@ public class ZwierzakiManager {
         randomItems.add(0.1, "pusta");
         randomItems.add(0.6, "zwykly");
         randomItems.add(0.2, "rzadki");
-        randomItems.add(0.07, "epicki");
-        randomItems.add(0.03, "legendarny");
+        randomItems.add(0.09, "epicki");
+        randomItems.add(0.01, "legendarny");
         this.zwykle.add(0.1111, PetItems.getByName("Duszek-Zwykly").getItemStack());
         this.zwykle.add(0.1111, PetItems.getByName("Zlota-Rybka-Zwykly").getItemStack());
         this.zwykle.add(0.1111, PetItems.getByName("Pancernik-Zwykly").getItemStack());
@@ -71,9 +72,11 @@ public class ZwierzakiManager {
             case "rzadki":
                 return rzadkie.next().clone();
             case "epicki":
-                epickie.next().clone();
+                Bukkit.broadcastMessage(Utils.format("&6&lZWIERZAKI &8>> &7Gracz &6" + player.getName() + " &7znalazl &5&lEPICKIEGO &7zwierzaka!"));
+                return epickie.next().clone();
             case "legendarny":
-                legendarne.next().clone();
+                Bukkit.broadcastMessage(Utils.format("&6&lZWIERZAKI &8>> &7Gracz &6" + player.getName() + " &7znalazl &6&lLEGENDARNEGO &7zwierzaka!"));
+                return legendarne.next().clone();
             default:
                 return null;
         }

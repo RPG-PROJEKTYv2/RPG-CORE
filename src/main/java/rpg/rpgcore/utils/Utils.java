@@ -2,8 +2,10 @@ package rpg.rpgcore.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -632,6 +634,33 @@ public class Utils {
         player.sendPluginMessage(RPGCORE.getInstance(), "BungeeCord", out.toByteArray());
         player.sendMessage(Utils.format(SERVERNAME + "&cSerwer jest aktualnie restartowany..."));
         player.sendMessage(Utils.format(SERVERNAME + "&cZa wszelkie utrudnienia przepraszamy. &4Administracja Hellrpg.pl"));
+    }
+
+    public static String getTagString(final ItemStack is, final String tag){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        if (!nmsStack.hasTag()) return "";
+        NBTTagCompound tagCompound = nmsStack.getTag();
+        return tagCompound.getString(tag);
+    }
+    public static double getTagDouble(final ItemStack is, final String tag){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        if (!nmsStack.hasTag()) return 0;
+        NBTTagCompound tagCompound = nmsStack.getTag();
+        return tagCompound.getDouble(tag);
+    }
+
+    public static int getTagInt(final ItemStack is, final String tag){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        if (!nmsStack.hasTag()) return 0;
+        NBTTagCompound tagCompound = nmsStack.getTag();
+        return tagCompound.getInt(tag);
+    }
+
+    public static boolean getTagBoolean(final ItemStack is, final String tag){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        if (!nmsStack.hasTag()) return false;
+        NBTTagCompound tagCompound = nmsStack.getTag();
+        return tagCompound.getBoolean(tag);
     }
 
 }
