@@ -7,6 +7,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
@@ -34,6 +35,7 @@ public class GuildCommand extends CommandAPI {
             return;
         }
         final UUID uuid = player.getUniqueId();
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
 
@@ -151,6 +153,17 @@ public class GuildCommand extends CommandAPI {
             }
 
             if (args[0].equalsIgnoreCase("dolacz")) {
+
+                if (user.getLvl() < 50) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymaganego poziomu, zeby dolaczyc do klau &8(50lvl)"));
+                    return;
+                }
+
+                if (user.getKasa() < 25000000) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wystarczajacej ilosci pieniedzy, zeby dolaczyc do klau &8(25.000.000$)"));
+                    return;
+                }
+
                 tag = args[1].toUpperCase(Locale.ROOT);
 
                 if (rpgcore.getGuildManager().hasGuild(uuid)) {
@@ -168,10 +181,14 @@ public class GuildCommand extends CommandAPI {
                         player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cKlan jest juz pelny"));
                         return;
                     }
+                    user.setKasa(user.getKasa() - 25000000);
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                        NameTagUtil.setPlayerNameTag(player);
+                        this.updateOneMember(player);
+                        rpgcore.getMongoManager().saveDataUser(user.getId(), user);
+                    });
                     return;
                 } else {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie masz zaproszenia od klanu &6" + tag));
@@ -299,6 +316,16 @@ public class GuildCommand extends CommandAPI {
         if (args.length > 2) {
             if (args[0].equalsIgnoreCase("zaloz")) {
 
+                if (user.getLvl() < 75) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wymagannego poziomu, zeby zalozyc swoj klan! &8(75lvl)"));
+                    return;
+                }
+
+                if (user.getKasa() < 100000000) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wystarczajacej ilosci pieniedzy, zeby zalozyc swoj klan! &8(100.000.000$)"));
+                    return;
+                }
+
                 if (!tag.equals("Brak Klanu")) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cMasz juz klan"));
                     return;
@@ -319,10 +346,14 @@ public class GuildCommand extends CommandAPI {
                     sb.append(s).append(" ");
                 }
                 final String description = sb.toString().trim();
+                user.setKasa(user.getKasa() - 100000000);
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    NameTagUtil.setPlayerNameTag(player);
+                    this.updateOneMember(player);
+                    rpgcore.getMongoManager().saveDataUser(user.getId(), user);
+                });
                 return;
             }
 

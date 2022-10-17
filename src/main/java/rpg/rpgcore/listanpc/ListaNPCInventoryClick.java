@@ -15,7 +15,7 @@ import rpg.rpgcore.utils.Utils;
 public class ListaNPCInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(final InventoryClickEvent e){
-        final Inventory gui = e.getInventory();
+        final Inventory gui = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {

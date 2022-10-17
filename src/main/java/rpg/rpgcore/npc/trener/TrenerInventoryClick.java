@@ -26,7 +26,7 @@ public class TrenerInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void trenerInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 

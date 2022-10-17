@@ -6,7 +6,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
@@ -22,8 +21,7 @@ public class TRADEInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void tradeInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getInventory();
-        final Player player = (Player) e.getWhoClicked();
+        final Inventory clickedInventory = e.getClickedInventory();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;

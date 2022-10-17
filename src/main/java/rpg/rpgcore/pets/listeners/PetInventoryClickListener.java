@@ -30,8 +30,8 @@ public class PetInventoryClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(final InventoryClickEvent e) {
-        if (e.getInventory() == null) return;
-        final String title = Utils.removeColor(e.getInventory().getTitle());
+        if (e.getClickedInventory() == null) return;
+        final String title = Utils.removeColor(e.getClickedInventory().getTitle());
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final ItemStack item = e.getCurrentItem();

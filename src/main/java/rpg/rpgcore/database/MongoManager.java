@@ -26,7 +26,6 @@ import rpg.rpgcore.npc.trener.TrenerObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
-import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.metiny.Metiny;
@@ -73,25 +72,122 @@ public class MongoManager {
 
     }
 
-    public void fixMires() {
-        final User user = rpgcore.getUserManager().find("Mires_");
-        user.getRankUser().setRank(RankType.DEV);
-        this.saveDataUser(UUID.fromString("7193813f-c9c3-37e6-b72b-4272a3898b80"), user);
+    /*public void fixMires(final String old, final String uuid) {
+        Document document = this.pool.getGracze().find(new Document("_id", old)).first(); //dd3d637b-aff4-4fa5-8484-d120ed492d43 7193813f-c9c3-37e6-b72b-4272a3898b80
+        this.pool.getGracze().deleteOne(document);
+        document.replace("_id", uuid);
+        this.pool.getGracze().insertOne(document);
     }
 
-    public void fix() {
-        for (Document document : this.pool.getBonuses().find()) {
-            final UUID uuid = UUID.fromString(document.getString("_id"));
+    public void fix(final UUID uuid, final String newUUID) {
+        Document document = null;
+        if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getBonuses().find(new Document("_id", uuid.toString())).first();
+            pool.getBonuses().deleteOne(document);
+            document.replace("_id", newUUID);
 
-            document.append("spowolnienie", 0.0)
-                    .append("dodatkowyExp", 0.0)
-                    .append("oslepienie", 0.0)
-                    .append("przebiciePancerza", 0.0)
-                    .append("wampiryzm", 0.0);
-
-            this.pool.getBonuses().findOneAndReplace(new Document("_id", uuid.toString()), document);
         }
-    }
+
+        if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first();
+            pool.getOsiagniecia().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first();
+            pool.getKolekcjoner().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+
+        if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() != null) {
+            document = this.pool.getBao().find(new Document("_id", uuid.toString())).first();
+            this.pool.getBao().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+
+        if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() != null) {
+            document = this.pool.getRybak().find(new Document("_id", uuid.toString())).first();
+            this.pool.getRybak().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+
+        if (this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first() != null) {
+            document = this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first();
+            this.pool.getAkcesoria().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+
+        document = pool.getTargi().find(new Document("_id", uuid.toString())).first();
+        pool.getTargi().deleteOne(document);
+        document.replace("_id", newUUID);
+
+
+        if (pool.getTrener().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getTrener().find(new Document("_id", uuid.toString())).first();
+            pool.getTrener().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getMetinolog().find(new Document("_id", uuid.toString())).first();
+            pool.getMetinolog().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getKlasy().find(new Document("_id", uuid.toString())).first();
+            pool.getKlasy().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getMedyk().find(new Document("_id", uuid.toString())).first();
+            pool.getMedyk().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getGornik().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getGornik().find(new Document("_id", uuid.toString())).first();
+            pool.getGornik().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getDuszolog().find(new Document("_id", uuid.toString())).first();
+            pool.getDuszolog().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first();
+            pool.getPrzyrodnik().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getChatUsers().find(new Document("_id", uuid.toString())).first();
+            pool.getChatUsers().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getMagazyny().find(new Document("_id", uuid.toString())).first();
+            pool.getMagazyny().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getLowca().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getLowca().find(new Document("_id", uuid.toString())).first();
+            pool.getLowca().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getLesnik().find(new Document("_id", uuid.toString())).first();
+            pool.getLesnik().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getPety().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getPety().find(new Document("_id", uuid.toString())).first();
+            pool.getPety().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+        if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() != null) {
+            document = pool.getUserPets().find(new Document("_id", uuid.toString())).first();
+            pool.getUserPets().deleteOne(document);
+            document.replace("_id", newUUID);
+        }
+    }*/
 
 
     public void loadAll() {
@@ -109,9 +205,7 @@ public class MongoManager {
             this.setFirstSpawn();
         }
 
-
         for (Document obj : pool.getGracze().find()){
-            //fix();
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
 
@@ -140,7 +234,7 @@ public class MongoManager {
 
             try {
                 obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
-                rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
+                if (obj != null) rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
             } catch (final IOException e) {
                 e.printStackTrace();
             }

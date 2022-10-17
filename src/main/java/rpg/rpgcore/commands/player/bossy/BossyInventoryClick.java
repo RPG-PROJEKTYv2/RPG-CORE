@@ -6,10 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
 
 public class BossyInventoryClick implements Listener {
 
@@ -24,7 +22,7 @@ public class BossyInventoryClick implements Listener {
             return;
         }
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
 
         final String clickedInventoryTitle = clickedInventory.getTitle();

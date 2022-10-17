@@ -41,8 +41,8 @@ public class PlayerJoinListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onJoin(final PlayerJoinEvent e) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onJoin(final PlayerLoginEvent e) {
         if (!rpgcore.getUserManager().isUser(e.getPlayer().getUniqueId())) {
             if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
                 rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.SERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_EXISTING_DATABASE&8)")), 1L);
@@ -64,7 +64,7 @@ public class PlayerJoinListener implements Listener {
 
             player.setLevel(1);
             player.setExp(0);
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
+            player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
         }
     }
 
@@ -93,6 +93,7 @@ public class PlayerJoinListener implements Listener {
             throw new RuntimeException(ex);
         }
         rpgcore.getBackupManager().savePlayer(player, uuid);
+        player.getActivePotionEffects().clear();
 
 
         final int playerLvl = user.getLvl();

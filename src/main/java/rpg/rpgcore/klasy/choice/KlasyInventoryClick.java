@@ -25,7 +25,7 @@ public class KlasyInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClick(final InventoryClickEvent e) {
-        final Inventory gui = e.getInventory();
+        final Inventory gui = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 

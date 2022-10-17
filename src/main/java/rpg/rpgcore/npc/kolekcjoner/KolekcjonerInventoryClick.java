@@ -32,7 +32,7 @@ public class KolekcjonerInventoryClick implements Listener {
             return;
         }
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final String clickedInventoryTitle = clickedInventory.getTitle();

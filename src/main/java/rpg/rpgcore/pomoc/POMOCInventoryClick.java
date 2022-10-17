@@ -22,7 +22,7 @@ public class POMOCInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void pomocInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {

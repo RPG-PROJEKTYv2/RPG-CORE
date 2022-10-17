@@ -26,7 +26,7 @@ public class LowcaInventoryClick implements Listener {
             return;
         }
 
-        final Inventory inv = e.getInventory();
+        final Inventory inv = e.getClickedInventory();
         final String title = Utils.removeColor(inv.getTitle());
         final Player player = (Player) e.getWhoClicked();
         final int slot = e.getSlot();

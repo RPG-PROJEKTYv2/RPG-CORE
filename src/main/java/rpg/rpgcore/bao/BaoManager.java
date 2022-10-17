@@ -82,7 +82,7 @@ public class BaoManager {
             )).addGlowing().toItemStack());
             if (isNotRolled(uuid)) {
                 for (int i = 10; i < 15; i++) {
-                    gui.setItem(10 + i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6Brak Bonusu").toItemStack().clone());
+                    gui.setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6Brak Bonusu").toItemStack().clone());
                 }
             }
         } else {

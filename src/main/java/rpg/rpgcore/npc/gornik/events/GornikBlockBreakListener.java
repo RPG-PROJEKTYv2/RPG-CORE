@@ -38,10 +38,38 @@ public class GornikBlockBreakListener implements Listener {
                 return;
             }
             if (!rpgcore.getOreManager().isOre(e.getBlock().getLocation())) {
-                System.out.println("nie ore");
                 return;
             }
             final Ore ore = rpgcore.getOreManager().find(e.getBlock().getLocation());
+
+            switch (ore.getOreMaterial()) {
+                case EMERALD_ORE:
+                case LAPIS_ORE:
+                    if (e.getPlayer().getItemInHand().getType() != Material.GOLD_PICKAXE || e.getPlayer().getItemInHand().getType() != Material.IRON_PICKAXE
+                            || e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
+                        e.getPlayer().sendMessage(Utils.format("&6&lGornik &8>> &7Wydaje mi sie ze tym rupieciem tego nie wykopiesz."));
+                        e.getPlayer().sendMessage(Utils.format("&8Zeby wydobyc te rude potrzebujesz co najmniej zlotego kilofa."));
+                        return;
+                    }
+                    break;
+                case DIAMOND_ORE:
+                    if (e.getPlayer().getItemInHand().getType() != Material.IRON_PICKAXE
+                            || e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
+                        e.getPlayer().sendMessage(Utils.format("&6&lGornik &8>> &7Wydaje mi sie ze tym rupieciem tego nie wykopiesz."));
+                        e.getPlayer().sendMessage(Utils.format("&8Zeby wydobyc te rude potrzebujesz co najmniej zelaznego kilofa."));
+                        return;
+                    }
+                    break;
+                case REDSTONE_ORE:
+                case GLOWING_REDSTONE_ORE:
+                    if (e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
+                        e.getPlayer().sendMessage(Utils.format("&6&lGornik &8>> &7Wydaje mi sie ze tym rupieciem tego nie wykopiesz."));
+                        e.getPlayer().sendMessage(Utils.format("&8Zeby wydobyc te rude potrzebujesz co najmniej diamentowego kilofa."));
+                        return;
+                    }
+                    break;
+            }
+
             final GornikOres gornikOre = GornikOres.getOre(e.getBlock().getType());
             final int oreHp = ore.getHp();
             final int oreMaxHP = ore.getMaxHp();
@@ -52,6 +80,7 @@ public class GornikBlockBreakListener implements Listener {
             if (ore.getHp() == 0) {
                 if (!ChanceHelper.getChance(gornikOre.getDropChance())) {
                     e.getPlayer().sendMessage(Utils.format("&cNiestety nie udalo Ci sie wydobyc tej rudy."));
+                    ore.setOreMaterial(Material.BEDROCK);
                     e.getBlock().setType(Material.BEDROCK);
                     return;
                 }
@@ -105,10 +134,11 @@ public class GornikBlockBreakListener implements Listener {
                         }
                         break;
                 }
-                
-                
+
+
                 e.getPlayer().getInventory().addItem(gornikOre.getDrop());
                 e.getPlayer().setItemInHand(RPGCORE.getInstance().getGornikNPC().updateKilofExp(e.getPlayer().getItemInHand(), gornikOre.getExp()));
+                ore.setOreMaterial(Material.BEDROCK);
                 e.getBlock().setType(Material.BEDROCK);
             }
         }

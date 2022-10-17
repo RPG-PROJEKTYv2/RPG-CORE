@@ -26,7 +26,7 @@ public class TeleporterInventoryClick implements Listener {
             return;
         }
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final int clickedSlot = e.getSlot();

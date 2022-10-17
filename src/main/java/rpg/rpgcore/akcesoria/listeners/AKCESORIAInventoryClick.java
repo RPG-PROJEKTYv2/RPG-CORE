@@ -42,7 +42,7 @@ public class AKCESORIAInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void akcesoriaInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getInventory();
+        final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
 

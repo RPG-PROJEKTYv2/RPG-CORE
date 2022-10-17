@@ -1,6 +1,5 @@
 package rpg.rpgcore;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import net.minecraft.server.v1_8_R3.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

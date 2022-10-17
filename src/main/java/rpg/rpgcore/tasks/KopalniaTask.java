@@ -1,6 +1,7 @@
 package rpg.rpgcore.tasks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
@@ -18,9 +19,11 @@ public class KopalniaTask implements Runnable{
     @Override
     public void run() {
         rpgcore.getOreManager().getOreLocations().forEach(ore -> {
-            this.setRandomOreMaterial(ore);
-            Bukkit.getWorld(ore.getWorld()).getBlockAt(ore.getLocation()).setType(ore.getOreMaterial());
-            ore.setHp(ore.getMaxHp());
+            if (ore.getOreMaterial() == Material.BEDROCK) {
+                this.setRandomOreMaterial(ore);
+                Bukkit.getWorld(ore.getWorld()).getBlockAt(ore.getLocation()).setType(ore.getOreMaterial());
+                ore.setHp(ore.getMaxHp());
+            }
         });
         Bukkit.broadcastMessage(Utils.format("&7&lKopalnia zostala zresetowana!"));
     }

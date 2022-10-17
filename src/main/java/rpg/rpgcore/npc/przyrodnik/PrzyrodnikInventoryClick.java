@@ -19,7 +19,7 @@ public class PrzyrodnikInventoryClick implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCLick(final InventoryClickEvent e) {
-        final Inventory gui = e.getInventory();
+        final Inventory gui = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
 

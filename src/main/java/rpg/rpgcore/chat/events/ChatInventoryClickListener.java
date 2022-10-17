@@ -38,7 +38,7 @@ public class ChatInventoryClickListener implements Listener {
 
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
-        final String title = Utils.removeColor(e.getInventory().getTitle());
+        final String title = Utils.removeColor(e.getClickedInventory().getTitle());
         final int slot = e.getSlot();
         final ItemStack item = e.getCurrentItem();
 
