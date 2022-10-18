@@ -126,7 +126,7 @@ public class GornikInventoryClick implements Listener {
                 return;
             }
             if (slot == 13) {
-                RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player);
+                RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, null);
                 return;
             }
             if (slot == 15) {
@@ -986,6 +986,486 @@ public class GornikInventoryClick implements Listener {
             player.getInventory().addItem(itemToAdd);
             player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles " + itemToAdd.getItemMeta().getDisplayName() + "&a!"));
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+        }
+
+        if (title.equals("Osadzanie Krysztalow")) {
+            e.setCancelled(true);
+            if (clickedInventory.getType() == InventoryType.DISPENSER){
+                if (slot != 4) return;
+                if (e.getCursor() == null || e.getCursor().getType() == Material.AIR && (!String.valueOf(e.getCursor().getType()).contains("_SWORD") ||
+                        !String.valueOf(e.getCursor().getType()).contains("_HELMET") || !String.valueOf(e.getCursor().getType()).contains("_CHESTPLATE")
+                        || !String.valueOf(e.getCursor().getType()).contains("_LEGGINGS") || !String.valueOf(e.getCursor().getType()).contains("_BOOTS"))) return;
+                ItemStack is = e.getCursor().clone();
+                e.setCursor(null);
+                RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, is);
+                return;
+            }
+            if (clickedInventory.getSize() != 54) return;
+            if (item != null && item.getType() == Material.STAINED_GLASS_PANE && item.getDurability() == 0) return;
+            if (slot == 13) {
+                player.getInventory().addItem(e.getCurrentItem());
+                RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, null);
+                return;
+            }
+            
+            final ItemStack playerItem = clickedInventory.getItem(13);
+            final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+            if (String.valueOf(playerItem.getType()).contains("_SWORD")) {
+                switch (slot) {
+                    case 38:
+                        final String mroku = Utils.getTagString(playerItem, "Mroku");
+                        if (mroku.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S1", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S1", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Mroku", "true");
+                            break;
+                        }
+                        if (mroku.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C1", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Mroku", "Czysty");
+                                Utils.setTagDouble(playerItem, "Mroku-Bonus", 3);
+                                break;
+                            }
+                            if (e.getCursor().equals(GornikItems.getItem("W1", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Mroku", "Wypolerowany");
+                                Utils.setTagDouble(playerItem, "Mroku-Bonus", 8);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+
+                        if (mroku.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C1", 1));
+                            }
+                        }
+                        if (mroku.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W1", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Mroku", "true");
+                        Utils.setTagDouble(playerItem, "Mroku-Bonus", 0);
+                        break;
+                    case 40:
+                        final String blasku = Utils.getTagString(playerItem, "Blasku");
+                        if (blasku.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S3", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S3", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Blasku", "true");
+                            break;
+                        }
+                        if (blasku.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C3", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Blasku", "Czysty");
+                                Utils.setTagInt(playerItem, "Blasku-Bonus", 75);
+                                break;
+                            } 
+                            if (e.getCursor().equals(GornikItems.getItem("W3", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Blasku", "Wypolerowany");
+                                Utils.setTagInt(playerItem, "Blasku-Bonus", 300);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+                        if (blasku.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C3", 1));
+                            }
+                        }
+                        if (blasku.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W3", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Blasku", "true");
+                        Utils.setTagInt(playerItem, "Blasku-Bonus", 0);
+                        break;
+                    case 42:
+                        final String ognia = Utils.getTagString(playerItem, "Ognia");
+                        if (ognia.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S7", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S7", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Ognia", "true");
+                            break;
+                        }
+                        if (ognia.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C7", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Ognia", "Czysty");
+                                Utils.setTagDouble(playerItem, "Ognia-Bonus", 2.5);
+                                break;
+                            }  
+                            if (e.getCursor().equals(GornikItems.getItem("W7", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Ognia", "Wypolerowany");
+                                Utils.setTagDouble(playerItem, "Ognia-Bonus", 7.5);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+                        if (ognia.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C7", 1));
+                            }
+                        }
+                        if (ognia.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W7", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Ognia", "true");
+                        Utils.setTagDouble(playerItem, "Ognia-Bonus", 0);
+                        break;
+                    default:
+                        return;
+                }
+            } else {
+                switch (slot) {
+                    case 38:
+                        final String wody = Utils.getTagString(playerItem, "Wody");
+                        if (wody.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S4", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S4", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Wody", "true");
+                            break;
+                        }
+                        if (wody.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C4", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Wody", "Czysty");
+                                Utils.setTagDouble(playerItem, "Wody-Bonus", 1.5);
+                                break;
+                            }
+                            if (e.getCursor().equals(GornikItems.getItem("W4", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Wody", "Wypolerowany");
+                                Utils.setTagDouble(playerItem, "Wody-Bonus", 4);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+                        if (wody.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C4", 1));
+                            }
+                        }
+                        if (wody.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W4", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Wody", "true");
+                        Utils.setTagDouble(playerItem, "Wody-Bonus", 0);
+                        break;
+                    case 40:
+                        final String lodu = Utils.getTagString(playerItem, "Lodu");
+                        if (lodu.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S6", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S6", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Lodu", "true");
+                            break;
+                        }
+                        if (lodu.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C6", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Lodu", "Czysty");
+                                Utils.setTagDouble(playerItem, "Lodu-Bonus", 0.5);
+                                break;
+                            }
+                            if (e.getCursor().equals(GornikItems.getItem("W6", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Lodu", "Wypolerowany");
+                                Utils.setTagDouble(playerItem, "Lodu-Bonus", 1.5);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+                        if (lodu.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C6", 1));
+                            }
+                        }
+                        if (lodu.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W6", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Lodu", "true");
+                        Utils.setTagDouble(playerItem, "Lodu-Bonus", 0);
+                        break;
+                    case 42:
+                        if (String.valueOf(playerItem.getType()).contains("_BOOTS")) {
+                            final String powietrza = Utils.getTagString(playerItem, "Powietrza");
+                            if (powietrza.equals("false")) {
+                                if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                    player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                    return;
+                                }
+                                if (!player.getInventory().containsAtLeast(GornikItems.getItem("S2", 1), 5) || user.getKasa() < 25000000) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                    return;
+                                }
+                                player.getInventory().removeItem(GornikItems.getItem("S2", 5));
+                                user.setKasa(user.getKasa() - 25000000);
+                                Utils.setTagString(playerItem, "Powietrza", "true");
+                                break;
+                            }
+                            if (powietrza.equals("true")) {
+                                if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                                if (e.getCursor().equals(GornikItems.getItem("C2", 1))) {
+                                    e.setCursor(null);
+                                    Utils.setTagString(playerItem, "Powietrza", "Czysty");
+                                    Utils.setTagInt(playerItem, "Powietrza-Bonus", 5);
+                                    break;
+                                }
+                                if (e.getCursor().equals(GornikItems.getItem("W2", 1))) {
+                                    e.setCursor(null);
+                                    Utils.setTagString(playerItem, "Powietrza", "Wypolerowany");
+                                    Utils.setTagInt(playerItem, "Powietrza-Bonus", 25);
+                                    break;
+                                }
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                                return;
+                            }
+                            if (powietrza.equals("Czysty")) {
+                                if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                    player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                    return;
+                                }
+                                if (!ChanceHelper.getChance(50)) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                                } else {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                    player.getInventory().addItem(GornikItems.getItem("C2", 1));
+                                }
+                            }
+                            if (powietrza.equals("Wypolerowany")) {
+                                if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                    player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                    return;
+                                }
+                                if (!ChanceHelper.getChance(60)) {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                                } else {
+                                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                    player.getInventory().addItem(GornikItems.getItem("W2", 1));
+                                }
+                            }
+                            Utils.setTagString(playerItem, "Powietrza", "true");
+                            Utils.setTagInt(playerItem, "Powietrza-Bonus", 0);
+                            break;
+                        }
+                        final String lasu = Utils.getTagString(playerItem, "Lasu");
+                        if (lasu.equals("false")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!player.getInventory().containsAtLeast(GornikItems.getItem("S5", 1), 5) || user.getKasa() < 25000000) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                                return;
+                            }
+                            player.getInventory().removeItem(GornikItems.getItem("S5", 5));
+                            user.setKasa(user.getKasa() - 25000000);
+                            Utils.setTagString(playerItem, "Lasu", "true");
+                            break;
+                        }
+                        if (lasu.equals("true")) {
+                            if (e.getCursor() == null || e.getCursor().getType() == Material.AIR || e.getCursor().getAmount() != 1) return;
+                            if (e.getCursor().equals(GornikItems.getItem("C5", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Lasu", "Czysty");
+                                Utils.setTagDouble(playerItem, "Lasu-Bonus", 2);
+                                break;
+                            }
+                            if (e.getCursor().equals(GornikItems.getItem("W5", 1))) {
+                                e.setCursor(null);
+                                Utils.setTagString(playerItem, "Lasu", "Wypolerowany");
+                                Utils.setTagDouble(playerItem, "Lasu-Bonus", 5);
+                                break;
+                            }
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
+                            return;
+                        }
+                        if (lasu.equals("Czysty")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(50)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("C5", 1));
+                            }
+                        }
+                        if (lasu.equals("Wypolerowany")) {
+                            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                                player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                                return;
+                            }
+                            if (!ChanceHelper.getChance(60)) {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Niestety twoj &5Krysztal &7doznal powaznych uszkodzen pod czas wyjmowania i zostal zniszczony"));
+                            } else {
+                                player.sendMessage(Utils.format("&6&lGornik &8>> &7Pomyslnie wyjmowalem twoj &5Krysztal"));
+                                player.getInventory().addItem(GornikItems.getItem("W5", 1));
+                            }
+                        }
+                        Utils.setTagString(playerItem, "Lasu", "true");
+                        Utils.setTagDouble(playerItem, "Lasu-Bonus", 0);
+                        break;
+                    default:
+                        return;
+                }
+            }
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+            RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, playerItem);
         }
     }
 }

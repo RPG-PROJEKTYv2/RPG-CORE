@@ -10,7 +10,7 @@ import java.util.List;
 public class ItemHelper {
 
 
-    public static ItemStack createArmor(final String name, final Material itemType, final int prot, final int thorns, final boolean hideFlags, final boolean addGlint) {
+    public static ItemStack createArmor(final String name, final Material itemType, final int prot, final int thorns, final boolean addGlint) {
         final ItemBuilder set = new ItemBuilder(itemType);
         final List<String> lore = new ArrayList<>();
 
@@ -19,18 +19,27 @@ public class ItemHelper {
         lore.add("&7Ciernie: &f" + thorns);
         set.setLore(lore);
 
-        if (hideFlags) {
-            set.hideFlag();
-        }
+        set.hideFlag();
 
         if (addGlint) {
             set.addGlowing();
+        }
+        set.addTagString("Wody", "false");
+        set.addTagDouble("Wody-Bonus", 0);
+        set.addTagString("Lodu", "false");
+        set.addTagDouble("Lodu-Bonus", 0);
+        if (String.valueOf(itemType).contains("_BOOTS")) {
+            set.addTagString("Powietrza", "false");
+            set.addTagDouble("Powietrza-Bonus", 0);
+        } else {
+            set.addTagString("Lasu", "false");
+            set.addTagInt("Lasu-Bonus", 0);
         }
 
         return set.toItemStack();
     }
 
-    public static ItemStack createSword(final String name, final Material itemType, final int sharp, final int bane, final boolean hideFlags, final boolean addGlowing) {
+    public static ItemStack createSword(final String name, final Material itemType, final int sharp, final int bane, final boolean addGlowing) {
         final ItemBuilder sword = new ItemBuilder(itemType);
         final List<String> lore = new ArrayList<>();
 
@@ -40,13 +49,18 @@ public class ItemHelper {
         lore.add("&7Obrazenia na potwory: &c" + bane);
         sword.setLore(lore);
 
-        if (hideFlags) {
-            sword.hideFlag();
-        }
+        sword.hideFlag();
 
         if (addGlowing) {
             sword.addGlowing();
         }
+        sword.addTagString("Mroku", "false");
+        sword.addTagDouble("Mroku-Bonus", 0);
+        sword.addTagString("Blasku", "false");
+        sword.addTagInt("Blasku-Bonus", 0);
+        sword.addTagString("Ognia", "false");
+        sword.addTagDouble("Ognia-Bonus", 0);
+
 
         return sword.toItemStack();
     }

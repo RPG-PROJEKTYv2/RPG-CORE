@@ -663,4 +663,56 @@ public class Utils {
         return tagCompound.getBoolean(tag);
     }
 
+    public static void setTagString(final ItemStack is, final String tag, final String value){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tagCompound;
+        if (!nmsStack.hasTag()) {
+            tagCompound = new NBTTagCompound();
+            nmsStack.setTag(tagCompound);
+        } else {
+            tagCompound = nmsStack.getTag();
+        }
+        tagCompound.setString(tag, value);
+        is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
+    public static void setTagDouble(final ItemStack is, final String tag, final double value){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tagCompound;
+        if (!nmsStack.hasTag()) {
+            tagCompound = new NBTTagCompound();
+            nmsStack.setTag(tagCompound);
+        } else {
+            tagCompound = nmsStack.getTag();
+        }
+        tagCompound.setDouble(tag, value);
+        is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
+    public static void setTagInt(final ItemStack is, final String tag, final int value){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tagCompound;
+        if (!nmsStack.hasTag()) {
+            tagCompound = new NBTTagCompound();
+            nmsStack.setTag(tagCompound);
+        } else {
+            tagCompound = nmsStack.getTag();
+        }
+        tagCompound.setInt(tag, value);
+        is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
+    public static void setTagBoolean(final ItemStack is, final String tag, final boolean value){
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tagCompound;
+        if (!nmsStack.hasTag()) {
+            tagCompound = new NBTTagCompound();
+            nmsStack.setTag(tagCompound);
+        } else {
+            tagCompound = nmsStack.getTag();
+        }
+        tagCompound.setBoolean(tag, value);
+        is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
 }

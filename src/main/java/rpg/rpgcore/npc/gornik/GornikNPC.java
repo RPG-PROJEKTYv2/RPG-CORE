@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -110,8 +111,220 @@ public class GornikNPC {
         player.openInventory(gui);
     }
 
-    public void openOsadzanieKrysztalow(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lOsadzanie Krysztalow"));
+    public void openOsadzanieKrysztalow(final Player player, ItemStack item) {
+        Inventory gui = Bukkit.createInventory(null, InventoryType.DISPENSER, Utils.format("&a&lOsadzanie Krysztalow"));
+        if (item == null) {
+            gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").addGlowing().toItemStack());
+            gui.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 2).setName(" ").addGlowing().toItemStack());
+            gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").addGlowing().toItemStack());
+            gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 2).setName(" ").addGlowing().toItemStack());
+            gui.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 0).setName(" ").toItemStack());
+            gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 2).setName(" ").addGlowing().toItemStack());
+            gui.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").addGlowing().toItemStack());
+            gui.setItem(7, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 2).setName(" ").addGlowing().toItemStack());
+            gui.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").addGlowing().toItemStack());
+
+        } else {
+            gui = Bukkit.createInventory(null, 54, Utils.format("&a&lOsadzanie Krysztalow"));
+            for (int i = 0; i < 54; i++) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 0).setName(" ").toItemStack());
+            }
+            gui.setItem(13, item);
+            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+            NBTTagCompound tag = nmsStack.getTag();
+            if (tag == null) {
+                tag = new NBTTagCompound();
+                if (String.valueOf(item.getType()).contains("_SWORD")) {
+                    tag.setString("Mroku", "false");
+                    tag.setDouble("Mroku-Bonus", 0);
+                    tag.setString("Blasku", "false");
+                    tag.setInt("Blasku-Bonus", 0);
+                    tag.setString("Ognia", "false");
+                    tag.setDouble("Ognia-Bonus", 0);
+                } else {
+                    tag.setString("Wody", "false");
+                    tag.setDouble("Wody-Bonus", 0);
+                    tag.setString("Lodu", "false");
+                    tag.setDouble("Lodu-Bonus", 0);
+                    if (String.valueOf(item.getType()).contains("_BOOTS")) {
+                        tag.setString("Powietrza", "false");
+                        tag.setDouble("Powietrza-Bonus", 0);
+                    } else {
+                        tag.setString("Lasu", "false");
+                        tag.setInt("Lasu-Bonus", 0);
+                    }
+                }
+                nmsStack.setTag(tag);
+                player.getInventory().addItem(CraftItemStack.asBukkitCopy(nmsStack));
+                player.sendMessage(Utils.format("&cCos poszlo nie tak :< i twoj item zostal poprawiony. Uzyj go jeszcze raz!"));
+                return;
+            }
+
+            if (String.valueOf(item.getType()).contains("_SWORD")) {
+                switch (tag.getString("Mroku")) {
+                    case "false":
+                        gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Mroku").setLore(Arrays.asList(
+                                "&c&lZablokowany!",
+                                "",
+                                "&7Koszt:",
+                                "&8- &6x5 &0Lsniacy Krysztal Mroku",
+                                "&8- &625,000,000 &2$",
+                                "&8Kliknij, zeby odblokowac."
+
+                        )).toItemStack());
+                        break;
+                    case "true":
+                        gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Mroku").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                        break;
+                    case "Czysty":
+                        gui.setItem(38, new ItemBuilder(GornikItems.getItem("C1", 1).clone()).setLore(Arrays.asList("&7Przeszycie Bloku Ciosu: &c3%")).toItemStack());
+                        break;
+                    case "Wypolerowany":
+                        gui.setItem(38, new ItemBuilder(GornikItems.getItem("W1", 1).clone()).setLore(Arrays.asList("&7Przeszycie Bloku Ciosu: &c8%")).toItemStack());
+                        break;
+                }
+                switch (tag.getString("Blasku")) {
+                    case "false":
+                        gui.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Blasku").setLore(Arrays.asList(
+                                "&c&lZablokowany!",
+                                "",
+                                "&7Koszt:",
+                                "&8- &6x5 &eLsniacy Krysztal Blasku",
+                                "&8- &625,000,000 &2$",
+                                "&8Kliknij, zeby odblokowac."
+
+                        )).toItemStack());
+                        break;
+                    case "true":
+                        gui.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Blasku").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                        break;
+                    case "Czysty":
+                        gui.setItem(40, new ItemBuilder(GornikItems.getItem("C3", 1).clone()).setLore(Arrays.asList("&7Dodatkowe Obrazenia: &c75")).toItemStack());
+                        break;
+                    case "Wypolerowany":
+                        gui.setItem(40, new ItemBuilder(GornikItems.getItem("W3", 1).clone()).setLore(Arrays.asList("&7Dodatkowe Obrazenia: &c300")).toItemStack());
+                        break;
+                }
+                switch (tag.getString("Ognia")) {
+                    case "false":
+                        gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Ognia").setLore(Arrays.asList(
+                                "&c&lZablokowany!",
+                                "",
+                                "&7Koszt:",
+                                "&8- &6x5 &cLsniacy Krysztal Ognia",
+                                "&8- &625,000,000 &2$",
+                                "&8Kliknij, zeby odblokowac."
+
+                        )).toItemStack());
+                        break;
+                    case "true":
+                        gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Ognia").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                        break;
+                    case "Czysty":
+                        gui.setItem(42, new ItemBuilder(GornikItems.getItem("C7", 1).clone()).setLore(Arrays.asList("&7Srednie Obrazenia: &c2.5%")).toItemStack());
+                        break;
+                    case "Wypolerowany":
+                        gui.setItem(42, new ItemBuilder(GornikItems.getItem("W7", 1).clone()).setLore(Arrays.asList("&7Srednie Obrazenia: &c7.5%")).toItemStack());
+                        break;
+                }
+            } else  {
+                switch (tag.getString("Wody")) {
+                    case "false":
+                        gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Wody").setLore(Arrays.asList(
+                                "&c&lZablokowany!",
+                                "",
+                                "&7Koszt:",
+                                "&8- &6x5 &1Lsniacy Krysztal Wody",
+                                "&8- &625,000,000 &2$",
+                                "&8Kliknij, zeby odblokowac."
+
+                        )).toItemStack());
+                        break;
+                    case "true":
+                        gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Wody").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                        break;
+                    case "Czysty":
+                        gui.setItem(38, new ItemBuilder(GornikItems.getItem("C4", 1).clone()).setLore(Arrays.asList("&7Srednia Defensywa: &c1.5%")).toItemStack());
+                        break;
+                    case "Wypolerowany":
+                        gui.setItem(38, new ItemBuilder(GornikItems.getItem("W4", 1).clone()).setLore(Arrays.asList("&7Srednia Defensywa: &c4%")).toItemStack());
+                        break;
+                }
+                switch (tag.getString("Lodu")) {
+                    case "false":
+                        gui.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Lodu").setLore(Arrays.asList(
+                                "&c&lZablokowany!",
+                                "",
+                                "&7Koszt:",
+                                "&8- &6x5 &bLsniacy Krysztal Lodu",
+                                "&8- &625,000,000 &2$",
+                                "&8Kliknij, zeby odblokowac."
+
+                        )).toItemStack());
+                        break;
+                    case "true":
+                        gui.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Lodu").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                        break;
+                    case "Czysty":
+                        gui.setItem(40, new ItemBuilder(GornikItems.getItem("C6", 1).clone()).setLore(Arrays.asList("&7Blok Ciosu: &c0.5%")).toItemStack());
+                        break;
+                    case "Wypolerowany":
+                        gui.setItem(40, new ItemBuilder(GornikItems.getItem("W6", 1).clone()).setLore(Arrays.asList("&7Blok Ciosu: &c1.5%")).toItemStack());
+                        break;
+                }
+                if (String.valueOf(item.getType()).contains("_BOOTS")) {
+                    switch (tag.getString("Powietrza")) {
+                        case "false":
+                            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Powietrza").setLore(Arrays.asList(
+                                    "&c&lZablokowany!",
+                                    "",
+                                    "&7Koszt:",
+                                    "&8- &6x5 &7Lsniacy Krysztal Powietrza",
+                                    "&8- &625,000,000 &2$",
+                                    "&8Kliknij, zeby odblokowac."
+
+                            )).toItemStack());
+                            break;
+                        case "true":
+                            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Powietrza").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                            break;
+                        case "Czysty":
+                            gui.setItem(42, new ItemBuilder(GornikItems.getItem("C2", 1).clone()).setLore(Arrays.asList("&7Szybkosc: &c5")).toItemStack());
+                            break;
+                        case "Wypolerowany":
+                            gui.setItem(42, new ItemBuilder(GornikItems.getItem("W2", 1).clone()).setLore(Arrays.asList("&7Szybkosc: &c25")).toItemStack());
+                            break;
+                    }
+                } else {
+                    switch (tag.getString("Lasu")) {
+                        case "false":
+                            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("&cMiejsce na Krysztal Lasu").setLore(Arrays.asList(
+                                    "&c&lZablokowany!",
+                                    "",
+                                    "&7Koszt:",
+                                    "&8- &6x5 &2Lsniacy Krysztal Lasu",
+                                    "&8- &625,000,000 &2$",
+                                    "&8Kliknij, zeby odblokowac."
+
+                            )).toItemStack());
+                            break;
+                        case "true":
+                            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName("&aMiejsce na Krysztal Lasu").setLore(Arrays.asList("&8Kliknij &5krysztalem, &8zeby go osadzic.")).toItemStack());
+                            break;
+                        case "Czysty":
+                            gui.setItem(42, new ItemBuilder(GornikItems.getItem("C5", 1).clone()).setLore(Arrays.asList("&7Dodatkowe HP: &c2")).toItemStack());
+                            break;
+                        case "Wypolerowany":
+                            gui.setItem(42, new ItemBuilder(GornikItems.getItem("W5", 1).clone()).setLore(Arrays.asList("&7Dodatkowe HP: &c5")).toItemStack());
+                            break;
+                    }
+                }
+            }
+
+        }
+        // ZBROJA: WODY, LASU, LODU
+        // BUTY: POWIETRZA
+        // OSTRZE: MROKU, BLASKU, OGNIA
 
         player.openInventory(gui);
     }
@@ -678,7 +891,7 @@ public class GornikNPC {
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", tag.getInt("Lvl") + 1);
         tag.setInt("Exp", 0);
-        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(tag.getInt("Lvl")+1, tag.getString("Tier")));
+        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(tag.getInt("Lvl") + 1, tag.getString("Tier")));
         final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();

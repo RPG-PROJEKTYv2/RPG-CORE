@@ -56,11 +56,11 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().setArmorContents(null);
             player.getEnderChest().clear();
 
-            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0, true, false));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0, true, false));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0, true, false));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0, true, false));
-            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 1, 0, true, false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0,false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0,false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0,false));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0,false));
+            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.STONE_SWORD, 1, 0,false));
             rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
 
             player.setLevel(1);

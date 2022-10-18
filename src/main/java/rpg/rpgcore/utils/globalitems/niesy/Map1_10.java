@@ -12,14 +12,14 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map1_10 {
-    I1_10_1("1-10-1", 1, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 1, true, true)),
-    I1_10_2("1-10-2", 1, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 1, true, true)),
-    I1_10_3("1-10-3", 1, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 1, true, true)),
-    I1_10_4("1-10-4", 1, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 1, true, true)),
+    I1_10_1("1-10-1", 1, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 1,true)),
+    I1_10_2("1-10-2", 1, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 1,true)),
+    I1_10_3("1-10-3", 1, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 1,true)),
+    I1_10_4("1-10-4", 1, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 1,true)),
     I99("null", 0, null);
-    private String name;
-    private double dropChance;
-    private ItemStack item;
+    private final String name;
+    private final double dropChance;
+    private final ItemStack item;
 
     Map1_10(String name, double dropChance, ItemStack item) {
         this.name = name;
