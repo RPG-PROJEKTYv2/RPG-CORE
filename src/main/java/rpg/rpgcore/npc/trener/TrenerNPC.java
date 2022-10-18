@@ -1,10 +1,6 @@
 package rpg.rpgcore.npc.trener;
 
 import com.google.common.collect.ImmutableSet;
-import jdk.nashorn.internal.ir.annotations.Immutable;
-import lombok.Getter;
-import lombok.Setter;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

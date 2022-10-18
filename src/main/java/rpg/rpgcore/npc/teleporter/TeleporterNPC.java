@@ -146,7 +146,7 @@ public class TeleporterNPC {
         // expowisko 6
         if (user.getLvl() > 49) {
             expowisko6.setName("&f&lMrozna Dolina");
-            this.loreEXPOWISKA("&cOFF", "&f50");
+            this.loreEXPOWISKA("&aON", "&f50");
             expowisko6.addGlowing();
             expowisko6.setLore(lore);
             gui.setItem(5, expowisko6.toItemStack());
