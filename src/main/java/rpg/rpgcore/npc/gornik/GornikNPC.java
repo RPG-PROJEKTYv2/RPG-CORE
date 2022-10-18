@@ -110,6 +110,12 @@ public class GornikNPC {
         player.openInventory(gui);
     }
 
+    public void openOsadzanieKrysztalow(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lOsadzanie Krysztalow"));
+
+        player.openInventory(gui);
+    }
+
     public void openCrafting(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lReceptury Gornika"));
         gui.setItem(0, new ItemBuilder(GornikItems.getItem("WODA", 1).clone()).setLoreCrafting(GornikItems.getItem("WODA", 1).clone().getItemMeta().getLore(), Arrays.asList(
@@ -211,175 +217,175 @@ public class GornikNPC {
         gui.setItem(10, new ItemBuilder(GornikItems.getItem("P1", 1).clone()).setLoreCrafting(GornikItems.getItem("P1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &0Krysztal Mroku"
         )).toItemStack());
         gui.setItem(19, new ItemBuilder(GornikItems.getItem("S1", 1).clone()).setLoreCrafting(GornikItems.getItem("S1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &0Polyskujacy Krysztal Mroku"
         )).toItemStack());
         gui.setItem(28, new ItemBuilder(GornikItems.getItem("C1", 1).clone()).setLoreCrafting(GornikItems.getItem("C1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &0Lsniacy Krysztal Mroku"
         )).toItemStack());
         gui.setItem(37, new ItemBuilder(GornikItems.getItem("W1", 1).clone()).setLoreCrafting(GornikItems.getItem("W1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &0Czysty Krysztal Mroku"
         )).toItemStack());
         // POWIETRZA
         gui.setItem(11, new ItemBuilder(GornikItems.getItem("P2", 1).clone()).setLoreCrafting(GornikItems.getItem("P2", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &7Krysztal Powietrza"
         )).toItemStack());
         gui.setItem(20, new ItemBuilder(GornikItems.getItem("S2", 1).clone()).setLoreCrafting(GornikItems.getItem("S2", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &7Polyskujacy Krysztal Powietrza"
         )).toItemStack());
         gui.setItem(29, new ItemBuilder(GornikItems.getItem("C2", 1).clone()).setLoreCrafting(GornikItems.getItem("C2", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &7Lsniacy Krysztal Powietrza"
         )).toItemStack());
         gui.setItem(38, new ItemBuilder(GornikItems.getItem("W2", 1).clone()).setLoreCrafting(GornikItems.getItem("W2", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &7Czysty Krysztal Powietrza"
         )).toItemStack());
         // BLASKU
         gui.setItem(12, new ItemBuilder(GornikItems.getItem("P3", 1).clone()).setLoreCrafting(GornikItems.getItem("P3", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &eKrysztal Blasku"
         )).toItemStack());
         gui.setItem(21, new ItemBuilder(GornikItems.getItem("S3", 1).clone()).setLoreCrafting(GornikItems.getItem("S3", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &ePolyskujacy Krysztal Blasku"
         )).toItemStack());
         gui.setItem(30, new ItemBuilder(GornikItems.getItem("C3", 1).clone()).setLoreCrafting(GornikItems.getItem("C3", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &eLsniacy Krysztal Blasku"
         )).toItemStack());
         gui.setItem(39, new ItemBuilder(GornikItems.getItem("W3", 1).clone()).setLoreCrafting(GornikItems.getItem("W3", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &eCzysty Krysztal Blasku"
         )).toItemStack());
         // WODY
         gui.setItem(13, new ItemBuilder(GornikItems.getItem("P4", 1).clone()).setLoreCrafting(GornikItems.getItem("P5", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &1Krysztal Wody"
         )).toItemStack());
         gui.setItem(22, new ItemBuilder(GornikItems.getItem("S4", 1).clone()).setLoreCrafting(GornikItems.getItem("S5", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &1Polyskujacy Krysztal Wody"
         )).toItemStack());
         gui.setItem(31, new ItemBuilder(GornikItems.getItem("C4", 1).clone()).setLoreCrafting(GornikItems.getItem("C5", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &1Lsniacy Krysztal Wody"
         )).toItemStack());
         gui.setItem(40, new ItemBuilder(GornikItems.getItem("W4", 1).clone()).setLoreCrafting(GornikItems.getItem("W5", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &1Czysty Krysztal Wody"
         )).toItemStack());
         // LASU
         gui.setItem(14, new ItemBuilder(GornikItems.getItem("P5", 1).clone()).setLoreCrafting(GornikItems.getItem("P4", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &2Krysztal Lasu"
         )).toItemStack());
         gui.setItem(23, new ItemBuilder(GornikItems.getItem("S5", 1).clone()).setLoreCrafting(GornikItems.getItem("S4", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &2Polyskujacy Krysztal Lasu"
         )).toItemStack());
         gui.setItem(32, new ItemBuilder(GornikItems.getItem("C5", 1).clone()).setLoreCrafting(GornikItems.getItem("C4", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &2Lsniacy Krysztal Lasu"
         )).toItemStack());
         gui.setItem(41, new ItemBuilder(GornikItems.getItem("W5", 1).clone()).setLoreCrafting(GornikItems.getItem("W4", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &2Czysty Krysztal Lasu"
         )).toItemStack());
         // LOODU
         gui.setItem(15, new ItemBuilder(GornikItems.getItem("P6", 1).clone()).setLoreCrafting(GornikItems.getItem("P6", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &bKrysztal Lodu"
         )).toItemStack());
         gui.setItem(24, new ItemBuilder(GornikItems.getItem("S6", 1).clone()).setLoreCrafting(GornikItems.getItem("S6", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &bPolyskujacy Krysztal Lodu"
         )).toItemStack());
         gui.setItem(33, new ItemBuilder(GornikItems.getItem("C6", 1).clone()).setLoreCrafting(GornikItems.getItem("C6", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &bLsniacy Krysztal Lodu"
         )).toItemStack());
         gui.setItem(42, new ItemBuilder(GornikItems.getItem("W6", 1).clone()).setLoreCrafting(GornikItems.getItem("W6", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &bCzysty Krysztal Lodu"
         )).toItemStack());
         // OGNIA
         gui.setItem(16, new ItemBuilder(GornikItems.getItem("P7", 1).clone()).setLoreCrafting(GornikItems.getItem("P7", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6500,000&2$",
+                "&8- &61,000,000&2$",
                 "&8- &6x8 &cKrysztal Ognia"
         )).toItemStack());
         gui.setItem(25, new ItemBuilder(GornikItems.getItem("S7", 1).clone()).setLoreCrafting(GornikItems.getItem("S7", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &6750,000&2$",
+                "&8- &62,500,000&2$",
                 "&8- &6x8 &cPolyskujacy Krysztal Ognia"
         )).toItemStack());
         gui.setItem(34, new ItemBuilder(GornikItems.getItem("C7", 1).clone()).setLoreCrafting(GornikItems.getItem("C7", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &62,500,000&2$",
+                "&8- &67,500,000&2$",
                 "&8- &6x8 &cLsniacy Krysztal Ognia"
         )).toItemStack());
         gui.setItem(43, new ItemBuilder(GornikItems.getItem("W7", 1).clone()).setLoreCrafting(GornikItems.getItem("W7", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
-                "&8- &610,000,000&2$",
+                "&8- &612,000,000&2$",
                 "&8- &6x8 &cCzysty Krysztal Ognia"
         )).toItemStack());
 

@@ -48,7 +48,7 @@ public class GornikInventoryClick implements Listener {
                 if (String.valueOf(e.getCursor().getType()).contains("_SPADE") && e.getCursor().getItemMeta().hasDisplayName()
                         && e.getCursor().getItemMeta().getDisplayName().contains(" Dluto") && player.getInventory().containsAtLeast(GornikItems.getItem("WODA", 1), 1)) {
                     if (item != null && (item.getType() == Material.COAL_ORE || item.getType() == Material.IRON_ORE || item.getType() == Material.GOLD_ORE || item.getType() == Material.DIAMOND_ORE
-                    || item.getType() == Material.EMERALD_ORE || item.getType() == Material.REDSTONE_ORE || item.getType() == Material.LAPIS_ORE) && item.getItemMeta().hasDisplayName()
+                            || item.getType() == Material.EMERALD_ORE || item.getType() == Material.REDSTONE_ORE || item.getType() == Material.LAPIS_ORE) && item.getItemMeta().hasDisplayName()
                             && item.getItemMeta().getDisplayName().contains("Ruda")) {
                         e.setCancelled(true);
                         final ItemStack toRemove = new ItemBuilder(item.clone()).setAmount(1).toItemStack();
@@ -123,6 +123,10 @@ public class GornikInventoryClick implements Listener {
             }
             if (slot == 11) {
                 RPGCORE.getInstance().getGornikNPC().openKampania(player);
+                return;
+            }
+            if (slot == 13) {
+                RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player);
                 return;
             }
             if (slot == 15) {
@@ -584,7 +588,7 @@ public class GornikInventoryClick implements Listener {
                 RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, playerUser);
             });
         }
-        
+
         if (title.equals("Receptury Gornika")) {
             e.setCancelled(true);
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
@@ -615,7 +619,7 @@ public class GornikInventoryClick implements Listener {
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Drewniane Dluto&a!"));
                     break;
                 case 2:
-                    if (!player.getInventory().containsAtLeast(GornikItems.getCompressed("G1", 1), 8) || 
+                    if (!player.getInventory().containsAtLeast(GornikItems.getCompressed("G1", 1), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G2", 1), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G3", 1), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G4", 1), 8) ||
@@ -627,7 +631,7 @@ public class GornikInventoryClick implements Listener {
                         return;
                     }
                     player.getInventory().removeItem(GornikItems.getZmiotka("T0", 50), GornikItems.getCompressed("G1", 8), GornikItems.getCompressed("G2", 8),
-                            GornikItems.getCompressed("G3", 8), GornikItems.getCompressed("G4", 8), GornikItems.getCompressed("G5", 8), 
+                            GornikItems.getCompressed("G3", 8), GornikItems.getCompressed("G4", 8), GornikItems.getCompressed("G5", 8),
                             GornikItems.getCompressed("G6", 8), GornikItems.getCompressed("G7", 8));
                     user.setKasa(user.getKasa() - 200000000);
                     player.getInventory().addItem(GornikItems.getZmiotka("T1", 1));
@@ -712,17 +716,276 @@ public class GornikInventoryClick implements Listener {
 
         if (title.equals("Wytwarzanie Krysztalow")) {
             e.setCancelled(true);
-            player.getInventory().addItem(GornikItems.getItem("P1", 1), GornikItems.getItem("P2", 1), GornikItems.getItem("P3", 1), GornikItems.getItem("P4", 1), GornikItems.getItem("P5", 1), GornikItems.getItem("P6", 1), GornikItems.getItem("P7", 1),
-                    GornikItems.getItem("S1", 1), GornikItems.getItem("S2", 1), GornikItems.getItem("S3", 1), GornikItems.getItem("S4", 1), GornikItems.getItem("S5", 1), GornikItems.getItem("S6", 1), GornikItems.getItem("S7", 1),
-                    GornikItems.getItem("C1", 1), GornikItems.getItem("C2", 1), GornikItems.getItem("C3", 1), GornikItems.getItem("C4", 1), GornikItems.getItem("C5", 1), GornikItems.getItem("C6", 1), GornikItems.getItem("C7", 1),
-                    GornikItems.getItem("W1", 1), GornikItems.getItem("W2", 1), GornikItems.getItem("W3", 1), GornikItems.getItem("W4", 1), GornikItems.getItem("W5", 1), GornikItems.getItem("W6", 1), GornikItems.getItem("W7", 1));
-            /*final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+            if (item.getType() == Material.STAINED_GLASS_PANE) {
+                return;
+            }
+            final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+            ItemStack itemToAdd = null;
+            switch (slot) {
+                // MROKU
+                case 10:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G1", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G1", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P1", 1);
+                    break;
+                case 19:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P1", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P1", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S1", 1);
+                    break;
+                case 28:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S1", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S1", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C1", 1);
+                    break;
+                case 37:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C1", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C1", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W1", 1);
+                    break;
+                // POWIETRZA
+                case 11:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G2", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G2", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P2", 1);
+                    break;
+                case 20:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P2", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P2", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S2", 1);
+                    break;
+                case 29:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S2", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S2", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C2", 1);
+                    break;
+                case 38:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C2", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C2", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W2", 1);
+                    break;
+                // BLASKU
+                case 12:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G3", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G3", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P3", 1);
+                    break;
+                case 21:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P3", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P3", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S3", 1);
+                    break;
+                case 30:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S3", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S3", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C3", 1);
+                    break;
+                case 39:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C3", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C3", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W3", 1);
+                    break;
+                // WODY
+                case 13:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G4", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G4", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P4", 1);
+                    break;
+                case 22:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P4", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P4", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S4", 1);
+                    break;
+                case 31:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S4", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S4", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C4", 1);
+                    break;
+                case 40:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C4", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C4", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W4", 1);
+                    break;
+                // LASU
+                case 14:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G5", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G5", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P5", 1);
+                    break;
+                case 23:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P5", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P5", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S5", 1);
+                    break;
+                case 32:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S5", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S5", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C5", 1);
+                    break;
+                case 41:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C5", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C5", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W5", 1);
+                    break;
+                // LODU
+                case 15:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G6", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G6", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P6", 1);
+                    break;
+                case 24:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P6", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P6", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S6", 1);
+                    break;
+                case 33:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S6", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S6", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C6", 1);
+                    break;
+                case 42:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C6", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C6", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W6", 1);
+                    break;
+                // OGNIA
+                case 16:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("G7", 1), 8) || user.getKasa() < 1000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("G7", 8));
+                    user.setKasa(user.getKasa() - 1000000);
+                    itemToAdd = GornikItems.getItem("P7", 1);
+                    break;
+                case 25:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("P7", 1), 8) || user.getKasa() < 2500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("P7", 8));
+                    user.setKasa(user.getKasa() - 2500000);
+                    itemToAdd = GornikItems.getItem("S7", 1);
+                    break;
+                case 34:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("S7", 1), 8) || user.getKasa() < 7500000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("S7", 8));
+                    user.setKasa(user.getKasa() - 7500000);
+                    itemToAdd = GornikItems.getItem("C7", 1);
+                    break;
+                case 43:
+                    if (!player.getInventory().containsAtLeast(GornikItems.getItem("C7", 1), 8) || user.getKasa() < 12000000) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getItem("C7", 8));
+                    user.setKasa(user.getKasa() - 12000000);
+                    itemToAdd = GornikItems.getItem("W7", 1);
+                    break;
+            }
 
-
-            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));*/
+            player.getInventory().addItem(itemToAdd);
+            player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles " + itemToAdd.getItemMeta().getDisplayName() + "&a!"));
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
         }
-
-
-
     }
 }
