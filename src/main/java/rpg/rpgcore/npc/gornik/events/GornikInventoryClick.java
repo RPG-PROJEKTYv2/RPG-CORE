@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -22,6 +23,8 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class GornikInventoryClick implements Listener {
@@ -1003,7 +1006,13 @@ public class GornikInventoryClick implements Listener {
             if (clickedInventory.getSize() != 54) return;
             if (item != null && item.getType() == Material.STAINED_GLASS_PANE && item.getDurability() == 0) return;
             if (slot == 13) {
+                if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie mozesz tego aktualnie osadzic!"));
+                    player.sendMessage(Utils.format("&8Zdejmij przedmiot z kursora!"));
+                    return;
+                }
                 player.getInventory().addItem(e.getCurrentItem());
+                e.setCurrentItem(null);
                 RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, null);
                 return;
             }
@@ -1464,8 +1473,21 @@ public class GornikInventoryClick implements Listener {
                         return;
                 }
             }
+            this.updateLore(playerItem, 1, "");
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+            clickedInventory.setItem(13, null);
             RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, playerItem);
         }
+    }
+
+    private void updateLore(final ItemStack is, final int slot, final String prefix) {
+        final ItemMeta im = is.getItemMeta();
+        if (!Utils.removeColor(im.getDisplayName()).contains("♦ ♦ ♦")) {
+            im.setDisplayName(im.getDisplayName() + Utils.format(" &8&l♦ ♦ ♦"));
+        }
+        //TODO do testu
+        String krysztaly = Utils.removeColor(im.getDisplayName()).substring(Utils.removeColor(im.getDisplayName()).lastIndexOf("♦") - 1);
+        System.out.println(krysztaly);
+        is.setItemMeta(im);
     }
 }

@@ -63,6 +63,7 @@ import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikBlockBreakListener;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
+import rpg.rpgcore.npc.gornik.events.GornikInventoryCloseListener;
 import rpg.rpgcore.npc.gornik.ore.OreCommand;
 import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
@@ -506,6 +507,7 @@ public final class RPGCORE extends JavaPlugin {
         // ...GORNIK
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new GornikBlockBreakListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new GornikInventoryCloseListener(), this);
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
