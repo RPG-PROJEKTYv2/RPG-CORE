@@ -23,8 +23,6 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class GornikInventoryClick implements Listener {
@@ -1019,9 +1017,12 @@ public class GornikInventoryClick implements Listener {
             
             final ItemStack playerItem = clickedInventory.getItem(13);
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+            int slotKrysztalu = 0;
+            String prefix = "";
             if (String.valueOf(playerItem.getType()).contains("_SWORD")) {
                 switch (slot) {
                     case 38:
+                        slotKrysztalu = 0;
                         final String mroku = Utils.getTagString(playerItem, "Mroku");
                         if (mroku.equals("false")) {
                             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -1036,6 +1037,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S1", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Mroku", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (mroku.equals("true")) {
@@ -1044,12 +1046,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Mroku", "Czysty");
                                 Utils.setTagDouble(playerItem, "Mroku-Bonus", 3);
+                                prefix = "&0";
                                 break;
                             }
                             if (e.getCursor().equals(GornikItems.getItem("W1", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Mroku", "Wypolerowany");
                                 Utils.setTagDouble(playerItem, "Mroku-Bonus", 8);
+                                prefix = "&0&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1084,8 +1088,10 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Mroku", "true");
                         Utils.setTagDouble(playerItem, "Mroku-Bonus", 0);
+                        prefix = "&7";
                         break;
                     case 40:
+                        slotKrysztalu = 1;
                         final String blasku = Utils.getTagString(playerItem, "Blasku");
                         if (blasku.equals("false")) {
                             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -1100,6 +1106,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S3", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Blasku", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (blasku.equals("true")) {
@@ -1108,12 +1115,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Blasku", "Czysty");
                                 Utils.setTagInt(playerItem, "Blasku-Bonus", 75);
+                                prefix = "&e";
                                 break;
                             } 
                             if (e.getCursor().equals(GornikItems.getItem("W3", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Blasku", "Wypolerowany");
                                 Utils.setTagInt(playerItem, "Blasku-Bonus", 300);
+                                prefix = "&e&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1147,8 +1156,10 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Blasku", "true");
                         Utils.setTagInt(playerItem, "Blasku-Bonus", 0);
+                        prefix = "&7";
                         break;
                     case 42:
+                        slotKrysztalu = 2;
                         final String ognia = Utils.getTagString(playerItem, "Ognia");
                         if (ognia.equals("false")) {
                             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -1163,6 +1174,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S7", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Ognia", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (ognia.equals("true")) {
@@ -1171,12 +1183,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Ognia", "Czysty");
                                 Utils.setTagDouble(playerItem, "Ognia-Bonus", 2.5);
+                                prefix = "&c";
                                 break;
                             }  
                             if (e.getCursor().equals(GornikItems.getItem("W7", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Ognia", "Wypolerowany");
                                 Utils.setTagDouble(playerItem, "Ognia-Bonus", 7.5);
+                                prefix = "&c&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1210,6 +1224,7 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Ognia", "true");
                         Utils.setTagDouble(playerItem, "Ognia-Bonus", 0);
+                        prefix = "&7";
                         break;
                     default:
                         return;
@@ -1217,6 +1232,7 @@ public class GornikInventoryClick implements Listener {
             } else {
                 switch (slot) {
                     case 38:
+                        slotKrysztalu = 0;
                         final String wody = Utils.getTagString(playerItem, "Wody");
                         if (wody.equals("false")) {
                             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -1231,6 +1247,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S4", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Wody", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (wody.equals("true")) {
@@ -1239,12 +1256,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Wody", "Czysty");
                                 Utils.setTagDouble(playerItem, "Wody-Bonus", 1.5);
+                                prefix = "&1";
                                 break;
                             }
                             if (e.getCursor().equals(GornikItems.getItem("W4", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Wody", "Wypolerowany");
                                 Utils.setTagDouble(playerItem, "Wody-Bonus", 4);
+                                prefix = "&1&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1278,8 +1297,10 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Wody", "true");
                         Utils.setTagDouble(playerItem, "Wody-Bonus", 0);
+                        prefix = "&7";
                         break;
                     case 40:
+                        slotKrysztalu = 1;
                         final String lodu = Utils.getTagString(playerItem, "Lodu");
                         if (lodu.equals("false")) {
                             if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
@@ -1294,6 +1315,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S6", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Lodu", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (lodu.equals("true")) {
@@ -1302,12 +1324,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Lodu", "Czysty");
                                 Utils.setTagDouble(playerItem, "Lodu-Bonus", 0.5);
+                                prefix = "&b";
                                 break;
                             }
                             if (e.getCursor().equals(GornikItems.getItem("W6", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Lodu", "Wypolerowany");
                                 Utils.setTagDouble(playerItem, "Lodu-Bonus", 1.5);
+                                prefix = "&b&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1341,8 +1365,10 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Lodu", "true");
                         Utils.setTagDouble(playerItem, "Lodu-Bonus", 0);
+                        prefix = "&7";
                         break;
                     case 42:
+                        slotKrysztalu = 2;
                         if (String.valueOf(playerItem.getType()).contains("_BOOTS")) {
                             final String powietrza = Utils.getTagString(playerItem, "Powietrza");
                             if (powietrza.equals("false")) {
@@ -1358,6 +1384,7 @@ public class GornikInventoryClick implements Listener {
                                 player.getInventory().removeItem(GornikItems.getItem("S2", 5));
                                 user.setKasa(user.getKasa() - 25000000);
                                 Utils.setTagString(playerItem, "Powietrza", "true");
+                                prefix = "&7";
                                 break;
                             }
                             if (powietrza.equals("true")) {
@@ -1366,12 +1393,14 @@ public class GornikInventoryClick implements Listener {
                                     e.setCursor(null);
                                     Utils.setTagString(playerItem, "Powietrza", "Czysty");
                                     Utils.setTagInt(playerItem, "Powietrza-Bonus", 5);
+                                    prefix = "&f";
                                     break;
                                 }
                                 if (e.getCursor().equals(GornikItems.getItem("W2", 1))) {
                                     e.setCursor(null);
                                     Utils.setTagString(playerItem, "Powietrza", "Wypolerowany");
                                     Utils.setTagInt(playerItem, "Powietrza-Bonus", 25);
+                                    prefix = "&f&l";
                                     break;
                                 }
                                 player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1405,6 +1434,7 @@ public class GornikInventoryClick implements Listener {
                             }
                             Utils.setTagString(playerItem, "Powietrza", "true");
                             Utils.setTagInt(playerItem, "Powietrza-Bonus", 0);
+                            prefix = "&7";
                             break;
                         }
                         final String lasu = Utils.getTagString(playerItem, "Lasu");
@@ -1421,6 +1451,7 @@ public class GornikInventoryClick implements Listener {
                             player.getInventory().removeItem(GornikItems.getItem("S5", 5));
                             user.setKasa(user.getKasa() - 25000000);
                             Utils.setTagString(playerItem, "Lasu", "true");
+                            prefix = "&7";
                             break;
                         }
                         if (lasu.equals("true")) {
@@ -1429,12 +1460,14 @@ public class GornikInventoryClick implements Listener {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Lasu", "Czysty");
                                 Utils.setTagDouble(playerItem, "Lasu-Bonus", 2);
+                                prefix = "&2";
                                 break;
                             }
                             if (e.getCursor().equals(GornikItems.getItem("W5", 1))) {
                                 e.setCursor(null);
                                 Utils.setTagString(playerItem, "Lasu", "Wypolerowany");
                                 Utils.setTagDouble(playerItem, "Lasu-Bonus", 5);
+                                prefix = "&2&l";
                                 break;
                             }
                             player.sendMessage(Utils.format("&6&lGornik &8>> &7To miejsce jest przeznaczone na inny &5Krysztal&7!"));
@@ -1468,12 +1501,13 @@ public class GornikInventoryClick implements Listener {
                         }
                         Utils.setTagString(playerItem, "Lasu", "true");
                         Utils.setTagDouble(playerItem, "Lasu-Bonus", 0);
+                        prefix = "&7";
                         break;
                     default:
                         return;
                 }
             }
-            this.updateLore(playerItem, 1, "");
+            this.updateLore(playerItem, slotKrysztalu, prefix);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
             clickedInventory.setItem(13, null);
             RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, playerItem);
@@ -1482,12 +1516,14 @@ public class GornikInventoryClick implements Listener {
 
     private void updateLore(final ItemStack is, final int slot, final String prefix) {
         final ItemMeta im = is.getItemMeta();
-        if (!Utils.removeColor(im.getDisplayName()).contains("♦ ♦ ♦")) {
-            im.setDisplayName(im.getDisplayName() + Utils.format(" &8&l♦ ♦ ♦"));
+        if (!Utils.removeColor(im.getDisplayName()).contains("♦")) {
+            System.out.println("Dodano!");
+            im.setDisplayName(im.getDisplayName() + Utils.format(" &8♦&8♦&8♦"));
         }
-        //TODO do testu
-        String krysztaly = Utils.removeColor(im.getDisplayName()).substring(Utils.removeColor(im.getDisplayName()).lastIndexOf("♦") - 1);
-        System.out.println(krysztaly);
+        String displayName = im.getDisplayName().substring(0, im.getDisplayName().lastIndexOf(" "));
+        String[] prefixes = im.getDisplayName().substring(im.getDisplayName().lastIndexOf(" ") + 1).split("♦");
+        prefixes[slot] = prefix;
+        im.setDisplayName(Utils.format(displayName + " " + prefixes[0] + "♦" + prefixes[1] + "♦" + prefixes[2] + "♦"));
         is.setItemMeta(im);
     }
 }

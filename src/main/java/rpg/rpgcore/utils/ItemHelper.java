@@ -15,8 +15,8 @@ public class ItemHelper {
         final List<String> lore = new ArrayList<>();
 
         set.setName(name);
-        lore.add("&7Obrona: &f" + prot);
-        lore.add("&7Ciernie: &f" + thorns);
+        lore.add("&7Obrona: &6" + prot);
+        lore.add("&7Ciernie: &6" + thorns);
         set.setLore(lore);
 
         set.hideFlag();

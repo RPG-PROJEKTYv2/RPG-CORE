@@ -10,7 +10,6 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class TrenerNPC {
