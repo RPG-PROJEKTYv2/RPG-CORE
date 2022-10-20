@@ -65,7 +65,7 @@ public class ChatManager {
         if (playerGuild.equals("Brak Klanu")) {
             format = format.replace("<player-klan>", "");
         } else {
-            format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8]"));
+            format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8] "));
         }
 
         return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", Utils.format(lvlInString)).replace("<player-name>", playerName).replace("<message>", Utils.format(message));
@@ -182,16 +182,19 @@ public class ChatManager {
         for (String s : args) {
             if (s.contains("@")) {
                 final String nick = s.replace("@", "");
-                if (!nick.isEmpty()) {
-                    final Player p = Bukkit.getPlayer(nick);
-                    if (p != null) {
-                        final ChatUser atUser = rpgcore.getChatManager().find(p.getUniqueId());
-                        if (atUser.isPingsEnabled()) {
-                            rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&cHej " + p.getName() + "!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&3" + player.getName() + " &7zaczepia Cie!", 5, 20, 5));
-                            p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 100);
-                        }
-                    }
+                if (nick.isEmpty()) {
+                    return;
                 }
+                final Player p = Bukkit.getPlayer(nick);
+                if (p == null) {
+                    return;
+                }
+                final ChatUser atUser = rpgcore.getChatManager().find(p.getUniqueId());
+                if (!atUser.isPingsEnabled()) {
+                    return;
+                }
+                rpgcore.getNmsManager().sendTitleAndSubTitle(p, rpgcore.getNmsManager().makeTitle("&cHej " + p.getName() + "!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&3" + player.getName() + " &7zaczepia Cie!", 5, 20, 5));
+                p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 100);
             }
         }
     }

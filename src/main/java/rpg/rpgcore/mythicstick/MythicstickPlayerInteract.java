@@ -60,7 +60,7 @@ public class MythicstickPlayerInteract implements Listener {
                     player.sendMessage(spawnerCount + "");
                     spawnerCount++;
                     ItemMeta meta = eventItem.getItemMeta();
-                    meta.setLore(Arrays.asList(Utils.format("&7Aktualnie ustawiasz spawner mobow: &c" + mobName), Utils.format("&7Nazwa Spawnera: &c" + mobName + "-RESP-" + spawnerCount)));
+                    meta.setLore(Arrays.asList(Utils.format("&7Aktualnie ustawiasz spawner mobow: &c" + mobName), Utils.format("&7Nazwa Spawnera: &c" + mobName + "-RESP-" + spawnerCount), Utils.format("&7Leashrange: &c" + leashRange)));
                     eventItem.setItemMeta(meta);
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aUstawiles spawner mobow: &c" + mobName));
                 }

@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.CustomZombie.CustomZombie;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
+import rpg.rpgcore.entities.ZamekNieskonczonosciBoss.ZamekNieskonczonosciBoss;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -23,7 +24,9 @@ import java.util.UUID;
 public enum EntityTypes {
     //NAME("Entity name", Entity ID, yourcustomclass.class);
     CUSTOM_ZOMBIE("Zombie", 54, CustomZombie.class), //You can add as many as you want.
-    PET_ARMOR_STAND("ArmorStand", 30, PetArmorStand.class);
+    PET_ARMOR_STAND("ArmorStand", 30, PetArmorStand.class),
+    ZAMEK_NIESKONCZONOSCI_BOSS("WitherBoss", 64, ZamekNieskonczonosciBoss.class);
+
 
     EntityTypes(String name, int id, Class<? extends Entity> custom) {
         addToMaps(custom, name, id);
@@ -31,7 +34,7 @@ public enum EntityTypes {
 
     private static Map<UUID, Entity> petMap = new HashMap<>();
 
-    public static void spawnEntity(Entity entity, UUID uuid, Location loc, String name) {
+    public static Entity spawnEntity(Entity entity, UUID uuid, Location loc, String name) {
         if (entity instanceof EntityArmorStand) {
             addEntity(uuid, entity);
         }
@@ -40,6 +43,7 @@ public enum EntityTypes {
         entity.setCustomNameVisible(true);
         //entity.world.addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         ((CraftWorld) loc.getWorld()).getHandle().addEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return entity;
     }
 
     private static void addToMaps(Class clazz, String name, int id) {

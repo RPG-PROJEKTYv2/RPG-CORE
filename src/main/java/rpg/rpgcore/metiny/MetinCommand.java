@@ -60,7 +60,7 @@ public class MetinCommand extends CommandAPI {
                             + Utils.SERVERNAME + "&aSwiat metina:&6 " + metiny.getMetins().getWorld() + "\n"
                             + Utils.SERVERNAME + "&aKordy metina:&6 " + metiny.getMetins().getCoordinates() + "\n"
                             + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth() + "\n"
-                            + Utils.SERVERNAME + "&Ilosc potworow:&6 " + metiny.getMetins().getMoby() + "\n"));
+                            + Utils.SERVERNAME + "&aIlosc potworow:&6 " + metiny.getMetins().getMoby() + "\n"));
                     MetinyHelper.spawnMetin(id);
                     return;
                 }

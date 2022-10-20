@@ -41,6 +41,7 @@ import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
 import rpg.rpgcore.guilds.events.GuildsInventoryClick;
@@ -211,6 +212,7 @@ public final class RPGCORE extends JavaPlugin {
     private LowcaNPC lowcaNPC;
     private LesnikNPC lesnikNPC;
     private PetyManager petyManager;
+    private ZamekNieskonczonosciManager zamekNieskonczonosciManager;
 
 
 
@@ -295,7 +297,8 @@ public final class RPGCORE extends JavaPlugin {
                             e.getName().contains("Wampir")) {
                         e.remove();
                     }
-                } else if (e instanceof EnderCrystal) {
+                }
+                if (e instanceof EnderCrystal) {
                     e.remove();
                 }
             }
@@ -573,6 +576,7 @@ public final class RPGCORE extends JavaPlugin {
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
+        this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
     }
 
     private void initNPCS() {
@@ -852,5 +856,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public OreManager getOreManager() {
         return oreManager;
+    }
+
+    public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
+        return zamekNieskonczonosciManager;
     }
 }

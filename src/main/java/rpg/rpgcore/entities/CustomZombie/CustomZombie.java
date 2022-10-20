@@ -2,6 +2,7 @@ package rpg.rpgcore.entities.CustomZombie;
 
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.List;
@@ -26,5 +27,15 @@ public class CustomZombie extends EntityZombie {
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntitySpider.class, false, true));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityIronGolem.class, false, false));
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), this::test, 300L);
+    }
+
+    public CustomZombie test() {
+        List goalB = (List) Utils.getPrivateField("b", PathfinderGoalSelector.class, goalSelector);
+        List targetB = (List)Utils.getPrivateField("b", PathfinderGoalSelector.class, targetSelector);
+        System.out.println("dodano!");
+        this.goalSelector.a(3, new PathfinderGoalMeleeAttack(this, EntityPlayer.class, 1.0D, false));
+        this.targetSelector.a(3, new PathfinderGoalNearestAttackableTarget(this, EntityPlayer.class, false, false));
+        return this;
     }
 }
