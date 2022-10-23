@@ -34,7 +34,7 @@ public class GuildsPlayerDamage implements Listener {
             final String tagPlayer = rpgcore.getGuildManager().getGuildTag(uuidPlayer);
             final String tagTarget = rpgcore.getGuildManager().getGuildTag(targetUUID);
 
-            if (tagPlayer != null && tagTarget != null) {
+            if (!tagPlayer.equals("Brak Klanu") && !tagTarget.equals("Brak Klanu")) {
                 if (tagPlayer.equals(tagTarget)) {
                     if (!rpgcore.getGuildManager().getGuildPvPStatus(tagPlayer)) {
                         damagerPlayer.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7PvP w twoim klanie jest &cwylaczone&7!"));

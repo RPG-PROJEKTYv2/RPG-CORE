@@ -57,6 +57,10 @@ public class PetInteractListener implements Listener {
             return;
         }
 
+        if (!eventItem.getItemMeta().hasDisplayName() || !eventItem.getItemMeta().hasLore()) {
+            return;
+        }
+
         if (eventItem.getType().equals(Material.SKULL_ITEM) && eventItem.getDurability() == 3) {
             e.setCancelled(true);
             if (!Utils.checkIfLoreContainsString(eventItem.getItemMeta().getLore(), "Zwierzak")) {

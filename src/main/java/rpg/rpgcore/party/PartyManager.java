@@ -43,6 +43,18 @@ public class PartyManager {
         return false;
     }
 
+    public Party findPartyByMember(final UUID uuid) {
+        if (!isInParty(uuid)) {
+            return null;
+        }
+        for (Party party : partyList.values()) {
+            if (party.getMembers().contains(uuid)) {
+                return party;
+            }
+        }
+        return null;
+    }
+
     public void createParty(final Player player) {
         if (this.hasParty(player.getUniqueId())) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Posiadasz juz swoja grupe. Aby ja usunac uzyj: &c/party usun"));

@@ -74,7 +74,7 @@ public class DamageManager {
         double krytyk = 1;
         double wzmKryt = 1;
 
-        if (weapon != null) {
+        if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
             dmg += Utils.getSharpnessLevel(weapon);
         }
 

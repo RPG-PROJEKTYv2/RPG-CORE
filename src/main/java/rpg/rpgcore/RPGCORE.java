@@ -42,6 +42,8 @@ import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
 import rpg.rpgcore.guilds.events.GuildsInventoryClick;
@@ -255,6 +257,7 @@ public final class RPGCORE extends JavaPlugin {
 
         this.initGlobalCommands();
         this.initEvents();
+        this.initDungeons();
         //this.initPacketListeners();
 
 
@@ -576,7 +579,6 @@ public final class RPGCORE extends JavaPlugin {
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
-        this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
     }
 
     private void initNPCS() {
@@ -614,6 +616,13 @@ public final class RPGCORE extends JavaPlugin {
         this.najemnikManager = new NajemnikManager();
         this.wygnaniecManager = new WygnaniecManager();
         this.zwierzakiManager = new ZwierzakiManager();
+    }
+
+    private void initDungeons() {
+        // ZAMEK NIESKONCZONOSCI
+        this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
+        this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciMoveListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciEntityDamgeListener(), this);
     }
 
     private void fixBuckets() {

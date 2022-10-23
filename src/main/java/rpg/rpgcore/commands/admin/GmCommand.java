@@ -9,11 +9,13 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class GmCommand extends CommandAPI {
     
     public GmCommand() {
         super("gm");
+        this.setAliases(Arrays.asList("gamemode"));
         this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }

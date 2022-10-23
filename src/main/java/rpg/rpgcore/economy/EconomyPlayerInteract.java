@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.user.User;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class EconomyPlayerInteract implements Listener {
             return;
         }
 
-        if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
+        if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
             final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
             final User user = rpgcore.getUserManager().find(uuid);
             final ItemStack is = e.getItem().clone();
