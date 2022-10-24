@@ -18,15 +18,14 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMove(final PlayerMoveEvent e) {
         final Player player = e.getPlayer();
-        if (player.getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci")) {
+        if (player.getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci") && rpgcore.getZamekNieskonczonosciManager().active) {
             if (rpgcore.getZamekNieskonczonosciManager().animationlist.contains(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId()))) {
+                player.teleport(e.getFrom());
                 e.setCancelled(true);
                 return;
             }
             if (rpgcore.getZamekNieskonczonosciManager().phase == 0) {
                 final Chunk chunk = player.getLocation().getChunk();
-                System.out.println(chunk.getX() >= -1 && chunk.getX() <= 1);
-                System.out.println(chunk.getZ() >= 0 && chunk.getZ() <= 2);
                 if ((chunk.getX() >= -1 && chunk.getX() <= 1) && (chunk.getZ() >= 0 && chunk.getZ() <= 2)) {
                     if (player.getLocation().getBlockY() <= 9) {
                         player.teleport(rpgcore.getZamekNieskonczonosciManager().spawn);
@@ -34,7 +33,6 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
                     }
                 }
                 if (Bukkit.getWorld("zamekNieskonczonosci").getBlockAt(1, 12, 44).isBlockIndirectlyPowered() && Bukkit.getWorld("zamekNieskonczonosci").getBlockAt(5, 12, 44).isBlockIndirectlyPowered()) {
-                    System.out.println(2);
                     if (rpgcore.getPartyManager().findPartyByMember(player.getUniqueId()) == null) {
                         rpgcore.getZamekNieskonczonosciManager().endDungeonByPass(Bukkit.getWorld("zamekNieskonczonosci").getPlayers());
                         return;

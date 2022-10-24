@@ -36,7 +36,7 @@ public class WyplacCommand extends CommandAPI {
         final UUID uuid = player.getUniqueId();
 
         if (args.length == 1) {
-            final User user = rpgcore.getUserManager().find(args[0]);
+            final User user = rpgcore.getUserManager().find(uuid);
             final double playerKasa = user.getKasa();
             if (args[0].contains("k")) {
                 int kIndex = args[0].indexOf('k');

@@ -4,6 +4,8 @@ package rpg.rpgcore.dungeons.zamekNieskonczonosci;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
@@ -30,6 +32,7 @@ public class ZamekNieskonczonosciManager {
     public Player player3;
     public Player player4;
     private final List<Player> players = new ArrayList<>();
+    public boolean active = false;
     public boolean success = false;
     public int phase = 0;
 
@@ -40,6 +43,8 @@ public class ZamekNieskonczonosciManager {
 
     public void startDungeon(final Party party) {
         partyLeader = Bukkit.getPlayer(party.getLeaderUUID());
+        partyLeader.teleport(spawn);
+        active = true;
         for (final UUID uuid : party.getMembers()) {
             final Player player = Bukkit.getPlayer(uuid);
             if (uuid == party.getLeaderUUID()) {
@@ -85,8 +90,106 @@ public class ZamekNieskonczonosciManager {
             player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fDobrze wiedziec, ze nie mam doczynienia z &aamatorami"));
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&4&lZamek Nieskonczonosci", 5, 20, 5),
                     rpgcore.getNmsManager().makeSubTitle("&f&lEtap &c&l1&f&l: &4&lRdzenie", 5, 20, 5)), 20L);
+            for (Player rest : players) {
+                if (rest == player) {
+                    continue;
+                }
+                player.hidePlayer(rest);
+            }
         }
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> animationlist.remove(party), 100L);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, this::liftUpGate1, 20L);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            animationlist.remove(party);
+            this.closeGate1();
+        }, 100L);
+    }
+
+    private void liftUpGate1() {
+        final World world = Bukkit.getWorld("zamekNieskonczonosci");
+        world.getBlockAt(5, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(4, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(3, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(5, 13, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 13, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(3, 13, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(5, 14, 50).setType(Material.AIR);
+        world.getBlockAt(4, 14, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(3, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 0, false);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            world.getBlockAt(5, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(4, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(3, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(5, 13, 50).setType(Material.BARRIER);
+            world.getBlockAt(4, 13, 50).setType(Material.BARRIER);
+            world.getBlockAt(3, 13, 50).setType(Material.BARRIER);
+            world.getBlockAt(5, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(4, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(3, 14, 50).setTypeIdAndData(139, (byte) 1, false);
+            world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 1, false);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                world.getBlockAt(5, 12, 50).setType(Material.AIR);
+                world.getBlockAt(4, 12, 50).setType(Material.AIR);
+                world.getBlockAt(3, 12, 50).setType(Material.AIR);
+                world.getBlockAt(5, 13, 50).setType(Material.AIR);
+                world.getBlockAt(4, 13, 50).setType(Material.AIR);
+                world.getBlockAt(3, 13, 50).setType(Material.AIR);
+                world.getBlockAt(5, 14, 50).setType(Material.AIR);
+                world.getBlockAt(4, 14, 50).setType(Material.AIR);
+                world.getBlockAt(3, 14, 50).setType(Material.AIR);
+                world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 0, false);
+                for (Player player : players) {
+                    for (Player rest : players) {
+                        if (rest == player) {
+                            continue;
+                        }
+                        player.showPlayer(rest);
+                    }
+                }
+            }, 20L);
+        }, 20L);
+    }
+
+    private void closeGate1() {
+        final World world = Bukkit.getWorld("zamekNieskonczonosci");
+        world.getBlockAt(5, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(4, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(3, 12, 50).setType(Material.BARRIER);
+        world.getBlockAt(5, 13, 50).setType(Material.BARRIER);
+        world.getBlockAt(4, 13, 50).setType(Material.BARRIER);
+        world.getBlockAt(3, 13, 50).setType(Material.BARRIER);
+        world.getBlockAt(5, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(3, 14, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 1, false);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            world.getBlockAt(5, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(4, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(3, 12, 50).setType(Material.BARRIER);
+            world.getBlockAt(5, 13, 50).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(4, 13, 50).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(3, 13, 50).setTypeIdAndData(139, (byte) 1, false);
+            world.getBlockAt(5, 14, 50).setType(Material.AIR);
+            world.getBlockAt(4, 14, 50).setTypeIdAndData(139, (byte) 1, false);
+            world.getBlockAt(3, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 0, false);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, this::resetGate1 ,20L);
+        }, 20L);
+    }
+
+    private void resetGate1() {
+        final World world = Bukkit.getWorld("zamekNieskonczonosci");
+        world.getBlockAt(5, 12, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 12, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(3, 12, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(3, 13, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 13, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(4, 13, 50).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(5, 13, 50).setType(Material.AIR);
+        world.getBlockAt(5, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(4, 14, 50).setTypeIdAndData(139, (byte) 0, false);
+        world.getBlockAt(3, 14, 50).setType(Material.AIR);
+        world.getBlockAt(4, 15, 50).setTypeIdAndData(139, (byte) 1, false);
     }
 
     public void endDungeon(final Party party) {
