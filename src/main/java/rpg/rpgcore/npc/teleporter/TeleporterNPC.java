@@ -39,6 +39,10 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.BLAZE_POWDER);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal());
     private final ItemBuilder expowisko12 = new ItemBuilder(Material.BEDROCK);
+    private final ItemBuilder expowisko13 = new ItemBuilder(Material.REDSTONE);
+    private final ItemBuilder expowisko14 = new ItemBuilder(Material.REDSTONE);
+    private final ItemBuilder expowisko15 = new ItemBuilder(Material.REDSTONE);
+
 
     private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
     private final ItemBuilder demontower = new ItemBuilder(Material.NETHERRACK);
@@ -77,7 +81,7 @@ public class TeleporterNPC {
         }
 
         // expowisko 1
-        expowisko1.setName("&9&lTajemnicza Grota");
+        expowisko1.setName("&9&lPrzelecz Najemnikow");
         this.loreEXPOWISKA("&cOFF", "&f1");
         expowisko1.addGlowing();
         expowisko1.setLore(lore);
@@ -100,7 +104,7 @@ public class TeleporterNPC {
 
         // expowisko 3
         if (user.getLvl() > 19) {
-            expowisko3.setName("&a&lUkryta Jungla");
+            expowisko3.setName("&a&lZapomniana Jungla");
             this.loreEXPOWISKA("&cOFF", "&f20");
             expowisko3.addGlowing();
             expowisko3.setLore(lore);
@@ -115,7 +119,7 @@ public class TeleporterNPC {
 
         // expowisko 4
         if (user.getLvl() > 29) {
-            expowisko4.setName("&7&lPrzekletny Port");
+            expowisko4.setName("&7&lOpuszczony Port");
             this.loreEXPOWISKA("&cOFF", "&f30");
             expowisko4.addGlowing();
             expowisko4.setLore(lore);
@@ -160,7 +164,7 @@ public class TeleporterNPC {
 
         // expowisko 7
         if (user.getLvl() > 59) {
-            expowisko7.setName("&4&lPiekielna Kraina");
+            expowisko7.setName("&4&lOgnista Kraina");
             this.loreEXPOWISKA("&aON", "&f60");
             expowisko7.addGlowing();
             expowisko7.setLore(lore);
@@ -175,7 +179,7 @@ public class TeleporterNPC {
 
         // expowisko 8
         if (user.getLvl() > 69) {
-            expowisko8.setName("&8&lPrzeklete Podziemia");
+            expowisko8.setName("&d&lMagiczny Las");
             this.loreEXPOWISKA("&aON", "&f70");
             expowisko8.addGlowing();
             expowisko8.setLore(lore);
@@ -190,7 +194,7 @@ public class TeleporterNPC {
 
         // expowisko 9
         if (user.getLvl() > 79) {
-            expowisko9.setName("&5&lPrzeklety Las");
+            expowisko9.setName("&6&lBRAK NAZWY");
             this.loreEXPOWISKA("&aON", "&f80");
             expowisko9.addGlowing();
             expowisko9.setLore(lore);
@@ -205,7 +209,7 @@ public class TeleporterNPC {
 
         // expowisko 10
         if (user.getLvl() > 89) {
-            expowisko10.setName("&c&lKraina Demonow");
+            expowisko10.setName("&6&lBRAK NAZWY");
             this.loreEXPOWISKA("&aON", "&f90");
             expowisko10.addGlowing();
             expowisko10.setLore(lore);
@@ -220,7 +224,7 @@ public class TeleporterNPC {
 
         // expowisko 11
         if (user.getLvl() > 99) {
-            expowisko11.setName("&8&lMroczny Wymiar");
+            expowisko11.setName("&6&lBRAK NAZWY");
             this.loreEXPOWISKA("&aON", "&f100");
             expowisko11.addGlowing();
             expowisko11.setLore(lore);
@@ -234,7 +238,7 @@ public class TeleporterNPC {
         }
         // expowisko 12
         if (user.getLvl() > 109) {
-            expowisko12.setName("&5&lZamek Nieskonczonosci");
+            expowisko12.setName("&6&lBRAK NAZWY");
             this.loreEXPOWISKA("&aON", "&f110");
             expowisko12.addGlowing();
             expowisko12.setLore(lore);
@@ -246,8 +250,48 @@ public class TeleporterNPC {
             brakdostepu.setLore(lore);
             gui.setItem(11, brakdostepu.toItemStack());
         }
-
-
+        // expowisko 13
+        if (user.getLvl() > 119) {
+            expowisko13.setName("&6&lBRAK NAZWY");
+            this.loreEXPOWISKA("&aON", "&f120");
+            expowisko13.addGlowing();
+            expowisko13.setLore(lore);
+            gui.setItem(12, expowisko13.toItemStack());
+        } else {
+            brakdostepu.setName("&2Expowisko &8[ &a13. &8]");
+            this.loreBRAKDOSTEPU("120");
+            brakdostepu.addGlowing();
+            brakdostepu.setLore(lore);
+            gui.setItem(12, brakdostepu.toItemStack());
+        }
+        // expowisko 14
+        if (user.getLvl() > 124) {
+            expowisko14.setName("&6&lBRAK NAZWY");
+            this.loreEXPOWISKA("&aON", "&f125");
+            expowisko14.addGlowing();
+            expowisko14.setLore(lore);
+            gui.setItem(13, expowisko14.toItemStack());
+        } else {
+            brakdostepu.setName("&2Expowisko &8[ &a14. &8]");
+            this.loreBRAKDOSTEPU("125");
+            brakdostepu.addGlowing();
+            brakdostepu.setLore(lore);
+            gui.setItem(13, brakdostepu.toItemStack());
+        }
+        // expowisko 15
+        if (user.getLvl() > 129) {
+            expowisko15.setName("&6&lBRAK NAZWY");
+            this.loreEXPOWISKA("&aON", "&f130");
+            expowisko15.addGlowing();
+            expowisko15.setLore(lore);
+            gui.setItem(14, expowisko15.toItemStack());
+        } else {
+            brakdostepu.setName("&2Expowisko &8[ &a15. &8]");
+            this.loreBRAKDOSTEPU("130");
+            brakdostepu.addGlowing();
+            brakdostepu.setLore(lore);
+            gui.setItem(14, brakdostepu.toItemStack());
+        }
         player.openInventory(gui);
     }
     public void openTeleporterDODATKOWEMAPY(final Player player) {

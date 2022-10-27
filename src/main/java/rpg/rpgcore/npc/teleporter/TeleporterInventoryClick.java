@@ -53,7 +53,7 @@ public class TeleporterInventoryClick implements Listener {
             e.setCancelled(true);
             if (clickedSlot == 0) {
                 player.closeInventory();
-                player.teleport(new Location(Bukkit.getWorld("1-10exp"), -363.448, 7, 20.466, (float)-58.0, (float)0.3));
+                player.teleport(new Location(Bukkit.getWorld("1-10exp"), -256, 9, -36, (float)136.3, (float)0.2));
             }
             //if
             if (rpgcore.getUserManager().find(uuid).getLvl() > 9) {

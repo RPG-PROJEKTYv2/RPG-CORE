@@ -11,7 +11,8 @@ import java.util.Arrays;
 public enum Map1Items {
 
     I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &9&lWygnanca").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc zawartosc...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&8Skrzynia Najemnika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co w srodku...")).hideFlag().toItemStack().clone());
+    I2("I2", new ItemBuilder(Material.CHEST).setName("&8Skrzynia Najemnika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co w srodku...")).hideFlag().toItemStack().clone()),
+    I3("I3", new ItemBuilder(Material.MAGMA_CREAM).setName("&8&lZaczarowana Kula").setLore(Arrays.asList(" ", "&7Kliknij aby zrespic &9&lKrola Wygnancow&7."," ")).hideFlag().toItemStack().clone());
 
 
     private final ItemStack itemStack;
