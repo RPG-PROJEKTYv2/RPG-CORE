@@ -48,7 +48,7 @@ public class FlyCommand extends CommandAPI {
         if (!(p.isFlying())) {
             p.setAllowFlight(true);
             p.setFlying(true);
-            p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczano &7fly"));
+            p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono &7fly"));
         } else {
             p.setAllowFlight(false);
             p.setFlying(false);

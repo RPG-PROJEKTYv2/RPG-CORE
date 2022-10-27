@@ -21,14 +21,14 @@ public class KopalniaTask implements Runnable{
         rpgcore.getOreManager().getOreLocations().forEach(ore -> {
             if (ore.getOreMaterial() == Material.BEDROCK) {
                 this.setRandomOreMaterial(ore);
-                Bukkit.getWorld(ore.getWorld()).getBlockAt(ore.getLocation()).setType(ore.getOreMaterial());
                 ore.setHp(ore.getMaxHp());
             }
+            Bukkit.getWorld(ore.getWorld()).getBlockAt(ore.getLocation()).setType(ore.getOreMaterial());
         });
         Bukkit.broadcastMessage(Utils.format("&7&lKopalnia zostala zresetowana!"));
     }
 
-    private void setRandomOreMaterial(Ore ore) {
+    private void setRandomOreMaterial(final Ore ore) {
         final int random = new Random().nextInt(7);
         GornikOres gornikOres = null;
         switch (random) {

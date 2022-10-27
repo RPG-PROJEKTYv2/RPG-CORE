@@ -993,7 +993,14 @@ public class GornikInventoryClick implements Listener {
             e.setCancelled(true);
             if (clickedInventory.getType() == InventoryType.DISPENSER){
                 if (slot != 4) return;
-                if (e.getCursor() == null || e.getCursor().getType() == Material.AIR && (!String.valueOf(e.getCursor().getType()).contains("_SWORD") ||
+                System.out.println(e.getCursor() == null || e.getCursor().getType() == Material.AIR);
+                System.out.println(!String.valueOf(e.getCursor().getType()).contains("_SWORD") ||
+                        !String.valueOf(e.getCursor().getType()).contains("_HELMET") || !String.valueOf(e.getCursor().getType()).contains("_CHESTPLATE")
+                        || !String.valueOf(e.getCursor().getType()).contains("_LEGGINGS") || !String.valueOf(e.getCursor().getType()).contains("_BOOTS"));
+                System.out.println((e.getCursor() != null || e.getCursor().getType() != Material.AIR) && (!String.valueOf(e.getCursor().getType()).contains("_SWORD") ||
+                        !String.valueOf(e.getCursor().getType()).contains("_HELMET") || !String.valueOf(e.getCursor().getType()).contains("_CHESTPLATE")
+                        || !String.valueOf(e.getCursor().getType()).contains("_LEGGINGS") || !String.valueOf(e.getCursor().getType()).contains("_BOOTS")));
+                if ((e.getCursor() != null || e.getCursor().getType() != Material.AIR) && (!String.valueOf(e.getCursor().getType()).contains("_SWORD") ||
                         !String.valueOf(e.getCursor().getType()).contains("_HELMET") || !String.valueOf(e.getCursor().getType()).contains("_CHESTPLATE")
                         || !String.valueOf(e.getCursor().getType()).contains("_LEGGINGS") || !String.valueOf(e.getCursor().getType()).contains("_BOOTS"))) return;
                 ItemStack is = e.getCursor().clone();
