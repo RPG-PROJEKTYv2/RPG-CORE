@@ -16,6 +16,7 @@ import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public class AsyncPlayerChatListener implements Listener {
             return;
         }
 
-        if (!rpgcore.getChatManager().isChatEnabled()) {
+        if (!rpgcore.getChatManager().isChatEnabled() && (!user.getRankUser().isStaff() && !user.isAdminCodeLogin())) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie &cwylaczony&7!"));
             return;
         }
@@ -65,7 +66,7 @@ public class AsyncPlayerChatListener implements Listener {
             }
         }
 
-        if (user.isMuted()) {
+        if (user.isMuted() && (!user.getRankUser().isStaff() && !user.isAdminCodeLogin())) {
             final String[] muteInfo = user.getMuteInfo().split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
                 Utils.youAreMuted(player, muteInfo[0], muteInfo[1], muteInfo[2]);
@@ -85,49 +86,61 @@ public class AsyncPlayerChatListener implements Listener {
                 return;
             }
         }
-        if (user.getRankUser().isStaff()) {
+        if (Utils.removeColor(message).isEmpty()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac pustej wiadomosci!"));
+            return;
+        }
+        formatuj(player, message);
+        player.getInventory().addItem(GlobalItem.getItem("I3", 1));
+        if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             return;
         }
         rpgcore.getCooldownManager().givePlayerChatCooldown(uuid);
     }
 
-    private void formatuj(final String message, final Player player) {
+    private void formatuj(final Player player, final String message) {
         if (message.contains("[eq]") || message.contains("[i]") ||message.contains("[item]")) {
             rpgcore.getChatManager().updateMessageWithEQ(player.getUniqueId(), message);
             rpgcore.getChatManager().formatujChatEQ(player);
             return;
         }
-        final TextComponent main = new TextComponent();
+        final TextComponent main = new TextComponent("");
         if (message.contains("@")) {
             rpgcore.getChatManager().pingPlayer(player, message);
         }
         if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
             final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
             final Guild guild = rpgcore.getGuildManager().find(tag).getGuild();
-            final TextComponent guildM = new TextComponent(Utils.format("&7[&6" + tag + "&7] "));
+            final TextComponent guildM = new TextComponent(Utils.format("&8[&e" + tag + "&8] "));
             guildM.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
-                    new TextComponent(Utils.format("&7Tag gildii: &6" + tag)),
-                    new TextComponent(Utils.format("&7Opis gildi: &6" + guild.getDescription())),
-                    new TextComponent(Utils.format("&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()).isOnline() ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()))),
-                    new TextComponent(Utils.format("&7Ilosc czlonkow: &6" + guild.getMembers().size() + "&7/&615")),
-                    new TextComponent(Utils.format("&7Poziom: &6" + guild.getLevel())),
-                    new TextComponent(Utils.format("&7Doswiadczenie: &6" + Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag)) + "%")),
-            }));
+                    new TextComponent(Utils.format("&7Tag gildii: &6" + tag +
+                            "\n&7Opis gildi: &6" + guild.getDescription() +
+                            "\n&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()).isOnline() ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()) +
+                            "\n&7Ilosc czlonkow: &6" + guild.getMembers().size() + "&7/&615" +
+                            "\n&7Poziom: &6" + guild.getLevel() +
+                            "\n&7Doswiadczenie: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag))) + "%"))}));
             guildM.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/klan info " + tag));
             main.addExtra(guildM);
         }
-        //TODO Dokonczyc lvl i range i ogolnie chat
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
-        final TextComponent lvl = new TextComponent(Utils.format(""));
-        TextComponent rank;
-        if (user.getRankUser().isStaff()) {
-            rank = new TextComponent(Utils.format(user.getRankUser().getRankType().getPrefix() + player.getName()));
-        } else {
+        final TextComponent lvl = (user.getLvl() == 130 ? new TextComponent(Utils.format("&8[&bLvl. &4&lMAX&8] ")) : new TextComponent(Utils.format("&8[&bLvl. &f" + user.getLvl() + "&8] ")));
+        lvl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                new TextComponent(Utils.format("&7Poziom: &6" + user.getLvl() +
+                        "\n&7Postep do nastepnego poziomu: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(user.getExp(), rpgcore.getLvlManager().getExpForLvl(user.getLvl()))) + "%"))}));
+        main.addExtra(lvl);
 
+        TextComponent rank;
+        if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
+            rank = new TextComponent(Utils.format(user.getRankUser().getRankType().getPrefix() + player.getName() + "&f: " + message));
+        } else {
+            rank = new TextComponent(Utils.format(user.getRankPlayerUser().getRankType().getPrefix() + player.getName() + "&f: " + Utils.removeColor(message)));
         }
-        TextComponent before = new TextComponent(Utils.format(Utils.SERVERNAME + "&7" + player.getName() + "&8: &7"));
+        rank.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Kliknij, zeby napisac wiadomosc"))}));
+        rank.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + player.getName() + " "));
+        main.addExtra(rank);
+
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.spigot().sendMessage();
+            p.spigot().sendMessage(main);
         }
     }
 

@@ -12,6 +12,7 @@ import java.util.UUID;
 public class PetArmorStand extends EntityArmorStand {
 
     public UUID player;
+    public int tick = 0;
     public PetArmorStand(net.minecraft.server.v1_8_R3.World world, Player player) {
         super(world);
         this.player = player.getUniqueId();
@@ -26,7 +27,7 @@ public class PetArmorStand extends EntityArmorStand {
         // Setting the position
         double x = Math.cos(Math.toRadians(p.yaw - 180));
         double z = Math.sin(Math.toRadians(p.yaw - 180));
-        setPosition(p.locX + x, p.locY + 0.8, p.locZ + z);
+        setPosition(p.locX + x, p.locY + 0.1 + fly(), p.locZ + z);
         this.world = p.getWorld();
         //Setting the yaw and pitch of the armor stand. If it fails we get another change to set it with the codes below.
         this.yaw = p.yaw;
@@ -43,6 +44,16 @@ public class PetArmorStand extends EntityArmorStand {
         // If you want to still do the normal entity update instead of just
         // standing totally still. Use this line.
         // super.m();
+    }
+
+    private double fly() {
+        int maxTime = 200;
+        double toAdd = Math.sin(Math.toRadians(tick * 360 / maxTime)/2);
+        tick++;
+        if (tick >= maxTime) {
+            tick = 0;
+        }
+        return toAdd;
     }
 
 
