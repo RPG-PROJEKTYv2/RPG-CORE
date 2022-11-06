@@ -19,6 +19,6 @@ public class TestCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        RPGCORE.getInstance().getZamekNieskonczonosciManager().startDungeon(RPGCORE.getInstance().getPartyManager().find(player.getUniqueId()));
+        RPGCORE.getInstance().getZamekNieskonczonosciManager().endDungeon(RPGCORE.getInstance().getPartyManager().find(player.getUniqueId()));
     }
 }

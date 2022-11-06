@@ -22,7 +22,9 @@ public class MetinyHelper {
             String world = metiny.getMetins().getWorld();
             Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
             Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
-            Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL).setCustomName(String.valueOf(id));
+            Entity e = Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL);
+            e.setCustomName(String.valueOf(id));
+            e.setCustomNameVisible(false);
             metiny.getMetins().setHealth(metiny.getMetins().getMaxhealth());
         }
     }

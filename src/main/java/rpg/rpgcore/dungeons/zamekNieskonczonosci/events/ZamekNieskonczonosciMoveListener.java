@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dungeons.DungeonStatus;
 
 public class ZamekNieskonczonosciMoveListener implements Listener {
     private final RPGCORE rpgcore;
@@ -18,17 +19,12 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMove(final PlayerMoveEvent e) {
         final Player player = e.getPlayer();
-        if (player.getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci") && rpgcore.getZamekNieskonczonosciManager().active) {
-            if (rpgcore.getZamekNieskonczonosciManager().animationlist.contains(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId()))) {
-                player.teleport(e.getFrom());
-                e.setCancelled(true);
-                return;
-            }
+        if (player.getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci") && rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.ONGOING) {
             if (rpgcore.getZamekNieskonczonosciManager().phase == 0) {
                 final Chunk chunk = player.getLocation().getChunk();
                 if ((chunk.getX() >= -1 && chunk.getX() <= 1) && (chunk.getZ() >= 0 && chunk.getZ() <= 2)) {
                     if (player.getLocation().getBlockY() <= 9) {
-                        player.teleport(rpgcore.getZamekNieskonczonosciManager().spawn);
+                        player.teleport(rpgcore.getZamekNieskonczonosciManager().parkour);
                         return;
                     }
                 }
@@ -40,13 +36,9 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
                     for (Player p : Bukkit.getWorld("zamekNieskonczonosci").getPlayers()) {
                         p.teleport(rpgcore.getZamekNieskonczonosciManager().phase1StartLocation);
                     }
-                    if (!rpgcore.getZamekNieskonczonosciManager().animationlist.contains(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId()))) {
-                        rpgcore.getZamekNieskonczonosciManager().animationlist.add(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId()));
-                    }
                     rpgcore.getZamekNieskonczonosciManager().phase = 1;
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getZamekNieskonczonosciManager().startPhase1(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId())), 1L);
                 }
-                return;
             }
         }
     }

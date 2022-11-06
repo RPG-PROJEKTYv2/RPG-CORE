@@ -29,13 +29,8 @@ public class PlayerInteractEntityListener implements Listener {
         final UUID uuid = player.getUniqueId();
 
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
-            final ArmorStand as = (ArmorStand) e.getRightClicked();
             e.setCancelled(true);
             return;
-        }
-
-        if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
         }
 
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
@@ -157,6 +152,17 @@ public class PlayerInteractEntityListener implements Listener {
             // LESNIK
             if (entityName.equalsIgnoreCase("Lesnik")) {
                 rpgcore.getLesnikNPC().openLesnikGUI(player);
+                return;
+            }
+
+            // DUNGEONS
+            if (entityName.equalsIgnoreCase("Dungeony")) {
+                rpgcore.getDungeonsManager().openDungeonMenu(player);
+                return;
+            }
+            //  ...ZAGINIONY WLADCA
+            if (entityName.equalsIgnoreCase("Zaginiony Wladca")) {
+                rpgcore.getZamekNieskonczonosciManager().openWladcaGUI(player);
                 return;
             }
 

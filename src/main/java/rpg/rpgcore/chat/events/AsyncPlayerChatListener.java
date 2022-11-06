@@ -34,7 +34,7 @@ public class AsyncPlayerChatListener implements Listener {
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
-        final String message = e.getMessage().replaceAll("%", "%%");
+        final String message = e.getMessage();
         final User user = rpgcore.getUserManager().find(uuid);
         e.setCancelled(true);
         if (!user.isHellCodeLogin() && !user.getHellCode().equals("off")) {

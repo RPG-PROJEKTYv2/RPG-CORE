@@ -38,11 +38,14 @@ import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.discord.DiscordBot;
+import rpg.rpgcore.dungeons.DungeonsInventoryClick;
+import rpg.rpgcore.dungeons.DungeonsManager;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
@@ -229,6 +232,7 @@ public final class RPGCORE extends JavaPlugin {
     private WygnaniecManager wygnaniecManager;
     private ZwierzakiManager zwierzakiManager;
     private OreManager oreManager;
+    private DungeonsManager dungeonsManager;
 
     private int i = 1;
 
@@ -620,9 +624,12 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initDungeons() {
         // ZAMEK NIESKONCZONOSCI
+        this.dungeonsManager = new DungeonsManager();
         this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
+        this.getServer().getPluginManager().registerEvents(new DungeonsInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciMoveListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciEntityDamgeListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciInventoryClick(), this);
     }
 
     private void fixBuckets() {
@@ -869,5 +876,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
         return zamekNieskonczonosciManager;
+    }
+
+    public DungeonsManager getDungeonsManager() {
+        return dungeonsManager;
     }
 }
