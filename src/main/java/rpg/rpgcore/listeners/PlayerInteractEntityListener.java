@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.klasy.objects.KlasaUser;
 import rpg.rpgcore.utils.Utils;
 
@@ -162,7 +163,10 @@ public class PlayerInteractEntityListener implements Listener {
             }
             //  ...ZAGINIONY WLADCA
             if (entityName.equalsIgnoreCase("Zaginiony Wladca")) {
-                rpgcore.getZamekNieskonczonosciManager().openWladcaGUI(player);
+                if (rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.STARTED) {
+                    rpgcore.getZamekNieskonczonosciManager().openWladcaGUI(player);
+                    return;
+                }
                 return;
             }
 

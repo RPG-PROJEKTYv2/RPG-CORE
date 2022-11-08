@@ -38,11 +38,11 @@ public class ZamekNieskonczonosciInventoryClick implements Listener {
         final int slot = e.getSlot();
 
         if (title.equals("Zaginiony Wladca")) {
-            if (!(manager.status == DungeonStatus.STARTED)) {
+            e.setCancelled(true);
+            if (manager.status != DungeonStatus.STARTED) {
                 System.out.println(1);
                 return;
             }
-            e.setCancelled(true);
             if (item == null || item.getType().equals(Material.SKULL_ITEM)) {
                 System.out.println(2);
                 return;
@@ -89,7 +89,7 @@ public class ZamekNieskonczonosciInventoryClick implements Listener {
                 for (Player player1 : manager.players) {
                     if (player1.getOpenInventory() != null && player1.getOpenInventory().getTopInventory() != null &&
                             player1.getOpenInventory().getTopInventory().getTitle() != null && player1.getOpenInventory().getTopInventory().getTitle().contains("Zaginiony Wladca")) {
-                        player1.getOpenInventory().getTopInventory().setItem(slot, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&aGotowy!").toItemStack());
+                        player1.getOpenInventory().getTopInventory().setItem(slot, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cNie gotowy!").toItemStack());
                     }
                 }
                 for (Player player1 : manager.players) {

@@ -2,16 +2,19 @@ package rpg.rpgcore.dungeons.zamekNieskonczonosci;
 
 
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.tasks.SideBarTask;
 import rpg.rpgcore.party.Party;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -19,11 +22,15 @@ import java.util.*;
 
 public class ZamekNieskonczonosciManager {
     private final RPGCORE rpgcore;
+
     public ZamekNieskonczonosciManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.deleteScoreboard();
+        this.resetGate(4, 15, 3);
+        this.resetGate(4, 13, 50);
     }
 
-    private final Map<Party, EntityInsentient> bossMap =  new HashMap<>();
+    private final Map<Party, EntityInsentient> bossMap = new HashMap<>();
     public final Location spawn = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 4.5, 19, -10.5);
     public final Location parkour = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 4.5, 14, 6.5);
     public final Location bossSpawnLocation = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 5, 7, 0);
@@ -37,8 +44,10 @@ public class ZamekNieskonczonosciManager {
     public boolean success = false;
     public int phase = 0;
     public int ready = 0;
+    public long time = 0;
     public Party party;
     public List<Integer> taskList = new ArrayList<>();
+    public final List<String> teamList = Arrays.asList(ChatColor.GREEN.toString() , ChatColor.BLUE.toString(), ChatColor.RED.toString(), ChatColor.YELLOW.toString());
 
     private List goalB = new ArrayList();
     private List goalC = new ArrayList();
@@ -79,7 +88,7 @@ public class ZamekNieskonczonosciManager {
         final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&5&lZaginiony Wladca"));
 
         for (int i = 0; i < gui.getSize(); i++) {
-           gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 0).setName(" ").toItemStack());
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 0).setName(" ").toItemStack());
         }
 
         gui.setItem(10, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName(Utils.format("&c" + players.get(0).getName())).setSkullOwner(players.get(0).getName()).toItemStack());
@@ -99,6 +108,8 @@ public class ZamekNieskonczonosciManager {
     }
 
     public void startDungeon(final Party party) {
+        time = System.currentTimeMillis();
+        this.newScoreboard();
         status = DungeonStatus.ONGOING;
         this.liftUpGate(4, 15, 3);
         for (Player player : players) {
@@ -108,7 +119,7 @@ public class ZamekNieskonczonosciManager {
             if (player.getUniqueId() != party.getLeaderUUID()) {
                 player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fa wiec postanowiles wraz z &6" + partyLeader.getName() + " &fpodbic moj zamek..."));
             } else {
-                player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fa wiec postanowiles wraz z &6" + (party.getMembers().size() -1) + " &frownie slabymi wojownikami podbic moj zamek..."));
+                player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fa wiec postanowiles wraz z &6" + (party.getMembers().size() - 1) + " &frownie slabymi wojownikami podbic moj zamek..."));
             }
             player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fdobrze, wrecz &eZNAKOMICIE&f!"));
             player.sendMessage(Utils.format("&4&l&kBoss Nieskonczonosci&4&l: &fa wiec &cZACZNIJMY PRZEDSTAWIENIE&f!"));
@@ -117,6 +128,58 @@ public class ZamekNieskonczonosciManager {
         Bukkit.broadcastMessage(Utils.format("&4&lZamek Nieskoncznosci &8Grupa gracza &c" + partyLeader.getName() + " &8postanowila wyruszyc na wyprawe!"));
     }
 
+    private void newScoreboard() {
+        //TODO Wywala 20 > 16 i chuj wie o co mu chodzi
+        final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        final Objective obj = scoreboard.registerNewObjective("dungeon", "dummy");
+        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        obj.setDisplayName(Utils.format("&4&lZamek Nieskonczonosci"));
+        for (int i = 0; i < players.size(); i++) {
+            final User user = rpgcore.getUserManager().find(players.get(i).getUniqueId());
+            final Team p = scoreboard.registerNewTeam(teamList.get(i));
+            p.addEntry(players.get(i).getName());
+            if (user.getRankUser().isStaff()) {
+                p.setPrefix(Utils.format(user.getRankUser().getRankType().getPrefix().substring(user.getRankUser().getRankType().getPrefix().indexOf(" "))));
+            } else {
+                p.setPrefix(Utils.format(user.getRankPlayerUser().getRankType().getPrefix().substring(user.getRankPlayerUser().getRankType().getPrefix().indexOf(" "))));
+            }
+            p.setSuffix(Utils.format("&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
+            System.out.println(p.getPrefix() + p.getEntries().toString() + p.getSuffix());
+            System.out.println(obj.getScore(teamList.get(i)).toString());
+            obj.getScore(teamList.get(i)).setScore(i + 1);
+        }
+
+        obj.getScore(" ").setScore(5);
+
+        final Team time = scoreboard.registerNewTeam("time");
+        time.addEntry(ChatColor.BOLD.toString());
+        time.setPrefix(Utils.format("&7Czas: "));
+        time.setSuffix(Utils.format("&c" + Utils.durationToString(this.time, false)));
+        obj.getScore(ChatColor.BOLD.toString()).setScore(6);
+
+        for (Player player : players) {
+            player.setScoreboard(scoreboard);
+        }
+
+        new SideBarTask(rpgcore);
+    }
+
+    private void deleteScoreboard() {
+        final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        if (scoreboard.getObjective("dungeon") != null) {
+            scoreboard.getObjective("dungeon").unregister();
+        }
+        for (String s : teamList) {
+            if (scoreboard.getTeam(s) != null) {
+                scoreboard.getTeam(s).unregister();
+            }
+        }
+        if (scoreboard.getTeam("time") != null) {
+            scoreboard.getTeam("time").unregister();
+        }
+    }
+            //§cMires_ Mires_ §a40§c♥
+            //§cStrasznyMaciusPL StrasznyMaciusPL §a20§c♥
 
     public void startPhase1(final Party party) {
         /*EntityInsentient entity = (EntityInsentient) EntityTypes.spawnEntity(new ZamekNieskonczonosciBoss(((org.bukkit.craftbukkit.v1_8_R3.CraftWorld) spawn.getWorld()).getHandle()), UUID.randomUUID(), bossSpawnLocation, "&c&l&kDinnerbone");
@@ -144,7 +207,7 @@ public class ZamekNieskonczonosciManager {
         world.getBlockAt(middleX - 1, middleY - 1, z).setType(Material.BARRIER);
         world.getBlockAt(middleX + 1, middleY, z).setTypeIdAndData(139, (byte) 0, false);
         world.getBlockAt(middleX, middleY, z).setTypeIdAndData(139, (byte) 0, false);
-        world.getBlockAt(middleX  - 1, middleY, z).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(middleX - 1, middleY, z).setTypeIdAndData(139, (byte) 1, false);
         world.getBlockAt(middleX + 1, middleY + 1, z).setType(Material.AIR);
         world.getBlockAt(middleX, middleY + 1, z).setTypeIdAndData(139, (byte) 1, false);
         world.getBlockAt(middleX - 1, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
@@ -155,7 +218,7 @@ public class ZamekNieskonczonosciManager {
             world.getBlockAt(middleX - 1, middleY - 1, z).setType(Material.BARRIER);
             world.getBlockAt(middleX + 1, middleY, z).setType(Material.BARRIER);
             world.getBlockAt(middleX, middleY, z).setType(Material.BARRIER);
-            world.getBlockAt(middleX  -1, middleY, z).setType(Material.BARRIER);
+            world.getBlockAt(middleX - 1, middleY, z).setType(Material.BARRIER);
             world.getBlockAt(middleX + 1, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
             world.getBlockAt(middleX, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
             world.getBlockAt(middleX - 1, middleY + 1, z).setTypeIdAndData(139, (byte) 1, false);
@@ -183,13 +246,13 @@ public class ZamekNieskonczonosciManager {
         final World world = Bukkit.getWorld("zamekNieskonczonosci");
         world.getBlockAt(middleX + 1, middleY - 1, z).setType(Material.BARRIER);
         world.getBlockAt(middleX, middleY - 1, z).setType(Material.BARRIER);
-        world.getBlockAt(middleX -1, middleY - 1, z).setType(Material.BARRIER);
+        world.getBlockAt(middleX - 1, middleY - 1, z).setType(Material.BARRIER);
         world.getBlockAt(middleX + 1, middleY, z).setType(Material.BARRIER);
         world.getBlockAt(middleX, middleY, z).setType(Material.BARRIER);
         world.getBlockAt(middleX - 1, middleY, z).setType(Material.BARRIER);
         world.getBlockAt(middleX + 1, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
         world.getBlockAt(middleX, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
-        world.getBlockAt(middleX -1 , middleY + 1, z).setTypeIdAndData(139, (byte) 1, false);
+        world.getBlockAt(middleX - 1, middleY + 1, z).setTypeIdAndData(139, (byte) 1, false);
         world.getBlockAt(middleX, middleY + 2, z).setTypeIdAndData(139, (byte) 1, false);
         int i = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             world.getBlockAt(middleX + 1, middleY - 1, z).setType(Material.BARRIER);
@@ -200,9 +263,9 @@ public class ZamekNieskonczonosciManager {
             world.getBlockAt(middleX - 1, middleY, z).setTypeIdAndData(139, (byte) 1, false);
             world.getBlockAt(middleX + 1, middleY + 1, z).setType(Material.AIR);
             world.getBlockAt(middleX, middleY + 1, z).setTypeIdAndData(139, (byte) 1, false);
-            world.getBlockAt(middleX -1, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
+            world.getBlockAt(middleX - 1, middleY + 1, z).setTypeIdAndData(139, (byte) 0, false);
             world.getBlockAt(middleX, middleY + 2, z).setTypeIdAndData(139, (byte) 0, false);
-            int j = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.resetGate(middleX, middleY, z) ,20L).getTaskId();
+            int j = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.resetGate(middleX, middleY, z), 20L).getTaskId();
             this.taskList.add(j);
         }, 20L).getTaskId();
         this.taskList.add(i);
@@ -237,6 +300,7 @@ public class ZamekNieskonczonosciManager {
                 rpgcore.getServer().getScheduler().cancelTask(i);
             }
         }
+        this.deleteScoreboard();
         goalB.clear();
         goalC.clear();
         targetB.clear();
@@ -286,7 +350,7 @@ public class ZamekNieskonczonosciManager {
     }
 
     public void updateBar(Party party, String text, float healthPercent) {
-        if(bossMap.containsKey(party)) {
+        if (bossMap.containsKey(party)) {
             DataWatcher watcher = new DataWatcher(null);
             watcher.a(0, (byte) 0x20);
             if (healthPercent != -1) watcher.a(6, (healthPercent * 200) / 100);
