@@ -7,7 +7,7 @@ import org.bukkit.scoreboard.Team;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
-public class SideBarTask implements Runnable{
+public class SideBarTask implements Runnable {
     private final RPGCORE rpgcore;
     private final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
@@ -19,16 +19,21 @@ public class SideBarTask implements Runnable{
 
     @Override
     public void run() {
-
         for (final Team team : scoreboard.getTeams()) {
-            if (!rpgcore.getZamekNieskonczonosciManager().teamList.contains(team.getName())) {
-                continue;
-            }
-            for (final Player player : rpgcore.getZamekNieskonczonosciManager().players) {
-                if (!team.hasEntry(player.getName())) {
-                    continue;
+            if (!team.getName().contains("dungeon_p")) continue;
+            for (int i = 0; i < rpgcore.getZamekNieskonczonosciManager().players.size(); i++) {
+                if (!team.getName().equals("dungeon_p" + i)) continue;
+                final Player player = rpgcore.getZamekNieskonczonosciManager().players.get(i);
+                String sufix = "";
+                //TODO sprawdzic czy dziala jak ktos zginie
+                if (scoreboard.getTeam(team.getName()).getSuffix().contains(" ") && !scoreboard.getTeam(team.getName()).getSuffix().substring(scoreboard.getTeam(team.getName()).getSuffix().indexOf(" ")).contains("ZYJE!")) {
+                    sufix = scoreboard.getTeam(team.getName()).getSuffix().substring(0, scoreboard.getTeam(team.getName()).getSuffix().indexOf(" ") + 1);
                 }
-                team.setSuffix(this.getSuffix(player.getHealth(), player.getMaxHealth()) + player.getHealth() + "❤");
+                if (player.isDead()) {
+                    scoreboard.getTeam(team.getName()).setSuffix(Utils.format(sufix + "&4NIE ZYJE!"));
+                } else {
+                    scoreboard.getTeam(team.getName()).setSuffix(Utils.format(sufix + this.getSuffix(player.getHealth(), player.getMaxHealth()) + String.format("%.0f", player.getHealth()) + "❤"));
+                }
             }
         }
         scoreboard.getTeam("time").setSuffix(Utils.format("&c" + Utils.durationToString(System.currentTimeMillis() - rpgcore.getZamekNieskonczonosciManager().time, true)));

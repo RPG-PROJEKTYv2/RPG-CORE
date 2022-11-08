@@ -47,7 +47,7 @@ public class ZamekNieskonczonosciManager {
     public long time = 0;
     public Party party;
     public List<Integer> taskList = new ArrayList<>();
-    public final List<String> teamList = Arrays.asList(ChatColor.GREEN.toString() , ChatColor.BLUE.toString(), ChatColor.RED.toString(), ChatColor.YELLOW.toString());
+    public final List<String> teamList = Arrays.asList(ChatColor.GREEN.toString(), ChatColor.BLUE.toString(), ChatColor.RED.toString(), ChatColor.YELLOW.toString());
 
     private List goalB = new ArrayList();
     private List goalC = new ArrayList();
@@ -129,33 +129,50 @@ public class ZamekNieskonczonosciManager {
     }
 
     private void newScoreboard() {
-        //TODO Wywala 20 > 16 i chuj wie o co mu chodzi
         final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         final Objective obj = scoreboard.registerNewObjective("dungeon", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(Utils.format("&4&lZamek Nieskonczonosci"));
         for (int i = 0; i < players.size(); i++) {
             final User user = rpgcore.getUserManager().find(players.get(i).getUniqueId());
-            final Team p = scoreboard.registerNewTeam(teamList.get(i));
-            p.addEntry(players.get(i).getName());
-            if (user.getRankUser().isStaff()) {
-                p.setPrefix(Utils.format(user.getRankUser().getRankType().getPrefix().substring(user.getRankUser().getRankType().getPrefix().indexOf(" "))));
+            final Team p = scoreboard.registerNewTeam("dungeon_p" + i);
+            p.addEntry(teamList.get(i));
+            if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
+
+                if (user.getRankUser().getRankType().getPrefix().substring(user.getRankUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim().length() + players.get(i).getName().trim().length() + 1 >= 16) {
+                    final String name = user.getRankUser().getRankType().getPrefix().substring(user.getRankUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim() + players.get(i).getName().trim() + " ";
+                    final String prefix = name.substring(0, 16);
+                    final String color = name.substring(0, 2);
+                    final String suffix = color + name.substring(16);
+                    p.setPrefix(Utils.format(prefix));
+                    p.setSuffix(Utils.format(suffix + "&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
+                } else {
+                    p.setPrefix(Utils.format(user.getRankUser().getRankType().getPrefix().substring(user.getRankUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim() + players.get(i).getName().trim() + " "));
+                    p.setSuffix(Utils.format("&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
+                }
             } else {
-                p.setPrefix(Utils.format(user.getRankPlayerUser().getRankType().getPrefix().substring(user.getRankPlayerUser().getRankType().getPrefix().indexOf(" "))));
+                if (user.getRankPlayerUser().getRankType().getPrefix().substring(user.getRankPlayerUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim().length() + players.get(i).getName().trim().length() + 1 >= 16) {
+                    final String name = user.getRankPlayerUser().getRankType().getPrefix().substring(user.getRankPlayerUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim() + players.get(i).getName()  + " ";
+                    final String prefix = name.substring(0, 16);
+                    final String color = name.substring(0, 2);
+                    final String suffix = color + name.substring(16);
+                    p.setPrefix(Utils.format(prefix));
+                    p.setSuffix(Utils.format(suffix + "&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
+                } else {
+                    p.setPrefix(Utils.format(user.getRankPlayerUser().getRankType().getPrefix().substring(user.getRankPlayerUser().getRankType().getPrefix().indexOf(" ") + 1).replace(" ", "").trim() + players.get(i).getName().trim() + " "));
+                    p.setSuffix(Utils.format("&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
+                }
             }
-            p.setSuffix(Utils.format("&a" + String.format("%.0f", players.get(i).getHealth()) + "&c♥"));
-            System.out.println(p.getPrefix() + p.getEntries().toString() + p.getSuffix());
-            System.out.println(obj.getScore(teamList.get(i)).toString());
-            obj.getScore(teamList.get(i)).setScore(i + 1);
+            obj.getScore(teamList.get(i)).setScore(i + 3);
         }
 
-        obj.getScore(" ").setScore(5);
+        obj.getScore(" ").setScore(2);
 
         final Team time = scoreboard.registerNewTeam("time");
         time.addEntry(ChatColor.BOLD.toString());
         time.setPrefix(Utils.format("&7Czas: "));
         time.setSuffix(Utils.format("&c" + Utils.durationToString(this.time, false)));
-        obj.getScore(ChatColor.BOLD.toString()).setScore(6);
+        obj.getScore(ChatColor.BOLD.toString()).setScore(1);
 
         for (Player player : players) {
             player.setScoreboard(scoreboard);
@@ -169,17 +186,15 @@ public class ZamekNieskonczonosciManager {
         if (scoreboard.getObjective("dungeon") != null) {
             scoreboard.getObjective("dungeon").unregister();
         }
-        for (String s : teamList) {
-            if (scoreboard.getTeam(s) != null) {
-                scoreboard.getTeam(s).unregister();
+        for (int i = 0; i < 4; i++) {
+            if (scoreboard.getTeam("dungeon_p" + i) != null) {
+                scoreboard.getTeam("dungeon_p" + i).unregister();
             }
         }
         if (scoreboard.getTeam("time") != null) {
             scoreboard.getTeam("time").unregister();
         }
     }
-            //§cMires_ Mires_ §a40§c♥
-            //§cStrasznyMaciusPL StrasznyMaciusPL §a20§c♥
 
     public void startPhase1(final Party party) {
         /*EntityInsentient entity = (EntityInsentient) EntityTypes.spawnEntity(new ZamekNieskonczonosciBoss(((org.bukkit.craftbukkit.v1_8_R3.CraftWorld) spawn.getWorld()).getHandle()), UUID.randomUUID(), bossSpawnLocation, "&c&l&kDinnerbone");
