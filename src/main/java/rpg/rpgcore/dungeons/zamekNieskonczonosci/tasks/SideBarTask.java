@@ -9,7 +9,6 @@ import rpg.rpgcore.utils.Utils;
 
 public class SideBarTask implements Runnable {
     private final RPGCORE rpgcore;
-    private final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
     public SideBarTask(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -19,6 +18,9 @@ public class SideBarTask implements Runnable {
 
     @Override
     public void run() {
+        final Scoreboard scoreboard = rpgcore.getZamekNieskonczonosciManager().scoreboard;
+        scoreboard.getTeam("etap").setPrefix(Utils.format("&7Etap: &c" + rpgcore.getZamekNieskonczonosciManager().phase + " &7- "));
+        scoreboard.getTeam("etap").setSuffix(Utils.format(rpgcore.getZamekNieskonczonosciManager().getEtapString()));
         for (final Team team : scoreboard.getTeams()) {
             if (!team.getName().contains("dungeon_p")) continue;
             for (int i = 0; i < rpgcore.getZamekNieskonczonosciManager().players.size(); i++) {

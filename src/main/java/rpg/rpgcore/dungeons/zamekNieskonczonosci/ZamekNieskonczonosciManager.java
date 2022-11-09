@@ -39,6 +39,7 @@ public class ZamekNieskonczonosciManager {
     public Player player2;
     public Player player3;
     public Player player4;
+    public Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
     public final List<Player> players = new ArrayList<>();
     public DungeonStatus status = DungeonStatus.ENDED;
     public boolean success = false;
@@ -129,10 +130,18 @@ public class ZamekNieskonczonosciManager {
     }
 
     private void newScoreboard() {
-        final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         final Objective obj = scoreboard.registerNewObjective("dungeon", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(Utils.format("&4&lZamek Nieskonczonosci"));
+
+        final Team etap = scoreboard.registerNewTeam("etap");
+        etap.addEntry(ChatColor.ITALIC.toString());
+        etap.setPrefix(Utils.format("&7Etap: &c" + this.phase + " &7- "));
+        etap.setSuffix(Utils.format(this.getEtapString()));
+        obj.getScore(ChatColor.ITALIC.toString()).setScore(9);
+        obj.getScore("  ").setScore(8);
+        obj.getScore(Utils.format("&7Wojownicy:")).setScore(7);
+
         for (int i = 0; i < players.size(); i++) {
             final User user = rpgcore.getUserManager().find(players.get(i).getUniqueId());
             final Team p = scoreboard.registerNewTeam("dungeon_p" + i);
@@ -174,6 +183,7 @@ public class ZamekNieskonczonosciManager {
         time.setSuffix(Utils.format("&c" + Utils.durationToString(this.time, false)));
         obj.getScore(ChatColor.BOLD.toString()).setScore(1);
 
+
         for (Player player : players) {
             player.setScoreboard(scoreboard);
         }
@@ -181,10 +191,28 @@ public class ZamekNieskonczonosciManager {
         new SideBarTask(rpgcore);
     }
 
+    public String getEtapString() {
+        switch (this.phase) {
+            case 0:
+                return "&cParkour";
+            case 1:
+                return "&cRdzenie";
+            case 2:
+                return "&cFilary";
+            case 3:
+                return "&4&lWladca Zamku";
+            default:
+                return "";
+        }
+    }
+
     private void deleteScoreboard() {
         final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         if (scoreboard.getObjective("dungeon") != null) {
             scoreboard.getObjective("dungeon").unregister();
+        }
+        if (scoreboard.getTeam("etap") != null) {
+            scoreboard.getTeam("etap").unregister();
         }
         for (int i = 0; i < 4; i++) {
             if (scoreboard.getTeam("dungeon_p" + i) != null) {
