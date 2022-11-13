@@ -8,15 +8,14 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.user.User;
 
 public class NameTagUtil {
-    private static Team team;
-    private static Scoreboard scoreboard;
 
 
     public static void changePlayerName(final Player player, final String prefix, final String action) {
-        if (player.getScoreboard() == null || prefix == null || action == null) return;
-        scoreboard = player.getScoreboard();
+        if (prefix == null || action == null) return;
+        final Scoreboard scoreboard = player.getScoreboard();
         if (scoreboard.getTeam(player.getName()) == null)
             scoreboard.registerNewTeam(player.getName());
+        Team team;
         (team = scoreboard.getTeam(player.getName())).setPrefix(Utils.format(prefix));
         team.setNameTagVisibility(NameTagVisibility.ALWAYS);
         switch (action) {

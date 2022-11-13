@@ -33,11 +33,7 @@ public class LocationHelper {
     }
 
     public static String locToString(final Location loc) {
-        return loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ() + ":" + loc.getPitch() + ":" + loc.getYaw();
-    }
-
-    public static String locToStringTargs(final Location loc) {
-        return loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
+        return loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getPitch() + ":" + loc.getYaw();
     }
 
     public static boolean isInLoc(final Location loc, final Location l2, final int distance) {

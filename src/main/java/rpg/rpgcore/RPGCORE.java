@@ -312,7 +312,6 @@ public final class RPGCORE extends JavaPlugin {
         }
         Bukkit.clearRecipes();
     }
-
     public void onDisable() {
         this.mongo.saveAllUsers();
         this.mongo.saveAllMetins();

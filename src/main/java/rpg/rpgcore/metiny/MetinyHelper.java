@@ -1,6 +1,7 @@
 package rpg.rpgcore.metiny;
 
 import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.utils.LocationHelper;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
+
+import java.util.Map;
 
 public class MetinyHelper {
 
@@ -43,7 +46,7 @@ public class MetinyHelper {
 
     public static void respAllMetins() {
         for (World w : Bukkit.getWorlds()) {
-            if (w.getName().equals("Dungeon80-90")) {
+            if (w.getName().equals("zamekNieskonczonosci") && w.getPlayers().size() != 0) {
                 continue;
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
@@ -64,6 +67,19 @@ public class MetinyHelper {
         if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
             return;
         }
+        if (player.getWorld().getName().equals("zamekNieskonczonosci") && RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.get(id) == null) {
+            player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fHAHAHAHAH... nic nie zdzialasz!"));
+            player.damage(player.getMaxHealth() / 10);
+            return;
+        } else if (player.getWorld().getName().equals("zamekNieskonczonosci") && RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.get(id) != null) {
+            for (Map.Entry<Integer, ArmorStand> entry : RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.entrySet()) {
+                if (entry.getKey() == id && !entry.getValue().getCustomName().contains(player.getName())) {
+                    player.sendMessage(Utils.format("&5&lZaginiony Wladca &8>> &7Niestety tylko &c" + Utils.removeColor(entry.getValue().getCustomName().replace("Rdzen: ", "")) + " &7moze zniszczyc ten rdzen"));
+                    player.damage(player.getMaxHealth() / 10);
+                    return;
+                }
+            }
+        }
         Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
         if (player.getItemInHand() != null) {
             if (String.valueOf(player.getItemInHand().getType()).contains("_SWORD")) {
@@ -73,7 +89,7 @@ public class MetinyHelper {
                         damage = damage + 1;
                     }
                     if (sharp < 300 && sharp > 199) {
-                        damage = damage + 2;
+                        damage = damage + 200;
                     }
                     if (sharp < 400 && sharp > 299) {
                         damage = damage + 3;
@@ -103,6 +119,22 @@ public class MetinyHelper {
             }
         }
         if (damage >= metiny.getMetins().getHealth()) {
+
+            if (player.getWorld().getName().equals("zamekNieskonczonosci")) {
+                RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.get(id).remove();
+                RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.remove(id);
+                RPGCORE.getInstance().getZamekNieskonczonosciManager().destroyed++;
+                entity.remove();
+                player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
+                player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
+                RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&b&lMetin: &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
+                if (RPGCORE.getInstance().getZamekNieskonczonosciManager().destroyed == 2) { //ZMIENIC NA 4
+                    RPGCORE.getInstance().getZamekNieskonczonosciManager().spawnMiniBoses();
+                    return;
+                }
+                return;
+            }
+
             getDropMetin(id, player, entity);
             entity.remove();
             metiny.getMetins().setHealth(0);

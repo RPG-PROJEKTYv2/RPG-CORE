@@ -16,7 +16,12 @@ public class DungeonsManager {
                 "&7Wymagania:",
                 "&8- &7Ilosc Osob: &64",
                 "&8- &7Poziom: &670",
-                "&8- &61&7x &cKlucz Do Wrot Zamku Nieskonczonosci"
+                "&8- &61&7x &cKlucz Do Wrot Zamku Nieskonczonosci",
+                " ",
+                "&7Dodatkowe Informacje:",
+                "&8 - &7Ilosc Etapow: &c5",
+                "&8 - &7Sredni Czas Ukonczenia: &c~20min",
+                "&8 - &7Czas Na Przejscie: &c30min"
         )).toItemStack());
 
         player.openInventory(gui);

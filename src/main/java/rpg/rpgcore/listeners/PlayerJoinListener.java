@@ -105,10 +105,8 @@ public class PlayerJoinListener implements Listener {
 
         player.setLevel(playerLvl);
         player.setExp((float) playerExp);
-        for (Player rest : Bukkit.getOnlinePlayers()) {
-            rpgcore.getLvlManager().updateLvlBelowName(rest, playerName, playerLvl);
-        }
 
+        rpgcore.getLvlManager().updateLvlBelowName(player, playerName, playerLvl);
 
         //TODO Zrobic ladowanie z klasy BONUSES dodatkowegohp
         player.setMaxHealth(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowehp() * 2);

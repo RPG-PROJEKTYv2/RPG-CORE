@@ -223,9 +223,9 @@ public class LvlManager {
 
     public void updateLvlBelowName(final Player p, final String name1, final int lvl) {
         final Scoreboard sb = p.getScoreboard();
-        Objective ob = sb.getObjective(Utils.format("&7Lvl &c"));
+        Objective ob = sb.getObjective(Utils.format("&7Lvl"));
         if (ob == null) {
-            ob = sb.registerNewObjective(Utils.format("&7Lvl &c"), "dummy");
+            ob = sb.registerNewObjective(Utils.format("&7Lvl"), "dummy");
             ob.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
         final Score score = ob.getScore(name1);

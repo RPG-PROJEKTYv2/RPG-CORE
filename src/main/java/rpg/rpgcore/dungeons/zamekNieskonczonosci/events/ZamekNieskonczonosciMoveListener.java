@@ -20,7 +20,7 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
     public void onMove(final PlayerMoveEvent e) {
         final Player player = e.getPlayer();
         if (player.getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci") && rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.ONGOING) {
-            if (rpgcore.getZamekNieskonczonosciManager().phase == 0) {
+            if (rpgcore.getZamekNieskonczonosciManager().phase == DungeonStatus.ETAP_0) {
                 final Chunk chunk = player.getLocation().getChunk();
                 if ((chunk.getX() >= -1 && chunk.getX() <= 1) && (chunk.getZ() >= 0 && chunk.getZ() <= 2)) {
                     if (player.getLocation().getBlockY() <= 9) {
@@ -36,7 +36,7 @@ public class ZamekNieskonczonosciMoveListener implements Listener {
                     for (Player p : Bukkit.getWorld("zamekNieskonczonosci").getPlayers()) {
                         p.teleport(rpgcore.getZamekNieskonczonosciManager().phase1StartLocation);
                     }
-                    rpgcore.getZamekNieskonczonosciManager().phase = 1;
+                    rpgcore.getZamekNieskonczonosciManager().phase = DungeonStatus.ETAP_1;
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> rpgcore.getZamekNieskonczonosciManager().startPhase1(rpgcore.getPartyManager().findPartyByMember(player.getUniqueId())), 1L);
                 }
             }
