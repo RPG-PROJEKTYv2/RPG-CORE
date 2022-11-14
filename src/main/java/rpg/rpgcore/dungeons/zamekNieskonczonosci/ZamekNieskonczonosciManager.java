@@ -317,11 +317,12 @@ public class ZamekNieskonczonosciManager {
         targetC = (List)Utils.getPrivateField("c", PathfinderGoalSelector.class, ksiazeMroku.targetSelector);
         ksiazeMroku.a(ksiazeMroku, 180F, 35F);
         bossMap.put(party, ksiazeMroku);
-        int f = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
+        ksiazeMroku.goalSelector.a(0, new PathfinderGoalFloat(ksiazeMroku));
+        /*int f = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
             ksiazeMroku.getBukkitEntity().teleport(new Location(ksiazeMrokuSpawnLocation.getWorld(), ksiazeMrokuSpawnLocation.getX(), ksiazeMroku.getBukkitEntity().getLocation().getY() + fly(), ksiazeMrokuSpawnLocation.getZ()));
             }, 1L, 10L);
         taskList.add(f);
-        ksiazeTasks.add(f);
+        ksiazeTasks.add(f);*/
 
         final PacketPlayOutEntity.PacketPlayOutEntityLook look = new PacketPlayOutEntity.PacketPlayOutEntityLook(ksiazeMroku.getId(), (byte) ((ksiazeMrokuSpawnLocation.getYaw() * 256.0F) / 360.0F), (byte) ((ksiazeMrokuSpawnLocation.getPitch() * 256.0F) / 360.0F), true);
         final PacketPlayOutEntityHeadRotation headRotation = new PacketPlayOutEntityHeadRotation(ksiazeMroku, (byte) ((ksiazeMrokuSpawnLocation.getYaw() * 256.0F) / 360.0F));
@@ -491,7 +492,7 @@ public class ZamekNieskonczonosciManager {
             }
 
             assert mini1 != null;
-            //assert mini2 != null;
+            assert mini2 != null;
 
 
             mini1.setCustomName(Utils.format("&cSluga Ksiecia Mroku &7- &f" + getRandomPlayerName(players) + " 5"));
@@ -502,15 +503,15 @@ public class ZamekNieskonczonosciManager {
             mini1.getEquipment().setItemInHand(new ItemBuilder(Material.IRON_SWORD).addGlowing().toItemStack());
             mini1.setCustomNameVisible(true);
 
-        /*
-        mini2.setCustomName(Utils.format("&cSluga Ksiecia Mroku &7- " + names2.get(0)));
-        mini2.getEquipment().setBoots(new ItemBuilder(Material.DIAMOND_BOOTS).addGlowing().toItemStack());
-        mini2.getEquipment().setLeggings(new ItemBuilder(Material.DIAMOND_LEGGINGS).addGlowing().toItemStack());
-        mini2.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).addGlowing().toItemStack());
-        mini2.getEquipment().setHelmet(new ItemBuilder(Material.DIAMOND_HELMET).addGlowing().toItemStack());
-        mini2.getEquipment().setItemInHand(new ItemBuilder(Material.IRON_SWORD).addGlowing().toItemStack());
-        mini2.setCustomNameVisible(true);
-         */
+
+            mini2.setCustomName(Utils.format("&cSluga Ksiecia Mroku &7- " + getRandomPlayerName(players) + " 5"));
+            mini2.getEquipment().setBoots(new ItemBuilder(Material.DIAMOND_BOOTS).addGlowing().toItemStack());
+            mini2.getEquipment().setLeggings(new ItemBuilder(Material.DIAMOND_LEGGINGS).addGlowing().toItemStack());
+            mini2.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).addGlowing().toItemStack());
+            mini2.getEquipment().setHelmet(new ItemBuilder(Material.DIAMOND_HELMET).addGlowing().toItemStack());
+            mini2.getEquipment().setItemInHand(new ItemBuilder(Material.IRON_SWORD).addGlowing().toItemStack());
+            mini2.setCustomNameVisible(true);
+
             int e = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.liftGateMiniBosses(mini1), 20L).getTaskId();
             taskList.add(e);
             this.phase = DungeonStatus.ETAP_1_MINIBOSS;
@@ -629,7 +630,73 @@ public class ZamekNieskonczonosciManager {
         return playerNames.get(random).getName();
     }
 
-    public void startPhase2() {
+    public void startKsiazeBossFight() {
+        int a = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            for (Player player : players) {
+                player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fWidze, ze i oni nie dali wam rady..."));
+            }
+            int b = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                for (Player player : players) {
+                    player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fEhhh... No dobrze"));
+                }
+                int c = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                    for (Player player : players) {
+                        player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fJak zwykle wszystko musze zalatwic &4&lSAM!"));
+                    }
+                    int d = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                        final World world = Bukkit.getWorld("zamekNieskonczonosci");
+                        for (int y = 0; y < 3; y++) {
+                            for (int x = 0; x < 3; x++) {
+                                world.getBlockAt(3 + x, 15 + y, 112).setType(Material.AIR);
+                            }
+                        }
+                    }, 40L).getTaskId();
+                    taskList.add(d);
+                }, 40L).getTaskId();
+                taskList.add(c);
+            }, 40L).getTaskId();
+            taskList.add(b);
+        }, 40L).getTaskId();
+        taskList.add(a);
+
+        int e = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            final EntityInsentient ksiaze = this.bossMap.get(party);
+            ((List) Utils.getPrivateField("b", PathfinderGoalSelector.class, ksiaze.goalSelector)).clear();
+            ((List) Utils.getPrivateField("c", PathfinderGoalSelector.class, ksiaze.goalSelector)).clear();
+
+            final Entity ksiazeBukkit = ksiaze.getBukkitEntity();
+
+            ksiazeBukkit.setVelocity(new Vector(0, 0.1, -2));
+
+            assert ksiaze instanceof EntityPigZombie;
+            //TODO Znalezc sposoob na castowanie tego z EntityInsentient do EntityCreature
+            ksiaze.goalSelector.a(0, new PathfinderGoalFloat(ksiaze));
+            ksiaze.goalSelector.a(2, new PathfinderGoalMeleeAttack(((EntityCreature) ksiaze), EntityHuman.class, 1.0, false));
+            ksiaze.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(((EntityCreature) ksiaze), 1.0));
+            ksiaze.goalSelector.a(7, new PathfinderGoalRandomStroll(((EntityCreature) ksiaze), 1.0));
+            ksiaze.goalSelector.a(8, new PathfinderGoalLookAtPlayer(ksiaze, EntityHuman.class, 8.0F));
+            ksiaze.goalSelector.a(8, new PathfinderGoalRandomLookaround(ksiaze));
+
+            int f = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                final World world = Bukkit.getWorld("zamekNieskonczonosci");
+                for (int y = 0; y < 3; y++) {
+                    for (int x = 0; x < 3; x++) {
+                        world.getBlockAt(3 + x, 15 + y, 112).setType(Material.BARRIER);
+                    }
+                }
+            }, 20L).getTaskId();
+            taskList.add(f);
+        }, 170L).getTaskId();
+        taskList.add(e);
+
+
+
+
+
+
+
+
+
 
     }
 

@@ -21,6 +21,12 @@ public class KsiazeMroku extends EntityPigZombie {
         this.setEquipment(2, CraftItemStack.asNMSCopy(new ItemBuilder(org.bukkit.Material.IRON_CHESTPLATE).addGlowing().toItemStack()));
         this.setEquipment(3, CraftItemStack.asNMSCopy(new ItemBuilder(org.bukkit.Material.IRON_LEGGINGS).addGlowing().toItemStack()));
         this.setEquipment(4, CraftItemStack.asNMSCopy(new ItemBuilder(org.bukkit.Material.IRON_BOOTS).addGlowing().toItemStack()));
+        this.getAttributeInstance(a).setValue(0.0);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(250000);
+        this.setHealth(250000);
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35);
+        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(15);
+        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(100);
 
     }
 

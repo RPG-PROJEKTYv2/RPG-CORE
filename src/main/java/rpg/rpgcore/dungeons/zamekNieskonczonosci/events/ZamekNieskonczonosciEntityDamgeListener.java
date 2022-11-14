@@ -8,7 +8,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
 public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
@@ -25,17 +29,43 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
         if (!e.getDamager().getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci")) {
             return;
         }
-        final Entity entity = e.getEntity();
         if (!(e.getDamager() instanceof Player)) {
-            //
+            final Entity entity = e.getDamager();
+            if (entity.getCustomName().contains("Sluga Ksiecia Mroku")) {
+                if (!(e.getEntity() instanceof Player)) return;
+                final Player player = (Player) e.getEntity();
+                if (ChanceHelper.getChance(10)) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 5, 3));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 4));
+                    player.setHealth(player.getHealth() - player.getMaxHealth() / 5);
+                    return;
+                }
+                if (ChanceHelper.getChance(20)) {
+                    if (player.getFireTicks() > 0) {
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, e.getDamage() * 2);
+                    }
+                    player.setFireTicks(80);
+                    player.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &6&lPLON!"));
+                }
+                if (ChanceHelper.getChance(35)) {
+                    player.setVelocity(new Vector(player.getEyeLocation().getX() * -1, 2, player.getEyeLocation().getZ() * -1));
+                    player.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &fOdejdz!"));
+                }
+            }
+            return;
         }
 
-        if (entity instanceof Player) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             e.setCancelled(true);
             return;
         }
 
+        assert e.getDamager() instanceof Player;
+        assert e.getEntity() instanceof LivingEntity;
         final Player player = (Player) e.getDamager();
+        final Entity entity = e.getEntity();
         if (entity.getCustomName() != null && entity.getCustomName().contains("Sluga Ksiecia Mroku")) {
             final String entityName = Utils.removeColor(entity.getCustomName());
             final String entityPlayerName = entityName.substring(entityName.indexOf("-") + 2, entityName.lastIndexOf(" "));
@@ -59,7 +89,6 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
             }
 
 
-
             if (((LivingEntity) entity).getHealth() <= 0) {
                 for (Player p : RPGCORE.getInstance().getZamekNieskonczonosciManager().players) {
                     p.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &fWybacz mi Panie... &4Zawiodlem Cie!"));
@@ -68,7 +97,7 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                 entity.remove();
 
                 if (RPGCORE.getInstance().getZamekNieskonczonosciManager().miniBossesKilled == 2) {
-                    RPGCORE.getInstance().getZamekNieskonczonosciManager().startPhase2();
+                    RPGCORE.getInstance().getZamekNieskonczonosciManager().startKsiazeBossFight();
                 }
                 return;
             }
