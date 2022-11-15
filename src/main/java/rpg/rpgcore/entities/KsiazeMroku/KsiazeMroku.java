@@ -27,7 +27,6 @@ public class KsiazeMroku extends EntityPigZombie {
         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35);
         this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(15);
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(100);
-
     }
 
 }

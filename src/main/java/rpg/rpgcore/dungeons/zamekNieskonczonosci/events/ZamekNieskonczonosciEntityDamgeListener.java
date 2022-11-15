@@ -53,6 +53,7 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                     player.setVelocity(new Vector(player.getEyeLocation().getX() * -1, 2, player.getEyeLocation().getZ() * -1));
                     player.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &fOdejdz!"));
                 }
+                return;
             }
             return;
         }

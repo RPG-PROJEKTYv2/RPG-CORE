@@ -1,10 +1,7 @@
 package rpg.rpgcore.dmg;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -75,6 +72,12 @@ public class EntityDamageEntityListener implements Listener {
                 attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
                 attacker.sendMessage("Dmg event - " + e.getDamage());
                 attacker.sendMessage("Dmg final - " + e.getFinalDamage());
+                if (victim.getCustomName().contains("Ksiaze Mroku")) {
+                    if (((Monster) victim).getTarget() != attacker) {
+                        ((Monster) victim).setTarget(attacker);
+                    }
+                }
+
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
             }
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {

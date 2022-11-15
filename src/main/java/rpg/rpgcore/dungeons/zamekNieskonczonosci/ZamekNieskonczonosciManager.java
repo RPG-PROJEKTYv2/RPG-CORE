@@ -53,7 +53,7 @@ public class ZamekNieskonczonosciManager {
         }
     }
 
-    private final Map<Party, EntityInsentient> bossMap = new HashMap<>();
+    public final Map<Party, EntityInsentient> bossMap = new HashMap<>();
     public final Location spawn = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 4.5, 19, -10.5);
     public final Location parkour = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 4.5, 14, 6.5);
     public final Location ksiazeMrokuSpawnLocation = new Location(Bukkit.getWorld("zamekNieskonczonosci"), 4.5, 16, 114.5, 180L, 35L);
@@ -557,8 +557,8 @@ public class ZamekNieskonczonosciManager {
                         world.getBlockAt(-10, i, 114).setType(Material.AIR);
                         world.getBlockAt(-10, i, 115).setType(Material.AIR);
                     }
-                    mini1.setVelocity(new Vector(-7, 0.2, 0));
-                    //mini2.setVelocity(new Vector(20, 0.5, 0));
+                    mini1.setVelocity(new Vector(-4, 0.2, 0));
+                    mini2.setVelocity(new Vector(-4, 0.2, 0));
                 }, 20L).getTaskId();
                 taskList.add(g);
             }, 40L).getTaskId();
@@ -631,6 +631,7 @@ public class ZamekNieskonczonosciManager {
     }
 
     public void startKsiazeBossFight() {
+        this.phase = DungeonStatus.ETAP_1_BOSS;
         int a = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             for (Player player : players) {
                 player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fWidze, ze i oni nie dali wam rady..."));
@@ -660,6 +661,13 @@ public class ZamekNieskonczonosciManager {
         taskList.add(a);
 
         int e = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            for (Integer i : ksiazeTasks) {
+                if (rpgcore.getServer().getScheduler().isCurrentlyRunning(i) || rpgcore.getServer().getScheduler().isQueued(i)) {
+                    rpgcore.getServer().getScheduler().cancelTask(i);
+                }
+            }
+            ksiazeTasks.clear();
+
             final EntityInsentient ksiaze = this.bossMap.get(party);
             ((List) Utils.getPrivateField("b", PathfinderGoalSelector.class, ksiaze.goalSelector)).clear();
             ((List) Utils.getPrivateField("c", PathfinderGoalSelector.class, ksiaze.goalSelector)).clear();
@@ -669,13 +677,16 @@ public class ZamekNieskonczonosciManager {
             ksiazeBukkit.setVelocity(new Vector(0, 0.1, -2));
 
             assert ksiaze instanceof EntityPigZombie;
-            //TODO Znalezc sposoob na castowanie tego z EntityInsentient do EntityCreature
-            ksiaze.goalSelector.a(0, new PathfinderGoalFloat(ksiaze));
-            ksiaze.goalSelector.a(2, new PathfinderGoalMeleeAttack(((EntityCreature) ksiaze), EntityHuman.class, 1.0, false));
-            ksiaze.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(((EntityCreature) ksiaze), 1.0));
-            ksiaze.goalSelector.a(7, new PathfinderGoalRandomStroll(((EntityCreature) ksiaze), 1.0));
+            //TODO zrobic entityTargetChangeEvent i ustawiac target na tego ktory ostatniu udzerzy
+            EntityPigZombie ksiazePig = (EntityPigZombie) ksiaze;
+            ksiaze.goalSelector.a(2, new PathfinderGoalMeleeAttack(ksiazePig, EntityHuman.class, 1.0, false));
+            ksiaze.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(ksiazePig, 1.0));
+            ksiaze.goalSelector.a(7, new PathfinderGoalRandomStroll(ksiazePig, 1.0));
             ksiaze.goalSelector.a(8, new PathfinderGoalLookAtPlayer(ksiaze, EntityHuman.class, 8.0F));
             ksiaze.goalSelector.a(8, new PathfinderGoalRandomLookaround(ksiaze));
+            ksiaze.targetSelector.a(1, new PathfinderGoalHurtByTarget(ksiazePig, false));
+            ksiaze.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(ksiazePig, EntityHuman.class, true));
+
 
             int f = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
                 final World world = Bukkit.getWorld("zamekNieskonczonosci");
@@ -689,14 +700,13 @@ public class ZamekNieskonczonosciManager {
         }, 170L).getTaskId();
         taskList.add(e);
 
+    }
 
+    public Player getRandomPlayerp() {
+        return players.get(new Random().nextInt(players.size()));
+    }
 
-
-
-
-
-
-
+    public void startPhase2() {
 
     }
 

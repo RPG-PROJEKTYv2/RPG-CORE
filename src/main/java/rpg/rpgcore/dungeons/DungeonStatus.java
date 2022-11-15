@@ -8,6 +8,7 @@ public enum DungeonStatus {
     ETAP_1("1"),
     ETAP_1_RDZENIE("1"),
     ETAP_1_MINIBOSS("1"),
+    ETAP_1_BOSS("1"),
     ETAP_2("2"),
     ETAP_3("3"),
     ONGOING(""),

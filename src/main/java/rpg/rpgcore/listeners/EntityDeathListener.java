@@ -1,6 +1,7 @@
 package rpg.rpgcore.listeners;
 
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -13,6 +14,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -121,6 +124,27 @@ public class EntityDeathListener implements Listener {
         if (entity.getName() == null) {
             return;
         }
+        if (entity.getCustomName() != null && entity.getCustomName().contains("Ksiaze Mroku")) {
+            if (rpgcore.getZamekNieskonczonosciManager().phase != DungeonStatus.ETAP_1_BOSS) {
+                return;
+            }
+            rpgcore.getZamekNieskonczonosciManager().bossMap.remove(rpgcore.getZamekNieskonczonosciManager().party);
+            for (Integer i : rpgcore.getZamekNieskonczonosciManager().ksiazeTasks) {
+                if (rpgcore.getServer().getScheduler().isCurrentlyRunning(i) || rpgcore.getServer().getScheduler().isQueued(i)) {
+                    rpgcore.getServer().getScheduler().cancelTask(i);
+                }
+            }
+            rpgcore.getZamekNieskonczonosciManager().ksiazeTasks.clear();
+            Bukkit.broadcastMessage(Utils.format("&4&lZamek Nieskonczonosci &8>> &7Grupa gracza &c" + rpgcore.getZamekNieskonczonosciManager().partyLeader.getName() + " &7pokonala &c&lKsiecia Mroku&7!"));
+            for (Player p : rpgcore.getZamekNieskonczonosciManager().players) {
+                if (ChanceHelper.getChance(0.001 + rpgcore.getBonusesManager().find(p.getUniqueId()).getBonusesUser().getSzczescie() / 100f)) {
+                    p.sendMessage("artefakt jakis do dodania");
+                    Bukkit.broadcastMessage(Utils.format("&4&lZamek Nieskonczonosci &8>> &c&lKsiaze Mroku &7postanowil obdarowac gracza &c" + p.getName() + " &5niesamowitym &6skarbem&7!"));
+                }
+            }
+            rpgcore.getZamekNieskonczonosciManager().startPhase2();
+        }
+
         if (player != null) {
             MobDropHelper.dropFromMob(player, entity);
         }
