@@ -50,7 +50,7 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                     player.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &6&lPLON!"));
                 }
                 if (ChanceHelper.getChance(35)) {
-                    player.setVelocity(new Vector(player.getEyeLocation().getX() * -1, 2, player.getEyeLocation().getZ() * -1));
+                    player.setVelocity(new Vector(player.getEyeLocation().getX() * -1 / 20, 2, player.getEyeLocation().getZ() * -1 / 20));
                     player.sendMessage(Utils.format("&cSluga Ksiecia Mroku: &fOdejdz!"));
                 }
                 return;
@@ -71,8 +71,8 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
             final String entityName = Utils.removeColor(entity.getCustomName());
             final String entityPlayerName = entityName.substring(entityName.indexOf("-") + 2, entityName.lastIndexOf(" "));
             final int hitNumber = Integer.parseInt(entityName.substring(entityName.lastIndexOf(" ") + 1));
+            e.setCancelled(true);
             if (!player.getName().equals(entityPlayerName)) {
-                e.setCancelled(true);
                 if (((LivingEntity) entity).getHealth() < ((LivingEntity) entity).getMaxHealth()) {
                     ((LivingEntity) entity).setHealth(((LivingEntity) entity).getHealth() + 1);
                 }
@@ -82,11 +82,9 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
             if (hitNumber - 1 > 0) {
                 ((LivingEntity) entity).damage(1);
                 entity.setCustomName(Utils.format("&cSluga Ksiecia Mroku &7- &f" + player.getName() + " " + (hitNumber - 1)));
-                e.setCancelled(true);
             } else {
                 ((LivingEntity) entity).damage(1);
                 entity.setCustomName(Utils.format("&cSluga Ksiecia Mroku &7- &f" + RPGCORE.getInstance().getZamekNieskonczonosciManager().getRandomPlayerName(RPGCORE.getInstance().getZamekNieskonczonosciManager().players) + " 5"));
-                e.setCancelled(true);
             }
 
 
@@ -102,7 +100,7 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                 }
                 return;
             }
-            RPGCORE.getInstance().getNmsManager().sendActionBar(player, Utils.format("&cSluga Ksiecia Mroku" + " &f" + ((LivingEntity) entity).getHealth() + "&c/&f" + ((LivingEntity) entity).getMaxHealth()));
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getNmsManager().sendActionBar(player, Utils.format("&cSluga Ksiecia Mroku" + " &f" + ((LivingEntity) entity).getHealth() + "&c/&f" + ((LivingEntity) entity).getMaxHealth())));
         }
     }
 }
