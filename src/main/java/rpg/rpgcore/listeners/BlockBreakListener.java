@@ -5,6 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -25,4 +27,17 @@ public class BlockBreakListener implements Listener {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow!"));
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onLeavesDecay(final LeavesDecayEvent e) {
+        e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onExplosion(final BlockExplodeEvent e) {
+        if (e.getBlock().getLocation().getWorld().getName().equals("zamekNieskonczonosci")) {
+            e.setCancelled(true);
+        }
+    }
+
 }

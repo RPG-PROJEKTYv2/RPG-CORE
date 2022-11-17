@@ -2,9 +2,7 @@ package rpg.rpgcore.dungeons.zamekNieskonczonosci.events;
 
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,8 +12,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dungeons.zamekNieskonczonosci.enums.ZamekNieskonczonosciLocations;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
+
+import java.util.Random;
 
 public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
 
@@ -30,6 +31,14 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
     public void onDamage(final EntityDamageByEntityEvent e) {
         if (!e.getDamager().getWorld().getName().equalsIgnoreCase("zamekNieskonczonosci")) {
             return;
+        }
+        if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
+            if (e.getEntity() instanceof Player) {
+                e.setDamage(0);
+                e.setCancelled(true);
+                ((Player) e.getEntity()).damage(20);
+                return;
+            }
         }
         if (!(e.getDamager() instanceof Player)) {
             final Entity entity = e.getDamager();
@@ -61,21 +70,35 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
             if (entity.getCustomName().contains("Ksiaze Mroku")) {
                 if (!(e.getEntity() instanceof Player)) return;
                 final Player player = (Player) e.getEntity();
-                if (ChanceHelper.getChance(25)) {
-                    player.setHealth(player.getMaxHealth()/5);
+                if (ChanceHelper.getChance(0)) {
+                    if (player.getHealth() - player.getMaxHealth()/5 <= 0) {
+                        player.setHealth(0);
+                    } else {
+                        player.setHealth(player.getHealth() - (player.getMaxHealth() / 5));
+                    }
                     return;
                 }
-                if (ChanceHelper.getChance(100)) {
+                if (ChanceHelper.getChance(0)) {
                     entity.setVelocity(new Vector(0, 3, 0));
-                    int b = RPGCORE.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(RPGCORE.getInstance(), () -> this.spawnCircleParticles(entity.getLocation(), 7, Effect.COLOURED_DUST), 1L, 10L);
+                    int b = RPGCORE.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(RPGCORE.getInstance(), () -> this.spawnCircleParticles(entity.getLocation(), 7, Effect.CRIT), 1L, 5L);
                     RPGCORE.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getServer().getScheduler().cancelTask(b), 30L);
                     RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
                         entity.setVelocity(new Vector(0, -3, 0));
                         for (Entity en : entity.getNearbyEntities(7, 2, 7)) {
                             if (!(en instanceof Player)) continue;
-                            ((Player) en).setHealth(((Player) en).getHealth() - ((Player) en).getMaxHealth() / 2);
+                            if ((((Player) en).getMaxHealth() / 2) - ((Player) en).getHealth() <= 0) {
+                                ((Player) en).setHealth(0);
+                                return;
+                            }
+                            ((Player) en).setHealth((((Player) en).getMaxHealth() / 2) - ((Player) en).getHealth());
                         }
                     }, 20L);
+                    return;
+                }
+
+                if (ChanceHelper.getChance(99)) {
+                    this.castSuperAbbility(entity);
+                    return;
                 }
             }
             return;
@@ -137,7 +160,25 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
             double z = (radius * Math.cos(angle));
             angle += 0.1;
 
-            loc.getWorld().playEffect(new Location(loc.getWorld(), loc.getX() + x, 5, loc.getZ() + z), effect, 2);
+            loc.getWorld().playEffect(new Location(loc.getWorld(), loc.getX() + x, 6, loc.getZ() + z), effect, 2);
         }
+    }
+
+    private void castSuperAbbility(final Entity entity) {
+        final Location loc = ZamekNieskonczonosciLocations.getLocationByName("SuperAbility_" + (new Random().nextInt(4) + 1));
+        System.out.println(loc);
+        if (loc == null) return;
+        entity.teleport(loc);
+        int a = RPGCORE.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(RPGCORE.getInstance(), () -> {
+            for (Player p : RPGCORE.getInstance().getZamekNieskonczonosciManager().players) {
+                p.setFireTicks(10);
+                final Fireball fireball = (Fireball) p.getWorld().spawnEntity(new Location(loc.getWorld(), loc.getX(), loc.getY() - 2, loc.getZ(), loc.getYaw(), loc.getPitch()), EntityType.FIREBALL);
+                fireball.setDirection(new Vector(p.getEyeLocation().getX() * -1, p.getEyeLocation().getY() * -1, p.getEyeLocation().getZ() * -1));
+            }
+        }, 1L, 180L);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            RPGCORE.getInstance().getServer().getScheduler().cancelTask(a);
+            entity.teleport(ZamekNieskonczonosciLocations.getLocationByName("BackLocation"));
+        }, 550L);
     }
 }

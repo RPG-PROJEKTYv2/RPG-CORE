@@ -141,6 +141,7 @@ public class GornikInventoryClick implements Listener {
         }
 
         if (title.equals("Sklep Gorniczy")) {
+            e.setCancelled(true);
             if (item == null || item.getType() == Material.AIR) {
                 return;
             }
@@ -148,6 +149,7 @@ public class GornikInventoryClick implements Listener {
             if (slot == 0) {
                 if (user.getKasa() < 100000000) {
                     player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie masz wystarczajaco pieniedzy zeby kupic moj kilof!"));
+                    player.closeInventory();
                     return;
                 }
                 user.setKasa(user.getKasa() - 100000000);
@@ -155,6 +157,7 @@ public class GornikInventoryClick implements Listener {
                 player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj... Mam nadzieje, ze bedzie ci dobrze sluzyl."));
                 player.sendMessage(Utils.format("&8Pssst... Kilof ten posiada niesamowite wlasciowsci przemiany."));
                 player.closeInventory();
+                return;
             }
         }
 

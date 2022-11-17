@@ -318,11 +318,6 @@ public class ZamekNieskonczonosciManager {
         ksiazeMroku.a(ksiazeMroku, 180F, 35F);
         bossMap.put(party, ksiazeMroku);
         ksiazeMroku.goalSelector.a(0, new PathfinderGoalFloat(ksiazeMroku));
-        /*int f = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
-            ksiazeMroku.getBukkitEntity().teleport(new Location(ksiazeMrokuSpawnLocation.getWorld(), ksiazeMrokuSpawnLocation.getX(), ksiazeMroku.getBukkitEntity().getLocation().getY() + fly(), ksiazeMrokuSpawnLocation.getZ()));
-            }, 1L, 10L);
-        taskList.add(f);
-        ksiazeTasks.add(f);*/
 
         final PacketPlayOutEntity.PacketPlayOutEntityLook look = new PacketPlayOutEntity.PacketPlayOutEntityLook(ksiazeMroku.getId(), (byte) ((ksiazeMrokuSpawnLocation.getYaw() * 256.0F) / 360.0F), (byte) ((ksiazeMrokuSpawnLocation.getPitch() * 256.0F) / 360.0F), true);
         final PacketPlayOutEntityHeadRotation headRotation = new PacketPlayOutEntityHeadRotation(ksiazeMroku, (byte) ((ksiazeMrokuSpawnLocation.getYaw() * 256.0F) / 360.0F));
@@ -446,16 +441,6 @@ public class ZamekNieskonczonosciManager {
         taskList.add(j);
     }
 
-    private double fly() {
-        int maxTime = 200;
-        double toAdd = Math.sin(Math.toRadians(tick * 360 / maxTime)/2);
-        tick++;
-        if (tick >= maxTime) {
-            tick = 0;
-        }
-        return toAdd;
-    }
-
     public void spawnMiniBoses() {
         int a = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             for (Player p : players) {
@@ -512,7 +497,7 @@ public class ZamekNieskonczonosciManager {
             mini2.getEquipment().setItemInHand(new ItemBuilder(Material.IRON_SWORD).addGlowing().toItemStack());
             mini2.setCustomNameVisible(true);
 
-            int e = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.liftGateMiniBosses(mini1), 20L).getTaskId();
+            int e = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.liftGateMiniBosses(mini1, mini2), 20L).getTaskId();
             taskList.add(e);
             this.phase = DungeonStatus.ETAP_1_MINIBOSS;
         }, 150L).getTaskId();
@@ -520,7 +505,7 @@ public class ZamekNieskonczonosciManager {
 
     }
 
-    private void liftGateMiniBosses(final Entity mini1) { //final Entity mini2 ----- DODAC!!!!!!!
+    private void liftGateMiniBosses(final Entity mini1, final Entity mini2) {
         final World world = Bukkit.getWorld("zamekNieskonczonosci");
         world.getBlockAt(18, 5, 113).setType(Material.BARRIER);
         world.getBlockAt(18, 5, 114).setType(Material.BARRIER);
@@ -557,8 +542,8 @@ public class ZamekNieskonczonosciManager {
                         world.getBlockAt(-10, i, 114).setType(Material.AIR);
                         world.getBlockAt(-10, i, 115).setType(Material.AIR);
                     }
-                    mini1.setVelocity(new Vector(-4, 0.2, 0));
-                    mini2.setVelocity(new Vector(-4, 0.2, 0));
+                    mini1.setVelocity(new Vector(-6, 0.2, 0));
+                    mini2.setVelocity(new Vector(6, 0.2, 0));
                 }, 20L).getTaskId();
                 taskList.add(g);
             }, 40L).getTaskId();

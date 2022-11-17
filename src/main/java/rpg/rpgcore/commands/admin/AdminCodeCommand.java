@@ -3,13 +3,16 @@ package rpg.rpgcore.commands.admin;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -75,6 +78,7 @@ public class AdminCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+
             RPGCORE.getDiscordBot().sendChannelMessage("admincode-logs", EmbedUtil.create("**AdminCode Create**",
                     "**Gracz:** `" + player.getName() + "` **stworzyl swoj AdminCode!**\n"
                             + "**Ranga:** " + user.getRankUser().getRankType().getName() + "\n"
@@ -160,6 +164,15 @@ public class AdminCodeCommand extends CommandAPI {
                             + "**Kod: **||" + args[0] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.GREEN));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataUser(user.getId(), user);
+                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()));
+                TabManager.removePlayer(Bukkit.getPlayer(user.getId()));
+                TabManager.addPlayer(Bukkit.getPlayer(user.getId()));
+                for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                    TabManager.update(restOfServer.getUniqueId());
+                }
+            });
         } else {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podany AdminCode jest nieprawidlowy!"));
         }

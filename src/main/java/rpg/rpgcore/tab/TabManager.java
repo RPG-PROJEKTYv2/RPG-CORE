@@ -27,7 +27,7 @@ public class TabManager {
     public static void addPlayer(Player player) {
         String prefix;
         String guild = "";
-        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isStaff() && rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
             prefix = rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getPrefix();
         } else {
             prefix = rpgcore.getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType().getPrefix();
@@ -52,7 +52,6 @@ public class TabManager {
         }
 
         for (Integer integer : occruence) {
-            player.sendMessage(lista.get(integer));
             lista.remove(lista.get(integer));
         }
         lista = sortList(lista);
@@ -71,7 +70,7 @@ public class TabManager {
         final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         String prefix;
-        if (user.getRankUser().isStaff()) {
+        if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             prefix = user.getRankUser().getRankType().getPrefix();
         } else {
             prefix = user.getRankPlayerUser().getRankType().getPrefix();
