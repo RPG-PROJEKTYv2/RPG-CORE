@@ -1,5 +1,7 @@
 package rpg.rpgcore.commands.admin;
 
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;

@@ -1,5 +1,7 @@
 package rpg.rpgcore.dungeons.zamekNieskonczonosci.events;
 
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -31,6 +33,7 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
         }
         if (!(e.getDamager() instanceof Player)) {
             final Entity entity = e.getDamager();
+            if (entity.getCustomName() == null) return;
             if (entity.getCustomName().contains("Sluga Ksiecia Mroku")) {
                 if (!(e.getEntity() instanceof Player)) return;
                 final Player player = (Player) e.getEntity();
@@ -55,6 +58,26 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                 }
                 return;
             }
+            if (entity.getCustomName().contains("Ksiaze Mroku")) {
+                if (!(e.getEntity() instanceof Player)) return;
+                final Player player = (Player) e.getEntity();
+                if (ChanceHelper.getChance(25)) {
+                    player.setHealth(player.getMaxHealth()/5);
+                    return;
+                }
+                if (ChanceHelper.getChance(100)) {
+                    entity.setVelocity(new Vector(0, 3, 0));
+                    int b = RPGCORE.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(RPGCORE.getInstance(), () -> this.spawnCircleParticles(entity.getLocation(), 7, Effect.COLOURED_DUST), 1L, 10L);
+                    RPGCORE.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getServer().getScheduler().cancelTask(b), 30L);
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+                        entity.setVelocity(new Vector(0, -3, 0));
+                        for (Entity en : entity.getNearbyEntities(7, 2, 7)) {
+                            if (!(en instanceof Player)) continue;
+                            ((Player) en).setHealth(((Player) en).getHealth() - ((Player) en).getMaxHealth() / 2);
+                        }
+                    }, 20L);
+                }
+            }
             return;
         }
 
@@ -67,7 +90,9 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
         assert e.getEntity() instanceof LivingEntity;
         final Player player = (Player) e.getDamager();
         final Entity entity = e.getEntity();
-        if (entity.getCustomName() != null && entity.getCustomName().contains("Sluga Ksiecia Mroku")) {
+
+        if (entity.getCustomName() == null) return;
+        if (entity.getCustomName().contains("Sluga Ksiecia Mroku")) {
             final String entityName = Utils.removeColor(entity.getCustomName());
             final String entityPlayerName = entityName.substring(entityName.indexOf("-") + 2, entityName.lastIndexOf(" "));
             final int hitNumber = Integer.parseInt(entityName.substring(entityName.lastIndexOf(" ") + 1));
@@ -101,6 +126,18 @@ public class ZamekNieskonczonosciEntityDamgeListener implements Listener {
                 return;
             }
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getNmsManager().sendActionBar(player, Utils.format("&cSluga Ksiecia Mroku" + " &f" + ((LivingEntity) entity).getHealth() + "&c/&f" + ((LivingEntity) entity).getMaxHealth())));
+        }
+    }
+
+    private void spawnCircleParticles(final Location loc, final float radius, final Effect effect) {
+        float angle = 0f;
+
+        while (angle < Math.PI * 2) {
+            double x = (radius * Math.sin(angle));
+            double z = (radius * Math.cos(angle));
+            angle += 0.1;
+
+            loc.getWorld().playEffect(new Location(loc.getWorld(), loc.getX() + x, 5, loc.getZ() + z), effect, 2);
         }
     }
 }

@@ -13,7 +13,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.CustomZombie.CustomZombie;
-import rpg.rpgcore.entities.Dworzanin.Dworzanin;
 import rpg.rpgcore.entities.KsiazeMroku.KsiazeMroku;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.entities.ZamekNieskonczonosciBoss.ZamekNieskonczonosciBoss;
@@ -28,8 +27,7 @@ public enum EntityTypes {
     CUSTOM_ZOMBIE("Zombie", 54, CustomZombie.class), //You can add as many as you want.
     PET_ARMOR_STAND("ArmorStand", 30, PetArmorStand.class),
     ZAMEK_NIESKONCZONOSCI_BOSS("WitherBoss", 64, ZamekNieskonczonosciBoss.class),
-    KSIAZE_MROKU("PigZombie", 57, KsiazeMroku.class),
-    DWORZANIN("Villager", 120, Dworzanin.class);
+    KSIAZE_MROKU("PigZombie", 57, KsiazeMroku.class);
 
 
     EntityTypes(String name, int id, Class<? extends Entity> custom) {
