@@ -33,11 +33,9 @@ public class BlockBreakListener implements Listener {
         e.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onExplosion(final BlockExplodeEvent e) {
-        if (e.getBlock().getLocation().getWorld().getName().equals("zamekNieskonczonosci")) {
-            e.setCancelled(true);
-        }
+        e.setCancelled(true);
     }
 
 }

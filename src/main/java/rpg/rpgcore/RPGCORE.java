@@ -164,6 +164,7 @@ import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.whitelist.WhitelistManager;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.Field;
@@ -233,6 +234,7 @@ public final class RPGCORE extends JavaPlugin {
     private ZwierzakiManager zwierzakiManager;
     private OreManager oreManager;
     private DungeonsManager dungeonsManager;
+    private WhitelistManager whitelistManager;
 
     private int i = 1;
 
@@ -582,6 +584,7 @@ public final class RPGCORE extends JavaPlugin {
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
+        this.whitelistManager = new WhitelistManager();
     }
 
     private void initNPCS() {
@@ -879,5 +882,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public DungeonsManager getDungeonsManager() {
         return dungeonsManager;
+    }
+
+    public WhitelistManager getWhitelistManager() {
+        return whitelistManager;
     }
 }
