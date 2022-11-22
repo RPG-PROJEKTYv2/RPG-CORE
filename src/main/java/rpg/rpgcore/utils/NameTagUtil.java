@@ -33,15 +33,15 @@ public class NameTagUtil {
         }
     }
 
-    public static void setPlayerNameTag(final Player p) {
+    public static void setPlayerNameTag(final Player p, final String action) {
         final User user = RPGCORE.getInstance().getUserManager().find(p.getUniqueId());
         if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
-            NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
+            NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), action);
         } else {
             if (RPGCORE.getInstance().getGuildManager().hasGuild(p.getUniqueId())) {
-                NameTagUtil.changePlayerName(p, "&8[&3" + RPGCORE.getInstance().getGuildManager().getGuildTag(p.getUniqueId()) + "&8] ", "updatePrefix");
+                NameTagUtil.changePlayerName(p, "&8[&3" + RPGCORE.getInstance().getGuildManager().getGuildTag(p.getUniqueId()) + "&8] ", action);
             } else {
-                NameTagUtil.changePlayerName(p, "&7", "updatePrefix");
+                NameTagUtil.changePlayerName(p, "&7", action);
             }
         }
     }

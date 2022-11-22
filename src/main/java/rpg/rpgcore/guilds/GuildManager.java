@@ -1,6 +1,8 @@
 package rpg.rpgcore.guilds;
 
 import com.google.common.collect.ImmutableSet;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,6 +16,7 @@ import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
+import java.util.List;
 
 public class GuildManager {
 
@@ -144,7 +147,7 @@ public class GuildManager {
         if (player.isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject);
-                NameTagUtil.setPlayerNameTag(player);
+                NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                 TabManager.removePlayer(player);
                 TabManager.addPlayer(player);
                 for (Player restOfServer : Bukkit.getOnlinePlayers()) {
@@ -392,7 +395,9 @@ public class GuildManager {
         guildInvites.get(uuid).put(tag, 0);
         int i = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.removeFromGuildInvites(uuid, tag, player), 600L).getTaskId();
         this.updateInviteTaskId(uuid, tag, i);
-        player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aOtrzymano zaproszenie do klanu &6" + tag));
+        final net.md_5.bungee.api.chat.TextComponent inviteMessage = new TextComponent(Utils.format(Utils.GUILDSPREFIX + "&aOtrzymano zaproszenie do klanu &6" + tag + " &8(kliknij, aby zaakceptowac)"));
+        inviteMessage.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/klan dolacz " + tag));
+        player.spigot().sendMessage(inviteMessage);
     }
 
     public void acceptInvite(final String tag, final UUID uuid, final Player player) {
@@ -643,11 +648,7 @@ public class GuildManager {
     }
 
     public GuildObject find(final String tag) {
-        if (this.guildMap.containsKey(tag)) {
-            return this.guildMap.get(tag);
-        } else {
-            return null;
-        }
+        return this.guildMap.getOrDefault(tag, null);
     }
     public void add(final GuildObject guildObject) {
         this.guildMap.put(guildObject.getTag(), guildObject);

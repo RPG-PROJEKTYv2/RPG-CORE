@@ -1,5 +1,9 @@
 package rpg.rpgcore.party;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
@@ -130,7 +134,10 @@ public class PartyManager {
         final PartyInvite partyInvite = new PartyInvite(this.find(leader.getUniqueId()), target.getUniqueId());
         inviteList.add(partyInvite);
         leader.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyslano zaproszenie do gracza &6" + target.getName()));
-        target.sendMessage(Utils.format(Utils.SERVERNAME + "&aOtrzymano zaproszenie do party gracza &6" + leader.getName() + "&a. Aby dolaczyc do niej uzyj: &c/party dolacz " + leader.getName()));
+        final TextComponent message = new TextComponent(Utils.format(Utils.SERVERNAME + "&aOtrzymano zaproszenie do party gracza &6" + leader.getName() + "&a. Aby dolaczyc do niej uzyj: &c/party dolacz " + leader.getName() + " &alub &akliknij w te wiadomosc"));
+        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.format("&aKliknij aby dolaczyc do party gracza &6" + leader.getName())).create()));
+        message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/party dolacz " + leader.getName()));
+        target.spigot().sendMessage(message);
         RPGCORE.getInstance().getCooldownManager().givePlayerPartyInviteCooldown(target.getUniqueId());
         RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
             if (inviteList.contains(partyInvite)) {

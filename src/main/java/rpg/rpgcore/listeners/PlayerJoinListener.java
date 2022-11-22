@@ -113,7 +113,7 @@ public class PlayerJoinListener implements Listener {
         player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
 
-        NameTagUtil.setPlayerNameTag(player);
+        NameTagUtil.setPlayerNameTag(player, "updatePrefix");
 
 
         e.setJoinMessage(null);

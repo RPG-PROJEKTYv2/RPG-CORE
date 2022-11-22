@@ -60,7 +60,7 @@ public class SetAdminRankCommand extends CommandAPI {
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zmieniles ranga gracza &6" + user.getName() + " &az &6" + rankTypeBefore.getName() + " &ana &6" + rankTypeAfter.getName() + "&a!"));
         if (Bukkit.getPlayer(user.getId()) != null && Bukkit.getPlayer(user.getId()).isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()));
+                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()), "updatePrefix");
                 TabManager.removePlayer(Bukkit.getPlayer(user.getId()));
                 TabManager.addPlayer(Bukkit.getPlayer(user.getId()));
                 for (Player restOfServer : Bukkit.getOnlinePlayers()) {

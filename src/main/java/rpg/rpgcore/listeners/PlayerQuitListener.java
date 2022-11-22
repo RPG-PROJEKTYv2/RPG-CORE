@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Date;
@@ -41,6 +42,7 @@ public class PlayerQuitListener implements Listener {
 
         e.setQuitMessage(Utils.quitMessage(name));
         TabManager.removePlayer(p);
+        NameTagUtil.setPlayerNameTag(p, "delete");
 
         if (EntityTypes.isPetSpawned(pUUID)) {
             EntityTypes.despawnPet(pUUID);

@@ -80,7 +80,7 @@ public class GuildCommand extends CommandAPI {
 
                 rpgcore.getGuildManager().removePlayerFromGuild(tag, uuid);
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + "&c opuscil klan &6" + tag));
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> NameTagUtil.setPlayerNameTag(player, "updatePrefix"));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateOneMember(player));
                 return;
             }
@@ -185,7 +185,7 @@ public class GuildCommand extends CommandAPI {
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                        NameTagUtil.setPlayerNameTag(player);
+                        NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                         this.updateOneMember(player);
                         rpgcore.getMongoManager().saveDataUser(user.getId(), user);
                     });
@@ -350,7 +350,7 @@ public class GuildCommand extends CommandAPI {
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
                 rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                    NameTagUtil.setPlayerNameTag(player);
+                    NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                     this.updateOneMember(player);
                     rpgcore.getMongoManager().saveDataUser(user.getId(), user);
                 });
@@ -381,7 +381,7 @@ public class GuildCommand extends CommandAPI {
         for (final UUID uuid1 : rpgcore.getGuildManager().getGuildMembers(tag)) {
             final Player p = Bukkit.getPlayer(uuid1);
             if (p != null && p.isOnline()) {
-                NameTagUtil.setPlayerNameTag(p);
+                NameTagUtil.setPlayerNameTag(p, "updatePrefix");
                 TabManager.removePlayer(p);
                 members.add(uuid1);
             }

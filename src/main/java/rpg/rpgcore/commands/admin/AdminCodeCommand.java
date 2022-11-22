@@ -166,7 +166,7 @@ public class AdminCodeCommand extends CommandAPI {
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.GREEN));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataUser(user.getId(), user);
-                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()));
+                NameTagUtil.setPlayerNameTag(Bukkit.getPlayer(user.getId()), "updatePrefix");
                 TabManager.removePlayer(Bukkit.getPlayer(user.getId()));
                 TabManager.addPlayer(Bukkit.getPlayer(user.getId()));
                 for (Player restOfServer : Bukkit.getOnlinePlayers()) {
