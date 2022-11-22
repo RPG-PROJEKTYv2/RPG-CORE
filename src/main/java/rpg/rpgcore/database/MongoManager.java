@@ -33,7 +33,6 @@ import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.whitelist.Whitelist;
 
 import java.io.IOException;
 import java.util.*;
@@ -1091,24 +1090,6 @@ public class MongoManager {
         for (Ore ore : rpgcore.getOreManager().getOreLocations()) {
             this.saveDataOreLocation(ore);
         }
-    }
-
-    public List<UUID> loadAllWhiteList() {
-        List<UUID> whiteList = new ArrayList<>();
-        if (this.pool.getWhiteList().find(new Document("_id", "whitelist")).first() != null) {
-            whiteList = this.pool.getWhiteList().find(new Document("_id", "whitelist")).first().getList("users", UUID.class);
-        } else {
-            addWhiteListData(new Whitelist(whiteList));
-        }
-        return whiteList;
-    }
-
-    public void addWhiteListData(Whitelist whitelist) {
-        this.pool.getWhiteList().insertOne(whitelist.toDocument());
-    }
-
-    public void saveWhiteListData(Whitelist whitelist) {
-        this.pool.getWhiteList().findOneAndReplace(new Document("_id", "whitelist"), whitelist.toDocument());
     }
 
 

@@ -35,7 +35,7 @@ public class NameTagUtil {
 
     public static void setPlayerNameTag(final Player p) {
         final User user = RPGCORE.getInstance().getUserManager().find(p.getUniqueId());
-        if (user.getRankUser().isStaff()) {
+        if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), "updatePrefix");
         } else {
             if (RPGCORE.getInstance().getGuildManager().hasGuild(p.getUniqueId())) {
