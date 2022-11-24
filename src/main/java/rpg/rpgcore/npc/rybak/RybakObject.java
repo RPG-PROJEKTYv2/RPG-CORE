@@ -15,7 +15,7 @@ public class RybakObject {
 
     public RybakObject(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.rybakUser = new RybakUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("value1"), document.getDouble("value2"), document.getDouble("value3"), document.getDouble("value4"));
+        this.rybakUser = new RybakUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("srDef"), document.getDouble("kryt"), document.getDouble("morskieSzczescie"), document.getDouble("trueDmg"));
     }
 
     public UUID getId() {
@@ -30,9 +30,9 @@ public class RybakObject {
         return new Document("_id", uuid.toString())
                 .append("mission", rybakUser.getMission())
                 .append("progress", rybakUser.getProgress())
-                .append("value1", rybakUser.getValue1())
-                .append("value2", rybakUser.getValue2())
-                .append("value3", rybakUser.getValue3())
-                .append("value4", rybakUser.getValue4());
+                .append("srDef", rybakUser.getSrDef())
+                .append("kryt", rybakUser.getKryt())
+                .append("morskieSzczescie", rybakUser.getMorskieSzczescie())
+                .append("trueDmg", rybakUser.getTrueDmg());
     }
 }

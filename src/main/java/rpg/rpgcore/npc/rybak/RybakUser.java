@@ -7,14 +7,14 @@ import lombok.Setter;
 @Setter
 public class RybakUser {
     private int mission, progress;
-    private double value1, value2, value3, value4;
+    private double srDef, kryt, morskieSzczescie, trueDmg;
 
-    public RybakUser(int mission, int progress, double value1, double value2, double value3, double value4) {
+    public RybakUser(int mission, int progress, double srDef, double kryt, double morskieSzczescie, double trueDmg) {
         this.mission = mission;
         this.progress = progress;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
-        this.value4 = value4;
+        this.srDef = srDef;
+        this.kryt = kryt;
+        this.morskieSzczescie = morskieSzczescie;
+        this.trueDmg = trueDmg;
     }
 }

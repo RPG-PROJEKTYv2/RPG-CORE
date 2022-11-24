@@ -602,10 +602,6 @@ public final class RPGCORE extends JavaPlugin {
         this.lesnikNPC = new LesnikNPC(this);
 
 
-        this.getRybakNPC().loadExpWedka();
-        this.getRybakNPC().loadRybakDrops();
-        this.getRybakNPC().loadRybakMobs();
-        this.getRybakNPC().loadRybakMisje();
         this.getMetinologNPC().loadMissions();
     }
 

@@ -77,13 +77,11 @@ public class GuildManager {
     }
 
     public void showInfo(final String tag, final Player player) {
-        for (GuildObject guildObject : this.getGuilds()){
-            if (!guildObject.getTag().equals(tag)) {
-                player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
-                return;
-            }
-        }
         final Guild guild = this.find(tag).getGuild();
+        if (guild == null) {
+            player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
+            return;
+        }
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
         player.sendMessage(Utils.format("&6Opis: &7" + guild.getDescription()));
         player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guild.getOwner()).getName()));

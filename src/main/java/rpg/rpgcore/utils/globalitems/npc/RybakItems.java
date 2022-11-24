@@ -21,7 +21,8 @@ public enum RybakItems {
     I12("I12", new ItemBuilder(Material.COOKED_FISH).setName("&6Makrela").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
     I13("I13", new ItemBuilder(Material.COOKED_FISH).setName("&6Mintaj").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
     I14("I14", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Okon").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I15("I15", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Plotka").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone());
+    I15("I15", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Plotka").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I16("I16", new ItemBuilder(Material.CHEST).setName("&a&lSkrzynia Rybaka").setLore(Arrays.asList("&8&n&oKliknij&r &8&ozeby otworzyc skrzynie i otrzymac przedmioty")).hideFlag().toItemStack().clone());
 
     private final String name;
     private final ItemStack itemStack;

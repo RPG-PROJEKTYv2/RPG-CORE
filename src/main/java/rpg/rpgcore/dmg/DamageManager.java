@@ -94,8 +94,8 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
         // ...RYBAK
-        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
-        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
+        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getMorskieSzczescie();
+        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getSrDef();
 
         dmg = (dmg * (mnoznik / 100)) /3;
         attacker.sendMessage("Dmg - " + dmg);
@@ -185,8 +185,8 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
         // ...RYBAK
-        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue3();
-        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getValue1();
+        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getMorskieSzczescie();
+        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getSrDef();
 
         dmg = (dmg * (mnoznik / 100)) /3;
         attacker.sendMessage("Dmg - " + dmg);

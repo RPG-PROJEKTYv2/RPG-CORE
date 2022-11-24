@@ -30,7 +30,7 @@ public class RybakInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void rybakInventoryClick(final InventoryClickEvent e) {
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        /*final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID playerUUID = player.getUniqueId();
 
@@ -329,7 +329,7 @@ public class RybakInventoryClick implements Listener {
                 return;
             }
             rpgcore.getServer().broadcastMessage(Utils.format(Utils.RYBAK + "&7Gracz &6" + player.getName() + " &7ukonczyl wlasnie moja &6" + Utils.removeColor(clickedItem.getItemMeta().getDisplayName().replace("Misja #", "")) + " &7misje.&6Gratulacje!"));
-        }
+        }*/
 
     }
 
