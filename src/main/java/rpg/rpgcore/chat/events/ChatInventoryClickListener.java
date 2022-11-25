@@ -239,6 +239,7 @@ public class ChatInventoryClickListener implements Listener {
             rpgcore.getChatManager().updateMessageWithEQ(uuid, "");
             player.closeInventory();
         }
+
         if (title.equals("Chat Panel")) {
             e.setCancelled(true);
             final ChatUser user = rpgcore.getChatManager().find(uuid);
@@ -283,6 +284,73 @@ public class ChatInventoryClickListener implements Listener {
                 user.setChestDropEnabled(true);
                 rpgcore.getChatManager().openChatPanel(player);
             }
+            if (slot == 6) {
+                if (user.isMsgEnabled()) {
+                    user.setMsgEnabled(false);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
+                }
+
+                user.setMsgEnabled(true);
+                rpgcore.getChatManager().openChatPanel(player);
+            }
         }
     }
+    /*
+    if (rpgcore.getUserManager().find(uuid).getLvl() < 74) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c75 &7poziom, zeby pokazac bao na chacie"));
+                        player.closeInventory();
+                        break;
+                    }
+
+                    if (rpgcore.getBaoManager().isNotRolled(uuid)) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz jeszcze zrobionego bao!"));
+                        player.closeInventory();
+                        break;
+                    }
+                    final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
+                    final TextComponent beforeMessageBao = new TextComponent(formatPrzed);
+                    final TextComponent stolMagii = new TextComponent("§8[§bStol Magii§8]");
+                    final TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + user.getBonus1() + ": §c" + user.getValue1() + "% §8\n§6" + user.getBonus2() + ": §c" + user.getValue2() + "% §8\n§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
+                    TextComponent text2;
+                    TextComponent text3;
+
+
+                    if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
+                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + " DMG §8\n");
+                    } else {
+                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + "% §8\n");
+                    }
+                    if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
+                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
+                    } else {
+                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + "%");
+                    }
+                    text.addExtra(text2);
+                    text.addExtra(text3);
+                    stolMagii.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{text}));
+
+
+                    if (msg.isEmpty()) {
+                        beforeMessageBao.addExtra(stolMagii);
+                    } else {
+                        if (!isHighStaff) {
+                            beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
+                        } else {
+                            beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(0)));
+                        }
+                        beforeMessageBao.addExtra(stolMagii);
+                        for (int i = 1; i < msg.size(); i++) {
+                            if (!isHighStaff) {
+                                beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
+                            } else {
+                                beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(i)));
+                            }
+                        }
+                    }
+
+
+                    Bukkit.getServer().spigot().broadcast(beforeMessageBao);
+                    break;
+     */
 }

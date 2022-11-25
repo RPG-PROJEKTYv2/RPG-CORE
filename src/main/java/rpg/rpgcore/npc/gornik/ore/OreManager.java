@@ -23,9 +23,22 @@ public class OreManager {
         return this.oreMap.get(location);
     }
 
+    public Ore findById(final int id) {
+        return this.oreMap.values().stream().filter(ore -> ore.getId() == id).findFirst().orElse(null);
+    }
+
     public boolean isOre(Location location) {
         for (final Ore ore : this.oreMap.values()) {
             if (ore.getLocation().equals(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isOre(final int id) {
+        for (final Ore ore : this.oreMap.values()) {
+            if (ore.getId() == id) {
                 return true;
             }
         }

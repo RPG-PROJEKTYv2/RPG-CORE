@@ -51,6 +51,16 @@ public class MessageCommand extends CommandAPI {
             return;
         }
 
+        if (rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
+            return;
+        }
+
+        if (rpgcore.getChatManager().find(targetUUID).getIgnoredPlayers().contains(playerUUID)) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz ignoruje twoje wiadomosci!"));
+            return;
+        }
+
         args[0] = "";
 
         for (final String arg : args) {
@@ -59,7 +69,7 @@ public class MessageCommand extends CommandAPI {
             }
         }
 
-        rpgcore.getMsgManager().sendMessages(player, target, String.valueOf(message));
+        rpgcore.getMsgManager().sendMessages(player, target, Utils.removeColor(String.valueOf(message)));
         if (rpgcore.getMsgManager().isInMessageMapAsKey(playerUUID)) {
             rpgcore.getMsgManager().updateMessageMap(playerUUID, targetUUID);
             return;

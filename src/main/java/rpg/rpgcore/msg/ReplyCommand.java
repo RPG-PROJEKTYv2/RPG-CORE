@@ -48,7 +48,7 @@ public class ReplyCommand extends CommandAPI {
                     message.append(" ").append(s);
                 }
             }
-            rpgcore.getMsgManager().sendMessages(player, target, String.valueOf(message));
+            rpgcore.getMsgManager().sendMessages(player, target, Utils.removeColor(String.valueOf(message)));
         } else if (rpgcore.getMsgManager().isInMessageMapAsValue(playerUUID)) {
             UUID targetUUID = null;
             for (Map.Entry<UUID, UUID> entry : rpgcore.getMsgManager().getMessageMap().entrySet()) {
@@ -62,13 +62,24 @@ public class ReplyCommand extends CommandAPI {
                 return;
             }
             final Player target = Bukkit.getPlayer(targetUUID);
+
+            if (rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
+                return;
+            }
+
+            if (rpgcore.getChatManager().find(targetUUID).getIgnoredPlayers().contains(playerUUID)) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz ignoruje twoje wiadomosci!"));
+                return;
+            }
+
             final StringBuilder message = new StringBuilder();
             for (final String s : args) {
                 if (!(s.equalsIgnoreCase(""))) {
                     message.append(" ").append(s);
                 }
             }
-            rpgcore.getMsgManager().sendMessages(player, target, String.valueOf(message));
+            rpgcore.getMsgManager().sendMessages(player, target, Utils.removeColor(String.valueOf(message)));
         } else {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Jeszcze do nikogo nie napisales!"));
         }

@@ -2,6 +2,7 @@ package rpg.rpgcore.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -311,10 +312,26 @@ public class Utils {
         }
     }
 
+    public static void sendToHighStaff(final TextComponent message) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
+                player.spigot().sendMessage(new TextComponent(format("&4&lHell&6&lINFO ")), message);
+            }
+        }
+    }
+
     public static void sendToStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
                 player.sendMessage(format(message));
+            }
+        }
+    }
+
+    public static void sendToStaff(final TextComponent message) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+                player.spigot().sendMessage(message);
             }
         }
     }

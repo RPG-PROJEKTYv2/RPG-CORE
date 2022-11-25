@@ -171,7 +171,12 @@ public class ChatManager {
         } else {
             gui.setItem(5, new ItemBuilder(Material.TRAPPED_CHEST).setName("&c&lWiadomosci o dropie ze skrzynek").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
         }
-        gui.setItem(6, new ItemBuilder(Material.BARRIER).setName("&c&lCos tu kiedys jeszcze bedzie").addGlowing().toItemStack().clone());
+        if (user.isMsgEnabled()) {
+            gui.setItem(6, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&a&lPrywatne wiadomosci od graczy").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(6, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lPrywatne wiadomosci od graczy").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+        }
+        gui.setItem(7, new ItemBuilder(Material.BARRIER).setName("&c&lCos tu kiedys jeszcze bedzie").addGlowing().toItemStack().clone());
 
 
         player.openInventory(gui);

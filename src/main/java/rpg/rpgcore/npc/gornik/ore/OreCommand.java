@@ -11,6 +11,7 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
 
 public class OreCommand extends CommandAPI {
@@ -45,9 +46,9 @@ public class OreCommand extends CommandAPI {
                     return;
                 }
                 final int id = Integer.parseInt(args[1]);
-                final int hp = GornikOres.getOre(block.getType()).getMaxHp();
+                final int hp = Objects.requireNonNull(GornikOres.getOre(block.getType())).getMaxHp();
                 if (RPGCORE.getInstance().getOreManager().isOre(block.getLocation())) {
-                    player.sendMessage(Utils.poprawneUzycie("/ore <list/add/remove> [id]"));
+                    player.sendMessage(Utils.poprawneUzycie("ore <list/add/remove> [id]"));
                     return;
                 }
                 final Ore ore = new Ore(id, block.getType(), block.getLocation(), hp, hp);
@@ -55,6 +56,35 @@ public class OreCommand extends CommandAPI {
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().addDataOreLocation(ore));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie dodano rude o id &6" + id + " &amateriale &6" + block.getType().name() + "&a i lokalizacji x:&6" + block.getLocation().getBlockX() + " &ay:&6" + block.getLocation().getBlockY() + " &az:&6" + block.getLocation().getBlockZ()));
             }
+        }
+        if (args[0].equalsIgnoreCase("list")) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista rud:"));
+            for (Ore ore : RPGCORE.getInstance().getOreManager().getOreLocations()) {
+                player.sendMessage(Utils.format("&8ID: &6" + ore.getId() + " &8Material: &6" + ore.getOreMaterial().name() + " &8X:&6" + ore.getLocation().getBlockX() + " &8Y:&6" + ore.getLocation().getBlockY() + " &8Z:&6" + ore.getLocation().getBlockZ()));
+            }
+            return;
+        }
+        if (args[0].equalsIgnoreCase("remove")) {
+            if (args[1] == null) {
+                player.sendMessage(Utils.poprawneUzycie("ore remove <id>"));
+                return;
+            }
+            int id;
+            try {
+                id = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz podac liczbe jako id!"));
+                return;
+            }
+            if (RPGCORE.getInstance().getOreManager().findById(id) == null) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie ma takiej rudy!"));
+                return;
+            }
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+                RPGCORE.getInstance().getOreManager().remove(RPGCORE.getInstance().getOreManager().findById(id));
+                RPGCORE.getInstance().getMongoManager().removeDataOreLocation(RPGCORE.getInstance().getOreManager().findById(id));
+            });
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie usunieto rude o id &6" + id));
         }
     }
 

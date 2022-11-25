@@ -62,6 +62,7 @@ import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.magazyn.MagazynManager;
+import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
@@ -401,6 +402,8 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new EnchantCustomCommand());
         CommandAPI.getCommand().register("HellRPGCore", new EnchantCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MemoryCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new IgnoreCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new AdminChatCommand());
     }
 
     private void initEvents() {

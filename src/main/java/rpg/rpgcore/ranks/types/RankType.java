@@ -2,22 +2,23 @@ package rpg.rpgcore.ranks.types;
 
 public enum RankType {
 
-    DEV("DEV", "&4&lDEV &c", 99),
-    HA("HA","&4&lH@ &c", 90),
-    ADMIN("ADMIN","&4&lAdmin &c", 10),
-    GM("GM", "&2&lGM &a",9),
-    MOD("MOD", "&2&lMod &a",8),
-    KIDMOD("KIDMOD", "&2&lKidMod &a",7),
-    HELPER("HELPER", "&3&lHelper &b",6),
-    JUNIORHELPER("JUNIORHELPER", "&3&lJrHelper &b",5),
-    GRACZ("GRACZ", "&7 ",0);
+    DEV("DEV", "&4&lDEV &c", "&c", 99),
+    HA("HA", "&4&lH@ &c", "&c", 90),
+    ADMIN("ADMIN", "&4&lAdmin &c", "&c", 10),
+    GM("GM", "&2&lGM &a", "&2", 9),
+    MOD("MOD", "&2&lMod &a", "&2", 8),
+    KIDMOD("KIDMOD", "&2&lKidMod &a", "&2", 7),
+    HELPER("HELPER", "&3&lHelper &b", "&b", 6),
+    JUNIORHELPER("JUNIORHELPER", "&3&lJrHelper &b", "&b", 5),
+    GRACZ("GRACZ", "&7 ", "", 0);
 
-    private final String name, prefix;
+    private final String name, prefix, messageColour;
     private final int priority;
 
-    RankType(String name, String prefix, int priority) {
+    RankType(String name, String prefix, String messageColour, int priority) {
         this.name = name;
         this.prefix = prefix;
+        this.messageColour = messageColour;
         this.priority = priority;
     }
 
@@ -36,6 +37,10 @@ public enum RankType {
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public String getMessageColour() {
+        return messageColour;
     }
 
 
