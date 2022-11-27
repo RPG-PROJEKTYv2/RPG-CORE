@@ -16,7 +16,6 @@ import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -91,7 +90,6 @@ public class AsyncPlayerChatListener implements Listener {
             return;
         }
         formatuj(player, message);
-        player.getInventory().addItem(GlobalItem.getItem("I3", 1));
         if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             return;
         }

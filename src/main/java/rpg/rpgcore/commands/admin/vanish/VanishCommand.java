@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
@@ -57,11 +56,9 @@ public class VanishCommand extends CommandAPI {
 
             if (!(rpgcore.getVanishManager().isVisible(targetUUID))) {
                 rpgcore.getVanishManager().hidePlayer(p, target);
-                TabManager.removePlayer(Bukkit.getPlayer(p.getUniqueId()));
                 return;
             }
             rpgcore.getVanishManager().showPlayer(p, target);
-            TabManager.addPlayer(Bukkit.getPlayer(p.getUniqueId()));
         }
     }
 }

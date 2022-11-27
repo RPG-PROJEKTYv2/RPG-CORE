@@ -11,6 +11,7 @@ import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class IgnoreCommand extends CommandAPI {
 
@@ -24,12 +25,20 @@ public class IgnoreCommand extends CommandAPI {
     public void executeCommand(final CommandSender sender, final String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
-            player.sendMessage(Utils.poprawneUzycie("ignore <gracz>"));
+            player.sendMessage(Utils.poprawneUzycie("ignore <list/gracz>"));
+            return;
+        }
+
+        if (args[0].equalsIgnoreCase("list")) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ignorowani gracze:"));
+            for (final UUID uuid : RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).getIgnoredPlayers()) {
+                player.sendMessage(Utils.format("&7- &6" + Bukkit.getOfflinePlayer(uuid).getPlayer().getName()));
+            }
             return;
         }
 
         if (Bukkit.getPlayer(args[0]) == null) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie odnaleziono takiego gracza!"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie odnaleziono takiego gracza lub nie jest on aktualnie online!"));
             return;
         }
 

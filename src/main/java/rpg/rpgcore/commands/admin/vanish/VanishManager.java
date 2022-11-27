@@ -48,7 +48,7 @@ public class VanishManager {
 
     public void hidePlayer(final Player target) {
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
-            if (!(restOfTheServer.hasPermission("rpg.vanish.see_hidden_players"))) {
+            if (!rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(target.getUniqueId()).isAdminCodeLogin()) {
                 restOfTheServer.hidePlayer(target);
             }
         }
@@ -60,7 +60,7 @@ public class VanishManager {
 
     public void hidePlayer(final Player sender, final Player target) {
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
-            if (!(restOfTheServer.hasPermission("rpg.vanish.see_hidden_players"))) {
+            if (!rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(target.getUniqueId()).isAdminCodeLogin()) {
                 restOfTheServer.hidePlayer(target);
             }
         }

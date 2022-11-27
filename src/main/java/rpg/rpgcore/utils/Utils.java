@@ -306,7 +306,7 @@ public class Utils {
 
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.sendMessage(format("&4&lHell&6&lINFO " + message));
             }
         }
@@ -314,7 +314,7 @@ public class Utils {
 
     public static void sendToHighStaff(final TextComponent message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.spigot().sendMessage(new TextComponent(format("&4&lHell&6&lINFO ")), message);
             }
         }
@@ -322,7 +322,7 @@ public class Utils {
 
     public static void sendToStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.sendMessage(format(message));
             }
         }
@@ -330,7 +330,7 @@ public class Utils {
 
     public static void sendToStaff(final TextComponent message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.spigot().sendMessage(message);
             }
         }

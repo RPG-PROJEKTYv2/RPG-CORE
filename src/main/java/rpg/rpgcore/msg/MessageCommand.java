@@ -51,7 +51,12 @@ public class MessageCommand extends CommandAPI {
             return;
         }
 
-        if (rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+        if (rpgcore.getUserManager().find(targetUUID).getRankUser().isHighStaff() && rpgcore.getUserManager().find(targetUUID).isAdminCodeLogin()) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz napisac do tego gracza. Jesli potrzebujesz pomocy uzyj &ckomendy /helpop &7lub napisz &cticket na naszym dc &8(&cdc.hellrpg.pl&8)"));
+            return;
+        }
+
+        if (!rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
             return;
         }

@@ -42,6 +42,17 @@ public class ReplyCommand extends CommandAPI {
                 return;
             }
             final Player target = Bukkit.getPlayer(targetUUID);
+
+            if (!rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
+                return;
+            }
+
+            if (rpgcore.getChatManager().find(targetUUID).getIgnoredPlayers().contains(playerUUID)) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz ignoruje twoje wiadomosci!"));
+                return;
+            }
+
             final StringBuilder message = new StringBuilder();
             for (final String s : args) {
                 if (!(s.equalsIgnoreCase(""))) {
@@ -63,7 +74,7 @@ public class ReplyCommand extends CommandAPI {
             }
             final Player target = Bukkit.getPlayer(targetUUID);
 
-            if (rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+            if (!rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
                 return;
             }
