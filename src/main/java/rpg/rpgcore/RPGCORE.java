@@ -7,9 +7,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
-import rpg.rpgcore.akcesoria.*;
-import rpg.rpgcore.akcesoria.listeners.AKCESORIAInventoryClick;
-import rpg.rpgcore.akcesoria.listeners.AKCESORIAPlayerInteract;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
@@ -38,6 +35,7 @@ import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.discord.DiscordBot;
+import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dungeons.DungeonsInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsManager;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
@@ -186,7 +184,7 @@ public final class RPGCORE extends JavaPlugin {
     private ChatManager chatManager;
     private BaoManager baoManager;
     private OsManager osManager;
-    private AkcesoriaManager akcesoriaManager;
+    private DodatkiManager dodatkiManager;
     private PomocManager pomocManager;
     private MuteManager muteManager;
     private MSGManager msgManager;
@@ -326,7 +324,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllOs();
         this.mongo.saveAllPrzyrodnik();
         this.mongo.saveAllActivePets();
-        this.mongo.saveAllAkcesoria();
+        this.mongo.saveAllDodatki();
         this.mongo.saveAllBonuses();
         this.mongo.saveAllUserPets();
         this.mongo.saveAllChatUsers();
@@ -360,7 +358,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new HealCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new TempBanCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new OsiagnieciaCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new AkcesoriaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new PomocCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new SprawdzMojeBonusyCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new MuteCommand(this));
@@ -388,7 +385,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new TestAnimationCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TestCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RemoveNearbyEntitiesCommand());
-        CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoriaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetPremiumCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new RankTimeCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetAdminRankCommand(this));
@@ -445,8 +441,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChatInventoryClickListener(this), this);
 
         // AKCESORIA
-        this.getServer().getPluginManager().registerEvents(new AKCESORIAInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new AKCESORIAPlayerInteract(this), this);
+
 
         // HISTORY
         this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
@@ -564,7 +559,7 @@ public final class RPGCORE extends JavaPlugin {
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
         this.osManager = new OsManager(this);
-        this.akcesoriaManager = new AkcesoriaManager(this);
+        this.dodatkiManager = new DodatkiManager(this);
         this.pomocManager = new PomocManager();
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
@@ -709,9 +704,8 @@ public final class RPGCORE extends JavaPlugin {
     public OsManager getOsManager() {
         return osManager;
     }
-
-    public AkcesoriaManager getAkcesoriaManager() {
-        return akcesoriaManager;
+    public DodatkiManager getDodatkiManager() {
+        return dodatkiManager;
     }
 
     public PomocManager getPomocManager() {

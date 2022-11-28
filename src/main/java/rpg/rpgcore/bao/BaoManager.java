@@ -339,14 +339,14 @@ public class BaoManager {
     public List<Integer> getAllEntities() {
         final List<Integer> entityList = new ArrayList<>();
         ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("spawnOFFICIAL"), -46.5, 99, -274.55), EntityType.ARMOR_STAND);
-        as.setVisible(false);
+        as.setVisible(true);
         for (Entity e : as.getNearbyEntities(1, 2, 1)) {
             if (!(e instanceof Player)) {
                 entityList.add(e.getEntityId());
             }
         }
-
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, as::remove, 100L);
+        System.out.println(entityList);
+        //Bukkit.getServer().getScheduler().runTaskLater(rpgcore, as::remove, 100L);
         return entityList;
     }
 

@@ -6,10 +6,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.akcesoria.AkcesoriaObject;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.magazyn.MagazynObject;
@@ -228,8 +228,8 @@ public class MongoManager {
                 this.addDataRybak(new RybakObject(uuid));
             }
 
-            if (this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataAkcesoria(new AkcesoriaObject(uuid));
+            if (this.pool.getDodatki().find(new Document("_id", uuid.toString())).first() == null) {
+                this.addDataDodatki(new DodatkiUser(uuid));
             }
 
             try {
@@ -329,9 +329,9 @@ public class MongoManager {
         this.addDataUser(user);
         rpgcore.getUserManager().add(user);
 
-        final AkcesoriaObject akcesoriaObject = new AkcesoriaObject(uuid);
-        this.addDataAkcesoria(akcesoriaObject);
-        rpgcore.getAkcesoriaManager().add(akcesoriaObject);
+        final DodatkiUser dodatkiUser = new DodatkiUser(uuid);
+        this.addDataDodatki(dodatkiUser);
+        rpgcore.getDodatkiManager().add(dodatkiUser);
 
         final Bonuses bonuses = new Bonuses(uuid);
         this.addDataBonuses(bonuses);
@@ -428,7 +428,7 @@ public class MongoManager {
             }
 
             this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
-            this.saveDataAkcesoria(uuid, rpgcore.getAkcesoriaManager().find(uuid));
+            this.saveDataDodatki(uuid, rpgcore.getDodatkiManager().find(uuid));
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
             this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
             this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
@@ -767,27 +767,27 @@ public class MongoManager {
         }
     }
 
-    // AKCEOSRIA
-    public Map<UUID, AkcesoriaObject> loadAllAkcesoria() {
-        Map<UUID, AkcesoriaObject> akcesoria = new HashMap<>();
-        for (Document document : this.pool.getAkcesoria().find()) {
-            AkcesoriaObject akcesoriaObject = new AkcesoriaObject(document);
-            akcesoria.put(akcesoriaObject.getId(), akcesoriaObject);
+    // DODATKI
+    public Map<UUID, DodatkiUser> loadAllDodatki() {
+        Map<UUID, DodatkiUser> dodatki = new HashMap<>();
+        for (Document document : this.pool.getDodatki().find()) {
+            final DodatkiUser dodatkiUser = new DodatkiUser(document);
+            dodatki.put(dodatkiUser.getUuid(), dodatkiUser);
         }
-        return akcesoria;
+        return dodatki;
     }
 
-    public void addDataAkcesoria(final AkcesoriaObject akcesoriaObject) {
-        this.pool.getAkcesoria().insertOne(akcesoriaObject.toDocument());
+    public void addDataDodatki(final DodatkiUser dodatkiUser) {
+        this.pool.getDodatki().insertOne(dodatkiUser.toDocument());
     }
 
-    public void saveDataAkcesoria(final UUID id, final AkcesoriaObject akcesoriaObject) {
-        this.pool.getAkcesoria().findOneAndReplace(new Document("_id", id.toString()), akcesoriaObject.toDocument());
+    public void saveDataDodatki(final UUID id, final DodatkiUser dodatkiUser) {
+        this.pool.getDodatki().findOneAndReplace(new Document("_id", id.toString()), dodatkiUser.toDocument());
     }
 
-    public void saveAllAkcesoria() {
-        for (AkcesoriaObject akcesoriaObject : rpgcore.getAkcesoriaManager().getAkcesoriaObjects()) {
-            this.saveDataAkcesoria(akcesoriaObject.getId(), akcesoriaObject);
+    public void saveAllDodatki() {
+        for (DodatkiUser dodatkiUser : rpgcore.getDodatkiManager().getDodatkiUsers()) {
+            this.saveDataDodatki(dodatkiUser.getUuid(), dodatkiUser);
         }
     }
 

@@ -18,8 +18,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_spawn;
     private final MongoCollection<Document> hellrpg_gracze;
     private final MongoCollection<Document> hellrpg_gildie;
-    private final MongoCollection<Document> hellrpg_akcesoria;
-    private final MongoCollection<Document> hellrpg_bony;
+    private final MongoCollection<Document> hellrpg_dodatki;
     private final MongoCollection<Document> hellrpg_magazyny;
     private final MongoCollection<Document> hellrpg_metiny;
     private final MongoCollection<Document> hellrpg_targi;
@@ -32,7 +31,6 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_metinolog;
     private final MongoCollection<Document> hellrpg_other;
     private final MongoCollection<Document> hellrpg_klasy;
-
     private final MongoCollection<Document> hellrpg_medyk;
     private final MongoCollection<Document> hellrpg_gornik;
     private final MongoCollection<Document> hellrpg_duszolog;
@@ -59,11 +57,8 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_gildie")) {
             database.createCollection("hellrpg_gildie");
         }
-        if (!collections.contains("hellrpg_akcesoria")) {
-            database.createCollection("hellrpg_akcesoria");
-        }
-        if (!collections.contains("hellrpg_bony")) {
-            database.createCollection("hellrpg_bony");
+        if (!collections.contains("hellrpg_dodatki")) {
+            database.createCollection("hellrpg_dodatki");
         }
         if (!collections.contains("hellrpg_magazyny")) {
             database.createCollection("hellrpg_magazyny");
@@ -137,8 +132,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
-        this.hellrpg_akcesoria = database.getCollection("hellrpg_akcesoria");
-        this.hellrpg_bony = database.getCollection("hellrpg_bony");
+        this.hellrpg_dodatki = database.getCollection("hellrpg_dodatki");
         this.hellrpg_magazyny = database.getCollection("hellrpg_magazyny");
         this.hellrpg_metiny = database.getCollection("hellrpg_metiny");
         this.hellrpg_targi = database.getCollection("hellrpg_targi");
@@ -181,12 +175,8 @@ public class MongoConnectionPoolManager {
         return this.hellrpg_gildie;
     }
 
-    public MongoCollection<Document> getAkcesoria() {
-        return this.hellrpg_akcesoria;
-    }
-
-    public MongoCollection<Document> getBony() {
-        return this.hellrpg_bony;
+    public MongoCollection<Document> getDodatki() {
+        return this.hellrpg_dodatki;
     }
 
     public MongoCollection<Document> getMagazyny() {

@@ -60,7 +60,40 @@ public class PlayerFishListener implements Listener {
                 }
 
                 if (check == 1) {
-                    //TODO dokonczyc sprawdzanie gora.dol.lewo.prawo
+                    if (toCheckAfter <= 20) {
+                        player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+                        return;
+                    }
+                    player.sendMessage("dobrze - dol");
+                    //addDrop(player);
+                    return;
+                }
+                if (check == 2) {
+                    if (toCheckAfter >= -20) {
+                        player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+                        return;
+                    }
+                    player.sendMessage("dobrze - gora");
+                    //addDrop(player);
+                    return;
+                }
+                if (check == 3) {
+                    if (toCheckAfter >= -35) {
+                        player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+                        return;
+                    }
+                    player.sendMessage("dobrze - lewo");
+                    //addDrop(player);
+                    return;
+                }
+                if (check == 4) {
+                    if (toCheckAfter <= 35) {
+                        player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+                        return;
+                    }
+                    player.sendMessage("dobrze - prawo");
+                    //addDrop(player);
+                    return;
                 }
             }, 40L);
         }
@@ -79,10 +112,10 @@ public class PlayerFishListener implements Listener {
                 return;
             }
             if (time.equals("<1s")) {
-                e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &eplynie..."));
+                e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7| &eplynie..."));
                 return;
             }
-            e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7oczekuje na rybe... &c" + time));
+            e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7| oczekuje na rybe... &c" + time));
         }, 1L, 20L);
         if (rpgcore.getRybakNPC().getTaskMap().containsKey(e.getPlayer().getUniqueId())) {
             rpgcore.getServer().getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskId(e.getPlayer().getUniqueId()));
