@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class AkcesoriaPodstUser {
     private final UUID uuid;
-    private final String tarcza, naszyjnik, kolczyki, pierscien, diadem;
+    private String tarcza, naszyjnik, kolczyki, pierscien, diadem;
 
     public AkcesoriaPodstUser(final UUID uuid) {
         this.uuid = uuid;

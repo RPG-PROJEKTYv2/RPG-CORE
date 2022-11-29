@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class AkcesoriaDodatUser {
     private final UUID uuid;
-    private final String szarfa, pas, medalion, energia;
+    private String szarfa, pas, medalion, energia;
 
     public AkcesoriaDodatUser(final UUID uuid) {
         this.uuid = uuid;

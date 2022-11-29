@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class BonyUser {
     private final UUID uuid;
-    private final String dmg5, dmg10, dmg15, def5, def10, def15, kryt5, kryt10, kryt15, wzmkryt10, blok20, przeszywka20, predkosc25, predkosc50, hp10, hp20, hp35;
+    private String dmg5, dmg10, dmg15, def5, def10, def15, kryt5, kryt10, kryt15, wzmkryt10, blok20, przeszywka20, predkosc25, predkosc50, hp10, hp20, hp35;
 
     public BonyUser(final UUID uuid) {
         this.uuid = uuid;
