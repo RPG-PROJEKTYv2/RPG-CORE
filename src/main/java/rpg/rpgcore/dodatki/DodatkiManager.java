@@ -89,103 +89,103 @@ public class DodatkiManager {
         }
 
         if (user.getDmg5().isEmpty()) {
-            gui.setItem(0, this.createNoAkcesoria("Bona Srednich Obrazen 5%"));
+            gui.setItem(0, this.createNoAkcesoria("Bonu Srednich Obrazen 5%"));
         } else {
             gui.setItem(0, Utils.deserializeItem(user.getDmg5()));
         }
 
         if (user.getDmg10().isEmpty()) {
-            gui.setItem(9, this.createNoAkcesoria("Bona Srednich Obrazen 10%"));
+            gui.setItem(9, this.createNoAkcesoria("Bonu Srednich Obrazen 10%"));
         } else {
             gui.setItem(9, Utils.deserializeItem(user.getDmg10()));
         }
 
         if (user.getDmg15().isEmpty()) {
-            gui.setItem(18, this.createNoAkcesoria("Bona Srednich Obrazen 15%"));
+            gui.setItem(18, this.createNoAkcesoria("Bonu Srednich Obrazen 15%"));
         } else {
             gui.setItem(18, Utils.deserializeItem(user.getDmg15()));
         }
 
         if (user.getDef5().isEmpty()) {
-            gui.setItem(1, this.createNoAkcesoria("Bona Sredniej Defensywy 5%"));
+            gui.setItem(1, this.createNoAkcesoria("Bonu Sredniej Defensywy 5%"));
         } else {
             gui.setItem(1, Utils.deserializeItem(user.getDef5()));
         }
 
         if (user.getDef10().isEmpty()) {
-            gui.setItem(10, this.createNoAkcesoria("Bona Sredniej Defensywy 10%"));
+            gui.setItem(10, this.createNoAkcesoria("Bonu Sredniej Defensywy 10%"));
         } else {
             gui.setItem(10, Utils.deserializeItem(user.getDef10()));
         }
 
         if (user.getDef15().isEmpty()) {
-            gui.setItem(19, this.createNoAkcesoria("Bona Sredniej Defensywy 15%"));
+            gui.setItem(19, this.createNoAkcesoria("Bonu Sredniej Defensywy 15%"));
         } else {
             gui.setItem(19, Utils.deserializeItem(user.getDef15()));
         }
 
         if (user.getKryt5().isEmpty()) {
-            gui.setItem(2, this.createNoAkcesoria("Bona Szansy Na Cios Krytyczny 5%"));
+            gui.setItem(2, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 5%"));
         } else {
             gui.setItem(2, Utils.deserializeItem(user.getKryt5()));
         }
 
         if (user.getKryt10().isEmpty()) {
-            gui.setItem(11, this.createNoAkcesoria("Bona Szansy Na Cios Krytyczny 10%"));
+            gui.setItem(11, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 10%"));
         } else {
             gui.setItem(11, Utils.deserializeItem(user.getKryt10()));
         }
 
         if (user.getKryt15().isEmpty()) {
-            gui.setItem(20, this.createNoAkcesoria("Bona Szansy Na Cios Krytyczny 15%"));
+            gui.setItem(20, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 15%"));
         } else {
             gui.setItem(20, Utils.deserializeItem(user.getKryt15()));
         }
 
         if (user.getWzmkryt10().isEmpty()) {
-            gui.setItem(3, this.createNoAkcesoria("Bona Szansy Na Wzmocnienie Ciosu Krytycznego 10%"));
+            gui.setItem(3, this.createNoAkcesoria("Bonu Szansy Na Wzmocnienie Ciosu Krytycznego 10%"));
         } else {
             gui.setItem(3, Utils.deserializeItem(user.getWzmkryt10()));
         }
 
         if (user.getBlok20().isEmpty()) {
-            gui.setItem(12, this.createNoAkcesoria("Bona Szansy Na Blok Ciosu 20%"));
+            gui.setItem(12, this.createNoAkcesoria("Bonu Szansy Na Blok Ciosu 20%"));
         } else {
             gui.setItem(12, Utils.deserializeItem(user.getBlok20()));
         }
 
         if (user.getPrzeszywka20().isEmpty()) {
-            gui.setItem(21, this.createNoAkcesoria("Bona Szansy Na Przeszycie Bloku Ciosu 20%"));
+            gui.setItem(21, this.createNoAkcesoria("Bonu Szansy Na Przeszycie Bloku Ciosu 20%"));
         } else {
             gui.setItem(21, Utils.deserializeItem(user.getPrzeszywka20()));
         }
 
         if (user.getHp10().isEmpty()) {
-            gui.setItem(4, this.createNoAkcesoria("Bona Dodatkowego Zdrowia +10"));
+            gui.setItem(4, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +10"));
         } else {
             gui.setItem(4, Utils.deserializeItem(user.getHp10()));
         }
 
         if (user.getHp20().isEmpty()) {
-            gui.setItem(13, this.createNoAkcesoria("Bona Dodatkowego Zdrowia +20"));
+            gui.setItem(13, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +20"));
         } else {
             gui.setItem(13, Utils.deserializeItem(user.getHp20()));
         }
 
         if (user.getHp35().isEmpty()) {
-            gui.setItem(22, this.createNoAkcesoria("Bona Dodatkowego Zdrowia +35"));
+            gui.setItem(22, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +35"));
         } else {
             gui.setItem(22, Utils.deserializeItem(user.getHp35()));
         }
 
         if (user.getPredkosc25().isEmpty()) {
-            gui.setItem(5, this.createNoAkcesoria("Bona Zwiekszonej Predkosci Ruchu +25"));
+            gui.setItem(5, this.createNoAkcesoria("Bonu Zwiekszonej Predkosci Ruchu +25"));
         } else {
             gui.setItem(5, Utils.deserializeItem(user.getPredkosc25()));
         }
 
         if (user.getPredkosc50().isEmpty()) {
-            gui.setItem(14, this.createNoAkcesoria("Bona Zwiekszonej Predkosci Ruchu +50"));
+            gui.setItem(14, this.createNoAkcesoria("Bonu Zwiekszonej Predkosci Ruchu +50"));
         } else {
             gui.setItem(14, Utils.deserializeItem(user.getPredkosc50()));
         }

@@ -44,7 +44,7 @@ public class GiveAkcesoriaCommand extends CommandAPI {
             case "tarcza":
                 player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
                 break;
-            case "naszyjnk":
+            case "naszyjnik":
                 player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
                 break;
             case "kolczyki":

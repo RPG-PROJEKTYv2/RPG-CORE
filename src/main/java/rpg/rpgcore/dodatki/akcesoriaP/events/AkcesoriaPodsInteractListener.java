@@ -59,7 +59,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             return;
         }
 
-        if (Utils.getTagInt(eventItem, "lvl") < lvl) {
+        if (Utils.getTagInt(eventItem, "lvl") > lvl) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, zeby zalozyc ten przedmiot!"));
             return;
         }

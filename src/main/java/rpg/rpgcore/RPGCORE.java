@@ -36,6 +36,8 @@ import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dodatki.DodatkiManager;
+import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInteractListener;
+import rpg.rpgcore.dodatki.events.DodatkiInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsManager;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
@@ -443,7 +445,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChatInventoryClickListener(this), this);
 
         // AKCESORIA
-
+        this.getServer().getPluginManager().registerEvents(new DodatkiInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new AkcesoriaPodsInteractListener(this), this);
 
         // HISTORY
         this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
