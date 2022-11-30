@@ -35,8 +35,6 @@ public class BonyInteractListener implements Listener {
             return;
         }
 
-
-        final int lvl = rpgcore.getUserManager().find(uuid).getLvl();
         final DodatkiUser user = rpgcore.getDodatkiManager().find(uuid);
         final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
 
@@ -56,11 +54,7 @@ public class BonyInteractListener implements Listener {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
             return;
         }
-
-        if (Utils.getTagInt(eventItem, "lvl") > lvl) {
-            player.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, zeby zalozyc ten przedmiot!"));
-            return;
-        }
+        e.setCancelled(true);
 
         switch (Utils.removeColor(eventItem.getItemMeta().getDisplayName())) {
             case "Bon Srednich Obrazen 5%":
@@ -228,7 +222,7 @@ public class BonyInteractListener implements Listener {
             rpgcore.getMongoManager().saveDataDodatki(uuid, user);
             RPGCORE.getDiscordBot().sendChannelMessage("player-bony-logs", EmbedUtil.create(
                     "**Gracz **`" + player.getName() + "`** zalozyl bona!**",
-                    "**Bon: **`" + Utils.removeColor(eventItem.getItemMeta().getDisplayName()), Color.getHSBColor(114, 90, 47)));
+                    "**Bon: **" + Utils.removeColor(eventItem.getItemMeta().getDisplayName()), Color.getHSBColor(114, 90, 47)));
         });
     }
 }

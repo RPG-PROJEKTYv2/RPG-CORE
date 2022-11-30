@@ -34,12 +34,16 @@ import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
+import rpg.rpgcore.commands.player.profile.ProfileCommand;
+import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInventoryClickListener;
 import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInteractListener;
 import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInventoryClick;
+import rpg.rpgcore.dodatki.bony.events.BonyInteractListener;
+import rpg.rpgcore.dodatki.bony.events.BonyInventoryClickListener;
 import rpg.rpgcore.dodatki.events.DodatkiInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsManager;
@@ -364,7 +368,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new TempBanCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new OsiagnieciaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new PomocCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new SprawdzMojeBonusyCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new MuteCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new UnMuteCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new TempMuteCommand(this));
@@ -408,6 +411,8 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new DodatkiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoriaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GetBonyCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new MaxCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new ProfileCommand());
     }
 
     private void initEvents() {
@@ -457,7 +462,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new AkcesoriaDodatInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new AkcesoriaDodatInventoryClickListener(this), this);
         // ... BONY
-
+        this.getServer().getPluginManager().registerEvents(new BonyInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BonyInventoryClickListener(this), this);
 
         // HISTORY
         this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);
@@ -474,6 +480,9 @@ public final class RPGCORE extends JavaPlugin {
         // KOSZ
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
+
+        // PROFILE
+        this.getServer().getPluginManager().registerEvents(new ProfileInventoryClickListener(), this);
 
         // KLASY
         this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
