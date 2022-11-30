@@ -36,7 +36,10 @@ import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dodatki.DodatkiManager;
+import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
+import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInventoryClickListener;
 import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInteractListener;
+import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInventoryClick;
 import rpg.rpgcore.dodatki.events.DodatkiInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsManager;
@@ -404,6 +407,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new AdminChatCommand());
         CommandAPI.getCommand().register("HellRPGCore", new DodatkiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoriaCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new GetBonyCommand());
     }
 
     private void initEvents() {
@@ -446,7 +450,14 @@ public final class RPGCORE extends JavaPlugin {
 
         // AKCESORIA
         this.getServer().getPluginManager().registerEvents(new DodatkiInventoryClick(), this);
+        // ... PODSTAWOWE
         this.getServer().getPluginManager().registerEvents(new AkcesoriaPodsInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new AkcesoriaPodsInventoryClick(this), this);
+        // ... DODATKOWE
+        this.getServer().getPluginManager().registerEvents(new AkcesoriaDodatInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new AkcesoriaDodatInventoryClickListener(this), this);
+        // ... BONY
+
 
         // HISTORY
         this.getServer().getPluginManager().registerEvents(new HISTORYInventoryClick(), this);

@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
@@ -94,9 +94,9 @@ public class PlayerJoinListener implements Listener {
             throw new RuntimeException(ex);
         }
         rpgcore.getBackupManager().savePlayer(player, uuid);
-        player.removePotionEffect(PotionEffectType.SLOW);
-        player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-        player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+        for (PotionEffect potionEffect : player.getActivePotionEffects()) {
+            player.removePotionEffect(potionEffect.getType());
+        }
 
 
 

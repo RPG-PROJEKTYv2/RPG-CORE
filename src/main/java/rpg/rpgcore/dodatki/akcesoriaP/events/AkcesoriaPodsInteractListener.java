@@ -12,6 +12,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.dodatki.DodatkiUser;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -78,11 +79,12 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final int hp = Utils.getTagInt(eventItem, "hp");
 
             user.getAkcesoriaPodstawowe().setTarcza(Utils.serializeItem(eventItem));
-            player.getInventory().remove(eventItem);
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + def);
             bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + blok);
             bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + hp);
+            player.setMaxHealth(player.getMaxHealth() + hp*2);
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
@@ -94,7 +96,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Srednia Defensywa: " + def + "\n" +
                                 "- Blok Ciosu: " + blok + "\n" +
                                 "- Dodatkowe Hp: " + hp + "\n" +
-                                "- Wymagazyny Poziom: " + lvl, Color.getHSBColor(114, 90, 47)));
+                                "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
 
@@ -112,7 +114,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double srdmg = Utils.getTagDouble(eventItem, "srdmg");
 
             user.getAkcesoriaPodstawowe().setNaszyjnik(Utils.serializeItem(eventItem));
-            player.getInventory().remove(eventItem);
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + ddmg);
             bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + kryt);
@@ -128,7 +130,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Dodatkowe Obrazenia: " + ddmg + "\n" +
                                 "- Szansa Na Cios Krytyczny: " + kryt + "\n" +
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
-                                "- Wymagazyny Poziom: " + lvl, Color.getHSBColor(114, 90, 47)));
+                                "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
 
@@ -146,7 +148,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final int mspeed = Utils.getTagInt(eventItem, "mspeed");
 
             user.getAkcesoriaPodstawowe().setKolczyki(Utils.serializeItem(eventItem));
-            player.getInventory().remove(eventItem);
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + ludzie);
             bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + odpo);
@@ -162,7 +164,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Silny Na Ludzi: " + ludzie + "\n" +
                                 "- Def Na Ludzi: " + odpo + "\n" +
                                 "- Zmniejszona Szybkosc: " + mspeed + "\n" +
-                                "- Wymagazyny Poziom: " + lvl, Color.getHSBColor(114, 90, 47)));
+                                "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
 
@@ -175,14 +177,14 @@ public class AkcesoriaPodsInteractListener implements Listener {
                 return;
             }
 
-            final double przebicie = Utils.getTagDouble(eventItem, "przebicie");
+            final double przeszycie = Utils.getTagDouble(eventItem, "przeszycie");
             final double wkryt = Utils.getTagDouble(eventItem, "wkryt");
             final int speed = Utils.getTagInt(eventItem, "speed");
 
             user.getAkcesoriaPodstawowe().setPierscien(Utils.serializeItem(eventItem));
-            player.getInventory().remove(eventItem);
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
-            bonuses.getBonusesUser().setPrzebiciePancerza(bonuses.getBonusesUser().getPrzebiciePancerza() + przebicie);
+            bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + przeszycie);
             bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + wkryt);
             bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + speed);
 
@@ -193,10 +195,10 @@ public class AkcesoriaPodsInteractListener implements Listener {
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
                         "**Typ: **`" + eventItem.getType() + "`\n"
                                 + "**Statystyki:** \n" +
-                                "- Przebicie Pancerza: " + przebicie + "\n" +
+                                "- Przeszycie Bloku: " + przeszycie + "\n" +
                                 "- Wzm Szansa na Kryta: " + wkryt + "\n" +
                                 "- Zwiekszona Szybkosc: " + speed + "\n" +
-                                "- Wymagazyny Poziom: " + lvl, Color.getHSBColor(114, 90, 47)));
+                                "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
 
@@ -213,8 +215,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double potwory = Utils.getTagDouble(eventItem, "potwory");
             final double exp = Utils.getTagInt(eventItem, "exp");
 
-            user.getAkcesoriaPodstawowe().setNaszyjnik(Utils.serializeItem(eventItem));
-            player.getInventory().remove(eventItem);
+            user.getAkcesoriaPodstawowe().setDiadem(Utils.serializeItem(eventItem));
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + srdmg);
             bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + potwory);
@@ -230,7 +232,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
                                 "- Silny na potwory: " + potwory + "\n" +
                                 "- Dodatkowy exp: " + exp + "\n" +
-                                "- Wymagazyny Poziom: " + lvl, Color.getHSBColor(114, 90, 47)));
+                                "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
     }

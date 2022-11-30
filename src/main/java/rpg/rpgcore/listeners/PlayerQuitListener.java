@@ -25,27 +25,31 @@ public class PlayerQuitListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuitListener(final PlayerQuitEvent e) {
 
-        final Player p = e.getPlayer();
-        final UUID pUUID = p.getUniqueId();
-        final String name = p.getName();
+        final Player player = e.getPlayer();
+        final UUID uuid = player.getUniqueId();
+        final String name = player.getName();
 
-        rpgcore.getServer().getScheduler().cancelTask(rpgcore.getBackupManager().getTaskId(pUUID));
-        rpgcore.getBackupManager().removeFromTaskMap(pUUID);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid));
 
-        rpgcore.getVanishManager().getVanishList().remove(pUUID);
-        rpgcore.getMsgManager().getMessageMap().remove(pUUID);
 
-        if (rpgcore.getGuildManager().hasGuild(pUUID)) {
-            final String tag = rpgcore.getGuildManager().getGuildTag(pUUID);
-            rpgcore.getGuildManager().putGuildLastOnline(tag, pUUID, new Date());
+        rpgcore.getServer().getScheduler().cancelTask(rpgcore.getBackupManager().getTaskId(uuid));
+        rpgcore.getBackupManager().removeFromTaskMap(uuid);
+
+        rpgcore.getVanishManager().getVanishList().remove(uuid);
+        rpgcore.getMsgManager().getMessageMap().remove(uuid);
+
+
+        if (rpgcore.getGuildManager().hasGuild(uuid)) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            rpgcore.getGuildManager().putGuildLastOnline(tag, uuid, new Date());
         }
 
         e.setQuitMessage(Utils.quitMessage(name));
-        TabManager.removePlayer(p);
-        NameTagUtil.setPlayerNameTag(p, "delete");
+        TabManager.removePlayer(player);
+        NameTagUtil.setPlayerNameTag(player, "delete");
 
-        if (EntityTypes.isPetSpawned(pUUID)) {
-            EntityTypes.despawnPet(pUUID);
+        if (EntityTypes.isPetSpawned(uuid)) {
+            EntityTypes.despawnPet(uuid);
         }
 
     }
