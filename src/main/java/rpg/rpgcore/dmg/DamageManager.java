@@ -35,9 +35,9 @@ public class DamageManager {
     public void sendDamagePacket(final String prefix, final double dmg, final Location entityLocation, final Player p) {
         final Random random = new Random();
 
-        final double randomx = (random.nextInt(11)-5) / 10.0;
-        final double randomy = (random.nextInt(11)-5) / 10.0;
-        final double randomz = (random.nextInt(11)-5) / 10.0;
+        final double randomx = (random.nextInt(11) - 5) / 10.0;
+        final double randomy = (random.nextInt(11) - 5) / 10.0;
+        final double randomz = (random.nextInt(11) - 5) / 10.0;
         entityLocation.add(randomx, randomy, randomz);
         final WorldServer s = ((CraftWorld) entityLocation.getWorld()).getHandle();
         final EntityArmorStand stand = new EntityArmorStand(s);
@@ -60,7 +60,7 @@ public class DamageManager {
 
     }
 
-    public  void sendDamageActionBarPacket(final Player player, final double damage, final LivingEntity entity) {
+    public void sendDamageActionBarPacket(final Player player, final double damage, final LivingEntity entity) {
         final String bar = "&fNazwa: " + entity.getCustomName() + " &fStan Zdrowia: &c" + String.format("%.2f", entity.getHealth()) + "&f/&c" + entity.getMaxHealth() + "&f(&c-" + String.format("%.2f", damage) + "&f)";
         rpgcore.getNmsManager().sendActionBar(player, bar);
     }
@@ -69,13 +69,15 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 10.5;
+        double dmg = 6;
         double mnoznik = 100;
         double krytyk = 1;
-        double wzmKryt = 1;
+        double wzmKryt = 0;
 
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
-            dmg += Utils.getSharpnessLevel(weapon);
+            dmg += Utils.getTagInt(weapon, "dmg");
+        } else {
+            dmg = 1;
         }
 
         // BAO
@@ -93,11 +95,8 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
-        // ...RYBAK
-        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getMorskieSzczescie();
-        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getSrDef();
 
-        dmg = (dmg * (mnoznik / 100)) /3;
+        dmg = (dmg * (mnoznik / 100)) / 3;
         attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
@@ -160,15 +159,17 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 10.5;
+        double dmg = 6;
         double mnoznik = 100;
         double krytyk = 1;
         double wzmKryt = 1;
 
         // MIECZ DMG
-        if (!weapon.getType().equals(Material.AIR)) {
-            dmg += Utils.getSharpnessLevel(weapon);
-            dmg += Utils.getObrazeniaMobyLevel(weapon);
+        if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
+            dmg += Utils.getTagInt(weapon, "dmg");
+            dmg += Utils.getTagInt(weapon, "moby");
+        } else {
+            dmg = 1;
         }
 
         mnoznik += bonuses.getSrednieobrazenia();
@@ -184,11 +185,8 @@ public class DamageManager {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
-        // ...RYBAK
-        dmg += rpgcore.getRybakNPC().find(uuid).getRybakUser().getMorskieSzczescie();
-        mnoznik += rpgcore.getRybakNPC().find(uuid).getRybakUser().getSrDef();
 
-        dmg = (dmg * (mnoznik / 100)) /3;
+        dmg = (dmg * (mnoznik / 100)) / 3;
         attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;

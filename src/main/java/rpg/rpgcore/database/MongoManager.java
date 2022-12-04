@@ -21,7 +21,7 @@ import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
-import rpg.rpgcore.npc.rybak.RybakObject;
+import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.trener.TrenerObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.pets.PetObject;

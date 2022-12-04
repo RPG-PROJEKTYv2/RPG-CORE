@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.rybak;
+package rpg.rpgcore.npc.rybak.objects;
 
 import org.bson.Document;
 
@@ -10,12 +10,12 @@ public class RybakObject {
 
     public RybakObject(UUID uuid) {
         this.uuid = uuid;
-        this.rybakUser = new RybakUser(0, 0, 0, 0, 0, 0);
+        this.rybakUser = new RybakUser(1, 0, 0, 0, 0, 0);
     }
 
     public RybakObject(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.rybakUser = new RybakUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("srDef"), document.getDouble("kryt"), document.getDouble("morskieSzczescie"), document.getDouble("trueDmg"));
+        this.rybakUser = new RybakUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("srDef"), document.getDouble("kryt"), document.getDouble("morskieSzczescie"), document.getInteger("trueDmg"));
     }
 
     public UUID getId() {

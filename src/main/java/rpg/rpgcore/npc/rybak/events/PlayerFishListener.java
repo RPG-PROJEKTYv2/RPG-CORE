@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.rybak;
+package rpg.rpgcore.npc.rybak.events;
 
 import net.minecraft.server.v1_8_R3.EntityFishingHook;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.lang.reflect.Field;
@@ -30,10 +31,18 @@ public class PlayerFishListener implements Listener {
     public void onFish(final PlayerFishEvent e) {
         final Player player = e.getPlayer();
         e.setExpToDrop(0);
+
+        if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+            e.setCancelled(true);
+            player.sendMessage(Utils.format("&8[&c✘&8] &cTa wedka nie nalezy do ciebie!"));
+            return;
+        }
+
         if (e.getState() == PlayerFishEvent.State.FISHING) {
             this.runAnimation(e);
         }
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+            e.getCaught().remove();
             rpgcore.getServer().getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskId(player.getUniqueId()));
             rpgcore.getRybakNPC().removeTaskId(player.getUniqueId());
             this.timeMap.remove(player.getUniqueId());
@@ -64,8 +73,7 @@ public class PlayerFishListener implements Listener {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
-                    player.sendMessage("dobrze - dol");
-                    //addDrop(player);
+                    RybakHelper.getDrop(player);
                     return;
                 }
                 if (check == 2) {
@@ -73,8 +81,7 @@ public class PlayerFishListener implements Listener {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
-                    player.sendMessage("dobrze - gora");
-                    //addDrop(player);
+                    RybakHelper.getDrop(player);
                     return;
                 }
                 if (check == 3) {
@@ -82,8 +89,7 @@ public class PlayerFishListener implements Listener {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
-                    player.sendMessage("dobrze - lewo");
-                    //addDrop(player);
+                    RybakHelper.getDrop(player);
                     return;
                 }
                 if (check == 4) {
@@ -91,18 +97,22 @@ public class PlayerFishListener implements Listener {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
-                    player.sendMessage("dobrze - prawo");
-                    //addDrop(player);
-                    return;
+                    RybakHelper.getDrop(player);
                 }
             }, 40L);
         }
     }
 
     private void runAnimation(final PlayerFishEvent e) {
-        this.timeMap.put(e.getPlayer().getUniqueId(), System.currentTimeMillis() + 15000);
-        this.setBiteTime(e.getHook(), 360);
+        final double szczescie = rpgcore.getRybakNPC().find(e.getPlayer().getUniqueId()).getRybakUser().getMorskieSzczescie() + Utils.getTagDouble(e.getPlayer().getItemInHand(), "szczescie");
+        this.timeMap.put(e.getPlayer().getUniqueId(), (long) (System.currentTimeMillis() + (15000 - ((15000 * szczescie) / 100))));
+        this.setBiteTime(e.getHook(), Math.round(300 - ((300 * (float) szczescie) / 100)) + 60);
         int a = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
+            if (System.currentTimeMillis() > this.timeMap.get(e.getPlayer().getUniqueId()) + 3000) {
+                rpgcore.getServer().getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskId(e.getPlayer().getUniqueId()));
+                this.timeMap.remove(e.getPlayer().getUniqueId());
+                return;
+            }
             final String time = Utils.durationToString(this.timeMap.get(e.getPlayer().getUniqueId()), false);
             e.getPlayer().sendMessage(e.getState().name()); //TODO <- PRZETESTOWAC!
             if (e.getState() == PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH || e.getState() == PlayerFishEvent.State.IN_GROUND) {
@@ -111,7 +121,7 @@ public class PlayerFishListener implements Listener {
                 this.timeMap.remove(e.getPlayer().getUniqueId());
                 return;
             }
-            if (time.equals("<1s")) {
+            if (time.contains("ms") || time.equals("<1s")) {
                 e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7| &eplynie..."));
                 return;
             }
@@ -125,12 +135,12 @@ public class PlayerFishListener implements Listener {
     }
 
     private void setBiteTime(FishHook hook, int time) {
-        net.minecraft.server.v1_8_R3.EntityFishingHook hookCopy = (EntityFishingHook) ((CraftEntity) hook).getHandle();
+        EntityFishingHook hookCopy = (EntityFishingHook) ((CraftEntity) hook).getHandle();
 
         Field fishCatchTime = null;
 
         try {
-            fishCatchTime = net.minecraft.server.v1_8_R3.EntityFishingHook.class.getDeclaredField("aw");
+            fishCatchTime = EntityFishingHook.class.getDeclaredField("aw");
         } catch (NoSuchFieldException | SecurityException e) {
             e.printStackTrace();
         }

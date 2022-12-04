@@ -10,12 +10,22 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.rybak.enums.RybakMissions;
+import rpg.rpgcore.npc.rybak.objects.RybakObject;
+import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.*;
 
@@ -26,12 +36,95 @@ public class RybakNPC {
     private final RPGCORE rpgcore;
     private final Map<UUID, RybakObject> usersMap;
     private final Map<UUID, Integer> taskMap = new HashMap<>();
+    private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
 
     public RybakNPC(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.usersMap = rpgcore.getMongoManager().loadAllRybak();
+        this.initDrop();
     }
 
+
+    private void initDrop() {
+        rybakDrops.add(0.2, RybakItems.I1.getItemStack()); // 20%
+        rybakDrops.add(0.15, RybakItems.I2.getItemStack()); // 15%
+        rybakDrops.add(0.15, RybakItems.I3.getItemStack()); // 15%
+        rybakDrops.add(0.1, RybakItems.I4.getItemStack()); // 10%
+        rybakDrops.add(0.1, RybakItems.I5.getItemStack()); // 10%
+        rybakDrops.add(0.1, RybakItems.I6.getItemStack()); // 10%
+        rybakDrops.add(0.07, RybakItems.I7.getItemStack()); // 7%
+        rybakDrops.add(0.07, RybakItems.I8.getItemStack()); // 7%
+        rybakDrops.add(0.03, RybakItems.I9.getItemStack()); // 3%
+        rybakDrops.add(0.03, RybakItems.I10.getItemStack()); // 3%
+    }
+
+    public ItemStack getDrop() {
+        return rybakDrops.next();
+    }
+
+
+    public void openRybakGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lRybak"));
+        final RybakUser user = this.find(player.getUniqueId()).getRybakUser();
+
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+        }
+
+        gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&4&lKampania").addGlowing().toItemStack());
+        gui.setItem(13, new ItemBuilder(Material.PAPER).setName("&f&lStatystyki").setLore(Arrays.asList(
+                "&7Aktualna Misja: &f" + user.getMission(),
+                "&7Postep Aktualnej Misji: &f" + user.getProgress(),
+                "",
+                "&f&lBONUSY",
+                "&7Srednia Odpornosc: &f" + user.getSrDef(),
+                "&7Szansa Na Cios Krytyczny: &f" + user.getKryt(),
+                "&7True Dmg: &f" + user.getTrueDmg(),
+                "&7Morskie Szczescie: &f" + user.getMorskieSzczescie()
+        )).toItemStack().clone());
+        gui.setItem(15, new ItemBuilder(Material.EMERALD).setName("&6&lSklep").toItemStack());
+
+        player.openInventory(gui);
+    }
+
+    public void openKampaniaGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&4&lKampania Rybacka"));
+        final RybakUser user = this.find(player.getUniqueId()).getRybakUser();
+
+        for (int i = 0; i < gui.getSize(); i++) {
+            if (user.getMission() > i + 1) {
+                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&c&lMisja #" + (i + 1)).setLore(Collections.singletonList("&7Postep: &a&lWYKONANA!")).addGlowing().toItemStack().clone());
+            } else if (user.getMission() == i + 1) {
+                final RybakMissions mission = RybakMissions.getMission(i + 1);
+                assert mission != null;
+                gui.setItem(i, new ItemBuilder(mission.getMissionItem().clone()).setName("&c&lMisja #" + (i + 1)).setLoreCrafting(mission.getMissionItem().getItemMeta().getLore(),
+                        Arrays.asList(" ", "&7Postep: &6" + user.getProgress() + "&7/&6" + mission.getReqAmount())).toItemStack().clone());
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisja #" + (i + 1)).setLore(Arrays.asList("&c&lUkoncz poprzednia", "&c&lmisje, zeby odblokowac")).toItemStack().clone());
+            }
+        }
+
+        player.openInventory(gui);
+    }
+
+    public void openSklepGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&a&lSklep Rybacki"));
+        gui.setItem(0, new ItemBuilder(RybakItems.getWedka(player.getName(), 1)).setLoreCrafting(RybakItems.getWedka(player.getName(), 1).getItemMeta().getLore(), Arrays.asList(
+                " ",
+                "&2Cena: &625 000 000 &2$")).toItemStack().clone());
+        gui.setItem(1, new ItemBuilder(RybakItems.I1.getItemStack().clone()).setLoreCrafting(RybakItems.I1.getItemStack().getItemMeta().getLore(), setLoreSell(1000)).toItemStack());
+        gui.setItem(2, new ItemBuilder(RybakItems.I2.getItemStack().clone()).setLoreCrafting(RybakItems.I2.getItemStack().getItemMeta().getLore(), setLoreSell(1500)).toItemStack());
+        gui.setItem(3, new ItemBuilder(RybakItems.I3.getItemStack().clone()).setLoreCrafting(RybakItems.I3.getItemStack().getItemMeta().getLore(), setLoreSell(1500)).toItemStack());
+        gui.setItem(4, new ItemBuilder(RybakItems.I4.getItemStack().clone()).setLoreCrafting(RybakItems.I4.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
+        gui.setItem(5, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setLoreCrafting(RybakItems.I5.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
+        gui.setItem(6, new ItemBuilder(RybakItems.I6.getItemStack().clone()).setLoreCrafting(RybakItems.I6.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
+        gui.setItem(7, new ItemBuilder(RybakItems.I7.getItemStack().clone()).setLoreCrafting(RybakItems.I7.getItemStack().getItemMeta().getLore(), setLoreSell(5000)).toItemStack());
+        gui.setItem(8, new ItemBuilder(RybakItems.I8.getItemStack().clone()).setLoreCrafting(RybakItems.I8.getItemStack().getItemMeta().getLore(), setLoreSell(5000)).toItemStack());
+        gui.setItem(9, new ItemBuilder(RybakItems.I9.getItemStack().clone()).setLoreCrafting(RybakItems.I9.getItemStack().getItemMeta().getLore(), setLoreSell(12500)).toItemStack());
+        gui.setItem(10, new ItemBuilder(RybakItems.I10.getItemStack().clone()).setLoreCrafting(RybakItems.I10.getItemStack().getItemMeta().getLore(), setLoreSell(12500)).toItemStack());
+
+        player.openInventory(gui);
+    }
 
 
     public int getTaskId(final UUID uuid) {

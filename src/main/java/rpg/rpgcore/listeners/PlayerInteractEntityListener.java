@@ -1,6 +1,5 @@
 package rpg.rpgcore.listeners;
 
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,7 +75,7 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // RYBAK
             if (entityName.equalsIgnoreCase("Rybak")) {
-                //rpgcore.getRybakNPC().openRybakGUI(player);
+                rpgcore.getRybakNPC().openRybakGUI(player);
                 return;
             }
             // KOWAL
