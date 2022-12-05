@@ -40,16 +40,19 @@ public class RybakHelper {
 
         if (ChanceHelper.getChance(nies)) {
             final ItemStack niesItem = getNiesDrop();
+            double exp = 1000;
             assert niesItem != null;
             if (event) {
                 niesItem.setAmount(niesItem.getAmount() * 2);
+                exp *= 2;
                 player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwoojony przez Event Rybacki"));
             }
             if (doubleDrop) {
                 niesItem.setAmount(niesItem.getAmount() * 2);
+                exp *= 2;
                 player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
             }
-            increaseExp(player.getItemInHand(), 1000);
+            increaseExp(player.getItemInHand(), exp);
             if (mission == 20) {
                 rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + niesItem.getAmount());
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
@@ -62,16 +65,19 @@ public class RybakHelper {
 
         if (ChanceHelper.getChance(kufer)) {
             final ItemStack kuferItem = RybakItems.I11.getItemStack();
+            double exp = 150;
             assert kuferItem != null;
             if (event) {
                 kuferItem.setAmount(kuferItem.getAmount() * 2);
+                exp *=2;
                 player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony przez Event Rybacki"));
             }
             if (doubleDrop) {
+                exp *=2;
                 kuferItem.setAmount(kuferItem.getAmount() * 2);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
             }
-            increaseExp(player.getItemInHand(), 150);
+            increaseExp(player.getItemInHand(), exp);
             if (mission == 12 || mission == 24) {
                 rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + kuferItem.getAmount());
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));

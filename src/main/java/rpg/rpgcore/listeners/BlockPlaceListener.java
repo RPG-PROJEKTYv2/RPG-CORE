@@ -19,7 +19,8 @@ public class BlockPlaceListener implements Listener {
     public void onBlockBreak(final BlockPlaceEvent e) {
         final Player player = e.getPlayer();
 
-        if (!(rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff())) {
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() ||
+                (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin())) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz stawiac blokow!"));
         }
