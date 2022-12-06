@@ -12,13 +12,13 @@ import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.klasy.objects.Klasy;
-import rpg.rpgcore.magazyn.MagazynObject;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
@@ -264,7 +264,7 @@ public class MongoManager {
                 this.addDataChatUsers(new ChatUser(uuid));
             }
             if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataMagazyny(new MagazynObject(uuid));
+                this.addDataMagazyny(new MagazynierUser(uuid));
             }
             if (pool.getLowca().find(new Document("_id", uuid.toString())).first() == null) {
                 this.addDataLowca(new LowcaObject(uuid));
@@ -373,9 +373,9 @@ public class MongoManager {
         this.addDataOs(osObject);
         rpgcore.getOsManager().add(osObject);
 
-        final MagazynObject magazynObject = new MagazynObject(uuid);
-        this.addDataMagazyny(magazynObject);
-        rpgcore.getMagazynManager().add(magazynObject);
+        final MagazynierUser magazynierUser = new MagazynierUser(uuid);
+        this.addDataMagazyny(magazynierUser);
+        rpgcore.getMagazynierNPC().add(magazynierUser);
 
         final LowcaObject lowcaObject = new LowcaObject(uuid);
         this.addDataLowca(lowcaObject);
@@ -439,7 +439,7 @@ public class MongoManager {
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
-            this.saveDataMagazyny(uuid, rpgcore.getMagazynManager().find(uuid));
+            this.saveDataMagazyny(uuid, rpgcore.getMagazynierNPC().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
 
             this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
@@ -890,27 +890,27 @@ public class MongoManager {
         }
     }
 
-    // CHAT
-    public Map<UUID, MagazynObject> loadAllMagazyny() {
-        Map<UUID, MagazynObject> magazyny = new HashMap<>();
+    // MAGAZYNIER
+    public Map<UUID, MagazynierUser> loadAllMagazynier() {
+        Map<UUID, MagazynierUser> magazynier = new HashMap<>();
         for (Document document : this.pool.getMagazyny().find()) {
-            MagazynObject magazynObject = new MagazynObject(document);
-            magazyny.put(magazynObject.getId(), magazynObject);
+            MagazynierUser magazynierUser = new MagazynierUser(document);
+            magazynier.put(magazynierUser.getUuid(), magazynierUser);
         }
-        return magazyny;
+        return magazynier;
     }
 
-    public void addDataMagazyny(final MagazynObject magazynObject) {
-        this.pool.getMagazyny().insertOne(magazynObject.toDocument());
+    public void addDataMagazyny(final MagazynierUser magazynierUser) {
+        this.pool.getMagazyny().insertOne(magazynierUser.toDocument());
     }
 
-    public void saveDataMagazyny(final UUID id, final MagazynObject magazynObject) {
-        this.pool.getMagazyny().findOneAndReplace(new Document("_id", id.toString()), magazynObject.toDocument());
+    public void saveDataMagazyny(final UUID id, final MagazynierUser magazynierUser) {
+        this.pool.getMagazyny().findOneAndReplace(new Document("_id", id.toString()), magazynierUser.toDocument());
     }
 
     public void saveAllMagazyny() {
-        for (MagazynObject magazynObject : rpgcore.getMagazynManager().getMagazynObjects()) {
-            this.saveDataMagazyny(magazynObject.getId(), magazynObject);
+        for (final MagazynierUser magazynierUser : rpgcore.getMagazynierNPC().getUsers()) {
+            this.saveDataMagazyny(magazynierUser.getUuid(), magazynierUser);
         }
     }
 

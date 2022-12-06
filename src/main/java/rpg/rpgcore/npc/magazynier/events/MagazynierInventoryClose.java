@@ -1,4 +1,4 @@
-package rpg.rpgcore.magazyn;
+package rpg.rpgcore.npc.magazynier.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ public class MagazynierInventoryClose implements Listener {
 
         if (closedInventoryTitle.contains("Magazyn #")) {
             final int nrMagazynu = Integer.parseInt(Utils.removeColor(closedInventoryTitle).replaceAll("Magazyn #", "").trim());
-            rpgcore.getMagazynManager().find(uuid).getMagazynUser().setMagazyn(Utils.itemStackArrayToBase64(closedInventory.getContents()), nrMagazynu);
+            //rpgcore.getMagazynierNPC().find(uuid).getMagazynUser().setMagazyn(Utils.itemStackArrayToBase64(closedInventory.getContents()), nrMagazynu);
         }
 
     }
