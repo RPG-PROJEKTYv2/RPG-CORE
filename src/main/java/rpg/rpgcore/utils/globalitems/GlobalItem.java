@@ -13,7 +13,7 @@ public enum GlobalItem {
     // SKRZYNKI //
     // RARE
     I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&6&lWartosciowy Kufer").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.CHEST).setName("&f&lSkrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
     I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "Normal").hideFlag().toItemStack().clone()),
    // INNE
     I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
