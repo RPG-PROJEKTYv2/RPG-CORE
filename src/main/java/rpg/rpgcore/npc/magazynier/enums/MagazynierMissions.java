@@ -28,12 +28,12 @@ public enum MagazynierMissions {
             "&f&lNAGRODA",
             "&8- &b75 punktow")).toItemStack(), 10, 75, null),
     M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb").setLore(Arrays.asList(
-            "&7Ukoncz &e5 &7dungeonow&7! &8(ogolnie)",
+            "&7Ukoncz &e3 &7dungeonow&7! &8(ogolnie)",
             "",
             "&f&lNAGRODA",
             "&8- &b150 punktow",
             "&8- &625 000 000 &2$"
-    )).toItemStack(), 5, 150, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(25000000)) + " &2$").addGlowing().toItemStack()),
+    )).toItemStack(), 3, 150, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(25000000)) + " &2$").addGlowing().toItemStack()),
     M5(5, new ItemBuilder(Material.BOOK).setName("&c&lKrysztalowy Niszczyciel").setLore(Arrays.asList(
             "&7Zniszcz &e100 &7krysztalow metin",
             "",
