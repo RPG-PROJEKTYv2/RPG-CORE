@@ -85,6 +85,7 @@ import rpg.rpgcore.npc.lesnik.LesnikNPC;
 import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
+import rpg.rpgcore.npc.magazynier.MagazynyCommand;
 import rpg.rpgcore.npc.medyk.MedykInventoryClick;
 import rpg.rpgcore.npc.medyk.MedykNPC;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
@@ -411,6 +412,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GetBonyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MaxCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ProfileCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new MagazynyCommand());
     }
 
     private void initEvents() {

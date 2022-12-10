@@ -12,7 +12,7 @@ public class MagazynierUser {
     private final UUID uuid;
     private int points;
     private String magazyn1, magazyn2, magazyn3, magazyn4, magazyn5;
-    private boolean unlocked1, unlocked2, unlocked3, unlocked4, unlocked5;
+    private boolean unlocked1, unlocked2, unlocked3, unlocked4, unlocked5, remoteCommand;
     private MagazynierMissions missions;
     private long resetTime;
 
@@ -29,7 +29,9 @@ public class MagazynierUser {
         this.unlocked3 = false;
         this.unlocked4 = false;
         this.unlocked5 = false;
-        this.missions = new MagazynierMissions(0, 0, 0, 0, 0, 0, 0.0);
+        this.remoteCommand = false;
+        this.missions = new MagazynierMissions(0, 0, 0, 0, 0, 0, 0.0,
+                false, false, false, false, false);
         this.resetTime = System.currentTimeMillis() + 86400000L;
     }
 
@@ -46,6 +48,7 @@ public class MagazynierUser {
         this.unlocked3 = document.getBoolean("unlocked3");
         this.unlocked4 = document.getBoolean("unlocked4");
         this.unlocked5 = document.getBoolean("unlocked5");
+        this.remoteCommand = document.getBoolean("remoteCommand");
         this.missions = new MagazynierMissions(document.get("missions", Document.class));
         this.resetTime = document.getLong("resetTime");
     }
@@ -63,6 +66,7 @@ public class MagazynierUser {
                 .append("unlocked3", this.unlocked3)
                 .append("unlocked4", this.unlocked4)
                 .append("unlocked5", this.unlocked5)
+                .append("remoteCommand", this.remoteCommand)
                 .append("missions", this.missions.toDocument())
                 .append("resetTime", this.resetTime);
     }

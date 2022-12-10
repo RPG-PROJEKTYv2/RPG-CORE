@@ -210,26 +210,38 @@ public class MongoManager {
             System.out.println(uuid);
 
             if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataBonuses(new Bonuses(uuid));
+                final Bonuses bonuses = new Bonuses(uuid);
+                this.addDataBonuses(bonuses);
+                rpgcore.getBonusesManager().add(bonuses);
             }
 
             if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataOs(new OsObject(uuid));
+                final OsObject user = new OsObject(uuid);
+                this.addDataOs(user);
+                rpgcore.getOsManager().add(user);
             }
             if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataKolekcjner(new KolekcjonerObject(uuid));
+                final KolekcjonerObject user = new KolekcjonerObject(uuid);
+                this.addDataKolekcjner(user);
+                rpgcore.getKolekcjonerNPC().add(user);
             }
 
             if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataBao(new BaoObject(uuid));
+                final BaoObject user = new BaoObject(uuid);
+                this.addDataBao(user);
+                rpgcore.getBaoManager().add(user);
             }
 
             if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataRybak(new RybakObject(uuid));
+                final RybakObject user = new RybakObject(uuid);
+                this.addDataRybak(user);
+                rpgcore.getRybakNPC().add(user);
             }
 
             if (this.pool.getDodatki().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataDodatki(new DodatkiUser(uuid));
+                final DodatkiUser user = new DodatkiUser(uuid);
+                this.addDataDodatki(user);
+                rpgcore.getDodatkiManager().add(user);
             }
 
             try {
@@ -240,43 +252,70 @@ public class MongoManager {
             }
 
             if (pool.getTrener().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataTrener(new TrenerObject(uuid));
+                final TrenerObject user = new TrenerObject(uuid);
+                this.addDataTrener(user);
+                rpgcore.getTrenerNPC().add(user);
             }
             if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataMetinolog(new MetinologObject(uuid));
+                final MetinologObject user = new MetinologObject(uuid);
+                this.addDataMetinolog(user);
+                rpgcore.getMetinologNPC().add(user);
             }
             if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addKlasyData(new Klasy(uuid));
+                final Klasy user = new Klasy(uuid);
+                this.addKlasyData(user);
+                rpgcore.getklasyHelper().add(user);
             }
             if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataMedyk(new MedykObject(uuid));
+                final MedykObject user = new MedykObject(uuid);
+                this.addDataMedyk(user);
+                rpgcore.getMedykNPC().add(user);
             }
             if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataGornik(new GornikObject(uuid));
+                final GornikObject user = new GornikObject(uuid);
+                this.addDataGornik(user);
+                rpgcore.getGornikNPC().add(user);
             }
             if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataDuszolog(new DuszologObject(uuid));
+                final DuszologObject user = new DuszologObject(uuid);
+                this.addDataDuszolog(user);
+                rpgcore.getDuszologNPC().add(user);
             }
             if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataPrzyrodnik(new PrzyrodnikObject(uuid));
+                final PrzyrodnikObject user = new PrzyrodnikObject(uuid);
+                this.addDataPrzyrodnik(user);
+                rpgcore.getPrzyrodnikNPC().add(user);
             }
             if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataChatUsers(new ChatUser(uuid));
+                final ChatUser user = new ChatUser(uuid);
+                this.addDataChatUsers(user);
+                rpgcore.getChatManager().add(user);
             }
-            if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataMagazyny(new MagazynierUser(uuid));
+            if (pool.getMagazynier().find(new Document("_id", uuid.toString())).first() == null) {
+                final MagazynierUser user = new MagazynierUser(uuid);
+                this.addDataMagazynier(user);
+                rpgcore.getMagazynierNPC().add(user);
+
             }
             if (pool.getLowca().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataLowca(new LowcaObject(uuid));
+                final LowcaObject user = new LowcaObject(uuid);
+                this.addDataLowca(user);
+                rpgcore.getLowcaNPC().add(user);
             }
             if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataLesnik(new LesnikObject(uuid));
+                final LesnikObject user = new LesnikObject(uuid);
+                this.addDataLesnik(user);
+                rpgcore.getLesnikNPC().add(user);
             }
             if (pool.getPety().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataActivePets(new PetObject(uuid));
+                final PetObject user = new PetObject(uuid);
+                this.addDataActivePets(user);
+                rpgcore.getPetyManager().addToActivePet(user);
             }
             if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() == null) {
-                this.addDataUserPets(new UserPets(uuid));
+                final UserPets user = new UserPets(uuid);
+                this.addDataUserPets(user);
+                rpgcore.getPetyManager().addToUserPets(user);
             }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
@@ -374,7 +413,7 @@ public class MongoManager {
         rpgcore.getOsManager().add(osObject);
 
         final MagazynierUser magazynierUser = new MagazynierUser(uuid);
-        this.addDataMagazyny(magazynierUser);
+        this.addDataMagazynier(magazynierUser);
         rpgcore.getMagazynierNPC().add(magazynierUser);
 
         final LowcaObject lowcaObject = new LowcaObject(uuid);
@@ -439,7 +478,7 @@ public class MongoManager {
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
-            this.saveDataMagazyny(uuid, rpgcore.getMagazynierNPC().find(uuid));
+            this.saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
 
             this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
@@ -893,24 +932,24 @@ public class MongoManager {
     // MAGAZYNIER
     public Map<UUID, MagazynierUser> loadAllMagazynier() {
         Map<UUID, MagazynierUser> magazynier = new HashMap<>();
-        for (Document document : this.pool.getMagazyny().find()) {
+        for (Document document : this.pool.getMagazynier().find()) {
             MagazynierUser magazynierUser = new MagazynierUser(document);
             magazynier.put(magazynierUser.getUuid(), magazynierUser);
         }
         return magazynier;
     }
 
-    public void addDataMagazyny(final MagazynierUser magazynierUser) {
-        this.pool.getMagazyny().insertOne(magazynierUser.toDocument());
+    public void addDataMagazynier(final MagazynierUser magazynierUser) {
+        this.pool.getMagazynier().insertOne(magazynierUser.toDocument());
     }
 
-    public void saveDataMagazyny(final UUID id, final MagazynierUser magazynierUser) {
-        this.pool.getMagazyny().findOneAndReplace(new Document("_id", id.toString()), magazynierUser.toDocument());
+    public void saveDataMagazynier(final UUID id, final MagazynierUser magazynierUser) {
+        this.pool.getMagazynier().findOneAndReplace(new Document("_id", id.toString()), magazynierUser.toDocument());
     }
 
     public void saveAllMagazyny() {
         for (final MagazynierUser magazynierUser : rpgcore.getMagazynierNPC().getUsers()) {
-            this.saveDataMagazyny(magazynierUser.getUuid(), magazynierUser);
+            this.saveDataMagazynier(magazynierUser.getUuid(), magazynierUser);
         }
     }
 

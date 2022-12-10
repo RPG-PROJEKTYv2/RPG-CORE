@@ -33,7 +33,17 @@ public class PlayerInteractEntityListener implements Listener {
             return;
         }
 
+        // MAGAZYNIER
+        if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
+            if (Utils.removeColor(e.getRightClicked().getCustomName()).equals("Magazynier")) {
+                e.setCancelled(true);
+                rpgcore.getMagazynierNPC().openMagazynierMainGUI(player);
+                return;
+            }
+        }
+
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+            e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // KUPIEC
             if (entityName.equalsIgnoreCase("Kupiec")) {
@@ -43,6 +53,7 @@ public class PlayerInteractEntityListener implements Listener {
         }
 
         if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
+            e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             if (rpgcore.getklasyHelper().find(uuid).getKlasaUser() != null) {
                 KlasaUser user = rpgcore.getklasyHelper().find(uuid).getKlasaUser();
@@ -59,7 +70,7 @@ public class PlayerInteractEntityListener implements Listener {
 
         // NPCTY
         if (e.getRightClicked().getType() == EntityType.PLAYER) {
-
+            e.setCancelled(true);
             final Player playerRightClicked = (Player) e.getRightClicked();
             final String entityName = Utils.removeColor(playerRightClicked.getName());
 

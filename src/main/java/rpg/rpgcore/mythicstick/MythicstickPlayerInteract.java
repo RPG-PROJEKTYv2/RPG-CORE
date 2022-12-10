@@ -11,6 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class MythicstickPlayerInteract implements Listener {
                     return;
                 }
                 if (eventItem.getItemMeta().getDisplayName().contains(Utils.format("&6&lMythic &4&lSTICK"))) {
-                    if (!player.hasPermission("dev.rpg.mythicstick")) {
+                    if (!RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() || !RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                         e.setCancelled(true);
                         player.getInventory().removeItem(eventItem);
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPosiadales w swoim ekwipunku przedmiot &4Developerski &cw zwiazku z tym zostal on usuniety. &7(&6&lMythic &4&lSTICK&7)"));
