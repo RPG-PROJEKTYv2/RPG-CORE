@@ -25,31 +25,29 @@ public class TeleporterNPC {
 
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ArrayList<String> lore = new ArrayList<>();
-    private final ItemBuilder wybor1 = new ItemBuilder(Material.WATER_BUCKET);
-    private final ItemBuilder wybor2 = new ItemBuilder(Material.LAVA_BUCKET);
-    private final ItemBuilder expowisko1 = new ItemBuilder(Material.IRON_FENCE);
-    private final ItemBuilder expowisko2 = new ItemBuilder(Material.DOUBLE_PLANT, 1, (short)3);
-    private final ItemBuilder expowisko3 = new ItemBuilder(Material.LOG, 1, (short)3);
-    private final ItemBuilder expowisko4 = new ItemBuilder(Material.NETHER_STAR);
-    private final ItemBuilder expowisko5 = new ItemBuilder(Material.SEA_LANTERN);
+    //private final ItemBuilder wybor1 = new ItemBuilder(Material.WATER_BUCKET);
+    //private final ItemBuilder wybor2 = new ItemBuilder(Material.LAVA_BUCKET);
+    private final ItemBuilder expowisko1 = new ItemBuilder(Material.LEAVES);
+    private final ItemBuilder expowisko2 = new ItemBuilder(Material.GRASS);
+    private final ItemBuilder expowisko3 = new ItemBuilder(Material.VINE);
+    private final ItemBuilder expowisko4 = new ItemBuilder(Material.WEB);
+    private final ItemBuilder expowisko5 = new ItemBuilder(Material.PRISMARINE);
     private final ItemBuilder expowisko6 = new ItemBuilder(Material.ICE);
-    private final ItemBuilder expowisko7 = new ItemBuilder(Material.NETHER_BRICK);
-    private final ItemBuilder expowisko8 = new ItemBuilder(Material.SMOOTH_BRICK, 1, (short)2);
-    private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAPLING);
-    private final ItemBuilder expowisko10 = new ItemBuilder(Material.BLAZE_POWDER);
-    private final ItemBuilder expowisko11 = new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal());
-    private final ItemBuilder expowisko12 = new ItemBuilder(Material.BEDROCK);
-    private final ItemBuilder expowisko13 = new ItemBuilder(Material.REDSTONE);
-    private final ItemBuilder expowisko14 = new ItemBuilder(Material.REDSTONE);
-    private final ItemBuilder expowisko15 = new ItemBuilder(Material.REDSTONE);
+    private final ItemBuilder expowisko7 = new ItemBuilder(Material.BLAZE_POWDER);
+    private final ItemBuilder expowisko8 = new ItemBuilder(Material.IRON_BARDING);
+    //(Material.SMOOTH_BRICK, 1, (short)2);
+    //SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()
+    private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAND);
+    private final ItemBuilder expowisko10 = new ItemBuilder(Material.STONE, (short)98);
+    private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
 
 
-    private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
-    private final ItemBuilder demontower = new ItemBuilder(Material.NETHERRACK);
+    //private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
+    //private final ItemBuilder demontower = new ItemBuilder(Material.NETHERRACK);
 
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 , (short)14);
 
-    public void openTeleporterMAIN(final Player player) {
+    /*public void openTeleporterMAIN(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- WYBOR"));
 
         fillInventory.setName(" ");
@@ -71,7 +69,7 @@ public class TeleporterNPC {
         gui.setItem(15, wybor2.toItemStack());
 
         player.openInventory(gui);
-    }
+    }*/
     public void openTeleporterEXPOWISKA(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&9&lTELEPORTER &7- EXPOWISKA"));
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
@@ -179,7 +177,7 @@ public class TeleporterNPC {
 
         // expowisko 8
         if (user.getLvl() > 69) {
-            expowisko8.setName("&d&lMagiczny Las");
+            expowisko8.setName("&7&lPodziemne Katakumby");
             this.loreEXPOWISKA("&aON", "&f70");
             expowisko8.addGlowing();
             expowisko8.setLore(lore);
@@ -194,7 +192,7 @@ public class TeleporterNPC {
 
         // expowisko 9
         if (user.getLvl() > 79) {
-            expowisko9.setName("&6&lBRAK NAZWY");
+            expowisko9.setName("&e&lPustynia Ptasznikow");
             this.loreEXPOWISKA("&aON", "&f80");
             expowisko9.addGlowing();
             expowisko9.setLore(lore);
@@ -209,7 +207,7 @@ public class TeleporterNPC {
 
         // expowisko 10
         if (user.getLvl() > 89) {
-            expowisko10.setName("&6&lBRAK NAZWY");
+            expowisko10.setName("&9&lGrota Wygnancow");
             this.loreEXPOWISKA("&aON", "&f90");
             expowisko10.addGlowing();
             expowisko10.setLore(lore);
@@ -224,7 +222,7 @@ public class TeleporterNPC {
 
         // expowisko 11
         if (user.getLvl() > 99) {
-            expowisko11.setName("&6&lBRAK NAZWY");
+            expowisko11.setName("&b&lZatopiona Swiatynia");
             this.loreEXPOWISKA("&aON", "&f100");
             expowisko11.addGlowing();
             expowisko11.setLore(lore);
@@ -236,6 +234,7 @@ public class TeleporterNPC {
             brakdostepu.setLore(lore);
             gui.setItem(10, brakdostepu.toItemStack());
         }
+        /*
         // expowisko 12
         if (user.getLvl() > 109) {
             expowisko12.setName("&6&lBRAK NAZWY");
@@ -291,10 +290,10 @@ public class TeleporterNPC {
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
             gui.setItem(14, brakdostepu.toItemStack());
-        }
+        }*/
         player.openInventory(gui);
     }
-    public void openTeleporterDODATKOWEMAPY(final Player player) {
+    /*public void openTeleporterDODATKOWEMAPY(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- INNE"));
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
@@ -331,7 +330,7 @@ public class TeleporterNPC {
             gui.setItem(15, brakdostepu.toItemStack());
         }
         player.openInventory(gui);
-    }
+    }*/
     private void loreEXPOWISKA(final String lorePVP, final String lorePOZIOM) {
         this.lore.clear();
         this.lore.add(" ");

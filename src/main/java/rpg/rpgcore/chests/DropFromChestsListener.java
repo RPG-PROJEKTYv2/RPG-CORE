@@ -10,8 +10,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
-import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 
 
 public class DropFromChestsListener implements Listener {
@@ -34,13 +34,62 @@ public class DropFromChestsListener implements Listener {
 
             final ItemStack playerItem = player.getItemInHand();
 
-            // SKRZYNIA Z ROZNOSCIAMI
             if (playerItem.getItemMeta().hasDisplayName()) {
                 e.setCancelled(true);
+                // ================================ SKRZYNKI INNE ================================
+                // WARTOSCIOWY KUFER
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
+                        ItemStack item = null;
+                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
+                            //item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
+                        }
+                        if (item == null) {
+                            return;
+                        }
+                        player.getInventory().addItem(item);
+                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        return;
+                    }
+                }
+                // SKRZYNIA KOWALA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
+                        ItemStack item = null;
+                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
+                            //item = rpgcore.getKowalManager().getDrawnItems(player);
+                        }
+                        if (item == null) {
+                            return;
+                        }
+                        player.getInventory().addItem(item);
+                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        return;
+                    }
+                }
+                // SKRZYNIA Z SUROWCAMI
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
-                        final Items item = rpgcore.getRoznosciManager().getDrawnItems(player);
+                        ItemStack item = null;
+                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
+                            //item = rpgcore.getSurowceManager().getDrawnItems(player);
+                        }
+                        if (item == null) {
+                            return;
+                        }
+                        player.getInventory().addItem(item);
+                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        return;
+                    }
+                }
+                // HELLCASE
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I6", 1));
+                        final Items item = rpgcore.gethellcaseManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -64,9 +113,7 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // unikatowe...
-
-                // ... ZE ZWIERZAKAMI
+                // SKRZYNIA ZE ZWIERZAKAMI
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
@@ -83,14 +130,15 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
 
-                //TODO Skrzynia Gornika
+                // SKRZYNIA GORNIKA TODO
 
-                // soon...
+                // ================================ SKRZYNKI EXPOWISKA ================================
+
                 // Expowisko 1
-                //  Skrzynia Wygnanca
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
+                //  SKRZYNIA WYGNANCA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(Map1Items.getItem("I1", 1));
+                        player.getInventory().removeItem(Skrzynki.getItem("I1", 1));
                         final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
                         if (item == null) {
                             return;
@@ -101,10 +149,10 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // Skrzynia Najemnika
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Map1Items.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
+                // SKRZYNIA NAJEMNIKA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(Map1Items.getItem("I2", 1));
+                        player.getInventory().removeItem(Skrzynki.getItem("I2", 1));
                         final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
                         if (item == null) {
                             return;
@@ -114,9 +162,38 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
                     }
                 }
-                // Expowisko 2
-                // soon...
 
+                // Expowisko 2
+                // SKRZYNIA WODZA GOBLINOW
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I4", 1));
+                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // SKRZYNIA GOBLINA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
+                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+
+                // Expowisko 3
             }
         }
     }

@@ -23,9 +23,7 @@ import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
-import rpg.rpgcore.chests.Inne.RoznosciManager;
-import rpg.rpgcore.chests.Inne.TajemniczaManager;
-import rpg.rpgcore.chests.Inne.ZwierzakiManager;
+import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
@@ -65,6 +63,7 @@ import rpg.rpgcore.klasy.KlasyHelper;
 import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
 import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
 import rpg.rpgcore.klasy.wojownik.KlasyNPC;
+import rpg.rpgcore.kulabossow.KulabossowPlayerInteract;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
@@ -231,14 +230,22 @@ public final class RPGCORE extends JavaPlugin {
 
     private NiebiosaManager niebiosaManager;
     private BonusesManager bonusesManager;
-    // SKRZYNKI
-    // inne
-    private RoznosciManager roznosciManager;
+    // ================================ SKRZYNKI INNE ================================
+    private HellcaseManager hellcaseManager;
+    private ZwierzakiManager zwierzakiManager;
+    private KowalManager kowalManager;
+    private SurowceManager surowceManager;
     private TajemniczaManager tajemniczaManager;
-    // exp1
+    private WartosciowykuferManager wartosciowykuferManager;
+    // ================================ SKRZYNKI EXPOWISKO ================================
+    // EXPOWISKO 1
     private NajemnikManager najemnikManager;
     private WygnaniecManager wygnaniecManager;
-    private ZwierzakiManager zwierzakiManager;
+
+
+
+
+    // cos innego...
     private OreManager oreManager;
     private DungeonsManager dungeonsManager;
 
@@ -499,6 +506,9 @@ public final class RPGCORE extends JavaPlugin {
         // MythicSTICK
         this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(), this);
 
+        //KulaBOSSOW
+        this.getServer().getPluginManager().registerEvents(new KulabossowPlayerInteract(), this);
+
         // NPC
 
         // ...DUSZOLOG
@@ -627,14 +637,17 @@ public final class RPGCORE extends JavaPlugin {
 
         this.getMetinologNPC().loadMissions();
     }
-
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
-        // SKRZYNKI
-        // inne
-        this.roznosciManager = new RoznosciManager();
+        // ================================ SKRZYNKI INNE ================================
+        this.hellcaseManager = new HellcaseManager();
+        this.zwierzakiManager = new ZwierzakiManager();
+        this.kowalManager = new KowalManager();
+        this.surowceManager = new SurowceManager();
         this.tajemniczaManager = new TajemniczaManager();
-        // exp1
+        this.wartosciowykuferManager = new WartosciowykuferManager();
+        // ================================ SKRZYNKI EXPOWISKO ================================
+        // EXPOWISKO 1
         this.najemnikManager = new NajemnikManager();
         this.wygnaniecManager = new WygnaniecManager();
         this.zwierzakiManager = new ZwierzakiManager();
@@ -827,15 +840,26 @@ public final class RPGCORE extends JavaPlugin {
     public NiebiosaManager getNiebiosaManager() {
         return niebiosaManager;
     }
-
-    // SKRZYNKI ALL
-    // inne
-    public RoznosciManager getRoznosciManager() {
-        return roznosciManager;
+    // ================================ SKRZYNKI INNE ================================
+    public HellcaseManager gethellcaseManager() {
+        return hellcaseManager;
+    }
+    public ZwierzakiManager getzwierzakiManager() {
+        return zwierzakiManager;
+    }
+    public KowalManager getKowalManager() {
+        return kowalManager;
+    }
+    public SurowceManager getSurowceManager() {
+        return surowceManager;
     }
     public TajemniczaManager getTajemniczaManager() {
         return tajemniczaManager;
     }
+    public WartosciowykuferManager getWartosciowykuferManager() {
+        return wartosciowykuferManager;
+    }
+    // ================================ SKRZYNKI EXPOWISKA ===============================
     // exp1
     public NajemnikManager getNajemnikManager() {
         return najemnikManager;

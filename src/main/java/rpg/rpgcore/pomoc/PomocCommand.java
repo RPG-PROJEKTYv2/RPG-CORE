@@ -6,8 +6,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
-import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 
 import java.io.IOException;
 
@@ -33,10 +33,10 @@ public class PomocCommand extends CommandAPI {
             player.getInventory().addItem(GlobalItem.getItem("I3", 1));
             player.getInventory().addItem(GlobalItem.getItem("I4", 1));
             player.getInventory().addItem(GlobalItem.getItem("I5", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I6", 1));
 
-            player.getInventory().addItem(Map1Items.getItem("I1", 1));
-            player.getInventory().addItem(Map1Items.getItem("I2", 1));
-            player.getInventory().addItem(Map1Items.getItem("I3", 1));
+            player.getInventory().addItem(Skrzynki.getItem("I1", 1));
+            player.getInventory().addItem(Skrzynki.getItem("I2", 1));
 
             return;
         }

@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
-import rpg.rpgcore.utils.globalitems.expowiska.Map1Items;
+import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 
 import java.util.UUID;
 
@@ -58,11 +58,11 @@ public class MobDropHelper {
         // EXPOWISKO 1
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
-            addDropPlayer(player, Map1Items.getItem("I1", 1), 100, true, true, entity);
+            addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
         }
         // MOB
         if (entityName.equals("Najemnik")) {
-            addDropPlayer(player, Map1Items.getItem("I2", 1), 1, true, true, entity);
+            addDropPlayer(player, Skrzynki.getItem("I2", 1), 1, true, true, entity);
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (ChanceHelper.getChance(100)) {

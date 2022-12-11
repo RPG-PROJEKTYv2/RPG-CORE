@@ -81,7 +81,7 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // TELEPORTER
             if (entityName.equalsIgnoreCase("TELEPORTER")) {
-                rpgcore.getTeleporterNPC().openTeleporterMAIN(player);
+                rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
                 return;
             }
             // RYBAK
