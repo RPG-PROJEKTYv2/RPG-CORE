@@ -36,8 +36,9 @@ public class KolekcjonerNPC {
         gui.setItem(4, this.getStatystykiItem(user));
         gui.setItem(11, this.getIfItemIsGiven(mission, 0, user.getMissionProgress().get(0)));
         gui.setItem(12, this.getIfItemIsGiven(mission, 1, user.getMissionProgress().get(1)));
-        gui.setItem(14, this.getIfItemIsGiven(mission, 2, user.getMissionProgress().get(2)));
-        gui.setItem(15, this.getIfItemIsGiven(mission, 3, user.getMissionProgress().get(3)));
+        gui.setItem(13, this.getIfItemIsGiven(mission, 2, user.getMissionProgress().get(2)));
+        gui.setItem(14, this.getIfItemIsGiven(mission, 3, user.getMissionProgress().get(3)));
+        gui.setItem(15, this.getIfItemIsGiven(mission, 4, user.getMissionProgress().get(4)));
 
         player.openInventory(gui);
     }

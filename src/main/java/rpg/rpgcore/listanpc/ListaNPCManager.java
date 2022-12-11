@@ -25,15 +25,15 @@ public class ListaNPCManager {
     public Map<Integer, NpcObject> loadAll() {
         final Map<Integer, NpcObject> toLoad = new HashMap<>();
         int i = 1;
-        for (String s : rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getKeys(false)) {
+        for (String s : rpgcore.getConfig().getConfigurationSection("ListaNPC").getKeys(false)) {
             toLoad.put(i, new NpcObject(s, new Location(
-                    Bukkit.getWorld(rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getString("world")),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("x"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("y"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getDouble("z"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getLong("yaw"),
-                    rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getLong("pitch")
-                    ), rpgcore.getConfig().getConfigurationSection("ListaNPCCommand").getConfigurationSection(s).getString("type")));
+                    Bukkit.getWorld(rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getString("world")),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("x"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("y"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getDouble("z"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getLong("yaw"),
+                    rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getLong("pitch")
+                    ), rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s).getString("Type")));
             i++;
         }
 
@@ -42,10 +42,10 @@ public class ListaNPCManager {
     }
 
     public void openMainGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&cLista NPC"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&cLista NPC"));
 
         for (int i = 0; i < npcMap.size(); i++) {
-            gui.setItem(0, this.makeNpcItem(this.npcMap.get(i+1)));
+            gui.setItem(i, this.makeNpcItem(this.npcMap.get(i+1)));
         }
 
         player.openInventory(gui);

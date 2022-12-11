@@ -35,35 +35,35 @@ public class OsManager {
     }
 
     public void loadAllRequiredOs() {
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Players").getKeys(false).size(); i++) {
-            this.reqForPlayerKills.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Players").getInt("Players_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Players").getKeys(false).size(); i++) {
+            this.reqForPlayerKills.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Players").getInt("Players_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Mobs").getKeys(false).size(); i++) {
-            this.reqForMobKills.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Mobs").getInt("Mobs_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Mobs").getKeys(false).size(); i++) {
+            this.reqForMobKills.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Mobs").getInt("Mobs_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Time").getKeys(false).size(); i++) {
-            this.reqForTimeSpent.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Time").getLong("Time_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Time").getKeys(false).size(); i++) {
+            this.reqForTimeSpent.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Time").getLong("Time_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Gornik").getKeys(false).size(); i++) {
-            this.reqForMinedBlocks.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Gornik").getInt("Gornik_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getKeys(false).size(); i++) {
+            this.reqForMinedBlocks.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Gornik").getInt("Gornik_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Fish").getKeys(false).size(); i++) {
-            this.reqForFishedItems.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Fish").getInt("Fish_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Fish").getKeys(false).size(); i++) {
+            this.reqForFishedItems.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Fish").getInt("Fish_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Chest").getKeys(false).size(); i++) {
-            this.reqForOpenedChests.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Chest").getInt("Chest_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Chest").getKeys(false).size(); i++) {
+            this.reqForOpenedChests.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Chest").getInt("Chest_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Upgrades").getKeys(false).size(); i++) {
-            this.reqForPositiveUpgrades.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Upgrades").getInt("Upgrades_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Upgrades").getKeys(false).size(); i++) {
+            this.reqForPositiveUpgrades.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Upgrades").getInt("Upgrades_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Nies").getKeys(false).size(); i++) {
-            this.reqForPickedUpNies.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Nies").getInt("Nies_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Nies").getKeys(false).size(); i++) {
+            this.reqForPickedUpNies.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Nies").getInt("Nies_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Metins").getKeys(false).size(); i++) {
-            this.reqForDestroyedMetins.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Metins").getInt("Metins_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metins").getKeys(false).size(); i++) {
+            this.reqForDestroyedMetins.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Metins").getInt("Metins_" + i));
         }
-        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Trees").getKeys(false).size(); i++) {
-            this.reqForMinedTrees.put(i, rpgcore.getConfig().getConfigurationSection("OsiagnieciaCommand").getConfigurationSection("Trees").getInt("Trees_" + i));
+        for (int i = 1; i <= rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Trees").getKeys(false).size(); i++) {
+            this.reqForMinedTrees.put(i, rpgcore.getConfig().getConfigurationSection("Osiagniecia").getConfigurationSection("Trees").getInt("Trees_" + i));
         }
     }
 

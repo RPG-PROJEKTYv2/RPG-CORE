@@ -33,7 +33,25 @@ public class MagazynierInventoryClose implements Listener {
 
         if (closedInventoryTitle.contains("Magazyn #")) {
             final int nrMagazynu = Integer.parseInt(Utils.removeColor(closedInventoryTitle).replaceAll("Magazyn #", "").trim());
-            //rpgcore.getMagazynierNPC().find(uuid).getMagazynUser().setMagazyn(Utils.itemStackArrayToBase64(closedInventory.getContents()), nrMagazynu);
+            switch (nrMagazynu) {
+                case 1:
+                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn1(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    break;
+                case 2:
+                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn2(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    break;
+                case 3:
+                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn3(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    break;
+                case 4:
+                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn4(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    break;
+                case 5:
+                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn5(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    break;
+            }
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid)));
+            rpgcore.getCooldownManager().givePlayerMagazynyCooldown(uuid);
         }
 
     }

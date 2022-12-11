@@ -11,7 +11,7 @@ public class KolekcjonerObject {
 
     public KolekcjonerObject(final UUID uuid) {
         this.uuid = uuid;
-        this.kolekcjonerUser = new KolekcjonerUser(1, Arrays.asList(false, false, false, false), 0, 0,0);
+        this.kolekcjonerUser = new KolekcjonerUser(1, Arrays.asList(false, false, false, false, false), 0, 0,0);
     }
 
     public KolekcjonerObject(final Document document) {

@@ -14,6 +14,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> trenerCooldown = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> metinyCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> partyInviteCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> magazynyCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -88,5 +89,17 @@ public class CooldownManager {
 
     public long getPlayerPartyInviteCooldown(final UUID uuid) {
         return this.partyInviteCooldown.asMap().get(uuid);
+    }
+
+    public boolean hasMagazynyCooldown(final UUID uuid) {
+        return this.magazynyCooldown.asMap().containsKey(uuid);
+    }
+
+    public void givePlayerMagazynyCooldown(final UUID uuid) {
+        this.magazynyCooldown.put(uuid, System.currentTimeMillis() + 5000L);
+    }
+
+    public long getPlayerMagazynyCooldown(final UUID uuid) {
+        return this.magazynyCooldown.asMap().get(uuid);
     }
 }

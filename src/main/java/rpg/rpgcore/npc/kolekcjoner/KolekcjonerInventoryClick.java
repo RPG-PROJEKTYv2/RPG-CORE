@@ -73,7 +73,7 @@ public class KolekcjonerInventoryClick implements Listener {
                     player.getInventory().removeItem(mission.getReqItems()[1]);
                     given.set(1, true);
                     break;
-                case 14:
+                    case 13:
                     if (given.get(2)) {
                         return;
                     }
@@ -85,7 +85,7 @@ public class KolekcjonerInventoryClick implements Listener {
                     player.getInventory().removeItem(mission.getReqItems()[2]);
                     given.set(2, true);
                     break;
-                case 15:
+                case 14:
                     if (given.get(3)) {
                         return;
                     }
@@ -96,6 +96,18 @@ public class KolekcjonerInventoryClick implements Listener {
 
                     player.getInventory().removeItem(mission.getReqItems()[3]);
                     given.set(3, true);
+                    break;
+                case 15:
+                    if (given.get(4)) {
+                        return;
+                    }
+                    if (!player.getInventory().containsAtLeast(mission.getReqItems()[4], 1)) {
+                        player.getInventory().addItem(mission.getReqItems()[4]);
+                        return;
+                    }
+
+                    player.getInventory().removeItem(mission.getReqItems()[4]);
+                    given.set(4, true);
                     break;
             }
             player.sendMessage(Utils.format("&6&lKolekcjoner &8>> &7Dziekuje Ci za ten przedmiot. Wlasnie tego potrzebowalem!"));

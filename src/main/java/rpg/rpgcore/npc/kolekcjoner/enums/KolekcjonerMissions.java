@@ -6,8 +6,8 @@ import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
 public enum KolekcjonerMissions {
 
-    M1(1, new ItemStack[]{Map1_10.I1_10_1.getItemStack(), Map1_10.I1_10_2.getItemStack(), Map1_10.I1_10_3.getItemStack(), Map1_10.I1_10_4.getItemStack()}, 2, 1, 50),
-    M99(99, new ItemStack[]{KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack()}, 0, 0, 0);
+    M1(1, new ItemStack[]{Map1_10.I1_10_1.getItemStack(), Map1_10.I1_10_2.getItemStack(), Map1_10.I1_10_5.getItemStack(), Map1_10.I1_10_3.getItemStack(), Map1_10.I1_10_4.getItemStack()}, 2, 1, 50),
+    M99(99, new ItemStack[]{KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack()}, 0, 0, 0);
 
     private final int number;
     private final ItemStack[] reqItems;

@@ -23,6 +23,6 @@ public class KolekcjonerUser {
     }
 
     public void resetMissionProgress() {
-        this.missionProgress = Arrays.asList(false, false, false, false);
+        this.missionProgress = Arrays.asList(false, false, false, false, false);
     }
 }
