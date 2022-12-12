@@ -148,12 +148,15 @@ public class MagazynierNPC {
                 missionList.add(mission);
             }
         }
+        missions.setProgress(0);
+        missions.setSelectedMission(0);
         missions.setMission1(missionList.get(0));
         missions.setMission2(missionList.get(1));
         missions.setMission3(missionList.get(2));
         missions.setMission4(missionList.get(3));
         missions.setMission5(missionList.get(4));
         magazynierUser.setResetTime(System.currentTimeMillis() + 86400000);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(magazynierUser.getUuid(), magazynierUser));
     }
 
     public void openMagazynierSklepGUI(final Player player) {
