@@ -65,6 +65,7 @@ public class PlayerJoinListener implements Listener {
 
             player.setLevel(1);
             player.setExp(0);
+            player.teleport(rpgcore.getSpawnManager().getSpawn());
             player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
         }
     }
@@ -80,6 +81,9 @@ public class PlayerJoinListener implements Listener {
             player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
             return;
         }
+
+        player.teleport(rpgcore.getSpawnManager().getSpawn());
+
         final User user = rpgcore.getUserManager().find(uuid);
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
@@ -126,7 +130,6 @@ public class PlayerJoinListener implements Listener {
             }, 20L);
 
         }
-        player.teleport(rpgcore.getSpawnManager().getSpawn());
 
         TabManager.addPlayer(player);
         TabManager.add(player);
@@ -158,16 +161,11 @@ public class PlayerJoinListener implements Listener {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
                     return;
                 }
-
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
 
-
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
         }
-
     }
-
-
 }
