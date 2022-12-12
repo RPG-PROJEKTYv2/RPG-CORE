@@ -39,10 +39,12 @@ public class MobDropHelper {
             rpgcore.getMedykNPC().find(uuid).getMedykUser().setProgress(rpgcore.getMedykNPC().find(uuid).getMedykUser().getProgress() + 1);
         }
 
-        double niesDropChance = 0.01;
-        double sakwaDropChance = 0.03;
-        double chestDropChance = 1;
-        double ulepszaczDropChance = 0.5;
+        final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
+
+        final double niesDropChance = 0.01 + ((0.01 * szczescie) / 100.0);
+        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 100.0);
+        final double chestDropChance = 1 + ((1 * szczescie) / 100.0);
+        final double ulepszaczDropChance = 0.5 + ((0.5 * szczescie) / 100.0);
 
         // TU BEDA PRZELICZNIKI I MNOZNIKI Z SETOW/MIECZOW/ULEPSZEN ITD.
 
