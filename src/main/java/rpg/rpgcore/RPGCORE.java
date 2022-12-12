@@ -268,8 +268,6 @@ public final class RPGCORE extends JavaPlugin {
 
         this.mongo.loadAll();
 
-        this.getLvlManager().loadAllReqExp();
-        this.getLvlManager().loadExpForAllMobs();
         this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
@@ -352,7 +350,6 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllOreLocations();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
-        this.getLvlManager().unLoadAll();
         EntityTypes.despawnAllEntities();
     }
 

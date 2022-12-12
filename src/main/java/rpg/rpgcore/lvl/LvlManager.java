@@ -2,80 +2,45 @@ package rpg.rpgcore.lvl;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.lvl.enums.Levels;
+import rpg.rpgcore.lvl.enums.mobs.Dungeons;
+import rpg.rpgcore.lvl.enums.mobs.Events;
+import rpg.rpgcore.lvl.enums.mobs.Maps;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class LvlManager {
 
     private final RPGCORE rpgcore;
-    private final HashMap<Integer, Double> wymaganyExpDlaLvli = new HashMap<>();
-    private final HashMap<String, Double> expZaMoby = new HashMap<>();
 
     public LvlManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
-    public HashMap<Integer, Double> getWymaganyExpDlaLvli() {
-        return wymaganyExpDlaLvli;
-    }
 
-    public HashMap<String, Double> getExpZaMoby() {
-        return expZaMoby;
-    }
-
-    public void loadAllReqExp() {
-        try {
-            int sciezkoLvl = rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").getKeys(false).size();
-            for (int i = 1; i <= sciezkoLvl; i++) {
-                this.wymaganyExpDlaLvli.put(i, rpgcore.getConfig().getConfigurationSection("wymaganyexp_na_lvl").getDouble("wymaganyexp_lvl_" + i));
-            }
-            System.out.println("[rpg.core]" + ChatColor.GREEN + "Pomyslnie wczytano wymagane doswiadczenia dla kazdego poziomu");
-        } catch (final Exception e) {
-            e.printStackTrace();
-            System.out.println(Utils.format("&8[&crpg.core&8] &cCos poszlo nie tak podczas wczytywania wymaganego doswiadczenia dla kazdego poziomu"));
-        }
-    }
-
-    public void loadExpForAllMobs() {
-        for (String s : rpgcore.getConfig().getConfigurationSection("exp_za_moby").getKeys(false)) {
-            expZaMoby.put(s, rpgcore.getConfig().getConfigurationSection("exp_za_moby").getDouble(s));
-        }
-    }
-
-    public void unLoadAll() {
-        this.wymaganyExpDlaLvli.clear();
-        this.expZaMoby.clear();
-        System.out.println("[rpg.core] Pomyslnie wyczyszczono wymagany exp i exp za moby!");
-    }
 
     public double getExpForLvl(final int lvl) {
-        double exp = 0;
-
-        if (this.wymaganyExpDlaLvli.containsKey(lvl)) {
-            exp = this.wymaganyExpDlaLvli.get(lvl);
-        }
-
-        return exp;
+        return Levels.getByLevel(lvl).getExp();
     }
 
     public double getExp(final String mob) {
-        double exp = 0;
-
-        if (this.expZaMoby.containsKey(mob)) {
-            exp = this.expZaMoby.get(mob);
+        if (Maps.isMob(mob)) {
+            return Maps.getByName(mob).getExp();
+        } else if (Dungeons.isDungeonMob(mob)) {
+            return Dungeons.getByName(mob).getExp();
+        } else if (Events.isEventMob(mob)) {
+            return Events.getByName(mob).getExp();
+        } else {
+            return 0;
         }
-
-        return exp;
     }
 
     private double getDodatkowyExp(final UUID uuid) {
@@ -89,10 +54,6 @@ public class LvlManager {
     }
 
     public void updateExp(final Player killer, final String mob) {
-        if (!(this.getExpZaMoby().containsKey(mob))) {
-            return;
-        }
-
         final UUID killerUUID = killer.getUniqueId();
         final User user = rpgcore.getUserManager().find(killerUUID);
         final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
