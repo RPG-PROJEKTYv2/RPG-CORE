@@ -41,15 +41,13 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
-                        ItemStack item = null;
-                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
-                            //item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
-                        }
+                        /*final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
-                        player.getInventory().addItem(item);
-                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);*/
                         return;
                     }
                 }
@@ -57,15 +55,13 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
-                        ItemStack item = null;
-                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
-                            //item = rpgcore.getKowalManager().getDrawnItems(player);
-                        }
+                        final Items item = rpgcore.getKowalManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
-                        player.getInventory().addItem(item);
-                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -73,15 +69,13 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
-                        ItemStack item = null;
-                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
-                            //item = rpgcore.getSurowceManager().getDrawnItems(player);
-                        }
+                        final Items item = rpgcore.getSurowceManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
-                        player.getInventory().addItem(item);
-                        player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }

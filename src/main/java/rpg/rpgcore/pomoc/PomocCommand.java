@@ -30,7 +30,7 @@ public class PomocCommand extends CommandAPI {
             player.openInventory(rpgcore.getPomocManager().pomocGUIMAIN());
             player.getInventory().addItem(GlobalItem.getItem("I1", 1));
             player.getInventory().addItem(GlobalItem.getItem("I2", 1));
-            player.getInventory().addItem(GlobalItem.getItem("I3", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I22", 1));
             player.getInventory().addItem(GlobalItem.getItem("I4", 1));
             player.getInventory().addItem(GlobalItem.getItem("I5", 1));
             player.getInventory().addItem(GlobalItem.getItem("I6", 1));
