@@ -126,8 +126,8 @@ public class LvlManager {
         sender.sendMessage(Utils.format("&7Poziom: &c" + aktualnyLvlGracza));
         if (aktualnyLvlGracza < Utils.MAXLVL) {
             final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
-            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + aktualnyExpGracza + " &7exp / &c" + expNaNextLvl + " &7exp (&c" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&7)"));
-            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &c" + (expNaNextLvl - aktualnyExpGracza) + "&7exp"));
+            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + Utils.spaceNumber(String.format("%.2f", aktualnyExpGracza)) + " &7exp / &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl)) + " &7exp (&c" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&7)"));
+            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl - aktualnyExpGracza)) + " &7exp"));
         } else {
             sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + aktualnyExpGracza + " &7exp / &4&lMAX LVL (&4&lMAX LVL&7)"));
             sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &4&lMAX LVL"));
