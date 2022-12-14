@@ -11,7 +11,7 @@ public final class ChanceHelper {
     }
 
     public static Double getRandDouble(final double min, final double max) throws IllegalArgumentException {
-        return (rand.nextDouble() * (max - min)) + min;
+        return Double.parseDouble(String.format("%.2f", (new Random().nextDouble() * (max - min) + min)).replace(",", "."));
     }
 
     public static Float getRandFloat(final float min, final float max) throws IllegalArgumentException {

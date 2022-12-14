@@ -35,6 +35,7 @@ import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.discord.DiscordBot;
+import rpg.rpgcore.dmg.EntityCombustListener;
 import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInventoryClickListener;
@@ -434,6 +435,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);

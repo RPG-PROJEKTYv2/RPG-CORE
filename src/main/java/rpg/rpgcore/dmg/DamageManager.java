@@ -69,7 +69,7 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 6;
+        double dmg = 2;
         double mnoznik = 100;
         double krytyk = 1;
         double wzmKryt = 0;
@@ -96,7 +96,7 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
 
-        dmg = (dmg * (mnoznik / 100)) / 3;
+        dmg = dmg * (mnoznik / 100);
         attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
@@ -159,7 +159,7 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 6;
+        double dmg = 2;
         double mnoznik = 100;
         double krytyk = 1;
         double wzmKryt = 1;
@@ -186,7 +186,7 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
-        dmg = (dmg * (mnoznik / 100)) / 3;
+        dmg = dmg * (mnoznik / 100);
         attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;

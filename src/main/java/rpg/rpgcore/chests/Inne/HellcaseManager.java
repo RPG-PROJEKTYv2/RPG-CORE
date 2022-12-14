@@ -4,9 +4,8 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
-import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -29,7 +28,7 @@ public class HellcaseManager {
         // AKCE
         this.hellcase.add(new Items("6", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 50, 5, true), 1));
         this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
-        this.hellcase.add(new Items("8", 4.0, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1, 10), ChanceHelper.getRandDouble(0.01, 0.05), ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandInt(1, 10), "Test"), 1));
+        this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));
         // WALUTA
         this.hellcase.add(new Items("15", 25.0, GlobalItem.getHellCoin(15),1));
         this.hellcase.add(new Items("16", 25.0, GlobalItem.getHellCoin(20),1));

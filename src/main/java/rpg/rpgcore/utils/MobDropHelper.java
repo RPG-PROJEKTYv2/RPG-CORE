@@ -9,6 +9,7 @@ import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
+import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
 import java.util.UUID;
 
@@ -42,10 +43,10 @@ public class MobDropHelper {
         }
 
         final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
-        final double niesDropChance = 0.01 + ((0.01 * szczescie) / 100.0);
-        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 100.0);
-        final double chestDropChance = 1 + ((1 * szczescie) / 100.0);
-        final double ulepszaczDropChance = 0.5 + ((0.5 * szczescie) / 100.0);
+        final double niesDropChance = 0.01 + ((0.01 * szczescie) / 1000.0);
+        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
+        final double chestDropChance = 2.5 + ((2.5 * szczescie) / 1000.0);
+        final double ulepszaczDropChance = 0.5 + ((0.5 * szczescie) / 1000.0);
 
         // TU BEDA PRZELICZNIKI I MNOZNIKI Z SETOW/MIECZOW/ULEPSZEN ITD.
 
@@ -62,17 +63,20 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
             addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
-            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 0) {
-                addDropPlayer(player, LowcaItems.getItem("I1", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
+                addDropPlayer(player, LowcaItems.getItem("I1", 1), getDropChance(szczescie, 60), true, true, entity);
             }
         }
         // MOB
         if (entityName.equals("Najemnik Lvl. 3") || entityName.equals("Najemnik Lvl. 5") || entityName.equals("Najemnik Lvl. 7")) {
             player.sendMessage("ZABILES NAJEMNICZKA");
-            addDropPlayer(player, Skrzynki.getItem("I2", 1), 1, true, true, entity);
+            addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance, true, true, entity);
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
-            addDropPlayer(player, LesnikItems.getByItem("I1", 1), 3, true, true, entity);
-           // if (rpgcore.getPrzyrodnikNPC().find(uuid))
+            addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
+
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
+                addDropPlayer(player, PrzyrodnikItems.getByName("1-10").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+            }
 
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (ChanceHelper.getChance(100)) {
@@ -88,5 +92,9 @@ public class MobDropHelper {
 
 
         rpgcore.getLvlManager().updateExp(player, entityName);
+    }
+
+    private static double getDropChance(int szczescie, double chance) {
+        return chance + ((chance * szczescie) / 1000.0);
     }
 }

@@ -9,6 +9,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -87,7 +89,12 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        if (is.getType().equals(Material.STORAGE_MINECART)) {
+                            is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1, 10), ChanceHelper.getRandDouble(0.01, 0.05), ChanceHelper.getRandDouble(0.01, 0.05), ChanceHelper.getRandInt(1, 10), "&7Naszyjnik Najemnika");
+                        }
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;

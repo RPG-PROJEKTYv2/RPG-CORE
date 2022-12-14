@@ -87,7 +87,7 @@ public enum GlobalItem {
     }
 
     public static ItemStack getHellCoin(final int value) {
-        ItemStack itemStack = GlobalItem.getByName("I11").getItemStack();
+        ItemStack itemStack = GlobalItem.getByName("I11").getItemStack().clone();
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(itemMeta.getDisplayName().replace("value", String.valueOf(value)));
         itemStack.setItemMeta(itemMeta);

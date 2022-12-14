@@ -66,7 +66,8 @@ public class EntityDamageEntityListener implements Listener {
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker);
-                e.setDamage(attackerDmg);
+                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+                e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
                 attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
                 attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
                 attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
