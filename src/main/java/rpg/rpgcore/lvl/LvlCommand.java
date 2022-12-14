@@ -37,12 +37,12 @@ public class LvlCommand extends CommandAPI {
                 return;
             }
 
-            final UUID uuidPlayerToSeeInfo = rpgcore.getUserManager().find(args[0]).getId();
-
-            if (uuidPlayerToSeeInfo == null) {
-                player.sendMessage(Utils.LVLPREFIX + Utils.NIEMATAKIEGOGRACZA);
+            if (rpgcore.getUserManager().find(args[0]) == null) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku &e" + args[0]));
                 return;
             }
+
+            final UUID uuidPlayerToSeeInfo = rpgcore.getUserManager().find(args[0]).getId();
             rpgcore.getLvlManager().getPlayerLvl(player, uuidPlayerToSeeInfo);
             return;
         }
