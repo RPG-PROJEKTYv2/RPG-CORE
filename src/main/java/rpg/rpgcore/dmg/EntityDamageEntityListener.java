@@ -1,6 +1,7 @@
 package rpg.rpgcore.dmg;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -64,8 +65,16 @@ public class EntityDamageEntityListener implements Listener {
             } else {
                 // ... Victim jest Mobem
 
+                if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
+                    if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getLvl() < Utils.getTagInt(attacker.getItemInHand(), "lvl")) {
+                        attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, aby uzywac tego przedmiotu!"));
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+
                 final LivingEntity victim = (LivingEntity) e.getEntity();
-                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker);
+                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
                 attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));

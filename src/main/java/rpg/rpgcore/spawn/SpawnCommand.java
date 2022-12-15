@@ -40,7 +40,7 @@ public class SpawnCommand extends CommandAPI {
             }
             return;
         }
-        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.ADMIN || rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.HA || rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV) {
             if (args[0] == null) {
                 return;
             }

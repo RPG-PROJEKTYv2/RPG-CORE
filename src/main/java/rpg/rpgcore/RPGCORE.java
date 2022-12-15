@@ -172,6 +172,9 @@ import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.zmianki.ZmiankiManager;
+import rpg.rpgcore.zmianki.events.ZmiankiInventoryClickListener;
+import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.Field;
@@ -249,7 +252,7 @@ public final class RPGCORE extends JavaPlugin {
     // cos innego...
     private OreManager oreManager;
     private DungeonsManager dungeonsManager;
-
+    private ZmiankiManager zmiankiManager;
     private int i = 1;
 
     public static RPGCORE getInstance() {
@@ -575,6 +578,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PetInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetWorldChangeListener(), this);
+
+        // ZMIANKI
+        this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryCloseListener(), this);
     }
 
     private void initDatabase() {
@@ -614,6 +621,7 @@ public final class RPGCORE extends JavaPlugin {
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
+        this.zmiankiManager = new ZmiankiManager();
     }
 
     private void initNPCS() {
@@ -920,5 +928,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public DungeonsManager getDungeonsManager() {
         return dungeonsManager;
+    }
+
+    public ZmiankiManager getZmiankiManager() {
+        return zmiankiManager;
     }
 }
