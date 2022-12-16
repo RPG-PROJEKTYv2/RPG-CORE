@@ -510,6 +510,15 @@ public class Utils {
         return false;
     }
 
+    public static int getLoreLineIndex(final List<String> lore, final String toCheck) {
+        for (int i = 0; i < lore.size(); i++) {
+            if (removeColor(lore.get(i)).contains(toCheck)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     public static String getLoreLineNoColor(final ItemStack item, final int line) {
         try {
             return removeColor(item.getItemMeta().getLore().get(line));

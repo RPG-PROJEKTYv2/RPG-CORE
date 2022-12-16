@@ -809,6 +809,7 @@ public class GornikNPC {
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Exp", tag.getInt("Exp") + exp);
 
+        nmsStack.setTag(tag);
         final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
@@ -835,6 +836,7 @@ public class GornikNPC {
         } else {
             tag.setInt("ReqExp", tag.getInt("ReqExp") + GornikLevels.getByLvl(tag.getInt("Lvl")).getExp());
         }
+        nmsStack.setTag(tag);
         final ItemStack item = CraftItemStack.asBukkitCopy(nmsStack);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();

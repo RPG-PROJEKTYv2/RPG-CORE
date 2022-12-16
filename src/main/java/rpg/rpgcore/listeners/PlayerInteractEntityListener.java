@@ -51,6 +51,15 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
+        if (e.getRightClicked().getType().equals(EntityType.ENDERMAN)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // KUPIEC
+            if (entityName.equalsIgnoreCase("Metinolog")) {
+                rpgcore.getMetinologNPC().openMetinologGUI(player);
+                return;
+            }
+        }
 
         if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
             e.setCancelled(true);
@@ -102,11 +111,6 @@ public class PlayerInteractEntityListener implements Listener {
             // TRENER
             if (entityName.equalsIgnoreCase("Trener")) {
                 rpgcore.getTrenerNPC().openTrenerGUI(player);
-                return;
-            }
-            // Metinolog
-            if (entityName.equalsIgnoreCase("Metinolog")) {
-                rpgcore.getMetinologNPC().openMetinologGUI(player);
                 return;
             }
             // KLASY
@@ -169,6 +173,12 @@ public class PlayerInteractEntityListener implements Listener {
             // DUNGEONS
             if (entityName.equalsIgnoreCase("Dungeony")) {
                 rpgcore.getDungeonsManager().openDungeonMenu(player);
+                return;
+            }
+
+            // ZMIANKI //TODO Przerobic na stol itd.
+            if (entityName.equalsIgnoreCase("Zmianki")) {
+                rpgcore.getZmiankiManager().openGUI(player, null);
                 return;
             }
             //  ...ZAGINIONY WLADCA

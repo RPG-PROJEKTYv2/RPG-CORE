@@ -1,13 +1,11 @@
 package rpg.rpgcore.dmg;
 
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -155,7 +153,7 @@ public class DamageManager {
         return Double.parseDouble(String.format("%.2f", def * (mnoznik / 100)));
     }
 
-    public double calculateAttackerDmgToEntity(final Player attacker) {
+    public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim) {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
@@ -168,6 +166,11 @@ public class DamageManager {
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "moby");
+            dmg += Utils.getTagInt(weapon, "dodatkowe");
+            if (Utils.removeColor(victim.getCustomName()).contains(Utils.removeColor(Utils.getTagString(weapon, "silny-na-mob")))) {
+                mnoznik += Utils.getTagInt(weapon, "silny-na-val");
+            }
+            krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
             dmg = 1;
         }
