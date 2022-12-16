@@ -26,7 +26,6 @@ public class HellcaseManager {
         // MIECZ
         this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 50, 5, true), 1));
         // AKCE
-        this.hellcase.add(new Items("6", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 50, 5, true), 1));
         this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
         this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));
         // WALUTA

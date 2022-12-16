@@ -46,38 +46,48 @@ public class MobDropHelper {
         final double niesDropChance = 0.01 + ((0.01 * szczescie) / 1000.0);
         final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
         final double chestDropChance = 2.5 + ((2.5 * szczescie) / 1000.0);
-        final double ulepszaczDropChance = 0.5 + ((0.5 * szczescie) / 1000.0);
 
         // TU BEDA PRZELICZNIKI I MNOZNIKI Z SETOW/MIECZOW/ULEPSZEN ITD.
 
         rpgcore.getOsManager().find(uuid).getOsUser().setMobKills(rpgcore.getOsManager().find(uuid).getOsUser().getMobKills() + 1);
 
-        // TUTAJ ZROB DROP SKRZYNNEK TYCH CO MAJA DROPIC Z KAZDEGO MOBA ( TAK JAK NA HYPE BYL DROP SKRZYNI Z MATERIALAMI Z KAZDEGO MOBA ) FUNCKJA addDropPlayer()
-        addDropPlayer(player, GlobalItem.getItem("I1", 1), 0.1, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I2", 1), 0.05, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I3", 1), 0.001, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), 0.7, true, true, entity);
-        addDropPlayer(player, GlobalItem.getItem("I5", 1), 0.5, true, true, entity);
+        // -------------------- SKRZYNKI PODSTAWOWE --------------------
+        // PRZELICZNIK -> 0.1 - OKOŁO CO TYSIAC MOBOW /// 0.01 - OKOLO CO 10K MOBOW /// 0.001 - OKOLO CO 100k MOBOW
+        // TODO PODSTAWOWY HELLCASE DROPI TYLKO Z KUFRA WARTOSCIOWEGO BADZ MISJI :]
+        // WARTOSCIOWY KUFER
+        addDropPlayer(player, GlobalItem.getItem("I1", 1), getDropChance(szczescie, 0.005), true, true, entity);
+        // SKRZYNIA KOWALA
+        addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.025), true, true, entity);
+        // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
+        addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
+        // TAJEMNICZA SKRZYNIA
+        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.02), true, true, entity);
+        // SKRZYNIA Z SUROWCAMI
+        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2.0), true, true, entity);
+
 
         // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
             addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
+            // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
                 addDropPlayer(player, LowcaItems.getItem("I1", 1), getDropChance(szczescie, 60), true, true, entity);
             }
         }
         // MOB
         if (entityName.equals("Najemnik Lvl. 3") || entityName.equals("Najemnik Lvl. 5") || entityName.equals("Najemnik Lvl. 7")) {
-            player.sendMessage("ZABILES NAJEMNICZKA");
+            // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance, true, true, entity);
+            // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
+            // LESNIK MISJE
             addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
-
+            // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
                 addDropPlayer(player, PrzyrodnikItems.getByName("1-10").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
-
+            // DUSZOLOG MISJE
             if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (ChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);
@@ -86,11 +96,36 @@ public class MobDropHelper {
         }
         // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
         // BOSS
+        if (entityName.equals("[BOSS] Wodz Goblinow")) {
+            addDropPlayer(player, Skrzynki.getItem("I2", 1), 100, true, true, entity);
+            // LOWCA
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
+                addDropPlayer(player, LowcaItems.getItem("I2", 1), getDropChance(szczescie, 60), true, true, entity);
+            }
+        }
         // MOB
+        if (entityName.equals("Goblin Lvl. 14") || entityName.equals("Goblin Lvl. 16") || entityName.equals("Goblin Lvl. 19")) {
+            // SKRZYNKA MOBA
+            addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance, true, true, entity);
+            // NIESAMOWITY PRZEDMIOT
+            addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance, true, true, entity);
+            // LESNIK MISJE
+            addDropPlayer(player, LesnikItems.getByItem("I2", 1), getDropChance(szczescie, 1), true, true, entity);
+            // PRZYRODNIK MISJE
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
+                addDropPlayer(player, PrzyrodnikItems.getByName("10-20").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+            }
+            // DUSZOLOG MISJE
+            if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 1) {
+                if (ChanceHelper.getChance(100)) {
+                    rpgcore.getDuszologNPC().spawnDusza(player, entity);
+                }
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
+        // BOSS
 
-
-
-
+        // MOB
         rpgcore.getLvlManager().updateExp(player, entityName);
     }
 

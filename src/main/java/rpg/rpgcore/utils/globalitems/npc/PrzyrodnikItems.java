@@ -17,6 +17,7 @@ public enum PrzyrodnikItems {
     I6("60-70", new ItemBuilder(Material.REDSTONE).setName("&cRdzen Zywiolaka").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I7("70-80", new ItemBuilder(Material.FLINT).setName("&9Odlamek Kosci Czarnego Szkieleta").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I8("80-90", new ItemBuilder(Material.INK_SACK, 1, (short) 10).setName("&aToksyczny Jad").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
+    // brak mobow
     I9("90-100", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4Serce Demona").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I10("100-110", new ItemBuilder(Material.RED_ROSE, 1, (short) 1).setName("&5Przeklety Kwiat").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I11("110-120", new ItemBuilder(Material.GOLD_NUGGET).setName("&3Astralny Fragment").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone());

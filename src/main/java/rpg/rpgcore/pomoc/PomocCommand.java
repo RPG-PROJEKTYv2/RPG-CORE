@@ -34,6 +34,7 @@ public class PomocCommand extends CommandAPI {
             player.getInventory().addItem(GlobalItem.getItem("I4", 1));
             player.getInventory().addItem(GlobalItem.getItem("I5", 1));
             player.getInventory().addItem(GlobalItem.getItem("I6", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I22", 1));
 
             player.getInventory().addItem(Skrzynki.getItem("I1", 1));
             player.getInventory().addItem(Skrzynki.getItem("I2", 1));

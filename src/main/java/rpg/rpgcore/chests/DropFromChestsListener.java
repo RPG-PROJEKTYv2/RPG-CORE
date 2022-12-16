@@ -114,10 +114,25 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // SKRZYNIA ZE ZWIERZAKAMI
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
+                        player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
+                        ItemStack item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
+                            item = rpgcore.getZwierzakiManager().getDrawnItems(player);
+                        }
+                        if (item == null) {
+                            return;
+                        }
+                        player.getInventory().addItem(item);
+                        return;
+                    }
+                }
+                // SKRZYNIA ZE ZWIERZAKAMI RARE ITEMSHOP
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
                         ItemStack item = null;
                         if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
                             item = rpgcore.getZwierzakiManager().getDrawnItems(player);
