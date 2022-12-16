@@ -59,11 +59,6 @@ import rpg.rpgcore.guilds.events.GuildsInventoryClick;
 import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
-import rpg.rpgcore.klasy.choice.KlasaCommand;
-import rpg.rpgcore.klasy.KlasyHelper;
-import rpg.rpgcore.klasy.choice.KlasaPlayerMove;
-import rpg.rpgcore.klasy.choice.KlasyInventoryClick;
-import rpg.rpgcore.klasy.wojownik.KlasyNPC;
 import rpg.rpgcore.kulabossow.KulabossowPlayerInteract;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
@@ -93,6 +88,8 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
+import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
+import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.os.OsiagnieciaCommand;
 import rpg.rpgcore.party.PartyManager;
 import rpg.rpgcore.pets.PetCommand;
@@ -217,8 +214,6 @@ public final class RPGCORE extends JavaPlugin {
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
-    private KlasyHelper klasyHelper;
-    private KlasyNPC klasyNPC;
     private MedykNPC medykNPC;
     private GornikNPC gornikNPC;
     private PrzyrodnikNPC przyrodnikNPC;
@@ -253,6 +248,7 @@ public final class RPGCORE extends JavaPlugin {
     private OreManager oreManager;
     private DungeonsManager dungeonsManager;
     private ZmiankiManager zmiankiManager;
+    private WyslannikNPC wyslannikNPC;
     private int i = 1;
 
     public static RPGCORE getInstance() {
@@ -352,6 +348,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllLesnik();
         this.mongo.saveAllTrener();
         this.mongo.saveAllOreLocations();
+        this.mongo.saveAllWyslannik();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -390,7 +387,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new MetinCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ChatCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new KlasaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BossyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ListaNPCCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GuildCommand(this));
@@ -494,8 +490,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ProfileInventoryClickListener(), this);
 
         // KLASY
-        this.getServer().getPluginManager().registerEvents(new KlasaPlayerMove(this), this);
-        this.getServer().getPluginManager().registerEvents(new KlasyInventoryClick(this), this);
 
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(), this);
@@ -563,6 +557,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new LesnikInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new LesnikInventoryClose(), this);
 
+        // ...WYSLANNIK
+        this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
+
 
         // DUNGEONS
 
@@ -582,6 +579,8 @@ public final class RPGCORE extends JavaPlugin {
         // ZMIANKI
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryCloseListener(), this);
+
+
     }
 
     private void initDatabase() {
@@ -633,13 +632,12 @@ public final class RPGCORE extends JavaPlugin {
         this.kowalNPC = new KowalNPC(this);
         this.trenerNPC = new TrenerNPC(this);
         this.metinologNPC = new MetinologNPC(this);
-        this.klasyNPC = new KlasyNPC(this);
-        this.klasyHelper = new KlasyHelper(this);
         this.medykNPC = new MedykNPC(this);
         this.gornikNPC = new GornikNPC(this);
         this.przyrodnikNPC = new PrzyrodnikNPC(this);
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
+        this.wyslannikNPC = new WyslannikNPC(this);
 
 
         this.getMetinologNPC().loadMissions();
@@ -832,14 +830,6 @@ public final class RPGCORE extends JavaPlugin {
         return serverManager;
     }
 
-    public KlasyHelper getklasyHelper() {
-        return klasyHelper;
-    }
-
-    public KlasyNPC getKlasyNPC() {
-        return klasyNPC;
-    }
-
     public MedykNPC getMedykNPC() {
         return medykNPC;
     }
@@ -850,9 +840,6 @@ public final class RPGCORE extends JavaPlugin {
     // ================================ SKRZYNKI INNE ================================
     public HellcaseManager gethellcaseManager() {
         return hellcaseManager;
-    }
-    public ZwierzakiManager getzwierzakiManager() {
-        return zwierzakiManager;
     }
     public KowalManager getKowalManager() {
         return kowalManager;
@@ -932,5 +919,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ZmiankiManager getZmiankiManager() {
         return zmiankiManager;
+    }
+
+    public WyslannikNPC getWyslannikNPC() {
+        return wyslannikNPC;
     }
 }

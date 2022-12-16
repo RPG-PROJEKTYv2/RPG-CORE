@@ -224,7 +224,7 @@ public class PetyManager {
         System.out.println(petNamePlusRarity);
         final double toAdd = Double.parseDouble(String.format("%.3f", PetList.getAbilityIncrease(petNamePlusRarity, 1, compound.getInt("PetLevel"))));
         final double toAdd2 = Double.parseDouble(String.format("%.3f", PetList.getAbilityIncrease(petNamePlusRarity, 2, compound.getInt("PetLevel"))));
-        //TODO PRZETESTOWAC CZY NIE DODAJE W PIZDU 0 NA KONCU!!!!!!!!!!!!!!!!!!!
+
         ItemStack newItem = increaseAbility(player.getUniqueId(), CraftItemStack.asBukkitCopy(nmsStack), toAdd, 1);
         newItem = increaseAbility(player.getUniqueId(), newItem, toAdd2, 2);
         final String name = is.getItemMeta().getDisplayName();

@@ -33,9 +33,6 @@ public class ZmiankiManager {
                     "",
                     "&8Kliknij &6&l1 Zwojem Zaczarowania&8, zeby",
                     "&8wylosowac nowe bonusy!",
-                    "&7lub",
-                    "&8Kliknij na bonus &d&l1 Ksiega Zaczarowania&8,",
-                    "&8zeby zmienic wartosc jednego bonusu!",
                     "",
                     "&8Pamietaj! Nie mozesz klikac wiecej, niz &c1 &8przedmiotem",
                     "",
@@ -77,11 +74,11 @@ public class ZmiankiManager {
 
     public ItemStack rollNewBonuses(final ItemStack is, final Player player) {
         final ItemMeta meta = is.getItemMeta();
-        if (meta.getLore().contains(Utils.format("&8----------------{&dMagiczne Zaczarowanie&8}----------------"))) {
+        if (meta.getLore().contains(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"))) {
             final List<String> lore = meta.getLore();
-            final int index = lore.indexOf(Utils.format("&8----------------{&dMagiczne Zaczarowanie&8}----------------"));
+            final int index = lore.indexOf(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
             lore.remove(index - 1);
-            lore.remove(Utils.format("&8----------------{&dMagiczne Zaczarowanie&8}----------------"));
+            lore.remove(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
             if (is.getType().toString().contains("_SWORD")) {
                 lore.remove(Utils.format("&7Dodatkowe Obrazenia: &f+" + Utils.getTagInt(is, "dodatkowe")));
                 lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(is, "silny-na-val") + "%"));
@@ -92,7 +89,7 @@ public class ZmiankiManager {
                 // ZBROJA
             }
             lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
-            lore.remove(Utils.format("&8----------------{&dMagiczne Zaczarowanie&8}----------------"));
+            lore.remove(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
             meta.setLore(Utils.format(lore));
 
             is.setItemMeta(meta);
@@ -117,14 +114,14 @@ public class ZmiankiManager {
         }
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&8----------------{&dMagiczne Zaczarowanie&8}----------------",
+                    "&8------------{&dMagiczne Zaczarowanie&8}------------",
                     "&7Dodatkowe Obrazenia: &f+" + Utils.getTagInt(toReturn, "dodatkowe"),
                     "&7Silny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
                     "&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(toReturn, "krytyk") + "%",
                     "&7Silny Na " + Utils.getTagString(toReturn, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(toReturn, "silny-lvl-val") + "%",
                     "&7Przebicie Pancerza: &f+" + Utils.getTagDouble(toReturn, "przebicie-pancerza") + "%",
                     "&cWymagany Poziom: &6" + loreLvl,
-                    "&8----------------{&dMagiczne Zaczarowanie&8}----------------"
+                    "&8------------{&dMagiczne Zaczarowanie&8}------------"
             )).addTagInt("lvl", loreLvl).toItemStack().clone();
 
         return toReturn.clone();

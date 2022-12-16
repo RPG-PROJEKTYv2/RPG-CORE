@@ -19,8 +19,8 @@ public class ItemHelper {
         final List<String> lore = new ArrayList<>();
 
         set.setName(name);
-        lore.add("&7Obrona: &6" + prot);
-        lore.add("&7Ciernie: &6" + thorns);
+        lore.add("&7Obrona: &f" + prot);
+        lore.add("&7Ciernie: &f" + thorns);
         set.setLore(lore);
 
         set.hideFlag();
@@ -80,11 +80,11 @@ public class ItemHelper {
             lore = im.getLore();
             if (type.equalsIgnoreCase("zbroja")) {
                 if (v1 > 0) {
-                    lore.set(0, Utils.format("&7Obrona: &6" + v1));
+                    lore.set(0, Utils.format("&7Obrona: &f" + v1));
                     Utils.setTagInt(is, "prot", v1);
                 }
                 if (v2 > 0) {
-                    lore.set(1, Utils.format("&7Ciernie: &6" + v2));
+                    lore.set(1, Utils.format("&7Ciernie: &f" + v2));
                     Utils.setTagInt(is, "thorns", v2);
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
@@ -100,11 +100,11 @@ public class ItemHelper {
         } else {
             if (type.equalsIgnoreCase("zbroja")) {
                 if (v1 > 0) {
-                    lore.add(Utils.format("&7Obrona: &6" + v1));
+                    lore.add(Utils.format("&7Obrona: &f" + v1));
                     Utils.setTagInt(is, "prot", v1);
                 }
                 if (v2 > 0) {
-                    lore.add(Utils.format("&7Ciernie: &6" + v2));
+                    lore.add(Utils.format("&7Ciernie: &f" + v2));
                     Utils.setTagInt(is, "thorns", v2);
                 }
             } else if (type.equalsIgnoreCase("miecz")) {

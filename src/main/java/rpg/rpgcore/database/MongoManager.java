@@ -11,7 +11,6 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
-import rpg.rpgcore.klasy.objects.Klasy;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.ore.Ore;
@@ -23,6 +22,7 @@ import rpg.rpgcore.npc.medyk.MedykObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.trener.TrenerObject;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
@@ -261,11 +261,11 @@ public class MongoManager {
                 this.addDataMetinolog(user);
                 rpgcore.getMetinologNPC().add(user);
             }
-            if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
+            /*if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
                 final Klasy user = new Klasy(uuid);
                 this.addKlasyData(user);
                 rpgcore.getklasyHelper().add(user);
-            }
+            }*/
             if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() == null) {
                 final MedykObject user = new MedykObject(uuid);
                 this.addDataMedyk(user);
@@ -316,6 +316,11 @@ public class MongoManager {
                 final UserPets user = new UserPets(uuid);
                 this.addDataUserPets(user);
                 rpgcore.getPetyManager().addToUserPets(user);
+            }
+            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
+                final WyslannikUser user = new WyslannikUser(uuid);
+                this.addDataWyslannik(user);
+                rpgcore.getWyslannikNPC().add(user);
             }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
@@ -380,9 +385,9 @@ public class MongoManager {
         this.addDataBao(baoObject);
         rpgcore.getBaoManager().add(baoObject);
 
-        final Klasy klasy = new Klasy(uuid);
+        /*final Klasy klasy = new Klasy(uuid);
         this.addKlasyData(klasy);
-        rpgcore.getklasyHelper().add(klasy);
+        rpgcore.getklasyHelper().add(klasy);*/
 
         final DuszologObject duszologObject = new DuszologObject(uuid);
         this.addDataDuszolog(duszologObject);
@@ -436,6 +441,10 @@ public class MongoManager {
         this.addDataTrener(trenerObject);
         rpgcore.getTrenerNPC().add(trenerObject);
 
+        final WyslannikUser wyslannikUser = new WyslannikUser(uuid);
+        this.addDataWyslannik(wyslannikUser);
+        rpgcore.getWyslannikNPC().add(wyslannikUser);
+
         Document document;
 
         document = new Document();
@@ -470,7 +479,7 @@ public class MongoManager {
             this.saveDataDodatki(uuid, rpgcore.getDodatkiManager().find(uuid));
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
             this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
-            this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
+            //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
             this.saveDataDuszolog(uuid, rpgcore.getDuszologNPC().find(uuid));
             this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
             this.saveDataMedyk(uuid, rpgcore.getMedykNPC().find(uuid));
@@ -480,6 +489,7 @@ public class MongoManager {
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
             this.saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
+            this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
 
             this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
@@ -616,7 +626,7 @@ public class MongoManager {
         pool.getOther().findOneAndReplace(new Document("_id", "dodatkowyExp"), rpgcore.getServerManager().find(name).toDocument());
     }
 
-    public Map<UUID, Klasy> loadAllKlasy() {
+    /*public Map<UUID, Klasy> loadAllKlasy() {
         Map<UUID, Klasy> klasy = new ConcurrentHashMap<>();
         for (Document document : this.pool.getKlasy().find()) {
             Klasy klasyUser = new Klasy(document);
@@ -630,7 +640,7 @@ public class MongoManager {
 
     public void saveKlasyData(UUID uuid, Klasy klasy) {
         pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), klasy.toDocument());
-    }
+    }*/
 
 
     // MEDYK
@@ -1128,6 +1138,30 @@ public class MongoManager {
     public void saveAllOreLocations() {
         for (Ore ore : rpgcore.getOreManager().getOreLocations()) {
             this.saveDataOreLocation(ore);
+        }
+    }
+
+    // WYSLANNIK
+    public Map<UUID, WyslannikUser> loadAllWyslannik() {
+        Map<UUID, WyslannikUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getWyslannik().find()) {
+            final WyslannikUser wyslannikUser = new WyslannikUser(document);
+            userMap.put(wyslannikUser.getUuid(), wyslannikUser);
+        }
+        return userMap;
+    }
+
+    public void addDataWyslannik(final WyslannikUser wyslannikUser) {
+        this.pool.getWyslannik().insertOne(wyslannikUser.toDocument());
+    }
+
+    public void saveDataWyslannik(final UUID uuid, final WyslannikUser wyslannikUser) {
+        this.pool.getWyslannik().findOneAndReplace(new Document("_id", uuid), wyslannikUser.toDocument());
+    }
+
+    public void saveAllWyslannik() {
+        for (final WyslannikUser wyslannikUser : rpgcore.getWyslannikNPC().getUsers()) {
+            this.saveDataWyslannik(wyslannikUser.getUuid(), wyslannikUser);
         }
     }
 

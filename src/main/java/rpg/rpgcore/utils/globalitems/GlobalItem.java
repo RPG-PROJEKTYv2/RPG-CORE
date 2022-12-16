@@ -45,9 +45,6 @@ public enum GlobalItem {
     // Zmianki
     I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lZwoj Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu")).toItemStack().clone()),
     I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lZwoj Zaczarowania Zbroii").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroii")).toItemStack().clone()),
-    I52("I52", new ItemBuilder(Material.BOOK).setName("&d&lKsiega Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic jedne bonus na twoim mieczu")).toItemStack().clone()),
-    I53("I53", new ItemBuilder(Material.BOOK).setName("&d&lKsiega Zaczarowania Zbroii").setLore(Arrays.asList("&8Pozwala zmienic jeden bonus na twojej zbroii")).toItemStack().clone()),
-
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 

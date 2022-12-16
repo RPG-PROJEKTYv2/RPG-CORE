@@ -118,7 +118,7 @@ public class DamageManager {
         return Double.parseDouble(String.format("%.2f", dmg));
     }
 
-    public double calculateDef(final Player player, final String type) {
+    public double calculatePlayerDef(final Player player, final String type) {
         final UUID uuid = player.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double def = 10;
@@ -211,6 +211,35 @@ public class DamageManager {
         }
 
         return Double.parseDouble(String.format("%.2f", dmg));
+    }
+
+    public double calculatePlayerDefToEntity(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+        double def = 10;
+        double mnoznik = 100;
+
+        mnoznik += bonuses.getSredniadefensywa();
+        mnoznik += bonuses.getDefnamoby();
+        mnoznik -= bonuses.getMinusdefnamoby();
+        mnoznik -= bonuses.getMinussredniadefensywa();
+
+        if (player.getInventory().getHelmet() != null) {
+            def += Utils.getTagInt(player.getInventory().getHelmet(), "prot");
+        }
+        if (player.getInventory().getChestplate() != null) {
+            def += Utils.getTagInt(player.getInventory().getChestplate(), "prot");
+        }
+        if (player.getInventory().getLeggings() != null) {
+            def += Utils.getTagInt(player.getInventory().getLeggings(), "prot");
+        }
+        if (player.getInventory().getBoots() != null) {
+            def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
+        }
+
+        def = def * (mnoznik / 100);
+
+        return Double.parseDouble(String.format("%.3f", def / (def + 100)));
     }
 
     public void updateKryt(UUID uuid, double kryt) {

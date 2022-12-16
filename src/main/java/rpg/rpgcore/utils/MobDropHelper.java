@@ -73,7 +73,7 @@ public class MobDropHelper {
             addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
-                addDropPlayer(player, LowcaItems.getItem("I1", 1), getDropChance(szczescie, 60), true, true, entity);
+                addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 60), true, true, entity);
             }
         }
         // MOB
@@ -101,7 +101,7 @@ public class MobDropHelper {
             addDropPlayer(player, Skrzynki.getItem("I2", 1), 100, true, true, entity);
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
-                addDropPlayer(player, LowcaItems.getItem("I2", 1), getDropChance(szczescie, 60), true, true, entity);
+                addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 60), true, true, entity);
             }
         }
         // MOB

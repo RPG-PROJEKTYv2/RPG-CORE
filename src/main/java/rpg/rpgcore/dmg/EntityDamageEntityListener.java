@@ -26,13 +26,23 @@ public class EntityDamageEntityListener implements Listener {
 
         if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
             if (e.getDamager() instanceof Player) {
+                final Player attacker = (Player) e.getDamager();
                 e.setCancelled(true);
+
+                if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
+                    if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getLvl() < Utils.getTagInt(attacker.getItemInHand(), "lvl")) {
+                        attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, aby uzywac tego przedmiotu!"));
+                        return;
+                    }
+                }
+
                 if (e.getEntity().getCustomName() == null) {
                     return;
                 }
-                if (!rpgcore.getCooldownManager().hasMetinyCooldown(e.getDamager().getUniqueId())) {
-                    MetinyHelper.attackMetin(Integer.parseInt(e.getEntity().getCustomName()), 1, e.getEntity(), ((Player) e.getDamager()).getPlayer());
-                    rpgcore.getCooldownManager().givePlayerMetinyCooldown(e.getDamager().getUniqueId());
+
+                if (!rpgcore.getCooldownManager().hasMetinyCooldown(attacker.getUniqueId())) {
+                    MetinyHelper.attackMetin(Integer.parseInt(e.getEntity().getCustomName()), 1, e.getEntity(), attacker);
+                    rpgcore.getCooldownManager().givePlayerMetinyCooldown(attacker.getUniqueId());
                     return;
                 }
                 return;
@@ -44,6 +54,14 @@ public class EntityDamageEntityListener implements Listener {
 
             final Player attacker = (Player) e.getDamager();
 
+            if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
+                if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getLvl() < Utils.getTagInt(attacker.getItemInHand(), "lvl")) {
+                    attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, aby uzywac tego przedmiotu!"));
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+
             if (e.getEntity() instanceof Player) {
 
                 //... Victim jest Graczem
@@ -51,7 +69,7 @@ public class EntityDamageEntityListener implements Listener {
                 final Player victim = (Player) e.getEntity();
 
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
-                final double victimDef = rpgcore.getDamageManager().calculateDef(victim, "ludzie");
+                final double victimDef = rpgcore.getDamageManager().calculatePlayerDef(victim, "ludzie");
 
                 double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - victimDef));
                 if (finalDmg < 0) {
@@ -65,14 +83,6 @@ public class EntityDamageEntityListener implements Listener {
             } else {
                 // ... Victim jest Mobem
 
-                if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
-                    if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getLvl() < Utils.getTagInt(attacker.getItemInHand(), "lvl")) {
-                        attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, aby uzywac tego przedmiotu!"));
-                        e.setCancelled(true);
-                        return;
-                    }
-                }
-
                 final LivingEntity victim = (LivingEntity) e.getEntity();
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
@@ -82,7 +92,7 @@ public class EntityDamageEntityListener implements Listener {
                 attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
                 attacker.sendMessage("Dmg event - " + e.getDamage());
                 attacker.sendMessage("Dmg final - " + e.getFinalDamage());
-                if (victim.getCustomName().contains("Ksiaze Mroku")) {
+                if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
                     if (((Monster) victim).getTarget() != attacker) {
                         ((Monster) victim).setTarget(attacker);
                     }
@@ -93,10 +103,22 @@ public class EntityDamageEntityListener implements Listener {
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
             }
+        } else if (e.getDamager() instanceof Monster) {
+            if (e.getEntity() instanceof Player) {
+                final Player victim = (Player) e.getEntity();
+                final double attackerDmg = e.getDamage();
+                victim.sendMessage("Mob damage: " + attackerDmg);
+                final double victimDef = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
+
+                double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - (attackerDmg * victimDef)));
+                if (finalDmg < 0) {
+                    finalDmg = 0;
+                }
+                victim.sendMessage("Final dmg - " + finalDmg);
+                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+                e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
+            }
         }
-
-        // ATAKUJACY JEST GRACZEM
-
     }
 
     private void updateCustomName(final Entity entity, final double dmg) {

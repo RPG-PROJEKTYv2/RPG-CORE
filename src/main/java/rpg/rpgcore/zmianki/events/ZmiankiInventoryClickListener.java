@@ -24,11 +24,9 @@ public class ZmiankiInventoryClickListener implements Listener {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID uuid = player.getUniqueId();
         final String title = Utils.removeColor(clickedInventory.getTitle());
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
-
 
         if (title.equals("Zmiana Bonusow")) {
             e.setCancelled(true);
@@ -39,7 +37,7 @@ public class ZmiankiInventoryClickListener implements Listener {
 
 
             if (slot == 13) {
-                if (clickedInventory.getItem(13) == null) {
+                if (clickedInventory.getItem(13) == null || clickedInventory.getItem(13).getType() == Material.AIR) {
                     if (e.getCursor() == null || e.getCursor().getType() == Material.AIR) {
                         return;
                     }
@@ -76,8 +74,6 @@ public class ZmiankiInventoryClickListener implements Listener {
                     RPGCORE.getInstance().getZmiankiManager().openGUI(player, null);
                 }
             }
-
-
         }
     }
 }
