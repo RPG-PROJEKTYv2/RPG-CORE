@@ -15,13 +15,13 @@ public class KowalManager {
 
     public KowalManager() {
         // metale
-        this.kowal.add(new Items("1", 7.5, GlobalItem.getItem("I_METAL", 1), 1));
-        this.kowal.add(new Items("2", 5.0, GlobalItem.getItem("I_METAL", 2), 2));
-        this.kowal.add(new Items("3", 2.5, GlobalItem.getItem("I_METAL", 3), 3));
-        // podreczniki
-        this.kowal.add(new Items("4", 5.0, GlobalItem.getItem("I10", 1), 1));
-        this.kowal.add(new Items("5", 3.0, GlobalItem.getItem("I10", 2), 2));
-        this.kowal.add(new Items("6", 1.0, GlobalItem.getItem("I10", 3), 3));
+        this.kowal.add(new Items("1", 12.0, GlobalItem.getItem("I_METAL", 1), 1));
+        this.kowal.add(new Items("2", 6.0, GlobalItem.getItem("I_METAL", 2), 2));
+        this.kowal.add(new Items("3", 3.0, GlobalItem.getItem("I_METAL", 3), 3));
+        // zwoje
+        this.kowal.add(new Items("4", 8.0, GlobalItem.getItem("I10", 1), 1));
+        this.kowal.add(new Items("5", 4.0, GlobalItem.getItem("I10", 2), 2));
+        this.kowal.add(new Items("6", 2.0, GlobalItem.getItem("I10", 3), 3));
         // oczyszczenie
 
     }

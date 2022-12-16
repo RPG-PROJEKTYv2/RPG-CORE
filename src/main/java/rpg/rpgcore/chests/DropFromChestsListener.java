@@ -1,5 +1,6 @@
 package rpg.rpgcore.chests;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
+import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
@@ -43,13 +45,13 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
-                        /*final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
+                        final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        player.getInventory().addItem(is);*/
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -108,20 +110,22 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+                        if (is.equals(BonType.SREDNIE_5.getBon()) || is.equals(BonType.KRYTYK_5.getBon()) || is.equals(BonType.DEFENSYWA_5.getBon())) {
+                            Bukkit.broadcastMessage(" ");
+                            Bukkit.broadcastMessage(Utils.format("&3Tajemnicza Skrzynia &8>> &7Gracz &6" + player.getName() + " &7znalazl jeden z rzadkich przedmiotow!"));
+                            Bukkit.broadcastMessage(" ");
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
                     }
                 }
                 // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
+                        player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
                         ItemStack item = rpgcore.getZwierzakiManager().getDrawnItems(player);
-                        if (Utils.getTagString(playerItem, "Type").equals("Normal")) {
-                            item = rpgcore.getZwierzakiManager().getDrawnItems(player);
-                        }
                         if (item == null) {
                             return;
                         }

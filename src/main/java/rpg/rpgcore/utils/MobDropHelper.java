@@ -45,7 +45,8 @@ public class MobDropHelper {
         final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final double niesDropChance = 0.01 + ((0.01 * szczescie) / 1000.0);
         final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
-        final double chestDropChance = 2.5 + ((2.5 * szczescie) / 1000.0);
+        final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
+        final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
 
         // TU BEDA PRZELICZNIKI I MNOZNIKI Z SETOW/MIECZOW/ULEPSZEN ITD.
 
@@ -61,7 +62,7 @@ public class MobDropHelper {
         // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
         addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
         // TAJEMNICZA SKRZYNIA
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.02), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 1.0), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
         addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2.0), true, true, entity);
 
@@ -78,7 +79,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Najemnik Lvl. 3") || entityName.equals("Najemnik Lvl. 5") || entityName.equals("Najemnik Lvl. 7")) {
             // SKRZYNKA MOBA
-            addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance, true, true, entity);
+            addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance50lvl, true, true, entity);
             // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
             // LESNIK MISJE
@@ -106,7 +107,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Goblin Lvl. 14") || entityName.equals("Goblin Lvl. 16") || entityName.equals("Goblin Lvl. 19")) {
             // SKRZYNKA MOBA
-            addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance, true, true, entity);
+            addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance50lvl, true, true, entity);
             // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance, true, true, entity);
             // LESNIK MISJE

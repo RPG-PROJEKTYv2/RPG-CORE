@@ -7,9 +7,9 @@ import rpg.rpgcore.utils.ItemBuilder;
 import java.util.Arrays;
 
 public enum BonType {
-    SREDNIE_5("Bon Sredinch Obrazen 5%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 5%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
-    SREDNIE_10("Bon Sredinch Obrazen 10%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 10%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
-    SREDNIE_15("Bon Sredinch Obrazen 15%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 15%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    SREDNIE_5("Bon Srednich Obrazen 5%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 5%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    SREDNIE_10("Bon Srednich Obrazen 10%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 10%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    SREDNIE_15("Bon Srednich Obrazen 15%", new ItemBuilder(Material.SIGN).setName("&cBon Srednich Obrazen 15%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
 
     DEFENSYWA_5("Bon Sredniej Defensywy 5%", new ItemBuilder(Material.SIGN).setName("&2Bon Sredniej Defensywy 5%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
     DEFENSYWA_10("Bon Sredniej Defensywy 10%", new ItemBuilder(Material.SIGN).setName("&2Bon Sredniej Defensywy 10%").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),

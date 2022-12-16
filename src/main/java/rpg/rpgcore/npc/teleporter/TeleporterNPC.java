@@ -38,7 +38,7 @@ public class TeleporterNPC {
     //(Material.SMOOTH_BRICK, 1, (short)2);
     //SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAND);
-    private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK, (short)98);
+    private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
 
 
