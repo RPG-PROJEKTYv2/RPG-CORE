@@ -18,15 +18,15 @@ public class HellcaseManager {
     private final Set<Items> hellcase = Sets.newConcurrentHashSet();
 
     public HellcaseManager() {
-        // ZBROJA I MIECZ
-        this.hellcase.add(new Items("1", 12.0 , ItemHelper.createArmor("&c&lPiekielny Helm", Material.DIAMOND_HELMET, 50, 5,false), 1));
-        this.hellcase.add(new Items("2", 12.0 , ItemHelper.createArmor("&c&lPiekielny Napiersnik", Material.DIAMOND_CHESTPLATE, 50, 5,false), 1));
-        this.hellcase.add(new Items("3", 12.0 , ItemHelper.createArmor("&c&lPiekielne Nogawice", Material.DIAMOND_LEGGINGS, 50, 5,false), 1));
-        this.hellcase.add(new Items("4", 12.0 , ItemHelper.createArmor("&c&lPiekielne Buty", Material.DIAMOND_BOOTS, 50, 5,false), 1));
-        this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 50, 5, true), 1));
+        // ZBROJA- DO DOKONCZENIA I MIECZ
+        this.hellcase.add(new Items("1", 12.0 , ItemHelper.createArmor("&c&lPiekielny Helm", Material.DIAMOND_HELMET, 16, 4,false), 1));
+        this.hellcase.add(new Items("2", 12.0 , ItemHelper.createArmor("&c&lPiekielny Napiersnik", Material.DIAMOND_CHESTPLATE, 16, 4,false), 1));
+        this.hellcase.add(new Items("3", 12.0 , ItemHelper.createArmor("&c&lPiekielne Nogawice", Material.DIAMOND_LEGGINGS, 16, 4,false), 1));
+        this.hellcase.add(new Items("4", 12.0 , ItemHelper.createArmor("&c&lPiekielne Buty", Material.DIAMOND_BOOTS, 16, 4,false), 1));
+        this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 20, 10, true), 1));
         // AKCE - DO DOKONCZENIA
-        this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
-        this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));
+        //this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
+        //this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));
         // WALUTA
         this.hellcase.add(new Items("15", 4.0, GlobalItem.getHellCoin(5),1));
         this.hellcase.add(new Items("16", 3.0, GlobalItem.getHellCoin(10),1));

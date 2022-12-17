@@ -187,8 +187,8 @@ public class DropFromChestsListener implements Listener {
                 // SKRZYNIA WODZA GOBLINOW
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(Skrzynki.getItem("I4", 1));
-                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
+                        final Items item = rpgcore.getWodzGoblinowManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -201,8 +201,8 @@ public class DropFromChestsListener implements Listener {
                 // SKRZYNIA GOBLINA
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
-                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        player.getInventory().removeItem(Skrzynki.getItem("I4", 1));
+                        final Items item = rpgcore.getGoblinManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }

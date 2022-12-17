@@ -36,17 +36,17 @@ public class TajemniczaManager {
         this.tajemnicza.add(new Items("9", 0.5, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
         this.tajemnicza.add(new Items("10", 0.25, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
         // set I
-        this.tajemnicza.add(new Items("11", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Helm", Material.IRON_HELMET, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("12", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("13", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Spodnie", Material.IRON_LEGGINGS, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("14", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Buty", Material.IRON_BOOTS, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("15", 5.0, ItemHelper.createSword("&3Uszkodzony Tajemniczy Miecz", Material.IRON_SWORD, 10, 5, false), 1));
+        this.tajemnicza.add(new Items("11", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Helm", Material.IRON_HELMET, 4, 1, false), 1));
+        this.tajemnicza.add(new Items("12", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 4, 1, false), 1));
+        this.tajemnicza.add(new Items("13", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Spodnie", Material.IRON_LEGGINGS, 4, 1, false), 1));
+        this.tajemnicza.add(new Items("14", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Buty", Material.IRON_BOOTS, 4, 1, false), 1));
+        this.tajemnicza.add(new Items("15", 5.0, ItemHelper.createSword("&3Uszkodzony Tajemniczy Miecz", Material.IRON_SWORD, 3, 2, false), 1));
         // set II
-        this.tajemnicza.add(new Items("11", 3.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.DIAMOND_HELMET, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("12", 3.0, ItemHelper.createArmor("&3Tajemniczy Napiersnik", Material.DIAMOND_CHESTPLATE, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("13", 3.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.DIAMOND_LEGGINGS, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("14", 3.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.DIAMOND_BOOTS, 12, 2, false), 1));
-        this.tajemnicza.add(new Items("15", 1.75, ItemHelper.createSword("&3Tajemniczy Miecz", Material.DIAMOND_SWORD, 10, 5, false), 1));
+        this.tajemnicza.add(new Items("11", 3.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.DIAMOND_HELMET, 7, 7, false), 1));
+        this.tajemnicza.add(new Items("12", 3.0, ItemHelper.createArmor("&3Tajemniczy Napiersnik", Material.DIAMOND_CHESTPLATE, 7, 2, false), 1));
+        this.tajemnicza.add(new Items("13", 3.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.DIAMOND_LEGGINGS, 7, 2, false), 1));
+        this.tajemnicza.add(new Items("14", 3.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.DIAMOND_BOOTS, 7, 2, false), 1));
+        this.tajemnicza.add(new Items("15", 1.75, ItemHelper.createSword("&3Tajemniczy Miecz", Material.DIAMOND_SWORD, 6, 4, false), 1));
         // wywar
         this.tajemnicza.add(new Items("16", 3.5, LesnikItems.getByItem("POTION", 1), 1));
     }

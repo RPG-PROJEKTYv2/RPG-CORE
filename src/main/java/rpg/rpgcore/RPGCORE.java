@@ -24,6 +24,8 @@ import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
+import rpg.rpgcore.chests.Expowisko2.GoblinManager;
+import rpg.rpgcore.chests.Expowisko2.WodzGoblinowManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
@@ -241,6 +243,9 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 1
     private NajemnikManager najemnikManager;
     private WygnaniecManager wygnaniecManager;
+    // EXPOWISKO 2
+    private GoblinManager goblinManager;
+    private WodzGoblinowManager wodzGoblinowManager;
 
 
 
@@ -654,11 +659,14 @@ public final class RPGCORE extends JavaPlugin {
         this.surowceManager = new SurowceManager();
         this.tajemniczaManager = new TajemniczaManager();
         this.wartosciowykuferManager = new WartosciowykuferManager();
+        this.zwierzakiManager = new ZwierzakiManager();
         // ================================ SKRZYNKI EXPOWISKO ================================
         // EXPOWISKO 1
         this.najemnikManager = new NajemnikManager();
         this.wygnaniecManager = new WygnaniecManager();
-        this.zwierzakiManager = new ZwierzakiManager();
+        // EXPOWISKO 2
+        this.wodzGoblinowManager = new WodzGoblinowManager();
+        this.goblinManager = new GoblinManager();
     }
 
     private void initDungeons() {
@@ -863,6 +871,13 @@ public final class RPGCORE extends JavaPlugin {
     }
     public WygnaniecManager getWygnaniecManager() {
         return wygnaniecManager;
+    }
+    // exp2
+    public GoblinManager getGoblinManager() {
+        return goblinManager;
+    }
+    public WodzGoblinowManager getWodzGoblinowManager() {
+        return wodzGoblinowManager;
     }
 
     public GornikNPC getGornikNPC() {
