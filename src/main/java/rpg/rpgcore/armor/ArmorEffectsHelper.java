@@ -10,7 +10,7 @@ import rpg.rpgcore.utils.Utils;
 
 public class ArmorEffectsHelper {
     public static void addEffectChestPlate(Player player, int prot) {
-        Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
+        final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
         player.setMaxHealth(bonuses.getBonusesUser().getDodatkowehp() * 2);
         int k = 0;
         int k1 = 0;
@@ -52,7 +52,7 @@ public class ArmorEffectsHelper {
             player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999999, k - 1));
             player.setMaxHealth((bonuses.getBonusesUser().getDodatkowehp() * 2) + (k1 * 2));
-            if (player.getWorld().getName().equals("spawn")) {
+            if (player.getWorld().getName().equals("spawnOFFICIAL")) {
                 player.setHealth(player.getMaxHealth());
             }
         }
@@ -101,7 +101,7 @@ public class ArmorEffectsHelper {
         if (value > 249) {
             k = 300;
         }
-        Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
+        final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.SPEED);
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0)));

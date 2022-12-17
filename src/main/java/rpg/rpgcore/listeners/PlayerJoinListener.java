@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.armor.ArmorEffectsHelper;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.pets.Pet;
@@ -82,6 +83,7 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
+        e.setJoinMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
         player.teleport(rpgcore.getSpawnManager().getSpawn());
 
         final User user = rpgcore.getUserManager().find(uuid);
@@ -112,7 +114,6 @@ public class PlayerJoinListener implements Listener {
 
         rpgcore.getLvlManager().updateLvlBelowName(player, playerName, playerLvl);
 
-        //TODO Zrobic ladowanie z klasy BONUSES dodatkowegohp
         player.setMaxHealth(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowehp() * 2);
         player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
@@ -120,7 +121,6 @@ public class PlayerJoinListener implements Listener {
         NameTagUtil.setPlayerNameTag(player, "updatePrefix");
 
 
-        e.setJoinMessage(null);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
         if (!player.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
@@ -134,6 +134,7 @@ public class PlayerJoinListener implements Listener {
         TabManager.addPlayer(player);
         TabManager.add(player);
         TabManager.update(player.getUniqueId());
+        ArmorEffectsHelper.addEffectsArmor(player);
 
         final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
 

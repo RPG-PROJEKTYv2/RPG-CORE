@@ -1,6 +1,7 @@
 package rpg.rpgcore.utils;
 
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -73,56 +74,61 @@ public class ItemHelper {
         return sword.toItemStack();
     }
 
-    public static void setEnchants(final ItemStack is, final String type, final int v1, final int v2) {
-        final ItemMeta im = is.getItemMeta();
+    public static ItemStack setEnchants(final ItemStack is, final String type, final int v1, final int v2) {
         List<String> lore = new ArrayList<>();
-        if (im.hasLore()) {
-            lore = im.getLore();
+        final net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
+        final net.minecraft.server.v1_8_R3.NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new net.minecraft.server.v1_8_R3.NBTTagCompound();
+        if (is.getItemMeta().hasLore()) {
+            lore = is.getItemMeta().getLore();
             if (type.equalsIgnoreCase("zbroja")) {
                 if (v1 > 0) {
                     lore.set(0, Utils.format("&7Obrona: &f" + v1));
-                    Utils.setTagInt(is, "prot", v1);
+                    tag.setInt("prot", v1);
                 }
                 if (v2 > 0) {
                     lore.set(1, Utils.format("&7Ciernie: &f" + v2));
-                    Utils.setTagInt(is, "thorns", v2);
+                    tag.setInt("thorns", v2);
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
                     lore.set(0, Utils.format("&7Obrazenia: &c" + v1));
-                    Utils.setTagInt(is, "dmg", v1);
+                    tag.setInt("dmg", v1);
                 }
                 if (v2 > 0) {
                     lore.set(1, Utils.format("&7Obrazenia na potwory: &c" + v2));
-                    Utils.setTagInt(is, "moby", v2);
+                    tag.setInt("moby", v2);
                 }
             }
         } else {
             if (type.equalsIgnoreCase("zbroja")) {
                 if (v1 > 0) {
                     lore.add(Utils.format("&7Obrona: &f" + v1));
-                    Utils.setTagInt(is, "prot", v1);
+                    tag.setInt("prot", v1);
                 }
                 if (v2 > 0) {
                     lore.add(Utils.format("&7Ciernie: &f" + v2));
-                    Utils.setTagInt(is, "thorns", v2);
+                    tag.setInt("thorns", v2);
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
                     lore.add(Utils.format("&7Obrazenia: &c" + v1));
-                    Utils.setTagInt(is, "dmg", v1);
+                    tag.setInt("dmg", v1);
                 }
                 if (v2 > 0) {
                     lore.add(Utils.format("&7Obrazenia na potwory: &c" + v2));
-                    Utils.setTagInt(is, "moby", v2);
+                    tag.setInt("moby", v2);
                 }
             }
         }
-        im.setLore(lore);
-        is.setItemMeta(im);
+        nmsStack.setTag(tag);
+        final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
+        final ItemMeta meta = toReturn.getItemMeta();
+        meta.setLore(lore);
+        toReturn.setItemMeta(meta);
+        return toReturn;
     }
 
-    public static void checkEnchants(ItemStack itemStack, Player player) {
+    public static void checkEnchants(final ItemStack itemStack, final Player player) {
         if (itemStack == null) {
             return;
         }
@@ -135,7 +141,7 @@ public class ItemHelper {
                             "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
                                     "Item: " + itemStack.getItemMeta(), Color.RED
                     )));
-                    setEnchants(itemStack, "zbroja", 250, 0);
+                    player.setItemInHand(setEnchants(itemStack, "zbroja", 250, 0));
                 }
                 if (Utils.getTagInt(itemStack, "thorns") > 50) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
@@ -143,7 +149,7 @@ public class ItemHelper {
                             "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
                                     "Item: " + itemStack.getItemMeta(), Color.RED
                     )));
-                    setEnchants(itemStack, "zrboja", 0, 50);
+                    player.setItemInHand(setEnchants(itemStack, "zrboja", 0, 50));
                 }
             }
             if (type.contains("_SWORD")) {
@@ -153,7 +159,7 @@ public class ItemHelper {
                             "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
                                     "Item: " + itemStack.getItemMeta(), Color.RED
                     )));
-                    setEnchants(itemStack, "miecz", 2500, 0);
+                    player.setItemInHand(setEnchants(itemStack, "miecz", 2500, 0));
                 }
                 if (Utils.getTagInt(itemStack, "moby") > 2500) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
@@ -161,7 +167,7 @@ public class ItemHelper {
                             "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
                                     "Item: " + itemStack.getItemMeta(), Color.RED
                     )));
-                    setEnchants(itemStack, "miecz", 0, 2500);
+                    player.setItemInHand(setEnchants(itemStack, "miecz", 0, 2500));
                 }
             }
         }

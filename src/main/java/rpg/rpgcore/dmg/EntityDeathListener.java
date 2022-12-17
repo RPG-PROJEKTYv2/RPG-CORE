@@ -1,4 +1,4 @@
-package rpg.rpgcore.listeners;
+package rpg.rpgcore.dmg;
 
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import org.bukkit.Bukkit;

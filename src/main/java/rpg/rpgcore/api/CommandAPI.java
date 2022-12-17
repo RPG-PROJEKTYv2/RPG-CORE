@@ -70,7 +70,12 @@ public abstract class CommandAPI extends Command {
                     return false;
                 }
             }
-            if (!s.contains("ac") && !s.contains("admincode") && !s.equals("punktyrangi") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.contains("expiciel") && !s.contains("expiciel+") && !s.contains("oldplayer") && !s.contains("poziom") && !s.contains("money") && !s.contains("magazyn") && !s.contains("msg") && !s.contains("r") && !s.contains("akcesoria") && !s.contains("bony") && !s.contains("targ") && !s.contains("kosz") && !s.contains("spawn")) {
+            if (!s.equals("ac") && !s.equals("admincode") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("lvl") && !s.equals("os")
+                    && !s.equals("message") && !s.equals("msg")  && !s.equals("pv")  && !s.equals("pw")  && !s.equals("m")  && !s.equals("reply")  && !s.equals("r")  && !s.equals("targ")  && !s.equals("ah")  && !s.equals("gielda")
+                    && !s.equals("kasa")  && !s.equals("money")  && !s.equals("bal")  && !s.equals("balance")  && !s.equals("wyplac")  && !s.equals("withdraw")  && !s.equals("wystaw")  && !s.equals("sprawdz") && !s.equals("helpop")
+                    && !s.equals("guild")  && !s.equals("g")  && !s.equals("klan")  && !s.equals("gildia")  && !s.equals("kosz")  && !s.equals("chatpanel")  && !s.equals("panel")  && !s.equals("chatp")  && !s.equals("party")  && !s.equals("p")
+                    && !s.equals("pety")  && !s.equals("pets")  && !s.equals("ignore")  && !s.equals("ignoruj")  && !s.equals("dodatki")  && !s.equals("bony")  && !s.equals("akce")  && !s.equals("akcesoria")  && !s.equals("ekwipunek")
+                    && !s.equals("profile")  && !s.equals("magazyny")  && !s.equals("magazyn")  && !s.equals("mag")) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));
@@ -78,7 +83,7 @@ public abstract class CommandAPI extends Command {
                     }
                 }
             }
-            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn")) {
+            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("lvl")) {
                 if (userProfile.getHellCode().isEmpty()) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw stworzyc swoj hellcode! Uzyj: &c/hellcode stworz <kod> <kod>"));
                     return false;

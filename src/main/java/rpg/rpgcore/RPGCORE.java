@@ -8,6 +8,7 @@ import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
@@ -36,6 +37,7 @@ import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dmg.EntityCombustListener;
+import rpg.rpgcore.dmg.EntityDeathListener;
 import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInventoryClickListener;
@@ -96,7 +98,6 @@ import rpg.rpgcore.pets.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
 import rpg.rpgcore.pets.listeners.PetInteractListener;
 import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
-import rpg.rpgcore.pets.listeners.PetWorldChangeListener;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -435,6 +436,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
@@ -574,12 +576,13 @@ public final class RPGCORE extends JavaPlugin {
         // PETY
         this.getServer().getPluginManager().registerEvents(new PetInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetInteractListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new PetWorldChangeListener(), this);
 
         // ZMIANKI
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryCloseListener(), this);
 
+        // EFFEKTY ARMOR
+        this.getServer().getPluginManager().registerEvents(new ArmorEffectListener(this), this);
 
     }
 

@@ -676,9 +676,8 @@ public class Utils {
     }
 
     public static int getTagInt(final ItemStack is, final String tag){
-        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
-        if (!nmsStack.hasTag()) return 0;
-        NBTTagCompound tagCompound = nmsStack.getTag();
+        final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        final NBTTagCompound tagCompound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         return tagCompound.getInt(tag);
     }
 

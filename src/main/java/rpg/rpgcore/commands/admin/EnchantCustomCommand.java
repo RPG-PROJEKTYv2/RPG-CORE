@@ -30,7 +30,7 @@ public class EnchantCustomCommand extends CommandAPI {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz trzymac przedmiot w rece!"));
             return;
         }
-        ItemHelper.setEnchants(player.getItemInHand(), args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        player.setItemInHand(ItemHelper.setEnchants(player.getItemInHand(), args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2])));
         player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie dodano enchanty!"));
     }
 }

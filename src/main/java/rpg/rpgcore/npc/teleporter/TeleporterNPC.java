@@ -1,19 +1,17 @@
 package rpg.rpgcore.npc.teleporter;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
-
-import static org.bukkit.Bukkit.getPlayer;
+import java.util.Random;
 
 public class TeleporterNPC {
 
@@ -45,31 +43,8 @@ public class TeleporterNPC {
     //private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
     //private final ItemBuilder demontower = new ItemBuilder(Material.NETHERRACK);
 
-    private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1 , (short)14);
+    private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
 
-    /*public void openTeleporterMAIN(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- WYBOR"));
-
-        fillInventory.setName(" ");
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setItem(i, fillInventory.toItemStack());
-        }
-        lore.clear();
-        lore.add(" ");
-        lore.add("&7Kliknij aby otworzyc wybor expowisk.");
-        lore.add(" ");
-        wybor1.setName(Utils.format("&8* &f&lExpowiska &8*")).setLore(lore);
-        gui.setItem(11, wybor1.toItemStack());
-
-        lore.clear();
-        lore.add(" ");
-        lore.add("&7Kliknij aby otworzyc wybor dodatkowych miejsc.");
-        lore.add(" ");
-        wybor2.setName(Utils.format("&8* &f&lMiejsca Dodatkowe &8*")).setLore(lore);
-        gui.setItem(15, wybor2.toItemStack());
-
-        player.openInventory(gui);
-    }*/
     public void openTeleporterEXPOWISKA(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&9&lTELEPORTER &7- EXPOWISKA"));
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
@@ -107,7 +82,7 @@ public class TeleporterNPC {
             expowisko3.addGlowing();
             expowisko3.setLore(lore);
             gui.setItem(2, expowisko3.toItemStack());
-        }  else {
+        } else {
             brakdostepu.setName("&2Expowisko &8[ &a3. &8]");
             this.loreBRAKDOSTEPU("20");
             brakdostepu.addGlowing();
@@ -122,7 +97,7 @@ public class TeleporterNPC {
             expowisko4.addGlowing();
             expowisko4.setLore(lore);
             gui.setItem(3, expowisko4.toItemStack());
-        }   else {
+        } else {
             brakdostepu.setName("&2Expowisko &8[ &a4. &8]");
             this.loreBRAKDOSTEPU("30");
             brakdostepu.addGlowing();
@@ -137,7 +112,7 @@ public class TeleporterNPC {
             expowisko5.addGlowing();
             expowisko5.setLore(lore);
             gui.setItem(4, expowisko5.toItemStack());
-        }  else {
+        } else {
             brakdostepu.setName("&2Expowisko &8[ &a5. &8]");
             this.loreBRAKDOSTEPU("40");
             brakdostepu.addGlowing();
@@ -293,58 +268,82 @@ public class TeleporterNPC {
         }*/
         player.openInventory(gui);
     }
-    /*public void openTeleporterDODATKOWEMAPY(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&9&lTELEPORTER &7- INNE"));
-        final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
-        fillInventory.setName(" ");
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setItem(i, fillInventory.toItemStack());
-        }
-
-        if (user.getLvl() > 59) {
-            miasto1.setName("&6Miasto pierwsze");
-            this.loreEXPOWISKA("&cOFF", "&f60");
-            miasto1.addGlowing();
-            miasto1.setLore(lore);
-            gui.setItem(11, miasto1.toItemStack());
-        } else {
-            brakdostepu.setName("&6Miasto pierwsze");
-            this.loreBRAKDOSTEPU("60");
-            brakdostepu.addGlowing();
-            brakdostepu.setLore(lore);
-            gui.setItem(11, brakdostepu.toItemStack());
-        }
-
-        if (user.getLvl() > 49) {
-            demontower.setName("&cDemonTower");
-            this.loreEXPOWISKA("&cOFF", "&f50");
-            demontower.addGlowing();
-            demontower.setLore(lore);
-            gui.setItem(15, demontower.toItemStack());
-        } else {
-            brakdostepu.setName("&cDemonTower");
-            this.loreBRAKDOSTEPU("50");
-            brakdostepu.addGlowing();
-            brakdostepu.setLore(lore);
-            gui.setItem(15, brakdostepu.toItemStack());
-        }
-        player.openInventory(gui);
-    }*/
     private void loreEXPOWISKA(final String lorePVP, final String lorePOZIOM) {
         this.lore.clear();
         this.lore.add(" ");
         this.lore.add("&8* &fWymagany poziom: &6" + lorePOZIOM);
-        this.lore.add("&8* &4PvP: " + lorePVP );
+        this.lore.add("&8* &4PvP: " + lorePVP);
         this.lore.add(" ");
         this.lore.add("&8* &9Status: &a&lODBLOKOWANE");
         this.lore.add(" ");
     }
+
     private void loreBRAKDOSTEPU(final String lorePOZIOM) {
         this.lore.clear();
         this.lore.add(" ");
         this.lore.add("&8* &9Status: &4&lZABLOKOWANE");
         this.lore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
         this.lore.add(" ");
+    }
+
+
+    public void teleportExp1(final Player player) {
+        switch (new Random().nextInt(3)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), -204.5, 72, -118.5, -90F, 0F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), -86.5, 71, -154.5, 90F, 0F));
+                return;
+            case 2:
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), -53.5, 70, -38.5, 150F, 0F));
+        }
+    }
+
+    public void teleportExp2(final Player player) {
+        switch (new Random().nextInt(3)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), 149.5, 77, 180.5, 180F, 0F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), 150.5, 71, 52.5, 110F, 0F));
+                return;
+            case 2:
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), 97.5, 71, 109.5, -180F, 0F));
+        }
+    }
+
+    public void teleportExp3(final Player player) {
+        switch (new Random().nextInt(3)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 63, 75, 123, -43.8F, -0.1F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 188, 75, 78, 56.6F, 0.2F));
+                return;
+            case 2:
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 159, 75, 173, 164.0F, 0.2F));
+        }
+    }
+
+    public void teleportExp4(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("30-40map"), 27.5, 78, -121.5, -90F, -0F));
+    }
+
+    public void teleportExp5(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("40-50map"), -89.5, 69, -24.5, -180F, -0F));
+    }
+
+    public void teleportExp6(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("50-60map"), -217, 72, 85, -135F, -0F));
+    }
+
+    public void teleportExp7(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("60-70map"), 152.5, 76, 278.5, 90F, -0F));
+    }
+
+    public void teleportExp8(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("70-80map"), 1.5, 32, 15.5, 0F, 0F));
     }
 }

@@ -48,7 +48,6 @@ public class MobDropHelper {
         final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
         final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
 
-        // TU BEDA PRZELICZNIKI I MNOZNIKI Z SETOW/MIECZOW/ULEPSZEN ITD.
 
         rpgcore.getOsManager().find(uuid).getOsUser().setMobKills(rpgcore.getOsManager().find(uuid).getOsUser().getMobKills() + 1);
 
@@ -75,6 +74,9 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
                 addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 60), true, true, entity);
             }
+            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 1) {
+                rpgcore.getWyslannikNPC().find(uuid).addKillBossMissionProgress();
+            }
         }
         // MOB
         if (entityName.equals("Najemnik Lvl. 3") || entityName.equals("Najemnik Lvl. 5") || entityName.equals("Najemnik Lvl. 7")) {
@@ -88,12 +90,15 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
                 addDropPlayer(player, PrzyrodnikItems.getByName("1-10").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
+            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 1) {
+               rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
             // DUSZOLOG MISJE
-            if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
+            /*if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (ChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);
                 }
-            }
+            }*/
         }
         // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
         // BOSS
@@ -102,6 +107,9 @@ public class MobDropHelper {
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
                 addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 60), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 2) {
+                rpgcore.getWyslannikNPC().find(uuid).addKillBossMissionProgress();
             }
         }
         // MOB
@@ -116,12 +124,15 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
                 addDropPlayer(player, PrzyrodnikItems.getByName("10-20").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
+            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 2) {
+                rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
             // DUSZOLOG MISJE
-            if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 1) {
+            /*if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 1) {
                 if (ChanceHelper.getChance(100)) {
                     rpgcore.getDuszologNPC().spawnDusza(player, entity);
                 }
-            }
+            }*/
         }
         // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
         // BOSS

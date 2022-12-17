@@ -14,7 +14,6 @@ public class ZamekNieskonczonosciBoss extends EntityWither {
 
     public ZamekNieskonczonosciBoss(World world) {
         super(world);
-        this.world = world;
         List goalB = (List) Utils.getPrivateField("b", PathfinderGoalSelector.class, goalSelector); goalB.clear();
         List goalC = (List) Utils.getPrivateField("c", PathfinderGoalSelector.class, goalSelector); goalC.clear();
         List targetB = (List) Utils.getPrivateField("b", PathfinderGoalSelector.class, targetSelector); targetB.clear();
