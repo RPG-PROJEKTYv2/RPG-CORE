@@ -212,8 +212,93 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-
                 // Expowisko 3
+                // SKRZYNIA GORYLA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I6", 1));
+                        final Items item = rpgcore.getGorylManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // SKRZYNIA KROLA GORYLI
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I5", 1));
+                        final Items item = rpgcore.getKrolGoryliManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 4
+                // Skrzynia zjawy
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I8", 1));
+                        final Items item = rpgcore.getZjawaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Skrzynia przekletej duszy
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I7", 1));
+                        final Items item = rpgcore.getPrzekletaDuszaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 5
+                // Skrzynia straznika swiatyni
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I10", 1));
+                        final Items item = rpgcore.getStraznikSwiatyniManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Skrzynia trytona
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I9", 1));
+                        final Items item = rpgcore.getTrytonManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        final ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
             }
         }
     }

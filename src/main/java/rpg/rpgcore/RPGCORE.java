@@ -26,6 +26,12 @@ import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
 import rpg.rpgcore.chests.Expowisko2.GoblinManager;
 import rpg.rpgcore.chests.Expowisko2.WodzGoblinowManager;
+import rpg.rpgcore.chests.Expowisko3.GorylManager;
+import rpg.rpgcore.chests.Expowisko3.KrolGoryliManager;
+import rpg.rpgcore.chests.Expowisko4.PrzekletaDuszaManager;
+import rpg.rpgcore.chests.Expowisko4.ZjawaManager;
+import rpg.rpgcore.chests.Expowisko5.StraznikSwiatyniManager;
+import rpg.rpgcore.chests.Expowisko5.TrytonManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
@@ -246,6 +252,15 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 2
     private GoblinManager goblinManager;
     private WodzGoblinowManager wodzGoblinowManager;
+    // EXPOWISKO 3
+    private GorylManager gorylManager;
+    private KrolGoryliManager krolGoryliManager;
+    // EXPOWISKO 4
+    private ZjawaManager zjawaManager;
+    private PrzekletaDuszaManager przekletaDuszaManager;
+    // EXPOWISKO 5
+    private StraznikSwiatyniManager straznikSwiatyniManager;
+    private TrytonManager trytonManager;
 
 
 
@@ -667,6 +682,15 @@ public final class RPGCORE extends JavaPlugin {
         // EXPOWISKO 2
         this.wodzGoblinowManager = new WodzGoblinowManager();
         this.goblinManager = new GoblinManager();
+        // EXPOWISKO 3
+        this.gorylManager = new GorylManager();
+        this.krolGoryliManager = new KrolGoryliManager();
+        // EXPOWISKO 4
+        this.zjawaManager = new ZjawaManager();
+        this.przekletaDuszaManager = new PrzekletaDuszaManager();
+        // EXPOWISKO 5
+        this.straznikSwiatyniManager = new StraznikSwiatyniManager();
+        this.trytonManager = new TrytonManager();
     }
 
     private void initDungeons() {
@@ -878,6 +902,27 @@ public final class RPGCORE extends JavaPlugin {
     }
     public WodzGoblinowManager getWodzGoblinowManager() {
         return wodzGoblinowManager;
+    }
+    // exp3
+    public GorylManager getGorylManager() {
+        return gorylManager;
+    }
+    public KrolGoryliManager getKrolGoryliManager() {
+        return krolGoryliManager;
+    }
+    // exp4
+    public ZjawaManager getZjawaManager() {
+        return zjawaManager;
+    }
+    public PrzekletaDuszaManager getPrzekletaDuszaManager() {
+        return przekletaDuszaManager;
+    }
+    // exp5
+    public StraznikSwiatyniManager getStraznikSwiatyniManager() {
+        return straznikSwiatyniManager;
+    }
+    public TrytonManager getTrytonManager() {
+        return trytonManager;
     }
 
     public GornikNPC getGornikNPC() {
