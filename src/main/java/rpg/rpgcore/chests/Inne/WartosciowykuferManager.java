@@ -26,12 +26,12 @@ public class WartosciowykuferManager {
         // ksiega magii
         this.wartosciowykufer.add(new Items("10", 6.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
         // zmianki miecz
-        this.wartosciowykufer.add(new Items("13", 4.0, GlobalItem.getItem("I50",1),1));
-        this.wartosciowykufer.add(new Items("14", 4.0, GlobalItem.getItem("I51",1),1));
+        this.wartosciowykufer.add(new Items("13", 7.0, GlobalItem.getItem("I50",1),1));
+        this.wartosciowykufer.add(new Items("14", 7.0, GlobalItem.getItem("I51",1),1));
         // zmiaki set
         // SOON...
         // wywar z kory
-        this.wartosciowykufer.add(new Items("15", 4.0, LesnikItems.getByItem("POTION", 1), 1));
+        this.wartosciowykufer.add(new Items("15", 6.0, LesnikItems.getByItem("POTION", 1), 1));
         // hellcase
         this.wartosciowykufer.add(new Items("16", 2.0, GlobalItem.getItem("I6",1), 1));
     }

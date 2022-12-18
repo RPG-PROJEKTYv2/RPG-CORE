@@ -36,8 +36,9 @@ public class PingCommand extends CommandAPI {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoj ping wynosi: &e" + ((CraftPlayer) player).getHandle().ping));
                 return;
             }
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ping gracza &e:" + target.getName() + " &7wynosi &e:" + ((CraftPlayer) target).getHandle().ping));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ping gracza: &e" + target.getName() + " &7wynosi: &e" + ((CraftPlayer) target).getHandle().ping));
+        } else {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoj ping wynosi: &e" + ((CraftPlayer) player).getHandle().ping));
         }
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoj ping wynosi: &e" + ((CraftPlayer) player).getHandle().ping));
     }
 }

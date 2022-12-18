@@ -24,9 +24,9 @@ public enum GlobalItem {
     I7("I7", new ItemBuilder(Material.EXP_BOTTLE, 1).setName("&8• &eSakwa &8•").addGlowing().toItemStack().clone()),
     I8("I8", new ItemBuilder(Material.PAPER).setName("&bBon na powiekszenie magazynu").setLore(Arrays.asList("&8&oChyba &b&lMagazynier &8tego potrzebuje")).addGlowing().toItemStack().clone()),
     I9("I9", new ItemBuilder(Material.EMERALD).setName("&4&lArtefakt &b&lMagazyniera").setLore(Arrays.asList("&8Artefakt ten pozwala na otwieranie","&8swoich magazynow nie chodzac do &b&lMagazyniera","&6Wlasciciel: &7playerName", " ","&4&lARTEFAKT")).addGlowing().toItemStack().clone()),
-    I_METAL("I_METAL", new ItemBuilder(Material.IRON_INGOT).setName("&7Magiczny Metal").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
-    I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR, 1).setName("&fLza Aniola").setLore(Arrays.asList("&8Przedmiot ten oczysci" , "&7twoj przedmiot, abys mogl go ponownie", "&8ulepszyc u &4&lKowala")).addGlowing().toItemStack().clone()),
-    I10("I10", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Blogoslawienstwa").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
+    I_METAL("I_METAL", new ItemBuilder(Material.IRON_INGOT).setName("&7Magiczna Stal").setLore(Arrays.asList("&8Przedmiot ten pozwoli ci ulepszyc twoj","&8przedmiot z szansa 100% u &4&lKowala")).addGlowing().toItemStack().clone()),
+    I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR, 1).setName("&fLza Aniola").setLore(Arrays.asList("&8Przedmiot ten oczysci twoj przedmiot" , "&8abys mogl go ponownie ulepszyc u &4&lKowala")).addGlowing().toItemStack().clone()),
+    I10("I10", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Kowala").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
     I_KAMIENBAO("I_KAMIENBAO", new ItemBuilder(Material.COAL).setName("&3&lKamien Bao").setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magi", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
     I_KSIEGAMAGII("I_KSIEGAMAGII", new ItemBuilder(Material.ENCHANTED_BOOK).setName("&4&lKsiega Magii").setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic jeden bonus w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
     I11("I11", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&8&lC").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
@@ -44,8 +44,8 @@ public enum GlobalItem {
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki
-    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lZwoj Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu")).toItemStack().clone()),
-    I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lZwoj Zaczarowania Zbroii").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroii")).toItemStack().clone()),
+    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lKamien Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu")).toItemStack().clone()),
+    I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lKamien Zaczarowania Zbroii").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroii")).toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 
