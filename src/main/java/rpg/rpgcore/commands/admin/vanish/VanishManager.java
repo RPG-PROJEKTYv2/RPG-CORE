@@ -48,9 +48,10 @@ public class VanishManager {
 
     public void hidePlayer(final Player target) {
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
-            if (!rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(target.getUniqueId()).isAdminCodeLogin()) {
-                restOfTheServer.hidePlayer(target);
+            if (rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).isAdminCodeLogin()) {
+                continue;
             }
+            restOfTheServer.hidePlayer(target);
         }
         rpgcore.getNmsManager().sendActionBar(target, "&3&lVanish");
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(rpgcore, new SendVanishBar(rpgcore, target), 0L, 40L);
@@ -60,9 +61,10 @@ public class VanishManager {
 
     public void hidePlayer(final Player sender, final Player target) {
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
-            if (!rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(target.getUniqueId()).isAdminCodeLogin()) {
-                restOfTheServer.hidePlayer(target);
+            if (rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).isAdminCodeLogin()) {
+                continue;
             }
+            restOfTheServer.hidePlayer(target);
         }
         this.vanishList.add(target.getUniqueId());
         rpgcore.getNmsManager().sendActionBar(target, "&3&lVanish");

@@ -126,10 +126,10 @@ public class ProfileCommand extends CommandAPI {
         )).addGlowing().toItemStack().clone());
 
         gui.setItem(34, new ItemBuilder(Material.GOLDEN_APPLE).setName("&cStatystyki Zdrowia").setLore(Arrays.asList(
-                "&7Aktualne Zdrowie: &f" + player.getHealth() + "&c❤",
-                "&7Maksymalne Zdrowie: &f" + player.getMaxHealth() + "&c❤",
-                "&7Dodatkowe Zdrowie: &f" + user.getDodatkowehp() + "&c❤",
-                "&7Dodatkowe Zlote Serca: &f" + user.getDodatkowezlotehp() + "&6❤"
+                "&7Aktualne Zdrowie: &f" + String.format("%.0f", player.getHealth()) + "&c❤",
+                "&7Maksymalne Zdrowie: &f" + String.format("%.0f", player.getMaxHealth()) + "&c❤",
+                "&7Dodatkowe Zdrowie: &f" + String.format("%.0f", user.getDodatkowehp() * 2.0) + "&c❤",
+                "&7Dodatkowe Zlote Serca: &f" + String.format("%.0f", user.getDodatkowezlotehp() * 2.0) + "&6❤"
         )).toItemStack().clone());
 
         gui.setItem(43, new ItemBuilder(Material.DIAMOND_BOOTS).setName("&fStatystyki Predkosci").setLore(Arrays.asList(

@@ -40,19 +40,19 @@ public class MetinologNPC {
         killMissions.put(12, "110-120;190;1.5;0.5;0;0");
         killMissions.put(13, "120-130;210;2;1.5;0;0");
 
-        giveMissions.put(1, "1-10;20;0;0;25;1.5");
-        giveMissions.put(2, "10-20;40;0;0;25;1.5");
-        giveMissions.put(3, "20-30;60;0;0;25;1.5");
-        giveMissions.put(4, "30-40;80;0;0;25;1.5");
-        giveMissions.put(5, "40-50;100;0;0;25;1.5");
-        giveMissions.put(6, "50-60;120;0;0;25;1.5");
-        giveMissions.put(7, "60-70;140;0;0;25;1.5");
-        giveMissions.put(8, "70-80;160;0;0;25;1.5");
-        giveMissions.put(9, "80-90;180;0;0;25;1.5");
-        giveMissions.put(10, "90-100;200;0;0;25;1.5");
-        giveMissions.put(11, "100-110;220;0;0;25;1.5");
-        giveMissions.put(12, "110-120;240;0;0;25;1.5");
-        giveMissions.put(13, "120-130;260;0;0;50;2");
+        giveMissions.put(1, "1-10;10;0;0;25;1.5");
+        giveMissions.put(2, "10-20;20;0;0;25;1.5");
+        giveMissions.put(3, "20-30;30;0;0;25;1.5");
+        giveMissions.put(4, "30-40;40;0;0;25;1.5");
+        giveMissions.put(5, "40-50;50;0;0;25;1.5");
+        giveMissions.put(6, "50-60;60;0;0;25;1.5");
+        giveMissions.put(7, "60-70;70;0;0;25;1.5");
+        giveMissions.put(8, "70-80;80;0;0;25;1.5");
+        giveMissions.put(9, "80-90;90;0;0;25;1.5");
+        giveMissions.put(10, "90-100;100;0;0;25;1.5");
+        giveMissions.put(11, "100-110;110;0;0;25;1.5");
+        giveMissions.put(12, "110-120;120;0;0;25;1.5");
+        giveMissions.put(13, "120-130;130;0;0;50;2");
     }
 
     public void openMetinologGUI(final Player player) {

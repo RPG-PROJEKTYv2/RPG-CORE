@@ -232,6 +232,8 @@ public class MobDropHelper {
             }
         }
 
+
+        rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + rpgcore.getLvlManager().getKasa(entityName));
         rpgcore.getLvlManager().updateExp(player, entityName);
     }
 

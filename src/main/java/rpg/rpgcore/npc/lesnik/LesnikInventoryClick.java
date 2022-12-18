@@ -45,9 +45,6 @@ public class LesnikInventoryClick implements Listener {
             e.setCancelled(true);
 
             if (slot != 13 && slot != 22) {
-                player.getInventory().addItem(LesnikItems.I1.getItem());
-                player.getInventory().addItem(LesnikItems.POTION.getItem());
-                rpgcore.getLesnikNPC().find(uuid).getUser().setCooldown(0);
                 return;
             }
 

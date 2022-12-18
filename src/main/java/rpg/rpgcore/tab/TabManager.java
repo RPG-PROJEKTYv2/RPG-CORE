@@ -151,6 +151,7 @@ public class TabManager {
                     tab.set(player, 3, 1, "&6Topka Poziomu");
                     final Map<String, Integer> topki1 = new HashMap<>();
                     for (User user1 : rpgcore.getUserManager().getUserObjects()) {
+                        if (user1.getRankUser().isHighStaff()) continue;
                         topki1.put(user1.getName(), user1.getLvl());
                     }
                     sortedDesc = topki1.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));

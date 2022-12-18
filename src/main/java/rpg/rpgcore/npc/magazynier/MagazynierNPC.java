@@ -165,10 +165,10 @@ public class MagazynierNPC {
         gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&bOdblokowanie magazynu").setLore(Arrays.asList(
                 "&8Oblokownuje kolejny magazyn",
                 "&7Cena: &b1 000 punktow"
-        )).addTagInt("price", 1_000).addGlowing().toItemStack());
+        )).addTagInt("price", 0).addGlowing().toItemStack()); //1_000
         gui.setItem(1, new ItemBuilder(Material.COMMAND).setName("&cOdblokowanie komendy /magazyny").setLore(Arrays.asList(
                 "&7Cena: &b15 000 punktow"
-        )).addTagInt("price", 15_000).addGlowing().toItemStack());
+        )).addTagInt("price", 0).addGlowing().toItemStack()); //15_000
         player.openInventory(gui);
     }
 
@@ -206,7 +206,11 @@ public class MagazynierNPC {
 
 
     public void openMagazyn(final Player player, final String magazynContents, final int magazynNumber) {
-        final Inventory gui = Bukkit.createInventory(null, 56, Utils.format("&c&lMagazyn #" + magazynNumber));
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&c&lMagazyn #" + magazynNumber));
+        if (magazynContents.isEmpty()) {
+            player.openInventory(gui);
+            return;
+        }
         try {
             ItemStack[] contents = Utils.itemStackArrayFromBase64(magazynContents);
             gui.setContents(contents);

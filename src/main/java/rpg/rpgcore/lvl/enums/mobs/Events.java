@@ -1,17 +1,23 @@
 package rpg.rpgcore.lvl.enums.mobs;
 public enum Events {
-    NAZWA_MOBA_EVENTOWEGO("NAZWA_MOOBA", 0),
-    ERROR("Error", 0);
+    NAZWA_MOBA_EVENTOWEGO("NAZWA_MOOBA", 0, 0),
+    ERROR("Error", 0, 0);
     private final String name;
+    private final double kasa;
     private final double exp;
 
-    Events(String name, double exp) {
+    Events(final String name, final double exp, final double kasa) {
         this.name = name;
         this.exp = exp;
+        this.kasa = kasa;
     }
 
     public String getName() {
         return name;
+    }
+
+    public double getKasa() {
+        return kasa;
     }
 
     public double getExp() {

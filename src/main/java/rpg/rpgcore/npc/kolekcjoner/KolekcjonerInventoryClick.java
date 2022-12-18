@@ -54,7 +54,6 @@ public class KolekcjonerInventoryClick implements Listener {
                         return;
                     }
                     if (!player.getInventory().containsAtLeast(mission.getReqItems()[0], 1)) {
-                        player.getInventory().addItem(mission.getReqItems()[0]);
                         return;
                     }
 
@@ -66,7 +65,6 @@ public class KolekcjonerInventoryClick implements Listener {
                         return;
                     }
                     if (!player.getInventory().containsAtLeast(mission.getReqItems()[1], 1)) {
-                        player.getInventory().addItem(mission.getReqItems()[1]);
                         return;
                     }
 
@@ -78,7 +76,6 @@ public class KolekcjonerInventoryClick implements Listener {
                         return;
                     }
                     if (!player.getInventory().containsAtLeast(mission.getReqItems()[2], 1)) {
-                        player.getInventory().addItem(mission.getReqItems()[2]);
                         return;
                     }
 
@@ -90,7 +87,6 @@ public class KolekcjonerInventoryClick implements Listener {
                         return;
                     }
                     if (!player.getInventory().containsAtLeast(mission.getReqItems()[3], 1)) {
-                        player.getInventory().addItem(mission.getReqItems()[3]);
                         return;
                     }
 
@@ -102,7 +98,6 @@ public class KolekcjonerInventoryClick implements Listener {
                         return;
                     }
                     if (!player.getInventory().containsAtLeast(mission.getReqItems()[4], 1)) {
-                        player.getInventory().addItem(mission.getReqItems()[4]);
                         return;
                     }
 

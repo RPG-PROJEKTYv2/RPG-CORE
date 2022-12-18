@@ -202,12 +202,18 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
+
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 1) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                        }
+
+                        return;
                     }
                 }
 
                 // Expowisko 2
                 // SKRZYNIA WODZA GOBLINOW
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
                         final Items item = rpgcore.getWodzGoblinowManager().getDrawnItems(player);
@@ -239,7 +245,7 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // SKRZYNIA GOBLINA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I4", 1));
                         final Items item = rpgcore.getGoblinManager().getDrawnItems(player);
@@ -249,12 +255,16 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
+
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 2) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                        }
                         return;
                     }
                 }
                 // Expowisko 3
                 // SKRZYNIA GORYLA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I6", 1));
                         final Items item = rpgcore.getGorylManager().getDrawnItems(player);
@@ -264,11 +274,16 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
+
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 3) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                        }
+
                         return;
                     }
                 }
                 // SKRZYNIA KROLA GORYLI
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I5", 1));
                         final Items item = rpgcore.getKrolGoryliManager().getDrawnItems(player);
@@ -301,7 +316,7 @@ public class DropFromChestsListener implements Listener {
                 }
                 // Expowisko 4
                 // Skrzynia zjawy
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I8").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I8", 1));
                         final Items item = rpgcore.getZjawaManager().getDrawnItems(player);
@@ -311,11 +326,16 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
+
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 4) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                        }
+
                         return;
                     }
                 }
                 // Skrzynia przekletej duszy
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I7").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I7", 1));
                         final Items item = rpgcore.getPrzekletaDuszaManager().getDrawnItems(player);
@@ -348,7 +368,7 @@ public class DropFromChestsListener implements Listener {
                 }
                 // Expowisko 5
                 // Skrzynia straznika swiatyni
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I10").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I10", 1));
                         final Items item = rpgcore.getStraznikSwiatyniManager().getDrawnItems(player);
@@ -358,11 +378,16 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
+
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 5) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                        }
+
                         return;
                     }
                 }
                 // Skrzynia trytona
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I9").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I9", 1));
                         final Items item = rpgcore.getTrytonManager().getDrawnItems(player);

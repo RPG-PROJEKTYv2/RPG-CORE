@@ -83,12 +83,17 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        e.setJoinMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
-        player.teleport(rpgcore.getSpawnManager().getSpawn());
 
+        player.teleport(rpgcore.getSpawnManager().getSpawn());
+        e.setJoinMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
         final User user = rpgcore.getUserManager().find(uuid);
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
+
+        if (user.getRankUser().isHighStaff()) {
+            e.setJoinMessage(null);
+        }
+
         try {
             if (user.getInventoriesUser().getArmor() != null && user.getInventoriesUser().getInventory() != null && user.getInventoriesUser().getEnderchest() != null
                     && !user.getInventoriesUser().getInventory().isEmpty() && !user.getInventoriesUser().getEnderchest().isEmpty() && !user.getInventoriesUser().getArmor().isEmpty()) {

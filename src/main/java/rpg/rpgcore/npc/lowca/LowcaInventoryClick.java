@@ -67,7 +67,6 @@ public class LowcaInventoryClick implements Listener {
             }
 
             if (!player.getInventory().containsAtLeast(reqItem, 1)) {
-                player.getInventory().addItem(reqItem);
                 return;
             }
 

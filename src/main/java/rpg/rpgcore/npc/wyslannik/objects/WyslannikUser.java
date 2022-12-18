@@ -74,9 +74,6 @@ public class WyslannikUser {
         this.openChestMission++;
     }
 
-    public void saveUser() {
-        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(this.uuid,this));
-    }
 
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())

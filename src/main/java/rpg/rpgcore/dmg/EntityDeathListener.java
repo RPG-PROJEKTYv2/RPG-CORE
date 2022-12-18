@@ -31,6 +31,7 @@ public class EntityDeathListener implements Listener {
     public void onDeathPlayer(PlayerDeathEvent e) {
         e.setDeathMessage(null);
         e.setKeepInventory(true);
+        e.setKeepLevel(true);
 
         PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
         ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);

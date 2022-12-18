@@ -32,8 +32,8 @@ public class AdminChatCommand extends CommandAPI {
             return;
         }
 
-        final TextComponent prefix = new TextComponent(Utils.format("&8[&4AdminChat&8] &7>> " + user.getRankUser().getRankType().getPrefix() + player.getName() + "&7: "));
-        final TextComponent message = new TextComponent(Utils.format(String.join(user.getRankUser().getRankType().getMessageColour() + " ", args)));
+        final TextComponent prefix = new TextComponent(Utils.format("&8[&4AdminChat&8] &7>> " + user.getRankUser().getRankType().getPrefix() + player.getName() + "&7: &f"));
+        final TextComponent message = new TextComponent(Utils.format(String.join(" ", args)));
 
         prefix.addExtra(message);
 

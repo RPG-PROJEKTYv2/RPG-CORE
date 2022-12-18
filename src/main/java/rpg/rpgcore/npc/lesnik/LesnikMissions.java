@@ -11,15 +11,15 @@ import java.util.Objects;
 public enum LesnikMissions {
 
     M1(1, 40, 90, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M2(1, 60, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M3(1, 80, 80, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M4(1, 100, 75, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M5(1, 120, 70, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M6(1, 140, 65, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M7(1, 160, 60, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M8(1, 180, 55, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M9(1, 200, 50, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
-    M10(1, 250, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M2(2, 60, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M3(3, 80, 80, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M4(4, 100, 75, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M5(5, 120, 70, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M6(6, 140, 65, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M7(7, 160, 60, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M8(8, 180, 55, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M9(9, 200, 50, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M10(10, 250, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
     M99(99, 9999, 0, new ItemBuilder(Material.BARRIER).setName("&c&lBrak misji").setLore(Arrays.asList("", "&7Wykonales/as juz wszystkie misje u Tego NPC!", "&8Kiedys moze jeszcze tu cos bedzie...")).toItemStack(), 0, 0, 0);
 
 

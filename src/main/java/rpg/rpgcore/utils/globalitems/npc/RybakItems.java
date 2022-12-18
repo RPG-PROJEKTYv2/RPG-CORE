@@ -9,17 +9,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum RybakItems {
-    I1("I1", new ItemBuilder(Material.RAW_FISH).setName("&6Sledz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Dorsz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I3("I3", new ItemBuilder(Material.RAW_FISH, 1, (short) 2).setName("&6Krasnopiorka").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I4("I4", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Fladra").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I5("I5", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Karas").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I6("I6", new ItemBuilder(Material.COOKED_FISH).setName("&6Karp").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I7("I7", new ItemBuilder(Material.COOKED_FISH, 1, (short) 1).setName("&6Leszcz").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I8("I8", new ItemBuilder(Material.COOKED_FISH).setName("&6Makrela").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I9("I9", new ItemBuilder(Material.COOKED_FISH).setName("&6Mintaj").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I10("I10", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Okon").setLore(Arrays.asList("&8&oChyba &8&n&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
-    I11("I11", new ItemBuilder(Material.CHEST).setName("&a&lKufer Rybacki").setLore(Arrays.asList("&8&n&oKliknij&r &8&ozeby otworzyc i sprawdzic co skrywa...")).hideFlag().toItemStack().clone());
+    I1("I1", new ItemBuilder(Material.RAW_FISH).setName("&6Sledz").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Dorsz").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I3("I3", new ItemBuilder(Material.RAW_FISH, 1, (short) 2).setName("&6Krasnopiorka").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I4("I4", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Fladra").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I5("I5", new ItemBuilder(Material.RAW_FISH, 1, (short) 1).setName("&6Karas").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I6("I6", new ItemBuilder(Material.COOKED_FISH).setName("&6Karp").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I7("I7", new ItemBuilder(Material.COOKED_FISH, 1, (short) 1).setName("&6Leszcz").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I8("I8", new ItemBuilder(Material.COOKED_FISH).setName("&6Makrela").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I9("I9", new ItemBuilder(Material.COOKED_FISH).setName("&6Mintaj").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I10("I10", new ItemBuilder(Material.RAW_FISH, 1, (short) 3).setName("&6Okon").setLore(Arrays.asList("&8&oChyba &8&orybak&r &8&otego potrzebuje")).hideFlag().toItemStack().clone()),
+    I11("I11", new ItemBuilder(Material.CHEST).setName("&a&lKufer Rybacki").setLore(Arrays.asList("&8&oKliknij&r &8&ozeby otworzyc i sprawdzic co skrywa...")).hideFlag().toItemStack().clone());
 
     private final String name;
     private final ItemStack itemStack;

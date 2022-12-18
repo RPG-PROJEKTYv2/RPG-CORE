@@ -206,7 +206,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             if (!eventItem.getItemMeta().getDisplayName().contains("Diadem")) return;
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaPodstawowe().getNaszyjnik().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getDiadem().isEmpty()) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony diadem!"));
                 return;
             }

@@ -93,7 +93,7 @@ public class RybakNPC {
 
         for (int i = 0; i < gui.getSize(); i++) {
             if (user.getMission() > i + 1) {
-                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&c&lMisja #" + (i + 1)).setLore(Collections.singletonList("&7Postep: &a&lWYKONANA!")).addGlowing().toItemStack().clone());
+                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&c&lMisja #" + (i + 1)).setLore(Arrays.asList("&7Postep: &a&lWYKONANA!")).addGlowing().toItemStack().clone());
             } else if (user.getMission() == i + 1) {
                 final RybakMissions mission = RybakMissions.getMission(i + 1);
                 assert mission != null;

@@ -36,13 +36,14 @@ public class SprawdzCommand extends CommandAPI {
         }
         final UUID uuid = player.getUniqueId();
         final UUID targetUUID = rpgcore.getUserManager().find(args[0]).getId();
+        final String targetName = rpgcore.getUserManager().find(args[0]).getName();
 
         if (!Bukkit.getPlayer(targetUUID).isOnline()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPodany gracz jest offline"));
             return;
         }
 
-        final Inventory targ = rpgcore.getTargManager().getPlayerTarg(targetUUID);
+        final Inventory targ = rpgcore.getNewTargManager().getPlayerTarg(targetName, targetUUID);
 
         if (targ.getItem(0) == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPodany gracz nie ma wystawionych zadnych przedmiotow"));

@@ -74,10 +74,10 @@ public class RybakInventoryClick implements Listener {
 
                 user.setProgress(0);
                 user.setMission(user.getMission() + 1);
-                user.setKryt(mission.getKryt());
-                user.setTrueDmg(mission.getTrueDmg());
-                user.setSrDef(mission.getSrDef());
-                user.setMorskieSzczescie(mission.getMorskieSzczescie());
+                user.setKryt(user.getKryt() + mission.getKryt());
+                user.setTrueDmg(user.getTrueDmg() + mission.getTrueDmg());
+                user.setSrDef(user.getSrDef() + mission.getSrDef());
+                user.setMorskieSzczescie(user.getMorskieSzczescie() + mission.getMorskieSzczescie());
 
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + mission.getSrDef());
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + mission.getKryt());
@@ -99,7 +99,7 @@ public class RybakInventoryClick implements Listener {
                 }
 
                 final int lvl = Utils.getTagInt(player.getItemInHand(), "lvl");
-                if (lvl >= 5) {
+                if (lvl >= 1) { //5
                     user.setProgress(1);
                 }
             } else if (mission == RybakMissions.M21) {
@@ -109,7 +109,7 @@ public class RybakInventoryClick implements Listener {
                 }
 
                 final int lvl = Utils.getTagInt(player.getItemInHand(), "lvl");
-                if (lvl >= 15) {
+                if (lvl >= 1) { //15
                     user.setProgress(1);
                 }
             }
@@ -139,6 +139,9 @@ public class RybakInventoryClick implements Listener {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                     return;
                 case 1:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I1.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I1.getItemStack()) {
@@ -157,6 +160,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 2:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I2.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I2.getItemStack()) {
@@ -173,6 +179,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 3:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I3.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I3.getItemStack()) {
@@ -189,6 +198,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 4:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I4.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I4.getItemStack()) {
@@ -205,6 +217,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 5:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I5.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I5.getItemStack()) {
@@ -221,6 +236,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 6:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I6.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I6.getItemStack()) {
@@ -237,6 +255,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 7:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I7.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I7.getItemStack()) {
@@ -250,6 +271,9 @@ public class RybakInventoryClick implements Listener {
                     user.setKasa(user.getKasa() + (amount * 5000));
                     break;
                 case 8:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I8.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I8.getItemStack()) {
@@ -263,6 +287,9 @@ public class RybakInventoryClick implements Listener {
                     user.setKasa(user.getKasa() + (amount * 5000));
                     break;
                 case 9:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I9.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I9.getItemStack()) {
@@ -279,6 +306,9 @@ public class RybakInventoryClick implements Listener {
                     }
                     break;
                 case 10:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I10.getItemStack(), 1)) {
+                        return;
+                    }
                     if (e.getClick() == ClickType.RIGHT) {
                         for (ItemStack is : player.getInventory().getContents()) {
                             if (is != null && is.getType() != Material.AIR && is == RybakItems.I10.getItemStack()) {
@@ -294,6 +324,8 @@ public class RybakInventoryClick implements Listener {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
                     break;
+                case 11:
+                    player.getInventory().addItem(RybakItems.getWedka(player.getName(), 20));
                 default:
                     return;
             }

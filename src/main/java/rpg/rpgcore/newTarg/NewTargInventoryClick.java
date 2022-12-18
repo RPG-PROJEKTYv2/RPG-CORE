@@ -115,7 +115,7 @@ public class NewTargInventoryClick implements Listener {
             }
 
             // RESZTA KATEGORI
-            if (clickedItem.getType().equals(Material.AIR)) {
+            if (clickedItem.getType().equals(Material.AIR) || clickedItem.getType().equals(Material.ARROW) || clickedItem.getType().equals(Material.STAINED_GLASS_PANE)) {
                 return;
             }
 

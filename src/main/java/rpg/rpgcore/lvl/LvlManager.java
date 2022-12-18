@@ -43,6 +43,18 @@ public class LvlManager {
         }
     }
 
+    public double getKasa(final String mob) {
+        if (Maps.isMob(mob)) {
+            return Maps.getByName(mob).getKasa();
+        } else if (Dungeons.isDungeonMob(mob)) {
+            return Dungeons.getByName(mob).getKasa();
+        } else if (Events.isEventMob(mob)) {
+            return Events.getByName(mob).getKasa();
+        } else {
+            return 0;
+        }
+    }
+
     private double getDodatkowyExp(final UUID uuid) {
         double dodatkowyExp = 0;
         if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
@@ -84,7 +96,9 @@ public class LvlManager {
         user.setExp(aktualnyExpGracza);
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + expDoDodaniaL + " exp &8(&e" + Utils.procentFormat.format((aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
+        killer.setLevel(lvlGracza);
+        killer.setExp((float) (aktualnyExpGraczaL / expNaNextLvlGracza));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + String.format("%.2f", expDoDodaniaL) + " exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
     }
 
     public void updateLVL(final Player killer) {

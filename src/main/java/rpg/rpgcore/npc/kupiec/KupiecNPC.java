@@ -37,7 +37,15 @@ public class KupiecNPC {
     private final Map<UUID, Double> playerSellValueItems = new HashMap<>();
 
     public void loadAll() {
-        final String[] listOfMaterials = rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getString("Item_List").replaceAll(" ", "").split(",");
+        itemStackList.add(Material.LEATHER_CHESTPLATE);
+        itemStackList.add(Material.LEATHER_HELMET);
+        itemStackList.add(Material.LEATHER_LEGGINGS);
+        itemStackList.add(Material.LEATHER_BOOTS);
+        itemPriceMap.put("Helm Najemnika", 10.0);
+        itemPriceMap.put("Zbroja Najemnika", 10.0);
+        itemPriceMap.put("Spodnie Najemnika", 10.0);
+        itemPriceMap.put("Buty Najemnika", 10.0);
+        /*final String[] listOfMaterials = rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getString("Item_List").replaceAll(" ", "").split(",");
 
         for (String oneMaterial : listOfMaterials) {
             itemStackList.add(Material.getMaterial(oneMaterial.toUpperCase(Locale.ROOT)));
@@ -47,7 +55,7 @@ public class KupiecNPC {
                     itemPriceMap.put(singleItemName, rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getConfigurationSection("Item_Price_List").getConfigurationSection(oneMaterial).getConfigurationSection(singleItemName).getDouble("Price"));
                 }
             }
-        }
+        }*/
     }
 
 

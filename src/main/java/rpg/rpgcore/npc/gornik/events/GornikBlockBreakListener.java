@@ -88,7 +88,6 @@ public class GornikBlockBreakListener implements Listener {
                 final GornikObject object = rpgcore.getGornikNPC().find(e.getPlayer().getUniqueId());
                 final GornikUser user = object.getGornikUser();
                 final double szczescie = ((double) bonuses.getBonusesUser().getSzczescie()) / 100;
-                e.getPlayer().sendMessage("" + szczescie);
                 if (ChanceHelper.getChance(0.025 + (0.025 * szczescie / 100))) {
                     e.getPlayer().getInventory().addItem(GlobalItem.getItem("I21", 1));
                     e.getPlayer().sendMessage(Utils.format("&8[&2+&8] &fx1 &8Skrzynia Gornika"));

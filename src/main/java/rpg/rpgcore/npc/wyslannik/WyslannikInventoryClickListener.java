@@ -47,7 +47,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     user.addKillMobsMission();
                     user.resetKillMobsMissionProgress();
                     player.getInventory().addItem(mission.getReward());
-                    user.saveUser();
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(moby)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
@@ -61,7 +61,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     user.addKillBossMission();
                     user.resetKillBossMissionProgress();
                     player.getInventory().addItem(mission.getReward());
-                    user.saveUser();
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(bossy)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
@@ -76,7 +76,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     user.addOpenChestMission();
                     user.resetOpenChestMissionProgress();
                     player.getInventory().addItem(mission.getReward());
-                    user.saveUser();
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(skrzynie)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                 }

@@ -25,8 +25,6 @@ public class PrzekletaDuszaManager {
         this.przekletadusza.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&f&lDiadem Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lPierscien Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lTarcza Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("10", 2.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&f&lKolczyki Przekletej Duszy").toItemStack(),1 ));
-
     }
 
     public Items getDrawnItems(final Player player) {

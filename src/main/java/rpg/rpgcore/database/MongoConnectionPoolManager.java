@@ -128,7 +128,8 @@ public class MongoConnectionPoolManager {
         }
         if (!collections.contains("hellrpg_oreLocations")) {
             database.createCollection("hellrpg_oreLocations");
-        }if (!collections.contains("hellrpg_wyslannik")) {
+        }
+        if (!collections.contains("hellrpg_wyslannik")) {
             database.createCollection("hellrpg_wyslannik");
         }
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");

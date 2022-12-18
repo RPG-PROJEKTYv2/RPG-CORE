@@ -12,7 +12,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Objects;
+
 
 
 public class EntityDamageEntityListener implements Listener {
@@ -25,11 +25,6 @@ public class EntityDamageEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
-
-        if (Objects.equals("1-10map, 10-20map, 20-30map, 30-40map, 40-50map, dt, spawnOFFICIAL", e.getDamager().getLocation().getWorld().getName())) {
-            e.setCancelled(true);
-            return;
-        }
 
         if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
             if (e.getDamager() instanceof Player) {
@@ -76,6 +71,13 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
+                if (e.getDamager().getLocation().getWorld().getName().equals("spawnOFFICIAL") || e.getDamager().getLocation().getWorld().getName().equals("1-10map") ||
+                        e.getDamager().getLocation().getWorld().getName().equals("10-20map")  || e.getDamager().getLocation().getWorld().getName().equals("20-30map") ||
+                        e.getDamager().getLocation().getWorld().getName().equals("30-40map") || e.getDamager().getLocation().getWorld().getName().equals("40-50map")) {
+                    e.setCancelled(true);
+                    return;
+                }
+
                 if (rpgcore.getGodManager().containsPlayer(victim.getUniqueId())) {
                     e.setCancelled(true);
                     return;
@@ -93,6 +95,11 @@ public class EntityDamageEntityListener implements Listener {
 
             } else {
                 // ... Victim jest Mobem
+
+                if (e.getEntity() instanceof ItemFrame) {
+                    e.setCancelled(true);
+                    return;
+                }
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);

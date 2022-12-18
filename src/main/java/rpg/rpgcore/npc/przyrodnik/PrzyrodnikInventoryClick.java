@@ -63,7 +63,6 @@ public class PrzyrodnikInventoryClick implements Listener {
             }
 
             if (!player.getInventory().containsAtLeast(mission.getItemStack(), 1)) {
-                player.getInventory().addItem(mission.getItemStack());
                 return;
             }
 
@@ -74,7 +73,7 @@ public class PrzyrodnikInventoryClick implements Listener {
                     amount = mission.getReqAmount() - user.getProgress();
                 } else {
                     for (ItemStack is : player.getInventory().getContents()) {
-                        if (is.isSimilar(reqItem)) {
+                        if (is != null && is.isSimilar(reqItem)) {
                             amount += is.getAmount();
                         }
                     }

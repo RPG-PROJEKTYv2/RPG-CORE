@@ -48,9 +48,9 @@ public class TrenerInventoryClick implements Listener {
                 return;
             }
 
-            if (clickedSlot != 8 && rpgcore.getCooldownManager().hasTrenerCooldown(uuid)) {
+            /*if (clickedSlot != 8 && rpgcore.getCooldownManager().hasTrenerCooldown(uuid)) {
                 return;
-            }
+            }*/
 
             if (clickedSlot == 8 && clickedItem.getType().equals(Material.BEACON) && (user.getSredniDmg() == 20 && user.getSredniDef() == 20 && user.getDodatkoweHp() == 10 && user.getBlokCiosu() == 10 && user.getSzczescie() == 20
                     && user.getSilnyNaLudzi() == 20 && user.getDefNaLudzi() == 20 && user.getKryt() == 10)) {
@@ -162,7 +162,7 @@ public class TrenerInventoryClick implements Listener {
             });
             rpgcore.getCooldownManager().givePlayerTrenerCooldown(uuid);
             player.closeInventory();
-            player.sendMessage(Utils.format(Utils.TRENER + "&aPomyslnie zwiekszyles/as " + clickedItem.getItemMeta().getDisplayName() + " &ao 1 %"));
+            player.sendMessage(Utils.format(Utils.TRENER + "&aPomyslnie rozwinales/as " + clickedItem.getItemMeta().getDisplayName() + " &ao 1 punkt"));
             rpgcore.getTrenerNPC().openTrenerGUI(player);
 
         }

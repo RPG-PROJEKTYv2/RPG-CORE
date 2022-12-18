@@ -48,9 +48,9 @@ public class KolekcjonerNPC {
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
         if (isGiven) {
-            meta.setDisplayName(meta.getDisplayName() + Utils.format("a &a✓"));
+            meta.setDisplayName(meta.getDisplayName() + Utils.format(" &a✓"));
         } else {
-            meta.setDisplayName(meta.getDisplayName() + Utils.format("c &c✘"));
+            meta.setDisplayName(meta.getDisplayName() + Utils.format(" &c✘"));
         }
         meta.setLore(lore);
         item.setItemMeta(meta);

@@ -1,12 +1,16 @@
 package rpg.rpgcore.npc.kolekcjoner.enums;
 
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.globalitems.niesy.Map1_10;
+import rpg.rpgcore.utils.globalitems.niesy.*;
 import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
 public enum KolekcjonerMissions {
 
     M1(1, new ItemStack[]{Map1_10.I1_10_1.getItemStack(), Map1_10.I1_10_2.getItemStack(), Map1_10.I1_10_5.getItemStack(), Map1_10.I1_10_3.getItemStack(), Map1_10.I1_10_4.getItemStack()}, 2, 1, 50),
+    M2(2, new ItemStack[]{Map10_20.I10_20_1.getItemStack(), Map10_20.I10_20_2.getItemStack(), Map10_20.I10_20_3.getItemStack(), Map10_20.I10_20_4.getItemStack(), Map10_20.I10_20_5.getItemStack()}, 2, 1, 50),
+    M3(3, new ItemStack[]{Map20_30.I20_30_1.getItemStack(), Map20_30.I20_30_2.getItemStack(), Map20_30.I20_30_3.getItemStack(), Map20_30.I20_30_4.getItemStack(), Map20_30.I20_30_5.getItemStack()}, 2, 1, 50),
+    M4(4, new ItemStack[]{Map30_40.I30_40_1.getItemStack(), Map30_40.I30_40_2.getItemStack(), Map30_40.I30_40_3.getItemStack(), Map30_40.I30_40_4.getItemStack(), Map30_40.I30_40_5.getItemStack()}, 2, 1, 50),
+    M5(5, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 1, 50),
     M99(99, new ItemStack[]{KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack()}, 0, 0, 0);
 
     private final int number;

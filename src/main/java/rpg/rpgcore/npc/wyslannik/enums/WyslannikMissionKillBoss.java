@@ -3,14 +3,16 @@ package rpg.rpgcore.npc.wyslannik.enums;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.ItemHelper;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public enum WyslannikMissionKillBoss {
-    M1(1, "&8[&4&lBOSS&8] &9&lKrol Wygnancow", 5, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
-    M2(2, "&8[&4&lBOSS&8] &a&lWodz Goblinow", 5, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
-    M3(3, "&8[&4&lBOSS&8] &f&lKrol Goryli", 5, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
-    M4(4, "&8[&4&lBOSS&8] &7&lPrzekleta Dusza", 5, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
-    M5(5, "&8[&4&lBOSS&8] &e&lTryton", 5, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
-    M6(6, "&8[&4&lBOSS&8] &f&lMityczny Lodowy Golem", 4, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
+    M1(1, "&8[&4&lBOSS&8] &9&lKrol Wygnancow", 5, ItemHelper.createSword("&dSlaby Miecz Wyslannika", Material.WOOD_SWORD, 3, 2, false)),
+    M2(2, "&8[&4&lBOSS&8] &a&lWodz Goblinow", 5, GlobalItem.getItem("I4", 1)),
+    M3(3, "&8[&4&lBOSS&8] &f&lKrol Goryli", 5, ItemHelper.createSword("&cOstry Miecz", Material.STONE_SWORD, 9, 4, false)),
+    M4(4, "&8[&4&lBOSS&8] &7&lPrzekleta Dusza", 5, GlobalItem.getItem("I4", 2)),
+    M5(5, "&8[&4&lBOSS&8] &e&lTryton", 5, ItemHelper.createSword("&5Mityczne Ostrze Wyslannika", Material.STONE_SWORD, 25, 9, false)),
+    M6(6, "&8[&4&lBOSS&8] &f&lMityczny Lodowy Golem", 4, GlobalItem.getItem("I4", 3)),
     M7(7, "&8[&4&lBOSS&8] &0&lPiekielny Rycerz", 4, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
     M8(8, "&8[&4&lBOSS&8] &5&lPrzeklety Czarnoksieznik", 3, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack());
     private final int mission;

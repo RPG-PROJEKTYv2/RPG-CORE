@@ -114,7 +114,6 @@ public class PlayerFishListener implements Listener {
                 return;
             }
             final String time = Utils.durationToString(this.timeMap.get(e.getPlayer().getUniqueId()), false);
-            e.getPlayer().sendMessage(e.getState().name()); //TODO <- PRZETESTOWAC!
             if (e.getState() == PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH || e.getState() == PlayerFishEvent.State.IN_GROUND) {
                 rpgcore.getServer().getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskId(e.getPlayer().getUniqueId()));
                 rpgcore.getRybakNPC().removeTaskId(e.getPlayer().getUniqueId());

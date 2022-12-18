@@ -79,113 +79,77 @@ public class MongoManager {
         this.pool.getGracze().insertOne(document);
     }
 
-    public void fix(final UUID uuid, final String newUUID) {
-        Document document = null;
+    public void clearDatabase(final UUID uuid) {
+        Document document;
         if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getBonuses().find(new Document("_id", uuid.toString())).first();
-            pool.getBonuses().deleteOne(document);
-            document.replace("_id", newUUID);
-
+            pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
         }
 
         if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first();
-            pool.getOsiagniecia().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getOsiagniecia().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first();
-            pool.getKolekcjoner().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getKolekcjoner().deleteOne(new Document("_id", uuid.toString()));
+
         }
 
         if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() != null) {
-            document = this.pool.getBao().find(new Document("_id", uuid.toString())).first();
-            this.pool.getBao().deleteOne(document);
-            document.replace("_id", newUUID);
+            this.pool.getBao().deleteOne(new Document("_id", uuid.toString()));
         }
 
         if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() != null) {
-            document = this.pool.getRybak().find(new Document("_id", uuid.toString())).first();
-            this.pool.getRybak().deleteOne(document);
-            document.replace("_id", newUUID);
+            this.pool.getRybak().deleteOne(new Document("_id", uuid.toString()));
         }
 
-        if (this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first() != null) {
-            document = this.pool.getAkcesoria().find(new Document("_id", uuid.toString())).first();
-            this.pool.getAkcesoria().deleteOne(document);
-            document.replace("_id", newUUID);
+        if (this.pool.getDodatki().find(new Document("_id", uuid.toString())).first() != null) {
+            this.pool.getDodatki().deleteOne(new Document("_id", uuid.toString()));
         }
 
-        document = pool.getTargi().find(new Document("_id", uuid.toString())).first();
-        pool.getTargi().deleteOne(document);
-        document.replace("_id", newUUID);
-
+        pool.getTargi().deleteOne(new Document("_id", uuid.toString()));
 
         if (pool.getTrener().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getTrener().find(new Document("_id", uuid.toString())).first();
-            pool.getTrener().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getTrener().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getMetinolog().find(new Document("_id", uuid.toString())).first();
-            pool.getMetinolog().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getMetinolog().deleteOne(new Document("_id", uuid.toString()));
         }
-        if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getKlasy().find(new Document("_id", uuid.toString())).first();
-            pool.getKlasy().deleteOne(document);
-            document.replace("_id", newUUID);
+        /*if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
+            pool.getKlasy().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getMedyk().find(new Document("_id", uuid.toString())).first();
-            pool.getMedyk().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getMedyk().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getGornik().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getGornik().find(new Document("_id", uuid.toString())).first();
-            pool.getGornik().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getGornik().deleteOne(new Document("_id", uuid.toString()));
+
         }
         if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getDuszolog().find(new Document("_id", uuid.toString())).first();
-            pool.getDuszolog().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getDuszolog().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first();
-            pool.getPrzyrodnik().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getPrzyrodnik().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getChatUsers().find(new Document("_id", uuid.toString())).first();
-            pool.getChatUsers().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getChatUsers().deleteOne(new Document("_id", uuid.toString()));
         }
-        if (pool.getMagazyny().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getMagazyny().find(new Document("_id", uuid.toString())).first();
-            pool.getMagazyny().deleteOne(document);
-            document.replace("_id", newUUID);
+        if (pool.getMagazynier().find(new Document("_id", uuid.toString())).first() != null) {
+            pool.getMagazynier().deleteOne(new Document("_id", uuid.toString()));
+
         }
         if (pool.getLowca().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getLowca().find(new Document("_id", uuid.toString())).first();
-            pool.getLowca().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getLowca().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getLesnik().find(new Document("_id", uuid.toString())).first();
-            pool.getLesnik().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getLesnik().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getPety().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getPety().find(new Document("_id", uuid.toString())).first();
-            pool.getPety().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getPety().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() != null) {
-            document = pool.getUserPets().find(new Document("_id", uuid.toString())).first();
-            pool.getUserPets().deleteOne(document);
-            document.replace("_id", newUUID);
+            pool.getUserPets().deleteOne(new Document("_id", uuid.toString()));
+        }
+        if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
+            pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
         }
     }*/
 
@@ -319,6 +283,7 @@ public class MongoManager {
             }
             if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
                 final WyslannikUser user = new WyslannikUser(uuid);
+                System.out.println("null");
                 this.addDataWyslannik(user);
                 rpgcore.getWyslannikNPC().add(user);
             }
