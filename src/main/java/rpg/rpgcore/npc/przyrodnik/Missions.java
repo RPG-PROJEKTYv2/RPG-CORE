@@ -6,26 +6,27 @@ import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
 public enum Missions {
 
-    M0(0,10, 95, 1.5,1.5,"&8Najemnik",70.0, PrzyrodnikItems.getItem("1-10")),
-    M1(1,15, 90, 1.5,1.5,"Mob2",65.0, PrzyrodnikItems.getItem("10-20")),
-    M2(2,20, 85, 1.5,1.5,"Mob3",60.0, PrzyrodnikItems.getItem("20-30")),
-    M3(3,25, 80,1.5,1.5,"Mob4",55.0, PrzyrodnikItems.getItem("30-40")),
-    M4(4,30, 75, 1.5,1.5,"Mob5",50.0, PrzyrodnikItems.getItem("40-50")),
-    M5(5,40, 65, 1.5,1.5,"Mob6",45.0, PrzyrodnikItems.getItem("50-60")),
-    M6(6,50, 60,1.5,1.5,"Mob7",40.0, PrzyrodnikItems.getItem("60-70")),
-    M7(7,60, 60, 1.5,1.5,"Mob8",35.0, PrzyrodnikItems.getItem("70-80")),
-    M8(8,70, 60,1.5,1.5,"Mob9",30.0, PrzyrodnikItems.getItem("80-90")),
-    M9(9,80, 55,1.5,1.5,"Mob10",30.0, PrzyrodnikItems.getItem("90-100")),
-    M10(10,90, 45,2.5,2.5,"Mob11",25.0, PrzyrodnikItems.getItem("100-110")),
-    M11(11,120, 30,5,5,"Mob12",20.0, PrzyrodnikItems.getItem("110-120")),
+    M0(0,10, 95, 1.5,1.5,"&8Najemnik",3, PrzyrodnikItems.getItem("1-10")),
+    M1(1,15, 90, 1.5,1.5,"&2Goblin",2.5, PrzyrodnikItems.getItem("10-20")),
+    M2(2,20, 85, 1.5,1.5,"&7Goryl",2.3, PrzyrodnikItems.getItem("20-30")),
+    M3(3,25, 80,1.5,1.5,"&8Zjawa",2.5, PrzyrodnikItems.getItem("30-40")),
+    M4(4,30, 75, 1.5,1.5,"&3Straznik Swiatyni",2.5, PrzyrodnikItems.getItem("40-50")),
+    M5(5,40, 65, 1.5,1.5,"&bMrozny Wilk",2.4, PrzyrodnikItems.getItem("50-60")),
+    M6(6,50, 60,1.5,1.5,"&6Zywiolak Ognia",1.9, PrzyrodnikItems.getItem("60-70")),
+    M7(7,60, 60, 1.5,1.5,"&fMroczna Dusza",1, PrzyrodnikItems.getItem("70-80")),
+    M8(8,70, 60,1.5,1.5,"Mob9",0.66, PrzyrodnikItems.getItem("80-90")),
+    M9(9,80, 55,1.5,1.5,"Mob10",0.24, PrzyrodnikItems.getItem("90-100")),
+    M10(10,90, 45,2.5,2.5,"Mob11",0.16, PrzyrodnikItems.getItem("100-110")),
+    M11(11,120, 30,5,5,"Mob12",0.12, PrzyrodnikItems.getItem("110-120")),
+    M12(12,130, 30,5,5,"Mob12",0.06, PrzyrodnikItems.getItem("110-120")),
     M_ERROR(99, 0,0,0,0,"", 0, GlobalItem.getItem("error", 1));
 
-    private int number, reqAmount;
-    private double acceptPercent, dmg,def, dropChance;
-    private String mobName;
-    private ItemStack reqitem;
+    private final int number, reqAmount;
+    private final double acceptPercent, dmg,def, dropChance;
+    private final String mobName;
+    private final ItemStack reqitem;
 
-    Missions(int number, int reqAmount, double acceptPercent, double dmg, double def, String mobName, double dropChance, ItemStack reqitem){
+    Missions(final int number, final int reqAmount, final double acceptPercent, final double dmg, final double def, final String mobName, final double dropChance, final ItemStack reqitem){
         this.number = number;
         this.reqAmount = reqAmount;
         this.acceptPercent = acceptPercent;

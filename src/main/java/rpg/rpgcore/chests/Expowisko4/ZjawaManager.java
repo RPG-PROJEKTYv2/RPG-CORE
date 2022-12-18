@@ -15,11 +15,11 @@ public class ZjawaManager {
     private final Set<Items> zjawa = Sets.newConcurrentHashSet();
 
     public ZjawaManager() {
-        this.zjawa.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Zjawy", Material.LEATHER_HELMET, 7, 0,false), 1));
-        this.zjawa.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Zjawy", Material.LEATHER_CHESTPLATE, 7, 0,false), 1));
-        this.zjawa.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Zjawy", Material.LEATHER_LEGGINGS, 7, 0,false), 1));
-        this.zjawa.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Zjawy", Material.LEATHER_BOOTS, 7, 0,false), 1));
-        this.zjawa.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Zjawy", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.zjawa.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Zjawy", Material.GOLD_HELMET, 20, 0,false), 1));
+        this.zjawa.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Zjawy", Material.GOLD_CHESTPLATE, 20, 0,false), 1));
+        this.zjawa.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Zjawy", Material.GOLD_LEGGINGS, 20, 0,false), 1));
+        this.zjawa.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Zjawy", Material.GOLD_BOOTS, 20, 0,false), 1));
+        this.zjawa.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Zjawy", Material.GOLD_SWORD, 9, 5,false), 1));
 
     }
 

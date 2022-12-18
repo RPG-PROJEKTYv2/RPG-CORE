@@ -15,11 +15,11 @@ public class StraznikSwiatyniManager {
     private final Set<Items> straznik = Sets.newConcurrentHashSet();
 
     public StraznikSwiatyniManager() {
-        this.straznik.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Straznika Swiatyni", Material.LEATHER_HELMET, 7, 0,false), 1));
-        this.straznik.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Straznika Swiatyni", Material.LEATHER_CHESTPLATE, 7, 0,false), 1));
-        this.straznik.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Straznika Swiatyni", Material.LEATHER_LEGGINGS, 7, 0,false), 1));
-        this.straznik.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Straznika Swiatyni", Material.LEATHER_BOOTS, 7, 0,false), 1));
-        this.straznik.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Straznika Swiatyni", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.straznik.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Straznika Swiatyni", Material.GOLD_HELMET, 7, 0,false), 1));
+        this.straznik.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Straznika Swiatyni", Material.IRON_CHESTPLATE, 7, 0,false), 1));
+        this.straznik.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Straznika Swiatyni", Material.IRON_LEGGINGS, 7, 0,false), 1));
+        this.straznik.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Straznika Swiatyni", Material.GOLD_BOOTS, 7, 0,false), 1));
+        this.straznik.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Straznika Swiatyni", Material.GOLD_SWORD, 3, 2,false), 1));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -1,9 +1,11 @@
 package rpg.rpgcore.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.przyrodnik.Missions;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -11,6 +13,9 @@ import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
 import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 public class MobDropHelper {
@@ -44,9 +49,9 @@ public class MobDropHelper {
 
         final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final double niesDropChance = 0.01 + ((0.01 * szczescie) / 1000.0);
-        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
+        //final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
         final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
-        final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
+        //final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
 
 
         rpgcore.getOsManager().find(uuid).getOsUser().setMobKills(rpgcore.getOsManager().find(uuid).getOsUser().getMobKills() + 1);
@@ -68,10 +73,13 @@ public class MobDropHelper {
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
 
 
+        final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
+
         // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
             addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
+            rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
                 addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 40), true, true, entity);
@@ -88,10 +96,13 @@ public class MobDropHelper {
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
-                addDropPlayer(player, PrzyrodnikItems.getByName("1-10").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("1-10")).getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 1) {
                rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
+            if (przyrodnikMission.getNumber() == 0) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("1-10"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
             // DUSZOLOG MISJE
             /*if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
@@ -104,6 +115,7 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Wodz Goblinow")) {
             addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
+            rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-10-20 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
                 addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 40), true, true, entity);
@@ -120,16 +132,20 @@ public class MobDropHelper {
             addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance, true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
-                addDropPlayer(player, PrzyrodnikItems.getByName("10-20").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 2) {
                 rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
+            if (przyrodnikMission.getNumber() == 1) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("10-20"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
         // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Krol Goryli")) {
             addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
+            rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-20-30 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
                 addDropPlayer(player, LowcaItems.getItem("20-30", 1), getDropChance(szczescie, 40), true, true, entity);
@@ -146,16 +162,20 @@ public class MobDropHelper {
             addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance, true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 2) {
-                addDropPlayer(player, PrzyrodnikItems.getByName("20-30").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 3) {
                 rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
+            if (przyrodnikMission.getNumber() == 2) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("20-30"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
         // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Przekleta Dusza")) {
             addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
+            rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-30-40 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
                 addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 40), true, true, entity);
@@ -172,16 +192,20 @@ public class MobDropHelper {
             addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance, true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
-                addDropPlayer(player, PrzyrodnikItems.getByName("30-40").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 4) {
                 rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
+            if (przyrodnikMission.getNumber() == 3) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("30-40"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
         // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Tryton")) {
             addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
+            rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-40-50 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
                 addDropPlayer(player, LowcaItems.getItem("40-50", 1), getDropChance(szczescie, 40), true, true, entity);
@@ -198,10 +222,13 @@ public class MobDropHelper {
             addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance, true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 4) {
-                addDropPlayer(player, PrzyrodnikItems.getByName("40-50").getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 2.5), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 5) {
                 rpgcore.getWyslannikNPC().find(uuid).addKillMobsMissionProgress();
+            }
+            if (przyrodnikMission.getNumber() == 4) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("40-50"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
 

@@ -181,9 +181,6 @@ public class ArmorEffectListener implements Listener {
                 return;
             }
 
-            player.sendMessage("prot: " + Utils.getTagInt(player.getItemInHand(), "prot"));
-            player.sendMessage("thorns: " + Utils.getTagInt(player.getItemInHand(), "thorns"));
-
             if (type.contains("_HELMET")) {
                 if (player.getInventory().getHelmet() == null) {
                     ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getItemInHand(), "prot"));

@@ -22,7 +22,7 @@ public class EnchantCustomCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (args.length == 0) {
+        if (args.length < 3) {
             player.sendMessage(Utils.poprawneUzycie("enchantcustom <zbroja/miecz> <prot/dmg> <ciernie/moby>"));
             return;
         }

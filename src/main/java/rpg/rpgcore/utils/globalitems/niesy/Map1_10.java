@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -12,11 +14,17 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map1_10 {
-    I1_10_1("1-10-1", 1, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 1,true)),
-    I1_10_2("1-10-2", 1, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 1,true)),
-    I1_10_3("1-10-3", 1, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 1,true)),
-    I1_10_4("1-10-4", 1, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 1,true)),
-    I1_10_5("1-10-5", 1, ItemHelper.createSword("&8Zaginiona Brzytwa", Material.WOOD_SWORD, 10, 3,false)),
+    I1_10_1("1-10-1", 10, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 0,true)),
+    I1_10_2("1-10-2", 10, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 0,true)),
+    I1_10_3("1-10-3", 10, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 0,true)),
+    I1_10_4("1-10-4", 10, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 0,true)),
+    I1_10_5("1-10-5", 10, ItemHelper.createSword("&8Zaginiona Brzytwa", Material.WOOD_SWORD, 5, 1,false)),
+
+    I1_10_6("1-10-6", 10, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandDouble(3, 5), ChanceHelper.getRandDouble(2, 3), ChanceHelper.getRandInt(1, 10), "&8Zaginiony Naszyjnik")),
+    I1_10_7("1-10-7", 10, AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 4), ChanceHelper.getRandDouble(1, 3), 1, ChanceHelper.getRandInt(1, 10), "&8Zaginiony Diadem")),
+    I1_10_8("1-10-8", 10, AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(2, 7), ChanceHelper.getRandDouble(2, 5), ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(1, 10), "&8Zaginiona Tarcza")),
+    I1_10_9("1-10-9", 10, AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandDouble(1, 1), ChanceHelper.getRandDouble(1, 1), 2, ChanceHelper.getRandInt(1, 10), "&8Zaginione Kolczyki")),
+    I1_10_10("1-10-10", 10, AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(2, 3), 1, ChanceHelper.getRandInt(1, 10), "&8Zaginiony Pierscien")),
     I99("null", 0, null);
     private final String name;
     private final double dropChance;

@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.globalitems.niesy.Map1_10;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.niesy.*;
 
 public class PlayerItemPickUpListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -19,8 +19,7 @@ public class PlayerItemPickUpListener implements Listener {
             e.setCancelled(true);
             final String itemName = Utils.removeColor(e.getItem().getItemStack().getItemMeta().getDisplayName());
             final String expowisko = itemName.substring(itemName.lastIndexOf(" ") + 1).trim();
-            e.getPlayer().sendMessage(expowisko);
-            Bukkit.broadcastMessage(Utils.format("&6&lDROP " + expowisko +" &8>> &fGracz &b" + e.getPlayer().getName() + " &fznalazl &b&lNiesamowity Przedmiot"));
+            Bukkit.broadcastMessage(Utils.format("&6&lDROP " + expowisko + " &8>> &fGracz &b" + e.getPlayer().getName() + " &fznalazl &b&lNiesamowity Przedmiot"));
 
             int amount = e.getItem().getItemStack().getAmount();
 
@@ -31,15 +30,25 @@ public class PlayerItemPickUpListener implements Listener {
                     }
                 }
             }
-
+            final double szcescie = RPGCORE.getInstance().getBonusesManager().find(e.getPlayer().getUniqueId()).getBonusesUser().getSzczescie() / 100.0;
             for (int i = 0; i < amount; i++) {
                 switch (expowisko) {
                     case "1-10":
-                        Map1_10.getDrop(e.getPlayer(), (double) RPGCORE.getInstance().getBonusesManager().find(e.getPlayer().getUniqueId()).getBonusesUser().getSzczescie() / 100);
-                        e.getPlayer().sendMessage("" + ((double) RPGCORE.getInstance().getBonusesManager().find(e.getPlayer().getUniqueId()).getBonusesUser().getSzczescie() / 100));
+                        Map1_10.getDrop(e.getPlayer(), szcescie);
                         break;
                     case "10-20":
+                        Map10_20.getDrop(e.getPlayer(), szcescie);
                         break;
+                    case "20-30":
+                        Map20_30.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "30-40":
+                        Map30_40.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "40-50":
+                        Map40_50.getDrop(e.getPlayer(), szcescie);
+                        break;
+
                 }
                 e.getPlayer().getInventory().removeItem(e.getItem().getItemStack());
             }

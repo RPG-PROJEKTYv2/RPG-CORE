@@ -13,26 +13,27 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public enum Map10_20 {
-    I10_20_1("10-20-1", 10, ItemHelper.createArmor("&8Zaginiona Czapka Goblina", Material.LEATHER_HELMET, 11, 0,true)),
-    I10_20_2("10-20-2", 10, ItemHelper.createArmor("&8Zaginiona Zbroja Goblina", Material.LEATHER_CHESTPLATE, 11, 0,true)),
-    I10_20_3("10-20-3", 10, ItemHelper.createArmor("&8Zaginione Spodnie Goblina", Material.LEATHER_LEGGINGS, 11, 0,true)),
-    I10_20_4("10-20-4", 10, ItemHelper.createArmor("&8Zaginione Buty Goblina", Material.LEATHER_BOOTS, 11, 0,true)),
-    I10_20_5("10-20-5", 10, ItemHelper.createSword("&8Zaginiona Czapka Najemnika", Material.STONE_SWORD, 6, 3,true)),
-    I10_20_6("10-20-6", 10, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(3, 9),
-            ChanceHelper.getRandDouble(4, 7), ChanceHelper.getRandDouble(3, 4), ChanceHelper.getRandInt(10, 20), "&8Goblinski Naszyjnik")),
-    I10_20_7("10-20-7", 10, AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 5),
-            ChanceHelper.getRandDouble(1, 5), 1, ChanceHelper.getRandInt(10, 20), "&8Goblinski Diadem")),
-    I10_20_8("10-20-8", 10, AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(3, 10),
-            ChanceHelper.getRandDouble(2, 7), ChanceHelper.getRandInt(1, 3), ChanceHelper.getRandInt(10, 20), "&8Goblinska Tarcza")),
-    I10_20_9("10-20-9", 10, AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1),
-            ChanceHelper.getRandDouble(2, 4), 1, ChanceHelper.getRandInt(10, 20), "&8Goblinski Pierscien")),
+public enum Map40_50 {
+    I40_50_1("40-50-1", 10, ItemHelper.createArmor("&8Pradawny Helm", Material.IRON_HELMET, 35, 2,true)),
+    I40_50_2("40-50-2", 10, ItemHelper.createArmor("&8Pradawna Zbroja", Material.DIAMOND_CHESTPLATE, 35, 2,true)),
+    I40_50_3("40-50-3", 10, ItemHelper.createArmor("&8Pradawne Spodnie", Material.IRON_LEGGINGS, 35, 2,true)),
+    I40_50_4("40-50-4", 10, ItemHelper.createArmor("&8Pradawne Buty", Material.IRON_BOOTS, 35, 2,true)),
+    I40_50_5("40-50-5", 10, ItemHelper.createArmor("&8Pradawny Miecz", Material.DIAMOND_SWORD, 30, 12,true)),
+    I40_50_6("40-50-6", 10, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(19, 41),
+            ChanceHelper.getRandDouble(8, 16), ChanceHelper.getRandDouble(8, 17), ChanceHelper.getRandInt(40, 50), "&8Pradawny Naszyjnik")),
+    I40_50_7("40-50-7", 10, AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(4, 14),
+            ChanceHelper.getRandDouble(4, 14), ChanceHelper.getRandDouble(1, 3), ChanceHelper.getRandInt(40, 50), "&8Pradawny Diadem")),
+    I40_50_8("40-50-8", 10, AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(9, 24),
+            ChanceHelper.getRandDouble(6, 17), ChanceHelper.getRandInt(4, 6), ChanceHelper.getRandInt(40, 50), "&8Pradawna Tarcza")),
+
+    I40_50_9("40-50-9", 10, AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.1, 0.2),
+            ChanceHelper.getRandDouble(4, 6), 1, ChanceHelper.getRandInt(40, 50), "&8Pradawny Pierscien")),
     I99("null", 0, null);
     private final String name;
     private final double dropChance;
     private final ItemStack item;
 
-    Map10_20(String name, double dropChance, ItemStack item) {
+    Map40_50(String name, double dropChance, ItemStack item) {
         this.name = name;
         this.dropChance = dropChance;
         this.item = item;
@@ -50,8 +51,8 @@ public enum Map10_20 {
         return item;
     }
 
-    public static Map10_20 getByName(String name) {
-        for (Map10_20 item : Map10_20.values()) {
+    public static Map40_50 getByName(String name) {
+        for (Map40_50 item : Map40_50.values()) {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
@@ -61,7 +62,7 @@ public enum Map10_20 {
 
     public static void getDrop(final Player player, final double szczescie) {
         final Set<Items> drop = Sets.newConcurrentHashSet();
-        for (Map10_20 item : Map10_20.values()) {
+        for (Map40_50 item : Map40_50.values()) {
             drop.add(new Items(item.getName(), item.getDropChance(), item.getItemStack(), 1));
         }
         for (Items item : drop) {

@@ -24,7 +24,7 @@ public class ProfileCommand extends CommandAPI {
 
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType().getPriority() >= RankType.HA.getPriority()) {
+        if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getPriority() >= RankType.HA.getPriority()) {
             if (args.length < 1) {
                 this.createProfileGUI(player);
                 return;
@@ -120,7 +120,7 @@ public class ProfileCommand extends CommandAPI {
                 "&7Szczescie: &f" + user.getSzczescie(),
                 "&7Szansa Na Spowolnienie: &f" + user.getSpowolnienie() + "%",
                 "&7Szansa Na Oslepienie: &f" + user.getOslepienie() + "%",
-                "&7Ddatkowy EXP: &f" + user.getDodatkowyExp() + "%",
+                "&7Dodatkowy EXP: &f" + user.getDodatkowyExp() + "%",
                 "&7Szansa Na Przebicie Pancerza: &f" + user.getPrzebiciePancerza() + "%",
                 "&7Wampiryzm: &f" + user.getWampiryzm() + "%"
         )).addGlowing().toItemStack().clone());

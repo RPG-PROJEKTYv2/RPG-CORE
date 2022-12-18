@@ -12,6 +12,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Objects;
+
 
 public class EntityDamageEntityListener implements Listener {
 
@@ -23,6 +25,11 @@ public class EntityDamageEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
+
+        if (Objects.equals("1-10map, 10-20map, 20-30map, 30-40map, 40-50map, dt, spawnOFFICIAL", e.getDamager().getLocation().getWorld().getName())) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
             if (e.getDamager() instanceof Player) {
@@ -49,6 +56,7 @@ public class EntityDamageEntityListener implements Listener {
             }
         }
 
+
         // ATAKUJACY JEST GRACZEM
         if (e.getDamager() instanceof Player) {
 
@@ -68,6 +76,11 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
+                if (rpgcore.getGodManager().containsPlayer(victim.getUniqueId())) {
+                    e.setCancelled(true);
+                    return;
+                }
+
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
                 final double victimDef = rpgcore.getDamageManager().calculatePlayerDef(victim, "ludzie");
 
@@ -75,8 +88,6 @@ public class EntityDamageEntityListener implements Listener {
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-                attacker.sendMessage("Final dmg - " + finalDmg);
-                victim.sendMessage("Def: " + victimDef);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
 
@@ -87,11 +98,11 @@ public class EntityDamageEntityListener implements Listener {
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
-                attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
+                /*attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
                 attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
                 attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
                 attacker.sendMessage("Dmg event - " + e.getDamage());
-                attacker.sendMessage("Dmg final - " + e.getFinalDamage());
+                attacker.sendMessage("Dmg final - " + e.getFinalDamage());*/
                 if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
                     if (((Monster) victim).getTarget() != attacker) {
                         ((Monster) victim).setTarget(attacker);
@@ -103,18 +114,21 @@ public class EntityDamageEntityListener implements Listener {
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
             }
-        } else if (e.getDamager() instanceof Monster) {
+        } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
+            // Victim jest Graczem
             if (e.getEntity() instanceof Player) {
                 final Player victim = (Player) e.getEntity();
-                final double attackerDmg = e.getDamage();
-                victim.sendMessage("Mob damage: " + attackerDmg);
+                if (rpgcore.getGodManager().containsPlayer(victim.getUniqueId())) {
+                    e.setCancelled(true);
+                    return;
+                }
+                final double attackerDmg = EntityDamage.getByName(Utils.removeColor(e.getDamager().getCustomName()));
                 final double victimDef = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
 
                 double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - (attackerDmg * victimDef)));
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-                victim.sendMessage("Final dmg - " + finalDmg);
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
             }

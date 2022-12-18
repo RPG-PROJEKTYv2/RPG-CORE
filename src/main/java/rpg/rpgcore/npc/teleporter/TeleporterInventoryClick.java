@@ -65,21 +65,23 @@ public class TeleporterInventoryClick implements Listener {
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
                 if (slot == 5) {
+                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
                     player.closeInventory();
-                    rpgcore.getTeleporterNPC().teleportExp6(player);
+                    //rpgcore.getTeleporterNPC().teleportExp6(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
                 if (slot == 6) {
+                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
                     player.closeInventory();
-                    rpgcore.getTeleporterNPC().teleportExp7(player);
+                    //rpgcore.getTeleporterNPC().teleportExp7(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 if (slot == 7) {
+                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
                     player.closeInventory();
-                    rpgcore.getTeleporterNPC().teleportExp8(player);
-
+                    //rpgcore.getTeleporterNPC().teleportExp8(player);
                 }
             }
         }

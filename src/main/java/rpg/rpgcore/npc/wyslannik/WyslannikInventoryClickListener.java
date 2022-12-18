@@ -49,6 +49,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     player.getInventory().addItem(mission.getReward());
                     user.saveUser();
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(moby)"));
+                    RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
                 }
                 return;
@@ -62,6 +63,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     player.getInventory().addItem(mission.getReward());
                     user.saveUser();
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(bossy)"));
+                    RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
                 }
                 return;
@@ -76,6 +78,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     player.getInventory().addItem(mission.getReward());
                     user.saveUser();
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(skrzynie)"));
+                    RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                 }
             }
         }

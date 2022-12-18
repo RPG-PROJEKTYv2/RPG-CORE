@@ -9,9 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -63,16 +63,6 @@ public class LesnikInventoryClick implements Listener {
                 }
             }
 
- /*           if (slot == 22) {
-                if (item != null && item.equals(LesnikItems.POTION.getItem())) {
-                    e.getClickedInventory().setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Potki Lesnika").toItemStack().clone());
-                    player.getInventory().addItem(LesnikItems.POTION.getItem());
-                    return;
-                } else {
-                    return;
-                }
-            }*/
-
             final LesnikObject lesnikObject = this.rpgcore.getLesnikNPC().find(uuid);
             final LesnikMissions mission = LesnikMissions.getByNumber(lesnikObject.getUser().getMission());
 
@@ -81,23 +71,18 @@ public class LesnikInventoryClick implements Listener {
             }
 
             if (!player.getInventory().containsAtLeast(mission.getReqItem(), 1)) {
-                player.getInventory().addItem(mission.getReqItem());
                 return;
             }
             player.getInventory().removeItem(mission.getReqItem());
 
-            final RandomItems<String> oddawanie = new RandomItems<>();
-            if (e.getClickedInventory().getItem(22).equals(LesnikItems.POTION.getItem())) {
-                oddawanie.add(1, "pozytywnie");
-            } else {
-                oddawanie.add(0.5, "pozytywnie");
-                oddawanie.add(0.5, "negatywnie");
-            }
-            if (oddawanie.next().equals("pozytywnie")) {
+           final double chance = mission.getChance() + (e.getClickedInventory().getItem(22) != null && e.getClickedInventory().getItem(22).equals(LesnikItems.POTION.getItem()) ? 50 : 0);
+
+            if (ChanceHelper.getChance(chance)) {
                 lesnikObject.getUser().setProgress(lesnikObject.getUser().getProgress() + 1);
                 player.sendMessage(Utils.format("&2&lLesnik &8>> &aDziekuje ci za ten przedmiot"));
                 if (lesnikObject.getUser().getProgress() == mission.getReqAmount()) {
                     final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
+                    lesnikObject.getUser().giveCooldown();
                     lesnikObject.getUser().setProgress(0);
                     lesnikObject.getUser().setMission(lesnikObject.getUser().getMission() + 1);
                     lesnikObject.getUser().setPrzeszycie(lesnikObject.getUser().getPrzeszycie() + mission.getPrzeszywka());

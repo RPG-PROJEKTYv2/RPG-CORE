@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -14,11 +15,15 @@ public class KrolGoryliManager {
     private final Set<Items> krolgoryli = Sets.newConcurrentHashSet();
 
     public KrolGoryliManager() {
-        this.krolgoryli.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Krola Goryli", Material.LEATHER_HELMET, 7, 0,false), 1));
-        this.krolgoryli.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Krola Goryli", Material.LEATHER_CHESTPLATE, 7, 0,false), 1));
-        this.krolgoryli.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Krola Goryli", Material.LEATHER_LEGGINGS, 7, 0,false), 1));
-        this.krolgoryli.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Krola Goryli", Material.LEATHER_BOOTS, 7, 0,false), 1));
-        this.krolgoryli.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Krola Goryli", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.krolgoryli.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Krola Goryli", Material.GOLD_HELMET, 17, 0,false), 1));
+        this.krolgoryli.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Krola Goryli", Material.GOLD_CHESTPLATE, 17, 0,false), 1));
+        this.krolgoryli.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Krola Goryli", Material.GOLD_LEGGINGS, 17, 0,false), 1));
+        this.krolgoryli.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Krola Goryli", Material.GOLD_BOOTS, 17, 0,false), 1));
+        this.krolgoryli.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Krola Goryli", Material.GOLD_SWORD, 10, 4,false), 1));
+        this.krolgoryli.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lNaszyjnik Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&f&lDiadem Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lPierscien Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lTarcza Krola Goryli").toItemStack(),1 ));
 
     }
 

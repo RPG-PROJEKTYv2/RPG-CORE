@@ -85,19 +85,19 @@ public class MetinyHelper {
             if (String.valueOf(player.getItemInHand().getType()).contains("_SWORD")) {
                 if (player.getItemInHand().getItemMeta().getLore() != null) {
                     int sharp = Utils.getSharpnessLevel(player.getItemInHand());
-                    if (sharp < 200 && sharp > 99) {
-                        damage = damage + 1;
+                    if (sharp < 10 && sharp > 1) {
+                        damage = 1;
                     }
-                    if (sharp < 300 && sharp > 199) {
-                        damage = damage + 200;
+                    if (sharp < 40 && sharp > 9) {
+                        damage = 2;
                     }
-                    if (sharp < 400 && sharp > 299) {
-                        damage = damage + 3;
+                    if (sharp < 150 && sharp > 39) {
+                        damage = 3;
                     }
-                    if (sharp < 500 && sharp > 399) {
-                        damage = damage + 4;
+                    if (sharp < 300 && sharp > 149) {
+                        damage = 4;
                     }
-                    if (sharp < 600 && sharp > 499) {
+                    /*if (sharp < 600 && sharp > 499) {
                         damage = damage + 5;
                     }
                     if (sharp < 700 && sharp > 599) {
@@ -114,7 +114,7 @@ public class MetinyHelper {
                     }
                     if (sharp < 1100 && sharp > 999) {
                         damage = damage + 10;
-                    }
+                    }*/
                 }
             }
         }
@@ -272,7 +272,7 @@ public class MetinyHelper {
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         player.sendMessage(worldName);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("exp", "") + "-MOB " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
         RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(kasa + kasaToAdd);
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().setDestroyedMetins(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().getDestroyedMetins() + 1);
         player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));

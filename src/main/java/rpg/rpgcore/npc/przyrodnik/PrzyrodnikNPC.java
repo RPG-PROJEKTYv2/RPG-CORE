@@ -16,11 +16,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PrzyrodnikNPC {
-    private final RPGCORE rpgcore;
     private final Map<UUID, PrzyrodnikObject> userMap;
 
     public PrzyrodnikNPC(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllPrzyrodnik();
     }
 
@@ -34,7 +32,7 @@ public class PrzyrodnikNPC {
         }
 
         gui.setItem(10, this.getStatystykiItem(user));
-        if (user.getMission() == 12) {
+        if (user.getMission() == 13) {
             gui.setItem(13, Missions.M_ERROR.getItemStack());
         } else {
             gui.setItem(13, this.getOddajItemyItem(user));
@@ -75,10 +73,6 @@ public class PrzyrodnikNPC {
 
     public ImmutableSet<PrzyrodnikObject> getPrzyrodnikObjects() {
         return ImmutableSet.copyOf(this.userMap.values());
-    }
-
-    public boolean isPrzyrodnikObject(final UUID uuid) {
-        return this.userMap.containsKey(uuid);
     }
 
 

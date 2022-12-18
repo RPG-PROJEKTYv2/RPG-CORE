@@ -13,8 +13,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ChanceHelper;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 
 
@@ -163,7 +163,29 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 3), ChanceHelper.getRandDouble(3, 5), ChanceHelper.getRandDouble(2, 3), ChanceHelper.getRandInt(1, 10), "&8&lNaszyjnik Wygnanca");
+                                break;
+                            case WATCH:
+                                is = AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 3), ChanceHelper.getRandDouble(1, 3), 1, ChanceHelper.getRandInt(1, 10), "&8&lDiadem Wygnanca");
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                is = AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(2, 3), 1, ChanceHelper.getRandInt(1, 10), "&8&lPierscien Wygnanca");
+                                break;
+                            case HOPPER_MINECART:
+                                is = AkcesoriaPodsHelper.createKolczyki(1, 1, 2, ChanceHelper.getRandInt(1, 10), "&8&lKolczyki Wygnanca");
+                                break;
+                            case ITEM_FRAME:
+                                is = AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(2, 7), ChanceHelper.getRandDouble(2, 4), ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(1, 10), "&8&lTarcza Wygnanca");
+                                break;
+                            default:
+                                break;
+                        }
+
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -192,7 +214,25 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 7), ChanceHelper.getRandDouble(4, 7), ChanceHelper.getRandDouble(3, 4), ChanceHelper.getRandInt(10, 20), "&a&lNaszyjnik Wodza Goblinow");
+                                break;
+                            case WATCH:
+                                is = AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 4), ChanceHelper.getRandDouble(1, 5), 1, ChanceHelper.getRandInt(10, 20), "&a&lDiadem Wodza Goblinow");
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                is = AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(2, 4), 1, ChanceHelper.getRandInt(10, 20), "&a&lPierscien Wodza Goblinow");
+                                break;
+                            case ITEM_FRAME:
+                                is = AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(3, 10), ChanceHelper.getRandDouble(2, 6), ChanceHelper.getRandInt(1, 3), ChanceHelper.getRandInt(10, 20), "&a&lTarcza Wodza Goblinow");
+                                break;
+                            default:
+                                break;
+                        }
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -235,7 +275,25 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(7, 17), ChanceHelper.getRandDouble(6, 9), ChanceHelper.getRandDouble(4, 5), ChanceHelper.getRandInt(20, 30), "&f&lNaszyjnik Krola Goryli");
+                                break;
+                            case WATCH:
+                                is = AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(2, 6), ChanceHelper.getRandDouble(2, 8), 1, ChanceHelper.getRandInt(20, 30), "&f&lDiadem Krola Goryli");
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                is = AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(3, 4), 1, ChanceHelper.getRandInt(20, 30), "&f&lPierscien Krola Goryli");
+                                break;
+                            case ITEM_FRAME:
+                                is = AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(4, 13), ChanceHelper.getRandDouble(3, 9), ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandInt(20, 30), "&f&lTarcza Krola Goryli");
+                                break;
+                            default:
+                                break;
+                        }
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -264,7 +322,25 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(14, 31), ChanceHelper.getRandDouble(8, 14), ChanceHelper.getRandDouble(6, 9), ChanceHelper.getRandInt(30, 40), "&f&lNaszyjnik Przekletej Duszy");
+                                break;
+                            case WATCH:
+                                is = AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(2, 12), ChanceHelper.getRandDouble(2, 11), ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(30, 40), "&f&lDiadem Przekletej Duszy");
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                is = AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.08, 0.2), ChanceHelper.getRandDouble(3, 5), 1, ChanceHelper.getRandInt(30, 40), "&f&lPierscien Przekletej Duszy");
+                                break;
+                            case ITEM_FRAME:
+                                is = AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(6, 19), ChanceHelper.getRandDouble(4, 12), ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandInt(30, 40), "&f&lTarcza Przekletej Duszy");
+                                break;
+                            default:
+                                break;
+                        }
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -293,7 +369,25 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(18, 38), ChanceHelper.getRandDouble(9, 16), ChanceHelper.getRandDouble(8, 16), ChanceHelper.getRandInt(40, 50), "&f&lNaszyjnik Trytona");
+                                break;
+                            case WATCH:
+                                is = AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(4, 14), ChanceHelper.getRandDouble(4, 14), ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(40, 50), "&f&lDiadem Trytona");
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                is = AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.1, 0.2), ChanceHelper.getRandDouble(4, 6), 1, ChanceHelper.getRandInt(40, 50), "&f&lPierscien Trytona");
+                                break;
+                            case ITEM_FRAME:
+                                is = AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(9, 24), ChanceHelper.getRandDouble(5, 15), ChanceHelper.getRandInt(4, 6), ChanceHelper.getRandInt(40, 50), "&f&lTarcza Trytona");
+                                break;
+                            default:
+                                break;
+                        }
+
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;

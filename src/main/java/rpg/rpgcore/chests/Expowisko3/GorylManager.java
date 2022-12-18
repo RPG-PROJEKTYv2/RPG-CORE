@@ -16,11 +16,11 @@ public class GorylManager {
     private final Set<Items> goryl = Sets.newConcurrentHashSet();
 
     public GorylManager() {
-        this.goryl.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Goryla", Material.LEATHER_HELMET, 7, 0,false), 1));
-        this.goryl.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Goryla", Material.LEATHER_CHESTPLATE, 7, 0,false), 1));
-        this.goryl.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Goryla", Material.LEATHER_LEGGINGS, 7, 0,false), 1));
-        this.goryl.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Goryla", Material.LEATHER_BOOTS, 7, 0,false), 1));
-        this.goryl.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Goryla", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.goryl.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Goryla", Material.LEATHER_HELMET, 14, 0,false), 1));
+        this.goryl.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Goryla", Material.CHAINMAIL_CHESTPLATE, 14, 0,false), 1));
+        this.goryl.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Goryla", Material.LEATHER_LEGGINGS, 14, 0,false), 1));
+        this.goryl.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Goryla", Material.LEATHER_BOOTS, 14, 0,false), 1));
+        this.goryl.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Goryla", Material.IRON_SWORD, 5, 3,false), 1));
     }
 
     public Items getDrawnItems(final Player player) {

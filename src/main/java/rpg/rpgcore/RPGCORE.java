@@ -446,7 +446,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);

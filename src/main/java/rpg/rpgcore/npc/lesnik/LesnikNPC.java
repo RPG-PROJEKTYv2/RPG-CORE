@@ -15,11 +15,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class LesnikNPC {
-    private final RPGCORE rpgcore;
     private final Map<UUID, LesnikObject> userMap;
 
     public LesnikNPC(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllLesnik();
     }
 
@@ -45,7 +43,7 @@ public class LesnikNPC {
             gui.setItem(16, new ItemBuilder(Material.WATCH).setName("&aGotowe do oddania!").toItemStack().clone());
         }
 
-        gui.setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Mikstury Lesnika").toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Wywaru z Kory").toItemStack().clone());
 
         player.openInventory(gui);
     }
@@ -55,7 +53,8 @@ public class LesnikNPC {
     private ItemStack getCurrentMissionItem(final LesnikUser lesnikUser) {
         final LesnikMissions mission = LesnikMissions.getByNumber(lesnikUser.getMission());
         return new ItemBuilder(mission.getReqItem().getType(), mission.getReqItem().getAmount(), mission.getReqItem().getDurability()).setName("&c&lMisja " + lesnikUser.getMission()).setLore(Arrays.asList(
-                "&7Przynies mi jeszcze &c" + (mission.getReqAmount() - lesnikUser.getProgress()) + " &7" + mission.getReqItem().getItemMeta().getDisplayName(),
+                "&7Przynies mi jeszcze &c" + Math.max(mission.getReqAmount() - lesnikUser.getProgress(), 0) + " &7" + mission.getReqItem().getItemMeta().getDisplayName(),
+                "&7Szansa na przyjecie przedmiotu: &c" + mission.getChance() + "%",
                 "",
                 "&f&lNagroda:",
                 "&7Przeszycie Bloku Ciosu: &c" + mission.getPrzeszywka() + "&7%",

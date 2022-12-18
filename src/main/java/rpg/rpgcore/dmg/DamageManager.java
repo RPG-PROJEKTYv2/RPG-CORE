@@ -95,7 +95,6 @@ public class DamageManager {
         }
 
         dmg = dmg * (mnoznik / 100);
-        attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
         }
@@ -106,12 +105,8 @@ public class DamageManager {
         }
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
-            attacker.sendMessage("Krytyk!");
-            attacker.sendMessage("DMG po krycie - " + dmg);
             if (ChanceHelper.getChance(wzmKryt)) {
                 dmg = dmg * 1.5;
-                attacker.sendMessage("Wzmocniony krytyk!");
-                attacker.sendMessage("DMG po wzmocnionym krycie - " + dmg);
             }
         }
 
@@ -190,7 +185,6 @@ public class DamageManager {
         }
 
         dmg = dmg * (mnoznik / 100);
-        attacker.sendMessage("Dmg - " + dmg);
         if (krytyk > 200) {
             krytyk = 200;
         }
@@ -201,12 +195,8 @@ public class DamageManager {
         }
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
-            attacker.sendMessage("Krytyk!");
-            attacker.sendMessage("DMG po krycie - " + dmg);
             if (ChanceHelper.getChance(wzmKryt)) {
                 dmg = dmg * 1.5;
-                attacker.sendMessage("Wzmocniony krytyk!");
-                attacker.sendMessage("DMG po wzmocnionym krycie - " + dmg);
             }
         }
 
