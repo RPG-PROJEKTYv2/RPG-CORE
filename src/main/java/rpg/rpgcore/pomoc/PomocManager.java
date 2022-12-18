@@ -24,7 +24,7 @@ public class PomocManager {
         player.openInventory(gui);
     }
     public void openAllKomendyInventory(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&b&lSpis komend"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&b&lSpis komend"));
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         }
@@ -45,6 +45,8 @@ public class PomocManager {
         gui.setItem(13, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/misje").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/ping, /ping <gracz>").addGlowing().toItemStack().clone());
         gui.setItem(15, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/rangi").addGlowing().toItemStack().clone());
+        gui.setItem(16, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/bony, /akcesoria, /dodatki").addGlowing().toItemStack().clone());
+
         player.openInventory(gui);
     }
 }

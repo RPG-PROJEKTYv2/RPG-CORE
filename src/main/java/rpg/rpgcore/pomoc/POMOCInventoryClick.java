@@ -39,7 +39,7 @@ public class POMOCInventoryClick implements Listener {
                 player.closeInventory();
                 player.sendMessage(Utils.format("&e&lPoradnik &f&l* &7Witaj &c" + player.getName() + " &7na samym poczatku powinienes przeczytac regulamin serwerowy ktory znajdziesz na naszym discordzie - &edc.hellrpg.pl&7!\n" +
                         "&7Znajdujesz sie na trybie &4&lMMO/RPG &7z poziomem &cmedium.\n" +
-                        "&7Tryb polega na zwiekszanie poziomu postaci poprzez zabijanie potworow na poszczegolnych mapach, ulepszaniu swojego konta jak i ekwipunku oraz rywalizacji z innymi graczami!\n" +
+                        "&7Tryb polega na zwiekszaniu poziomu postaci poprzez zabijanie potworow na poszczegolnych mapach, ulepszaniu swojego konta jak i ekwipunku oraz rywalizacji z innymi graczami!\n" +
                         "&7Aby teleportowac sie na pierwsza mape musisz udac sie do &9&lTeleportera&7.\n" +
                         "&7Wszystkie najwazniejsze npcty znajdziesz pod - &e/listanpc&7.\n" +
                         "\n " +

@@ -43,6 +43,8 @@ import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
+import rpg.rpgcore.commands.player.rangi.RangiCommand;
+import rpg.rpgcore.commands.player.rangi.RangiInventoryClick;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dmg.EntityCombustListener;
 import rpg.rpgcore.dmg.EntityDeathListener;
@@ -69,7 +71,6 @@ import rpg.rpgcore.guilds.events.GuildsInventoryClick;
 import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
-import rpg.rpgcore.kulabossow.KulabossowPlayerInteract;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
@@ -409,6 +410,8 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ChatCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BossyCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new PingCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new RangiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ListaNPCCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GuildCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new KoszCommand());
@@ -505,6 +508,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GuildEntityDeath(this), this);
 
 
+        // Rangi command
+        this.getServer().getPluginManager().registerEvents(new RangiInventoryClick(), this);
+
         // KOSZ
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClose(), this);
@@ -524,9 +530,6 @@ public final class RPGCORE extends JavaPlugin {
 
         // MythicSTICK
         this.getServer().getPluginManager().registerEvents(new MythicstickPlayerInteract(), this);
-
-        //KulaBOSSOW
-        this.getServer().getPluginManager().registerEvents(new KulabossowPlayerInteract(), this);
 
         // NPC
 

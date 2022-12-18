@@ -23,7 +23,9 @@ public class KowalManager {
         this.kowal.add(new Items("5", 4.0, GlobalItem.getItem("I10", 2), 2));
         this.kowal.add(new Items("6", 2.0, GlobalItem.getItem("I10", 3), 3));
         // oczyszczenie
-
+        this.kowal.add(new Items("7", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
+        this.kowal.add(new Items("7", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),2));
+        this.kowal.add(new Items("7", 2.5, GlobalItem.getItem("I_OCZYSZCZENIE", 3), 3));
     }
 
     public Items getDrawnItems(final Player player) {

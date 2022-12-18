@@ -9,6 +9,7 @@ import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class LvlCommand extends CommandAPI {
@@ -17,6 +18,7 @@ public class LvlCommand extends CommandAPI {
 
     public LvlCommand(RPGCORE rpgcore) {
         super("lvl");
+        this.setAliases(Arrays.asList("level", "poziom"));
         this.setRankLevel(RankType.GRACZ);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
