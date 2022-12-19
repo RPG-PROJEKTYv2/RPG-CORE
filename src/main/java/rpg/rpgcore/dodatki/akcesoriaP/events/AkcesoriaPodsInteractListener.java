@@ -55,6 +55,10 @@ public class AkcesoriaPodsInteractListener implements Listener {
             return;
         }
 
+        if (!eventItem.getItemMeta().getDisplayName().contains("Tarcza") && !eventItem.getItemMeta().getDisplayName().contains("Kolczyki") &&
+                !eventItem.getItemMeta().getDisplayName().contains("Naszyjnik") && !eventItem.getItemMeta().getDisplayName().contains("Pierscien") &&
+                !eventItem.getItemMeta().getDisplayName().contains("Pierscien")) return;
+
         if (eventItem.getAmount() > 1) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
             return;
@@ -66,7 +70,6 @@ public class AkcesoriaPodsInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.ITEM_FRAME) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Tarcza")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaPodstawowe().getTarcza().isEmpty()) {
@@ -101,7 +104,6 @@ public class AkcesoriaPodsInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.STORAGE_MINECART) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Naszyjnik")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaPodstawowe().getNaszyjnik().isEmpty()) {
@@ -135,7 +137,6 @@ public class AkcesoriaPodsInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.HOPPER_MINECART) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Kolczyki")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaPodstawowe().getKolczyki().isEmpty()) {
@@ -169,7 +170,6 @@ public class AkcesoriaPodsInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.EXPLOSIVE_MINECART) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Pierscien")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaPodstawowe().getPierscien().isEmpty()) {
@@ -203,7 +203,6 @@ public class AkcesoriaPodsInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.WATCH) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Diadem")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaPodstawowe().getDiadem().isEmpty()) {

@@ -3,12 +3,9 @@ package rpg.rpgcore.chests.Inne;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
-import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
@@ -35,19 +32,25 @@ public class TajemniczaManager {
         this.tajemnicza.add(new Items("9", 0.5, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
         this.tajemnicza.add(new Items("10", 0.25, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
         // set I
-        this.tajemnicza.add(new Items("11", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Helm", Material.GOLD_HELMET, 4, 1, false), 1));
-        this.tajemnicza.add(new Items("12", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Napiersnik", Material.GOLD_CHESTPLATE, 4, 1, false), 1));
-        this.tajemnicza.add(new Items("13", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Spodnie", Material.GOLD_LEGGINGS, 4, 1, false), 1));
-        this.tajemnicza.add(new Items("14", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Buty", Material.GOLD_BOOTS, 4, 1, false), 1));
+        this.tajemnicza.add(new Items("11", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Helm", Material.GOLD_HELMET, 4, 0, false), 1));
+        this.tajemnicza.add(new Items("12", 7.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Napiersnik", Material.GOLD_CHESTPLATE, 4, 0, false), 1));
+        this.tajemnicza.add(new Items("13", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Spodnie", Material.GOLD_LEGGINGS, 4, 0, false), 1));
+        this.tajemnicza.add(new Items("14", 7.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Buty", Material.GOLD_BOOTS, 4, 0, false), 1));
         this.tajemnicza.add(new Items("15", 5.0, ItemHelper.createSword("&3Uszkodzony Tajemniczy Miecz", Material.GOLD_SWORD, 3, 2, false), 1));
         // set II
-        this.tajemnicza.add(new Items("11", 3.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, 7, 7, false), 1));
-        this.tajemnicza.add(new Items("12", 3.0, ItemHelper.createArmor("&3Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 7, 2, false), 1));
-        this.tajemnicza.add(new Items("13", 3.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, 7, 2, false), 1));
-        this.tajemnicza.add(new Items("14", 3.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, 7, 2, false), 1));
-        this.tajemnicza.add(new Items("15", 1.75, ItemHelper.createSword("&3Tajemniczy Miecz", Material.IRON_SWORD, 6, 4, false), 1));
+        this.tajemnicza.add(new Items("11", 3.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, 7, 0, false), 1));
+        this.tajemnicza.add(new Items("12", 3.0, ItemHelper.createArmor("&3Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 7, 0, false), 1));
+        this.tajemnicza.add(new Items("13", 3.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, 7, 0, false), 1));
+        this.tajemnicza.add(new Items("14", 3.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, 7, 0, false), 1));
+        this.tajemnicza.add(new Items("15", 2.5, ItemHelper.createSword("&3Tajemniczy Miecz", Material.IRON_SWORD, 6, 4, false), 1));
+        // set III
+        this.tajemnicza.add(new Items("16", 1.5, ItemHelper.createArmor("&3Ulepszony Tajemniczy Helm", Material.IRON_HELMET, 14, 0, false), 1));
+        this.tajemnicza.add(new Items("17", 1.5, ItemHelper.createArmor("&3Ulepszony Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 14, 0, false), 1));
+        this.tajemnicza.add(new Items("18", 1.5, ItemHelper.createArmor("&3Ulepszony Tajemnicze Spodnie", Material.IRON_LEGGINGS, 14, 0, false), 1));
+        this.tajemnicza.add(new Items("19", 1.5, ItemHelper.createArmor("&3Ulepszony Tajemnicze Buty", Material.IRON_BOOTS, 14, 0, false), 1));
+        this.tajemnicza.add(new Items("20", 1.25, ItemHelper.createSword("&3Ulepszony Tajemniczy Miecz", Material.IRON_SWORD, 11, 7, false), 1));
         // wywar
-        this.tajemnicza.add(new Items("16", 3.5, LesnikItems.getByItem("POTION", 1), 1));
+        this.tajemnicza.add(new Items("21", 3.5, LesnikItems.getByItem("POTION", 1), 1));
     }
 
 

@@ -44,8 +44,8 @@ public class WyslannikInventoryClickListener implements Listener {
                 final WyslannikMissionKillMob mission = WyslannikMissionKillMob.getByMission(user.getKillMobsMission());
                 assert mission != null;
                 if (user.getKillMobsMissionProgress() >= mission.getReqAmount()) {
-                    user.addKillMobsMission();
-                    user.resetKillMobsMissionProgress();
+                    user.setKillMobsMission(user.getKillMobsMission() + 1);
+                    user.setKillMobsMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(moby)"));
@@ -58,8 +58,8 @@ public class WyslannikInventoryClickListener implements Listener {
                 final WyslannikMissionKillBoss mission = WyslannikMissionKillBoss.getByMission(user.getKillBossMission());
                 assert mission != null;
                 if (user.getKillBossMissionProgress() >= mission.getReqAmount()) {
-                    user.addKillBossMission();
-                    user.resetKillBossMissionProgress();
+                    user.setKillBossMission(user.getKillBossMission() + 1);
+                    user.setKillBossMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(bossy)"));
@@ -73,8 +73,8 @@ public class WyslannikInventoryClickListener implements Listener {
                 final WyslannikMissionOpen mission = WyslannikMissionOpen.getByMission(user.getOpenChestMission());
                 assert mission != null;
                 if (user.getOpenChestMissionProgress() >= mission.getReqAmount()) {
-                    user.addOpenChestMission();
-                    user.resetOpenChestMissionProgress();
+                    user.setOpenChestMission(user.getOpenChestMission() + 1);
+                    user.setOpenChestMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(skrzynie)"));

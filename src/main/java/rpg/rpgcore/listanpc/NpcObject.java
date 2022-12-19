@@ -7,13 +7,15 @@ import org.bukkit.Location;
 @Getter
 @Setter
 public class NpcObject {
-    private String npcName;
-    private Location location;
-    private String npcType;
+    private final String npcName;
+    private final Location location;
+    private final String npcType;
+    private final int reqLvl;
 
-    public NpcObject(String npcName, Location location, String npcType) {
+    public NpcObject(final String npcName, final Location location, final String npcType, final int reqLvl) {
         this.npcName = npcName;
         this.location = location;
         this.npcType = npcType;
+        this.reqLvl = reqLvl;
     }
 }

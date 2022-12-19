@@ -31,7 +31,7 @@ public class TeleportHereCommand extends CommandAPI {
             return;
         }
 
-        final Player target = Bukkit.getPlayer(args[0]);
+        final Player target = Bukkit.getPlayerExact(args[0]);
         if (target == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podany gracz nie jest online!"));
             return;

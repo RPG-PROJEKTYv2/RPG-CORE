@@ -31,7 +31,7 @@ public class TeleportCommand extends CommandAPI {
             return;
         }
         if (args.length == 1) {
-            final Player target = Bukkit.getPlayer(args[0]);
+            final Player target = Bukkit.getPlayerExact(args[0]);
             if (target == null) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podany gracz nie jest online!"));
                 return;
@@ -48,6 +48,7 @@ public class TeleportCommand extends CommandAPI {
         }
         if (args.length == 3) {
             try {
+                this.rpgcore.getTeleportManager().setBeforeTeleportLocation(player.getUniqueId(), player.getLocation());
                 player.teleport(new Location(player.getWorld(), Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2])));
             } catch (final NumberFormatException e) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podane wartosci musza byc liczbami"));

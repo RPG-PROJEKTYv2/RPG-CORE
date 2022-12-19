@@ -55,6 +55,9 @@ public class AkcesoriaDodatInteractListener implements Listener {
             return;
         }
 
+        if (!eventItem.getItemMeta().getDisplayName().contains("Szarfa") && !eventItem.getItemMeta().getDisplayName().contains("Pas") &&
+                !eventItem.getItemMeta().getDisplayName().contains("Medalion")  && !eventItem.getItemMeta().getDisplayName().contains("Energia")) return;
+
         if (eventItem.getAmount() > 1) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
             return;
@@ -66,7 +69,6 @@ public class AkcesoriaDodatInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.LADDER) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Szarfa")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaDodatkowe().getSzarfa().isEmpty()) {
@@ -99,7 +101,6 @@ public class AkcesoriaDodatInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.LEASH) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Pas")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaDodatkowe().getPas().isEmpty()) {
@@ -132,7 +133,6 @@ public class AkcesoriaDodatInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.FIREBALL) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Medalion")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaDodatkowe().getMedalion().isEmpty()) {
@@ -165,7 +165,6 @@ public class AkcesoriaDodatInteractListener implements Listener {
         }
 
         if (eventItem.getType() == Material.MINECART) {
-            if (!eventItem.getItemMeta().getDisplayName().contains("Energia")) return;
             e.setCancelled(true);
 
             if (!user.getAkcesoriaDodatkowe().getEnergia().isEmpty()) {

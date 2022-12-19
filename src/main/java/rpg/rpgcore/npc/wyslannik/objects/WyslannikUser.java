@@ -3,7 +3,6 @@ package rpg.rpgcore.npc.wyslannik.objects;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
-import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
 
@@ -36,42 +35,6 @@ public class WyslannikUser {
         this.killBossMissionProgress = document.getInteger("killBossMissionProgress");
         this.openChestMission = document.getInteger("openChestMission");
         this.openChestMissionProgress = document.getInteger("openChestMissionProgress");
-    }
-
-    public void addKillMobsMissionProgress() {
-        this.killMobsMissionProgress++;
-    }
-
-    public void addKillBossMissionProgress() {
-        this.killBossMissionProgress++;
-    }
-
-    public void addOpenChestMissionProgress() {
-        this.openChestMissionProgress++;
-    }
-
-    public void resetKillMobsMissionProgress() {
-        this.killMobsMissionProgress = 0;
-    }
-
-    public void resetKillBossMissionProgress() {
-        this.killBossMissionProgress = 0;
-    }
-
-    public void resetOpenChestMissionProgress() {
-        this.openChestMissionProgress = 0;
-    }
-
-    public void addKillMobsMission() {
-        this.killMobsMission++;
-    }
-
-    public void addKillBossMission() {
-        this.killBossMission++;
-    }
-
-    public void addOpenChestMission() {
-        this.openChestMission++;
     }
 
 

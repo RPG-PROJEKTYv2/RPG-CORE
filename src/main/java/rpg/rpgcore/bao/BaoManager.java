@@ -55,9 +55,9 @@ public class BaoManager {
             } else {
                 gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus5() + ": &c" + user.getValue5() + "%").toItemStack().clone());
             }
-            gui.setItem(16, new ItemBuilder(Material.NETHER_STAR).setName("&4&lZmien bonusy Stolu Magi").setLore(Arrays.asList(
+            gui.setItem(16, new ItemBuilder(Material.NETHER_STAR).setName("&4&lZmien bonusy Stolu Magii").setLore(Arrays.asList(
                     "&8Kliknij na ten item, zeby zmienic",
-                    "&8swoje bonusy w &6stole magi",
+                    "&8swoje bonusy w &6stole magii",
                     "&8Pamietaj, ze &c&lAdministracja &8nie odpowiada za zmienione bonusy"
             )).toItemStack());
 
@@ -109,12 +109,31 @@ public class BaoManager {
         player.openInventory(gui);
     }
 
-    public void losujNoweBonusy(final UUID uuid) {
+    public void losujNoweBonusy(final UUID uuid, final String playerName) {
         this.losujNowyBonus1(uuid);
         this.losujNowyBonus2(uuid);
         this.losujNowyBonus3(uuid);
         this.losujNowyBonus4(uuid);
         this.losujNowyBonus5(uuid);
+
+        final BaoUser user = this.rpgcore.getBaoManager().find(uuid).getBaoUser();
+
+        rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
+        rpgcore.getServer().broadcastMessage(Utils.format("&7Nowe bonusy gracza &c " + playerName));
+        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus1() + ": &c" + user.getValue1() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus2() + ": &c" + user.getValue2() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus3() + ": &c" + user.getValue3() + "%"));
+        if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
+            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus4() + ": &c" + user.getValue4() + " DMG"));
+        } else {
+            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus4() + ": &c" + user.getValue4() + "%"));
+        }
+        if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
+            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus5() + ": &c" + user.getValue5() + " HP"));
+        } else {
+            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus5() + ": &c" + user.getValue5() + "%"));
+        }
+        rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
     }
 
     public void losujNowyBonus1(final UUID uuid) {
@@ -310,7 +329,7 @@ public class BaoManager {
 
 
     public ItemStack getItemDoLosowania() {
-        return new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Bao")
+        return new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu")
                 .setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magi", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"))
                 .toItemStack().clone();
     }

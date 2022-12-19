@@ -68,7 +68,6 @@ public class MetinologInventoryClick implements Listener {
                 player.getInventory().removeItem(MetinologItems.getItem("I" + mission[0], 1));
                 ms.setPostepMisjiGive(ms.getPostepMisjiGive() + 1);
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid)));
-                player.closeInventory();
                 RPGCORE.getInstance().getMetinologNPC().openMetinologGUI(player);
                 return;
             }

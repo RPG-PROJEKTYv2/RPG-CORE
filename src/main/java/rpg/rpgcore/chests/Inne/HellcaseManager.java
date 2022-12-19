@@ -4,8 +4,6 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -19,11 +17,11 @@ public class HellcaseManager {
 
     public HellcaseManager() {
         // ZBROJA- DO DOKONCZENIA I MIECZ
-        this.hellcase.add(new Items("1", 12.0 , ItemHelper.createArmor("&c&lPiekielny Helm", Material.DIAMOND_HELMET, 16, 4,false), 1));
-        this.hellcase.add(new Items("2", 12.0 , ItemHelper.createArmor("&c&lPiekielny Napiersnik", Material.DIAMOND_CHESTPLATE, 16, 4,false), 1));
-        this.hellcase.add(new Items("3", 12.0 , ItemHelper.createArmor("&c&lPiekielne Nogawice", Material.DIAMOND_LEGGINGS, 16, 4,false), 1));
-        this.hellcase.add(new Items("4", 12.0 , ItemHelper.createArmor("&c&lPiekielne Buty", Material.DIAMOND_BOOTS, 16, 4,false), 1));
-        this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.DIAMOND_SWORD, 20, 10, true), 1));
+        this.hellcase.add(new Items("1", 12.0 , ItemHelper.createArmor("&c&lPiekielny Helm", Material.IRON_HELMET, 22, 0,false), 1));
+        this.hellcase.add(new Items("2", 12.0 , ItemHelper.createArmor("&c&lPiekielny Napiersnik", Material.IRON_CHESTPLATE, 22, 0,false), 1));
+        this.hellcase.add(new Items("3", 12.0 , ItemHelper.createArmor("&c&lPiekielne Nogawice", Material.IRON_LEGGINGS, 22, 0,false), 1));
+        this.hellcase.add(new Items("4", 12.0 , ItemHelper.createArmor("&c&lPiekielne Buty", Material.IRON_BOOTS, 22, 0,false), 1));
+        this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.IRON_SWORD, 20, 10, true), 1));
         // AKCE - DO DOKONCZENIA
         //this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
         //this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));

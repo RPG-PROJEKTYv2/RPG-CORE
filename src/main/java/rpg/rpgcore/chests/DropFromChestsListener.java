@@ -204,7 +204,7 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
 
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 1) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMissionProgress() + 1);
                         }
 
                         return;
@@ -257,7 +257,7 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
 
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 2) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMissionProgress() + 1);
                         }
                         return;
                     }
@@ -276,7 +276,7 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
 
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 3) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMissionProgress() + 1);
                         }
 
                         return;
@@ -328,7 +328,7 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
 
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 4) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMissionProgress() + 1);
                         }
 
                         return;
@@ -380,7 +380,7 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
 
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMission() == 5) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).addOpenChestMissionProgress();
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getOpenChestMissionProgress() + 1);
                         }
 
                         return;

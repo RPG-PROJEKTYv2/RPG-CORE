@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,7 +45,14 @@ public class PlayerQuitListener implements Listener {
             rpgcore.getGuildManager().putGuildLastOnline(tag, uuid, new Date());
         }
 
-        e.setQuitMessage(Utils.quitMessage(name));
+        if (!rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff()) {
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (rpgcore.getChatManager().find(online.getUniqueId()).isQuitMessageEnabled()) {
+                    online.sendMessage(Utils.format("&8[&c-&8] &7" + name + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
+                }
+            }
+        }
+
         TabManager.removePlayer(player);
         NameTagUtil.setPlayerNameTag(player, "delete");
 

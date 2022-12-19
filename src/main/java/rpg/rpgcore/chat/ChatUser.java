@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class ChatUser {
     private UUID uuid;
-    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled;
+    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled;
     private List<UUID> ignoredPlayers;
 
     public ChatUser(UUID uuid) {
@@ -23,6 +23,8 @@ public class ChatUser {
         this.itemDropEnabled = true;
         this.msgEnabled = true;
         this.ignoredPlayers = new ArrayList<>();
+        this.joinMessageEnabled = true;
+        this.quitMessageEnabled = true;
     }
 
     public ChatUser(Document document) {
@@ -33,6 +35,8 @@ public class ChatUser {
         this.itemDropEnabled = document.getBoolean("itemDropEnabled");
         this.msgEnabled = document.getBoolean("msgEnabled");
         this.ignoredPlayers = document.getList("ignoredPlayers", UUID.class);
+        this.joinMessageEnabled = document.getBoolean("joinMessageEnabled");
+        this.quitMessageEnabled = document.getBoolean("quitMessageEnabled");
     }
 
     public Document toDocument() {
@@ -42,6 +46,8 @@ public class ChatUser {
                 .append("niesDropEnabled", niesDropEnabled)
                 .append("itemDropEnabled", itemDropEnabled)
                 .append("msgEnabled", msgEnabled)
-                .append("ignoredPlayers", ignoredPlayers);
+                .append("ignoredPlayers", ignoredPlayers)
+                .append("joinMessageEnabled", joinMessageEnabled)
+                .append("quitMessageEnabled", quitMessageEnabled);
     }
 }

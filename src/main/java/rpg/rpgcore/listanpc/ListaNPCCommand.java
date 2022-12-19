@@ -23,7 +23,10 @@ public class ListaNPCCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-
+        if (!player.getWorld().getName().equals("spawnOFFICIAL")) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTej komendy mozesz uzywac tylko na spawnie!"));
+            return;
+        }
         if (args.length > 0) {
             player.sendMessage(Utils.poprawneUzycie("listanpc"));
             return;

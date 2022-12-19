@@ -50,6 +50,8 @@ public class BonyInteractListener implements Listener {
             return;
         }
 
+        if (!eventItem.getItemMeta().getDisplayName().contains("Bon")) return;
+
         if (eventItem.getAmount() > 1) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
             return;

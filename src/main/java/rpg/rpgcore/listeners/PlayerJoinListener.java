@@ -85,13 +85,19 @@ public class PlayerJoinListener implements Listener {
 
 
         player.teleport(rpgcore.getSpawnManager().getSpawn());
-        e.setJoinMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
+        e.setJoinMessage(null);
+
+
         final User user = rpgcore.getUserManager().find(uuid);
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
 
-        if (user.getRankUser().isHighStaff()) {
-            e.setJoinMessage(null);
+        if (!user.getRankUser().isHighStaff()) {
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (rpgcore.getChatManager().find(online.getUniqueId()).isJoinMessageEnabled()) {
+                    online.sendMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
+                }
+            }
         }
 
         try {

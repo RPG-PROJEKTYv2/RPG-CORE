@@ -43,7 +43,7 @@ public class BAOInventoryClick implements Listener {
                     player.getInventory().addItem(rpgcore.getBaoManager().getItemDoZmianki());
                     return;
                 }
-                rpgcore.getBaoManager().losujNoweBonusy(playerUUID);
+                rpgcore.getBaoManager().losujNoweBonusy(playerUUID, player.getName());
                 player.getInventory().removeItem(rpgcore.getBaoManager().getItemDoLosowania());
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zmieniles swoje bonusy w &6Stole Magi"));
                 player.closeInventory();

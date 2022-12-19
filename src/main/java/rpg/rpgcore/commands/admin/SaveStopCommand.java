@@ -22,15 +22,13 @@ public class SaveStopCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         for (Player player : Bukkit.getOnlinePlayers()) {
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().savePlayer(player, player.getUniqueId()));
-            if ((sender instanceof Player) && ((Player) sender) == player) {
+            if ((sender instanceof Player) && sender == player) {
                 continue;
             }
             player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cAktualnie Trwa Restart Serwera!\n&7Zapraszamy ponownie za chwile"));
         }
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZapisano graczy i wylogowano"));
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aSerwer zostanie wylaczony za 10 sekundy..."));
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(RPGCORE.getInstance(), () -> {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart");
-        }, 200L);
+        Bukkit.getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart"), 200L);
     }
 }
