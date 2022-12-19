@@ -120,18 +120,18 @@ public class BaoManager {
 
         rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
         rpgcore.getServer().broadcastMessage(Utils.format("&7Nowe bonusy gracza &c " + playerName));
-        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus1() + ": &c" + user.getValue1() + "%"));
-        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus2() + ": &c" + user.getValue2() + "%"));
-        rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus3() + ": &c" + user.getValue3() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus1() + ": &f" + user.getValue1() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus2() + ": &f" + user.getValue2() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus3() + ": &f" + user.getValue3() + "%"));
         if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus4() + ": &c" + user.getValue4() + " DMG"));
+            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus4() + ": &f" + user.getValue4() + " DMG"));
         } else {
-            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus4() + ": &c" + user.getValue4() + "%"));
+            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus4() + ": &f" + user.getValue4() + "%"));
         }
         if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus5() + ": &c" + user.getValue5() + " HP"));
+            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus5() + ": &f" + user.getValue5() + " HP"));
         } else {
-            rpgcore.getServer().broadcastMessage(Utils.format(user.getBonus5() + ": &c" + user.getValue5() + "%"));
+            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus5() + ": &f" + user.getValue5() + "%"));
         }
         rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
     }
