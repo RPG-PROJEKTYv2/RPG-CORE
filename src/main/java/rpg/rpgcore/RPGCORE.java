@@ -24,6 +24,10 @@ import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
+import rpg.rpgcore.chests.Expowisko10.PodziemnaLowczyniManager;
+import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
+import rpg.rpgcore.chests.Expowisko11.MitycznyKrakenManager;
+import rpg.rpgcore.chests.Expowisko11.PodwodnyStraznikManager;
 import rpg.rpgcore.chests.Expowisko2.GoblinManager;
 import rpg.rpgcore.chests.Expowisko2.WodzGoblinowManager;
 import rpg.rpgcore.chests.Expowisko3.GorylManager;
@@ -32,6 +36,14 @@ import rpg.rpgcore.chests.Expowisko4.PrzekletaDuszaManager;
 import rpg.rpgcore.chests.Expowisko4.ZjawaManager;
 import rpg.rpgcore.chests.Expowisko5.StraznikSwiatyniManager;
 import rpg.rpgcore.chests.Expowisko5.TrytonManager;
+import rpg.rpgcore.chests.Expowisko6.MitycznyLodowyGolemManager;
+import rpg.rpgcore.chests.Expowisko6.MroznyWilkManager;
+import rpg.rpgcore.chests.Expowisko7.PrzekletyRycerzManager;
+import rpg.rpgcore.chests.Expowisko7.ZywiolakOgniaManager;
+import rpg.rpgcore.chests.Expowisko8.MrocznaDuszaManager;
+import rpg.rpgcore.chests.Expowisko8.PrzekletyCzarnoksieznikManager;
+import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
+import rpg.rpgcore.chests.Expowisko9.PustynnyPtasznikManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
@@ -262,9 +274,24 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 5
     private StraznikSwiatyniManager straznikSwiatyniManager;
     private TrytonManager trytonManager;
-
-
-
+    // EXPOWISKO 6
+    private MitycznyLodowyGolemManager mitycznyLodowyGolemManager;
+    private MroznyWilkManager mroznyWilkManager;
+    // EXPOWISKO 7
+    private PrzekletyRycerzManager przekletyRycerzManager;
+    private ZywiolakOgniaManager zywiolakOgniaManager;
+    // EXPOWISKO 8
+    private MrocznaDuszaManager mrocznaDuszaManager;
+    private PrzekletyCzarnoksieznikManager przekletyCzarnoksieznikManager;
+    // EXPOWISKO 9
+    private MitycznyPajakManager mitycznyPajakManager;
+    private PustynnyPtasznikManager pustynnyPtasznikManager;
+    // EXPOWISK0 10
+    private PodziemnaLowczyniManager podziemnaLowczyniManager;
+    private PodziemnyRozpruwaczManager podziemnyRozpruwaczManager;
+    // EXPOWISKO 11
+    private MitycznyKrakenManager mitycznyKrakenManager;
+    private PodwodnyStraznikManager podwodnyStraznikManager;
 
     // cos innego...
     private OreManager oreManager;
@@ -699,6 +726,24 @@ public final class RPGCORE extends JavaPlugin {
         // EXPOWISKO 5
         this.straznikSwiatyniManager = new StraznikSwiatyniManager();
         this.trytonManager = new TrytonManager();
+        // EXPOWISKO 6
+        this.mitycznyLodowyGolemManager = new MitycznyLodowyGolemManager();
+        this.mroznyWilkManager = new MroznyWilkManager();
+        // EXPOWISKO 7
+        this.przekletyRycerzManager = new PrzekletyRycerzManager();
+        this.zywiolakOgniaManager = new ZywiolakOgniaManager();
+        // EXPOWISKO 8
+        this.mrocznaDuszaManager = new MrocznaDuszaManager();
+        this.przekletyCzarnoksieznikManager = new PrzekletyCzarnoksieznikManager();
+        // EXPOWISKO 9
+        this.mitycznyPajakManager = new MitycznyPajakManager();
+        this.pustynnyPtasznikManager = new PustynnyPtasznikManager();
+        // EXPOWISKO 10
+        this.podziemnaLowczyniManager = new PodziemnaLowczyniManager();
+        this.podziemnyRozpruwaczManager = new PodziemnyRozpruwaczManager();
+        // EXPOWISKO 11
+        this.mitycznyKrakenManager = new MitycznyKrakenManager();
+        this.podwodnyStraznikManager = new PodwodnyStraznikManager();
     }
 
     private void initDungeons() {
@@ -931,6 +976,48 @@ public final class RPGCORE extends JavaPlugin {
     }
     public TrytonManager getTrytonManager() {
         return trytonManager;
+    }
+    // exp6
+    public MitycznyLodowyGolemManager getMitycznyLodowyGolemManager() {
+        return mitycznyLodowyGolemManager;
+    }
+    public MroznyWilkManager getMroznyWilkManager() {
+        return mroznyWilkManager;
+    }
+    // exp7
+    public PrzekletyRycerzManager getPrzekletyRycerzManager() {
+        return  przekletyRycerzManager;
+    }
+    public ZywiolakOgniaManager getZywiolakOgniaManager() {
+        return zywiolakOgniaManager;
+    }
+    // exp8
+    public MrocznaDuszaManager getMrocznaDuszaManager() {
+        return mrocznaDuszaManager;
+    }
+    public PrzekletyCzarnoksieznikManager getPrzekletyCzarnoksieznikManager() {
+        return  przekletyCzarnoksieznikManager;
+    }
+    // exp9
+    public MitycznyPajakManager getMitycznyPajakManager() {
+        return mitycznyPajakManager;
+    }
+    public PustynnyPtasznikManager getPustynnyPtasznikManager() {
+        return  pustynnyPtasznikManager;
+    }
+    // exp10
+    public PodziemnaLowczyniManager getPodziemnaLowczyniManager() {
+        return  podziemnaLowczyniManager;
+    }
+    public PodziemnyRozpruwaczManager getPodziemnyRozpruwaczManager() {
+        return  podziemnyRozpruwaczManager;
+    }
+    // exp11
+    public MitycznyKrakenManager getMitycznyKrakenManager() {
+        return mitycznyKrakenManager;
+    }
+    public PodwodnyStraznikManager getPodwodnyStraznikManager() {
+        return podwodnyStraznikManager;
     }
 
     public GornikNPC getGornikNPC() {

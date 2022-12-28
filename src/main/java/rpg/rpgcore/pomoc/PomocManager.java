@@ -34,7 +34,7 @@ public class PomocManager {
         gui.setItem(2, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/money, /wyplac").addGlowing().toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/targ, /wystaw").addGlowing().toItemStack().clone());
         gui.setItem(4, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/klan").addGlowing().toItemStack().clone());
-        gui.setItem(5, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/profile").addGlowing().toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/profil").addGlowing().toItemStack().clone());
         gui.setItem(6, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/chatpanel").addGlowing().toItemStack().clone());
         gui.setItem(7, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/msg <gracz> <wiadomosc>, /r <wiadomosc>").addGlowing().toItemStack().clone());
         gui.setItem(8, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/itemshop").addGlowing().toItemStack().clone());
@@ -46,6 +46,7 @@ public class PomocManager {
         gui.setItem(14, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/ping, /ping <gracz>").addGlowing().toItemStack().clone());
         gui.setItem(15, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/rangi").addGlowing().toItemStack().clone());
         gui.setItem(16, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/bony, /akcesoria, /dodatki").addGlowing().toItemStack().clone());
+        gui.setItem(17, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/artefakty").addGlowing().toItemStack().clone());
 
         player.openInventory(gui);
     }

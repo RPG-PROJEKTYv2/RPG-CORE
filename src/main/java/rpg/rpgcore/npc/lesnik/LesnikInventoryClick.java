@@ -54,7 +54,6 @@ public class LesnikInventoryClick implements Listener {
                     e.getClickedInventory().setItem(22, LesnikItems.POTION.getItem());
                     return;
                 } else {
-                    player.getInventory().addItem(LesnikItems.POTION.getItem());
                     e.getClickedInventory().setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Mikstury Lesnika").toItemStack().clone());
                     return;
                 }

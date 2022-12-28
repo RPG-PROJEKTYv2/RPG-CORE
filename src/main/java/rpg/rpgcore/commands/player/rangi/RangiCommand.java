@@ -37,12 +37,11 @@ public class RangiCommand extends CommandAPI {
     private void openRangiInventory(Player player) {
         final Inventory gui = Bukkit.createInventory(null, InventoryType.BREWING, Utils.format("&cRangi"));
 
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
-        }
+
         gui.setItem(0, new ItemBuilder(Material.BOOK, 1).setName("&e&lVip").setLore(Arrays.asList(" ", "&7Ranga ta posiada:", "&7* &e15% dodatkowego expa", " ")).addGlowing().toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.BOOK, 1).setName("&6&lS&e&lvip").setLore(Arrays.asList(" ", "&7Ranga ta posiada:", "&7* &e25% dodatkowego expa", " ")).addGlowing().toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.BOOK, 1).setName("&5&lELITA").setLore(Arrays.asList(" ", "&7Ranga ta posiada:", "&7* &e30% dodatkowego expa", " ")).addGlowing().toItemStack().clone());
+        gui.setItem(4, new ItemBuilder(Material.SNOW_BALL, 1).setName("&c&lInformacje").setLore(Arrays.asList(" ", "&7Wszystkie rangi mozna zakupic na discordzie:", "&7* &edc.hellrpg.pl", " ")).addGlowing().toItemStack().clone());
 
         player.openInventory(gui);
     }
