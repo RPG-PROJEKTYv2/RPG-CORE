@@ -13,7 +13,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionOpen;
-import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -39,15 +39,15 @@ public class WyslannikInventoryClickListener implements Listener {
             if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE) {
                 return;
             }
-            final WyslannikUser user = RPGCORE.getInstance().getWyslannikNPC().find(uuid);
+            final WyslannikObject wyslannikObject = RPGCORE.getInstance().getWyslannikNPC().find(uuid);
             if (slot == 0) {
-                final WyslannikMissionKillMob mission = WyslannikMissionKillMob.getByMission(user.getKillMobsMission());
+                final WyslannikMissionKillMob mission = WyslannikMissionKillMob.getByMission(wyslannikObject.getWyslannikUser().getKillMobsMission());
                 assert mission != null;
-                if (user.getKillMobsMissionProgress() >= mission.getReqAmount()) {
-                    user.setKillMobsMission(user.getKillMobsMission() + 1);
-                    user.setKillMobsMissionProgress(0);
+                if (wyslannikObject.getWyslannikUser().getKillMobsMissionProgress() >= mission.getReqAmount()) {
+                    wyslannikObject.getWyslannikUser().setKillMobsMission(wyslannikObject.getWyslannikUser().getKillMobsMission() + 1);
+                    wyslannikObject.getWyslannikUser().setKillMobsMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, wyslannikObject));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(moby)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
@@ -55,13 +55,13 @@ public class WyslannikInventoryClickListener implements Listener {
                 return;
             }
             if (slot == 2) {
-                final WyslannikMissionKillBoss mission = WyslannikMissionKillBoss.getByMission(user.getKillBossMission());
+                final WyslannikMissionKillBoss mission = WyslannikMissionKillBoss.getByMission(wyslannikObject.getWyslannikUser().getKillBossMission());
                 assert mission != null;
-                if (user.getKillBossMissionProgress() >= mission.getReqAmount()) {
-                    user.setKillBossMission(user.getKillBossMission() + 1);
-                    user.setKillBossMissionProgress(0);
+                if (wyslannikObject.getWyslannikUser().getKillBossMissionProgress() >= mission.getReqAmount()) {
+                    wyslannikObject.getWyslannikUser().setKillBossMission(wyslannikObject.getWyslannikUser().getKillBossMission() + 1);
+                    wyslannikObject.getWyslannikUser().setKillBossMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, wyslannikObject));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(bossy)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                     return;
@@ -70,13 +70,13 @@ public class WyslannikInventoryClickListener implements Listener {
             }
 
             if (slot == 4) {
-                final WyslannikMissionOpen mission = WyslannikMissionOpen.getByMission(user.getOpenChestMission());
+                final WyslannikMissionOpen mission = WyslannikMissionOpen.getByMission(wyslannikObject.getWyslannikUser().getOpenChestMission());
                 assert mission != null;
-                if (user.getOpenChestMissionProgress() >= mission.getReqAmount()) {
-                    user.setOpenChestMission(user.getOpenChestMission() + 1);
-                    user.setOpenChestMissionProgress(0);
+                if (wyslannikObject.getWyslannikUser().getOpenChestMissionProgress() >= mission.getReqAmount()) {
+                    wyslannikObject.getWyslannikUser().setOpenChestMission(wyslannikObject.getWyslannikUser().getOpenChestMission() + 1);
+                    wyslannikObject.getWyslannikUser().setOpenChestMissionProgress(0);
                     player.getInventory().addItem(mission.getReward());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, user));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, wyslannikObject));
                     Bukkit.broadcastMessage(Utils.format("&c&lWyslannik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl &c" + mission.getMission() + " &7misje! &8(skrzynie)"));
                     RPGCORE.getInstance().getWyslannikNPC().openGUI(player);
                 }

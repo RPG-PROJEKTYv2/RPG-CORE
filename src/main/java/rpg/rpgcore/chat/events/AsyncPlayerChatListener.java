@@ -65,7 +65,7 @@ public class AsyncPlayerChatListener implements Listener {
             }
         }
 
-        if (user.isMuted() && (!user.getRankUser().isStaff() && !user.isAdminCodeLogin())) {
+        if (user.isMuted() && (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
             final String[] muteInfo = user.getMuteInfo().split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
                 Utils.youAreMuted(player, muteInfo[0], muteInfo[1], muteInfo[2]);
@@ -84,6 +84,7 @@ public class AsyncPlayerChatListener implements Listener {
                 ex.printStackTrace();
                 return;
             }
+            return;
         }
         if (Utils.removeColor(message).isEmpty()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac pustej wiadomosci!"));

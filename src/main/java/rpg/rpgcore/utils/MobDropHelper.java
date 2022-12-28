@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dungeons.icetower.IceTowerManager;
 import rpg.rpgcore.npc.przyrodnik.Missions;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
@@ -84,8 +85,8 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
                 addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 1) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 1) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
             }
         }
         // MOB
@@ -98,8 +99,8 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("1-10")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 1) {
-               rpgcore.getWyslannikNPC().find(uuid).setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillMobsMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 1) {
+               rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 0) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("1-10"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
@@ -120,8 +121,8 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
                 addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 2) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 2) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
             }
         }
         // MOB
@@ -134,8 +135,8 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 2) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillMobsMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 2) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 1) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("10-20"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
@@ -150,8 +151,8 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
                 addDropPlayer(player, LowcaItems.getItem("20-30", 1), getDropChance(szczescie, 15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 3) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 3) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
             }
         }
         // MOB
@@ -164,8 +165,8 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 2) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 3) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillMobsMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 3) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 2) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("20-30"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
@@ -180,8 +181,8 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
                 addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 4) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 4) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
             }
         }
         // MOB
@@ -194,8 +195,8 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 4) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillMobsMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 4) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 3) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("30-40"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
@@ -210,8 +211,8 @@ public class MobDropHelper {
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
                 addDropPlayer(player, LowcaItems.getItem("40-50", 1), getDropChance(szczescie, 15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 5) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 5) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
             }
         }
         // MOB
@@ -224,14 +225,59 @@ public class MobDropHelper {
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 4) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getKillMobsMission() == 5) {
-                rpgcore.getWyslannikNPC().find(uuid).setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillMobsMissionProgress() + 1);
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 5) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 4) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("40-50"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
 
+
+
+        // ----------------------------------------- ICE TOWER -----------------------------------------
+        if (entityName.equals("Lodowy Sluga Lvl. 57")) {
+            //TODO dodac expa
+            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            if (!player.getWorld().getName().equals("demontower")) return;
+            RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 50) {
+                IceTowerManager.actionBar(50, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f50");
+            }
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 50) {
+                IceTowerManager.startIceTowerEtap2();
+            }
+        }
+        if (entityName.equals("Lodowy Sluga Lvl. 58")) {
+            //TODO dodac expa
+            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            if (!player.getWorld().getName().equals("demontower")) return;
+            RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
+                IceTowerManager.actionBar(80, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f80");
+            }
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 80) {
+                IceTowerManager.startIceTowerEtapBOSS();
+            }
+        }
+        if (entityName.equals("Lodowy Sluga Lvl. 59")) {
+            //TODO dodac expa
+            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            if (!player.getWorld().getName().equals("demontower")) return;
+            RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
+                IceTowerManager.actionBar(80, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f80");
+            }
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 80) {
+                IceTowerManager.startIceTowerEtap3();
+            }
+        }
+        if (entityName.equals("[BOSS] Mrozny Wladca")) {
+            //TODO dodac expa
+            //TODO dodac skrzynke z bossa
+            if (!player.getWorld().getName().equals("demontower")) return;
+            IceTowerManager.teleportKowal();
+        }
 
         rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + rpgcore.getLvlManager().getKasa(entityName));
         rpgcore.getLvlManager().updateExp(player, entityName);

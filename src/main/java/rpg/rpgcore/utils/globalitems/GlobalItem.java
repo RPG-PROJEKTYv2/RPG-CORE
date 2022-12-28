@@ -29,7 +29,7 @@ public enum GlobalItem {
     I10("I10", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Kowala").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj","&8przedmiot przed spaleniem podczas","&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),
     I_KAMIENBAO("I_KAMIENBAO", new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu").setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magi", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
     I_KSIEGAMAGII("I_KSIEGAMAGII", new ItemBuilder(Material.ENCHANTED_BOOK).setName("&4&lKsiega Magii").setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic jeden bonus w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
-    I11("I11", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&8&lC").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
+    I11("I11", new ItemBuilder(Material.EMERALD).setName("&c&lvalue &4&lH&6&lS").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
     // MATERIALY
     I12("I12", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I13("I13", new ItemBuilder(Material.DIAMOND).setName("&bBrylant").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
@@ -44,8 +44,8 @@ public enum GlobalItem {
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki
-    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lKamien Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu!")).toItemStack().clone()),
-    I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lKamien Zaczarowania Zbroi").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroi!")).toItemStack().clone()),
+    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lKamien Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu")).toItemStack().clone()),
+    I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lKamien Zaczarowania Zbroi").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroi")).toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 
@@ -91,7 +91,7 @@ public enum GlobalItem {
         return itemStack;
     }
 
-    public static ItemStack getHellCoin(final int value) {
+    public static ItemStack getHells(final int value) {
         ItemStack itemStack = GlobalItem.getByName("I11").getItemStack().clone();
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(itemMeta.getDisplayName().replace("value", String.valueOf(value)));

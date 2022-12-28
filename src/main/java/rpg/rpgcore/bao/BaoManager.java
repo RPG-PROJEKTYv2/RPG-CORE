@@ -330,7 +330,7 @@ public class BaoManager {
 
     public ItemStack getItemDoLosowania() {
         return new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu")
-                .setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magi", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"))
+                .setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"))
                 .toItemStack().clone();
     }
 

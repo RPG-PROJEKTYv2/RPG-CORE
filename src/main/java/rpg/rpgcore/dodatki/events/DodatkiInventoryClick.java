@@ -22,23 +22,21 @@ public class DodatkiInventoryClick implements Listener {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID uuid = player.getUniqueId();
         final String title = Utils.removeColor(clickedInventory.getTitle());
-        final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
         if (title.equals("Menu Dodatkow")) {
             e.setCancelled(true);
             if (slot == 10) {
-                RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player);
+                RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player);
                 return;
             }
             if (slot == 13) {
-                RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player);
+                RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player);
                 return;
             }
             if (slot == 16) {
-                RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player);
+                RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player);
             }
         }
     }

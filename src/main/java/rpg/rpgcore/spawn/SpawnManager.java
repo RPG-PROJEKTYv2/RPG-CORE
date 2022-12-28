@@ -9,9 +9,9 @@ import org.bukkit.Location;
 @Setter
 public class SpawnManager {
 
-    public static double defaultSpawnX = Bukkit.getWorld("world").getSpawnLocation().getX();
-    public static double defaultSpawnY = Bukkit.getWorld("world").getSpawnLocation().getY();
-    public static double defaultSpawnZ = Bukkit.getWorld("world").getSpawnLocation().getZ();
+    public static double defaultSpawnX = Bukkit.getWorld("spawnOFFICIAL").getSpawnLocation().getX();
+    public static double defaultSpawnY = Bukkit.getWorld("spawnOFFICIAL").getSpawnLocation().getY();
+    public static double defaultSpawnZ = Bukkit.getWorld("spawnOFFICIAL").getSpawnLocation().getZ();
 
     private Location spawn;
 

@@ -1,17 +1,13 @@
 package rpg.rpgcore.commands.admin;
 
-import net.minecraft.server.v1_8_R3.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
-import rpg.rpgcore.entities.EntityTypes;
-import rpg.rpgcore.entities.KsiazeMroku.KsiazeMroku;
 import rpg.rpgcore.ranks.types.RankType;
 
-import java.io.IOException;
-import java.util.UUID;
 
 public class TestCommand extends CommandAPI {
 
@@ -22,8 +18,9 @@ public class TestCommand extends CommandAPI {
     }
 
     @Override
-    public void executeCommand(CommandSender sender, String[] args) throws IOException {
+    public void executeCommand(CommandSender sender, String[] args) {
         final Player player = (Player) sender;
+        final RPGCORE rpgcore = RPGCORE.getInstance();
 
         /*final EntityInsentient ksiaze = (EntityInsentient) EntityTypes.spawnEntity(new KsiazeMroku(((org.bukkit.craftbukkit.v1_8_R3.CraftWorld) player.getWorld()).getHandle()), UUID.randomUUID(), player.getLocation(), "&c&lKsiaze Mroku");
 

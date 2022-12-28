@@ -57,7 +57,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (!eventItem.getItemMeta().getDisplayName().contains("Tarcza") && !eventItem.getItemMeta().getDisplayName().contains("Kolczyki") &&
                 !eventItem.getItemMeta().getDisplayName().contains("Naszyjnik") && !eventItem.getItemMeta().getDisplayName().contains("Pierscien") &&
-                !eventItem.getItemMeta().getDisplayName().contains("Pierscien")) return;
+                !eventItem.getItemMeta().getDisplayName().contains("Diadem")) return;
 
         if (eventItem.getAmount() > 1) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));

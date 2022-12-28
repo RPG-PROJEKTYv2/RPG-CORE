@@ -38,7 +38,7 @@ public class PomocManager {
         gui.setItem(6, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/chatpanel").addGlowing().toItemStack().clone());
         gui.setItem(7, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/msg <gracz> <wiadomosc>, /r <wiadomosc>").addGlowing().toItemStack().clone());
         gui.setItem(8, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/itemshop").addGlowing().toItemStack().clone());
-        gui.setItem(9, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/demontower").addGlowing().toItemStack().clone());
+        gui.setItem(9, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/icetower").addGlowing().toItemStack().clone());
         gui.setItem(10, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/enderchest").addGlowing().toItemStack().clone());
         gui.setItem(11, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/hellcode").addGlowing().toItemStack().clone());
         gui.setItem(12, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/lvl, /lvl <gracz>").addGlowing().toItemStack().clone());

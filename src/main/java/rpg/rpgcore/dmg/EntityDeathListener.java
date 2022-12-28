@@ -15,6 +15,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.dungeons.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.icetower.ResetType;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
@@ -32,6 +34,12 @@ public class EntityDeathListener implements Listener {
         e.setDeathMessage(null);
         e.setKeepInventory(true);
         e.setKeepLevel(true);
+
+        if (e.getEntity().getWorld().getName().equals("demontower")) {
+            if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {
+                IceTowerManager.resetIceTower(ResetType.BYPASS);
+            }
+        }
 
         PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
         ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);

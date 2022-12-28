@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,8 +28,25 @@ public class PlayerInteractEntityListener implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getCustomName()).equals("Teleporter")) {
+            e.setCancelled(true);
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
+            return;
+        }
+
+
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             e.setCancelled(true);
+            if (e.getRightClicked().getLocation().getWorld().getName().equals("demontower")) {
+                player.sendMessage("x: " + e.getRightClicked().getLocation().getX());
+                player.sendMessage("y: " + e.getRightClicked().getLocation().getY());
+                player.sendMessage("z: " + e.getRightClicked().getLocation().getZ());
+                player.sendMessage("yaw: " + e.getRightClicked().getLocation().getYaw());
+                player.sendMessage("pitch: " + e.getRightClicked().getLocation().getPitch());
+                player.sendMessage("rightArm X: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getX());
+                player.sendMessage("rightArm Y: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getY());
+                player.sendMessage("rightArm Z: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getZ());
+            }
             return;
         }
 
@@ -79,6 +97,10 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // RYBAK
             if (entityName.equalsIgnoreCase("Rybak")) {
+                if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 30) {
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Osiagnij przynajmniej &630 &7poziom, odblokowac kampanie rybaka!"));
+                    return;
+                }
                 rpgcore.getRybakNPC().openRybakGUI(player);
                 return;
             }

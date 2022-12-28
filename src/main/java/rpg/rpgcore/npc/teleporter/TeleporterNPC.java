@@ -41,7 +41,7 @@ public class TeleporterNPC {
 
 
     //private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
-    //private final ItemBuilder demontower = new ItemBuilder(Material.NETHERRACK);
+    //private final ItemBuilder icetower = new ItemBuilder(Material.NETHERRACK);
 
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
 

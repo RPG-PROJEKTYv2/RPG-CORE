@@ -30,6 +30,8 @@ public class PlayerQuitListener implements Listener {
         final UUID uuid = player.getUniqueId();
         final String name = player.getName();
 
+        e.setQuitMessage(null);
+
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid));
 
 

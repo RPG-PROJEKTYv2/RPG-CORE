@@ -70,6 +70,9 @@ import rpg.rpgcore.dodatki.bony.events.BonyInventoryClickListener;
 import rpg.rpgcore.dodatki.events.DodatkiInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsInventoryClick;
 import rpg.rpgcore.dungeons.DungeonsManager;
+import rpg.rpgcore.dungeons.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.icetower.ResetType;
+import rpg.rpgcore.dungeons.icetower.events.IceTowerListener;
 import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
 import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
@@ -111,6 +114,7 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
+import rpg.rpgcore.npc.test.TestNPC;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.os.OsiagnieciaCommand;
@@ -181,10 +185,7 @@ import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
-import rpg.rpgcore.tasks.ActionBarTask;
-import rpg.rpgcore.tasks.KopalniaTask;
-import rpg.rpgcore.tasks.MetinyTask;
-import rpg.rpgcore.tasks.ReloadPetsTask;
+import rpg.rpgcore.tasks.*;
 import rpg.rpgcore.trade.TRADEInventoryClick;
 import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
@@ -298,6 +299,11 @@ public final class RPGCORE extends JavaPlugin {
     private DungeonsManager dungeonsManager;
     private ZmiankiManager zmiankiManager;
     private WyslannikNPC wyslannikNPC;
+    private IceTowerManager iceTowerManager;
+    private TestNPC testNPC; // TU JEST TEST NPC
+
+
+
     private int i = 1;
 
     public static RPGCORE getInstance() {
@@ -346,6 +352,10 @@ public final class RPGCORE extends JavaPlugin {
         new ReloadPetsTask(this);
         // ...KOPALNIA
         new KopalniaTask(this);
+        // ...ANTY AFK ICE TOWER
+        new AntyAfktIceTowerTask(this);
+        // ...BOSS BAR
+        new BossBarTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -373,6 +383,7 @@ public final class RPGCORE extends JavaPlugin {
             }
         }
         Bukkit.clearRecipes();
+        IceTowerManager.resetIceTower(ResetType.BYPASS);
     }
     public void onDisable() {
         this.mongo.saveAllUsers();
@@ -401,6 +412,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
+        IceTowerManager.resetIceTower(ResetType.BYPASS);
     }
 
     private void initGlobalCommands() {
@@ -473,6 +485,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new AdministracjaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new BroadcastCommand());
         CommandAPI.getCommand().register("HellRPGCore", new CaseCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new TowerCommand());
     }
 
     private void initEvents() {
@@ -620,6 +633,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // DUNGEONS
 
+        // ...ICE TOWER
+        this.getServer().getPluginManager().registerEvents(new IceTowerListener(), this);
+
         // ...NIEBIOSA
         this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
         this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
@@ -696,6 +712,7 @@ public final class RPGCORE extends JavaPlugin {
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
         this.wyslannikNPC = new WyslannikNPC(this);
+        this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
 
 
         this.getMetinologNPC().loadMissions();
@@ -747,6 +764,8 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     private void initDungeons() {
+        // DEMON TOWER
+        this.iceTowerManager = new IceTowerManager();
         // ZAMEK NIESKONCZONOSCI
         this.dungeonsManager = new DungeonsManager();
         this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
@@ -1082,4 +1101,12 @@ public final class RPGCORE extends JavaPlugin {
     public WyslannikNPC getWyslannikNPC() {
         return wyslannikNPC;
     }
+
+    public IceTowerManager getIceTowerManager() {
+        return iceTowerManager;
+    }
+
+    public TestNPC getTestNPC() {
+        return testNPC;
+    } // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
 }

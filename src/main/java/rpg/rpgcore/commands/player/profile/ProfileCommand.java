@@ -85,6 +85,7 @@ public class ProfileCommand extends CommandAPI {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
 
+        gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisje").setLore(Arrays.asList("&8Kliknij, aby zobaczyc postep oraz aktualne misje")).toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&6&l" + player.getName()).setSkullOwner(player.getName()).toItemStack());
         /*if (RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem() != null) {
             gui.setItem(31, RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem().clone());
@@ -137,6 +138,10 @@ public class ProfileCommand extends CommandAPI {
                 "&7Podstawowa Szybkosc: &f100",
                 "&7Szybkosc: &f" + user.getSzybkosc()
         )).addGlowing().toItemStack().clone());
+
+        gui.setItem(48, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lAkcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack().clone());
+        gui.setItem(49, new ItemBuilder(Material.SIGN).setName("&6&lBony").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu bonow")).toItemStack().clone());
+        gui.setItem(50, new ItemBuilder(Material.LEASH).setName("&6&lAkcesorium Dodatkowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu dodatkowego akcesorium")).toItemStack().clone());
 
         player.openInventory(gui);
     }

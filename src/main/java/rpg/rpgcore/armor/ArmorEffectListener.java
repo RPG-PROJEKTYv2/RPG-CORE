@@ -93,8 +93,6 @@ public class ArmorEffectListener implements Listener {
                 final String type = e.getCursor().getType().toString();
                 User user = this.rpgcore.getUserManager().find(player.getUniqueId());
 
-                System.out.println(e.getCursor());
-                System.out.println(Utils.getTagInt(e.getCursor(), "lvl"));
 
 
                 int level = Utils.getTagInt(e.getCursor(), "lvl");

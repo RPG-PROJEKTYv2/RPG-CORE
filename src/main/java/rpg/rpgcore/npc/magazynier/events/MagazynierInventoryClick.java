@@ -64,6 +64,18 @@ public class MagazynierInventoryClick implements Listener {
                 return;
             }
             if (user.getMissions().getSelectedMission() == Utils.getTagInt(item, "mission")) {
+                switch (slot) {
+                    case 0:
+                        if (user.getMissions().isMission1done()) return;
+                    case 1:
+                        if (user.getMissions().isMission2done()) return;
+                    case 2:
+                        if (user.getMissions().isMission3done()) return;
+                    case 3:
+                        if (user.getMissions().isMission4done()) return;
+                    case 4:
+                        if (user.getMissions().isMission5done()) return;
+                }
                 final MagazynierMissions mission = MagazynierMissions.getMissionById(user.getMissions().getSelectedMission());
                 assert mission != null;
                 if (user.getMissions().getProgress() >= mission.getReqAmount()) {
@@ -71,6 +83,23 @@ public class MagazynierInventoryClick implements Listener {
                         player.getInventory().addItem(mission.getItemReward());
                     }
                     user.setPoints(user.getPoints() + mission.getPoints());
+                    switch (slot) {
+                        case 0:
+                            user.getMissions().setMission1done(true);
+                            break;
+                        case 1:
+                            user.getMissions().setMission2done(true);
+                            break;
+                        case 2:
+                            user.getMissions().setMission3done(true);
+                            break;
+                        case 3:
+                            user.getMissions().setMission4done(true);
+                            break;
+                        case 4:
+                            user.getMissions().setMission5done(true);
+                            break;
+                    }
                     user.getMissions().setSelectedMission(0);
                     user.getMissions().setProgress(0);
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));

@@ -42,11 +42,12 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_userPets;
     private final MongoCollection<Document> hellrpg_oreLocations;
     private final MongoCollection<Document> hellrpg_wyslannik;
+    //private final MongoCollection<Document> hellrpg_przykladowyNPC; // TU TWORZYSZ ZMIENNA DO KOLEKCJI ZEBY MOC SIE DO NIEJ ODOWLAC !!!!
 
 
     public MongoConnectionPoolManager() {
-        this.client = MongoClients.create("mongodb://u7id5em5uspjam4butns:3ws4TKngK0iIgoE0lMSY@n1-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017,n2-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017/biyowrjyqcvr1sa?replicaSet=rs0");
-        MongoDatabase database = this.client.getDatabase("biyowrjyqcvr1sa");
+        this.client = MongoClients.create("mongodb://localhost/minecraft"); //mongodb://u7id5em5uspjam4butns:3ws4TKngK0iIgoE0lMSY@n1-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017,n2-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017/biyowrjyqcvr1sa?replicaSet=rs0
+        MongoDatabase database = this.client.getDatabase("minecraft");
         final ArrayList<String> collections = database.listCollectionNames().into(new ArrayList<>());
         if (!collections.contains("hellrpg_spawn")) {
             database.createCollection("hellrpg_spawn");
@@ -132,6 +133,10 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_wyslannik")) {
             database.createCollection("hellrpg_wyslannik");
         }
+        // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
+        /*if (!collections.contains("hellrpg_przykladowyNPC")) {
+            database.createCollection("hellrpg_przykladowyNPC");
+        }*/
         this.hellrpg_spawn = database.getCollection("hellrpg_spawn");
         this.hellrpg_gracze = database.getCollection("hellrpg_gracze");
         this.hellrpg_gildie = database.getCollection("hellrpg_gildie");
@@ -159,6 +164,8 @@ public class MongoConnectionPoolManager {
         this.hellrpg_userPets = database.getCollection("hellrpg_userPets");
         this.hellrpg_oreLocations = database.getCollection("hellrpg_oreLocations");
         this.hellrpg_wyslannik = database.getCollection("hellrpg_wyslannik");
+        // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
+        //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.hasPermission("*")) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
@@ -268,6 +275,11 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getWyslannik() {
         return this.hellrpg_wyslannik;
     }
+
+    // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI
+    /*public MongoCollection<Document> getPrzykladowyNPC() {
+        return hellrpg_przykladowyNPC;
+    }*/
 
     public void closePool() {
         this.client.close();

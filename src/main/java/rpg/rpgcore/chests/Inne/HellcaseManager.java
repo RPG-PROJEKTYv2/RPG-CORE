@@ -26,10 +26,10 @@ public class HellcaseManager {
         //this.hellcase.add(new Items("7", 6.0, AkcesoriaPodsHelper.createTarcza(5.0, 5.3, 5, 5, "test tarcza"), 1));
         //this.hellcase.add(new Items("8", 25.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7Test").toItemStack(), 1));
         // WALUTA
-        this.hellcase.add(new Items("15", 4.0, GlobalItem.getHellCoin(5),1));
-        this.hellcase.add(new Items("16", 3.0, GlobalItem.getHellCoin(10),1));
-        this.hellcase.add(new Items("16", 1.0, GlobalItem.getHellCoin(20),1));
-        this.hellcase.add(new Items("16", 0.1, GlobalItem.getHellCoin(30),1));
+        this.hellcase.add(new Items("15", 4.0, GlobalItem.getHells(5),1));
+        this.hellcase.add(new Items("16", 3.0, GlobalItem.getHells(10),1));
+        this.hellcase.add(new Items("16", 1.0, GlobalItem.getHells(20),1));
+        this.hellcase.add(new Items("16", 0.1, GlobalItem.getHells(30),1));
 
     }
 

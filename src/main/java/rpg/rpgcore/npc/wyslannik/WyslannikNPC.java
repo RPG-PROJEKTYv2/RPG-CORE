@@ -10,6 +10,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionOpen;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class WyslannikNPC {
-    private final Map<UUID, WyslannikUser> userMap;
+    private final Map<UUID, WyslannikObject> userMap;
 
     public WyslannikNPC(final RPGCORE rpgcore) {
         this.userMap = rpgcore.getMongoManager().loadAllWyslannik();
@@ -27,7 +28,7 @@ public class WyslannikNPC {
 
 
     public void openGUI(final Player player) {
-        final WyslannikUser user = this.find(player.getUniqueId());
+        final WyslannikUser user = this.find(player.getUniqueId()).getWyslannikUser();
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lWyslannik"));
         final WyslannikMissionKillMob missionKillMob = WyslannikMissionKillMob.getByMission(user.getKillMobsMission());
         final WyslannikMissionKillBoss missionKillBoss = WyslannikMissionKillBoss.getByMission(user.getKillBossMission());
@@ -82,17 +83,16 @@ public class WyslannikNPC {
         player.openInventory(gui);
     }
 
-
-    public void add(final WyslannikUser wyslannikUser) {
-        this.userMap.put(wyslannikUser.getUuid(), wyslannikUser);
-    }
-
-    public WyslannikUser find(final UUID uuid) {
+    public WyslannikObject find(final UUID uuid) {
+        this.userMap.computeIfAbsent(uuid, k -> new WyslannikObject(uuid));
         return this.userMap.get(uuid);
     }
 
-    public ImmutableSet<WyslannikUser> getUsers() {
-        return ImmutableSet.copyOf(this.userMap.values());
+    public void add(final WyslannikObject wyslannikObject) {
+        this.userMap.put(wyslannikObject.getUuid(), wyslannikObject);
     }
 
+    public ImmutableSet<WyslannikObject> getWyslannikObjects() {
+        return ImmutableSet.copyOf(userMap.values());
+    }
 }

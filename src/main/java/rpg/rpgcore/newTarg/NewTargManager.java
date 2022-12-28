@@ -396,7 +396,7 @@ public class NewTargManager {
     }
 
     public List<ItemStack> getPlayerTargItems(final UUID uuid) {
-        return playerTargItems.get(uuid);
+        return playerTargItems.getOrDefault(uuid, new ArrayList<>());
     }
 
     public void removePlayerTargItem(final UUID uuid, final ItemStack is) {

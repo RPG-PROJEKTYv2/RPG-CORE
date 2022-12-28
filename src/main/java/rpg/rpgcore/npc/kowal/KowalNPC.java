@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.*;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.*;
 
@@ -41,8 +40,6 @@ public class KowalNPC {
 
     public void openKowalMainGui(final Player player) {
 
-        player.getInventory().addItem(GlobalItem.getItem("I9", 1));
-
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&4&lKowal"));
         final List<String> lore = new ArrayList<>();
 
@@ -68,7 +65,7 @@ public class KowalNPC {
         } else {
             lore.add("&8>> &a75 &7Lvl");
         }
-        gui.setItem(14, dalsze.setName("&cDalsze Etapy &4DT").setLore(lore).toItemStack());
+        gui.setItem(14, dalsze.setName("&b&lDalsze Etapy Lodowej Wiezy").setLore(lore).toItemStack());
 
         player.openInventory(gui);
     }
@@ -103,7 +100,7 @@ public class KowalNPC {
         this.upgradeList.add(player.getUniqueId());
         this.clearOstatniUlepszonyItem(player.getUniqueId());
         this.addToAnimationList(player.getUniqueId());
-        player.teleport(new Location(player.getWorld(), -33.5, 6, -3.5, -90, -4.5F));
+        player.teleport(new Location(player.getWorld(), 16.5, 9, 95.5, 0, 0));
 
         /*Location kowalLocation = new Location(Bukkit.getWorld("dt"), 0, 0, 0);
 
@@ -122,13 +119,9 @@ public class KowalNPC {
                 }
             }
         }*/
-        final RandomItems<String> ulepszanie = new RandomItems<>();
-        ulepszanie.add(0.5, "udane");
-        ulepszanie.add(0.5, "nieudane");
 
-        final String result = ulepszanie.next();
 
-        if (result.equals("nieudane")) {
+        if (!ChanceHelper.getChance(50 + ((50 * rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0))) {
             if (hasZwoj) {
                 this.runAnimation(player, itemToUpgrade, false);
                 rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
@@ -156,55 +149,63 @@ public class KowalNPC {
 
         final String itemToUpgradeType = String.valueOf(itemToUpgrade.getType());
         if (itemToUpgradeType.contains("HELMET") || itemToUpgradeType.contains("CHESTPLATE") || itemToUpgradeType.contains("LEGGINGS") || itemToUpgradeType.contains("BOOTS")) {
-            final int prot = Utils.getProtectionLevel(itemToUpgrade);
-            final int thorns = Utils.getThornsLevel(itemToUpgrade);
+            final int prot = Utils.getTagInt(itemToUpgrade, "prot");
+            final int thorns = Utils.getTagInt(itemToUpgrade, "thorns");
             this.runAnimation(player, itemToUpgrade, true);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.upgradeArmor(player, itemToUpgrade, prot, thorns), 70L);
             return;
         }
-        final int sharp = Utils.getSharpnessLevel(itemToUpgrade);
-        final int obrazeniaMoby = Utils.getObrazeniaMobyLevel(itemToUpgrade);
+        final int sharp = Utils.getTagInt(itemToUpgrade, "dmg");
+        final int obrazeniaMoby = Utils.getTagInt(itemToUpgrade, "moby");
         this.runAnimation(player, itemToUpgrade, true);
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> this.upgradeWeapon(player, itemToUpgrade, sharp, obrazeniaMoby), 70L);
     }
 
     public void upgradeArmor(final Player player, final ItemStack itemToUpgrade, final int prot, final int thorns) {
-        final ItemMeta meta = itemToUpgrade.getItemMeta();
-        final List<String> lore = meta.getLore();
+        final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemToUpgrade);
+        final NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        compound.setInt("prot", prot + 4);
+        compound.setInt("thorns", thorns + 1);
+        nmsStack.setTag(compound);
 
-        for (int i = 0; i < lore.size(); i++) {
-            String s = lore.get(i);
-            if (Utils.removeColor(s).contains("❣ Obrona: ")) {
-                lore.set(i, Utils.format(s.substring(0, s.lastIndexOf(" ")) + " &f" + (prot + 2)));
-            } else if (Utils.removeColor(s).contains("✪ Thorns: ")) {
-                lore.set(i, Utils.format(s.substring(0, s.lastIndexOf(" ")) + " &f" + (thorns + 1)));
-            }
-        }
+        final ItemStack toGive = CraftItemStack.asBukkitCopy(nmsStack);
+
+        final ItemMeta meta = toGive.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.set(0, Utils.format("&7Obrona: &f" + (prot + 4)));
+        lore.set(1, Utils.format("&7Ciernie: &f" + (thorns + 1)));
+
 
         meta.setLore(lore);
-        itemToUpgrade.setItemMeta(meta);
+        toGive.setItemMeta(meta);
 
-        player.getInventory().addItem(itemToUpgrade.clone());
+        player.sendMessage("prot: " + Utils.getTagInt(toGive, "prot"));
+        player.sendMessage("thorns: " + Utils.getTagInt(toGive, "thorns"));
+        player.getInventory().addItem(toGive.clone());
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
 
     public void upgradeWeapon(final Player player, final ItemStack itemToUpgrade, final int sharp, final int obrazeniaMoby) {
-        final ItemMeta meta = itemToUpgrade.getItemMeta();
+        final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemToUpgrade);
+        final NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+        compound.setInt("dmg", sharp + 4);
+        compound.setInt("moby", obrazeniaMoby + 1);
+        nmsStack.setTag(compound);
+
+        final ItemStack toGive = CraftItemStack.asBukkitCopy(nmsStack);
+
+        final ItemMeta meta = toGive.getItemMeta();
         final List<String> lore = meta.getLore();
 
-        for (int i = 0; i < lore.size(); i++) {
-            String s = lore.get(i);
-            if (Utils.removeColor(s).contains("⚔ Obrazenia: ")) {
-                lore.set(i, Utils.format(s.substring(0, s.lastIndexOf(" ")) + " &c" + (sharp + 4)));
-            } else if (Utils.removeColor(s).contains("☠ Obrazenia na potwory: ")) {
-                lore.set(i, Utils.format(s.substring(0, s.lastIndexOf(" ")) + " &c" + (obrazeniaMoby + 2)));
-            }
-        }
+        lore.set(0, Utils.format("&7Obrazenia: &c" + (sharp + 4)));
+        lore.set(1, Utils.format("&7Obrazenia na potwory: &c" + (obrazeniaMoby + 1)));
 
         meta.setLore(lore);
-        itemToUpgrade.setItemMeta(meta);
+        toGive.setItemMeta(meta);
 
-        player.getInventory().addItem(itemToUpgrade.clone());
+        player.sendMessage("dmg: " + Utils.getTagInt(toGive, "dmg"));
+        player.sendMessage("moby: " + Utils.getTagInt(toGive, "moby"));
+        player.getInventory().addItem(toGive.clone());
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
 
@@ -216,22 +217,22 @@ public class KowalNPC {
         final net.minecraft.server.v1_8_R3.ItemStack hammer = CraftItemStack.asNMSCopy(new ItemStack(Material.IRON_AXE));
 
         if (String.valueOf(is.getType()).contains("SWORD")) {
-            itemArmorStand.setLocation(-31.30, 5.60, -2.666, 132.36932F, 30.1819F);
-            itemArmorStand.setRightArmPose(new Vector3f(2.1F * 55, 3.3F * 58, 1.4F * 60));
+            itemArmorStand.setLocation(16.5, 8.601, 98.1839, 183.75226F, 42.600063F);
+            itemArmorStand.setRightArmPose(new Vector3f(4.737412F * 55, 0F * 58, 1.58798F * 60)); //2.1F * 55, 3.3F * 58, 1.4F * 60
         } else {
-            itemArmorStand.setLocation(-31.55, 6.22, -2.966, 132.36932F, 30.1819F);
-            itemArmorStand.setRightArmPose(new Vector3f(2.1F, 3.3F, 1.4F));
+            itemArmorStand.setLocation(16.15, 9.2, 97.7839, 183.75226F, 42.600063F);
+            itemArmorStand.setRightArmPose(new Vector3f(0.0415472105075128F * 56, 0F, 0F));
         }
         itemArmorStand.setArms(true);
         itemArmorStand.setGravity(false);
-        itemArmorStand.setInvisible(true);
+        itemArmorStand.setInvisible(false);
 
 
-        hammerArmorStand.setLocation(-32, 6.4, -2.6, 180F, 0F);
+        hammerArmorStand.setLocation(15.7, 9, 97.3, -90F, 0F);
         hammerArmorStand.setRightArmPose(new Vector3f(-45F, hammerArmorStand.rightArmPose.getY(), hammerArmorStand.rightArmPose.getZ()));
         hammerArmorStand.setArms(true);
         hammerArmorStand.setGravity(false);
-        hammerArmorStand.setInvisible(true);
+        hammerArmorStand.setInvisible(false);
 
         final PacketPlayOutSpawnEntityLiving itemArmorStandSpawnPacket = new PacketPlayOutSpawnEntityLiving(itemArmorStand);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemArmorStandSpawnPacket);
@@ -257,11 +258,11 @@ public class KowalNPC {
                             this.changeArmPossition(player, hammerArmorStand, -15F);
                             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
                                 this.changeArmPossition(player, hammerArmorStand, -45F);
-                                if (ulepszylo) {
-                                    this.spawnPossitiveUpgradeParticles(player, new Location(player.getWorld(), hammerArmorStand.locX, hammerArmorStand.locY, hammerArmorStand.locZ));
+                                /*if (ulepszylo) {
+                                    this.spawnPossitiveUpgradeParticles(player, new Location(player.getWorld(), 16, 11, 97.5)); // TODO chuj w to na razie
                                 } else {
-                                    this.spawnNegativeUpgradeParticles(player, new Location(player.getWorld(), hammerArmorStand.locX, hammerArmorStand.locY, hammerArmorStand.locZ));
-                                }
+                                    this.spawnNegativeUpgradeParticles(player, new Location(player.getWorld(), 16, 11, 97.5));
+                                }*/
                                 this.destroyPackets(player, itemArmorStand.getId(), hammerArmorStand.getId());
                                 this.removeFromAnimationList(player.getUniqueId());
                             }, 10L);
@@ -279,36 +280,34 @@ public class KowalNPC {
     }
 
     private void spawnPossitiveUpgradeParticles(final Player player, final Location location) {
-        float x = 0.1F;
+        float x = 1.3F;
         float y = 1.5F;
-        float z = 1.3F;
         for (int i = 0; i < 5; i++) {
-            PacketPlayOutWorldParticles particles = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) location.getX() - x, (float) location.getY() + y, (float) location.getZ() - z, 0, 0, 0, 0, 0, 0);
+            PacketPlayOutWorldParticles particles = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) location.getX() + x, (float) location.getY() + y, (float) location.getZ(), 0, 0, 0, 0, 0, 0);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(particles);
             y -= 0.1F;
-            z -= 0.1F;
+            x += 0.1F;
         }
         for (int i = 0; i < 10; i++) {
-            PacketPlayOutWorldParticles particles = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) location.getX() - x, (float) location.getY() + y, (float) location.getZ() - z, 0, 0, 0, 0, 0, 0);
+            PacketPlayOutWorldParticles particles = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) location.getX() + x, (float) location.getY() + y, (float) location.getZ(), 0, 0, 0, 0, 0, 0);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(particles);
             y += 0.1F;
-            z -= 0.1F;
+            x += 0.1F;
         }
     }
 
     private void spawnNegativeUpgradeParticles(final Player player, final Location location) {
-        float x = 0.1F;
+        float x = 1.5F;
         float y = 1.5F;
-        float z = 1.3F;
-        float z2 = 0.7F;
+        float x2 = -0.7F;
         for (int i = 0; i < 10; i++) {
-            PacketPlayOutWorldParticles particles1 = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) location.getX() - x, (float) location.getY() + y, (float) location.getZ() - z, 0, 0, 0, 0, 0, 0);
+            PacketPlayOutWorldParticles particles1 = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) location.getX() + x, (float) location.getY() + y, (float) location.getZ(), 0, 0, 0, 0, 0, 0);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(particles1);
-            PacketPlayOutWorldParticles particles2 = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) location.getX() - x, (float) location.getY() + y, (float) location.getZ() - z + z2, 0, 0, 0, 0, 0, 0);
+            PacketPlayOutWorldParticles particles2 = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) location.getX() + x +x2, (float) location.getY() + y, (float) location.getZ(), 0, 0, 0, 0, 0, 0);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(particles2);
             y -= 0.1F;
-            z -= 0.1F;
-            z2 -= 0.2F;
+            x -= 0.1F;
+            x2 += 0.1F;
         }
     }
 

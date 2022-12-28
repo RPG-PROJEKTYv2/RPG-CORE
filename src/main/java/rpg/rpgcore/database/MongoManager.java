@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
@@ -11,6 +12,7 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
+import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.ore.Ore;
@@ -19,23 +21,24 @@ import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medyk.MedykObject;
+import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.trener.TrenerObject;
-import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.os.OsObject;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
-import rpg.rpgcore.metiny.Metiny;
-import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MongoManager {
@@ -72,13 +75,34 @@ public class MongoManager {
 
     }
 
-    /*public void fixMires(final String old, final String uuid) {
-        Document document = this.pool.getGracze().find(new Document("_id", old)).first(); //dd3d637b-aff4-4fa5-8484-d120ed492d43 7193813f-c9c3-37e6-b72b-4272a3898b80
-        this.pool.getGracze().deleteOne(document);
-        document.replace("_id", uuid);
-        this.pool.getGracze().insertOne(document);
-    }
+    public void fix() {
+        for (User user : rpgcore.getUserManager().getUserObjects()) {
+            final UUID uuid = user.getId();
 
+            this.addDataUser(rpgcore.getUserManager().find(uuid));
+            this.addDataDodatki(rpgcore.getDodatkiManager().find(uuid));
+            this.addDataBonuses(rpgcore.getBonusesManager().find(uuid));
+            this.addDataBao(rpgcore.getBaoManager().find(uuid));
+            //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
+            this.addDataDuszolog(rpgcore.getDuszologNPC().find(uuid));
+            this.addDataKolekcjner(rpgcore.getKolekcjonerNPC().find(uuid));
+            this.addDataMedyk(rpgcore.getMedykNPC().find(uuid));
+            this.addDataMetinolog(rpgcore.getMetinologNPC().find(uuid));
+            this.addDataPrzyrodnik(rpgcore.getPrzyrodnikNPC().find(uuid));
+            this.addDataRybak(rpgcore.getRybakNPC().find(uuid));
+            this.addDataOs(rpgcore.getOsManager().find(uuid));
+            this.addDataMagazynier(rpgcore.getMagazynierNPC().find(uuid));
+            this.addDataLowca(rpgcore.getLowcaNPC().find(uuid));
+            this.addDataWyslannik(rpgcore.getWyslannikNPC().find(uuid));
+
+            this.addDataTrener(rpgcore.getTrenerNPC().find(uuid));
+            this.addDataLesnik(rpgcore.getLesnikNPC().find(uuid));
+            this.addDataUserPets(rpgcore.getPetyManager().findUserPets(uuid));
+            this.addDataActivePets(rpgcore.getPetyManager().findActivePet(uuid));
+
+        }
+    }
+/*
     public void clearDatabase(final UUID uuid) {
         Document document;
         if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
@@ -169,7 +193,7 @@ public class MongoManager {
             this.setFirstSpawn();
         }
 
-        for (Document obj : pool.getGracze().find()){
+        for (Document obj : pool.getGracze().find()) {
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
 
@@ -210,7 +234,11 @@ public class MongoManager {
 
             try {
                 obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
-                if (obj != null) rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(String.valueOf(obj.get("Targ")), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
+                if (obj != null) {
+                    if (!obj.getString("Targ").isEmpty()) {
+                        rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(obj.getString("Targ"), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
+                    }
+                }
             } catch (final IOException e) {
                 e.printStackTrace();
             }
@@ -282,11 +310,18 @@ public class MongoManager {
                 rpgcore.getPetyManager().addToUserPets(user);
             }
             if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
-                final WyslannikUser user = new WyslannikUser(uuid);
-                System.out.println("null");
+                final WyslannikObject user = new WyslannikObject(uuid);
                 this.addDataWyslannik(user);
                 rpgcore.getWyslannikNPC().add(user);
             }
+            // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
+            // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
+            // TEZ BARDZO WAZEN I NIE ZAPOMNIEC O TYM.
+            /*if (pool.getPrzykladowyNPC().find(new Document("_id", uuid.toString())).first() == null) {
+                final TestUser user = new TestUser(uuid);
+                this.addDataTest(user);
+                rpgcore.getTestNPC().add(user);
+            }*/
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             addOtherData(new ServerUser("dodatkowyExp"));
@@ -406,9 +441,17 @@ public class MongoManager {
         this.addDataTrener(trenerObject);
         rpgcore.getTrenerNPC().add(trenerObject);
 
-        final WyslannikUser wyslannikUser = new WyslannikUser(uuid);
-        this.addDataWyslannik(wyslannikUser);
-        rpgcore.getWyslannikNPC().add(wyslannikUser);
+        final WyslannikObject wyslannikObject = new WyslannikObject(uuid);
+        this.addDataWyslannik(wyslannikObject);
+        rpgcore.getWyslannikNPC().add(wyslannikObject);
+
+        // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
+        // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
+        // PATRZ loadALL() DALEJ
+
+        /*final TestUser testUser = new TestUser(uuid);
+        this.addDataTest(testUser);
+        rpgcore.getTestNPC().add(testUser);*/
 
         Document document;
 
@@ -457,10 +500,15 @@ public class MongoManager {
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
 
             this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
-            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
             this.saveDataUserPets(uuid, rpgcore.getPetyManager().findUserPets(uuid));
             this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
+            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
+            this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
+            this.saveDataTarg(uuid, user.getName());
+            // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
+            // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
+            //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
 
 
             Utils.sendToHighStaff("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
@@ -583,6 +631,7 @@ public class MongoManager {
         }
         return server;
     }
+
     public void addOtherData(ServerUser serverUser) {
         this.pool.getOther().insertOne(serverUser.toDocument());
     }
@@ -754,7 +803,6 @@ public class MongoManager {
             this.saveDataPrzyrodnik(przyrodnikObject.getId(), przyrodnikObject);
         }
     }
-
 
 
     // BAO
@@ -1098,7 +1146,7 @@ public class MongoManager {
     }
 
     public void saveDataOreLocation(final Ore ore) {
-        this.pool.getGildie().findOneAndReplace(new Document("_id", ore.getId()), ore.toDocument());
+        this.pool.getOreLocations().findOneAndReplace(new Document("_id", ore.getId()), ore.toDocument());
     }
 
     public void saveAllOreLocations() {
@@ -1108,29 +1156,63 @@ public class MongoManager {
     }
 
     // WYSLANNIK
-    public Map<UUID, WyslannikUser> loadAllWyslannik() {
-        Map<UUID, WyslannikUser> userMap = new HashMap<>();
+    public Map<UUID, WyslannikObject> loadAllWyslannik() {
+        Map<UUID, WyslannikObject> userMap = new HashMap<>();
         for (Document document : this.pool.getWyslannik().find()) {
-            final WyslannikUser wyslannikUser = new WyslannikUser(document);
-            userMap.put(wyslannikUser.getUuid(), wyslannikUser);
+            final WyslannikObject wyslannikObject = new WyslannikObject(document);
+            userMap.put(wyslannikObject.getUuid(), wyslannikObject);
         }
         return userMap;
     }
 
-    public void addDataWyslannik(final WyslannikUser wyslannikUser) {
-        this.pool.getWyslannik().insertOne(wyslannikUser.toDocument());
+    public void addDataWyslannik(final WyslannikObject wyslannikObject) {
+        this.pool.getWyslannik().insertOne(wyslannikObject.toDocument());
     }
 
-    public void saveDataWyslannik(final UUID uuid, final WyslannikUser wyslannikUser) {
-        this.pool.getWyslannik().findOneAndReplace(new Document("_id", uuid), wyslannikUser.toDocument());
+    public void saveDataWyslannik(final UUID uuid, final WyslannikObject wyslannikObject) {
+        this.pool.getWyslannik().findOneAndReplace(new Document("_id", uuid.toString()), wyslannikObject.toDocument());
     }
 
     public void saveAllWyslannik() {
-        for (final WyslannikUser wyslannikUser : rpgcore.getWyslannikNPC().getUsers()) {
-            this.saveDataWyslannik(wyslannikUser.getUuid(), wyslannikUser);
+        for (final WyslannikObject wyslannikObject : rpgcore.getWyslannikNPC().getWyslannikObjects()) {
+            this.saveDataWyslannik(wyslannikObject.getUuid(), wyslannikObject);
         }
     }
 
+    // TARGI
+    public void addDataTarg(final UUID uuid, final Inventory playerTarg) {
+        this.pool.getTargi().insertOne(new Document("_id", uuid.toString()).append("Targ", Utils.toBase64(playerTarg)));
+    }
+
+    public void saveDataTarg(final UUID uuid, final String playerName) {
+        this.pool.getTargi().findOneAndReplace(new Document("_id", uuid.toString()), new Document("_id", uuid.toString()).append("Targ", (rpgcore.getNewTargManager().getPlayerTargItems(uuid)).isEmpty() ? "" : Utils.toBase64(rpgcore.getNewTargManager().getPlayerTarg(playerName, uuid))));
+    }
+
+    // PRZYKLADOWY NPC
+    // TO JEST PODSTAWA DO ZAPISU I ODCZYTY USERA Z BAZY, ZMIENIASZ TYLKO NAZWY FUNKCJI WEDLUG WZORU (PATRZ POPRZEDNIE) I TO JAKIE PRZYJMUJA ZMIENNE I GDZIE ZAPISUJE
+    // PAMIETAJ ZEBY ZMIENIC KOLEKCJE NP. getPrzykladowyNPC() NA getTwojNPC() BO INACZEJ SIE WSZYTSKO SPIERDOLI :D
+    /*public Map<UUID, TestUser> loadAllTestUser() {
+        Map<UUID, TestUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getPrzykladowyNPC().find()) {
+            final TestUser testUser = new TestUser(document);
+            userMap.put(testUser.getUuid(), testUser);
+        }
+        return userMap;
+    }
+
+    public void addDataTest(final TestUser testUser) {
+        this.pool.getPrzykladowyNPC().insertOne(testUser.toDocument());
+    }
+
+    public void saveDataTest(final UUID uuid, final TestUser testUser) {
+        this.pool.getPrzykladowyNPC().findOneAndReplace(new Document("_id", uuid.toString()), testUser.toDocument());
+    }
+
+    public void saveAllTest() {
+        for (final TestUser testUser : rpgcore.getTestNPC().getTestUsers()) {
+            this.saveDataTest(testUser.getUuid(), testUser);
+        }
+    }*/
 
 
     public void onDisable() {

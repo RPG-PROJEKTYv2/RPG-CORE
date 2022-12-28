@@ -122,7 +122,7 @@ public class KolekcjonerInventoryClick implements Listener {
                     rpgcore.getMongoManager().saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
                     rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
                 });
-                if (user.getMission() == 10) {
+                if (user.getMission() == 14) {
                     Bukkit.broadcastMessage(" ");
                     Bukkit.broadcastMessage(Utils.format("&6&lKolekcjoner &8>> &7Gracz &6" + player.getName() + " &7ukonczyl moja &c&lKampanie &7!"));
                     Bukkit.broadcastMessage(" ");

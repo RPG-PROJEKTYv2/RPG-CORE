@@ -48,9 +48,9 @@ public class TrenerInventoryClick implements Listener {
                 return;
             }
 
-            /*if (clickedSlot != 8 && rpgcore.getCooldownManager().hasTrenerCooldown(uuid)) {
+            if (clickedSlot != 8 && rpgcore.getCooldownManager().hasTrenerCooldown(uuid)) {
                 return;
-            }*/
+            }
 
             if (clickedSlot == 8 && clickedItem.getType().equals(Material.BEACON) && (user.getSredniDmg() == 20 && user.getSredniDef() == 20 && user.getDodatkoweHp() == 10 && user.getBlokCiosu() == 10 && user.getSzczescie() == 20
                     && user.getSilnyNaLudzi() == 20 && user.getDefNaLudzi() == 20 && user.getKryt() == 10)) {
@@ -87,6 +87,7 @@ public class TrenerInventoryClick implements Listener {
                     }
                     user.setDodatkoweHp(user.getDodatkoweHp() + 1);
                     bonusesUser.setDodatkowehp(bonusesUser.getDodatkowehp() + 1);
+                    player.setMaxHealth(bonusesUser.getDodatkowehp());
                     break;
                 case 3:
                     if (user.getBlokCiosu() == 10) {
@@ -149,6 +150,7 @@ public class TrenerInventoryClick implements Listener {
                     bonusesUser.setSzansanakryta(bonusesUser.getSzansanakryta() - user.getKryt());
                     user.reset();
                     rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() - 5000000);
+                    player.setMaxHealth(bonusesUser.getDodatkowehp() * 2);
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, rpgcore.getUserManager().find(uuid)));
                     player.closeInventory();
                     player.sendMessage(Utils.format(Utils.TRENER + "&aPomyslnie zresetowałes/as swoj postep"));

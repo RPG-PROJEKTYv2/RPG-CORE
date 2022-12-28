@@ -141,7 +141,7 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
 
             }
             player.getInventory().addItem(item);
-            rpgcore.getDodatkiManager().openAkceDodaGUI(player);
+            rpgcore.getDodatkiManager().openAkceDodaGUI(player, player);
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zdjales " + item.getItemMeta().getDisplayName() + "&a!"));
         }
     }

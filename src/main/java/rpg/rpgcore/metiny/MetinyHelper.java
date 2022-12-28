@@ -32,6 +32,24 @@ public class MetinyHelper {
         }
     }
 
+    public static void despawnMetin(int id) {
+        if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
+            return;
+        }
+        Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
+        if (metiny.getMetins().getHealth() > 0) {
+            String world = metiny.getMetins().getWorld();
+            for (Entity e : Bukkit.getServer().getWorld(world).getEntities()) {
+                if (e.getCustomName() != null) {
+                    if (e.getCustomName().equals(String.valueOf(id))) {
+                        e.remove();
+                    }
+                }
+            }
+            metiny.getMetins().setHealth(0);
+        }
+    }
+
     public static void spawnMetinByPass(int id) {
         if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
             return;
@@ -47,6 +65,9 @@ public class MetinyHelper {
     public static void respAllMetins() {
         for (World w : Bukkit.getWorlds()) {
             if (w.getName().equals("zamekNieskonczonosci") && w.getPlayers().size() != 0) {
+                continue;
+            }
+            if (w.getName().equals("demontower") && w.getPlayers().size() != 0) {
                 continue;
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
@@ -96,6 +117,9 @@ public class MetinyHelper {
                     }
                     if (sharp < 300 && sharp > 149) {
                         damage = 4;
+                    }
+                    if (sharp == 2500) {
+                        damage = 40;
                     }
                     /*if (sharp < 600 && sharp > 499) {
                         damage = damage + 5;
@@ -208,67 +232,78 @@ public class MetinyHelper {
         }
         if ((id >= 61 && id <= 70) || (id >= 10061 && id <= 10070)) {
             kasaToAdd = 3500;
-            if (metinolog.getMetinologUser().getPostepGive() == 6) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I60-70", 1), 25, true, true, entity);
-            }
-            if (metinolog.getMetinologUser().getPostepKill() == 6) {
-                metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
-            }
-        }
-        if ((id >= 71 && id <= 80) || (id >= 10071 && id <= 10080)) {
-            kasaToAdd = 6000;
             if (metinolog.getMetinologUser().getPostepGive() == 7) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I70-80", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I60-70", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 7) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 81 && id <= 90) {
-            kasaToAdd = 8000;
+        if ((id >= 71 && id <= 80) || (id >= 10071 && id <= 10080)) {
+            kasaToAdd = 6000;
             if (metinolog.getMetinologUser().getPostepGive() == 8) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I80-90", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I70-80", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 8) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 91 && id <= 100) {
-            kasaToAdd = 10000;
+        if (id >= 81 && id <= 90) {
+            kasaToAdd = 8000;
             if (metinolog.getMetinologUser().getPostepGive() == 9) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I90-100", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I80-90", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 9) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 101 && id <= 110) {
-           kasaToAdd = 12500;
+        if (id >= 91 && id <= 100) {
+            kasaToAdd = 10000;
             if (metinolog.getMetinologUser().getPostepGive() == 10) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I100-110", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I90-100", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 10) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 111 && id <= 120) {
-           kasaToAdd = 15000;
+        if (id >= 101 && id <= 110) {
+           kasaToAdd = 12500;
             if (metinolog.getMetinologUser().getPostepGive() == 11) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I110-120", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I100-110", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 11) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 121 && id <= 130) {
-           kasaToAdd = 17500;
+        if (id >= 111 && id <= 120) {
+           kasaToAdd = 15000;
             if (metinolog.getMetinologUser().getPostepGive() == 12) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I120-130", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I110-120", 1), 25, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 12) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
+        if (id >= 121 && id <= 130) {
+           kasaToAdd = 17500;
+            if (metinolog.getMetinologUser().getPostepGive() == 13) {
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I120-130", 1), 25, true, true, entity);
+            }
+            if (metinolog.getMetinologUser().getPostepKill() == 13) {
+                metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
+            }
+        }
+        // ---------------------------------------- ICE TOWER ----------------------------------------
+        if (id >= 20000 && id <= 20007) {
+            kasaToAdd = 2500;
+            if (metinolog.getMetinologUser().getPostepGive() == 6) {
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("ILodowej-Wiezy", 1), 25, true, true, entity);
+            }
+            if (metinolog.getMetinologUser().getPostepKill() == 6) {
+                metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
+            }
+        }
+
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());

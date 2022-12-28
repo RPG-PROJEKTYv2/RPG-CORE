@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -19,17 +20,11 @@ public enum Map20_30 {
     I20_30_3("20-30-3", 10, ItemHelper.createArmor("&8Tropikalne Spodnie", Material.GOLD_LEGGINGS, 21, 0,true)),
     I20_30_4("20-30-4", 10, ItemHelper.createArmor("&8Tropikalne Buty", Material.GOLD_BOOTS, 21, 0,true)),
     I20_30_5("20-30-5", 10, ItemHelper.createSword("&8Tropikalna Maczeta", Material.STONE_SWORD, 12, 5,true)),
-    I20_30_6("20-30-6", 10, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(8, 19),
-            ChanceHelper.getRandDouble(6, 9), ChanceHelper.getRandDouble(4, 6), ChanceHelper.getRandInt(20, 30), "&8Tropikalny Naszyjnik")),
-    I20_30_7("20-30-7", 10, AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 7),
-            ChanceHelper.getRandDouble(1, 8), 1, ChanceHelper.getRandInt(20, 30), "&8Tropikalny Diadem")),
-    I20_30_8("20-30-8", 10, AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(4, 14),
-            ChanceHelper.getRandDouble(3, 10), ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandInt(20, 30), "&8Tropikalna Tarcza")),
+    I20_30_6("20-30-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Tropikalny Naszyjnik").toItemStack()),
+    I20_30_7("20-30-7", 10, new ItemBuilder(Material.WATCH).setName("&8Tropikalny Diadem").toItemStack()),
+    I20_30_8("20-30-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&8Tropikalna Tarcza").toItemStack()),
 
-    I20_30_9("20-30-9", 10, AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1),
-            ChanceHelper.getRandDouble(3, 4), 1, ChanceHelper.getRandInt(1, 10), "&8Tropikalny Pierscien")),
-
-    I99("null", 0, null);
+    I20_30_9("20-30-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&8Tropikalny Pierscien").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -58,7 +53,7 @@ public enum Map20_30 {
                 return item;
             }
         }
-        return I99;
+        return null;
     }
 
     public static void getDrop(final Player player, final double szczescie) {
@@ -69,6 +64,26 @@ public enum Map20_30 {
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(8, 19),
+                            ChanceHelper.getRandDouble(6, 9), ChanceHelper.getRandDouble(4, 6), ChanceHelper.getRandInt(20, 30), "&8Tropikalny Naszyjnik"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.WATCH) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(2, 7),
+                            ChanceHelper.getRandDouble(3, 8), ChanceHelper.getRandDouble(1, 2), ChanceHelper.getRandInt(20, 30), "&8Tropikalny Diadem"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(4, 14),
+                            ChanceHelper.getRandDouble(3, 10), ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandInt(20, 30), "&8Tropikalna Tarcza"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1),
+                            ChanceHelper.getRandDouble(3, 4), 1, ChanceHelper.getRandInt(1, 10), "&8Tropikalny Pierscien"));
+                    return;
+                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

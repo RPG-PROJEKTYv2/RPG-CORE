@@ -32,27 +32,29 @@ public class MetinologNPC {
         killMissions.put(4, "30-40;50;1.5;0.5;0;0");
         killMissions.put(5, "40-50;65;1.5;0.5;0;0");
         killMissions.put(6, "50-60;80;1.5;0.5;0;0");
-        killMissions.put(7, "60-70;95;1.5;0.5;0;0");
-        killMissions.put(8, "70-80;110;1.5;0.5;0;0");
-        killMissions.put(9, "80-90;130;1.5;0.5;0;0");
-        killMissions.put(10, "90-100;150;1.5;0.5;0;0");
-        killMissions.put(11, "100-110;170;1.5;0.5;0;0");
-        killMissions.put(12, "110-120;190;1.5;0.5;0;0");
-        killMissions.put(13, "120-130;210;2;1.5;0;0");
+        killMissions.put(7, "Lodowej-Wiezy;85;1.5;0.5;0;0");
+        killMissions.put(8, "60-70;95;1.5;0.5;0;0");
+        killMissions.put(9, "70-80;110;1.5;0.5;0;0");
+        killMissions.put(10, "80-90;130;1.5;0.5;0;0");
+        killMissions.put(11, "90-100;150;1.5;0.5;0;0");
+        killMissions.put(12, "100-110;170;1.5;0.5;0;0");
+        killMissions.put(13, "110-120;190;1.5;0.5;0;0");
+        killMissions.put(14, "120-130;210;2;1.5;0;0"); //21.5 - DMG
 
-        giveMissions.put(1, "1-10;10;0;0;25;1.5");
-        giveMissions.put(2, "10-20;20;0;0;25;1.5");
-        giveMissions.put(3, "20-30;30;0;0;25;1.5");
-        giveMissions.put(4, "30-40;40;0;0;25;1.5");
-        giveMissions.put(5, "40-50;50;0;0;25;1.5");
-        giveMissions.put(6, "50-60;60;0;0;25;1.5");
-        giveMissions.put(7, "60-70;70;0;0;25;1.5");
-        giveMissions.put(8, "70-80;80;0;0;25;1.5");
-        giveMissions.put(9, "80-90;90;0;0;25;1.5");
-        giveMissions.put(10, "90-100;100;0;0;25;1.5");
-        giveMissions.put(11, "100-110;110;0;0;25;1.5");
-        giveMissions.put(12, "110-120;120;0;0;25;1.5");
-        giveMissions.put(13, "120-130;130;0;0;50;2");
+        giveMissions.put(1, "1-10;10;0;0;2;1.5");
+        giveMissions.put(2, "10-20;20;0;0;4;1.5");
+        giveMissions.put(3, "20-30;30;0;0;5;1.5");
+        giveMissions.put(4, "30-40;40;0;0;7;1.5");
+        giveMissions.put(5, "40-50;50;0;0;12;1.5");
+        giveMissions.put(6, "50-60;60;0;0;20;1.5");
+        giveMissions.put(7, "Lodowej-Wiezy;65;0;0;20;1.5");
+        giveMissions.put(8, "60-70;70;0;0;25;1.5"); // DO TAD PRZEPISANE
+        giveMissions.put(9, "70-80;80;0;0;55;1.5");
+        giveMissions.put(10, "80-90;90;0;0;90;1.5");
+        giveMissions.put(11, "90-100;100;0;0;230;1.5");
+        giveMissions.put(12, "100-110;110;0;0;420;1.5");
+        giveMissions.put(13, "110-120;120;0;0;1200;1.5");
+        giveMissions.put(14, "120-130;130;0;0;2000;2");
     }
 
     public void openMetinologGUI(final Player player) {
@@ -70,7 +72,7 @@ public class MetinologNPC {
     }
 
     public ItemStack getKillMissionItem(final MetinologUser ms) {
-        try {
+        if (ms.getPostepKill() + 1 < killMissions.size()) {
             final String[] mission = killMissions.get(ms.getPostepKill() + 1).split(";");
             return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6Misja #" + (ms.getPostepKill() + 1)).setLore(
                     Arrays.asList("&7Zniszcz &c" + mission[1] + " &7Kamieni Metin na mapie &c" + mission[0],
@@ -80,14 +82,14 @@ public class MetinologNPC {
                             "&7Przeszycie Bloku Ciosu: &c" + mission[3],
                             " ",
                             "&7Postep: &6" + ms.getPostepMisjiKill() + "&7/&6" + mission[1])).hideFlag().toItemStack().clone();
-        } catch (final IndexOutOfBoundsException e) {
+        } else {
             return new ItemBuilder(Material.BARRIER).setName("&a&lUkonczono").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne",
                     "&7misje dla tego NPC!", " ", "&8Wiecej misji bedzie dostepnych wkrotce!")).toItemStack().clone();
         }
     }
 
     public ItemStack getGiveMissionItem(final MetinologUser ms) {
-        try {
+        if (ms.getPostepGive() + 1 < giveMissions.size()) {
             final String[] mission = giveMissions.get(ms.getPostepGive() + 1).split(";");
             return new ItemBuilder(Material.PRISMARINE_SHARD).setName("&6Misja #" + (ms.getPostepGive() + 1)).setLore(
                     Arrays.asList("&7Przynies &c" + mission[1] + " &4Odlamkow Kamienia Metin " + mission[0],
@@ -97,7 +99,7 @@ public class MetinologNPC {
                             "&7Odpornosc Przeciwko Ludziom: &c" + mission[5],
                             " ",
                             "&7Postep: &6" + ms.getPostepMisjiGive() + "&7/&6" + mission[1])).hideFlag().toItemStack().clone();
-        } catch (final IndexOutOfBoundsException e) {
+        } else {
             return new ItemBuilder(Material.BARRIER).setName("&a&lUkonczono").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne",
                     "&7misje dla tego NPC!", " ", "&8Wiecej misji bedzie dostepnych wkrotce!")).toItemStack().clone();
         }

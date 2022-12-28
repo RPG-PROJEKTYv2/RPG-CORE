@@ -11,7 +11,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> chatCooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> commandCooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> helpopCooldown = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
-    private final Cache<UUID, Long> trenerCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> trenerCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> metinyCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> partyInviteCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> magazynyCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
@@ -60,7 +60,7 @@ public class CooldownManager {
     }
 
     public void givePlayerTrenerCooldown(final UUID uuid) {
-        this.trenerCooldown.put(uuid, System.currentTimeMillis() + 300000L); //300000
+        this.trenerCooldown.put(uuid, System.currentTimeMillis() + 300000L);
     }
 
     public boolean hasTrenerCooldown(final UUID uuid) {

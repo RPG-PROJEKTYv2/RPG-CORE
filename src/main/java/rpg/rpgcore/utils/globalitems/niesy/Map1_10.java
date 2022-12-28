@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -20,12 +21,11 @@ public enum Map1_10 {
     I1_10_4("1-10-4", 10, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 0,true)),
     I1_10_5("1-10-5", 10, ItemHelper.createSword("&8Zaginiona Brzytwa", Material.WOOD_SWORD, 5, 1,false)),
 
-    I1_10_6("1-10-6", 10, AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandDouble(3, 5), ChanceHelper.getRandDouble(2, 3), ChanceHelper.getRandInt(1, 10), "&8Zaginiony Naszyjnik")),
-    I1_10_7("1-10-7", 10, AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 4), ChanceHelper.getRandDouble(1, 3), 1, ChanceHelper.getRandInt(1, 10), "&8Zaginiony Diadem")),
-    I1_10_8("1-10-8", 10, AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(2, 7), ChanceHelper.getRandDouble(2, 5), ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(1, 10), "&8Zaginiona Tarcza")),
-    I1_10_9("1-10-9", 10, AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandDouble(1, 1), ChanceHelper.getRandDouble(1, 1), 2, ChanceHelper.getRandInt(1, 10), "&8Zaginione Kolczyki")),
-    I1_10_10("1-10-10", 10, AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(2, 3), 1, ChanceHelper.getRandInt(1, 10), "&8Zaginiony Pierscien")),
-    I99("null", 0, null);
+    I1_10_6("1-10-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Zaginiony Naszyjnik").toItemStack()),
+    I1_10_7("1-10-7", 10, new ItemBuilder(Material.WATCH).setName("&8Zaginiony Diadem").toItemStack()),
+    I1_10_8("1-10-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&8Zaginiona Tarcza").toItemStack()),
+    I1_10_9("1-10-9", 10, new ItemBuilder(Material.HOPPER_MINECART).setName("&8Zaginione Kolczyki").toItemStack()),
+    I1_10_10("1-10-10", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&8Zaginiony Pierscien").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -54,7 +54,7 @@ public enum Map1_10 {
                 return item;
             }
         }
-        return I99;
+        return null;
     }
 
     public static void getDrop(final Player player, final double szczescie) {
@@ -65,6 +65,31 @@ public enum Map1_10 {
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 4), ChanceHelper.getRandDouble(3, 5),
+                            ChanceHelper.getRandDouble(2, 3), ChanceHelper.getRandInt(1, 10), "&8Zaginiony Naszyjnik"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.WATCH) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(1, 4), ChanceHelper.getRandDouble(1, 3), 1,
+                            ChanceHelper.getRandInt(1, 10), "&8Zaginiony Diadem"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(2, 7), ChanceHelper.getRandDouble(2, 5),
+                            ChanceHelper.getRandInt(1, 2), ChanceHelper.getRandInt(1, 10), "&8Zaginiona Tarcza"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandDouble(1, 1), ChanceHelper.getRandDouble(1, 1), 2,
+                            ChanceHelper.getRandInt(1, 10), "&8Zaginione Kolczyki"));
+                    return;
+                }
+                if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandDouble(2, 3), 1,
+                            ChanceHelper.getRandInt(1, 10), "&8Zaginiony Pierscien"));
+                    return;
+                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

@@ -20,24 +20,29 @@ public class MetinCommand extends CommandAPI {
     public MetinCommand(RPGCORE rpgcore) {
         super("metin");
         this.setRankLevel(RankType.ADMIN);
-        this.setRestrictedForPlayer(true);
+        this.setRestrictedForPlayer(false);
         this.rpgcore = rpgcore;
     }
 
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
-        final Player player = (Player) sender;
+        
 
         if (args.length < 1) {
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
+            sender.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
             return;
         }
         if (args.length == 5) {
             if (args[0].equals("create")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(Utils.format("Tej opcji moze uzywac tylko gracz"));
+                    return;
+                }
                 if (args[1] != null) {
+                    final Player player = (Player) sender;
                     int id = Integer.parseInt(args[1]);
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o ID:&6 " + id + " &cjest juz utworzony."));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o ID:&6 " + id + " &cjest juz utworzony."));
                         return;
                     }
                     int health = Integer.parseInt(args[2]);
@@ -56,7 +61,7 @@ public class MetinCommand extends CommandAPI {
                     metiny.getMetins().setResp(resp);
                     metiny.getMetins().setMoby(moby);
                     this.rpgcore.getMongoManager().saveDataMetins(id, metiny);
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie stowrzyles lokacje metina ID:&6 " + args[1] + "\n"
+                    sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie stowrzyles lokacje metina ID:&6 " + args[1] + "\n"
                             + Utils.SERVERNAME + "&aSwiat metina:&6 " + metiny.getMetins().getWorld() + "\n"
                             + Utils.SERVERNAME + "&aKordy metina:&6 " + metiny.getMetins().getCoordinates() + "\n"
                             + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth() + "\n"
@@ -65,7 +70,7 @@ public class MetinCommand extends CommandAPI {
                     return;
                 }
             }
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
+            sender.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
             return;
         }
         if (args.length == 2) {
@@ -74,16 +79,34 @@ public class MetinCommand extends CommandAPI {
                     int id = Integer.parseInt(args[1]);
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
                         MetinyHelper.spawnMetin(id);
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zrespiles metin o ID&6 " + id));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zrespiles metin o ID&6 " + id));
                     }
                     if (!this.rpgcore.getMetinyManager().isMetin(id)) {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
+                    }
+                    return;
+                }
+            }
+            if (args[0].equals("despawn")) {
+                if (args[1] != null) {
+                    int id = Integer.parseInt(args[1]);
+                    if (this.rpgcore.getMetinyManager().isMetin(id)) {
+                        MetinyHelper.despawnMetin(id);
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie despawnowales metin o ID&6 " + id));
+                    }
+                    if (!this.rpgcore.getMetinyManager().isMetin(id)) {
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
                     }
                     return;
                 }
             }
             if (args[0].equals("tp")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(Utils.format("Tej opcji moze uzywac tylko gracz"));
+                    return;
+                }
                 if (args[1] != null) {
+                    final Player player = (Player) sender;
                     int id = Integer.parseInt(args[1]);
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
                         Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
@@ -91,7 +114,7 @@ public class MetinCommand extends CommandAPI {
                         Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
                         Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
                         player.teleport(location);
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales pomyslnie przeteleportowany na lokacje metina ID:&6 " + id + "&a."));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales pomyslnie przeteleportowany na lokacje metina ID:&6 " + id + "&a."));
                         return;
                     }
                 }
@@ -105,14 +128,14 @@ public class MetinCommand extends CommandAPI {
                         this.rpgcore.getServer().getWorld(metiny.getMetins().getWorld()).getEntities().stream().filter((entity) -> (entity.getCustomName() != null && entity.getCustomName().equals(String.valueOf(id)))).forEachOrdered(Entity::remove);
                         this.rpgcore.getMetinyManager().remove(metiny);
                         this.rpgcore.getMongoManager().saveAllMetins();
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aMetin o podanym ID zostal usuniety!"));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aMetin o podanym ID zostal usuniety!"));
                     } else {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
+                        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cMetin o podanym ID nie istnieje!"));
                     }
                     return;
                 }
             }
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
+            sender.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <resp(0/1)>"));
             return;
         }
         if (args.length == 1) {
@@ -121,13 +144,13 @@ public class MetinCommand extends CommandAPI {
                 return;
             }
             if (args[0].equalsIgnoreCase("list")) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista metin:"));
+                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista metin:"));
                 for (final Metiny metin : this.rpgcore.getMetinyManager().getMetins()) {
-                    player.sendMessage(Utils.format("&8- &6" + metin.getId() + "&8: &6" + metin.getMetins().getWorld() + "&8: &6" + metin.getMetins().getCoordinates()));
+                    sender.sendMessage(Utils.format("&8- &6" + metin.getId() + "&8: &6" + metin.getMetins().getWorld() + "&8: &6" + metin.getMetins().getCoordinates()));
                 }
                 return;
             }
-            player.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
+            sender.sendMessage(Utils.poprawneUzycie("metin <create/spawn/tp/spawnall/usun/list> <id> <hp> <moby> <resp(0/1)>"));
         }
     }
 }

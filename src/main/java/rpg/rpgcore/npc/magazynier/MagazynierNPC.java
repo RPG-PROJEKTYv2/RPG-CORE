@@ -155,7 +155,12 @@ public class MagazynierNPC {
         missions.setMission3(missionList.get(2));
         missions.setMission4(missionList.get(3));
         missions.setMission5(missionList.get(4));
-        magazynierUser.setResetTime(System.currentTimeMillis() + 86400000);
+        missions.setMission1done(false);
+        missions.setMission2done(false);
+        missions.setMission3done(false);
+        missions.setMission4done(false);
+        missions.setMission5done(false);
+        magazynierUser.setResetTime(System.currentTimeMillis() + 86400000L);
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(magazynierUser.getUuid(), magazynierUser));
     }
 

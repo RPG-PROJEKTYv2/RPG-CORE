@@ -96,7 +96,7 @@ public class TeleporterInventoryClick implements Listener {
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
                 if (clickedSlot == 15) {
                     player.closeInventory();
-                    player.teleport(new Location(Bukkit.getWorld("demontower"), -258, 14, 107, (float) -82.9, (float) 0.4));
+                    player.teleport(new Location(Bukkit.getWorld("icetower"), -258, 14, 107, (float) -82.9, (float) 0.4));
                 }
             }
         }*/
