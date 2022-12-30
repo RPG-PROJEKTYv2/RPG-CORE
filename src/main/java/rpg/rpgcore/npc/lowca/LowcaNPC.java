@@ -13,11 +13,9 @@ import rpg.rpgcore.utils.Utils;
 import java.util.*;
 
 public class LowcaNPC {
-    private final RPGCORE rpgcore;
     private final Map<UUID, LowcaObject> userMap;
 
     public LowcaNPC(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllLowca();
     }
 
@@ -56,7 +54,7 @@ public class LowcaNPC {
         player.openInventory(gui);
     }
 
-    private ItemStack getMissionItem(final LowcaMissions lowcaMissions, final LowcaUser lowcaUser) {
+    public ItemStack getMissionItem(final LowcaMissions lowcaMissions, final LowcaUser lowcaUser) {
         return new ItemBuilder(Material.BOOK).setName("&4&lMisja " + lowcaUser.getMission()).setLore(getlore(lowcaMissions.getLore(), lowcaUser, lowcaMissions)).toItemStack().clone();
     }
 

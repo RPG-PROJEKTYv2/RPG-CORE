@@ -50,7 +50,7 @@ public class LesnikNPC {
 
 
 
-    private ItemStack getCurrentMissionItem(final LesnikUser lesnikUser) {
+    public ItemStack getCurrentMissionItem(final LesnikUser lesnikUser) {
         final LesnikMissions mission = LesnikMissions.getByNumber(lesnikUser.getMission());
         return new ItemBuilder(mission.getReqItem().getType(), mission.getReqItem().getAmount(), mission.getReqItem().getDurability()).setName("&c&lMisja " + lesnikUser.getMission()).setLore(Arrays.asList(
                 "&7Przynies mi jeszcze &c" + Math.max(mission.getReqAmount() - lesnikUser.getProgress(), 0) + " &7" + mission.getReqItem().getItemMeta().getDisplayName(),

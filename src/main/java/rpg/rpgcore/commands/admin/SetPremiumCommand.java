@@ -2,12 +2,15 @@ package rpg.rpgcore.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -82,14 +85,23 @@ public class SetPremiumCommand extends CommandAPI {
             if (args[3].equals("true")) {
                 rpgcore.getServer().broadcastMessage(" ");
                 rpgcore.getServer().broadcastMessage(Utils.format("          &6&lItem&2&lShop            "));
-                rpgcore.getServer().broadcastMessage(Utils.format("  &aGracz &6" + args[0] + " &azakupil range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6" + Utils.durationToString(user.getRankPlayerUser().getTime(), false) + "&a!"));
+                rpgcore.getServer().broadcastMessage(Utils.format("  &aGracz &6" + args[0] + " &azakupil range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6" + args[2] + "&a!"));
                 rpgcore.getServer().broadcastMessage(Utils.format("  &6Dziekujemy za wspacie servera. &cZespol Hellrpg.pl ❤"));
                 rpgcore.getServer().broadcastMessage(Utils.format("  &7Rangi oraz HellCooins'y mozesz zakupic na naszej stronie www.hellrpg.pl"));
                 rpgcore.getServer().broadcastMessage(Utils.format("          &6&lItem&2&lShop            "));
                 rpgcore.getServer().broadcastMessage(" ");
 
                 if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
-                    rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(args[0]), rpgcore.getNmsManager().makeTitle("&6&lItem&2&lShop", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6" + Utils.durationToString(user.getRankPlayerUser().getTime(), false) + "&a! &cDziekujemy za wsparcie ❤", 5, 20, 5));
+                    final Player player = Bukkit.getPlayer(args[0]);
+                    rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lItem&2&lShop", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6" + Utils.durationToString(user.getRankPlayerUser().getTime(), false) + "&a! &cDziekujemy za wsparcie ❤", 5, 20, 5));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                        NameTagUtil.setPlayerNameTag(player, "updatePrefix");
+                        TabManager.removePlayer(player);
+                        TabManager.addPlayer(player);
+                        for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                            TabManager.update(restOfServer.getUniqueId());
+                        }
+                    });
                 }
             }
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
@@ -100,6 +112,5 @@ public class SetPremiumCommand extends CommandAPI {
         }
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
-
     }
 }

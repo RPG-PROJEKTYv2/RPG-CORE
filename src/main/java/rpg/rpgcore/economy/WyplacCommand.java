@@ -9,6 +9,7 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -65,6 +66,34 @@ public class WyplacCommand extends CommandAPI {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.spaceNumber(Utils.kasaFormat.format(wyplac)) + " &2$"));
             } catch (NumberFormatException e) {
                 player.sendMessage(Utils.poprawneUzycie("wyplac <ilosc>"));
+            }
+        }
+        if (args.length == 2) {
+            if (!args[0].equals("hs")) {
+                player.sendMessage(Utils.poprawneUzycie("wyplac hs <ilosc>"));
+                return;
+            }
+            final User user = rpgcore.getUserManager().find(uuid);
+            try {
+                final int wyplac = Integer.parseInt(args[1]);
+
+                if (wyplac < 1) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz wyplacic tej kwoty"));
+                    return;
+                }
+
+                if (user.getHellcoins() < wyplac) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz tylu &4&lHell&6&lSow&c!"));
+                    return;
+                }
+
+                user.setHellcoins(user.getHellcoins() - wyplac);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
+
+                player.getInventory().addItem(GlobalItem.getHells(wyplac).clone());
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.spaceNumber(String.valueOf(wyplac)) + " &4&lH&6&lS"));
+            } catch (NumberFormatException e) {
+                player.sendMessage(Utils.poprawneUzycie("wyplac hs <ilosc>"));
             }
         }
     }

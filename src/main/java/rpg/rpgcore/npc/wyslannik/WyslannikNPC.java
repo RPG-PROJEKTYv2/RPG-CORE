@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
@@ -36,51 +37,65 @@ public class WyslannikNPC {
         assert missionKillMob != null;
         assert missionKillBoss != null;
         assert missionOpen != null;
-        if (user.getKillMobsMission() == 9) {
-            gui.setItem(0, new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
-                    "&7Ukonczyles/-as juz wszystkie mozliwe",
-                    "&7misje w tej kategorii."
-            )).toItemStack());
-        } else {
-            gui.setItem(0, new ItemBuilder(Material.IRON_SWORD).setName("&c&lMisja " + user.getKillMobsMission()).setLore(Arrays.asList(
-                    "&7Zabij &6" + (Math.max(missionKillMob.getReqAmount() - user.getKillMobsMissionProgress(), 0)),
-                    "&8- " + missionKillMob.getMobName(),
-                    "&f&lNAGRODA",
-                    "&8- " + missionKillMob.getReward().getItemMeta().getDisplayName()
-            )).hideFlag().toItemStack().clone());
-        }
-        if (user.getKillBossMission() == 9) {
-            gui.setItem(2, new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
-                    "&7Ukonczyles/-as juz wszystkie mozliwe",
-                    "&7misje w tej kategorii."
-            )).toItemStack());
-        } else {
-            gui.setItem(2, new ItemBuilder(Material.DIAMOND_SWORD).setName("&c&lMisja " + user.getKillBossMission()).setLore(Arrays.asList(
-                    "&7Zabij &6" + (Math.max(missionKillBoss.getReqAmount() - user.getKillBossMissionProgress(), 0)),
-                    "&8- " + missionKillBoss.getMobName(),
-                    "&f&lNAGRODA",
-                    "&8- " + missionKillBoss.getReward().getItemMeta().getDisplayName()
-            )).hideFlag().toItemStack().clone());
-        }
+        gui.setItem(0, this.getMobKillsItem(user, missionKillMob));
+        gui.setItem(2, this.getBossKillsItem(user, missionKillBoss));
+        gui.setItem(4, this.getChestOpenItem(user, missionOpen));
 
-        if (user.getOpenChestMission() == 9) {
-            gui.setItem(4, new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
-                    "&7Ukonczyles/-as juz wszystkie mozliwe",
-                    "&7misje w tej kategorii."
-            )).toItemStack());
-        } else {
-            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&c&lMisja " + user.getOpenChestMission()).setLore(Arrays.asList(
-                    "&7Otworz &6" + (Math.max(missionOpen.getReqAmount() - user.getOpenChestMissionProgress(), 0)),
-                    "&7- " + missionOpen.getChestName(),
-                    "&f&lNAGRODA",
-                    "&8- " + missionOpen.getReward().getItemMeta().getDisplayName()
-            )).hideFlag().toItemStack().clone());
-        }
+
+
 
         gui.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
 
         player.openInventory(gui);
+    }
+
+    public ItemStack getMobKillsItem(final WyslannikUser user, final WyslannikMissionKillMob mission) {
+        if (user.getKillMobsMission() == 9) {
+            return new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
+                    "&7Ukonczyles/-as juz wszystkie mozliwe",
+                    "&7misje w tej kategorii."
+            )).toItemStack();
+        } else {
+            return new ItemBuilder(Material.IRON_SWORD).setName("&c&lMisja " + user.getKillMobsMission()).setLore(Arrays.asList(
+                    "&7Zabij &6" + (Math.max(mission.getReqAmount() - user.getKillMobsMissionProgress(), 0)),
+                    "&8- " + mission.getMobName(),
+                    "&f&lNAGRODA",
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+            )).hideFlag().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getBossKillsItem(final WyslannikUser user, final WyslannikMissionKillBoss mission) {
+        if (user.getKillBossMission() == 9) {
+            return new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
+                    "&7Ukonczyles/-as juz wszystkie mozliwe",
+                    "&7misje w tej kategorii."
+            )).toItemStack();
+        } else {
+            return new ItemBuilder(Material.DIAMOND_SWORD).setName("&c&lMisja " + user.getKillBossMission()).setLore(Arrays.asList(
+                    "&7Zabij &6" + (Math.max(mission.getReqAmount() - user.getKillBossMissionProgress(), 0)),
+                    "&8- " + mission.getMobName(),
+                    "&f&lNAGRODA",
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+            )).hideFlag().toItemStack().clone();
+        }
+    }
+
+    public ItemStack getChestOpenItem(final WyslannikUser user, final WyslannikMissionOpen mission) {
+        if (user.getOpenChestMission() == 9) {
+            return new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
+                    "&7Ukonczyles/-as juz wszystkie mozliwe",
+                    "&7misje w tej kategorii."
+            )).toItemStack();
+        } else {
+            return new ItemBuilder(Material.CHEST).setName("&c&lMisja " + user.getOpenChestMission()).setLore(Arrays.asList(
+                    "&7Otworz &6" + (Math.max(mission.getReqAmount() - user.getOpenChestMissionProgress(), 0)),
+                    "&7- " + mission.getChestName(),
+                    "&f&lNAGRODA",
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+            )).hideFlag().toItemStack().clone();
+        }
     }
 
     public WyslannikObject find(final UUID uuid) {

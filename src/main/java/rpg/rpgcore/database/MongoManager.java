@@ -482,6 +482,17 @@ public class MongoManager {
                     }
                 }
             }
+            if (user.getPierscienDoswiadczeniaTime() <= System.currentTimeMillis() && user.getPierscienDoswiadczenia() != 0) {
+                final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(user.getId());
+                bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - user.getPierscienDoswiadczenia());
+                user.setPierscienDoswiadczenia(0);
+                user.setPierscienDoswiadczeniaTime(0L);
+                RPGCORE.getInstance().getNmsManager().sendTitleAndSubTitle(player, RPGCORE.getInstance().getNmsManager().makeTitle("&8&l[&4&l!&8&l]", 5, 20, 5), RPGCORE.getInstance().getNmsManager().makeSubTitle("&cTwoj &ePierscien Doswiadczenia &cdobiegl konca", 5, 20, 5));
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+                    RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user);
+                    RPGCORE.getInstance().getMongoManager().saveDataBonuses(user.getId(), bonuses);
+                });
+            }
 
             this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
             this.saveDataDodatki(uuid, rpgcore.getDodatkiManager().find(uuid));

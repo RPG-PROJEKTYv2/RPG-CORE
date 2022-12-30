@@ -1,6 +1,5 @@
 package rpg.rpgcore.listeners;
 
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +36,7 @@ public class PlayerInteractEntityListener implements Listener {
 
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             e.setCancelled(true);
-            if (e.getRightClicked().getLocation().getWorld().getName().equals("demontower")) {
+            /*if (e.getRightClicked().getLocation().getWorld().getName().equals("demontower")) {
                 player.sendMessage("x: " + e.getRightClicked().getLocation().getX());
                 player.sendMessage("y: " + e.getRightClicked().getLocation().getY());
                 player.sendMessage("z: " + e.getRightClicked().getLocation().getZ());
@@ -46,7 +45,7 @@ public class PlayerInteractEntityListener implements Listener {
                 player.sendMessage("rightArm X: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getX());
                 player.sendMessage("rightArm Y: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getY());
                 player.sendMessage("rightArm Z: " + ((ArmorStand) e.getRightClicked()).getRightArmPose().getZ());
-            }
+            }*/
             return;
         }
 
@@ -74,6 +73,15 @@ public class PlayerInteractEntityListener implements Listener {
             // KUPIEC
             if (entityName.equalsIgnoreCase("Metinolog")) {
                 rpgcore.getMetinologNPC().openMetinologGUI(player);
+                return;
+            }
+        }
+        // ITEMSHOP
+        if (e.getRightClicked().getType().equals(EntityType.SHEEP)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            if (entityName.equalsIgnoreCase("ItemShop")) {
+                rpgcore.getItemShopNPC().openItemShop(player);
                 return;
             }
         }

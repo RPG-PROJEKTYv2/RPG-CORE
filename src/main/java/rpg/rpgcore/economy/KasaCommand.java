@@ -16,7 +16,7 @@ public class KasaCommand extends CommandAPI {
 
     public KasaCommand(final RPGCORE rpgcore) {
         super("kasa");
-        this.setAliases(Arrays.asList("money", "bal", "balance"));
+        this.setAliases(Arrays.asList("money", "bal", "balance", "hells", "hellsy"));
         this.setRankLevel(RankType.GRACZ);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
@@ -31,7 +31,8 @@ public class KasaCommand extends CommandAPI {
         }
 
         if (args.length == 0) {
-            player.sendMessage(Utils.format("&2Twoj aktualny stan konta wynosi: &6&o" + Utils.spaceNumber(String.valueOf(Utils.kasaFormat.format(rpgcore.getUserManager().find(player.getUniqueId()).getKasa()))) + "&2$"));
+            player.sendMessage(Utils.format("&7Twoj aktualny stan konta wynosi: &6&o" + Utils.spaceNumber(String.valueOf(Utils.kasaFormat.format(rpgcore.getUserManager().find(player.getUniqueId()).getKasa()))) + "&2$"));
+            player.sendMessage(Utils.format("&7Twoj aktualny stan &4&lH&6&lS&7: &c" + Utils.spaceNumber(String.valueOf(rpgcore.getUserManager().find(player.getUniqueId()).getHellcoins()))));
             return;
         }
 
@@ -41,6 +42,7 @@ public class KasaCommand extends CommandAPI {
                     return;
                 }
                 rpgcore.getUserManager().find(player.getUniqueId()).setKasa(100000000000.0);
+                rpgcore.getUserManager().find(player.getUniqueId()).setHellcoins(999999999);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(player.getUniqueId(), rpgcore.getUserManager().find(player.getUniqueId())));
             }
         }

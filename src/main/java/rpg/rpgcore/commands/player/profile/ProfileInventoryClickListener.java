@@ -29,10 +29,12 @@ public class ProfileInventoryClickListener implements Listener {
                 target = Bukkit.getOfflinePlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "")).getPlayer();
             }
             if (target.getName().equals(player.getName())) {
+                if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje");
                 if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player);
                 if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player);
                 if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player);
             } else {
+                if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje " + target.getName());
                 if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, target);
                 if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, target);
                 if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, target);
