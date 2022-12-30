@@ -77,6 +77,42 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
+        if (e.getRightClicked().getType().equals(EntityType.CREEPER)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // PRZYRODNIK
+            if (entityName.equalsIgnoreCase("przyrodnik")) {
+                rpgcore.getPrzyrodnikNPC().openMainGUI(player);
+                return;
+            }
+        }
+        if (e.getRightClicked().getType().equals(EntityType.PIG_ZOMBIE)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // KOLEKCJONER
+            if (entityName.equalsIgnoreCase("Kolekcjoner")) {
+                rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
+                return;
+            }
+        }
+        if (e.getRightClicked().getType().equals(EntityType.BLAZE)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // LOWCA
+            if (entityName.equalsIgnoreCase("Lowca")) {
+                rpgcore.getLowcaNPC().openLowcaGUI(player);
+                return;
+            }
+        }
+        if (e.getRightClicked().getType().equals(EntityType.SLIME)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // DUNGEONS
+            if (entityName.equalsIgnoreCase("Dungeony")) {
+                rpgcore.getDungeonsManager().openDungeonMenu(player);
+                return;
+            }
+        }
 
 
         // NPCTY
@@ -109,11 +145,6 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKowalNPC().openKowalMainGui(player);
                 return;
             }
-            // KOLEKCJONER
-            if (entityName.equalsIgnoreCase("Kolekcjoner")) {
-                rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
-                return;
-            }
             // TRENER
             if (entityName.equalsIgnoreCase("Trener")) {
                 rpgcore.getTrenerNPC().openTrenerGUI(player);
@@ -139,27 +170,11 @@ public class PlayerInteractEntityListener implements Listener {
                 }
             }
 
-            // PRZYRODNIK
-            if (entityName.equalsIgnoreCase("przyrodnik")) {
-                rpgcore.getPrzyrodnikNPC().openMainGUI(player);
-                return;
-            }
 
-            // LOWCA
-            if (entityName.equalsIgnoreCase("Lowca")) {
-                rpgcore.getLowcaNPC().openLowcaGUI(player);
-                return;
-            }
 
             // LESNIK
             if (entityName.equalsIgnoreCase("Lesnik")) {
                 rpgcore.getLesnikNPC().openLesnikGUI(player);
-                return;
-            }
-
-            // DUNGEONS
-            if (entityName.equalsIgnoreCase("Dungeony")) {
-                rpgcore.getDungeonsManager().openDungeonMenu(player);
                 return;
             }
 
