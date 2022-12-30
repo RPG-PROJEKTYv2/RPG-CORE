@@ -27,6 +27,21 @@ public class PomocCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
+            player.getInventory().addItem(GlobalItem.getItem("I_SZATANAJEMNIKA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_UCHOGOBLINA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_SKORAGORYLA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_PROCHYZJAWY", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_LZAOCEANU", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_MROZNYPAZUR", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_OGNISTYPYL", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_TRUJACAROSLINA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_JADPTASZNIKA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_MROCZNYMATERIAL", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_SZAFIROWESERCE", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_SERCEDEMONA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_NIEBIANSKIMATERIAL", 1));
+
+
             rpgcore.getPomocManager().openPomocInventory(player);
             return;
         }

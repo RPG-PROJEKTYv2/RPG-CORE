@@ -117,7 +117,6 @@ public class MobDropHelper {
         if (entityName.equals("[BOSS] Wodz Goblinow")) {
             addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-10-20 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
-            // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
                 addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -127,11 +126,8 @@ public class MobDropHelper {
         }
         // MOB
         if (entityName.equals("Goblin Lvl. 14") || entityName.equals("Goblin Lvl. 16") || entityName.equals("Goblin Lvl. 19")) {
-            // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance50lvl, true, true, entity);
-            // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance, true, false, entity);
-            // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -147,7 +143,6 @@ public class MobDropHelper {
         if (entityName.equals("[BOSS] Krol Goryli")) {
             addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-20-30 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
-            // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
                 addDropPlayer(player, LowcaItems.getItem("20-30", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -157,11 +152,8 @@ public class MobDropHelper {
         }
         // MOB
         if (entityName.equals("Goryl Lvl. 21") || entityName.equals("Goryl Lvl. 25") || entityName.equals("Goryl Lvl. 28")) {
-            // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I6", 1), chestDropChance50lvl, true, true, entity);
-            // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance, true, false, entity);
-            // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 2) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -177,7 +169,6 @@ public class MobDropHelper {
         if (entityName.equals("[BOSS] Przekleta Dusza")) {
             addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-30-40 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
-            // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
                 addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -187,11 +178,8 @@ public class MobDropHelper {
         }
         // MOB
         if (entityName.equals("Zjawa Lvl. 32") || entityName.equals("Zjawa Lvl. 36") || entityName.equals("Zjawa Lvl. 39")) {
-            // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I8", 1), chestDropChance50lvl, true, true, entity);
-            // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance, true, false, entity);
-            // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -207,7 +195,6 @@ public class MobDropHelper {
         if (entityName.equals("[BOSS] Tryton")) {
             addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-40-50 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
-            // LOWCA
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
                 addDropPlayer(player, LowcaItems.getItem("40-50", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -217,11 +204,8 @@ public class MobDropHelper {
         }
         // MOB
         if (entityName.equals("Straznik Swiatyni Lvl. 43") || entityName.equals("Straznik Swiatyni Lvl. 46") || entityName.equals("Straznik Swiatyni Lvl. 47")) {
-            // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I10", 1), chestDropChance50lvl, true, true, entity);
-            // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance, true, false, entity);
-            // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 4) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }

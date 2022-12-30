@@ -65,40 +65,46 @@ public class TeleporterInventoryClick implements Listener {
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
                 if (slot == 5) {
-                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
-                    player.closeInventory();
-                    //rpgcore.getTeleporterNPC().teleportExp6(player);
+                    rpgcore.getTeleporterNPC().teleportExp6(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
                 if (slot == 6) {
-                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
-                    player.closeInventory();
-                    //rpgcore.getTeleporterNPC().teleportExp7(player);
+                    rpgcore.getTeleporterNPC().teleportExp7(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 if (slot == 7) {
-                    player.sendMessage(Utils.format("&CTo expowisko zostalo wylaczone przez Administratora!"));
-                    player.closeInventory();
-                    //rpgcore.getTeleporterNPC().teleportExp8(player);
+                    rpgcore.getTeleporterNPC().teleportExp8(player);
+                }
+            }
+            if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
+                if (slot == 8) {
+                    rpgcore.getTeleporterNPC().teleportExp9(player);
+                }
+            }
+            if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
+                if (slot == 9) {
+                    rpgcore.getTeleporterNPC().teleportExp10(player);
+                }
+            }
+            if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
+                if (slot == 10) {
+                    rpgcore.getTeleporterNPC().teleportExp11(player);
+                }
+            }
+            if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
+                if (slot == 11) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
+                    //rpgcore.getTeleporterNPC().teleportExp12(player);
+                }
+            }
+            if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {
+                if (slot == 12) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
+                    //rpgcore.getTeleporterNPC().teleportExp13(player);
                 }
             }
         }
-        /*if (Utils.removeColor(clickedInventoryTitle).equals("TELEPORTER - INNE")) {
-            e.setCancelled(true);
-            if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
-                if (clickedSlot == 11) {
-                    player.closeInventory();
-                    player.teleport(new Location(Bukkit.getWorld("miasto1"), -258, 14, 107, (float) -82.9, (float) 0.4));
-                }
-            }
-            if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
-                if (clickedSlot == 15) {
-                    player.closeInventory();
-                    player.teleport(new Location(Bukkit.getWorld("icetower"), -258, 14, 107, (float) -82.9, (float) 0.4));
-                }
-            }
-        }*/
     }
 }

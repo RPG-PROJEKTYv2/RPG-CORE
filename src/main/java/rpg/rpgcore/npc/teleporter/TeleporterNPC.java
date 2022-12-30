@@ -38,10 +38,9 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAND);
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
+    private final ItemBuilder expowisko12 = new ItemBuilder(Material.SKULL, (short)1);
+    private final ItemBuilder expowisko13 = new ItemBuilder(Material.QUARTZ_BLOCK);
 
-
-    //private final ItemBuilder miasto1 = new ItemBuilder(Material.PUMPKIN);
-    //private final ItemBuilder icetower = new ItemBuilder(Material.NETHERRACK);
 
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
 
@@ -209,10 +208,9 @@ public class TeleporterNPC {
             brakdostepu.setLore(lore);
             gui.setItem(10, brakdostepu.toItemStack());
         }
-        /*
         // expowisko 12
         if (user.getLvl() > 109) {
-            expowisko12.setName("&6&lBRAK NAZWY");
+            expowisko12.setName("&c&lPodziemie Hadesu");
             this.loreEXPOWISKA("&aON", "&f110");
             expowisko12.addGlowing();
             expowisko12.setLore(lore);
@@ -226,7 +224,7 @@ public class TeleporterNPC {
         }
         // expowisko 13
         if (user.getLvl() > 119) {
-            expowisko13.setName("&6&lBRAK NAZWY");
+            expowisko13.setName("&f&lNiebo");
             this.loreEXPOWISKA("&aON", "&f120");
             expowisko13.addGlowing();
             expowisko13.setLore(lore);
@@ -238,34 +236,6 @@ public class TeleporterNPC {
             brakdostepu.setLore(lore);
             gui.setItem(12, brakdostepu.toItemStack());
         }
-        // expowisko 14
-        if (user.getLvl() > 124) {
-            expowisko14.setName("&6&lBRAK NAZWY");
-            this.loreEXPOWISKA("&aON", "&f125");
-            expowisko14.addGlowing();
-            expowisko14.setLore(lore);
-            gui.setItem(13, expowisko14.toItemStack());
-        } else {
-            brakdostepu.setName("&2Expowisko &8[ &a14. &8]");
-            this.loreBRAKDOSTEPU("125");
-            brakdostepu.addGlowing();
-            brakdostepu.setLore(lore);
-            gui.setItem(13, brakdostepu.toItemStack());
-        }
-        // expowisko 15
-        if (user.getLvl() > 129) {
-            expowisko15.setName("&6&lBRAK NAZWY");
-            this.loreEXPOWISKA("&aON", "&f130");
-            expowisko15.addGlowing();
-            expowisko15.setLore(lore);
-            gui.setItem(14, expowisko15.toItemStack());
-        } else {
-            brakdostepu.setName("&2Expowisko &8[ &a15. &8]");
-            this.loreBRAKDOSTEPU("130");
-            brakdostepu.addGlowing();
-            brakdostepu.setLore(lore);
-            gui.setItem(14, brakdostepu.toItemStack());
-        }*/
         player.openInventory(gui);
     }
 
@@ -291,13 +261,13 @@ public class TeleporterNPC {
     public void teleportExp1(final Player player) {
         switch (new Random().nextInt(3)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), -204.5, 72, -118.5, -90F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), 70, 73, 69, -53F, -1F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), -86.5, 71, -154.5, 90F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), 85, 73, 234, 176F, 0F));
                 return;
             case 2:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), -53.5, 70, -38.5, 150F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), 167, 75, 118, 32F, 1F));
         }
     }
 
@@ -344,6 +314,24 @@ public class TeleporterNPC {
     }
 
     public void teleportExp8(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("70-80map"), 1.5, 32, 15.5, 0F, 0F));
+        switch (new Random().nextInt(2)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("70-80map"), 197, 94, 200, 134F, 1F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("70-80map"), 49, 94, 51, -44, 1));
+        }
+    }
+
+    public void teleportExp9(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("80-90map"), -17, 67, 391, -165F, -0F));
+    }
+
+    public void teleportExp10(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("90-100map"), 30, 71, 52, -51F, -1));
+    }
+
+    public void teleportExp11(final Player player) {
+        player.teleport(new Location(Bukkit.getWorld("100-110map"), 143, 83, 222, 90, 1));
     }
 }
