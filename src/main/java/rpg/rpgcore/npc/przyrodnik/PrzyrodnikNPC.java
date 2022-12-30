@@ -48,6 +48,7 @@ public class PrzyrodnikNPC {
 
     public ItemStack getOddajItemyItem(final PrzyrodnikUser user) {
         Missions missions = Missions.getByNumber(user.getMission());
+        if (user.getMission() == 13) return Missions.M_ERROR.getItemStack();
         return new ItemBuilder(missions.getItemStack().getType(), missions.getItemStack().getAmount(), missions.getItemStack().getDurability()).setName(missions.getItemStack().getItemMeta().getDisplayName() + " &7x" + missions.getReqAmount())
                 .setLore(Arrays.asList("&f&lNagroda", "&7Srednie Obrazenia: &c" + missions.getDmg() + "%", "&7Srednia Odpornosc: &c" + missions.getDef() + "%", "", "&7Postep: &6" + user.getProgress() + "&7/&6" + missions.getReqAmount() + "&8(&6" + Utils.convertIntegersToPercentage(user.getProgress(), missions.getReqAmount()) + "%&8)")).toItemStack().clone();
     }

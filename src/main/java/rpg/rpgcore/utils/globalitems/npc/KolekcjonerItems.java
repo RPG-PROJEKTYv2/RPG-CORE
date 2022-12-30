@@ -7,8 +7,10 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Arrays;
+
 public enum KolekcjonerItems {
-    I99("ERROR", new ItemBuilder(Material.DIRT).setName("&c&lCos sie popsulo :<").toItemStack().clone());
+    I99("ERROR", new ItemBuilder(Material.BARRIER).setName("&a&lUkonczono!").setLore(Arrays.asList("&7Ukonczyles/-as juz cala kampanie tego NPC", "&8W przyszlosci moze cos sie tu jeszcze pojawi")).toItemStack().clone());
 
     private final ItemStack itemStack;
     private final String name;

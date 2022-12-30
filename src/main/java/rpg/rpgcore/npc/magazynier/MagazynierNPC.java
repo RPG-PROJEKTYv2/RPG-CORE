@@ -59,86 +59,16 @@ public class MagazynierNPC {
         assert m3 != null;
         assert m4 != null;
         assert m5 != null;
-        if (magazynierUser.getMissions().isMission1done()) {
-            gui.setItem(0, new ItemBuilder(m1.getMissionItem().clone()).addGlowing().setLoreCrafting(m1.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&a&lWykonano!"
-            )).toItemStack().clone());
-        } else {
-            if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(m1.getMissionItem(), "mission")) {
-                gui.setItem(0, new ItemBuilder(m1.getMissionItem().clone()).addGlowing().setLoreCrafting(m1.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                        " ",
-                        "&7Postep: &6" + missions.getProgress() + "&7/&6" + m1.getReqAmount()
-                )).toItemStack().clone());
-            } else {
-                gui.setItem(0, m1.getMissionItem().clone());
-            }
-        }
-        if (magazynierUser.getMissions().isMission2done()) {
-            gui.setItem(1, new ItemBuilder(m2.getMissionItem().clone()).addGlowing().setLoreCrafting(m2.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&a&lWykonano!"
-            )).toItemStack().clone());
-        } else {
-            if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(m2.getMissionItem(), "mission")) {
-                gui.setItem(1, new ItemBuilder(m2.getMissionItem().clone()).addGlowing().setLoreCrafting(m2.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                        " ",
-                        "&7Postep: &6" + missions.getProgress() + "&7/&6" + m2.getReqAmount()
-                )).toItemStack().clone());
-            } else {
-                gui.setItem(1, m2.getMissionItem().clone());
-            }
-        }
-        if (magazynierUser.getMissions().isMission3done()) {
-            gui.setItem(2, new ItemBuilder(m3.getMissionItem().clone()).addGlowing().setLoreCrafting(m3.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&a&lWykonano!"
-            )).toItemStack().clone());
-        } else {
-            if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(m3.getMissionItem(), "mission")) {
-                gui.setItem(2, new ItemBuilder(m3.getMissionItem().clone()).addGlowing().setLoreCrafting(m3.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                        " ",
-                        "&7Postep: &6" + missions.getProgress() + "&7/&6" + m3.getReqAmount()
-                )).toItemStack().clone());
-            } else {
-                gui.setItem(2, m3.getMissionItem().clone());
-            }
-        }
-        if (magazynierUser.getMissions().isMission4done()) {
-            gui.setItem(3, new ItemBuilder(m4.getMissionItem().clone()).addGlowing().setLoreCrafting(m4.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&a&lWykonano!"
-            )).toItemStack().clone());
-        } else {
-            if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(m4.getMissionItem(), "mission")) {
-                gui.setItem(3, new ItemBuilder(m4.getMissionItem().clone()).addGlowing().setLoreCrafting(m4.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                        " ",
-                        "&7Postep: &6" + missions.getProgress() + "&7/&6" + m4.getReqAmount()
-                )).toItemStack().clone());
-            } else {
-                gui.setItem(3, m4.getMissionItem().clone());
-            }
-        }
-        if (magazynierUser.getMissions().isMission5done()) {
-            gui.setItem(4, new ItemBuilder(m5.getMissionItem().clone()).addGlowing().setLoreCrafting(m5.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&a&lWykonano!"
-            )).toItemStack().clone());
-        } else {
-            if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(m5.getMissionItem(), "mission")) {
-                gui.setItem(4, new ItemBuilder(m5.getMissionItem().clone()).addGlowing().setLoreCrafting(m5.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
-                        " ",
-                        "&7Postep: &6" + missions.getProgress() + "&7/&6" + m5.getReqAmount()
-                )).toItemStack().clone());
-            } else {
-                gui.setItem(4, m5.getMissionItem().clone());
-            }
-        }
+        gui.setItem(0, isMissionDone(magazynierUser, 1, m1));
+        gui.setItem(1, isMissionDone(magazynierUser, 2, m2));
+        gui.setItem(2, isMissionDone(magazynierUser, 3, m3));
+        gui.setItem(3, isMissionDone(magazynierUser, 4, m4));
+        gui.setItem(4, isMissionDone(magazynierUser, 5, m5));
 
         player.openInventory(gui);
     }
 
-    private void generateNewMissionSet(final MagazynierUser magazynierUser) {
+    public void generateNewMissionSet(final MagazynierUser magazynierUser) {
         final MagazynierMissions missions = magazynierUser.getMissions();
         final List<Integer> missionList = new ArrayList<>(5);
         final Random random = new Random();
@@ -162,6 +92,28 @@ public class MagazynierNPC {
         missions.setMission5done(false);
         magazynierUser.setResetTime(System.currentTimeMillis() + 86400000L);
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(magazynierUser.getUuid(), magazynierUser));
+    }
+
+    public ItemStack isMissionDone(final MagazynierUser magazynierUser, final int mission, final rpg.rpgcore.npc.magazynier.enums.MagazynierMissions missions) {
+        final MagazynierMissions missionsU = magazynierUser.getMissions();
+        boolean done = false;
+        switch (mission) {
+            case 1: if (missionsU.isMission1done())done = true;
+            case 2: if (missionsU.isMission2done()) done = true;
+            case 3: if (missionsU.isMission3done()) done = true;
+            case 4: if (missionsU.isMission4done()) done = true;
+            case 5: if (missionsU.isMission5done()) done = true;
+        }
+        if (done) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&a&lWykonano!"
+            )).toItemStack().clone();
+        if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(missions.getMissionItem(), "mission")) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&7Postep: &6" + missionsU.getProgress() + "&7/&6" + missions.getReqAmount()
+            )).toItemStack().clone();
+
+        return missions.getMissionItem().clone();
     }
 
     public void openMagazynierSklepGUI(final Player player) {

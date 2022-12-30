@@ -182,6 +182,7 @@ public class NewTargInventoryClick implements Listener {
 
                     rpgcore.getNewTargManager().returnPlayerItem(player, item);
                     rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
+                    clickedInventory.setItem(4, new ItemStack(Material.AIR));
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
                     return;
                 }
@@ -215,12 +216,14 @@ public class NewTargInventoryClick implements Listener {
                                 "**Typ Przedmiotu: **`" + item.getType().toString() + "`\n" +
                                 "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) + "\n", Color.GREEN));
                 rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
+                clickedInventory.setItem(4, new ItemStack(Material.AIR));
                 player.closeInventory();
                 return;
             }
 
             rpgcore.getNewTargManager().returnPlayerItem(player, clickedInventory.getItem(4));
             rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
+            clickedInventory.setItem(4, new ItemStack(Material.AIR));
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAnulowales wystawianie przedmiotu"));
             RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - Wystaw**",

@@ -53,6 +53,8 @@ import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
+import rpg.rpgcore.commands.player.misje.MisjeCommand;
+import rpg.rpgcore.commands.player.misje.MisjeInventoryClickListener;
 import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
@@ -92,6 +94,7 @@ import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
+import rpg.rpgcore.newTarg.*;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
@@ -100,6 +103,9 @@ import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryCloseListener;
 import rpg.rpgcore.npc.gornik.ore.OreCommand;
 import rpg.rpgcore.npc.gornik.ore.OreManager;
+import rpg.rpgcore.npc.itemshop.ItemShopNPC;
+import rpg.rpgcore.npc.itemshop.events.ItemShopInteractListener;
+import rpg.rpgcore.npc.itemshop.events.ItemShopInventoryClickListener;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
@@ -114,7 +120,6 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
-import rpg.rpgcore.npc.test.TestNPC;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.os.OsiagnieciaCommand;
@@ -154,10 +159,6 @@ import rpg.rpgcore.metiny.MetinyManager;
 import rpg.rpgcore.msg.MSGManager;
 import rpg.rpgcore.msg.MessageCommand;
 import rpg.rpgcore.msg.ReplyCommand;
-import rpg.rpgcore.newTarg.NewTargCommand;
-import rpg.rpgcore.newTarg.NewTargInventoryClick;
-import rpg.rpgcore.newTarg.NewTargManager;
-import rpg.rpgcore.newTarg.NewTargWystawCommand;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
 import rpg.rpgcore.npc.kowal.KowalInventoryClick;
@@ -300,7 +301,8 @@ public final class RPGCORE extends JavaPlugin {
     private ZmiankiManager zmiankiManager;
     private WyslannikNPC wyslannikNPC;
     private IceTowerManager iceTowerManager;
-    private TestNPC testNPC; // TU JEST TEST NPC
+    // private TestNPC testNPC; // TU JEST TEST NPC
+    private ItemShopNPC itemShopNPC;
 
 
 
@@ -486,6 +488,9 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new BroadcastCommand());
         CommandAPI.getCommand().register("HellRPGCore", new CaseCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TowerCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new MisjeCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new ItemShopCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new PdCommand());
     }
 
     private void initEvents() {
@@ -519,7 +524,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // TARG
         this.getServer().getPluginManager().registerEvents(new NewTargInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new TARGInventoryClose(this), this);
+        this.getServer().getPluginManager().registerEvents(new NewTargInventoryClose(), this);
 
         // POMOC
         this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
@@ -561,6 +566,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // PROFILE
         this.getServer().getPluginManager().registerEvents(new ProfileInventoryClickListener(), this);
+
+        // MISJE
+        this.getServer().getPluginManager().registerEvents(new MisjeInventoryClickListener(), this);
 
         // KLASY
 
@@ -629,6 +637,10 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...WYSLANNIK
         this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
+
+        // ...ITEMSHOP
+        this.getServer().getPluginManager().registerEvents(new ItemShopInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ItemShopInteractListener(), this);
 
 
         // DUNGEONS
@@ -712,7 +724,8 @@ public final class RPGCORE extends JavaPlugin {
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
         this.wyslannikNPC = new WyslannikNPC(this);
-        this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
+        //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
+        this.itemShopNPC = new ItemShopNPC();
 
 
         this.getMetinologNPC().loadMissions();
@@ -1106,7 +1119,11 @@ public final class RPGCORE extends JavaPlugin {
         return iceTowerManager;
     }
 
-    public TestNPC getTestNPC() {
+    /*public TestNPC getTestNPC() {
         return testNPC;
-    } // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
+    }*/ // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
+
+    public ItemShopNPC getItemShopNPC() {
+        return itemShopNPC;
+    }
 }

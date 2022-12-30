@@ -43,7 +43,7 @@ public class KolekcjonerNPC {
         player.openInventory(gui);
     }
 
-    private ItemStack getIfItemIsGiven(final KolekcjonerMissions missions, final int i, final boolean isGiven) {
+    public ItemStack getIfItemIsGiven(final KolekcjonerMissions missions, final int i, final boolean isGiven) {
         final ItemStack item = missions.getReqItems()[i].clone();
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();

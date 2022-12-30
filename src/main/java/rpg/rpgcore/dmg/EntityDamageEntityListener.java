@@ -71,9 +71,10 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
-                if (e.getDamager().getLocation().getWorld().getName().equals("spawnOFFICIAL") || e.getDamager().getLocation().getWorld().getName().equals("1-10map") ||
-                        e.getDamager().getLocation().getWorld().getName().equals("10-20map")  || e.getDamager().getLocation().getWorld().getName().equals("20-30map") ||
-                        e.getDamager().getLocation().getWorld().getName().equals("30-40map") || e.getDamager().getLocation().getWorld().getName().equals("40-50map")) {
+                if (!e.getDamager().getLocation().getWorld().getName().equals("50-60map") && !e.getDamager().getLocation().getWorld().getName().equals("60-70map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("70-80map") && !e.getDamager().getLocation().getWorld().getName().equals("80-90map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("90-100map") && !e.getDamager().getLocation().getWorld().getName().equals("100-110map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("110-120map") && !e.getDamager().getLocation().getWorld().getName().equals("120-130map")) {
                     e.setCancelled(true);
                     return;
                 }

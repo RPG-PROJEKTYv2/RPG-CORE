@@ -10,14 +10,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class EconomyPlayerInteract implements Listener {
 
-    final HashMap<Integer, ItemStack> itemMapToRemove = new HashMap<>();
 
     private final RPGCORE rpgcore;
 
@@ -49,6 +48,19 @@ public class EconomyPlayerInteract implements Listener {
             user.setKasa(user.getKasa() + kwotaZCzeku);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(Utils.kasaFormat.format(kwotaZCzeku)) + " &2$"));
+        }
+        if (eventItem.getType() == Material.GOLD_NUGGET && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("HS")) {
+            final int hells = Utils.getTagInt(eventItem, "value");
+            if (hells == 0) {
+                player.getInventory().removeItem(eventItem);
+                return;
+            }
+            final User user = rpgcore.getUserManager().find(uuid);
+
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack().clone());
+            user.setHellcoins(user.getHellcoins() + hells);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(String.valueOf(hells)) + " &4&lH&6&lS"));
         }
 
     }

@@ -77,7 +77,7 @@ public class LvlManager {
         }
 
         if (user.getLvl() == 130) {
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8[&6EXP&8]"));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &f+0 exp &8(&4MAX LVL&8) &8| &f+" + String.format("%.2f", rpgcore.getBonusesManager().find(killerUUID).getBonusesUser().getDodatkowyExp()) + "% &8[&6EXP&8]"));
             return;
         }
 
@@ -98,7 +98,7 @@ public class LvlManager {
         final double aktualnyExpGraczaL = aktualnyExpGracza;
         killer.setLevel(lvlGracza);
         killer.setExp((float) (aktualnyExpGraczaL / expNaNextLvlGracza));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + String.format("%.2f", expDoDodaniaL) + " exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8[&6EXP&8]"));
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + String.format("%.2f", expDoDodaniaL) + " exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8| &f+" + String.format("%.2f", rpgcore.getBonusesManager().find(killerUUID).getBonusesUser().getDodatkowyExp()) + "% &8[&6EXP&8]"));
     }
 
     public void updateLVL(final Player killer) {
