@@ -28,7 +28,7 @@ public class PomocCommand extends CommandAPI {
         final Player player = (Player) sender;
         if (args.length == 0) {
             player.getInventory().addItem(GlobalItem.getItem("I_SZATANAJEMNIKA", 1));
-            player.getInventory().addItem(GlobalItem.getItem("I_UCHOGOBLINA", 1));
+            player.getInventory().addItem(GlobalItem.getItem("I_OKOGOBLINA", 1));
             player.getInventory().addItem(GlobalItem.getItem("I_SKORAGORYLA", 1));
             player.getInventory().addItem(GlobalItem.getItem("I_PROCHYZJAWY", 1));
             player.getInventory().addItem(GlobalItem.getItem("I_LZAOCEANU", 1));
