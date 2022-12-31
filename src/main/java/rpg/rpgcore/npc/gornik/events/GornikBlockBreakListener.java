@@ -12,7 +12,6 @@ import rpg.rpgcore.npc.gornik.GornikUser;
 import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.utils.ChanceHelper;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
@@ -34,7 +33,6 @@ public class GornikBlockBreakListener implements Listener {
                 return;
             }
             if (!e.getPlayer().getItemInHand().getItemMeta().hasDisplayName()) {
-                e.getPlayer().getInventory().addItem(new ItemBuilder(Material.WOOD_PICKAXE).setName("&6Kilof Gornika").toItemStack().clone());
                 return;
             }
             if (!rpgcore.getOreManager().isOre(e.getBlock().getLocation())) {
@@ -45,8 +43,8 @@ public class GornikBlockBreakListener implements Listener {
             switch (ore.getOreMaterial()) {
                 case EMERALD_ORE:
                 case LAPIS_ORE:
-                    if (e.getPlayer().getItemInHand().getType() != Material.GOLD_PICKAXE || e.getPlayer().getItemInHand().getType() != Material.IRON_PICKAXE
-                            || e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
+                    if (e.getPlayer().getItemInHand().getType() != Material.GOLD_PICKAXE && e.getPlayer().getItemInHand().getType() != Material.IRON_PICKAXE
+                            && e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
                         e.getPlayer().sendMessage(Utils.format("&6&lGornik &8>> &7Wydaje mi sie ze tym rupieciem tego nie wykopiesz."));
                         e.getPlayer().sendMessage(Utils.format("&8Zeby wydobyc te rude potrzebujesz co najmniej zlotego kilofa."));
                         return;
@@ -54,7 +52,7 @@ public class GornikBlockBreakListener implements Listener {
                     break;
                 case DIAMOND_ORE:
                     if (e.getPlayer().getItemInHand().getType() != Material.IRON_PICKAXE
-                            || e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
+                            && e.getPlayer().getItemInHand().getType() != Material.DIAMOND_PICKAXE) {
                         e.getPlayer().sendMessage(Utils.format("&6&lGornik &8>> &7Wydaje mi sie ze tym rupieciem tego nie wykopiesz."));
                         e.getPlayer().sendMessage(Utils.format("&8Zeby wydobyc te rude potrzebujesz co najmniej zelaznego kilofa."));
                         return;

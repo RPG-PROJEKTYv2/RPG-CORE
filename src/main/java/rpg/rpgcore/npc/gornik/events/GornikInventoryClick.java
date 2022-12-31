@@ -135,6 +135,7 @@ public class GornikInventoryClick implements Listener {
                 return;
             }
             if (slot == 22) {
+                if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() < 28) return;
                 RPGCORE.getInstance().getGornikNPC().openDrzewko(player);
                 return;
             }
@@ -705,7 +706,11 @@ public class GornikInventoryClick implements Listener {
                     //TODO LEGENDARNY KRYSZTAL WZMOCNIENIA
                     break;
                 case 8:
-                    RPGCORE.getInstance().getGornikNPC().openCraftingiKrysztalow(player);
+                    if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() > 28) {
+                        if (RPGCORE.getInstance().getUserManager().find(uuid).getLvl() >= 110) {
+                            RPGCORE.getInstance().getGornikNPC().openCraftingiKrysztalow(player);
+                        }
+                    }
                     return;
                 case 10:
 

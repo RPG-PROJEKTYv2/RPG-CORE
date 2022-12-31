@@ -17,7 +17,7 @@ public class OsiagnieciaCommand extends CommandAPI {
     public OsiagnieciaCommand(RPGCORE rpgcore) {
         super("osiagniecia");
         this.setAliases(Arrays.asList("os", "nagrody"));
-        this.setRankLevel(RankType.GRACZ);
+        this.setRankLevel(RankType.HA);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }

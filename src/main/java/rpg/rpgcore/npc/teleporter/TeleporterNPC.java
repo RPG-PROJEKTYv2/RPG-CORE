@@ -38,7 +38,7 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAND);
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
-    private final ItemBuilder expowisko12 = new ItemBuilder(Material.SKULL, (short)1);
+    private final ItemBuilder expowisko12 = new ItemBuilder(Material.SKULL_ITEM,1, (short)1);
     private final ItemBuilder expowisko13 = new ItemBuilder(Material.QUARTZ_BLOCK);
 
 

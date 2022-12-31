@@ -76,7 +76,7 @@ public class ItemShopInteractListener implements Listener {
         if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przeklety Smoczy Zwoj")) {
             final int range = Utils.getTagInt(eventItem, "range");
 
-            for (Entity entity : player.getNearbyEntities(range/2.0, range/2.0, range/2.0)) {
+            for (Entity entity : player.getNearbyEntities(range/2.0, 5, range/2.0)) {
                 if (entity instanceof Creature) {
                     final Creature creature = (Creature) entity;
                     creature.setTarget(player);

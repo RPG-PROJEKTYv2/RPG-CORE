@@ -9,6 +9,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
+import rpg.rpgcore.artefakty.ArtefaktyCommand;
+import rpg.rpgcore.artefakty.events.ArtefaktyInteractListener;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
@@ -88,6 +90,7 @@ import rpg.rpgcore.guilds.events.GuildsInventoryClick;
 import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
+import rpg.rpgcore.kociolki.KociolkiManager;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
@@ -303,6 +306,7 @@ public final class RPGCORE extends JavaPlugin {
     private IceTowerManager iceTowerManager;
     // private TestNPC testNPC; // TU JEST TEST NPC
     private ItemShopNPC itemShopNPC;
+    private KociolkiManager kociolkiManager;
 
 
 
@@ -358,6 +362,8 @@ public final class RPGCORE extends JavaPlugin {
         new AntyAfktIceTowerTask(this);
         // ...BOSS BAR
         new BossBarTask(this);
+        // ... KOCIOLKI I ARTEFAKTY
+        new KociolkiTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -411,6 +417,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllTrener();
         this.mongo.saveAllOreLocations();
         this.mongo.saveAllWyslannik();
+        this.mongo.saveAllKociolki();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -491,6 +498,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new MisjeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ItemShopCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PdCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ArtefaktyCommand());
     }
 
     private void initEvents() {
@@ -667,6 +675,9 @@ public final class RPGCORE extends JavaPlugin {
         // EFFEKTY ARMOR
         this.getServer().getPluginManager().registerEvents(new ArmorEffectListener(this), this);
 
+        // ARTEFAKTY
+        this.getServer().getPluginManager().registerEvents(new ArtefaktyInteractListener(this), this);
+
     }
 
     private void initDatabase() {
@@ -707,6 +718,7 @@ public final class RPGCORE extends JavaPlugin {
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
         this.zmiankiManager = new ZmiankiManager();
+        this.kociolkiManager = new KociolkiManager(this);
     }
 
     private void initNPCS() {
@@ -1125,5 +1137,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ItemShopNPC getItemShopNPC() {
         return itemShopNPC;
+    }
+
+    public KociolkiManager getKociolkiManager() {
+        return kociolkiManager;
     }
 }

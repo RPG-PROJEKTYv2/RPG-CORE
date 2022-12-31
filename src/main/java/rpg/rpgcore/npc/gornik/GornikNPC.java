@@ -167,7 +167,7 @@ public class GornikNPC {
                                 "&c&lZablokowany!",
                                 "",
                                 "&7Koszt:",
-                                "&8- &6x5 &0Lsniacy Krysztal Mroku",
+                                "&8- &6x5 &8Lsniacy Krysztal Mroku",
                                 "&8- &625,000,000 &2$",
                                 "&8Kliknij, zeby odblokowac."
 
@@ -335,7 +335,7 @@ public class GornikNPC {
                 "",
                 "&7Koszt:",
                 "&8- &62,500,000&2$",
-                "&8- &6x8 &0Ruda Mroku",
+                "&8- &6x8 &8Ruda Mroku",
                 "&8- &6x8 &7&lRuda Cyrkonu",
                 "&8- &6x8 &3&lRuda Szafiru"
         )).addGlowing().toItemStack());
@@ -346,7 +346,7 @@ public class GornikNPC {
                 " ",
                 "&7Koszt:",
                 "&8- &6150,000,000&2$",
-                "&8- &6x128 &0Ruda Mroku",
+                "&8- &6x128 &8Ruda Mroku",
                 "&8- &6x128 &7&lRuda Cyrkonu",
                 "&8- &6x128 &e&lRuda Blasku",
                 "&8- &6x128 &3&lRuda Szafiru",
@@ -361,7 +361,7 @@ public class GornikNPC {
                 "&7Koszt:",
                 "&8- &8Drewniane Dluto &7Lvl. &650",
                 "&8- &6200,000,000&2$",
-                "&8- &6x8 &0Krysztal Mroku &8(x64)",
+                "&8- &6x8 &8Krysztal Mroku &8(x64)",
                 "&8- &6x8 &7Krysztal Powietrza &8(x64)",
                 "&8- &6x8 &eKrysztal Blasku &8(x64)",
                 "&8- &6x8 &1Krysztal Wody &8(x64)",
@@ -376,7 +376,7 @@ public class GornikNPC {
                 "&7Koszt:",
                 "&8- &8Kamienne Dluto &7Lvl. &650",
                 "&8- &6350,000,000&2$",
-                "&8- &6x16 &0Krysztal Mroku &8(x64)",
+                "&8- &6x16 &8Krysztal Mroku &8(x64)",
                 "&8- &6x16 &7Krysztal Powietrza &8(x64)",
                 "&8- &6x16 &eKrysztal Blasku &8(x64)",
                 "&8- &6x16 &1Krysztal Wody &8(x64)",
@@ -391,7 +391,7 @@ public class GornikNPC {
                 "&7Koszt:",
                 "&8- &8Metalowe Dluto &7Lvl. &650",
                 "&8- &6500,000,000&2$",
-                "&8- &6x24 &0Krysztal Mroku &8(x64)",
+                "&8- &6x24 &8Krysztal Mroku &8(x64)",
                 "&8- &6x24 &7Krysztal Powietrza &8(x64)",
                 "&8- &6x24 &eKrysztal Blasku &8(x64)",
                 "&8- &6x24 &1Krysztal Wody &8(x64)",
@@ -406,7 +406,7 @@ public class GornikNPC {
                 "&7Koszt:",
                 "&8- &8Zlote Dluto &7Lvl. &650",
                 "&8- &6750,000,000&2$",
-                "&8- &6x32 &0Krysztal Mroku &8(x64)",
+                "&8- &6x32 &8Krysztal Mroku &8(x64)",
                 "&8- &6x32 &7Krysztal Powietrza &8(x64)",
                 "&8- &6x32 &eKrysztal Blasku &8(x64)",
                 "&8- &6x32 &1Krysztal Wody &8(x64)",
@@ -431,25 +431,25 @@ public class GornikNPC {
                 "",
                 "&7Koszt:",
                 "&8- &61,000,000&2$",
-                "&8- &6x8 &0Krysztal Mroku"
+                "&8- &6x8 &8Krysztal Mroku"
         )).toItemStack());
         gui.setItem(19, new ItemBuilder(GornikItems.getItem("S1", 1).clone()).setLoreCrafting(GornikItems.getItem("S1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
                 "&8- &62,500,000&2$",
-                "&8- &6x8 &0Polyskujacy Krysztal Mroku"
+                "&8- &6x8 &8Polyskujacy Krysztal Mroku"
         )).toItemStack());
         gui.setItem(28, new ItemBuilder(GornikItems.getItem("C1", 1).clone()).setLoreCrafting(GornikItems.getItem("C1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
                 "&8- &67,500,000&2$",
-                "&8- &6x8 &0Lsniacy Krysztal Mroku"
+                "&8- &6x8 &8Lsniacy Krysztal Mroku"
         )).toItemStack());
         gui.setItem(37, new ItemBuilder(GornikItems.getItem("W1", 1).clone()).setLoreCrafting(GornikItems.getItem("W1", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Koszt:",
                 "&8- &612,000,000&2$",
-                "&8- &6x8 &0Czysty Krysztal Mroku"
+                "&8- &6x8 &8Czysty Krysztal Mroku"
         )).toItemStack());
         // POWIETRZA
         gui.setItem(11, new ItemBuilder(GornikItems.getItem("P2", 1).clone()).setLoreCrafting(GornikItems.getItem("P2", 1).clone().getItemMeta().getLore(), Arrays.asList(
@@ -805,6 +805,7 @@ public class GornikNPC {
     }
 
     public ItemStack updateKilofExp(final ItemStack itemStack, final int exp) {
+        if (!itemStack.getType().toString().contains("_PICKAXE") || !itemStack.getItemMeta().hasDisplayName() || !itemStack.getItemMeta().getDisplayName().contains("Kilof")) return itemStack;
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Exp", tag.getInt("Exp") + exp);
@@ -827,6 +828,7 @@ public class GornikNPC {
     }
 
     public ItemStack updateKilofLevel(final ItemStack itemStack) {
+        if (!itemStack.getType().toString().contains("_PICKAXE") || !itemStack.getItemMeta().hasDisplayName() || !itemStack.getItemMeta().getDisplayName().contains("Kilof")) return itemStack;
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", tag.getInt("Lvl") + 1);
@@ -868,6 +870,7 @@ public class GornikNPC {
     }
 
     public ItemStack updateDlutoExp(final ItemStack itemStack, final int exp) {
+        if (!itemStack.getType().toString().contains("_SPADE") || !itemStack.getItemMeta().hasDisplayName() || !itemStack.getItemMeta().getDisplayName().contains("Dluto")) return itemStack;
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Exp", tag.getInt("Exp") + exp);
@@ -889,6 +892,7 @@ public class GornikNPC {
     }
 
     public ItemStack updateDlutoLevel(final ItemStack itemStack) {
+        if (!itemStack.getType().toString().contains("_SPADE") || !itemStack.getItemMeta().hasDisplayName() || !itemStack.getItemMeta().getDisplayName().contains("Dluto")) return itemStack;
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", tag.getInt("Lvl") + 1);

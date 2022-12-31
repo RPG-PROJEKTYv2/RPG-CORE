@@ -46,22 +46,22 @@ public class GiveAkcesoriaCommand extends CommandAPI {
         switch (args[0]) {
             case "tarcza":
                 val3 = Integer.parseInt(args[3]);
-                player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
+                player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "naszyjnik":
                 val1 = Integer.parseInt(args[1]);
-                player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik((int) val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
+                player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik((int) val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "kolczyki":
                 val3 = Integer.parseInt(args[3]);
-                player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
+                player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "pierscien":
                 val3 = Integer.parseInt(args[3]);
-                player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
+                player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(val1, val2, (int) val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "diadem":
-                player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 5, args.length)))));
+                player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(val1, val2, val3, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "szarfa":
                 player.getInventory().addItem(AkcesoriaDodatHelper.createSzarfa(val1, val2, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));

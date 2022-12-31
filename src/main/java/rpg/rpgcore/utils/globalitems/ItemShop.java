@@ -98,19 +98,19 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "30d").toItemStack().clone())),
-    IS19("PELERYNKA", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzeklety &8&lSmoczy Zwoj").setLore(Arrays.asList(
+    IS19("PELERYNKA", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora").setLore(Arrays.asList(
             "&7Zasieg: &610 kratek",
             "",
-            "&8Tajemniczy zwoj, wykuty ze skory pradawnego smoka",
-            "&8uzycie go spowoduje, ze wszystkie potwory w zasiegu",
-            "&8jego dzialania zostana zwrocone przeciwko tobie"
+            "&8Tajemnicza skora, zdarta z pradawnego smoka",
+            "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
+            "&8jej dzialania zostana zwrocone przeciwko tobie"
     )).addTagInt("range", 10).addGlowing().toItemStack().clone())),
-    IS20("PELERYNKA+", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzeklety &8&lSmoczy Zwoj&b&l+").setLore(Arrays.asList(
+    IS20("PELERYNKA+", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora&b&l+").setLore(Arrays.asList(
             "&7Zasieg: &620 kratek",
             "",
-            "&8Tajemniczy zwoj, wykuty ze skory pradawnego smoka",
-            "&8uzycie go spowoduje, ze wszystkie potwory w zasiegu",
-            "&8jego dzialania zostana zwrocone przeciwko tobie"
+            "&8Tajemnicza skora, zdarta z pradawnego smoka",
+            "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
+            "&8jej dzialania zostana zwrocone przeciwko tobie"
     )).addTagInt("range", 20).addGlowing().toItemStack().clone()));
 
 

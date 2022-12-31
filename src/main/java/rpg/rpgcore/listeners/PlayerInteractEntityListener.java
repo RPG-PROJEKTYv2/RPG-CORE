@@ -28,7 +28,7 @@ public class PlayerInteractEntityListener implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getCustomName()).equals("Teleporter")) {
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getCustomName()).equals("TELEPORTER")) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
             return;

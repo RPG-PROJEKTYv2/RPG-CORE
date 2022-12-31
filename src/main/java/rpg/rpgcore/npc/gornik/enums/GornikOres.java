@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
 public enum GornikOres {
-    O1(Material.COAL_ORE, "&0&lRuda Mroku", 10, GornikItems.getItem("R1", 1), 1, 90.0),
+    O1(Material.COAL_ORE, "&8&lRuda Mroku", 10, GornikItems.getItem("R1", 1), 1, 90.0),
     O2(Material.IRON_ORE, "&7&lRuda Cyrkonu", 12, GornikItems.getItem("R2", 1), 3, 85.0),
     O3(Material.GOLD_ORE, "&e&lRuda Blasku", 14, GornikItems.getItem("R3", 1), 5, 80.0),
     O4(Material.LAPIS_ORE, "&3&lRuda Szafiru", 15, GornikItems.getItem("R4", 1), 7, 75.0),

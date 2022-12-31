@@ -9,10 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.metiny.MetinyHelper;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
-
-
 
 
 public class EntityDamageEntityListener implements Listener {
@@ -84,9 +84,26 @@ public class EntityDamageEntityListener implements Listener {
                     return;
                 }
 
+                if (attacker.getInventory().contains(Artefakty.getArtefakt("Egzekutor", attacker))) {
+                    if (ChanceHelper.getChance(5.0)) {
+                        if (!rpgcore.getCooldownManager().hasEgzekutorCooldown(attacker.getUniqueId())) {
+                            rpgcore.getKociolkiManager().find(attacker.getUniqueId()).setEgzekutor(true);
+                            rpgcore.getKociolkiManager().find(attacker.getUniqueId()).setEgzekutorTime(5);
+                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataKociolki(attacker.getUniqueId(), rpgcore.getKociolkiManager().find(attacker.getUniqueId())));
+                            rpgcore.getCooldownManager().givePlayerEgzekutorCooldown(attacker.getUniqueId());
+                            attacker.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie nalozono efekt &c&lEgzekutora &a!"));
+                        }
+                    }
+                }
+
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
                 final double victimDef = rpgcore.getDamageManager().calculatePlayerDef(victim, "ludzie");
 
+                //TODO dodac dzialanie efektu oslabienia (I = -20% final def, II = -50% final def)
+                if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
+                    // TODO attacker dmg x3
+                }
+                
                 double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - victimDef));
                 if (finalDmg < 0) {
                     finalDmg = 0;
@@ -119,7 +136,9 @@ public class EntityDamageEntityListener implements Listener {
 
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
             }
-            if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
+            if (e.getDamage() < ((LivingEntity) e.getEntity()).
+
+                    getHealth()) {
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
             }
         } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {

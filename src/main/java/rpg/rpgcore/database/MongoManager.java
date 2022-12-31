@@ -12,6 +12,7 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
+import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -314,6 +315,11 @@ public class MongoManager {
                 this.addDataWyslannik(user);
                 rpgcore.getWyslannikNPC().add(user);
             }
+            if (pool.getKociolki().find(new Document("_id", uuid.toString())).first() == null) {
+                final KociolkiUser user = new KociolkiUser(uuid);
+                this.addDataKociolki(user);
+                rpgcore.getKociolkiManager().add(user);
+            }
             // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
             // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
             // TEZ BARDZO WAZEN I NIE ZAPOMNIEC O TYM.
@@ -445,6 +451,10 @@ public class MongoManager {
         this.addDataWyslannik(wyslannikObject);
         rpgcore.getWyslannikNPC().add(wyslannikObject);
 
+        final KociolkiUser kociolkiUser = new KociolkiUser(uuid);
+        this.addDataKociolki(kociolkiUser);
+        rpgcore.getKociolkiManager().add(kociolkiUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -509,6 +519,7 @@ public class MongoManager {
             this.saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
+            this.saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
 
             this.saveDataTrener(uuid, rpgcore.getTrenerNPC().find(uuid));
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
@@ -1224,6 +1235,30 @@ public class MongoManager {
             this.saveDataTest(testUser.getUuid(), testUser);
         }
     }*/
+
+    // KOCIOLKI
+    public Map<UUID, KociolkiUser> loadAllKociolki() {
+        Map<UUID, KociolkiUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getKociolki().find()) {
+            final KociolkiUser kociolkiUser = new KociolkiUser(document);
+            userMap.put(kociolkiUser.getUuid(), kociolkiUser);
+        }
+        return userMap;
+    }
+
+    public void addDataKociolki(final KociolkiUser kociolkiUser) {
+        this.pool.getKociolki().insertOne(kociolkiUser.toDocument());
+    }
+
+    public void saveDataKociolki(final UUID uuid, final KociolkiUser kociolkiUser) {
+        this.pool.getKociolki().findOneAndReplace(new Document("_id", uuid.toString()), kociolkiUser.toDocument());
+    }
+
+    public void saveAllKociolki() {
+        for (final KociolkiUser kociolkiUser : rpgcore.getKociolkiManager().getKociolkiUsers()) {
+            this.saveDataKociolki(kociolkiUser.getUuid(), kociolkiUser);
+        }
+    }
 
 
     public void onDisable() {

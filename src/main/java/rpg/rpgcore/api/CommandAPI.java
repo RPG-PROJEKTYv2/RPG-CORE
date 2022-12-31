@@ -71,11 +71,12 @@ public abstract class CommandAPI extends Command {
                 }
             }
             if (!s.equals("ac") && !s.equals("admincode") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("lvl") && !s.equals("os")
-                    && !s.equals("message") && !s.equals("msg")  && !s.equals("pv")  && !s.equals("pw")  && !s.equals("m")  && !s.equals("reply")  && !s.equals("r")  && !s.equals("targ")  && !s.equals("ah")  && !s.equals("gielda")
-                    && !s.equals("kasa")  && !s.equals("money")  && !s.equals("bal")  && !s.equals("balance")  && !s.equals("wyplac")  && !s.equals("withdraw")  && !s.equals("wystaw")  && !s.equals("sprawdz") && !s.equals("helpop")
-                    && !s.equals("guild")  && !s.equals("g")  && !s.equals("klan")  && !s.equals("gildia")  && !s.equals("kosz")  && !s.equals("chatpanel")  && !s.equals("panel")  && !s.equals("chatp")  && !s.equals("party")  && !s.equals("p")
-                    && !s.equals("pety")  && !s.equals("pets")  && !s.equals("ignore")  && !s.equals("ignoruj")  && !s.equals("dodatki")  && !s.equals("bony")  && !s.equals("akce")  && !s.equals("akcesoria")  && !s.equals("ekwipunek")
-                    && !s.equals("profile")  && !s.equals("magazyny")  && !s.equals("magazyn")  && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia")) {
+                    && !s.equals("message") && !s.equals("msg") && !s.equals("pv") && !s.equals("pw") && !s.equals("m") && !s.equals("reply") && !s.equals("r") && !s.equals("targ") && !s.equals("ah") && !s.equals("gielda")
+                    && !s.equals("kasa") && !s.equals("money") && !s.equals("bal") && !s.equals("balance") && !s.equals("wyplac") && !s.equals("withdraw") && !s.equals("wystaw") && !s.equals("sprawdz") && !s.equals("helpop")
+                    && !s.equals("guild") && !s.equals("g") && !s.equals("klan") && !s.equals("gildia") && !s.equals("kosz") && !s.equals("chatpanel") && !s.equals("panel") && !s.equals("chatp") && !s.equals("party") && !s.equals("p")
+                    && !s.equals("pety") && !s.equals("pets") && !s.equals("ignore") && !s.equals("ignoruj") && !s.equals("dodatki") && !s.equals("bony") && !s.equals("akce") && !s.equals("akcesoria") && !s.equals("ekwipunek")
+                    && !s.equals("profile") && !s.equals("magazyny") && !s.equals("magazyn") && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia") && !s.equals("artefakty")
+                    && !s.equals("arte")) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));
