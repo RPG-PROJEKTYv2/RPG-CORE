@@ -152,7 +152,14 @@ public class ArmorEffectListener implements Listener {
                 }
             }
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                if (e.getClickedBlock().getType().equals(Material.ANVIL) || e.getClickedBlock().getType().equals(Material.CHEST) || e.getClickedBlock().getType().equals(Material.ENDER_CHEST) || e.getClickedBlock().getType().equals(Material.TRAPPED_CHEST) || e.getClickedBlock().getType().equals(Material.HOPPER) || e.getClickedBlock().getType().equals(Material.HOPPER_MINECART) || e.getClickedBlock().getType().equals(Material.FURNACE) || e.getClickedBlock().getType().equals(Material.BURNING_FURNACE) || e.getClickedBlock().getType().equals(Material.STORAGE_MINECART) || e.getClickedBlock().getType().equals(Material.POWERED_MINECART) || e.getClickedBlock().getType().equals(Material.DISPENSER) || e.getClickedBlock().getType().equals(Material.DROPPER) || e.getClickedBlock().getType().equals(Material.WORKBENCH) || e.getClickedBlock().getType().equals(Material.JUKEBOX) || e.getClickedBlock().getType().equals(Material.ITEM_FRAME) || e.getClickedBlock().getType().equals(Material.BED) || e.getClickedBlock().getType().equals(Material.BREWING_STAND)) {
+                if (e.getClickedBlock().getType().equals(Material.ANVIL) || e.getClickedBlock().getType().equals(Material.CHEST) ||
+                        e.getClickedBlock().getType().equals(Material.TRAPPED_CHEST) || e.getClickedBlock().getType().equals(Material.HOPPER) ||
+                        e.getClickedBlock().getType().equals(Material.HOPPER_MINECART) || e.getClickedBlock().getType().equals(Material.FURNACE) ||
+                        e.getClickedBlock().getType().equals(Material.BURNING_FURNACE) || e.getClickedBlock().getType().equals(Material.STORAGE_MINECART) ||
+                        e.getClickedBlock().getType().equals(Material.POWERED_MINECART) || e.getClickedBlock().getType().equals(Material.DISPENSER) ||
+                        e.getClickedBlock().getType().equals(Material.DROPPER) || e.getClickedBlock().getType().equals(Material.WORKBENCH) ||
+                        e.getClickedBlock().getType().equals(Material.JUKEBOX) || e.getClickedBlock().getType().equals(Material.ITEM_FRAME) ||
+                        e.getClickedBlock().getType().equals(Material.BED) || e.getClickedBlock().getType().equals(Material.BREWING_STAND)) {
                     if (!player.isOp()) {
                         e.setCancelled(true);
                         return;

@@ -3,17 +3,20 @@ package rpg.rpgcore.osiagniecia.enums;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.ItemShop;
+import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
 public enum OsGornik {
-    M1(1, 0, 100, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M2(2, 1, 250, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M3(3, 2, 500, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M4(4, 3, 1_500, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M5(5, 4, 3_000, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M6(6, 5, 7_500, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M7(7, 6, 12_500, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M8(8, 7, 50_000, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M9(9, 8, 100_000, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone());
+    M1(1, 0, 100, GlobalItem.getItem("I6", 2).clone()),
+    M2(2, 1, 250, GlobalItem.getItem("I21", 3).clone()),
+    M3(3, 2, 500, GlobalItem.getItem("I2", 3).clone()),
+    M4(4, 3, 1_500, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l75 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M5(5, 4, 3_000, GlobalItem.getItem("I1", 3).clone()),
+    M6(6, 5, 7_500, GlobalItem.getItem("I21", 16).clone()),
+    M7(7, 6, 12_500, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l150 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M8(8, 7, 50_000, GornikItems.getItem("I1", 3).clone()),
+    M9(9, 8, 100_000, ItemShop.IS15.getItems().get(0).clone());
 
 
     private final int mission;

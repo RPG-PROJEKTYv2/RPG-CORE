@@ -76,7 +76,7 @@ public abstract class CommandAPI extends Command {
                     && !s.equals("guild") && !s.equals("g") && !s.equals("klan") && !s.equals("gildia") && !s.equals("kosz") && !s.equals("chatpanel") && !s.equals("panel") && !s.equals("chatp") && !s.equals("party") && !s.equals("p")
                     && !s.equals("pety") && !s.equals("pets") && !s.equals("ignore") && !s.equals("ignoruj") && !s.equals("dodatki") && !s.equals("bony") && !s.equals("akce") && !s.equals("akcesoria") && !s.equals("ekwipunek")
                     && !s.equals("profile") && !s.equals("magazyny") && !s.equals("magazyn") && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia") && !s.equals("artefakty")
-                    && !s.equals("arte")) {
+                    && !s.equals("arte") && !s.equals("enderchest") && !s.equals("ec")) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));

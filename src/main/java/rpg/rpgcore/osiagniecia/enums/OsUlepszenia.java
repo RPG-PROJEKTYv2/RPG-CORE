@@ -1,19 +1,18 @@
 package rpg.rpgcore.osiagniecia.enums;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public enum OsUlepszenia {
-    M1(1, 0, 3, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M2(2, 1, 10, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M3(3, 2, 25, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M4(4, 3, 50, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M5(5, 4, 125, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M6(6, 5, 250, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M7(7, 6, 500, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M8(8, 7, 1_000, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone()),
-    M9(9, 8, 2_000, new ItemBuilder(Material.STONE).setName("&4&lCZEKAM NA ROZPISKE").toItemStack().clone());
+    M1(1, 0, 3, GlobalItem.getItem("I10", 1).clone()),
+    M2(2, 1, 10, GlobalItem.getItem("I10", 2).clone()),
+    M3(3, 2, 25, GlobalItem.getItem("I2", 1).clone()),
+    M4(4, 3, 50, GlobalItem.getItem("I10", 4).clone()),
+    M5(5, 4, 125, GlobalItem.getItem("I2", 3).clone()),
+    M6(6, 5, 250, GlobalItem.getItem("I1", 3).clone()),
+    M7(7, 6, 500, GlobalItem.getItem("I_OCZYSZCZENIE", 24).clone()),
+    M8(8, 7, 1_000, GlobalItem.getItem("I2", 32).clone()),
+    M9(9, 8, 2_000, GlobalItem.getItem("I1", 8).clone());
 
 
     private final int mission;
