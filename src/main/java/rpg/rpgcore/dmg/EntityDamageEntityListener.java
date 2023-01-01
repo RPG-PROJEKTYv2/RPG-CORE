@@ -8,10 +8,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 
@@ -66,6 +69,10 @@ public class EntityDamageEntityListener implements Listener {
             }
 
             if (e.getEntity() instanceof Player) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
+                    e.setCancelled(true);
+                    return;
+                }
 
                 //... Victim jest Graczem
 
@@ -91,24 +98,64 @@ public class EntityDamageEntityListener implements Listener {
                             rpgcore.getKociolkiManager().find(attacker.getUniqueId()).setEgzekutorTime(5);
                             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataKociolki(attacker.getUniqueId(), rpgcore.getKociolkiManager().find(attacker.getUniqueId())));
                             rpgcore.getCooldownManager().givePlayerEgzekutorCooldown(attacker.getUniqueId());
-                            attacker.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie nalozono efekt &c&lEgzekutora &a!"));
+                            attacker.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie aktywowano &c&lEgzekutora &a!"));
                         }
                     }
                 }
+                boolean przebicie = false;
+                if (!ChanceHelper.getChance(rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getPrzebiciePancerza())) {
+                    if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(victim, attacker))) {
+                        e.setCancelled(true);
+                        if (ChanceHelper.getChance(15.0)) {
+                            final int trueDmg = rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getTruedamage();
+                            victim.setHealth(victim.getHealth() - trueDmg);
+                            victim.sendMessage(Utils.format("&cGracz " + attacker.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
+                            attacker.sendMessage(Utils.format("&aZadales/-as graczu " + victim.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
+                        }
+                        attacker.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + victim.getName() + "&c!"));
+                        victim.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + attacker.getName() + "&a!"));
+                        return;
+                    }
+                } else {
+                    przebicie = true;
+                    attacker.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + victim.getName() + "&c!"));
+                    victim.sendMessage(Utils.format("&aGracz " + attacker.getName() + " przebil twoj pancerz!"));
+                }
 
-                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker);
-                final double victimDef = rpgcore.getDamageManager().calculatePlayerDef(victim, "ludzie");
+
+                double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
+                double victimDmgReduction = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
                 //TODO dodac dzialanie efektu oslabienia (I = -20% final def, II = -50% final def)
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
-                    // TODO attacker dmg x3
-                    // TODO Egzekutor nadaje efekt z amplifire 1
+                    attackerDmg *= 1.75;
+                    victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 1));
+                    victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 3));
+                    victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 1));
+                    victim.sendMessage(Utils.format("&4&lArtefakty &8>> &7Gracz &c" + attacker.getName() + " &7nalozyl na Ciebie efekt &c&lEgzekutora&7!"));
+                }
+
+                if (victim.hasPotionEffect(PotionEffectType.WEAKNESS)) {
+                    for (PotionEffect effect : victim.getActivePotionEffects()) {
+                        if (effect.getType().equals(PotionEffectType.WEAKNESS)) {
+                            if (effect.getAmplifier() == 0) {
+                                victimDmgReduction *= 0.9;
+                            } else if (effect.getAmplifier() == 1) {
+                                victimDmgReduction *= 0.8;
+                            }
+                        }
+                    }
+                }
+                if (przebicie) {
+                    victimDmgReduction = 0.5;
                 }
                 
-                double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - victimDef));
+                double finalDmg = DoubleUtils.round(attackerDmg - (attackerDmg * victimDmgReduction), 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
+                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+                e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
 

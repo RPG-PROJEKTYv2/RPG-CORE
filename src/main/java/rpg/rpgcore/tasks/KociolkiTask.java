@@ -70,6 +70,7 @@ public class KociolkiTask implements Runnable {
                     RPGCORE.getInstance().getMongoManager().saveDataBonuses(user.getId(), bonuses);
                 });
             }
+            rpgcore.getOsManager().find(player.getUniqueId()).setCzasProgress(rpgcore.getOsManager().find(player.getUniqueId()).getCzasProgress() + 1_000L);
         }
     }
 }

@@ -1,6 +1,9 @@
 package rpg.rpgcore.dmg;
 
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -12,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -63,22 +67,46 @@ public class DamageManager {
         rpgcore.getNmsManager().sendActionBar(player, bar);
     }
 
-    public double calculateAttackerDmgToPlayer(final Player attacker) {
+    public double calculateAttackerDmgToPlayer(final Player attacker, final Player victim) {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double dmg = 2;
         double mnoznik = 100;
         double krytyk = 1;
-        double wzmKryt = 0;
+        double wzmKryt = 1;
 
+        // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
             dmg += Utils.getTagInt(weapon, "dmg");
+            dmg += Utils.getTagInt(weapon, "dodatkowe");
+            final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
+            final int attackerLvl = rpgcore.getUserManager().find(uuid).getLvl();
+            final int victimLvl = rpgcore.getUserManager().find(victim.getUniqueId()).getLvl();
+            switch (silnyLvl) {
+                case "mniejsze":
+                    if (victimLvl < attackerLvl) {
+                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+                    }
+                    break;
+                case "rowne":
+                    if (victimLvl == attackerLvl) {
+                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+                    }
+                    break;
+                case "wyzsze":
+                    if (victimLvl > attackerLvl) {
+                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+                    }
+                    break;
+                default:
+                    break;
+            }
+            krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
             dmg = 1;
         }
 
-        // BAO
         mnoznik += bonuses.getSrednieobrazenia();
         mnoznik += bonuses.getSilnynaludzi();
         mnoznik -= bonuses.getMinussrednieobrazenia();
@@ -95,14 +123,10 @@ public class DamageManager {
         }
 
         dmg = dmg * (mnoznik / 100);
-        if (krytyk > 200) {
-            krytyk = 200;
+        if (krytyk > 100) {
+            krytyk = 100;
         }
 
-        if (krytyk > 100) {
-            krytyk -= 100;
-            dmg = dmg * 2;
-        }
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
             if (ChanceHelper.getChance(wzmKryt)) {
@@ -110,42 +134,45 @@ public class DamageManager {
             }
         }
 
-        return Double.parseDouble(String.format("%.2f", dmg));
+        dmg = dmg/100;
+
+        return DoubleUtils.round(dmg, 2);
     }
 
-    public double calculatePlayerDef(final Player player, final String type) {
+    public double calculatePlayerDef(final Player player) {
         final UUID uuid = player.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double def = 10;
         double mnoznik = 100;
 
         mnoznik += bonuses.getSredniadefensywa();
+        mnoznik += bonuses.getDefnaludzi();
+        mnoznik -= bonuses.getMinusdefnaludzi();
+        mnoznik -= bonuses.getMinussredniadefensywa();
+
+        // GILDIA
+        if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            mnoznik += rpgcore.getGuildManager().getGuildDefNaLudzi(tag);
+            mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
+        }
 
         if (player.getInventory().getHelmet() != null) {
-            def += Utils.getProtectionLevel(player.getInventory().getHelmet());
+            def += Utils.getTagInt(player.getInventory().getHelmet(), "prot");
         }
         if (player.getInventory().getChestplate() != null) {
-            def += Utils.getProtectionLevel(player.getInventory().getChestplate());
+            def += Utils.getTagInt(player.getInventory().getChestplate(), "prot");
         }
         if (player.getInventory().getLeggings() != null) {
-            def += Utils.getProtectionLevel(player.getInventory().getLeggings());
+            def += Utils.getTagInt(player.getInventory().getLeggings(), "prot");
         }
         if (player.getInventory().getBoots() != null) {
-            def += Utils.getProtectionLevel(player.getInventory().getBoots());
+            def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
+        def = def * (mnoznik / 100);
 
-        if (type.equalsIgnoreCase("ludzie")) {
-            mnoznik += bonuses.getDefnaludzi();
-            if (rpgcore.getGuildManager().hasGuild(uuid)) {
-                mnoznik += rpgcore.getGuildManager().getGuildDefNaLudzi(rpgcore.getGuildManager().getGuildTag(uuid));
-            }
-        } else if (type.equalsIgnoreCase("moby")) {
-            mnoznik += bonuses.getDefnamoby();
-
-        }
-
-        return Double.parseDouble(String.format("%.2f", def * (mnoznik / 100)));
+        return DoubleUtils.round(def / (def + 100), 3);
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim) {
@@ -185,14 +212,10 @@ public class DamageManager {
         }
 
         dmg = dmg * (mnoznik / 100);
-        if (krytyk > 200) {
-            krytyk = 200;
+        if (krytyk > 100) {
+            krytyk = 100;
         }
 
-        if (krytyk > 100) {
-            krytyk -= 100;
-            dmg = dmg * 2;
-        }
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * 1.5;
             if (ChanceHelper.getChance(wzmKryt)) {
@@ -200,7 +223,7 @@ public class DamageManager {
             }
         }
 
-        return Double.parseDouble(String.format("%.2f", dmg));
+        return DoubleUtils.round(dmg, 2);
     }
 
     public double calculatePlayerDefToEntity(final Player player) {
@@ -213,6 +236,12 @@ public class DamageManager {
         mnoznik += bonuses.getDefnamoby();
         mnoznik -= bonuses.getMinusdefnamoby();
         mnoznik -= bonuses.getMinussredniadefensywa();
+
+        // GILDIA
+        if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
+        }
 
         if (player.getInventory().getHelmet() != null) {
             def += Utils.getTagInt(player.getInventory().getHelmet(), "prot");
@@ -229,7 +258,18 @@ public class DamageManager {
 
         def = def * (mnoznik / 100);
 
-        return Double.parseDouble(String.format("%.3f", def / (def + 100)));
+        return DoubleUtils.round(def / (def + 100), 3);
+    }
+
+    public double calculateVictimBlok(final Player victim, final Player attacker) {
+        final UUID victimUUID = victim.getUniqueId();
+        final UUID attackerUUID = attacker.getUniqueId();
+        final BonusesUser victimBonuses = rpgcore.getBonusesManager().find(victimUUID).getBonusesUser();
+        final BonusesUser attackerBonuses = rpgcore.getBonusesManager().find(attackerUUID).getBonusesUser();
+        double victimBlok = victimBonuses.getBlokciosu();
+        double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku();
+
+        return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
     }
 
     public void updateKryt(UUID uuid, double kryt) {

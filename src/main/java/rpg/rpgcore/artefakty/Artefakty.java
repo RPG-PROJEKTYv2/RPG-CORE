@@ -33,7 +33,7 @@ public enum Artefakty {
             "&8Krolestwem Chunjo i Shinsoo, pozwala na",
             "&8nalozenie efektu &5Oslabienia I &8na wszystkich",
             "&8pobliskich wrogow.",
-            "&5Oslabienie I &8zmniejsza defensywe przeciwnika o &520%&8.",
+            "&5Oslabienie I &8zmniejsza defensywe przeciwnika o &510%&8.",
             "&4&lARTEFAKT"
     )).addGlowing().toItemStack().clone()),
     A4("Eliksir-Potegi", new ItemBuilder(Material.LAVA_BUCKET).setName("&6&lEliksir Potegi").setLore(Arrays.asList(
@@ -57,14 +57,14 @@ public enum Artefakty {
     A6("Egzekutor", new ItemBuilder(Material.SKULL_ITEM, 1, (short) 1).setName("&c&lEgzekutor").setLore(Arrays.asList(
             "&7Czas Odnowienia: &e10 min",
             "&7Czas dzialania: &e5 sek",
-            "&7Szansa na aktywacje: &e5%",
+            "&7Szansa na aktywacje: &e2%",
             "",
             "&8Stworzony przez &4Diabla &8przedmiot, dzieki ktoremu",
-            "&8wpadamy w &cSzal&8, bijac &4potrojone obrazenia",
+            "&8wpadamy w &cSzal&8, bijac &4zwiekszone obrazenia",
             "&8i nakladamy na przeciwnika efekt &5Oslabienia II&8,",
-            "&8ktory zmniejsza jego defensywe o &550%&8.",
+            "&8ktory zmniejsza jego defensywe o &520%&8.",
             "&4&lARTEFAKT"
-    )).addTagInt("range", 5).addGlowing().toItemStack().clone());
+    )).addGlowing().toItemStack().clone());
 
 
     private final String name;
