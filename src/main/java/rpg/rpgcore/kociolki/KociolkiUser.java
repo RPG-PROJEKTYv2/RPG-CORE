@@ -30,7 +30,7 @@ public class KociolkiUser {
     }
 
     public KociolkiUser(final Document document) {
-        this.uuid = UUID.fromString(document.getString("uuid"));
+        this.uuid = UUID.fromString(document.getString("_id"));
         this.eliksirPotegi = document.getBoolean("eliksirPotegi");
         this.eliksirObroncy = document.getBoolean("eliksirObroncy");
         this.talizmanPogromcy = document.getBoolean("talizmanPogromcy");

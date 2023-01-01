@@ -27,7 +27,7 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.trener.TrenerObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
-import rpg.rpgcore.os.OsObject;
+import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -205,7 +205,7 @@ public class MongoManager {
             }
 
             if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() == null) {
-                final OsObject user = new OsObject(uuid);
+                final OsUser user = new OsUser(uuid);
                 this.addDataOs(user);
                 rpgcore.getOsManager().add(user);
             }
@@ -419,7 +419,7 @@ public class MongoManager {
         this.addDataRybak(rybakObject);
         rpgcore.getRybakNPC().add(rybakObject);
 
-        final OsObject osObject = new OsObject(uuid);
+        final OsUser osObject = new OsUser(uuid);
         this.addDataOs(osObject);
         rpgcore.getOsManager().add(osObject);
 
@@ -730,26 +730,26 @@ public class MongoManager {
 
 
     // OsiagnieciaCommand
-    public Map<UUID, OsObject> loadAllOs() {
-        Map<UUID, OsObject> gornik = new ConcurrentHashMap<>();
+    public Map<UUID, OsUser> loadAllOs() {
+        Map<UUID, OsUser> osUserMap = new ConcurrentHashMap<>();
         for (Document document : this.pool.getOsiagniecia().find()) {
-            OsObject osObject = new OsObject(document);
-            gornik.put(osObject.getID(), osObject);
+            OsUser osUser = new OsUser(document);
+            osUserMap.put(osUser.getUuid(), osUser);
         }
-        return gornik;
+        return osUserMap;
     }
 
-    public void addDataOs(final OsObject osObject) {
-        this.pool.getOsiagniecia().insertOne(osObject.toDocument());
+    public void addDataOs(final OsUser osUser) {
+        this.pool.getOsiagniecia().insertOne(osUser.toDocument());
     }
 
-    public void saveDataOs(final UUID id, final OsObject osObject) {
-        this.pool.getOsiagniecia().findOneAndReplace(new Document("_id", id.toString()), osObject.toDocument());
+    public void saveDataOs(final UUID id, final OsUser osUser) {
+        this.pool.getOsiagniecia().findOneAndReplace(new Document("_id", id.toString()), osUser.toDocument());
     }
 
     public void saveAllOs() {
-        for (OsObject osObject : rpgcore.getOsManager().getOsObject()) {
-            this.saveDataOs(osObject.getID(), osObject);
+        for (OsUser osUser : rpgcore.getOsManager().getOsUsers()) {
+            this.saveDataOs(osUser.getUuid(), osUser);
         }
     }
 

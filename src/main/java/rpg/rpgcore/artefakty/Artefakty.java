@@ -18,9 +18,9 @@ public enum Artefakty {
     )).addGlowing().toItemStack().clone()),
     A2("Krwisty-Legendarny-Rog", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4&lKrwisty Legendarny Rog").setLore(Arrays.asList(
             "&7Czas Odnowienia: &e45 sek",
-            "&7Zasieg: &e35 kratek",
+            "&7Ilosc Potworow: &e15-30",
             "",
-            "&8Odebrany od Wielkiego Wodza Goblinow",
+            "&8Odebrany od Elitarnego Wodza Orkow",
             "&8pozwala na przywolanie wszystkich stworzen",
             "&8w zasiegu jego dzialania",
             "&4&lARTEFAKT"
@@ -31,8 +31,9 @@ public enum Artefakty {
             "",
             "&8Zdobyte podczas Wielkiej Wojny pomiedzy",
             "&8Krolestwem Chunjo i Shinsoo, pozwala na",
-            "&8nalozenie efektu &5Oslabienia &8na wszystkich",
+            "&8nalozenie efektu &5Oslabienia I &8na wszystkich",
             "&8pobliskich wrogow.",
+            "&5Oslabienie I &8zmniejsza defensywe przeciwnika o &520%&8.",
             "&4&lARTEFAKT"
     )).addGlowing().toItemStack().clone()),
     A4("Eliksir-Potegi", new ItemBuilder(Material.LAVA_BUCKET).setName("&6&lEliksir Potegi").setLore(Arrays.asList(
@@ -58,9 +59,10 @@ public enum Artefakty {
             "&7Czas dzialania: &e5 sek",
             "&7Szansa na aktywacje: &e5%",
             "",
-            "&8Stworzony przez &4Diabla &8przedmiot,",
-            "&8dzieki ktoremu wpadamy w &cSzal i nakladamy",
-            "&8na przeciwnika efekt &5Oslabienia II&8.",
+            "&8Stworzony przez &4Diabla &8przedmiot, dzieki ktoremu",
+            "&8wpadamy w &cSzal&8, bijac &4potrojone obrazenia",
+            "&8i nakladamy na przeciwnika efekt &5Oslabienia II&8,",
+            "&8ktory zmniejsza jego defensywe o &550%&8.",
             "&4&lARTEFAKT"
     )).addTagInt("range", 5).addGlowing().toItemStack().clone());
 

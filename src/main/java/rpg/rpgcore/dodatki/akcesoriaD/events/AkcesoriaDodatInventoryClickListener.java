@@ -138,6 +138,9 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                                         "- Wymagazyny Poziom: " + Utils.getTagInt(item, "lvl"), Color.getHSBColor(114, 90, 47)));
                     });
                     break;
+                case 8:
+                    rpgcore.getDodatkiManager().openDodatkiGUI(player);
+                    return;
 
             }
             player.getInventory().addItem(item);

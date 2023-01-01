@@ -71,7 +71,7 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 final String map = player.getWorld().getName().replace("map", "");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn " + map + "-MOB3 " + ChanceHelper.getRandInt(15, 30) + " " + player.getWorld().getName() + "," + String.format("%.2f", player.getLocation().getX()) + "," + String.format("%.2f", player.getLocation().getY()) + "," + String.format("%.2f", player.getLocation().getZ()));
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn " + map + "-MOB3 " + ChanceHelper.getRandInt(15, 30) + " " + player.getWorld().getName() + "," + String.format("%.2f", player.getLocation().getX()) + "," + String.format("%.2f", player.getLocation().getY() + 5) + "," + String.format("%.2f", player.getLocation().getZ()));
                 rpgcore.getCooldownManager().givePlayerRogCooldown(uuid);
                 player.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie uzyto &4&lKrwistego Legendarnego Rogu!"));
                 return;
@@ -97,8 +97,9 @@ public class ArtefaktyInteractListener implements Listener {
                 }
                 for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                     if (entity instanceof Player) {
-                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 1));
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
                         entity.sendMessage(Utils.format("&4&lArtefakty &8>> &cGracz &4" + player.getName() + " &cnalozyl na Ciebie efekt artefaktu &4Serca Yothuna&c!"));
                     }
                 }

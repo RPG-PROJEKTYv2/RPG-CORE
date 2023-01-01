@@ -70,7 +70,7 @@ public abstract class CommandAPI extends Command {
                     return false;
                 }
             }
-            if (!s.equals("ac") && !s.equals("admincode") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("lvl") && !s.equals("os")
+            if (!s.equals("ac") && !s.equals("admincode") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("lvl") && !s.equals("os") && !s.equals("osiagniecia")
                     && !s.equals("message") && !s.equals("msg") && !s.equals("pv") && !s.equals("pw") && !s.equals("m") && !s.equals("reply") && !s.equals("r") && !s.equals("targ") && !s.equals("ah") && !s.equals("gielda")
                     && !s.equals("kasa") && !s.equals("money") && !s.equals("bal") && !s.equals("balance") && !s.equals("wyplac") && !s.equals("withdraw") && !s.equals("wystaw") && !s.equals("sprawdz") && !s.equals("helpop")
                     && !s.equals("guild") && !s.equals("g") && !s.equals("klan") && !s.equals("gildia") && !s.equals("kosz") && !s.equals("chatpanel") && !s.equals("panel") && !s.equals("chatp") && !s.equals("party") && !s.equals("p")

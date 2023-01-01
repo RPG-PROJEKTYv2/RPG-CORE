@@ -161,7 +161,9 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                                         "- Wymagazyny Poziom: " + Utils.getTagInt(item, "lvl"), Color.getHSBColor(114, 90, 47)));
                     });
                     break;
-
+                case 8:
+                    rpgcore.getDodatkiManager().openDodatkiGUI(player);
+                    return;
             }
             player.getInventory().addItem(item);
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zdjales " + item.getItemMeta().getDisplayName() + "&a!"));

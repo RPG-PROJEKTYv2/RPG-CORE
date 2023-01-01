@@ -20,11 +20,6 @@ public enum GlobalItem {
     I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
     I5("I5", new ItemBuilder(Material.CHEST).setName("&2Skrzynia Z Surowcami").setLore(Arrays.asList("&8&oSkrzynia ta zawiera rozne materialy...")).hideFlag().toItemStack().clone()),
     I6("I6", new ItemBuilder(Material.CHEST).setName("&4&lHELLCASE").setLore(Arrays.asList("&8&oSerwerowa skrzynia skrywa cenne przedmioty...")).hideFlag().toItemStack().clone()),
-
-
-    I7("I7", new ItemBuilder(Material.EXP_BOTTLE, 1).setName("&8• &eSakwa &8•").addGlowing().toItemStack().clone()),
-    I8("I8", new ItemBuilder(Material.PAPER).setName("&bBon na powiekszenie magazynu").setLore(Arrays.asList("&8&oChyba &b&lMagazynier &8tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I9("I9", new ItemBuilder(Material.EMERALD).setName("&4&lArtefakt &b&lMagazyniera").setLore(Arrays.asList("&8Artefakt ten pozwala na otwieranie", "&8swoich magazynow nie chodzac do &b&lMagazyniera", "&6Wlasciciel: &7playerName", " ", "&4&lARTEFAKT")).addGlowing().toItemStack().clone()),
     I_METAL("I_METAL", new ItemBuilder(Material.IRON_INGOT).setName("&7Magiczna Stal").setLore(Arrays.asList("&8Przedmiot ten pozwoli ci ulepszyc twoj", "&8przedmiot z szansa 100% u &4&lKowala")).addGlowing().toItemStack().clone()),
     I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR, 1).setName("&fLza Aniola").setLore(Arrays.asList("&8Przedmiot ten oczysci twoj przedmiot", "&8abys mogl go ponownie ulepszyc u &4&lKowala")).addGlowing().toItemStack().clone()),
     I10("I10", new ItemBuilder(Material.BOOK).setName("&a&lZwoj Kowala").setLore(Arrays.asList("&8Przedmiot ten ochroni twoj", "&8przedmiot przed spaleniem podczas", "&8ulepszania go u &4&lKowala")).addGlowing().toItemStack().clone()),

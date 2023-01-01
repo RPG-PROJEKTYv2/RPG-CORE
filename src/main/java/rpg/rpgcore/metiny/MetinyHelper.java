@@ -299,7 +299,7 @@ public class MetinyHelper {
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
         RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(kasa + kasaToAdd);
-        RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().setDestroyedMetins(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getOsUser().getDestroyedMetins() + 1);
+        RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
         player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));
     }
 }

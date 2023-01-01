@@ -11,6 +11,7 @@ import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
 import rpg.rpgcore.artefakty.events.ArtefaktyInteractListener;
+import rpg.rpgcore.artefakty.events.ArtefaktyInventoryClickListener;
 import rpg.rpgcore.bao.*;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
@@ -125,7 +126,9 @@ import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
-import rpg.rpgcore.os.OsiagnieciaCommand;
+import rpg.rpgcore.osiagniecia.OsManager;
+import rpg.rpgcore.osiagniecia.OsiagnieciaCommand;
+import rpg.rpgcore.osiagniecia.events.OsInventoryClickListener;
 import rpg.rpgcore.party.PartyManager;
 import rpg.rpgcore.pets.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
@@ -179,8 +182,6 @@ import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.npc.trener.TrenerInventoryClick;
 import rpg.rpgcore.npc.trener.TrenerNPC;
-import rpg.rpgcore.os.OSInventoryClick;
-import rpg.rpgcore.os.OsManager;
 import rpg.rpgcore.pomoc.POMOCInventoryClick;
 import rpg.rpgcore.pomoc.PomocCommand;
 import rpg.rpgcore.pomoc.PomocManager;
@@ -441,7 +442,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GmCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HealCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new TempBanCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new OsiagnieciaCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new OsiagnieciaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PomocCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new MuteCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new UnMuteCommand(this));
@@ -524,7 +525,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BAOPlayerInteract(this), this);
 
         // OS
-        this.getServer().getPluginManager().registerEvents(new OSInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new OsInventoryClickListener(this), this);
 
         // TRADE
         this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
@@ -676,6 +677,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ArmorEffectListener(this), this);
 
         // ARTEFAKTY
+        this.getServer().getPluginManager().registerEvents(new ArtefaktyInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInteractListener(this), this);
 
     }

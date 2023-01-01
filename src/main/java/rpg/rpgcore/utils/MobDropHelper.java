@@ -55,7 +55,7 @@ public class MobDropHelper {
         //final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
 
 
-        rpgcore.getOsManager().find(uuid).getOsUser().setMobKills(rpgcore.getOsManager().find(uuid).getOsUser().getMobKills() + 1);
+        rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
 
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
         // PRZELICZNIK -> 0.1 - OKOŁO CO TYSIAC MOBOW /// 0.01 - OKOLO CO 10K MOBOW /// 0.001 - OKOLO CO 100k MOBOW

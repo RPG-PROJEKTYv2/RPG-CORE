@@ -102,6 +102,7 @@ public class EntityDamageEntityListener implements Listener {
                 //TODO dodac dzialanie efektu oslabienia (I = -20% final def, II = -50% final def)
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
                     // TODO attacker dmg x3
+                    // TODO Egzekutor nadaje efekt z amplifire 1
                 }
                 
                 double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - victimDef));

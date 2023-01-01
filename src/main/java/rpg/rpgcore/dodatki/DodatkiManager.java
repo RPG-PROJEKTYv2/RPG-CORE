@@ -17,11 +17,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DodatkiManager {
-    private final RPGCORE rpgcore;
     private final Map<UUID, DodatkiUser> userMap;
 
     public DodatkiManager(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllDodatki();
     }
 
@@ -77,6 +75,8 @@ public class DodatkiManager {
         } else {
             gui.setItem(6, Utils.deserializeItem(user.getDiadem()));
         }
+
+        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
         player.openInventory(gui);
     }
@@ -192,6 +192,8 @@ public class DodatkiManager {
             gui.setItem(14, Utils.deserializeItem(user.getPredkosc50()));
         }
 
+        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+
         player.openInventory(gui);
     }
 
@@ -229,6 +231,8 @@ public class DodatkiManager {
         } else {
             gui.setItem(7, Utils.deserializeItem(user.getEnergia()));
         }
+
+        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
         player.openInventory(gui);
     }

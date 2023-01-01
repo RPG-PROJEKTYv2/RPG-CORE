@@ -97,7 +97,7 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&e3 &cBrak",
                 "&74 &cBrak"
         )).toItemStack());
-        gui.setItem(12, new ItemBuilder(Artefakty.A3.getItem().clone()).setLoreCrafting(Artefakty.A3.getItem().clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(13, new ItemBuilder(Artefakty.A3.getItem().clone()).setLoreCrafting(Artefakty.A3.getItem().clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Sposob Zdobycia: &cOsiagnij 110 poziom",
                 "&7Ilosc do zdobycia: &c4 sztuk",
