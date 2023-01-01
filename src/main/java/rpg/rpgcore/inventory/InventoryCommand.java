@@ -44,8 +44,6 @@ public class InventoryCommand extends CommandAPI {
         if (Bukkit.getPlayer(target) != null && Bukkit.getPlayer(target).isOnline()) {
             final Player p = Bukkit.getPlayer(target);
             player.openInventory(p.getInventory());
-            player.sendMessage(p.getInventory().getName());
-            player.sendMessage(p.getInventory().getHolder().getName());
             return;
             /*gui.setContents(p.getInventory().getContents());
             gui.setItem(36, p.getInventory().getHelmet());

@@ -1,4 +1,4 @@
-package rpg.rpgcore.pomoc;
+package rpg.rpgcore.commands.admin.adminpanel;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -9,14 +9,13 @@ import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
 
-
-public class PomocCommand extends CommandAPI {
+public class AdminPanelCommand extends CommandAPI {
 
     private final RPGCORE rpgcore;
 
-    public PomocCommand(RPGCORE rpgcore) {
-        super("pomoc");
-        this.setRankLevel(RankType.GRACZ);
+    public AdminPanelCommand(RPGCORE rpgcore) {
+        super("adminpanel");
+        this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }
@@ -24,10 +23,11 @@ public class PomocCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
+
         if (args.length == 0) {
-            rpgcore.getPomocManager().openPomocInventory(player);
+            rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             return;
         }
-        player.sendMessage(Utils.poprawneUzycie("pomoc"));
+        player.sendMessage(Utils.poprawneUzycie("adminpanel"));
     }
 }

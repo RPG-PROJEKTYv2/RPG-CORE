@@ -50,6 +50,9 @@ import rpg.rpgcore.chests.Expowisko9.PustynnyPtasznikManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
+import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
+import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
+import rpg.rpgcore.commands.admin.adminpanel.AdminPanelManager;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.player.*;
@@ -216,6 +219,7 @@ public final class RPGCORE extends JavaPlugin {
     private VanishManager vanishManager;
     private NMSManager nmsManager;
     private GodManager godManager;
+    private AdminPanelManager adminPanelManager;
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
@@ -494,7 +498,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new RozdajCommand());
         CommandAPI.getCommand().register("HellRPGCore", new AdministracjaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new BroadcastCommand());
-        CommandAPI.getCommand().register("HellRPGCore", new CaseCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new AdminPanelCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new TowerCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MisjeCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ItemShopCommand());
@@ -538,6 +542,8 @@ public final class RPGCORE extends JavaPlugin {
         // POMOC
         this.getServer().getPluginManager().registerEvents(new POMOCInventoryClick(this), this);
 
+        // ADMIN PANEL
+        this.getServer().getPluginManager().registerEvents(new AdminPanelInventoryClick(this), this);
         // EQ
         this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
         this.getServer().getPluginManager().registerEvents(new ChatInventoryClickListener(this), this);
@@ -694,6 +700,7 @@ public final class RPGCORE extends JavaPlugin {
         this.vanishManager = new VanishManager(this);
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager(this);
+        this.adminPanelManager = new AdminPanelManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
@@ -864,6 +871,9 @@ public final class RPGCORE extends JavaPlugin {
         return godManager;
     }
 
+    public AdminPanelManager getAdminPanelManager() {
+        return adminPanelManager;
+    }
 
     public LvlManager getLvlManager() {
         return lvlManager;

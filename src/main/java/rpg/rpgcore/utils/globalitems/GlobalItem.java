@@ -37,7 +37,7 @@ public enum GlobalItem {
     // ULEPSZACZE
     I_SZATANAJEMNIKA("I_SZATANAJEMNIKA", new ItemBuilder(Material.RABBIT_HIDE).setName("&6Szata Najemnika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_OKOGOBLINA("I_OKOGOBLINA", new ItemBuilder(Material.EYE_OF_ENDER).setName("&aOko Goblina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_SKORAGORYLA("I_SKORAGORYLA", new ItemBuilder(Material.INK_SACK, 1 , (short)15).setName("&fSkora Goblina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
+    I_SKORAGORYLA("I_SKORAGORYLA", new ItemBuilder(Material.INK_SACK, 1 , (short)15).setName("&fSkora Goryla").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_PROCHYZJAWY("I_PROCHYZJAWY", new ItemBuilder(Material.SULPHUR).setName("&7Proch Zjawy").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_LZAOCEANU("I_LZAOCEANU", new ItemBuilder(Material.GHAST_TEAR).setName("&bLza Oceanu").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_MROZNYPAZUR("I_MROZNYPAZUR", new ItemBuilder(Material.FEATHER).setName("&bMrozny Pazur").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),

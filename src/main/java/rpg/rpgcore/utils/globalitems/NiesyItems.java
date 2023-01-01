@@ -21,6 +21,7 @@ public enum NiesyItems {
     N13("120-130", new ItemBuilder(Material.DIAMOND_BLOCK).setName("&b&lNiesamowity Przedmiot 120-130").addGlowing().toItemStack().clone());
     private final ItemStack itemStack;
     private final String name;
+
     NiesyItems(String name, ItemStack item) {
         this.name = name;
         this.itemStack = item;
@@ -46,5 +47,8 @@ public enum NiesyItems {
     public static ItemStack getItem(String name) {
         ItemStack itemStack = PrzyrodnikItems.getByName(name).getItemStack();
         return itemStack;
+    }
+    public ItemStack getNiesy() {
+        return this.itemStack;
     }
 }
