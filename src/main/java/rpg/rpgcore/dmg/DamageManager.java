@@ -272,6 +272,44 @@ public class DamageManager {
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
     }
 
+    public double calculatePlayerThornsDmg(final Player victim) {
+        final UUID uuid = victim.getUniqueId();
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+        double thornsDmg = 0;
+        double mnoznik = 100;
+
+        mnoznik += bonuses.getSrednieobrazenia();
+        mnoznik += bonuses.getSilnynapotwory();
+        mnoznik -= bonuses.getMinussrednieobrazenia();
+        mnoznik -= bonuses.getMinusobrazenianamoby();
+        thornsDmg += bonuses.getDodatkoweobrazenia();
+
+        // GILDIA
+        if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
+        }
+
+        if (victim.getInventory().getHelmet() != null) {
+            thornsDmg += Utils.getTagInt(victim.getInventory().getHelmet(), "thorns");
+        }
+        if (victim.getInventory().getChestplate() != null) {
+            thornsDmg += Utils.getTagInt(victim.getInventory().getChestplate(), "thorns");
+        }
+        if (victim.getInventory().getLeggings() != null) {
+            thornsDmg += Utils.getTagInt(victim.getInventory().getLeggings(), "thorns");
+        }
+        if (victim.getInventory().getBoots() != null) {
+            thornsDmg += Utils.getTagInt(victim.getInventory().getBoots(), "thorns");
+        }
+        System.out.println(thornsDmg);
+
+        thornsDmg = (thornsDmg * (mnoznik / 100));
+
+
+        return DoubleUtils.round(thornsDmg, 2);
+    }
+
     public void updateKryt(UUID uuid, double kryt) {
         krytMap.replace(uuid, kryt);
     }

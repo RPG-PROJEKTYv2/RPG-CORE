@@ -54,6 +54,33 @@ public class EntityDamageEntityListener implements Listener {
             }
         }
 
+        if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
+            if (e.getEntity() instanceof Player) {
+                if (e.getDamager() instanceof Player) {
+                    e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                    final double victimThornsDmg = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getEntity());
+                    if (e.getDamager() instanceof Player) {
+                        if (victimThornsDmg > 0) {
+                            e.setDamage(EntityDamageEvent.DamageModifier.BASE, victimThornsDmg / 2);
+                        } else {
+                            e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                        }
+                    } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
+                        if (victimThornsDmg > 0) {
+                            e.setDamage(EntityDamageEvent.DamageModifier.BASE, victimThornsDmg);
+                        } else {
+                            e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                        }
+                    }
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getEntity()));
+                    if (victimThornsDmg < ((LivingEntity) e.getEntity()).getHealth()) {
+                        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getEntity(), e.getFinalDamage(), (LivingEntity) e.getDamager()));
+                    }
+                }
+            }
+        }
+
 
         // ATAKUJACY JEST GRACZEM
         if (e.getDamager() instanceof Player) {
@@ -184,9 +211,7 @@ public class EntityDamageEntityListener implements Listener {
 
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
             }
-            if (e.getDamage() < ((LivingEntity) e.getEntity()).
-
-                    getHealth()) {
+            if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
             }
         } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
@@ -200,7 +225,8 @@ public class EntityDamageEntityListener implements Listener {
                 final double attackerDmg = EntityDamage.getByName(Utils.removeColor(e.getDamager().getCustomName()));
                 final double victimDef = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
 
-                double finalDmg = Double.parseDouble(String.format("%.2f", attackerDmg - (attackerDmg * victimDef)));
+
+                double finalDmg = DoubleUtils.round(attackerDmg - (attackerDmg * victimDef), 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }

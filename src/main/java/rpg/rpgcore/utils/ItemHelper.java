@@ -2,6 +2,7 @@ package rpg.rpgcore.utils;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,6 +24,7 @@ public class ItemHelper {
         lore.add("&7Obrona: &f" + prot);
         lore.add("&7Ciernie: &f" + thorns);
         set.setLore(lore);
+        set.addEnchant(Enchantment.THORNS, thorns);
 
         set.hideFlag();
 
@@ -122,6 +124,11 @@ public class ItemHelper {
         }
         nmsStack.setTag(tag);
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
+        if (type.equalsIgnoreCase("zbroja")) {
+            if (v2 > 0) {
+                toReturn.addUnsafeEnchantment(Enchantment.THORNS, v2);
+            }
+        }
         final ItemMeta meta = toReturn.getItemMeta();
         meta.setLore(lore);
         toReturn.setItemMeta(meta);
