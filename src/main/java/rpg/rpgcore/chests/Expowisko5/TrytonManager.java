@@ -16,10 +16,10 @@ public class TrytonManager {
     private final Set<Items> tryton = Sets.newConcurrentHashSet();
 
     public TrytonManager() {
-        this.tryton.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Trytona", Material.IRON_HELMET, 30, 1,false), 1));
-        this.tryton.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Trytona", Material.IRON_CHESTPLATE, 30, 1,false), 1));
-        this.tryton.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Trytona", Material.IRON_LEGGINGS, 30, 1,false), 1));
-        this.tryton.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Trytona", Material.IRON_BOOTS, 30, 1,false), 1));
+        this.tryton.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Trytona", Material.IRON_HELMET, 30, 1), 1));
+        this.tryton.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Trytona", Material.IRON_CHESTPLATE, 30, 1), 1));
+        this.tryton.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Trytona", Material.IRON_LEGGINGS, 30, 1), 1));
+        this.tryton.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Trytona", Material.IRON_BOOTS, 30, 1), 1));
         this.tryton.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Trytona", Material.IRON_SWORD, 22, 13,false), 1));
         this.tryton.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lNaszyjnik Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&f&lDiadem Trytona").toItemStack(),1 ));

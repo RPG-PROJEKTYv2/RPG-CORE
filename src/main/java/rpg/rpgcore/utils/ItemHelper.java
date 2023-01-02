@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
@@ -16,7 +17,7 @@ import java.util.List;
 public class ItemHelper {
 
 
-    public static ItemStack createArmor(final String name, final Material itemType, final int prot, final int thorns, final boolean addGlint) {
+    public static ItemStack createArmor(final String name, final Material itemType, final int prot, final int thorns) {
         final ItemBuilder set = new ItemBuilder(itemType);
         final List<String> lore = new ArrayList<>();
 
@@ -24,13 +25,12 @@ public class ItemHelper {
         lore.add("&7Obrona: &f" + prot);
         lore.add("&7Ciernie: &f" + thorns);
         set.setLore(lore);
-        set.addEnchant(Enchantment.THORNS, thorns);
+        if (thorns > 0 && itemType.toString().contains("_CHESTPLATE")) {
+            set.addEnchant(Enchantment.THORNS, thorns);
+        }
 
         set.hideFlag();
-
-        if (addGlint) {
-            set.addGlowing();
-        }
+        set.addGlowing();
         set.addTagInt("prot", prot);
         set.addTagInt("thorns", thorns);
         set.addTagString("Wody", "false");
@@ -77,7 +77,11 @@ public class ItemHelper {
     }
 
     public static ItemStack setEnchants(final ItemStack is, final String type, final int v1, final int v2) {
+        if (!is.getType().toString().contains("_CHESTPLATE")) {
+            is.removeEnchantment(Enchantment.THORNS);
+        }
         List<String> lore = new ArrayList<>();
+        boolean addGlowing = false;
         final net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         final net.minecraft.server.v1_8_R3.NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new net.minecraft.server.v1_8_R3.NBTTagCompound();
         if (is.getItemMeta().hasLore()) {
@@ -90,6 +94,7 @@ public class ItemHelper {
                 if (v2 > 0) {
                     lore.set(1, Utils.format("&7Ciernie: &f" + v2));
                     tag.setInt("thorns", v2);
+                    addGlowing = true;
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
@@ -110,6 +115,7 @@ public class ItemHelper {
                 if (v2 > 0) {
                     lore.add(Utils.format("&7Ciernie: &f" + v2));
                     tag.setInt("thorns", v2);
+                    addGlowing = true;
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
@@ -124,12 +130,18 @@ public class ItemHelper {
         }
         nmsStack.setTag(tag);
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
-        if (type.equalsIgnoreCase("zbroja")) {
+        if (type.equalsIgnoreCase("zbroja") && toReturn.getType().toString().contains("_CHESTPLATE")) {
             if (v2 > 0) {
                 toReturn.addUnsafeEnchantment(Enchantment.THORNS, v2);
             }
         }
         final ItemMeta meta = toReturn.getItemMeta();
+        if (addGlowing) {
+            toReturn.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        }
         meta.setLore(lore);
         toReturn.setItemMeta(meta);
         return toReturn;

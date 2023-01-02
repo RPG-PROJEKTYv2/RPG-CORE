@@ -65,6 +65,9 @@ import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
 import rpg.rpgcore.commands.player.rangi.RangiInventoryClick;
+import rpg.rpgcore.commands.player.topki.TopkiCommand;
+import rpg.rpgcore.commands.player.topki.TopkiInventoryClickListener;
+import rpg.rpgcore.commands.player.topki.TopkiManager;
 import rpg.rpgcore.discord.DiscordBot;
 import rpg.rpgcore.dmg.EntityCombustListener;
 import rpg.rpgcore.dmg.EntityDeathListener;
@@ -312,6 +315,7 @@ public final class RPGCORE extends JavaPlugin {
     // private TestNPC testNPC; // TU JEST TEST NPC
     private ItemShopNPC itemShopNPC;
     private KociolkiManager kociolkiManager;
+    private TopkiManager topkiManager;
 
 
 
@@ -369,6 +373,8 @@ public final class RPGCORE extends JavaPlugin {
         new BossBarTask(this);
         // ... KOCIOLKI I ARTEFAKTY
         new KociolkiTask(this);
+        // ... TOPKI
+        new TopkiTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -505,6 +511,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new PdCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ArtefaktyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new EnderChestCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new TopkiCommand(this));
     }
 
     private void initEvents() {
@@ -585,6 +592,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // MISJE
         this.getServer().getPluginManager().registerEvents(new MisjeInventoryClickListener(), this);
+
+        // TOPKI
+        this.getServer().getPluginManager().registerEvents(new TopkiInventoryClickListener(), this);
 
         // KLASY
 
@@ -729,6 +739,7 @@ public final class RPGCORE extends JavaPlugin {
         this.oreManager = new OreManager(this);
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
+        this.topkiManager = new TopkiManager(this);
     }
 
     private void initNPCS() {
@@ -1154,5 +1165,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public KociolkiManager getKociolkiManager() {
         return kociolkiManager;
+    }
+
+    public TopkiManager getTopkiManager() {
+        return topkiManager;
     }
 }

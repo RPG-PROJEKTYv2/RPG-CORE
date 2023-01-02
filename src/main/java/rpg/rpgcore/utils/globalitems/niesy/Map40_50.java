@@ -15,11 +15,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map40_50 {
-    I40_50_1("40-50-1", 10, ItemHelper.createArmor("&8Pradawny Helm", Material.IRON_HELMET, 35, 2,true)),
-    I40_50_2("40-50-2", 10, ItemHelper.createArmor("&8Pradawna Zbroja", Material.DIAMOND_CHESTPLATE, 35, 2,true)),
-    I40_50_3("40-50-3", 10, ItemHelper.createArmor("&8Pradawne Spodnie", Material.IRON_LEGGINGS, 35, 2,true)),
-    I40_50_4("40-50-4", 10, ItemHelper.createArmor("&8Pradawne Buty", Material.IRON_BOOTS, 35, 2,true)),
-    I40_50_5("40-50-5", 10, ItemHelper.createArmor("&8Pradawny Miecz", Material.DIAMOND_SWORD, 30, 12,true)),
+    I40_50_1("40-50-1", 10, ItemHelper.createArmor("&8Pradawny Helm", Material.IRON_HELMET, 35, 2)),
+    I40_50_2("40-50-2", 10, ItemHelper.createArmor("&8Pradawna Zbroja", Material.DIAMOND_CHESTPLATE, 35, 2)),
+    I40_50_3("40-50-3", 10, ItemHelper.createArmor("&8Pradawne Spodnie", Material.IRON_LEGGINGS, 35, 2)),
+    I40_50_4("40-50-4", 10, ItemHelper.createArmor("&8Pradawne Buty", Material.IRON_BOOTS, 35, 2)),
+    I40_50_5("40-50-5", 10, ItemHelper.createArmor("&8Pradawny Miecz", Material.DIAMOND_SWORD, 30, 12)),
     I40_50_6("40-50-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Pradawny Naszyjnik").toItemStack()),
     I40_50_7("40-50-7", 10, new ItemBuilder(Material.WATCH).setName("&8Pradawny Diadem").toItemStack()),
     I40_50_8("40-50-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&8Pradawna Tarcza").toItemStack()),

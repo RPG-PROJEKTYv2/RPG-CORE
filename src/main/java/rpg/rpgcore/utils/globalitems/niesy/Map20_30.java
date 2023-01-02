@@ -15,10 +15,10 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map20_30 {
-    I20_30_1("20-30-1", 10, ItemHelper.createArmor("&8Tropikalny Helm", Material.GOLD_HELMET, 21, 0,true)),
-    I20_30_2("20-30-2", 10, ItemHelper.createArmor("&8Tropikalna Zbroja", Material.CHAINMAIL_CHESTPLATE, 21, 0,true)),
-    I20_30_3("20-30-3", 10, ItemHelper.createArmor("&8Tropikalne Spodnie", Material.GOLD_LEGGINGS, 21, 0,true)),
-    I20_30_4("20-30-4", 10, ItemHelper.createArmor("&8Tropikalne Buty", Material.GOLD_BOOTS, 21, 0,true)),
+    I20_30_1("20-30-1", 10, ItemHelper.createArmor("&8Tropikalny Helm", Material.GOLD_HELMET, 21, 0)),
+    I20_30_2("20-30-2", 10, ItemHelper.createArmor("&8Tropikalna Zbroja", Material.CHAINMAIL_CHESTPLATE, 21, 0)),
+    I20_30_3("20-30-3", 10, ItemHelper.createArmor("&8Tropikalne Spodnie", Material.GOLD_LEGGINGS, 21, 0)),
+    I20_30_4("20-30-4", 10, ItemHelper.createArmor("&8Tropikalne Buty", Material.GOLD_BOOTS, 21, 0)),
     I20_30_5("20-30-5", 10, ItemHelper.createSword("&8Tropikalna Maczeta", Material.STONE_SWORD, 12, 5,true)),
     I20_30_6("20-30-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Tropikalny Naszyjnik").toItemStack()),
     I20_30_7("20-30-7", 10, new ItemBuilder(Material.WATCH).setName("&8Tropikalny Diadem").toItemStack()),

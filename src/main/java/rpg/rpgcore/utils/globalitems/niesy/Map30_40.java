@@ -15,11 +15,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map30_40 {
-    I30_40_1("30-40-1", 10, ItemHelper.createArmor("&8Przeklety Helm", Material.GOLD_HELMET, 28, 1,true)),
-    I30_40_2("30-40-2", 10, ItemHelper.createArmor("&8Przekleta Zbroja", Material.GOLD_CHESTPLATE, 28, 1,true)),
-    I30_40_3("30-40-3", 10, ItemHelper.createArmor("&8Przeklete Spodnie", Material.GOLD_LEGGINGS, 28, 1,true)),
-    I30_40_4("30-40-4", 10, ItemHelper.createArmor("&8Przeklete Buty", Material.GOLD_BOOTS, 28, 1,true)),
-    I30_40_5("30-40-5", 10, ItemHelper.createArmor("&8Przekleta Kosa", Material.IRON_SWORD, 18, 8,true)),
+    I30_40_1("30-40-1", 10, ItemHelper.createArmor("&8Przeklety Helm", Material.GOLD_HELMET, 28, 1)),
+    I30_40_2("30-40-2", 10, ItemHelper.createArmor("&8Przekleta Zbroja", Material.GOLD_CHESTPLATE, 28, 1)),
+    I30_40_3("30-40-3", 10, ItemHelper.createArmor("&8Przeklete Spodnie", Material.GOLD_LEGGINGS, 28, 1)),
+    I30_40_4("30-40-4", 10, ItemHelper.createArmor("&8Przeklete Buty", Material.GOLD_BOOTS, 28, 1)),
+    I30_40_5("30-40-5", 10, ItemHelper.createArmor("&8Przekleta Kosa", Material.IRON_SWORD, 18, 8)),
     I30_40_6("30-40-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Przeklety Naszyjnik").toItemStack()),
     I30_40_7("30-40-7", 10, new ItemBuilder(Material.WATCH).setName("&8Przeklety Diadem").toItemStack()),
     I30_40_8("30-40-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&8Przekleta Tarcza").toItemStack()),

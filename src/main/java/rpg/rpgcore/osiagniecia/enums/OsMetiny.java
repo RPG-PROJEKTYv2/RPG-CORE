@@ -9,9 +9,9 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 public enum OsMetiny {
     M1(1, 0, 5, GlobalItem.getItem("I6", 1).clone()),
     M2(2, 1, 15, GlobalItem.getHells(10).clone()),
-    M3(3, 2, 50, ItemHelper.createArmor("&bSpodnie Niszczyciela Metinow", Material.IRON_LEGGINGS, 18, 2, false).clone()),
+    M3(3, 2, 50, ItemHelper.createArmor("&bSpodnie Niszczyciela Metinow", Material.IRON_LEGGINGS, 18, 2).clone()),
     M4(4, 3, 150, GlobalItem.getItem("I50", 2).clone()),
-    M5(5, 4, 500, ItemHelper.createArmor("&bButy Niszczyciela Metinow", Material.IRON_BOOTS, 45, 15, false).clone()),
+    M5(5, 4, 500, ItemHelper.createArmor("&bButy Niszczyciela Metinow", Material.IRON_BOOTS, 45, 15).clone()),
     M6(6, 5, 1_250, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l75 000 000&2$").addGlowing().toItemStack().clone().clone()),
     M7(7, 6, 2_500, GlobalItem.getHells(50).clone()),
     M8(8, 7, 5_000, GlobalItem.getItem("I1", 16).clone()),

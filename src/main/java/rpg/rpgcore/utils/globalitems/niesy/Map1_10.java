@@ -15,10 +15,10 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map1_10 {
-    I1_10_1("1-10-1", 10, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 0,true)),
-    I1_10_2("1-10-2", 10, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 0,true)),
-    I1_10_3("1-10-3", 10, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 0,true)),
-    I1_10_4("1-10-4", 10, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 0,true)),
+    I1_10_1("1-10-1", 10, ItemHelper.createArmor("&8Zaginiona Czapka Najemnika", Material.LEATHER_HELMET, 8, 0)),
+    I1_10_2("1-10-2", 10, ItemHelper.createArmor("&8Zaginiona Koszula Najemnika", Material.LEATHER_CHESTPLATE, 8, 0)),
+    I1_10_3("1-10-3", 10, ItemHelper.createArmor("&8Zaginione Spodnie Najemnika", Material.LEATHER_LEGGINGS, 8, 0)),
+    I1_10_4("1-10-4", 10, ItemHelper.createArmor("&8Zaginiona Buty Najemnika", Material.LEATHER_BOOTS, 8, 0)),
     I1_10_5("1-10-5", 10, ItemHelper.createSword("&8Zaginiona Brzytwa", Material.WOOD_SWORD, 5, 1,false)),
 
     I1_10_6("1-10-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Zaginiony Naszyjnik").toItemStack()),

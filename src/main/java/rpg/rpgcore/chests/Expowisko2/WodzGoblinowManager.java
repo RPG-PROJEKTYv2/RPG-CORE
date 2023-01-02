@@ -16,10 +16,10 @@ public class WodzGoblinowManager {
     private final Set<Items> wodzgoblin = Sets.newConcurrentHashSet();
 
     public WodzGoblinowManager() {
-        this.wodzgoblin.add(new Items("1", 8.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 0,false), 1));
-        this.wodzgoblin.add(new Items("2", 8.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 9, 0,false), 1));
-        this.wodzgoblin.add(new Items("3", 8.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 9, 0,false), 1));
-        this.wodzgoblin.add(new Items("4", 8.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 9, 0,false), 1));
+        this.wodzgoblin.add(new Items("1", 8.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 0), 1));
+        this.wodzgoblin.add(new Items("2", 8.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 9, 0), 1));
+        this.wodzgoblin.add(new Items("3", 8.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 9, 0), 1));
+        this.wodzgoblin.add(new Items("4", 8.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 9, 0), 1));
         this.wodzgoblin.add(new Items("5", 6.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
         this.wodzgoblin.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lNaszyjnik Wodza Goblinow").toItemStack(),1 ));
         this.wodzgoblin.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&a&lDiadem Wodza Goblinow").toItemStack(),1 ));

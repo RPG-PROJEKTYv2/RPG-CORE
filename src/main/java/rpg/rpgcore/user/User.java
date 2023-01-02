@@ -38,6 +38,7 @@ public class User {
     private final InventoriesUser inventoriesUser;
     private int pierscienDoswiadczenia;
     private long pierscienDoswiadczeniaTime;
+    private double krytyk;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -60,6 +61,7 @@ public class User {
         this.inventoriesUser = new InventoriesUser("", "", "");
         this.pierscienDoswiadczenia = 0;
         this.pierscienDoswiadczeniaTime = 0L;
+        this.krytyk = 0.0;
     }
 
     public User(final Document document) {
@@ -83,6 +85,7 @@ public class User {
         this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"));
         this.pierscienDoswiadczenia = document.getInteger("pierscienDoswiadczenia");
         this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
+        this.krytyk = document.getDouble("krytyk");
     }
 
     public boolean isBanned() {
@@ -116,7 +119,8 @@ public class User {
                 .append("enderchest", this.inventoriesUser.getEnderchest())
                 .append("armor", this.inventoriesUser.getArmor())
                 .append("pierscienDoswiadczenia", this.pierscienDoswiadczenia)
-                .append("pierscienDoswiadczeniaTime", this.pierscienDoswiadczeniaTime);
+                .append("pierscienDoswiadczeniaTime", this.pierscienDoswiadczeniaTime)
+                .append("krytyk", this.krytyk);
     }
 
 
