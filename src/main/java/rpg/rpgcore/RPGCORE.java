@@ -58,6 +58,9 @@ import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
+import rpg.rpgcore.commands.player.craftingi.CraftingiCommand;
+import rpg.rpgcore.commands.player.craftingi.CraftingiInventoryClickListener;
+import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.commands.player.misje.MisjeCommand;
 import rpg.rpgcore.commands.player.misje.MisjeInventoryClickListener;
@@ -316,6 +319,7 @@ public final class RPGCORE extends JavaPlugin {
     private ItemShopNPC itemShopNPC;
     private KociolkiManager kociolkiManager;
     private TopkiManager topkiManager;
+    private CraftingiManager craftingiManager;
 
 
 
@@ -512,6 +516,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new ArtefaktyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new EnderChestCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TopkiCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new CraftingiCommand());
     }
 
     private void initEvents() {
@@ -595,6 +600,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // TOPKI
         this.getServer().getPluginManager().registerEvents(new TopkiInventoryClickListener(), this);
+
+        // CRAFTINGI
+        this.getServer().getPluginManager().registerEvents(new CraftingiInventoryClickListener(), this);
 
         // KLASY
 
@@ -740,6 +748,7 @@ public final class RPGCORE extends JavaPlugin {
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
+        this.craftingiManager = new CraftingiManager();
     }
 
     private void initNPCS() {
@@ -1169,5 +1178,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public TopkiManager getTopkiManager() {
         return topkiManager;
+    }
+
+    public CraftingiManager getCraftingiManager() {
+        return craftingiManager;
     }
 }
