@@ -1,7 +1,9 @@
 package rpg.rpgcore.npc.rybak.events;
 
 import net.minecraft.server.v1_8_R3.EntityFishingHook;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Fish;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +33,7 @@ public class PlayerFishListener implements Listener {
     public void onFish(final PlayerFishEvent e) {
         final Player player = e.getPlayer();
         e.setExpToDrop(0);
+        Bukkit.broadcastMessage("1");
 
         if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
             e.setCancelled(true);
@@ -114,7 +117,8 @@ public class PlayerFishListener implements Listener {
                 return;
             }
             final String time = Utils.durationToString(this.timeMap.get(e.getPlayer().getUniqueId()), false);
-            if (e.getState() == PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH || e.getState() == PlayerFishEvent.State.IN_GROUND) {
+            e.getPlayer().sendMessage(e.getState().name()); //TODO <- PRZETESTOWAC!
+            if (e.getState() == PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
                 rpgcore.getServer().getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskId(e.getPlayer().getUniqueId()));
                 rpgcore.getRybakNPC().removeTaskId(e.getPlayer().getUniqueId());
                 this.timeMap.remove(e.getPlayer().getUniqueId());
@@ -124,6 +128,8 @@ public class PlayerFishListener implements Listener {
                 e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7| &eplynie..."));
                 return;
             }
+
+            e.getHook().setCustomNameVisible(true);
             e.getHook().setCustomName(Utils.format("&c" + e.getPlayer().getName() + " &7| oczekuje na rybe... &c" + time));
         }, 1L, 20L);
         if (rpgcore.getRybakNPC().getTaskMap().containsKey(e.getPlayer().getUniqueId())) {
@@ -151,7 +157,5 @@ public class PlayerFishListener implements Listener {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
-        fishCatchTime.setAccessible(false);
     }
 }

@@ -43,9 +43,9 @@ public class CraftingiManager {
 
         gui.setItem(10, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lAnielska Tarcza").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Zwiekszona Defensywa: &c1% - 1%",
-                "&7Szansa na Blok: &c1% - 1%",
-                "&7Dodatkowe Serca: &c+1 - 1",
+                "&7Zwiekszona Defensywa: &c1% - 17%",
+                "&7Szansa na Blok: &c1% - 10%",
+                "&7Dodatkowe Serca: &c+1 - 5",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -62,9 +62,9 @@ public class CraftingiManager {
 
         gui.setItem(12, new ItemBuilder(Material.WATCH).setName("&f&lAnielski Diadem").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Srednie Obrazenia: &c1% - 1%",
-                "&7Silny przeciwko potworom: &c1% - 1%",
-                "&7Dodatkowy EXP: &c1% - 1%",
+                "&7Srednie Obrazenia: &c1% - 8%",
+                "&7Silny przeciwko potworom: &c1% - 10%",
+                "&7Dodatkowy EXP: &c1% - 2%",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -81,9 +81,9 @@ public class CraftingiManager {
 
         gui.setItem(14, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lAnielski Naszyjnik").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Dodatkowe Obrazenia: &c+1 - 1",
-                "&7Szansa na Cios Krytyczny: &c1% - 1%",
-                "&7Zwiekszone Obrazenia: &c1% - 1%",
+                "&7Dodatkowe Obrazenia: &c+1 - 20",
+                "&7Szansa na Cios Krytyczny: &c1% - 10%",
+                "&7Zwiekszone Obrazenia: &c1% - 7%",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -101,8 +101,8 @@ public class CraftingiManager {
         gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lAnielski Pierscien").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Szansa na Przeszycie Bloku: &c1% - 1%",
-                "&7Wzmocnienie Ciosu Krytycznego: &c1% - 1%",
-                "&7Zwiekszona Szybkosc Ruchu, &c+1 - 1",
+                "&7Wzmocnienie Ciosu Krytycznego: &c1% - 5%",
+                "&7Zwiekszona Szybkosc Ruchu, &c+1 - 10",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -117,6 +117,8 @@ public class CraftingiManager {
                 "&8- &6100 000&2$"
         )).toItemStack());
 
+        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+
         player.openInventory(gui);
     }
 
@@ -124,19 +126,24 @@ public class CraftingiManager {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lCraftingi &8>> &4&lDiabelskie Akce"));
 
         for (int i = 0; i < 27; i++) {
-            if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-            } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
-            }
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
         }
+
+        gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
 
 
         gui.setItem(10, new ItemBuilder(Material.ITEM_FRAME).setName("&4&lDiabelska Tarcza").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Zwiekszona Defensywa: &c1% - 1%",
-                "&7Szansa na Blok: &c1% - 1%",
-                "&7Dodatkowe Serca: &c+1 - 1",
+                "&7Zwiekszona Defensywa: &c5% - 35%",
+                "&7Szansa na Blok: &c3% - 20%",
+                "&7Dodatkowe Serca: &c+1 - 10",
                 "",
                 "&cWymagany poziom: &630 - 60",
                 "",
@@ -153,11 +160,11 @@ public class CraftingiManager {
 
         gui.setItem(12, new ItemBuilder(Material.WATCH).setName("&4&lDiabelski Diadem").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Srednie Obrazenia: &c1% - 1%",
-                "&7Silny przeciwko potworom: &c1% - 1%",
-                "&7Dodatkowy EXP: &c1% - 1%",
+                "&7Srednie Obrazenia: &c3% - 15%",
+                "&7Silny przeciwko potworom: &c3% - 15%",
+                "&7Dodatkowy EXP: &c1% - 3%",
                 "",
-                "&cWymagany poziom: &61 - 30",
+                "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &648x &eZloto",
@@ -172,9 +179,9 @@ public class CraftingiManager {
         
         gui.setItem(13, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lDiabelskie Kolcyki").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Silny przeciwko ludziom: &c1% - 1%",
-                "&7Odpornosc na Ludzi: &c1% - 1%",
-                "&7Zmniejszona Szybkosc Ruchu: -&c1 - 1",
+                "&7Silny przeciwko ludziom: &c3% - 18%",
+                "&7Odpornosc na Ludzi: &c2% - 15%",
+                "&7Zmniejszona Szybkosc Ruchu: -&c10 - 30",
                 "",
                 "&cWymagany poziom: &630 - 60",
                 "",
@@ -192,11 +199,11 @@ public class CraftingiManager {
 
         gui.setItem(14, new ItemBuilder(Material.STORAGE_MINECART).setName("&4&lDiabelski Naszyjnik").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Dodatkowe Obrazenia: &c+1 - 1",
-                "&7Szansa na Cios Krytyczny: &c1% - 1%",
-                "&7Zwiekszone Obrazenia: &c1% - 1%",
+                "&7Dodatkowe Obrazenia: &c+12 - 60",
+                "&7Szansa na Cios Krytyczny: &c5% - 18%",
+                "&7Zwiekszone Obrazenia: &c5% - 18%",
                 "",
-                "&cWymagany poziom: &61 - 30",
+                "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &664x &eZloto",
@@ -212,10 +219,10 @@ public class CraftingiManager {
         gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lDiabelski Pierscien").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Szansa na Przeszycie Bloku: &c1% - 1%",
-                "&7Wzmocnienie Ciosu Krytycznego: &c1% - 1%",
-                "&7Zwiekszona Szybkosc Ruchu, &c+1 - 1",
+                "&7Wzmocnienie Ciosu Krytycznego: &c3% - 10%",
+                "&7Zwiekszona Szybkosc Ruchu, &c+15 - 30",
                 "",
-                "&cWymagany poziom: &61 - 30",
+                "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &648x &eZloto",
@@ -228,11 +235,13 @@ public class CraftingiManager {
                 "&8- &6300 000&2$"
         )).toItemStack());
 
+        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+
         player.openInventory(gui);
     }
 
     public void openCratingSwietlnaZbroja(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lCraftingi &8>> &4&lSwietlne EQ"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lCraftingi &8>> &e&lSwietlne EQ"));
 
         for (int i = 0; i < 27; i++) {
             if (i % 2 == 0) {
@@ -243,8 +252,8 @@ public class CraftingiManager {
         }
 
         gui.setItem(10, new ItemBuilder(Material.DIAMOND_HELMET).setName("&e&lSwietlny Helm").setLore(Arrays.asList(
-                "&7Obrona: &f1 - 1",
-                "&7Ciernie: &f1 - 1",
+                "&7Obrona: &f1 - 75",
+                "&7Ciernie: &f1 - 20",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &640x &eZloto",
@@ -258,8 +267,8 @@ public class CraftingiManager {
         )).toItemStack());
 
         gui.setItem(12, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&e&lSwietlny Napiersnik").setLore(Arrays.asList(
-                "&7Obrona: &f1 - 1",
-                "&7Ciernie: &f1 - 1",
+                "&7Obrona: &f1 - 75",
+                "&7Ciernie: &f1 - 20",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &664x &eZloto",
@@ -273,8 +282,8 @@ public class CraftingiManager {
         )).toItemStack());
 
         gui.setItem(14, new ItemBuilder(Material.DIAMOND_LEGGINGS).setName("&e&lSwietlne Nogawice").setLore(Arrays.asList(
-                "&7Obrona: &f1 - 1",
-                "&7Ciernie: &f1 - 1",
+                "&7Obrona: &f1 - 75",
+                "&7Ciernie: &f1 - 20",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &656x &eZloto",
@@ -288,8 +297,8 @@ public class CraftingiManager {
         )).toItemStack());
 
         gui.setItem(16, new ItemBuilder(Material.DIAMOND_BOOTS).setName("&e&lSwietlne Buty").setLore(Arrays.asList(
-                "&7Obrona: &f1 - 1",
-                "&7Ciernie: &f1 - 1",
+                "&7Obrona: &f1 - 75",
+                "&7Ciernie: &f1 - 20",
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &632x &eZloto",
@@ -302,6 +311,8 @@ public class CraftingiManager {
                 "&8- &65 000 000&2$"
         )).toItemStack());
 
+        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+
         player.openInventory(gui);
     }
 
@@ -309,13 +320,18 @@ public class CraftingiManager {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lCraftingi &8>> &3&lInne"));
 
         for (int i = 0; i < 27; i++) {
-            if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-            } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
-            }
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
         }
-        
+
+        gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(21, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+
         gui.setItem(10, new ItemBuilder(GlobalItem.getItem("I50", 1).clone()).setLoreCrafting(GlobalItem.getItem("I50", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
@@ -346,25 +362,18 @@ public class CraftingiManager {
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &63x &8&lFragment Magicznej Stali",
-                "&8- &648x &eZloto",
-                "&8- &648x &bBrylant",
-                "&8- &648x &aSzmaragd",
-                "&8- &648x &cPyl",
-                "&8- &648x &7Kamien",
-                "&8- &648x &8Stal",
-                "&8- &648x &7Proch",
+                "&8- &616x &eZloto",
+                "&8- &616x &cPyl",
+                "&8- &616x &7Kamien",
+                "&8- &616x &8Stal",
                 "&8- &68 000 000&2$"
         )).toItemStack());
         gui.setItem(14, new ItemBuilder(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &62x &8&lFragment Magicznej Stali",
-                "&8- &616x &eZloto",
+                "&8- &61x &8&lFragment Magicznej Stali",
                 "&8- &616x &bBrylant",
                 "&8- &616x &aSzmaragd",
-                "&8- &616x &cPyl",
-                "&8- &616x &7Kamien",
-                "&8- &616x &8Stal",
                 "&8- &616x &7Proch",
                 "&8- &61 000 000&2$"
         )).toItemStack());
@@ -372,15 +381,16 @@ public class CraftingiManager {
         gui.setItem(16, new ItemBuilder(GlobalItem.getItem("I_KAMIENBAO", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_KAMIENBAO", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &664x &eZloto",
-                "&8- &664x &bBrylant",
-                "&8- &664x &aSzmaragd",
-                "&8- &664x &cPyl",
-                "&8- &664x &7Kamien",
-                "&8- &664x &8Stal",
-                "&8- &664x &7Proch",
+                "&8- &61x &d&lCzastka Magii",
+                "&8- &632x &eZloto",
+                "&8- &632x &bBrylant",
+                "&8- &632x &aSzmaragd",
+                "&8- &632x &cPyl",
+                "&8- &632x &7Proch",
                 "&8- &67 500 000&2$"
         )).toItemStack());
+
+        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
 
         player.openInventory(gui);

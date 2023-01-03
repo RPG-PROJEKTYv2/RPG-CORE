@@ -72,6 +72,8 @@ public class MobDropHelper {
         addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2.0), true, true, entity);
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
+        // FRAGMENT STALI
+        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 1.2), true, true, entity);
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
@@ -262,6 +264,8 @@ public class MobDropHelper {
             if (!player.getWorld().getName().equals("demontower")) return;
             IceTowerManager.teleportKowal();
         }
+
+        // TODO Dodac drop Czastki Magii powyzej mobow 60Lvl
 
         rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + rpgcore.getLvlManager().getKasa(entityName));
         rpgcore.getLvlManager().updateExp(player, entityName);

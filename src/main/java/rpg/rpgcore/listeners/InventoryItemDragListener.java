@@ -9,7 +9,7 @@ public class InventoryItemDragListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void tradeInventoryDragEvent(final InventoryDragEvent e) {
-        if (e.getWhoClicked().getOpenInventory().getTopInventory().getTitle().contains("container.")) {
+        if (e.getWhoClicked().getOpenInventory().getTopInventory().getTitle().contains("container.") || e.getWhoClicked().getOpenInventory().getTopInventory().getTitle().contains("Magazyn")) {
             return;
         }
         e.setCancelled(true);
