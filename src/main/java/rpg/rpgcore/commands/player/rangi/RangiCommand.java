@@ -32,7 +32,7 @@ public class RangiCommand extends CommandAPI {
         this.openRangiInventory(player);
     }
 
-    private void openRangiInventory(Player player) {
+    private void openRangiInventory(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, InventoryType.BREWING, Utils.format("&cRangi"));
 
 

@@ -138,7 +138,6 @@ public enum ItemShop {
         }
         return null;
     }
-
     public static void listAll(final CommandSender sender) {
         sender.sendMessage(Utils.format("&8&m------------{-&6&l ItemShop &8&m-}------------"));
         sender.sendMessage(Utils.format("&7Lista dostepnych pakietow:"));

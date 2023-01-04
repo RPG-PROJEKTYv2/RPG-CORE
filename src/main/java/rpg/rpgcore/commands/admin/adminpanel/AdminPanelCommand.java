@@ -8,6 +8,7 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AdminPanelCommand extends CommandAPI {
 
@@ -15,6 +16,7 @@ public class AdminPanelCommand extends CommandAPI {
 
     public AdminPanelCommand(RPGCORE rpgcore) {
         super("adminpanel");
+        this.setAliases(Arrays.asList("paneladmin"));
         this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;

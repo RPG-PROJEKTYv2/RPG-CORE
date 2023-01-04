@@ -51,7 +51,6 @@ public enum GlobalItem {
     I_SERCEDEMONA("I_SERCEDEMONA", new ItemBuilder(Material.FLINT).setName("&dSerce Demona").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_NIEBIANSKIMATERIAL("I_NIEBIANSKIMATERIAL", new ItemBuilder(Material.INK_SACK, 1, (short)12).setName("&3Niebianki Material").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
 
-    // SKRZYNKI CIAG DALSZY BO ORZEL KURWA NIE UMIE ZROBIC DOBRZE...........
     I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSzkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 

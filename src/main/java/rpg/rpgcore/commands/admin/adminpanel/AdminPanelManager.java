@@ -188,19 +188,19 @@ public class AdminPanelManager {
         gui.setItem(32,new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName(" ").toItemStack());
         gui.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName(" ").toItemStack());
 
-        gui.setItem(5, GlobalItem.getItem("II52",1 ));
-        gui.setItem(6, GlobalItem.getItem("II53",1 ));
-        gui.setItem(7, GlobalItem.getItem("II54",1 ));
-        gui.setItem(8, GlobalItem.getItem("II55",1 ));
-        
+        gui.setItem(5, GlobalItem.getItem("I52",1));
+        gui.setItem(6, GlobalItem.getItem("I53",1));
+        gui.setItem(7, GlobalItem.getItem("I54",1));
+        gui.setItem(8, GlobalItem.getItem("I55",1));
 
+        
         gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);
     }
 
 
     public void openNiesamowiteGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&b&lNiesamowite  &f- ADMINISTRACJA"));
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&b&lNiesamowite &f- ADMINISTRACJA"));
         for (final NiesyItems niesyItems : NiesyItems.values()) {
             gui.setItem(gui.firstEmpty(), niesyItems.getNiesy());
         }

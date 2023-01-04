@@ -64,6 +64,9 @@ public class POMOCInventoryClick implements Listener {
         }
         if (Utils.removeColor(clickedInventoryTitle).equals("Spis komend")) {
             e.setCancelled(true);
+            if (clickedSlot == 27) {
+                rpgcore.getPomocManager().openPomocInventory(player);
+            }
         }
     }
 }

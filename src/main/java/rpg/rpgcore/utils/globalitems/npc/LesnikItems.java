@@ -35,7 +35,6 @@ public enum LesnikItems {
         }
         return null;
     }
-
     public static ItemStack getByItem(final String name, final int amount) {
         final ItemStack item = getByName(name).getItem();
         item.setAmount(amount);

@@ -76,6 +76,10 @@ public class AdminPanelInventoryClick implements Listener {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openInneCaseGUI(player);
             }
+            if (slot == 26) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+            }
         }
         if (title.equals("Skrzynki MOBY - ADMINISTRACJA") || title.equals("Skrzynki BOSSY - ADMINISTRACJA") || title.equals("Skrzynki DUNGEONY - ADMINISTRACJA")) {
             if (slot == 26) {
