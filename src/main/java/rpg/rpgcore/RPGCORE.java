@@ -147,6 +147,8 @@ import rpg.rpgcore.pets.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
 import rpg.rpgcore.pets.listeners.PetInteractListener;
 import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
+import rpg.rpgcore.playerInventory.PlayerOpenInventoryListener;
+import rpg.rpgcore.playerInventory.tasks.PacketTask;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -384,6 +386,8 @@ public final class RPGCORE extends JavaPlugin {
         new KociolkiTask(this);
         // ... TOPKI
         new TopkiTask(this);
+        // ... ITEMY W CRAFTING GUI
+        new PacketTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -713,6 +717,9 @@ public final class RPGCORE extends JavaPlugin {
         // ARTEFAKTY
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInteractListener(this), this);
+
+        // PLAYER INVENTORY
+        this.getServer().getPluginManager().registerEvents(new PlayerOpenInventoryListener(), this);
 
     }
 

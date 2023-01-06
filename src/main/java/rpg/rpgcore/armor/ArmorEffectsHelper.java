@@ -134,7 +134,6 @@ public class ArmorEffectsHelper {
         if (player.getInventory().getHelmet() == null) {
             if (player.hasPotionEffect(PotionEffectType.JUMP)) {
                 player.removePotionEffect(PotionEffectType.JUMP);
-                return;
             }
         } else {
             player.getInventory().setHelmet(ItemHelper.checkEnchants(player.getInventory().getHelmet(), player));
@@ -146,7 +145,6 @@ public class ArmorEffectsHelper {
             if (player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
                 player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                 player.setMaxHealth(RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
-                return;
             }
         } else {
             player.getInventory().setChestplate(ItemHelper.checkEnchants(player.getInventory().getChestplate(), player));
@@ -157,7 +155,6 @@ public class ArmorEffectsHelper {
         if (player.getInventory().getLeggings() == null) {
             if (player.hasPotionEffect(PotionEffectType.REGENERATION)) {
                 player.removePotionEffect(PotionEffectType.REGENERATION);
-                return;
             }
         } else {
             player.getInventory().setLeggings(ItemHelper.checkEnchants(player.getInventory().getLeggings(), player));

@@ -29,7 +29,6 @@ public class ItemHelper {
             set.addEnchant(Enchantment.THORNS, thorns);
         }
 
-        set.hideFlag();
         set.addGlowing();
         set.addTagInt("prot", prot);
         set.addTagInt("thorns", thorns);
@@ -81,7 +80,6 @@ public class ItemHelper {
             is.removeEnchantment(Enchantment.THORNS);
         }
         List<String> lore = new ArrayList<>();
-        boolean addGlowing = false;
         final net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         final net.minecraft.server.v1_8_R3.NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new net.minecraft.server.v1_8_R3.NBTTagCompound();
         if (is.getItemMeta().hasLore()) {
@@ -94,7 +92,6 @@ public class ItemHelper {
                 if (v2 > 0) {
                     lore.set(1, Utils.format("&7Ciernie: &f" + v2));
                     tag.setInt("thorns", v2);
-                    addGlowing = true;
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
@@ -115,7 +112,6 @@ public class ItemHelper {
                 if (v2 > 0) {
                     lore.add(Utils.format("&7Ciernie: &f" + v2));
                     tag.setInt("thorns", v2);
-                    addGlowing = true;
                 }
             } else if (type.equalsIgnoreCase("miecz")) {
                 if (v1 > 0) {
@@ -136,12 +132,6 @@ public class ItemHelper {
             }
         }
         final ItemMeta meta = toReturn.getItemMeta();
-        if (addGlowing) {
-            toReturn.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-        }
         meta.setLore(lore);
         toReturn.setItemMeta(meta);
         return toReturn;
