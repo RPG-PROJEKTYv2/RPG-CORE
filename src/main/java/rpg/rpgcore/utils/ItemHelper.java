@@ -147,48 +147,55 @@ public class ItemHelper {
         return toReturn;
     }
 
-    public static void checkEnchants(final ItemStack itemStack, final Player player) {
+    public static ItemStack checkEnchants(final ItemStack itemStack, final Player player) {
         if (itemStack == null) {
-            return;
+            return null;
         }
         if (!itemStack.getType().equals(Material.AIR)) {
             final String type = itemStack.getType().toString();
             if (type.contains("_HELMET") || type.contains("_CHESTPLATE") || type.contains("_LEGGINGS") || type.contains("_BOOTS")) {
-                if (Utils.getTagInt(itemStack, "prot") > 250) {
+                int prot = Utils.getTagInt(itemStack, "prot");
+                int thorns = Utils.getTagInt(itemStack, "thorns");
+                if (prot > 250) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Duża Obrona ! (" + Utils.getTagInt(itemStack, "prot") + ")**",
-                            "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
-                                    "Item: " + itemStack.getItemMeta(), Color.RED
+                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                                    "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
-                    player.setItemInHand(setEnchants(itemStack, "zbroja", 250, 0));
+                    prot = 250;
                 }
-                if (Utils.getTagInt(itemStack, "thorns") > 50) {
+                if (thorns > 50) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Dużo THORNS ! (" + Utils.getTagInt(itemStack, "thorns") + ")**",
-                            "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
-                                    "Item: " + itemStack.getItemMeta(), Color.RED
+                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                                    "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
-                    player.setItemInHand(setEnchants(itemStack, "zrboja", 0, 50));
+                    thorns = 50;
                 }
+                return setEnchants(itemStack, "zbroja", prot, thorns);
             }
             if (type.contains("_SWORD")) {
-                if (Utils.getTagInt(itemStack, "dmg") > 2500) {
+                int dmg = Utils.getTagInt(itemStack, "dmg");
+                int moby = Utils.getTagInt(itemStack, "moby");
+                if (dmg > 2500) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Duża DMG ! (" + Utils.getTagInt(itemStack, "dmg") + ")**",
-                            "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
-                                    "Item: " + itemStack.getItemMeta(), Color.RED
+                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                                    "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
-                    player.setItemInHand(setEnchants(itemStack, "miecz", 2500, 0));
+                    dmg = 2500;
                 }
-                if (Utils.getTagInt(itemStack, "moby") > 2500) {
+                if (moby > 2500) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Dużo DMG MOBY ! (" + Utils.getTagInt(itemStack, "moby") + ")**",
-                            "Gracz: " + player.getName() + " (" + player.getUniqueId() + ")" +
-                                    "Item: " + itemStack.getItemMeta(), Color.RED
+                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                                    "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
-                    player.setItemInHand(setEnchants(itemStack, "miecz", 0, 2500));
+                    moby = 2500;
                 }
+                return setEnchants(itemStack, "miecz", dmg, moby);
             }
         }
+        return itemStack;
     }
 }

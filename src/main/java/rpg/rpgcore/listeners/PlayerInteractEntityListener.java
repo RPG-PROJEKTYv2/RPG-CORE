@@ -98,7 +98,7 @@ public class PlayerInteractEntityListener implements Listener {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // LOWCA
-            if (entityName.equalsIgnoreCase("Lowca")) {
+            if (entityName.equals("Lowca")) {
                 rpgcore.getLowcaNPC().openLowcaGUI(player);
                 return;
             }
@@ -107,7 +107,7 @@ public class PlayerInteractEntityListener implements Listener {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // DUNGEONS
-            if (entityName.equalsIgnoreCase("Dungeony")) {
+            if (entityName.equals("Dungeony")) {
                 rpgcore.getDungeonsManager().openDungeonMenu(player);
                 return;
             }
@@ -116,8 +116,17 @@ public class PlayerInteractEntityListener implements Listener {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // ITEMSHOP
-            if (entityName.equalsIgnoreCase("ItemShop")) {
+            if (entityName.equals("ItemShop")) {
                 rpgcore.getItemShopNPC().openItemShop(player);
+                return;
+            }
+        }
+        if (e.getRightClicked().getType().equals(EntityType.ENDERMITE)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // ITEMSHOP
+            if (entityName.equals("Pomocnik Gornika")) {
+                rpgcore.getGornikNPC().openPomocnikGUI(player);
                 return;
             }
         }

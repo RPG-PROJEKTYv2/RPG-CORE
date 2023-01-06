@@ -73,7 +73,7 @@ public class MobDropHelper {
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
         // FRAGMENT STALI
-        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 1.2), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.4), true, true, entity);
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());

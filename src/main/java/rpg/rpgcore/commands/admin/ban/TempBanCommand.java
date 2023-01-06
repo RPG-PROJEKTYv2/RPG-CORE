@@ -1,7 +1,6 @@
 package rpg.rpgcore.commands.admin.ban;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
@@ -18,26 +17,24 @@ public class TempBanCommand extends CommandAPI {
     public TempBanCommand(RPGCORE rpgcore) {
         super("tempban");
         this.setRankLevel(RankType.KIDMOD);
-        this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }
 
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
-        final Player player = (Player) sender;
 
         if (args.length < 3) {
-            player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+            sender.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
             return;
         }
         if (args.length == 3) {
             if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
-                player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+                sender.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
                 return;
             }
 
             if (!rpgcore.getUserManager().isUserName(args[0])) {
-                player.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return;
             }
             if (args[0].equalsIgnoreCase(sender.getName())) {
@@ -54,19 +51,19 @@ public class TempBanCommand extends CommandAPI {
             try {
                 time = Integer.parseInt(args[1]);
             } catch (final NumberFormatException e) {
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
+                sender.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
             }
-            rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, args[2], false, "Brak Powodu!");
+            rpgcore.getBanManager().tempBanPlayer(sender.getName(), uuidPlayerToTempBan, time, args[2], false, "Brak Powodu!");
             return;
         }
 
         if (args.length == 4) {
             if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
-                player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+                sender.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
                 return;
             }
             if (!rpgcore.getUserManager().isUserName(args[0])) {
-                player.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+                sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
                 return;
             }
             if (args[0].equalsIgnoreCase(sender.getName())) {
@@ -84,11 +81,11 @@ public class TempBanCommand extends CommandAPI {
             try {
                 time = Integer.parseInt(args[1]);
             } catch (final NumberFormatException e) {
-                player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
+                sender.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
             }
 
             if (args[3].equalsIgnoreCase("-s")) {
-                rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, true, "Brak Powodu!");
+                rpgcore.getBanManager().tempBanPlayer(sender.getName(), uuidPlayerToTempBan, time, jednostka, true, "Brak Powodu!");
                 return;
             }
 
@@ -96,17 +93,17 @@ public class TempBanCommand extends CommandAPI {
             args[1] = "";
             args[2] = "";
 
-            rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, false, String.valueOf(args[3]));
+            rpgcore.getBanManager().tempBanPlayer(sender.getName(), uuidPlayerToTempBan, time, jednostka, false, String.valueOf(args[3]));
             return;
         }
 
         boolean silent = false;
         if (!(args[2].equalsIgnoreCase("y") || args[2].equalsIgnoreCase("m") || args[2].equalsIgnoreCase("d") || args[2].equalsIgnoreCase("h") || args[2].equalsIgnoreCase("mm") || args[2].equalsIgnoreCase("s"))) {
-            player.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
+            sender.sendMessage(Utils.poprawneUzycie("tempban <gracz> <liczba> <y/m/d/h/mm/s> [-s] [powod]"));
             return;
         }
         if (!rpgcore.getUserManager().isUserName(args[0])) {
-            player.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
+            sender.sendMessage(Utils.BANPREFIX + Utils.NIEMATAKIEGOGRACZA);
             return;
         }
         if (args[0].equalsIgnoreCase(sender.getName())) {
@@ -124,7 +121,7 @@ public class TempBanCommand extends CommandAPI {
         try {
             time = Integer.parseInt(args[1]);
         } catch (final NumberFormatException e) {
-            player.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
+            sender.sendMessage(Utils.format(Utils.BANPREFIX + "&cMusisz podac liczbe calkowita"));
         }
 
         if (args[3].equalsIgnoreCase("-s")) {
@@ -141,6 +138,6 @@ public class TempBanCommand extends CommandAPI {
             }
         }
 
-        rpgcore.getBanManager().tempBanPlayer(player.getName(), uuidPlayerToTempBan, time, jednostka, silent, String.valueOf(reason));
+        rpgcore.getBanManager().tempBanPlayer(sender.getName(), uuidPlayerToTempBan, time, jednostka, silent, String.valueOf(reason));
     }
 }

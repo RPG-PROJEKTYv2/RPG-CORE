@@ -1,5 +1,7 @@
 package rpg.rpgcore.npc.kupiec;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,15 +15,10 @@ import java.util.*;
 
 public class KupiecNPC {
 
-    private final RPGCORE rpgcore;
-
     public KupiecNPC(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
     }
 
     // LISTY I MAPY DO SPRAWDZENIA CZY PRZEDMIOT JEST W BAZIE
-    private final List<Material> itemStackList = new ArrayList<>();
-    private final Map<String, Double> itemPriceMap = new HashMap<>();
 
     // KASA ZAROBIONA W DZEIN
     private double moneyEarnedPerDay = 0.0;
@@ -33,18 +30,11 @@ public class KupiecNPC {
     private final ItemBuilder dailyIncome = new ItemBuilder(Material.PAPER);
 
     // LISTA PRZEDMIOTOW GRACZY
-    private final Map<UUID, List<ItemStack>> playerItemStackList = new HashMap<>();
+    private final Map<UUID, Multimap<ItemStack, Double>> playerItemStackList = new HashMap<>();
     private final Map<UUID, Double> playerSellValueItems = new HashMap<>();
 
     public void loadAll() {
-        itemStackList.add(Material.LEATHER_CHESTPLATE);
-        itemStackList.add(Material.LEATHER_HELMET);
-        itemStackList.add(Material.LEATHER_LEGGINGS);
-        itemStackList.add(Material.LEATHER_BOOTS);
-        itemPriceMap.put("Helm Najemnika", 10.0);
-        itemPriceMap.put("Zbroja Najemnika", 10.0);
-        itemPriceMap.put("Spodnie Najemnika", 10.0);
-        itemPriceMap.put("Buty Najemnika", 10.0);
+
         /*final String[] listOfMaterials = rpgcore.getConfig().getConfigurationSection("Kupiec_Item_List").getString("Item_List").replaceAll(" ", "").split(",");
 
         for (String oneMaterial : listOfMaterials) {
@@ -87,18 +77,6 @@ public class KupiecNPC {
 
     }
 
-    public boolean checkIfItemIsInLists(final ItemStack itemStack) {
-        if (itemStackList.contains(itemStack.getType())) {
-            return itemPriceMap.containsKey(Utils.removeColor(itemStack.getItemMeta().getDisplayName()));
-        } else {
-            return false;
-        }
-    }
-
-    public double getItemPrice(final ItemStack itemStack) {
-        return itemPriceMap.get(Utils.removeColor(itemStack.getItemMeta().getDisplayName()));
-    }
-
     public ItemStack getSellItem(final double newSellStackCash) {
         List<String> lore = new ArrayList<>();
 
@@ -114,10 +92,10 @@ public class KupiecNPC {
         List<String> lore = new ArrayList<>();
 
         lore.add(" ");
-        lore.add("&7Gracze zarobili dzisiaj:");
+        lore.add("&7Gracze zarobili:");
         lore.add("&6" + Utils.spaceNumber(String.format("%.2f", moneyEarnedPerDay)) +"&2$");
 
-        dailyIncome.setName("&c&lDzienny zarobek").setLore(lore);
+        dailyIncome.setName("&c&lZarobek od ostatniego Restartu").setLore(lore);
 
         return dailyIncome.toItemStack().clone();
     }
@@ -126,40 +104,32 @@ public class KupiecNPC {
 
 
 
-    public String getMoneyEarnedPerDay() {
-        return String.format("%.2f",moneyEarnedPerDay);
-    }
-
-    public void resetMoneyEarnedPerDay() {
-        moneyEarnedPerDay = 0.0;
-    }
-
     public void addMoneyEarnedPerDay(double money) {
         moneyEarnedPerDay += money;
     }
 
-    public void addPlayerItemStack(final UUID uuid, final ItemStack itemStack) {
+    public void addPlayerItemStack(final UUID uuid, final ItemStack itemStack, final double price) {
         if (playerItemStackList.containsKey(uuid)) {
-            playerItemStackList.get(uuid).add(itemStack);
+            playerItemStackList.get(uuid).put(itemStack, price);
         } else {
-            final List<ItemStack> itemStackList = new ArrayList<>();
-            itemStackList.add(itemStack);
+            final Multimap<ItemStack, Double> itemStackList = ArrayListMultimap.create();
+            itemStackList.put(itemStack, price);
             playerItemStackList.put(uuid, itemStackList);
         }
     }
-    public void removePlayerItemStack(final UUID uuid, final ItemStack itemStack) {
-        playerItemStackList.get(uuid).remove(itemStack);
+    public void removePlayerItemStack(final UUID uuid, final ItemStack itemStack, final double price) {
+        playerItemStackList.get(uuid).remove(itemStack, price);
     }
 
     public void resetPlayerItemStack(final UUID uuid) {
         playerItemStackList.remove(uuid);
     }
 
-    public List<ItemStack> getPlayerItemStackList(final UUID uuid) {
+    public Multimap<ItemStack, Double> getPlayerItemStackList(final UUID uuid) {
         if (playerItemStackList.containsKey(uuid)) {
             return playerItemStackList.get(uuid);
         } else {
-            return new ArrayList<>();
+            return ArrayListMultimap.create();
         }
     }
 

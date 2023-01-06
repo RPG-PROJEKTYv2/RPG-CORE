@@ -14,7 +14,7 @@ import rpg.rpgcore.utils.Utils;
 import java.util.UUID;
 
 public class AdminPanelInventoryClick implements Listener {
-    private RPGCORE rpgcore;
+    private final RPGCORE rpgcore;
 
     public AdminPanelInventoryClick(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -24,7 +24,6 @@ public class AdminPanelInventoryClick implements Listener {
     public void onCLick(final InventoryClickEvent e) {
         final Inventory gui = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID uuid = player.getUniqueId();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
@@ -32,87 +31,102 @@ public class AdminPanelInventoryClick implements Listener {
 
         final String title = Utils.removeColor(gui.getTitle());
         final int slot = e.getSlot();
-        final ItemStack item = e.getCurrentItem();
 
         if (title.equals("Panel Administracyjny")) {
             e.setCancelled(true);
             if (slot == 10) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAllCaseGUI(player);
+                return;
             }
             if (slot == 11) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openNiesamowiteGUI(player);
+                return;
             }
             if (slot == 12) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openBonyGUI(player);
+                return;
             }
             if (slot == 13) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openItemShopGUI(player);
+                return;
             }
             if (slot == 14) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openUlepszaczeGUI(player);
+                return;
+            }
+            if (slot == 19) {
+                rpgcore.getAdminPanelManager().openGornikItemsGUI(player);
+                return;
             }
         }
 
         if (title.equals("Skrzynki - ADMINISTRACJA")) {
             e.setCancelled(true);
             if (slot == 12) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openMobyCaseGUI(player);
+                return;
             }
             if (slot == 13) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openBossyCaseGUI(player);
+                return;
             }
             if (slot == 14) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openDungeonyCaseGUI(player);
+                return;
             }
             if (slot == 22) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openInneCaseGUI(player);
+                return;
             }
             if (slot == 26) {
-                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
             }
         }
         if (title.equals("Skrzynki MOBY - ADMINISTRACJA") || title.equals("Skrzynki BOSSY - ADMINISTRACJA") || title.equals("Skrzynki DUNGEONY - ADMINISTRACJA")) {
             if (slot == 26) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAllCaseGUI(player);
+                return;
             }
         }
         if (title.equals("Skrzynki INNE - ADMINISTRACJA")) {
             if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAllCaseGUI(player);
+                return;
             }
         }
         if (title.equals("Ulepszacze - ADMINISTRACJA")) {
             if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
             }
         }
         if (title.equals("Bony - ADMINISTRACJA")) {
             if (slot == 26) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
             }
         }
         if (title.equals("ItemShop - ADMINISTRACJA")) {
             if (slot == 35) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
             }
         }
         if (title.equals("Niesamowite - ADMINISTRACJA")) {
             if (slot == 17) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
+            }
+        }
+        if (title.equals("GORNIK - ADMINISTRACJA")) {
+            if (slot == 53) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }

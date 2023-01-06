@@ -27,30 +27,30 @@ public class GuildsInventoryClick implements Listener {
 
         final Inventory clickedInventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
+        final UUID uuid = player.getUniqueId();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
         }
 
-        final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
-        final int clickedSlot = e.getSlot();
+        final String title = clickedInventory.getTitle();
+        final ItemStack item = e.getCurrentItem();
+        final int slot = e.getSlot();
 
         // MAIN GUI
-        if (clickedInventoryTitle.contains("Panel Klanu")) {
+        if (title.contains("Panel Klanu")) {
             e.setCancelled(true);
 
-            final String playerGuild = rpgcore.getGuildManager().getGuildTag(playerUUID);
+            final String playerGuild = rpgcore.getGuildManager().getGuildTag(uuid);
 
-            if (clickedSlot == 10) {
+            if (slot == 10) {
                 rpgcore.getGuildManager().showMembers(playerGuild, player);
                 return;
             }
 
-            if (clickedSlot == 16) {
-                if (rpgcore.getGuildManager().getGuildOwner(playerGuild).equals(playerUUID) ||
-                        (!rpgcore.getGuildManager().getGuildCoOwner(playerGuild).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(playerGuild).equals(playerUUID.toString()))) {
+            if (slot == 16) {
+                if (rpgcore.getGuildManager().getGuildOwner(playerGuild).equals(uuid) ||
+                        (!rpgcore.getGuildManager().getGuildCoOwner(playerGuild).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(playerGuild).equals(uuid.toString()))) {
                     rpgcore.getGuildManager().showUpgrades(playerGuild, player);
                     return;
                 }
@@ -62,32 +62,32 @@ public class GuildsInventoryClick implements Listener {
         }
 
         // MEMBERS
-        if (clickedInventoryTitle.contains("Czlonkowie Klanu")) {
+        if (title.contains("Czlonkowie Klanu")) {
             e.setCancelled(true);
-            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
 
-            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID.toString()))) {
+            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid.toString()))) {
                 return;
             }
 
-            if (clickedSlot == 0) {
+            if (slot == 0) {
                 return;
             }
 
 
-            if (clickedItem.getType().equals(Material.AIR)) {
+            if (item.getType().equals(Material.AIR)) {
                 return;
             }
 
-            final UUID targetUUID = rpgcore.getUserManager().find(Utils.removeColor(clickedItem.getItemMeta().getDisplayName())).getId();
+            final UUID targetUUID = rpgcore.getUserManager().find(Utils.removeColor(item.getItemMeta().getDisplayName())).getId();
 
-            if (targetUUID.equals(playerUUID)) {
+            if (targetUUID.equals(uuid)) {
                 return;
             }
 
-            if (clickedSlot == 1) {
+            if (slot == 1) {
                 if (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty()) {
-                    if (rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID)) {
+                    if (rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid)) {
                         rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
                         player.closeInventory();
                         return;
@@ -101,11 +101,11 @@ public class GuildsInventoryClick implements Listener {
         }
 
         // UPGRADES
-        if (clickedInventoryTitle.contains("Ulepszenia Klanu ")) {
+        if (title.contains("Ulepszenia Klanu ")) {
             e.setCancelled(true);
-            final String tag = rpgcore.getGuildManager().getGuildTag(playerUUID);
-            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(playerUUID) ||
-                    (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(playerUUID.toString())))) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+            if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) ||
+                    (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid.toString())))) {
                 player.closeInventory();
                 return;
             }
@@ -117,7 +117,7 @@ public class GuildsInventoryClick implements Listener {
                 player.closeInventory();
                 return;
             }
-            switch (clickedSlot) {
+            switch (slot) {
                 case 0:
                     if (rpgcore.getGuildManager().getGuildSredniDmg(tag) >= 50) {
                         player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7Twoja gildia posiada juz maksymalny poziom ulepszenia w tym drzewku"));
@@ -176,8 +176,12 @@ public class GuildsInventoryClick implements Listener {
             }
             rpgcore.getGuildManager().updateGuildBalance(tag, -1);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataGuild(tag, rpgcore.getGuildManager().find(tag)));
-            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + clickedItem.getItemMeta().getDisplayName()));
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + item.getItemMeta().getDisplayName()));
             rpgcore.getGuildManager().showUpgrades(tag, player);
+        }
+
+        if (title.contains("Statystyki Klanu ")) {
+            e.setCancelled(true);
         }
     }
 }

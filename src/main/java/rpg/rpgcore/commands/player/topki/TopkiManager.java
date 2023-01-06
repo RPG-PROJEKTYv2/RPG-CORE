@@ -49,7 +49,7 @@ public class TopkiManager {
         }
         final List<String> topka = new ArrayList<>(10);
         Stream<Map.Entry<String, Long>> sorted = czasMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        sorted.limit(10).forEach(e -> topka.add(e.getKey() + "&8(&7" + Utils.durationToString(e.getValue(), true) + "&8)"));
+        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + Utils.durationToString(e.getValue(), true) + "&8)"));
         if (topka.size() < 10) {
             for (int i = topka.size(); i < 10; i++) {
                 topka.add("Brak");
@@ -67,7 +67,7 @@ public class TopkiManager {
         }
         final List<String> topka = new ArrayList<>(10);
         Stream<Map.Entry<String, Integer>> sorted = lvlMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        sorted.limit(10).forEach(e -> topka.add(e.getKey() + "&8(&7" + e.getValue() + " poziom&8)"));
+        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + e.getValue() + " poziom&8)"));
         if (topka.size() < 10) {
             for (int i = topka.size(); i < 10; i++) {
                 topka.add("Brak");
@@ -85,7 +85,7 @@ public class TopkiManager {
         }
         final List<String> topka = new ArrayList<>(10);
         Stream<Map.Entry<String, Double>> sorted = krytykMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        sorted.limit(10).forEach(e -> topka.add(e.getKey() + "&8(&7" + DoubleUtils.round(e.getValue(), 2) + " dmg&8)"));
+        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + DoubleUtils.round(e.getValue(), 2) + " dmg&8)"));
         if (topka.size() < 10) {
             for (int i = topka.size(); i < 10; i++) {
                 topka.add("Brak");
@@ -101,7 +101,7 @@ public class TopkiManager {
         }
         final List<String> topka = new ArrayList<>(10);
         Stream<Map.Entry<String, Integer>> sorted = gildiaLvlMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        sorted.limit(10).forEach(e -> topka.add(e.getKey() + "&8(&7" + e.getValue() + " poziom&8)"));
+        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + e.getValue() + " poziom&8)"));
         if (topka.size() < 10) {
             for (int i = topka.size(); i < 10; i++) {
                 topka.add("Brak");
@@ -133,7 +133,7 @@ public class TopkiManager {
                 "&79. " + this.czasMap.get(8),
                 "&710. " + this.czasMap.get(9),
                 "",
-                "&8Topki sa resetowane co 30min"
+                "&8Topki sa resetowane co 10min"
         )).toItemStack());
 
         gui.setItem(12, new ItemBuilder(Material.EXP_BOTTLE).setName("&3&lTopka poziomu").setLore(Arrays.asList(
@@ -148,7 +148,7 @@ public class TopkiManager {
                 "&79. " + this.lvlMap.get(8),
                 "&710. " + this.lvlMap.get(9),
                 "",
-                "&8Topki sa resetowane co 30min"
+                "&8Topki sa resetowane co 10min"
         )).toItemStack());
 
         gui.setItem(14, new ItemBuilder(Material.FIREBALL).setName("&3&lTopka krytyka").setLore(Arrays.asList(
@@ -163,7 +163,7 @@ public class TopkiManager {
                 "&79. " + this.krytykMap.get(8),
                 "&710. " + this.krytykMap.get(9),
                 "",
-                "&8Topki sa resetowane co 30min"
+                "&8Topki sa resetowane co 10min"
         )).toItemStack());
 
         gui.setItem(16, new ItemBuilder(Material.FLINT).setName("&3&lTopka gildii").setLore(Arrays.asList(
@@ -178,7 +178,7 @@ public class TopkiManager {
                 "&79. " + this.gildiaLvlMap.get(8),
                 "&710. " + this.gildiaLvlMap.get(9),
                 "",
-                "&8Topki sa resetowane co 30min"
+                "&8Topki sa resetowane co 10min"
         )).toItemStack());
 
 

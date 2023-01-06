@@ -77,7 +77,7 @@ public abstract class CommandAPI extends Command {
                     && !s.equals("pety") && !s.equals("pets") && !s.equals("ignore") && !s.equals("ignoruj") && !s.equals("dodatki") && !s.equals("bony") && !s.equals("akce") && !s.equals("akcesoria") && !s.equals("ekwipunek")
                     && !s.equals("profile") && !s.equals("magazyny") && !s.equals("magazyn") && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia") && !s.equals("artefakty")
                     && !s.equals("arte") && !s.equals("enderchest") && !s.equals("ec") && !s.equals("topki") && !s.equals("top") && !s.equals("rangi") && !s.equals("vip") && !s.equals("svip") && !s.equals("elita") && !s.equals("craftingi")
-                    && !s.equals("craft") && !s.equals("crafting")) {
+                    && !s.equals("craft") && !s.equals("crafting") && !s.equals("listanpc") && !s.equals("lnpc") && !s.equals("npc")) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));

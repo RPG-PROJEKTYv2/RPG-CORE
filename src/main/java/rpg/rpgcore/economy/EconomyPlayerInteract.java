@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -40,10 +41,12 @@ public class EconomyPlayerInteract implements Listener {
         }
 
         if (eventItem.getType().equals(Material.DOUBLE_PLANT) && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Czek na ")) {
-            final double kwotaZCzeku = Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim());
-            final User user = rpgcore.getUserManager().find(uuid);
             final ItemStack is = e.getItem().clone();
-            is.setAmount(1);
+            if (!player.isSneaking()) {
+                is.setAmount(1);
+            }
+            final double kwotaZCzeku = DoubleUtils.round(Double.parseDouble(Utils.removeColor(eventItem.getItemMeta().getDisplayName()).replace("Czek na ", "").replaceAll(" ", "").replace("$", "").trim()) * is.getAmount(), 2);
+            final User user = rpgcore.getUserManager().find(uuid);
             player.getInventory().removeItem(is);
             user.setKasa(user.getKasa() + kwotaZCzeku);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
@@ -55,12 +58,15 @@ public class EconomyPlayerInteract implements Listener {
                 player.getInventory().removeItem(eventItem);
                 return;
             }
+            int amount = 1;
             final User user = rpgcore.getUserManager().find(uuid);
-
-            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack().clone());
-            user.setHellcoins(user.getHellcoins() + hells);
+            if (player.isSneaking()) {
+                amount = eventItem.getAmount();
+            }
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(amount).toItemStack());
+            user.setHellcoins(user.getHellcoins() + (hells * amount));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(String.valueOf(hells)) + " &4&lH&6&lS"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zwiekszono stan twojego konta o &6" + Utils.spaceNumber(String.valueOf((hells * amount))) + " &4&lH&6&lS"));
         }
 
     }

@@ -55,6 +55,8 @@ import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelManager;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListCommand;
+import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListManager;
 import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
@@ -119,6 +121,7 @@ import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.itemshop.ItemShopNPC;
 import rpg.rpgcore.npc.itemshop.events.ItemShopInteractListener;
 import rpg.rpgcore.npc.itemshop.events.ItemShopInventoryClickListener;
+import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
@@ -133,6 +136,7 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
+import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.osiagniecia.OsManager;
@@ -320,6 +324,7 @@ public final class RPGCORE extends JavaPlugin {
     private KociolkiManager kociolkiManager;
     private TopkiManager topkiManager;
     private CraftingiManager craftingiManager;
+    private SerwerWhiteListManager serwerWhiteListManager;
 
 
 
@@ -433,6 +438,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllOreLocations();
         this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
+        this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -517,6 +523,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new EnderChestCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TopkiCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new CraftingiCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new SerwerWhiteListCommand());
     }
 
     private void initEvents() {
@@ -627,6 +634,7 @@ public final class RPGCORE extends JavaPlugin {
         // ...RYBAK
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
@@ -641,6 +649,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new KowalInventoryCloseListener(), this);
 
         // ...KOLEKCJONER
         this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
@@ -749,6 +758,7 @@ public final class RPGCORE extends JavaPlugin {
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
         this.craftingiManager = new CraftingiManager();
+        this.serwerWhiteListManager = new SerwerWhiteListManager(this);
     }
 
     private void initNPCS() {
@@ -1182,5 +1192,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public CraftingiManager getCraftingiManager() {
         return craftingiManager;
+    }
+    public SerwerWhiteListManager getSerwerWhiteListManager() {
+        return serwerWhiteListManager;
     }
 }

@@ -26,7 +26,15 @@ public class GornikBlockBreakListener implements Listener {
     public void onMine(final BlockBreakEvent e) {
         if (e.getPlayer().getWorld().getName().equals("Gornik")) {
             e.setCancelled(true);
+            if (rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isAdminCodeLogin()) {
+                e.setCancelled(false);
+                return;
+            }
             if (!String.valueOf(e.getPlayer().getItemInHand().getType()).contains("_PICKAXE")) {
+                return;
+            }
+            if (!Utils.getTagString(e.getPlayer().getItemInHand(), "owner").equals(e.getPlayer().getName())) {
+                e.getPlayer().sendMessage(Utils.format("&6&lGornik &8» &cNie mozesz uzywac nie swojego sprzetu!"));
                 return;
             }
             if (!String.valueOf(e.getBlock().getType()).contains("_ORE")) {

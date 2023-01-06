@@ -1,22 +1,27 @@
 package rpg.rpgcore.guilds;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class GuildManager {
 
@@ -427,6 +432,188 @@ public class GuildManager {
         }
     }
 
+    public void showGuildStats(final String tag, final Player player) {
+        if (tag.equals("Brak Klanu")) {
+            player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
+            return;
+        }
+        final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&6&lStatystyki Klanu " + tag));
+        for (int i = 0; i < 45; i++) {
+            if (i % 2 == 0) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability((short) 3).setName(" ").toItemStack());
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability((short) 9).setName(" ").toItemStack());
+            }
+        }
+
+        gui.setItem(10, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(12, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(14, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(16, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+
+        gui.setItem(18, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(20, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(22, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(24, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(26, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+
+        gui.setItem(28, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(30, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(32, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+        gui.setItem(34, new ItemBuilder(Material.IRON_FENCE).setName("").toItemStack());
+
+        gui.setItem(19, getKillsItem(tag));
+        gui.setItem(21, getDeathsItem(tag));
+        gui.setItem(23, getExpEarnedItem(tag));
+        gui.setItem(25, getTimeSpent(tag));
+
+
+        player.openInventory(gui);
+    }
+
+    private ItemStack getKillsItem(final String tag) {
+        final Multimap<UUID, Integer> killsMap = ArrayListMultimap.create();
+        final Guild guild = this.find(tag).getGuild();
+        for (UUID uuid : guild.getMembers()) {
+            killsMap.put(uuid, guild.getKills().get(uuid));
+        }
+        Stream<Map.Entry<UUID, Integer>> sorted = killsMap.entries().stream().sorted(Map.Entry.comparingByValue());
+
+        final List<String> topka = new ArrayList<>();
+        sorted.limit(10).forEach(entry -> {
+            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+            topka.add(player.getName() + " &8(&7" + entry.getValue() + " zabojstw&8)");
+        });
+
+        if (topka.size() < 10) {
+            for (int i = topka.size(); i < 10; i++) {
+                topka.add("Brak");
+            }
+        }
+
+        return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6&lZabojstwa").setLore(Arrays.asList(
+                "&7Zabojstwa: &6" + guild.getKills().values().stream().mapToInt(Integer::intValue).sum(),
+                "&7Top 10 Graczy:",
+                "&41. " + topka.get(0),
+                "&62. " + topka.get(1),
+                "&63. " + topka.get(2),
+                "&e4. " + topka.get(3),
+                "&e5. " + topka.get(4),
+                "&76. " + topka.get(5),
+                "&77. " + topka.get(6),
+                "&78. " + topka.get(7),
+                "&79. " + topka.get(8),
+                "&710. " + topka.get(9)
+        )).toItemStack().clone();
+    }
+
+    private ItemStack getDeathsItem(final String tag) {
+        final Multimap<UUID, Integer> deathsMap = ArrayListMultimap.create();
+        final Guild guild = this.find(tag).getGuild();
+        for (UUID uuid : guild.getMembers()) {
+            deathsMap.put(uuid, guild.getDeaths().get(uuid));
+        }
+        Stream<Map.Entry<UUID, Integer>> sorted = deathsMap.entries().stream().sorted(Map.Entry.comparingByValue());
+
+        final List<String> topka = new ArrayList<>(10);
+        sorted.limit(10).forEach(entry -> {
+            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+            topka.add(player.getName() + " &8(&7" + entry.getValue() + " smierci&8)");
+        });
+
+        if (topka.size() < 10) {
+            for (int i = topka.size(); i < 10; i++) {
+                topka.add("Brak");
+            }
+        }
+
+        return new ItemBuilder(Material.SKULL_ITEM).setName("&6&lSmierci").setLore(Arrays.asList(
+                "&7Smierci: &6" + guild.getDeaths().values().stream().mapToInt(Integer::intValue).sum(),
+                "&7Top 10 Graczy:",
+                "&41. " + topka.get(0),
+                "&62. " + topka.get(1),
+                "&63. " + topka.get(2),
+                "&e4. " + topka.get(3),
+                "&e5. " + topka.get(4),
+                "&76. " + topka.get(5),
+                "&77. " + topka.get(6),
+                "&78. " + topka.get(7),
+                "&79. " + topka.get(8),
+                "&710. " + topka.get(9)
+        )).toItemStack().clone();
+    }
+
+    private ItemStack getExpEarnedItem(final String tag) {
+        final Multimap<UUID, Double> expMap = ArrayListMultimap.create();
+        final Guild guild = this.find(tag).getGuild();
+        for (UUID uuid : guild.getMembers()) {
+            expMap.put(uuid, guild.getExpEarned().get(uuid));
+        }
+        Stream<Map.Entry<UUID, Double>> sorted = expMap.entries().stream().sorted(Map.Entry.comparingByValue());
+
+        final List<String> topka = new ArrayList<>(10);
+        sorted.limit(10).forEach(entry -> {
+            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+            topka.add(player.getName() + " &8(&7" + DoubleUtils.round(entry.getValue(), 2) + " exp&8)");
+        });
+
+        if (topka.size() < 10) {
+            for (int i = topka.size(); i < 10; i++) {
+                topka.add("Brak");
+            }
+        }
+
+        return new ItemBuilder(Material.EXP_BOTTLE).setName("&6&lExp").setLore(Arrays.asList(
+                "&7Exp: &6" + DoubleUtils.round(guild.getExpEarned().values().stream().mapToDouble(Double::doubleValue).sum(), 2),
+                "&7Top 10 Graczy:",
+                "&41. " + topka.get(0),
+                "&62. " + topka.get(1),
+                "&63. " + topka.get(2),
+                "&e4. " + topka.get(3),
+                "&e5. " + topka.get(4),
+                "&76. " + topka.get(5),
+                "&77. " + topka.get(6),
+                "&78. " + topka.get(7),
+                "&79. " + topka.get(8),
+                "&710. " + topka.get(9)
+        )).toItemStack().clone();
+    }
+
+    private ItemStack getTimeSpent(final String tag) {
+        final Multimap<UUID, Long> timeMap = ArrayListMultimap.create();
+        final Guild guild = this.find(tag).getGuild();
+        for (UUID uuid : guild.getMembers()) {
+            timeMap.put(uuid, rpgcore.getOsManager().find(uuid).getCzasProgress());
+        }
+        Stream<Map.Entry<UUID, Long>> sorted = timeMap.entries().stream().sorted(Map.Entry.comparingByValue());
+        final List<String> topka = new ArrayList<>(10);
+        sorted.limit(10).forEach(entry -> {
+            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+            topka.add(player.getName() + " &8(&7" + Utils.durationToString(entry.getValue(), true) + "&8)");
+        });
+
+        if (topka.size() < 10) {
+            for (int i = topka.size(); i < 10; i++) {
+                topka.add("Brak");
+            }
+        }
+
+        return new ItemBuilder(Material.WATCH).setName("&6&lCzas Spedzony").setLore(Arrays.asList(
+                "&7Czas Spedzony: &6" + Utils.durationToString(timeMap.entries().stream().mapToLong(Map.Entry::getValue).sum(), true),
+                "&7Top 10 Graczy:",
+                "&41. " + topka.get(0),
+                "&62. " + topka.get(1),
+                "&63. " + topka.get(2),
+                "&e4. " + topka.get(3),
+                "&e5. " + topka.get(4),
+                "&76. " + topka.get(5),
+                "&77. " + topka.get(6),
+                "&78. " + topka.get(7),
+                "&79. " + topka.get(8),
+                "&710. " + topka.get(9)
+        )).toItemStack().clone();
+    }
+
 
     public UUID getGuildOwner(final String tag) {
         return this.find(tag).getOwner();
@@ -449,7 +636,7 @@ public class GuildManager {
     }
 
     public double getGuildExp(final String tag) {
-        return this.find(tag).getGuild().getExp();
+        return DoubleUtils.round(this.find(tag).getGuild().getExp(), 2);
     }
 
     public int getGuildBalance(final String tag) {
@@ -457,23 +644,23 @@ public class GuildManager {
     }
 
     public double getGuildDodatkowyExp(final String tag) {
-        return this.find(tag).getGuild().getDodatkowyExp();
+        return DoubleUtils.round(this.find(tag).getGuild().getDodatkowyExp(), 2);
     }
 
     public double getGuildSredniDmg(final String tag) {
-        return this.find(tag).getGuild().getSredniDmg();
+        return DoubleUtils.round(this.find(tag).getGuild().getSredniDmg(), 2);
     }
 
     public double getGuildSredniDef(final String tag) {
-        return this.find(tag).getGuild().getSredniDef();
+        return DoubleUtils.round(this.find(tag).getGuild().getSredniDef(), 2);
     }
 
     public double getGuildSilnyNaLudzi(final String tag) {
-        return this.find(tag).getGuild().getSilnyNaLudzi();
+        return DoubleUtils.round(this.find(tag).getGuild().getSilnyNaLudzi(), 2);
     }
 
     public double getGuildDefNaLudzi(final String tag) {
-        return this.find(tag).getGuild().getDefNaLudzi();
+        return DoubleUtils.round(this.find(tag).getGuild().getDefNaLudzi(), 2);
     }
 
     public Map<UUID, Integer> getGuildKills(final String tag) {
@@ -557,10 +744,6 @@ public class GuildManager {
 
     public void updateGuildExpEarned(final String tag, final UUID player, final double expEarned) {
         this.find(tag).getGuild().getExpEarned().replace(player, this.find(tag).getGuild().getExpEarned().get(player) + expEarned);
-    }
-
-    public void updateGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
-        this.find(tag).getGuild().getLastOnline().replace(player, lastOnline);
     }
 
     public void putGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {

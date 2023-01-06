@@ -48,6 +48,11 @@ public class GornikInventoryClick implements Listener {
             if (e.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
                 if (String.valueOf(e.getCursor().getType()).contains("_SPADE") && e.getCursor().getItemMeta().hasDisplayName()
                         && e.getCursor().getItemMeta().getDisplayName().contains(" Dluto") && player.getInventory().containsAtLeast(GornikItems.getItem("WODA", 1), 1)) {
+                    if (!Utils.getTagString(e.getCursor(), "owner").equals(player.getName())) {
+                        e.setCancelled(true);
+                        player.sendMessage(Utils.format("&6&lGornik &8» &cNie mozesz uzywac nie swojego sprzetu!"));
+                        return;
+                    }
                     if (item != null && (item.getType() == Material.COAL_ORE || item.getType() == Material.IRON_ORE || item.getType() == Material.GOLD_ORE || item.getType() == Material.DIAMOND_ORE
                             || item.getType() == Material.EMERALD_ORE || item.getType() == Material.REDSTONE_ORE || item.getType() == Material.LAPIS_ORE) && item.getItemMeta().hasDisplayName()
                             && item.getItemMeta().getDisplayName().contains("Ruda")) {
@@ -154,7 +159,7 @@ public class GornikInventoryClick implements Listener {
                     return;
                 }
                 user.setKasa(user.getKasa() - 100000000);
-                player.getInventory().addItem(GornikItems.getKilof());
+                player.getInventory().addItem(GornikItems.getKilof(player.getName()));
                 player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj... Mam nadzieje, ze bedzie ci dobrze sluzyl."));
                 player.sendMessage(Utils.format("&8Pssst... Kilof ten posiada niesamowite wlasciowsci przemiany."));
                 player.closeInventory();
@@ -620,7 +625,7 @@ public class GornikInventoryClick implements Listener {
                     player.getInventory().removeItem(GornikItems.getItem("R1", 128), GornikItems.getItem("R2", 128), GornikItems.getItem("R3", 128), GornikItems.getItem("R4", 128),
                             GornikItems.getItem("R5", 128), GornikItems.getItem("R6", 128), GornikItems.getItem("R7", 128));
                     user.setKasa(user.getKasa() - 100000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T0", 1));
+                    player.getInventory().addItem(GornikItems.getZmiotka("T0", 1, player.getName()));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Drewniane Dluto&a!"));
                     break;
                 case 2:
@@ -631,15 +636,15 @@ public class GornikInventoryClick implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G5", 1), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G6", 1), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G7", 1), 8) ||
-                            !player.getInventory().contains(GornikItems.getZmiotka("T0", 50)) || user.getKasa() < 200000000) {
+                            !player.getInventory().contains(GornikItems.getZmiotka("T0", 50, player.getName())) || user.getKasa() < 200000000) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
                         return;
                     }
-                    player.getInventory().removeItem(GornikItems.getZmiotka("T0", 50), GornikItems.getCompressed("G1", 8), GornikItems.getCompressed("G2", 8),
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T0", 50, player.getName()), GornikItems.getCompressed("G1", 8), GornikItems.getCompressed("G2", 8),
                             GornikItems.getCompressed("G3", 8), GornikItems.getCompressed("G4", 8), GornikItems.getCompressed("G5", 8),
                             GornikItems.getCompressed("G6", 8), GornikItems.getCompressed("G7", 8));
                     user.setKasa(user.getKasa() - 200000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T1", 1));
+                    player.getInventory().addItem(GornikItems.getZmiotka("T1", 1, player.getName()));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Kamienne Dluto&a!"));
                     break;
                 case 3:
@@ -650,16 +655,15 @@ public class GornikInventoryClick implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G5", 1), 16) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G6", 1), 16) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G7", 1), 16) ||
-                            !player.getInventory().contains(GornikItems.getZmiotka("T1", 50)) || user.getKasa() < 350000000) {
+                            !player.getInventory().contains(GornikItems.getZmiotka("T1", 50, player.getName())) || user.getKasa() < 350000000) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
-                        player.getInventory().addItem(GornikItems.getZmiotka("T1", 50));
                         return;
                     }
-                    player.getInventory().removeItem(GornikItems.getZmiotka("T1", 50), GornikItems.getCompressed("G1", 16), GornikItems.getCompressed("G2", 16),
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T1", 50, player.getName()), GornikItems.getCompressed("G1", 16), GornikItems.getCompressed("G2", 16),
                             GornikItems.getCompressed("G3", 16), GornikItems.getCompressed("G4", 16), GornikItems.getCompressed("G5", 16),
                             GornikItems.getCompressed("G6", 16), GornikItems.getCompressed("G7", 16));
                     user.setKasa(user.getKasa() - 350000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T2", 1));
+                    player.getInventory().addItem(GornikItems.getZmiotka("T2", 1, player.getName()));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Metalowe Dluto&a!"));
                     break;
                 case 4:
@@ -670,16 +674,15 @@ public class GornikInventoryClick implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G5", 1), 24) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G6", 1), 24) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G7", 1), 24) ||
-                            !player.getInventory().contains(GornikItems.getZmiotka("T2", 50)) || user.getKasa() < 500000000) {
+                            !player.getInventory().contains(GornikItems.getZmiotka("T2", 50, player.getName())) || user.getKasa() < 500000000) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
-                        player.getInventory().addItem(GornikItems.getZmiotka("T2", 50));
                         return;
                     }
-                    player.getInventory().removeItem(GornikItems.getZmiotka("T2", 50), GornikItems.getCompressed("G1", 24), GornikItems.getCompressed("G2", 24),
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T2", 50, player.getName()), GornikItems.getCompressed("G1", 24), GornikItems.getCompressed("G2", 24),
                             GornikItems.getCompressed("G3", 24), GornikItems.getCompressed("G4", 24), GornikItems.getCompressed("G5", 24),
                             GornikItems.getCompressed("G6", 24), GornikItems.getCompressed("G7", 24));
                     user.setKasa(user.getKasa() - 500000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T3", 1));
+                    player.getInventory().addItem(GornikItems.getZmiotka("T3", 1, player.getName()));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Zlote Dluto&a!"));
                     break;
                 case 5:
@@ -690,20 +693,34 @@ public class GornikInventoryClick implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G5", 1), 32) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G6", 1), 32) ||
                             !player.getInventory().containsAtLeast(GornikItems.getCompressed("G7", 1), 32) ||
-                            !player.getInventory().contains(GornikItems.getZmiotka("T3", 50)) || user.getKasa() < 750000000) {
+                            !player.getInventory().contains(GornikItems.getZmiotka("T3", 50, player.getName())) || user.getKasa() < 750000000) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
-                        player.getInventory().addItem(GornikItems.getZmiotka("T3", 50));
                         return;
                     }
-                    player.getInventory().removeItem(GornikItems.getZmiotka("T3", 50), GornikItems.getCompressed("G1", 32), GornikItems.getCompressed("G2", 32),
+                    player.getInventory().removeItem(GornikItems.getZmiotka("T3", 50, player.getName()), GornikItems.getCompressed("G1", 32), GornikItems.getCompressed("G2", 32),
                             GornikItems.getCompressed("G3", 32), GornikItems.getCompressed("G4", 32), GornikItems.getCompressed("G5", 32),
                             GornikItems.getCompressed("G6", 32), GornikItems.getCompressed("G7", 32));
                     user.setKasa(user.getKasa() - 750000000);
-                    player.getInventory().addItem(GornikItems.getZmiotka("T4", 1), GornikItems.getZmiotka("T4", 50));
+                    player.getInventory().addItem(GornikItems.getZmiotka("T4", 1, player.getName()));
                     player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &8Diamentowe Dluto&a!"));
                     break;
                 case 6:
-                    //TODO LEGENDARNY KRYSZTAL WZMOCNIENIA
+                    if (!player.getInventory().containsAtLeast(GornikItems.getCompressed("C1", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C2", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C3", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C4", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C5", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C6", 1), 5) ||
+                            !player.getInventory().containsAtLeast(GornikItems.getCompressed("C7", 1), 5)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie posadasz wszystkich potrzebnych skladnikow"));
+                        return;
+                    }
+                    player.getInventory().removeItem(GornikItems.getCompressed("C1", 5), GornikItems.getCompressed("C2", 5),
+                            GornikItems.getCompressed("C3", 5), GornikItems.getCompressed("C4", 5), GornikItems.getCompressed("C5", 5),
+                            GornikItems.getCompressed("C6", 5), GornikItems.getCompressed("C7", 5));
+                    user.setKasa(user.getKasa() - 100_000_000);
+                    player.getInventory().addItem(GornikItems.getItem("I1", 1));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wytworzyles &6&lLegendarny Krysztal Wzmocnienia&a!"));
                     break;
                 case 8:
                     if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() > 28) {
@@ -1520,6 +1537,11 @@ public class GornikInventoryClick implements Listener {
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
             clickedInventory.setItem(13, null);
             RPGCORE.getInstance().getGornikNPC().openOsadzanieKrysztalow(player, playerItem);
+            return;
+        }
+
+        if (title.equals("Pomocnik Gornika")) {
+            e.setCancelled(true);
         }
     }
 

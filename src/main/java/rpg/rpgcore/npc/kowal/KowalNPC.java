@@ -96,43 +96,26 @@ public class KowalNPC {
         player.openInventory(gui);
     }
 
-    public void upgradeItem(final Player player, final ItemStack itemToUpgrade, final boolean hasZwoj) {
+    public void upgradeItem(final Player player, final ItemStack itemToUpgrade, final int zwoj) {
         this.upgradeList.add(player.getUniqueId());
         this.clearOstatniUlepszonyItem(player.getUniqueId());
         this.addToAnimationList(player.getUniqueId());
         player.teleport(new Location(player.getWorld(), 16.5, 9, 95.5, 0, 0));
 
-        /*Location kowalLocation = new Location(Bukkit.getWorld("dt"), 0, 0, 0);
-
-        for (Player p : Bukkit.getWorld("dt").getPlayers()) {
-            if (Utils.removeColor(p.getName()).equals("Kowal")) {
-               kowalLocation = p.getLocation();
-            }
-        }
-
-        Collection<Entity> nearbyEntities = Bukkit.getWorld("dt").getNearbyEntities(kowalLocation, 2, 2, 2);
-
-        for (Entity entity : nearbyEntities) {
-            if (entity instanceof Player) {
-                if (!Utils.removeColor(entity.getName()).equals("Kowal")) {
-                    player.hidePlayer((Player) entity);
+        if (zwoj != 2) {
+            if (!ChanceHelper.getChance(50 + ((50 * rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0))) {
+                if (zwoj == 1) {
+                    this.runAnimation(player, itemToUpgrade, false);
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                        player.getInventory().addItem(itemToUpgrade);
+                        player.sendMessage(Utils.format("&4&lKowal &8>> &cNiestety nie udalo mi sie ulepszyc twojego przedmiotu, ale &a&lPodrecznik Kowala &cuchronil go przed spaleniem"));
+                    }, 70L);
+                    return;
+                } else {
+                    this.runAnimation(player, itemToUpgrade, false);
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&4&lKowal &8>> &cNiestety nie udalo mi sie ulepszyc twojego przedmiotu i zostal on spalony")), 70L);
+                    return;
                 }
-            }
-        }*/
-
-
-        if (!ChanceHelper.getChance(50 + ((50 * rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0))) {
-            if (hasZwoj) {
-                this.runAnimation(player, itemToUpgrade, false);
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                    player.getInventory().addItem(itemToUpgrade);
-                    player.sendMessage(Utils.format("&4&lKowal &8>> &cNiestety nie udalo mi sie ulepszyc twojego przedmiotu, ale zwoj blogoslawienstwa ochronil go przed spaleniem"));
-                }, 70L);
-                return;
-            } else {
-                this.runAnimation(player, itemToUpgrade, false);
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&4&lKowal &8>> &cNiestety nie udalo mi sie ulepszyc twojego przedmiotu i zostal on zniszczony")), 70L);
-                return;
             }
         }
 
@@ -148,7 +131,7 @@ public class KowalNPC {
         itemToUpgrade.setItemMeta(meta);
 
         final String itemToUpgradeType = String.valueOf(itemToUpgrade.getType());
-        if (itemToUpgradeType.contains("HELMET") || itemToUpgradeType.contains("CHESTPLATE") || itemToUpgradeType.contains("LEGGINGS") || itemToUpgradeType.contains("BOOTS")) {
+        if (itemToUpgradeType.contains("_HELMET") || itemToUpgradeType.contains("_CHESTPLATE") || itemToUpgradeType.contains("_LEGGINGS") || itemToUpgradeType.contains("_BOOTS")) {
             final int prot = Utils.getTagInt(itemToUpgrade, "prot");
             final int thorns = Utils.getTagInt(itemToUpgrade, "thorns");
             this.runAnimation(player, itemToUpgrade, true);
@@ -205,6 +188,7 @@ public class KowalNPC {
 
         player.sendMessage("dmg: " + Utils.getTagInt(toGive, "dmg"));
         player.sendMessage("moby: " + Utils.getTagInt(toGive, "moby"));
+        ItemHelper.checkEnchants(toGive, player);
         player.getInventory().addItem(toGive.clone());
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
@@ -225,14 +209,14 @@ public class KowalNPC {
         }
         itemArmorStand.setArms(true);
         itemArmorStand.setGravity(false);
-        itemArmorStand.setInvisible(false);
+        itemArmorStand.setInvisible(true);
 
 
         hammerArmorStand.setLocation(15.7, 9, 97.3, -90F, 0F);
         hammerArmorStand.setRightArmPose(new Vector3f(-45F, hammerArmorStand.rightArmPose.getY(), hammerArmorStand.rightArmPose.getZ()));
         hammerArmorStand.setArms(true);
         hammerArmorStand.setGravity(false);
-        hammerArmorStand.setInvisible(false);
+        hammerArmorStand.setInvisible(true);
 
         final PacketPlayOutSpawnEntityLiving itemArmorStandSpawnPacket = new PacketPlayOutSpawnEntityLiving(itemArmorStand);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(itemArmorStandSpawnPacket);
@@ -318,22 +302,38 @@ public class KowalNPC {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet2);
     }
 
+    public void openOczyszczanieGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&c&lOczyszczanie Przedmiotu"));
+        for (int i = 0; i < 9; i++) {
+            if (i % 2 == 0) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName(" ").toItemStack());
+            }
+        }
+
+        gui.setItem(4, new ItemBuilder(Material.ANVIL).setName("&cOczysc Swoj Przedmiot").setLore(Arrays.asList(
+                "&7Wymagane Przedmioty:",
+                "   &8- &61x &fLza Aniola",
+                "   &8- &6250 000&2$"
+        )).toItemStack());
+
+        player.openInventory(gui);
+    }
+
+
+
 
     public ItemStack getPlaceForItem() {
-        return placeForItem.setName("&aMiejsce na przedmiot").toItemStack();
+        return placeForItem.setName("&aMiejsce na Twoj Przedmiot").toItemStack();
     }
 
     public ItemStack getPlaceForZwoj() {
-        return placeForZwoj.setName("&aMiejsce na zwoj").toItemStack();
+        return placeForZwoj.setName("&aMiejsce na Przedmiot Kowalski").toItemStack();
     }
 
     public List<ItemStack> getOstatniUlepszonyItem(final UUID uuid) {
         return ostatniUlepszonyItem.get(uuid);
-    }
-
-    public void updateOstatniUlepszonyItem(final UUID uuid, final List<ItemStack> item) {
-        ostatniUlepszonyItem.remove(uuid);
-        ostatniUlepszonyItem.put(uuid, item);
     }
 
     public void clearOstatniUlepszonyItem(final UUID uuid) {

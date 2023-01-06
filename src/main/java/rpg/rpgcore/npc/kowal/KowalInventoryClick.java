@@ -9,7 +9,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
 
@@ -30,20 +33,20 @@ public class KowalInventoryClick implements Listener {
             return;
         }
 
-        final Inventory clickedInventory = e.getClickedInventory();
+        final Inventory inventory = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
-        final UUID playerUUID = player.getUniqueId();
+        final UUID uuid = player.getUniqueId();
 
-        final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
-        final int clickedSlot = e.getSlot();
+        final String title = Utils.removeColor(inventory.getTitle());
+        final ItemStack item = e.getCurrentItem();
+        final int slot = e.getSlot();
 
-        if (Utils.removeColor(clickedInventoryTitle).equals("Kowal")) {
+        if (title.equals("Kowal")) {
             e.setCancelled(true);
 
-            if (clickedItem.getType().equals(Material.ANVIL)) {
-                if (rpgcore.getKowalNPC().hasAlreadyUpgraded(playerUUID)) {
-                    player.sendMessage(Utils.format("&4&lKowal &8>> &7Przedmiot mozesz ulepszyc tylko raz na jedno &4DT"));
+            if (item.getType().equals(Material.ANVIL)) {
+                if (rpgcore.getKowalNPC().hasAlreadyUpgraded(uuid)) {
+                    player.sendMessage(Utils.format("&4&lKowal &8>> &7Przedmiot mozesz ulepszyc tylko raz!"));
                     player.closeInventory();
                     return;
                 }
@@ -51,8 +54,8 @@ public class KowalInventoryClick implements Listener {
                 return;
             }
 
-            if (clickedItem.getType().equals(Material.REDSTONE_TORCH_ON)) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + " &cDalsze &4DT &7bedzie dostepne w pozniejszym terminie"));
+            if (item.getType().equals(Material.REDSTONE_TORCH_ON)) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + " &cDalsze etapy &b&lIce Tower &cbeda dostepne w pozniejszym terminie"));
                 rpgcore.getKowalNPC().resetUpgradeList();
                 return;
             }
@@ -60,29 +63,34 @@ public class KowalInventoryClick implements Listener {
             return;
         }
 
-        if (clickedInventory.getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Kowal - Ulepszanie")) {
+        if (inventory.getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Kowal - Ulepszanie")) {
             e.setCancelled(true);
-            final String clickedItemType = String.valueOf(clickedItem.getType());
-            if (!(clickedItemType.contains("HELMET") || clickedItemType.contains("CHESTPLATE") || clickedItemType.contains("LEGGINGS") || clickedItemType.contains("BOOTS")
-                    || clickedItemType.contains("SWORD") || clickedItemType.equals("BOOK")) || clickedItem.getItemMeta().getDisplayName() == null || clickedItem.getItemMeta().getLore() == null) {
+            final String clickedItemType = String.valueOf(item.getType());
+            if (!(clickedItemType.contains("_HELMET") || clickedItemType.contains("_CHESTPLATE") || clickedItemType.contains("_LEGGINGS") || clickedItemType.contains("_BOOTS")
+                    || clickedItemType.contains("_SWORD") || (item.getType().equals(Material.IRON_INGOT) && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Stal Kowalska"))
+                    || (item.getType().equals(Material.BOOK) && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Podrecznik Kowala"))
+                    || item.getItemMeta().getDisplayName() == null || item.getItemMeta().getLore() == null)) {
                 return;
             }
-            final ItemStack itemToGui = clickedItem.clone();
+            final ItemStack itemToGui = item.clone();
             final String itemDisplayName = itemToGui.getItemMeta().getDisplayName();
 
             if (itemDisplayName.contains("+3")) {
                 return;
             }
 
-            if (itemToGui.getType().equals(Material.BOOK) && !player.getOpenInventory().getTopInventory().getItem(14).equals(rpgcore.getKowalNPC().getPlaceForZwoj())) {
+            if (((itemToGui.getType().equals(Material.BOOK) && itemToGui.getItemMeta().hasDisplayName() && itemToGui.getItemMeta().getDisplayName().contains("Podrecznik Kowala")) ||
+                    (itemToGui.getType().equals(Material.IRON_INGOT) && itemToGui.getItemMeta().hasDisplayName() && itemToGui.getItemMeta().getDisplayName().contains("Stal Kowalska")))
+                    && !player.getOpenInventory().getTopInventory().getItem(14).equals(rpgcore.getKowalNPC().getPlaceForZwoj())) {
                 return;
             }
 
-            if (itemToGui.getType().equals(Material.BOOK)) {
-                player.getInventory().getItem(clickedSlot).setAmount(player.getInventory().getItem(clickedSlot).getAmount() - 1);
+            if ((itemToGui.getType().equals(Material.BOOK) && itemToGui.getItemMeta().hasDisplayName() && itemToGui.getItemMeta().getDisplayName().contains("Podrecznik Kowala")) ||
+                    (itemToGui.getType().equals(Material.IRON_INGOT) && itemToGui.getItemMeta().hasDisplayName() && itemToGui.getItemMeta().getDisplayName().contains("Stal Kowalska"))) {
+                player.getInventory().removeItem(new ItemBuilder(itemToGui.clone()).setAmount(1).toItemStack());
                 itemToGui.setAmount(1);
                 player.getOpenInventory().getTopInventory().setItem(14, itemToGui);
-                rpgcore.getKowalNPC().addOstatniUlepszonyItem(playerUUID, itemToGui);
+                rpgcore.getKowalNPC().addOstatniUlepszonyItem(uuid, itemToGui);
                 return;
             }
 
@@ -90,36 +98,70 @@ public class KowalInventoryClick implements Listener {
                 return;
             }
 
-            player.getInventory().removeItem(clickedItem);
+            player.getInventory().removeItem(item);
             player.getOpenInventory().getTopInventory().setItem(12, itemToGui);
-            rpgcore.getKowalNPC().addOstatniUlepszonyItem(playerUUID, itemToGui);
+            rpgcore.getKowalNPC().addOstatniUlepszonyItem(uuid, itemToGui);
             return;
         }
 
-        if (Utils.removeColor(clickedInventoryTitle).equals("Kowal - Ulepszanie")) {
+        if (title.equals("Kowal - Ulepszanie")) {
             e.setCancelled(true);
 
-            if (clickedSlot == 12 && !clickedInventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
-                final ItemStack itemToGiveBack = clickedItem.clone();
+            if (slot == 12 && !inventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
+                final ItemStack itemToGiveBack = item.clone();
                 player.getInventory().addItem(itemToGiveBack);
-                clickedInventory.setItem(12, rpgcore.getKowalNPC().getPlaceForItem());
-                rpgcore.getKowalNPC().removeOstatniUlepszonyItem(playerUUID, itemToGiveBack);
+                inventory.setItem(12, rpgcore.getKowalNPC().getPlaceForItem());
+                rpgcore.getKowalNPC().removeOstatniUlepszonyItem(uuid, itemToGiveBack);
                 return;
             }
 
-            if (clickedSlot == 14 && !clickedInventory.getItem(14).equals(rpgcore.getKowalNPC().getPlaceForZwoj())) {
-                final ItemStack itemToGiveBack = clickedItem.clone();
+            if (slot == 14 && !inventory.getItem(14).equals(rpgcore.getKowalNPC().getPlaceForZwoj())) {
+                final ItemStack itemToGiveBack = item.clone();
                 player.getInventory().addItem(itemToGiveBack);
-                clickedInventory.setItem(14, rpgcore.getKowalNPC().getPlaceForZwoj());
-                rpgcore.getKowalNPC().removeOstatniUlepszonyItem(playerUUID, itemToGiveBack);
+                inventory.setItem(14, rpgcore.getKowalNPC().getPlaceForZwoj());
+                rpgcore.getKowalNPC().removeOstatniUlepszonyItem(uuid, itemToGiveBack);
                 return;
             }
 
-            if (clickedSlot == 22 && !clickedInventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
-                boolean hasZwoj = clickedInventory.getItem(14).equals(GlobalItem.getItem("I9", 1));
+            if (slot == 22 && !inventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
+                int zwoj = 0;
+                if (inventory.getItem(14).equals(GlobalItem.getItem("I_METAL", 1))) {
+                    zwoj = 2;
+                } else if (inventory.getItem(14).equals(GlobalItem.getItem("I10", 1))) {
+                    zwoj = 1;
+                }
 
-                rpgcore.getKowalNPC().upgradeItem(player, clickedInventory.getItem(12).clone(), hasZwoj);
+                rpgcore.getKowalNPC().upgradeItem(player, inventory.getItem(12).clone(), zwoj);
                 player.closeInventory();
+            }
+        }
+
+        if (title.equals("Oczyszczanie Przedmiotu")) {
+            e.setCancelled(true);
+            if (slot == 4) {
+                final User user = rpgcore.getUserManager().find(uuid);
+                if (!player.getInventory().containsAtLeast(GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1) || user.getKasa() < 250_000) {
+                    player.sendMessage(Utils.format(" &4&lKowal &8>> &7Nie posiadasz wymaganych przedmiotow!"));
+                    player.closeInventory();
+                    return;
+                }
+                player.getInventory().removeItem(GlobalItem.getItem("I_OCZYSZCZENIE", 1));
+                user.setKasa(user.getKasa() - 250_000);
+                final ItemStack playerItem = player.getItemInHand();
+                final ItemMeta itemMeta = playerItem.getItemMeta();
+
+                if (itemMeta.getDisplayName().contains("+3")) {
+                    itemMeta.setDisplayName(itemMeta.getDisplayName().replace("+3", "+2"));
+                } else if (itemMeta.getDisplayName().contains("+2")) {
+                    itemMeta.setDisplayName(itemMeta.getDisplayName().replace("+2", "+1"));
+                } else if (itemMeta.getDisplayName().contains("+1")) {
+                    itemMeta.setDisplayName(itemMeta.getDisplayName().replace(Utils.format(" &8&l+1"), ""));
+                    player.closeInventory();
+                }
+
+                playerItem.setItemMeta(itemMeta);
+                player.setItemInHand(playerItem);
+                player.sendMessage(Utils.format(" &4&lKowal &8>> &aPrzedmiot zostal pomyslnie oczyszczony!"));
             }
         }
     }

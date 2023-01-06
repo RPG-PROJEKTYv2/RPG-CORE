@@ -129,7 +129,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
                 }
                 boolean przebicie = false;
-                if (!ChanceHelper.getChance(rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getPrzebiciePancerza())) {
+                if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(attacker))) {
                     if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(victim, attacker))) {
                         e.setCancelled(true);
                         if (ChanceHelper.getChance(15.0)) {

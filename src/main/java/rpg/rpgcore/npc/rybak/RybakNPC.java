@@ -16,12 +16,14 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.enums.RybakMissions;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
@@ -35,7 +37,8 @@ public class RybakNPC {
 
     private final RPGCORE rpgcore;
     private final Map<UUID, RybakObject> usersMap;
-    private final Map<UUID, Integer> taskMap = new HashMap<>();
+    private final Map<UUID, Integer> failedAttemptMap = new HashMap<>();
+    private final Map<UUID, Integer> fishingCount = new HashMap<>();
     private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
 
     public RybakNPC(final RPGCORE rpgcore) {
@@ -126,18 +129,70 @@ public class RybakNPC {
         player.openInventory(gui);
     }
 
+    public void getAntyAfk(final Player player) {
+        player.sendMessage(Utils.format("&6&lRybak &8» &7Ochrona &cAnty-AFK"));
+        player.sendMessage(Utils.format("&6&lRybak &8» &7Kliknij w &bpodswietlona wedke&7, aby zakonczyc weryfikacje"));
+        player.sendMessage(Utils.format("&6&lRybak &8» &7GUI zamknie sie &cautomatycznie po 10 sekundach&7, a na ciebie zostanie nalozona kara"));
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lRybak &8>> &cAnty-AFK"));
 
-    public int getTaskId(final UUID uuid) {
-        return taskMap.get(uuid);
+        for (int i = 0; i < 18; i++) {
+            gui.setItem(i, new ItemBuilder(Material.FISHING_ROD).setName("&c&lAnty-AFK").toItemStack());
+        }
+
+        gui.setItem(ChanceHelper.getRandInt(0, 17), new ItemBuilder(Material.FISHING_ROD).setName("&a&lAnty-AFK").setLore(Arrays.asList("&7Kliknij, zeby przejsc weryfikacje &cAnty-AFK")).addGlowing().toItemStack());
+
+        player.openInventory(gui);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            if (player == null || !player.isOnline()) return;
+            if (player.getOpenInventory().getTopInventory() == null) {
+                return;
+            }
+            if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Rybak » Anty-AFK")) {
+                for (int i = 0; i < 17; i++) {
+                    if (player.getOpenInventory().getTopInventory().getItem(i).getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
+                        player.getOpenInventory().getTopInventory().setItem(i, new ItemStack(Material.AIR));
+                    }
+                }
+                player.closeInventory();
+                this.addFailedAttempt(player.getUniqueId());
+                player.sendMessage(Utils.format("&6&lRybak &8>> &cNie udalo sie przeslac weryfikacji Anty-AFK &4(" +this.getFailedAttempts(player.getUniqueId()) + "/3)"));
+                if (this.getFailedAttempts(player.getUniqueId()) >= 3) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + "6 h Afk na lowienie (skrypt?)");
+                }
+            }
+        }, 200L);
     }
 
-    public void addTaskId(final UUID uuid, final int taskId) {
-        taskMap.put(uuid, taskId);
+
+    public int getFailedAttempts(final UUID uuid) {
+        return failedAttemptMap.getOrDefault(uuid, 0);
     }
 
-    public void removeTaskId(final UUID uuid) {
-        taskMap.remove(uuid);
+    public void addFailedAttempt(final UUID uuid) {
+        failedAttemptMap.replace(uuid, failedAttemptMap.get(uuid) + 1);
     }
+
+    public void resetFailedAttempt(final UUID uuid) {
+        failedAttemptMap.replace(uuid, 0);
+    }
+
+    public int getFishingCount(final UUID uuid) {
+        return fishingCount.getOrDefault(uuid, 0);
+    }
+
+    public void addFishingCount(final UUID uuid) {
+        if (fishingCount.containsKey(uuid)) {
+            fishingCount.replace(uuid, fishingCount.get(uuid) + 1);
+        } else {
+            fishingCount.put(uuid, 1);
+        }
+    }
+
+    public void resetFishingCount(final UUID uuid) {
+        fishingCount.replace(uuid, 0);
+    }
+
+
 
     private List<String> setLoreSell(final double cena) {
         List<String> lore2 = new ArrayList<>();

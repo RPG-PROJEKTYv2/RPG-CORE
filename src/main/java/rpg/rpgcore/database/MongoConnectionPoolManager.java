@@ -44,6 +44,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_wyslannik;
     //private final MongoCollection<Document> hellrpg_przykladowyNPC; // TU TWORZYSZ ZMIENNA DO KOLEKCJI ZEBY MOC SIE DO NIEJ ODOWLAC !!!!
     private final MongoCollection<Document> hellrpg_kociolki;
+    private final MongoCollection<Document> hellrpg_serwerWhiteList;
 
 
     public MongoConnectionPoolManager() {
@@ -133,8 +134,12 @@ public class MongoConnectionPoolManager {
         }
         if (!collections.contains("hellrpg_wyslannik")) {
             database.createCollection("hellrpg_wyslannik");
-        }if (!collections.contains("hellrpg_kociolki")) {
+        }
+        if (!collections.contains("hellrpg_kociolki")) {
             database.createCollection("hellrpg_kociolki");
+        }
+        if (!collections.contains("hellrpg_serwerWhiteList")) {
+            database.createCollection("hellrpg_serwerWhiteList");
         }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
@@ -168,6 +173,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_oreLocations = database.getCollection("hellrpg_oreLocations");
         this.hellrpg_wyslannik = database.getCollection("hellrpg_wyslannik");
         this.hellrpg_kociolki = database.getCollection("hellrpg_kociolki");
+        this.hellrpg_serwerWhiteList = database.getCollection("hellrpg_serwerWhiteList");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -282,6 +288,9 @@ public class MongoConnectionPoolManager {
 
     public MongoCollection<Document> getKociolki() {
         return this.hellrpg_kociolki;
+    }
+    public MongoCollection<Document> getSerwerWhiteList() {
+        return this.hellrpg_serwerWhiteList;
     }
 
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI

@@ -10,6 +10,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.commands.admin.serverwhitelist.objects.SerwerWhiteList;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.kociolki.KociolkiUser;
@@ -1260,6 +1261,20 @@ public class MongoManager {
         }
     }
 
+    // SERVER WHITELIST
+    public SerwerWhiteList loadSerwerWhiteList() {
+        Document document = this.pool.getSerwerWhiteList().find().first();
+        if (document == null) {
+            final SerwerWhiteList serwerWhiteList = new SerwerWhiteList();
+            this.pool.getSerwerWhiteList().insertOne(serwerWhiteList.toDocument());
+            return serwerWhiteList;
+        }
+        return new SerwerWhiteList(document);
+    }
+
+    public void saveSerwerWhiteList(final SerwerWhiteList serwerWhiteList) {
+        this.pool.getSerwerWhiteList().findOneAndReplace(new Document("_id", "SerwerWhiteList"), serwerWhiteList.toDocument());
+    }
 
     public void onDisable() {
         pool.closePool();

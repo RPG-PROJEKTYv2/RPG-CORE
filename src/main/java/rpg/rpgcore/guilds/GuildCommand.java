@@ -40,7 +40,6 @@ public class GuildCommand extends CommandAPI {
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
 
         if (args.length == 1){
-            //TODO statystyki i sortowanie od najwyzszej
             if (tag.equals("Brak Klanu")) {
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
                 return;
@@ -102,6 +101,11 @@ public class GuildCommand extends CommandAPI {
                     rpgcore.getGuildManager().setGuildPvPStatus(tag, true);
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aWlaczono pvp w klanie"));
                 }
+                return;
+            }
+
+            if (args[0].equalsIgnoreCase("stats")) {
+                rpgcore.getGuildManager().showGuildStats(tag, player);
                 return;
             }
         }

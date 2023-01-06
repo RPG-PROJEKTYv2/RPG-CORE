@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.rybak.helpers;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,32 +27,19 @@ public class RybakHelper {
 
         final double podwojnyDrop = Utils.getTagDouble(player.getItemInHand(), "podwojnyDrop");
         final double kufer = Utils.getTagDouble(player.getItemInHand(), "kufer");
-        final double nies = Utils.getTagDouble(player.getItemInHand(), "nies");
+        double nies = Utils.getTagDouble(player.getItemInHand(), "nies");
+
+        nies += (nies * (rybakObject.getRybakUser().getMorskieSzczescie() + Utils.getTagDouble(player.getItemInHand(), "szczescie")) / 100);
 
         boolean doubleDrop = false;
         boolean event = false;
 
         //if od eventu
 
-        if (ChanceHelper.getChance(podwojnyDrop)) {
-            doubleDrop = true;
-        }
-
-
         if (ChanceHelper.getChance(nies)) {
             final ItemStack niesItem = getNiesDrop();
             double exp = 1000;
             assert niesItem != null;
-            if (event) {
-                niesItem.setAmount(niesItem.getAmount() * 2);
-                exp *= 2;
-                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwoojony przez Event Rybacki"));
-            }
-            if (doubleDrop) {
-                niesItem.setAmount(niesItem.getAmount() * 2);
-                exp *= 2;
-                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
-            }
             increaseExp(player.getItemInHand(), exp);
             if (mission == 20) {
                 rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + niesItem.getAmount());
@@ -61,6 +49,10 @@ public class RybakHelper {
             player.sendMessage(Utils.format("&8[&a+&8] &6" + niesItem.getAmount() + "x " + niesItem.getItemMeta().getDisplayName()));
             RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7znalazl &b&lNiesamowity Przedmiot!"));
             return;
+        }
+
+        if (ChanceHelper.getChance(podwojnyDrop)) {
+            doubleDrop = true;
         }
 
         if (ChanceHelper.getChance(kufer)) {
@@ -235,6 +227,12 @@ public class RybakHelper {
         meta.setLore(Utils.format(lore));
 
         wedka.setItemMeta(meta);
+        if (lvl % 5 == 0) {
+            wedka.addEnchantment(Enchantment.LUCK, lvl / 5);
+        }
+        if (lvl % 10 == 0) {
+            wedka.addEnchantment(Enchantment.LURE, lvl / 10);
+        }
     }
 
     private static double getExp(final String dropName) {

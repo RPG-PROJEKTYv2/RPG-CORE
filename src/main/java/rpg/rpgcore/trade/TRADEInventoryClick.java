@@ -1,11 +1,9 @@
 package rpg.rpgcore.trade;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
@@ -39,7 +37,7 @@ public class TRADEInventoryClick implements Listener {
             final UUID firstViewerUUID = firstViewer.getUniqueId();
             if (clickedInventoryTitle.equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName())) {
 
-               if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                if (e.getClick().isShiftClick() || e.getClick().isKeyboardClick() || e.getClick().isCreativeAction()){
                     e.setCancelled(true);
                     return;
                 }
@@ -84,6 +82,11 @@ public class TRADEInventoryClick implements Listener {
                             return;
                         }
                     }
+                    return;
+                }
+
+                if (clickedInventory.getItem(48).equals(rpgcore.getTradeManager().getAcceptItem(firstViewerUUID)) || clickedInventory.getItem(50).equals(rpgcore.getTradeManager().getAcceptItem(secViewerUUID))) {
+                    e.setCancelled(true);
                     return;
                 }
 

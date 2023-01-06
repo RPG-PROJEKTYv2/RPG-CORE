@@ -1,5 +1,7 @@
 package rpg.rpgcore.npc.rybak.enums;
 
+import rpg.rpgcore.utils.DoubleUtils;
+
 public enum WedkaStats {
     I1(1, 100, 0, 0, 0, 0),
     I2(2, 125, 0.5, 0.1, 0, 0.001),
@@ -44,23 +46,23 @@ public enum WedkaStats {
     }
 
     public double getExp() {
-        return exp;
+        return DoubleUtils.round(exp, 2);
     }
 
     public double getMorskieSzczescie() {
-        return morskieSzczescie;
+        return DoubleUtils.round(morskieSzczescie, 2);
     }
 
     public double getPodwojnyDrop() {
-        return podwojnyDrop;
+        return DoubleUtils.round(podwojnyDrop, 2);
     }
 
     public double getKufer() {
-        return kufer;
+        return DoubleUtils.round(kufer, 2);
     }
 
     public double getNies() {
-        return nies;
+        return DoubleUtils.round(nies, 2);
     }
 
     public static WedkaStats getByLvl(final int lvl) {

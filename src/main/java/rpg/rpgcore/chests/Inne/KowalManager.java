@@ -15,15 +15,15 @@ public class KowalManager {
 
     public KowalManager() {
         // metale
-        this.kowal.add(new Items("1", 12.0, GlobalItem.getItem("I_METAL", 1), 1));
-        this.kowal.add(new Items("2", 6.0, GlobalItem.getItem("I_METAL", 2), 2));
-        this.kowal.add(new Items("3", 3.0, GlobalItem.getItem("I_METAL", 3), 3));
+        this.kowal.add(new Items("1", 4.0, GlobalItem.getItem("I_METAL", 1), 1));
+        this.kowal.add(new Items("2", 3.0, GlobalItem.getItem("I_METAL", 2), 2));
+        this.kowal.add(new Items("3", 2.0, GlobalItem.getItem("I_METAL", 3), 3));
         // zwoje
-        this.kowal.add(new Items("4", 8.0, GlobalItem.getItem("I10", 1), 1));
-        this.kowal.add(new Items("5", 4.0, GlobalItem.getItem("I10", 2), 2));
-        this.kowal.add(new Items("6", 2.0, GlobalItem.getItem("I10", 3), 3));
+        this.kowal.add(new Items("4", 16.0, GlobalItem.getItem("I10", 1), 1));
+        this.kowal.add(new Items("5", 12.0, GlobalItem.getItem("I10", 2), 2));
+        this.kowal.add(new Items("6", 8.0, GlobalItem.getItem("I10", 3), 3));
         // oczyszczenie
-        this.kowal.add(new Items("7", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
+        this.kowal.add(new Items("7", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
         this.kowal.add(new Items("7", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),2));
         this.kowal.add(new Items("7", 2.5, GlobalItem.getItem("I_OCZYSZCZENIE", 3), 3));
     }

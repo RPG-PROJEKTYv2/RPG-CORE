@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.rybak.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
@@ -99,7 +101,7 @@ public class RybakInventoryClick implements Listener {
                 }
 
                 final int lvl = Utils.getTagInt(player.getItemInHand(), "lvl");
-                if (lvl >= 1) { //5
+                if (lvl >= 5) {
                     user.setProgress(1);
                 }
             } else if (mission == RybakMissions.M21) {
@@ -109,7 +111,7 @@ public class RybakInventoryClick implements Listener {
                 }
 
                 final int lvl = Utils.getTagInt(player.getItemInHand(), "lvl");
-                if (lvl >= 1) { //15
+                if (lvl >= 15) {
                     user.setProgress(1);
                 }
             }
@@ -337,6 +339,24 @@ public class RybakInventoryClick implements Listener {
                 rpgcore.getMongoManager().saveDataRybak(uuid, rybakObject);
             });
 
+        }
+
+        if (title.equals("Rybak » Anty-AFK")) {
+            e.setCancelled(true);
+            if (item != null && item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
+                clickedInventory.setItem(slot, new ItemStack(Material.AIR));
+                rpgcore.getRybakNPC().resetFishingCount(uuid);
+                rpgcore.getRybakNPC().resetFailedAttempt(uuid);
+                player.closeInventory();
+                player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie przeszedles/-as weryfikacje &cAnty-AFK&a!"));
+                return;
+            }
+            player.closeInventory();
+            rpgcore.getRybakNPC().addFailedAttempt(uuid);
+            player.sendMessage(Utils.format("&6&lRybak &8>> &cNie udalo sie przeslac weryfikacji Anty-AFK &4(" + rpgcore.getRybakNPC().getFailedAttempts(uuid) + "/3)"));
+            if (rpgcore.getRybakNPC().getFailedAttempts(uuid) >= 3) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + "6 h Afk na lowienie (skrypt?)");
+            }
         }
 
 

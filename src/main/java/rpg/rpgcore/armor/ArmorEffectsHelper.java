@@ -124,7 +124,9 @@ public class ArmorEffectsHelper {
         }
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.JUMP);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, k));
+            if (!player.getWorld().getName().equals("spawnOFFICIAL")) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, k));
+            }
         }
     }
 
@@ -134,9 +136,8 @@ public class ArmorEffectsHelper {
                 player.removePotionEffect(PotionEffectType.JUMP);
                 return;
             }
-        }
-        if (player.getInventory().getHelmet() != null) {
-            ItemHelper.checkEnchants(player.getInventory().getHelmet(), player);
+        } else {
+            player.getInventory().setHelmet(ItemHelper.checkEnchants(player.getInventory().getHelmet(), player));
             if (!player.hasPotionEffect(PotionEffectType.JUMP)) {
                 addEffectHelmet(player, Utils.getTagInt(player.getInventory().getHelmet(), "prot"));
             }
@@ -147,9 +148,8 @@ public class ArmorEffectsHelper {
                 player.setMaxHealth(RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
                 return;
             }
-        }
-        if (player.getInventory().getChestplate() != null) {
-            ItemHelper.checkEnchants(player.getInventory().getChestplate(), player);
+        } else {
+            player.getInventory().setChestplate(ItemHelper.checkEnchants(player.getInventory().getChestplate(), player));
             if (!player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
                 addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getChestplate(), "prot"));
             }
@@ -159,9 +159,8 @@ public class ArmorEffectsHelper {
                 player.removePotionEffect(PotionEffectType.REGENERATION);
                 return;
             }
-        }
-        if (player.getInventory().getLeggings() != null) {
-            ItemHelper.checkEnchants(player.getInventory().getLeggings(), player);
+        } else {
+            player.getInventory().setLeggings(ItemHelper.checkEnchants(player.getInventory().getLeggings(), player));
             if (!player.hasPotionEffect(PotionEffectType.REGENERATION)) {
                 addEffectLeggings(player, Utils.getTagInt(player.getInventory().getLeggings(), "prot"));
             }
@@ -169,11 +168,9 @@ public class ArmorEffectsHelper {
         if (player.getInventory().getBoots() == null) {
             if (player.hasPotionEffect(PotionEffectType.SPEED)) {
                 player.removePotionEffect(PotionEffectType.SPEED);
-                return;
             }
-        }
-        if (player.getInventory().getBoots() != null) {
-            ItemHelper.checkEnchants(player.getInventory().getBoots(), player);
+        } else {
+            player.getInventory().setBoots(ItemHelper.checkEnchants(player.getInventory().getBoots(), player));
             if (!player.hasPotionEffect(PotionEffectType.SPEED)) {
                 addEffectBoots(player, Utils.getTagInt(player.getInventory().getBoots(), "prot"));
             }

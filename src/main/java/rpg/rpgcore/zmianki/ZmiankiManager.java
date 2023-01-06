@@ -84,7 +84,7 @@ public class ZmiankiManager {
                 lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(is, "silny-na-val") + "%"));
                 lore.remove(Utils.format("&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(is, "krytyk") + "%"));
                 lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(is, "silny-lvl-val") + "%"));
-                lore.remove(Utils.format("&7Przebicie Pancerza: &f+" + Utils.getTagDouble(is, "przebicie-pancerza") + "%"));
+                lore.remove(Utils.format("&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(is, "przeszywka") + "%"));
             } else {
                 // ZBROJA
             }
@@ -102,14 +102,14 @@ public class ZmiankiManager {
             toReturn = rollSecondBonus(toReturn.clone(), 0.01, 10);
             toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
             toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
-            toReturn = rollFifthBonus(toReturn.clone(), 0.01, 1);
+            toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
             loreLvl = 50;
         } else {
             toReturn = rollFirstBonus(is, 1, 200);
             toReturn = rollSecondBonus(toReturn.clone(), 0.01, 20);
             toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
             toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
-            toReturn = rollFifthBonus(toReturn.clone(), 0.01, 2);
+            toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
             loreLvl = 80;
         }
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
@@ -119,7 +119,7 @@ public class ZmiankiManager {
                     "&7Silny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
                     "&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(toReturn, "krytyk") + "%",
                     "&7Silny Na " + Utils.getTagString(toReturn, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(toReturn, "silny-lvl-val") + "%",
-                    "&7Przebicie Pancerza: &f+" + Utils.getTagDouble(toReturn, "przebicie-pancerza") + "%",
+                    "&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(toReturn, "przeszywka") + "%",
                     "&cWymagany Poziom: &6" + loreLvl,
                     "&8------------{&dMagiczne Zaczarowanie&8}------------"
             )).addTagInt("lvl", loreLvl).toItemStack().clone();
@@ -192,7 +192,7 @@ public class ZmiankiManager {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         if (is.getType().toString().contains("_SWORD")) {
-            tag.setDouble("przebicie-pancerza", ChanceHelper.getRandDouble(min, max));
+            tag.setDouble("przeszywka", ChanceHelper.getRandDouble(min, max));
         } else {
             //ZBROJA
         }

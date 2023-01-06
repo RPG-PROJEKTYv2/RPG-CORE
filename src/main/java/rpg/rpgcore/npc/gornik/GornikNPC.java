@@ -339,7 +339,7 @@ public class GornikNPC {
                 "&8- &6x8 &7&lRuda Cyrkonu",
                 "&8- &6x8 &3&lRuda Szafiru"
         )).addGlowing().toItemStack());
-        gui.setItem(1, new ItemBuilder(GornikItems.getZmiotka("T0", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T0", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(1, new ItemBuilder(GornikItems.getZmiotka("T0", 1, player.getName()).clone()).setLoreCrafting(GornikItems.getZmiotka("T0", 1, player.getName()).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -353,7 +353,7 @@ public class GornikNPC {
                 "&8- &6x128 &2&lRuda Jadeitu",
                 "&8- &6x128 &b&lRuda Tanzanitu",
                 "&8- &6x128 &c&lRuda Rubinu")).addGlowing().toItemStack());
-        gui.setItem(2, new ItemBuilder(GornikItems.getZmiotka("T1", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T1", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(2, new ItemBuilder(GornikItems.getZmiotka("T1", 1, player.getName()).clone()).setLoreCrafting(GornikItems.getZmiotka("T1", 1, player.getName()).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -368,7 +368,7 @@ public class GornikNPC {
                 "&8- &6x8 &2Krysztal Lasu &8(x64)",
                 "&8- &6x8 &bKrysztal Lodu &8(x64)",
                 "&8- &6x8 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
-        gui.setItem(3, new ItemBuilder(GornikItems.getZmiotka("T2", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T2", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(3, new ItemBuilder(GornikItems.getZmiotka("T2", 1, player.getName()).clone()).setLoreCrafting(GornikItems.getZmiotka("T2", 1, player.getName()).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -383,7 +383,7 @@ public class GornikNPC {
                 "&8- &6x16 &2Krysztal Lasu &8(x64)",
                 "&8- &6x16 &bKrysztal Lodu &8(x64)",
                 "&8- &6x16 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
-        gui.setItem(4, new ItemBuilder(GornikItems.getZmiotka("T3", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T3", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(4, new ItemBuilder(GornikItems.getZmiotka("T3", 1, player.getName()).clone()).setLoreCrafting(GornikItems.getZmiotka("T3", 1, player.getName()).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -398,7 +398,7 @@ public class GornikNPC {
                 "&8- &6x24 &2Krysztal Lasu &8(x64)",
                 "&8- &6x24 &bKrysztal Lodu &8(x64)",
                 "&8- &6x24 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
-        gui.setItem(5, new ItemBuilder(GornikItems.getZmiotka("T4", 1).clone()).setLoreCrafting(GornikItems.getZmiotka("T4", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(5, new ItemBuilder(GornikItems.getZmiotka("T4", 1, player.getName()).clone()).setLoreCrafting(GornikItems.getZmiotka("T4", 1, player.getName()).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&8Pozwala oczyscic rudy z kamienia",
                 "&8i wydobyc z nich wartosciowe &5Krysztaly&8.",
@@ -413,6 +413,17 @@ public class GornikNPC {
                 "&8- &6x32 &2Krysztal Lasu &8(x64)",
                 "&8- &6x32 &bKrysztal Lodu &8(x64)",
                 "&8- &6x32 &cKrysztal Ognia &8(x64)")).addGlowing().toItemStack());
+        gui.setItem(6, new ItemBuilder(GornikItems.getItem("I1", 1).clone()).setLoreCrafting(GornikItems.getItem("I1", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&7Koszt:",
+                "&8- &6100 000 000&2$",
+                "&8- &6x5 &8Czysty Krysztal Mroku",
+                "&8- &6x5 &7Czysty Krysztal Powietrza",
+                "&8- &6x5 &eCzysty Krysztal Blasku",
+                "&8- &6x5 &1Czysty Krysztal Wody",
+                "&8- &6x5 &2Czysty Krysztal Lasu",
+                "&8- &6x5 &bCzysty Krysztal Lodu",
+                "&8- &6x5 &cCzysty Krysztal Ognia")).addGlowing().toItemStack());
         gui.setItem(8, new ItemBuilder(Material.QUARTZ).setName("&6Wytwarzanie Krysztalow").setLore(Arrays.asList("&8Wymagania:", "&8- &6110 lvl", "&8- &6Ukonczona Kampania Gornika")).toItemStack());
 
         player.openInventory(gui);
@@ -800,6 +811,87 @@ public class GornikNPC {
         } else {
             gui.setItem(0, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Przyspieszenie II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
         }
+
+        player.openInventory(gui);
+    }
+
+    public void openPomocnikGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&5&lPomocnik Gornika"));
+
+        for (int i = 0; i < 9; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+        }
+
+        gui.setItem(1, new ItemBuilder(Material.COAL_ORE).setName("&8&lRuda Mroku").setLore(Arrays.asList(
+                "&7HP: &610",
+                "&7Exp: &61 &7exp",
+                "&7Szansa na wydobycie: &690%",
+                "&7Podstawowa szansa na przerobienie: &675%",
+                "&7Drop po przerobieniu: &8Krysztal Mroku",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&7&lSTONE&8)",
+                "   &8- &6Kilof Gornika &8(&6&lGOLD&8)",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(2, new ItemBuilder(Material.IRON_ORE).setName("&7&lRuda Cyrkonu").setLore(Arrays.asList(
+                "&7HP: &612",
+                "&7Exp: &63 &7exp",
+                "&7Szansa na wydobycie: &685%",
+                "&7Podstawowa szansa na przerobienie: &665%",
+                "&7Drop po przerobieniu: &7Krysztal Powietrza",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&7&lSTONE&8)",
+                "   &8- &6Kilof Gornika &8(&6&lGOLD&8)",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(3, new ItemBuilder(Material.GOLD_ORE).setName("&e&lRuda Blasku").setLore(Arrays.asList(
+                "&7HP: &614",
+                "&7Exp: &65 &7exp",
+                "&7Szansa na wydobycie: &680%",
+                "&7Podstawowa szansa na przerobienie: &660%",
+                "&7Drop po przerobieniu: &eKrysztal Blasku",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&7&lSTONE&8)",
+                "   &8- &6Kilof Gornika &8(&6&lGOLD&8)",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(4, new ItemBuilder(Material.LAPIS_ORE).setName("&3&lRuda Szafiru").setLore(Arrays.asList(
+                "&7HP: &615",
+                "&7Exp: &67 &7exp",
+                "&7Szansa na wydobycie: &675%",
+                "&7Podstawowa szansa na przerobienie: &655%",
+                "&7Drop po przerobieniu: &1Krysztal Wody",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&6&lGOLD&8)",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(5, new ItemBuilder(Material.EMERALD_ORE).setName("&2&lRuda Jadeitu").setLore(Arrays.asList(
+                "&7HP: &620",
+                "&7Exp: &610 &7exp",
+                "&7Szansa na wydobycie: &660%",
+                "&7Podstawowa szansa na przerobienie: &650%",
+                "&7Drop po przerobieniu: &2Krysztal Lasu",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&6&lGOLD&8)",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(6, new ItemBuilder(Material.DIAMOND_ORE).setName("&b&lRuda Tanzanitu").setLore(Arrays.asList(
+                "&7HP: &625",
+                "&7Exp: &615 &7exp",
+                "&7Szansa na wydobycie: &655%",
+                "&7Podstawowa szansa na przerobienie: &645%",
+                "&7Drop po przerobieniu: &bKrysztal Lodu",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&f&lIRON&8)",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
+        gui.setItem(7, new ItemBuilder(Material.REDSTONE_ORE).setName("&c&lRuda Rubinu").setLore(Arrays.asList(
+                "&7HP: &630",
+                "&7Exp: &620 &7exp",
+                "&7Szansa na wydobycie: &650%",
+                "&7Podstawowa szansa na przerobienie: &640%",
+                "&7Drop po przerobieniu: &cKrysztal Ognia",
+                "&7Mozna wydobyc:",
+                "   &8- &6Kilof Gornika &8(&b&lDIAMOND&8)")).toItemStack());
 
         player.openInventory(gui);
     }

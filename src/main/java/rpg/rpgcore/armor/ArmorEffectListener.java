@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
 import static org.bukkit.event.EventPriority.LOWEST;
@@ -33,10 +34,14 @@ public class ArmorEffectListener implements Listener {
 
     @EventHandler(priority = LOWEST)
     public void inventoryClickArmorContents(final InventoryClickEvent e) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) {
+            return;
+        }
         Player player = (Player) e.getWhoClicked();
         if (player.getGameMode().equals(GameMode.SURVIVAL)) {
             if (e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                final String type = e.getClickedInventory().getType().toString();
+                final String type = e.getCurrentItem().getType().toString();
+                e.setCurrentItem(ItemHelper.checkEnchants(e.getCurrentItem(), player));
                 if (type.contains("_HELMET")) {
                     if (player.getInventory().getHelmet() == null) {
                         User user = this.rpgcore.getUserManager().find(player.getUniqueId());
@@ -93,14 +98,15 @@ public class ArmorEffectListener implements Listener {
                 final String type = e.getCursor().getType().toString();
                 User user = this.rpgcore.getUserManager().find(player.getUniqueId());
 
-
-
                 int level = Utils.getTagInt(e.getCursor(), "lvl");
                 if (user.getLvl() < level) {
                     e.setCancelled(true);
                     player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
                     return;
                 }
+
+                e.setCursor(ItemHelper.checkEnchants(e.getCursor(), player));
+
                 if (type.contains("_HELMET")) {
                     if (e.getSlot() == 39 && player.getInventory().getItem(39) == null) {
                         ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(e.getCursor(), "prot"));
@@ -152,7 +158,7 @@ public class ArmorEffectListener implements Listener {
                 }
             }
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                if (e.getClickedBlock().getType().equals(Material.ANVIL) || e.getClickedBlock().getType().equals(Material.CHEST) ||
+                if ((e.getClickedBlock().getType().equals(Material.ANVIL) && !e.getPlayer().getWorld().getName().equals("demontower")) || e.getClickedBlock().getType().equals(Material.CHEST) ||
                         e.getClickedBlock().getType().equals(Material.TRAPPED_CHEST) || e.getClickedBlock().getType().equals(Material.HOPPER) ||
                         e.getClickedBlock().getType().equals(Material.HOPPER_MINECART) || e.getClickedBlock().getType().equals(Material.FURNACE) ||
                         e.getClickedBlock().getType().equals(Material.BURNING_FURNACE) || e.getClickedBlock().getType().equals(Material.STORAGE_MINECART) ||
@@ -185,6 +191,8 @@ public class ArmorEffectListener implements Listener {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
                 return;
             }
+
+            player.setItemInHand(ItemHelper.checkEnchants(player.getItemInHand(), player));
 
             if (type.contains("_HELMET")) {
                 if (player.getInventory().getHelmet() == null) {

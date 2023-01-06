@@ -16,6 +16,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.HashMap;
@@ -31,8 +32,6 @@ public class DamageManager {
     public DamageManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
-
-    private final Map<UUID, Double> krytMap = new HashMap<>();
 
     public void sendDamagePacket(final String prefix, final double dmg, final Location entityLocation, final Player p) {
         final Random random = new Random();
@@ -68,6 +67,7 @@ public class DamageManager {
     }
 
     public double calculateAttackerDmgToPlayer(final Player attacker, final Player victim) {
+        attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
@@ -136,7 +136,14 @@ public class DamageManager {
 
         dmg = dmg/100;
 
-        return DoubleUtils.round(dmg, 2);
+        final double finalDmg = DoubleUtils.round(dmg, 2);
+
+        if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
+            attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
+            RPGCORE.getInstance().getUserManager().find(uuid).setKrytyk(finalDmg);
+        }
+
+        return finalDmg;
     }
 
     public double calculatePlayerDef(final Player player) {
@@ -176,6 +183,7 @@ public class DamageManager {
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim) {
+        attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
@@ -223,7 +231,14 @@ public class DamageManager {
             }
         }
 
-        return DoubleUtils.round(dmg, 2);
+        final double finalDmg = DoubleUtils.round(dmg, 2);
+
+        if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
+            attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
+            RPGCORE.getInstance().getUserManager().find(uuid).setKrytyk(finalDmg);
+        }
+
+        return finalDmg;
     }
 
     public double calculatePlayerDefToEntity(final Player player) {
@@ -268,8 +283,21 @@ public class DamageManager {
         final BonusesUser attackerBonuses = rpgcore.getBonusesManager().find(attackerUUID).getBonusesUser();
         double victimBlok = victimBonuses.getBlokciosu();
         double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku();
+        attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
+        if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR && String.valueOf(attacker.getItemInHand().getType()).contains("SWORD")) {
+            attackerPrzeszywka += Utils.getTagInt(attacker.getItemInHand(), "przeszywka");
+        }
 
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
+    }
+    public double calculatePrzebicie(final Player attacker) {
+        final UUID uuid = attacker.getUniqueId();
+        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+        double przebicie = bonuses.getPrzebiciePancerza();
+
+
+
+        return DoubleUtils.round(przebicie, 2);
     }
 
     public double calculatePlayerThornsDmg(final Player victim) {
@@ -308,18 +336,5 @@ public class DamageManager {
 
 
         return DoubleUtils.round(thornsDmg, 2);
-    }
-
-    public void updateKryt(UUID uuid, double kryt) {
-        krytMap.replace(uuid, kryt);
-    }
-
-    public Double getKryt(final UUID uuid) {
-        krytMap.computeIfAbsent(uuid, kryt -> 0.0);
-        return krytMap.get(uuid);
-    }
-
-    public void setKryt(final UUID uuid, final double kryt) {
-        krytMap.put(uuid, kryt);
     }
 }

@@ -34,16 +34,14 @@ public class KupiecInventoryClose implements Listener {
 
         if (Utils.removeColor(closedInventoryTitle).equals("Kupiec")) {
 
-            for (ItemStack is : rpgcore.getKupiecNPC().getPlayerItemStackList(uuid)) {
-                if (is.getAmount() >= 1) {
+            for (ItemStack is : rpgcore.getKupiecNPC().getPlayerItemStackList(uuid).keys()) {
+                for (int i = 0; i < is.getAmount(); i++) {
                     player.getInventory().addItem(is);
                 }
             }
 
             rpgcore.getKupiecNPC().resetPlayerSellValueItems(uuid);
             rpgcore.getKupiecNPC().resetPlayerItemStack(uuid);
-
-            return;
         }
     }
 }

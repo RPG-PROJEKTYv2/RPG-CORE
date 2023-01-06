@@ -11,13 +11,13 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class OreCommand extends CommandAPI {
     public OreCommand() {
         super("ore");
-        this.setRankLevel(RankType.DEV);
+        this.setRankLevel(RankType.HA);
         this.setRestrictedForPlayer(true);
     }
 
@@ -59,9 +59,14 @@ public class OreCommand extends CommandAPI {
         }
         if (args[0].equalsIgnoreCase("list")) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista rud:"));
+            final Map<Integer, Ore> oreMap = new HashMap<>();
             for (Ore ore : RPGCORE.getInstance().getOreManager().getOreLocations()) {
-                player.sendMessage(Utils.format("&8ID: &6" + ore.getId() + " &8Material: &6" + ore.getOreMaterial().name() + " &8X:&6" + ore.getLocation().getBlockX() + " &8Y:&6" + ore.getLocation().getBlockY() + " &8Z:&6" + ore.getLocation().getBlockZ()));
+                oreMap.put(ore.getId(), ore);
             }
+
+            Stream<Map.Entry<Integer, Ore>> sortedDesc = oreMap.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByKey()));
+            sortedDesc.forEach(e -> player.sendMessage(Utils.format("&8ID: &6" + e.getKey() + " &8Material: &6" + e.getValue().getOreMaterial().name() + " &8X:&6" + e.getValue().getLocation().getBlockX() + " &8Y:&6" + e.getValue().getLocation().getBlockY() + " &8Z:&6" + e.getValue().getLocation().getBlockZ())));
+
             return;
         }
         if (args[0].equalsIgnoreCase("remove")) {

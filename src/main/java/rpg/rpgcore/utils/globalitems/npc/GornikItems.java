@@ -92,18 +92,19 @@ public enum GornikItems {
     }
 
     public static ItemStack getItem(String name, int amount) {
-        ItemStack is = GornikItems.getByName(name).getItemStack();
+        ItemStack is = GornikItems.getByName(name).getItemStack().clone();
         is.setAmount(amount);
         return is;
     }
 
-    public static ItemStack getKilof() {
-        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(KILOF.getItemStack());
+    public static ItemStack getKilof(final String name) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(KILOF.getItemStack().clone());
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", 1);
         tag.setInt("Exp", 0);
         tag.setInt("ReqExp", 100);
         tag.setBoolean("Unbreakable", true);
+        tag.setString("owner", name);
 
         nmsStack.setTag(tag);
         final ItemStack newItem = CraftItemStack.asBukkitCopy(nmsStack);
@@ -111,12 +112,16 @@ public enum GornikItems {
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        final List<String> lore = meta.getLore();
+        lore.add("");
+        lore.add(Utils.format("&7Wlasciciel: &6" + name));
 
+        meta.setLore(lore);
         newItem.setItemMeta(meta);
         return newItem;
     }
 
-    public static ItemStack getZmiotka(String tier, int lvl) {
+    public static ItemStack getZmiotka(final String tier, final int lvl, final String name) {
         ItemStack is = getByName("ZMIOTKA_" + tier.toUpperCase()).getItemStack().clone();
         final ItemMeta meta = is.getItemMeta();
         final List<String> lore = meta.getLore();
@@ -126,6 +131,8 @@ public enum GornikItems {
         } else {
             lore.set(1, Utils.format("&7Exp: &60&7/&6" + GornikDlutoLevels.getExpByLevel(lvl + 1, tier)));
         }
+        lore.add("");
+        lore.add(Utils.format("&7Wlasciciel: &6" + name));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -142,6 +149,7 @@ public enum GornikItems {
         tag.setDouble("Chance", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(2).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));
         tag.setDouble("DubleDrop", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(3).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));
         tag.setString("Tier", tier);
+        tag.setString("owner", name);
         nmsStack.setTag(tag);
 
         return CraftItemStack.asBukkitCopy(nmsStack);
