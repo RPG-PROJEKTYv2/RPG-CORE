@@ -49,22 +49,22 @@ public class MobDropHelper {
         }
 
         final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
-        final double niesDropChance = 0.01 + ((0.01 * szczescie) / 1000.0);
+        final double niesDropChance50lvl = 0.02 + ((0.02 * szczescie) / 1000.0);
+        final double niesDropChance50plus = 0.01 + ((0.01 * szczescie) / 1000.0);
         //final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
         final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
-        //final double chestDropChance50plus = 1 + ((2.5 * szczescie) / 1000.0);
+        final double chestDropChance50plus = 1.25 + ((1.25 * szczescie) / 1000.0);
 
 
         rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
 
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
-        // PRZELICZNIK -> 0.1 - OKOŁO CO TYSIAC MOBOW /// 0.01 - OKOLO CO 10K MOBOW /// 0.001 - OKOLO CO 100k MOBOW
         // TODO PODSTAWOWY HELLCASE DROPI TYLKO Z KUFRA WARTOSCIOWEGO BADZ MISJI :]
         // WARTOSCIOWY KUFER
         addDropPlayer(player, GlobalItem.getItem("I1", 1), getDropChance(szczescie, 0.005), true, true, entity);
         // SKRZYNIA KOWALA
         addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.025), true, true, entity);
-        // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
+        // SKRZYNIA ZE ZWIERZAKAMI
         addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
         // TAJEMNICZA SKRZYNIA
         addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 1.0), true, true, entity);
@@ -96,7 +96,7 @@ public class MobDropHelper {
             // SKRZYNKA MOBA
             addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance50lvl, true, true, entity);
             // NIESAMOWITY PRZEDMIOT
-            addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance, true, false, entity);
+            addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance50lvl, true, false, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("1-10")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
@@ -129,7 +129,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Goblin Lvl. 14") || entityName.equals("Goblin Lvl. 16") || entityName.equals("Goblin Lvl. 19")) {
             addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance50lvl, true, true, entity);
-            addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance, true, false, entity);
+            addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance50lvl, true, false, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -155,7 +155,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Goryl Lvl. 21") || entityName.equals("Goryl Lvl. 25") || entityName.equals("Goryl Lvl. 28")) {
             addDropPlayer(player, Skrzynki.getItem("I6", 1), chestDropChance50lvl, true, true, entity);
-            addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance, true, false, entity);
+            addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance50lvl, true, false, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 2) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -181,7 +181,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Zjawa Lvl. 32") || entityName.equals("Zjawa Lvl. 36") || entityName.equals("Zjawa Lvl. 39")) {
             addDropPlayer(player, Skrzynki.getItem("I8", 1), chestDropChance50lvl, true, true, entity);
-            addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance, true, false, entity);
+            addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance50lvl, true, false, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }
@@ -207,7 +207,7 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Straznik Swiatyni Lvl. 43") || entityName.equals("Straznik Swiatyni Lvl. 46") || entityName.equals("Straznik Swiatyni Lvl. 47")) {
             addDropPlayer(player, Skrzynki.getItem("I10", 1), chestDropChance50lvl, true, true, entity);
-            addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance, true, false, entity);
+            addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance50lvl, true, false, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 4) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
             }

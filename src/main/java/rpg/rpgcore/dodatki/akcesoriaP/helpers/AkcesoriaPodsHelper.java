@@ -49,7 +49,7 @@ public class AkcesoriaPodsHelper {
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Silny przeciwko ludziom: &c" + ludzie + "%",
                 "&7Odpornosc na Ludzi: &c" + odpo + "%",
-                "&7Zmniejszona Szybkosc Ruchu: &c-" + mspeed,
+                "&7Zmniejszona Szybkosc Ruchu: &c" + mspeed,
                 " ",
                 "&cWymagany poziom: &6" + lvl
         )).addTagDouble("ludzie", ludzie).addTagDouble("odpo", odpo).addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();

@@ -11,11 +11,13 @@ import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class RozdajCommand extends CommandAPI {
     public RozdajCommand() {
         super("rozdaj");
+        this.setAliases(Arrays.asList("losowanie", "losuj"));
         this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }

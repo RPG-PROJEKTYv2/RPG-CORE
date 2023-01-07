@@ -115,8 +115,7 @@ public class AdminPanelManager {
         gui.setItem(3, GlobalItem.getItem("I4",1));
         gui.setItem(4, GlobalItem.getItem("I5",1));
         gui.setItem(5, GlobalItem.getItem("I6",1));
-        gui.setItem(6, GlobalItem.getItem("I22",1));
-        gui.setItem(7, GlobalItem.getItem("I21",1));
+        gui.setItem(6, GlobalItem.getItem("I21",1));
 
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
@@ -211,12 +210,12 @@ public class AdminPanelManager {
         gui.setItem(32, ItemShop.IS9.getItems().get(0));
         gui.setItem(41, ItemShop.IS20.getItems().get(0));
 
-        gui.setItem(16, GlobalItem.getItem("I52", 1));
-        gui.setItem(25, GlobalItem.getItem("I53", 1));
-        gui.setItem(34, GlobalItem.getItem("I54", 1));
-        gui.setItem(43, GlobalItem.getItem("I55", 1));
+        //gui.setItem(16, GlobalItem.getItem("I52", 1));
+        //gui.setItem(25, GlobalItem.getItem("I53", 1));
+        //gui.setItem(34, GlobalItem.getItem("I54", 1));
+        //gui.setItem(43, GlobalItem.getItem("I55", 1));
 
-        
+
         gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);
     }

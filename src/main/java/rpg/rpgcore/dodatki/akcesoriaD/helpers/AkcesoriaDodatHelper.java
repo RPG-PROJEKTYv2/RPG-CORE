@@ -44,7 +44,7 @@ public class AkcesoriaDodatHelper {
         return new ItemBuilder(Material.MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Zmniejszone Obrazenia: &c" + mDmg + "%",
-                "&7Zwiekszona Defensywa: &c" + def + "%",
+                "&7Zwiekszona Defensywa: &c" + def,
                 "&7Blok Ciosu: &c" + blok + "%",
                 "&7Przebicie Pancerza: &c" + przebicie + "%",
                 "&7Zmniejszona Predkosc Ruchu: &c" + mspeed,

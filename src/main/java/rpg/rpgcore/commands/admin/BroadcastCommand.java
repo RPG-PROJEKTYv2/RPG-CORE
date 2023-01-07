@@ -48,7 +48,7 @@ public class BroadcastCommand extends CommandAPI {
                 message.append(args[i]).append(" ");
             }
             for (Player server : Bukkit.getOnlinePlayers()) {
-                RPGCORE.getInstance().getNmsManager().sendActionBar(server, "&8&l[&4&lHELLRPG&8&l]" + message + "&8&l[&4&lHELLRPG&8&l]");
+                RPGCORE.getInstance().getNmsManager().sendActionBar(server, "&8&l[&4&lHELLRPG&8&l] &f&l" + message + "&8&l[&4&lHELLRPG&8&l]");
             }
         }
     }

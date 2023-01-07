@@ -45,7 +45,7 @@ public enum NiesyItems {
     }
 
     public static ItemStack getItem(String name) {
-        ItemStack itemStack = PrzyrodnikItems.getByName(name).getItemStack();
+        ItemStack itemStack = NiesyItems.getByName(name).getItemStack();
         return itemStack;
     }
     public ItemStack getNiesy() {

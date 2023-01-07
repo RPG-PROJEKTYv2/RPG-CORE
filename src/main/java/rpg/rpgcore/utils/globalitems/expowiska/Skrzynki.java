@@ -24,8 +24,31 @@ public enum Skrzynki {
     I8("I8", new ItemBuilder(Material.CHEST).setName("&8Skrzynia Zjawy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 5
     I9("I9", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &e&lTrytona").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
-    I10("I10", new ItemBuilder(Material.CHEST).setName("&3Skrzynia Straznika Swiatyni").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
-
+    I10("I10", new ItemBuilder(Material.CHEST).setName("&3Skrzynia Straznika Swiatyni").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 6
+    I11("I11", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &f&lSkrzynia Mitycznego Lodowego Golema").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I12("I12", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Mroznego Wilka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 7
+    I13("I13", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &1&lSkrzynia Piekielnego Rycerza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I14("I14", new ItemBuilder(Material.CHEST).setName("&6Skrzynia Zywiolaka Ognia").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 8
+    I15("I15", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &5&lSkrzynia Przekletego Czarnoksieznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I16("I16", new ItemBuilder(Material.CHEST).setName("&fSkrzynia Mrocznej Duszy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 9
+    I17("I17", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &e&lSkrzynia Mitycznego Pajaka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I18("I18", new ItemBuilder(Material.CHEST).setName("&6Skrzynia Pustynnego Ptasznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 10
+    I19("I19", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &6&lSkrzynia Podziemnego Rozpruwacza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I20("I20", new ItemBuilder(Material.CHEST).setName("&eSkrzynia  Podziemnej Lowczyni").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 11
+    I21("I21", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &b&lSkrzynia Mitycznego Krakena").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I22("I22", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Podwodnego Straznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 12
+    I23("I23", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &c&lSkrzynia Hadesu").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I24("I24", new ItemBuilder(Material.CHEST).setName("&fSkrzynia Centaura").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    // Expowisko 13
+    I25("I25", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &f&lSkrzynia Archaniola").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I26("I26", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Straznika Nieba").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
     private final ItemStack itemStack;
     private final String name;
 

@@ -15,16 +15,16 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map30_40 {
-    I30_40_1("30-40-1", 10, ItemHelper.createArmor("&8Przeklety Helm", Material.GOLD_HELMET, 28, 1)),
-    I30_40_2("30-40-2", 10, ItemHelper.createArmor("&8Przekleta Zbroja", Material.GOLD_CHESTPLATE, 28, 1)),
-    I30_40_3("30-40-3", 10, ItemHelper.createArmor("&8Przeklete Spodnie", Material.GOLD_LEGGINGS, 28, 1)),
-    I30_40_4("30-40-4", 10, ItemHelper.createArmor("&8Przeklete Buty", Material.GOLD_BOOTS, 28, 1)),
-    I30_40_5("30-40-5", 10, ItemHelper.createArmor("&8Przekleta Kosa", Material.IRON_SWORD, 18, 8)),
-    I30_40_6("30-40-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&8Przeklety Naszyjnik").toItemStack()),
-    I30_40_7("30-40-7", 10, new ItemBuilder(Material.WATCH).setName("&8Przeklety Diadem").toItemStack()),
-    I30_40_8("30-40-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&8Przekleta Tarcza").toItemStack()),
+    I30_40_1("30-40-1", 10, ItemHelper.createArmor("&cPrzeklety Helm", Material.GOLD_HELMET, 23, 5)),
+    I30_40_2("30-40-2", 10, ItemHelper.createArmor("&cPrzekleta Zbroja", Material.GOLD_CHESTPLATE, 21, 5)),
+    I30_40_3("30-40-3", 10, ItemHelper.createArmor("&cPrzeklete Spodnie", Material.GOLD_LEGGINGS, 20, 5)),
+    I30_40_4("30-40-4", 10, ItemHelper.createArmor("&cPrzeklete Trepy", Material.GOLD_BOOTS, 20, 5)),
+    I30_40_5("30-40-5", 10, ItemHelper.createSword("&cPrzekleta Kosa", Material.GOLD_SWORD, 18, 8, true)),
 
-    I30_40_9("30-40-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&8Przeklety Pierscien").toItemStack());
+    I30_40_6("30-40-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&cPrzeklety Naszyjnik").toItemStack()),
+    I30_40_7("30-40-7", 10, new ItemBuilder(Material.WATCH).setName("&cPrzeklety Diadem").toItemStack()),
+    I30_40_8("30-40-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&cPrzekleta Tarcza").toItemStack()),
+    I30_40_9("30-40-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&cPrzeklety Pierscien").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -65,23 +65,23 @@ public enum Map30_40 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(15, 34),
-                            ChanceHelper.getRandDouble(8, 13), ChanceHelper.getRandDouble(6, 9), ChanceHelper.getRandInt(30, 40), "&8Przeklety Naszyjnik"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(15, 42),
+                            ChanceHelper.getRandInt(8, 13), ChanceHelper.getRandInt(6, 12), ChanceHelper.getRandInt(30, 40), "&cPrzeklety Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandDouble(4, 11),
-                            ChanceHelper.getRandDouble(4, 10), ChanceHelper.getRandDouble(1, 2), ChanceHelper.getRandInt(30, 40), "&8Przeklety Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(5, 14),
+                            ChanceHelper.getRandInt(6, 18), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(30, 40), "&cPrzeklety Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandDouble(6, 19),
-                            ChanceHelper.getRandDouble(4, 14), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(30, 40), "&8Przekleta Tarcza"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(14, 21),
+                            ChanceHelper.getRandInt(20, 36), ChanceHelper.getRandInt(6, 9), ChanceHelper.getRandInt(30, 40), "&cPrzekleta Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandDouble(0.08, 0.2),
-                            ChanceHelper.getRandDouble(3, 5), 1, ChanceHelper.getRandInt(30, 40), "&8Przeklety Pierscien"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(1, 11), ChanceHelper.getRandInt(3, 14), ChanceHelper.getRandInt(10, 35),
+                            ChanceHelper.getRandInt(30, 40), "&cPrzeklety Pierscien"));
                     return;
                 }
                 player.getInventory().addItem(item.getRewardItem());

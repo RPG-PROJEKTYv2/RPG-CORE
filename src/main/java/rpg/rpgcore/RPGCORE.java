@@ -31,6 +31,10 @@ import rpg.rpgcore.chests.Expowisko10.PodziemnaLowczyniManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
 import rpg.rpgcore.chests.Expowisko11.MitycznyKrakenManager;
 import rpg.rpgcore.chests.Expowisko11.PodwodnyStraznikManager;
+import rpg.rpgcore.chests.Expowisko12.CentaurManager;
+import rpg.rpgcore.chests.Expowisko12.HadesManager;
+import rpg.rpgcore.chests.Expowisko13.ArchaniolManager;
+import rpg.rpgcore.chests.Expowisko13.StraznikNiebaManager;
 import rpg.rpgcore.chests.Expowisko2.GoblinManager;
 import rpg.rpgcore.chests.Expowisko2.WodzGoblinowManager;
 import rpg.rpgcore.chests.Expowisko3.GorylManager;
@@ -314,6 +318,12 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 11
     private MitycznyKrakenManager mitycznyKrakenManager;
     private PodwodnyStraznikManager podwodnyStraznikManager;
+    // Expowisko 12
+    private CentaurManager centaurManager;
+    private HadesManager hadesManager;
+    // Expowisko 13
+    private ArchaniolManager archaniolManager;
+    private StraznikNiebaManager straznikNiebaManager;
 
     // cos innego...
     private OreManager oreManager;
@@ -833,6 +843,12 @@ public final class RPGCORE extends JavaPlugin {
         // EXPOWISKO 11
         this.mitycznyKrakenManager = new MitycznyKrakenManager();
         this.podwodnyStraznikManager = new PodwodnyStraznikManager();
+        // EXPOWISKO 12
+        this.centaurManager = new CentaurManager();
+        this.hadesManager = new HadesManager();
+        // EXPOWISKO 13
+        this.archaniolManager = new ArchaniolManager();
+        this.straznikNiebaManager = new StraznikNiebaManager();
     }
 
     private void initDungeons() {
@@ -1113,6 +1129,22 @@ public final class RPGCORE extends JavaPlugin {
     public PodwodnyStraznikManager getPodwodnyStraznikManager() {
         return podwodnyStraznikManager;
     }
+    // exp12
+    public CentaurManager getCentaurManager() {
+        return centaurManager;
+    }
+    public HadesManager getHadesManager() {
+        return hadesManager;
+    }
+    // exp13
+    public ArchaniolManager getArchaniolManager() {
+        return archaniolManager;
+    }
+    public StraznikNiebaManager getStraznikNiebaManager() {
+        return  getStraznikNiebaManager();
+    }
+
+
 
     public GornikNPC getGornikNPC() {
         return gornikNPC;

@@ -134,7 +134,7 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // SKRZYNIA ZE ZWIERZAKAMI RARE ITEMSHOP
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
+              if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
                         ItemStack item = null;
