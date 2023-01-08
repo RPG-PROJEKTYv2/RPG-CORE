@@ -149,8 +149,7 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-
-                // SKRZYNIA GORNIKA TODO
+                // TODO SKRZYNIA GORNIKA
 
                 // ================================ SKRZYNKI EXPOWISKA ================================
 
@@ -159,12 +158,11 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I1", 1));
-                        final Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
+                        Items item = rpgcore.getWygnaniecManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
-
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 3), ChanceHelper.getRandDouble(3, 5), ChanceHelper.getRandDouble(2, 3),
@@ -188,8 +186,6 @@ public class DropFromChestsListener implements Listener {
                             default:
                                 break;
                         }
-
-
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -203,7 +199,7 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
 
@@ -225,7 +221,6 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
-
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(2, 7), ChanceHelper.getRandDouble(4, 7),
@@ -246,7 +241,6 @@ public class DropFromChestsListener implements Listener {
                             default:
                                 break;
                         }
-
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -260,7 +254,7 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
 
@@ -275,7 +269,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I6", 1));
-                        final Items item = rpgcore.getGorylManager().getDrawnItems(player);
+                        Items item = rpgcore.getGorylManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -299,7 +293,6 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
-
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(7, 17), ChanceHelper.getRandDouble(6, 9),
@@ -335,7 +328,7 @@ public class DropFromChestsListener implements Listener {
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
 
@@ -350,7 +343,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I7").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I7", 1));
-                        final Items item = rpgcore.getPrzekletaDuszaManager().getDrawnItems(player);
+                        Items item = rpgcore.getPrzekletaDuszaManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -387,11 +380,11 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I10").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I10", 1));
-                        final Items item = rpgcore.getStraznikSwiatyniManager().getDrawnItems(player);
+                        Items item = rpgcore.getStraznikSwiatyniManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
 
@@ -406,12 +399,11 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I9").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I9", 1));
-                        final Items item = rpgcore.getTrytonManager().getDrawnItems(player);
+                        Items item = rpgcore.getTrytonManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
-
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(18, 38), ChanceHelper.getRandDouble(9, 13),
@@ -433,6 +425,163 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
 
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 6
+                // Skrzynia Mroznego Wilka
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I12").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I12", 1));
+                        Items item = rpgcore.getMroznyWilkManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 6) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
+                        }
+                        return;
+                    }
+                }
+                // Expowisko 7
+                // Skrzynia Zywiolaka Ognia
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I14").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I14", 1));
+                        Items item = rpgcore.getZywiolakOgniaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 7) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
+                        }
+                        return;
+                    }
+                }
+                // Skrzynia Przekletego Rycerza
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I13").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I13", 1));
+                        Items item = rpgcore.getPrzekletyRycerzManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 8
+                // Skrzynia Mrocznej Duszy
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I16").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I16", 1));
+                        Items item = rpgcore.getMrocznaDuszaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 8) {
+                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
+                        }
+                        return;
+                    }
+                }
+                // Skrzynia Przekletego Czarnoksieznika
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I15").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I15", 1));
+                        Items item = rpgcore.getPrzekletyCzarnoksieznikManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 9
+                // Skrzynia Mitycznego Pajaka
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I17").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I17", 1));
+                        Items item = rpgcore.getMitycznyPajakManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 10
+                // Skrzynia Podziemnego Rozpruwacza
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I19").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I19", 1));
+                        Items item = rpgcore.getPodziemnyRozpruwaczManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 11
+                // Skrzynia Mitycznego Krakena
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I21").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I21", 1));
+                        Items item = rpgcore.getMitycznyKrakenManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 12
+                // Skrzynia Hadesa
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I23").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I23", 1));
+                        Items item = rpgcore.getHadesManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Expowisko 13
+                // Skrzynia Archaniola
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I25").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I25", 1));
+                        Items item = rpgcore.getArchaniolManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;

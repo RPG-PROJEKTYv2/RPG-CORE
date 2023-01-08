@@ -48,7 +48,30 @@ public class PlayerItemPickUpListener implements Listener {
                     case "40-50":
                         Map40_50.getDrop(e.getPlayer(), szcescie);
                         break;
-
+                    case "50-60":
+                        Map50_60.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "60-70":
+                        Map60_70.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "70-80":
+                        Map70_80.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "80-90":
+                        Map80_90.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "90-100":
+                        Map90_100.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "100-110":
+                        Map100_110.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "110-120":
+                        Map110_120.getDrop(e.getPlayer(), szcescie);
+                        break;
+                    case "120-130":
+                        Map120_130.getDrop(e.getPlayer(), szcescie);
+                        break;
                 }
                 e.getPlayer().getInventory().removeItem(e.getItem().getItemStack());
             }

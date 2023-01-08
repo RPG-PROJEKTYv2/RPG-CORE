@@ -20,7 +20,7 @@ public class WygnaniecManager {
         this.wygnaniec.add(new Items("2", 8.0, ItemHelper.createArmor("&8&lZbroja Wygnanca", Material.LEATHER_CHESTPLATE, 6, 0), 1));
         this.wygnaniec.add(new Items("3", 8.0, ItemHelper.createArmor("&8&lSpodnie Wygnanca", Material.LEATHER_LEGGINGS, 6, 0), 1));
         this.wygnaniec.add(new Items("4", 8.0, ItemHelper.createArmor("&8&lButy Wygnanca", Material.LEATHER_BOOTS, 6, 0), 1));
-        this.wygnaniec.add(new Items("5", 6.0, ItemHelper.createSword("&9&lMiecz Wygnanego", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.wygnaniec.add(new Items("5", 6.0, ItemHelper.createSword("&8&lMiecz Wygnanego", Material.WOOD_SWORD, 3, 2,false), 1));
         this.wygnaniec.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&8&lNaszyjnik Wygnanca").toItemStack(),1 ));
         this.wygnaniec.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&8&lDiadem Wyganca").toItemStack(),1 ));
         this.wygnaniec.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&8&lPierscien Wyganca").toItemStack(),1 ));

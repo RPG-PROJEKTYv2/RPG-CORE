@@ -51,9 +51,9 @@ public class MobDropHelper {
         final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final double niesDropChance50lvl = 0.02 + ((0.02 * szczescie) / 1000.0);
         final double niesDropChance50plus = 0.01 + ((0.01 * szczescie) / 1000.0);
-        //final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
         final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
         final double chestDropChance50plus = 1.25 + ((1.25 * szczescie) / 1000.0);
+        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
 
 
         rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
@@ -166,7 +166,7 @@ public class MobDropHelper {
                 addDropPlayer(player, PrzyrodnikItems.getItem("20-30"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
-        // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
+        // ----------------------------------------- EXPOWISKO 4 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Przekleta Dusza")) {
             addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
@@ -192,7 +192,7 @@ public class MobDropHelper {
                 addDropPlayer(player, PrzyrodnikItems.getItem("30-40"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
-        // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
+        // ----------------------------------------- EXPOWISKO 5 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Tryton")) {
             addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
@@ -218,13 +218,220 @@ public class MobDropHelper {
                 addDropPlayer(player, PrzyrodnikItems.getItem("40-50"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
-
-
-
+        // ----------------------------------------- EXPOWISKO 6 -----------------------------------------
+        // BOSS
+        // TODO JEST BOSS Z DT I PODPIETE NA SAMYM DOLE
+        // MOB
+        if (entityName.equals("Mrozny Wilk Lvl. 52") || entityName.equals("Mrozny Wilk Lvl. 54") || entityName.equals("Mrozny Wilk Lvl. 56")) {
+            addDropPlayer(player, Skrzynki.getItem("I12", 1), chestDropChance50lvl, true, true, entity);
+            addDropPlayer(player, NiesyItems.N6.getItemStack(), niesDropChance50lvl, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 5) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("50-60")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 6) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 5) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("50-60"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 7 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Piekielny Rycerz")) {
+            addDropPlayer(player, Skrzynki.getItem("I13", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 7) {
+                addDropPlayer(player, LowcaItems.getItem("60-70", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 7) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Zywiolak Ognia Lvl. 64") || entityName.equals("Zywiolak Ognia Lvl. 66") || entityName.equals("Zywiolak Ognia Lvl. 68")) {
+            addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
+            addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 6) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("60-70")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 7) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 6) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("60-70"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 8 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Przeklety Czarnoksieznik")) {
+            addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
+                addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 8) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Mroczna Dusza Lvl. 71") || entityName.equals("Mroczna Dusza Lvl. 75") || entityName.equals("Mroczna Dusza Lvl. 78")) {
+            addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
+            addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 7) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("70-80")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 8) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 7) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("70-80"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 9 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Mityczny Pajak")) {
+            addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
+                addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 9) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Mroczna Dusza Lvl. 71") || entityName.equals("Mroczna Dusza Lvl. 75") || entityName.equals("Mroczna Dusza Lvl. 78")) {
+            addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 8) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("70-80")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 9) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 8) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("70-80"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 10 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Mityczny Pajak")) {
+            addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
+                addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 9) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Pustynny Ptasznik Lvl. 84") || entityName.equals("Pustynny Ptasznik Lvl. 87") || entityName.equals("Pustynny Ptasznik Lvl. 89")) {
+            addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 9) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("80-90")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 10) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 9) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("80-90"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 11 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Podziemny Rozpruwacz")) {
+            addDropPlayer(player, Skrzynki.getItem("I19", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 10) {
+                addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 10) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Podziemna Lowczyni Lvl. 92") || entityName.equals("Podziemna Lowczyni Lvl. 95") || entityName.equals("Podziemna Lowczyni Lvl. 98")) {
+            addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 10) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("90-100")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 11) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 10) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("90-100"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 12 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Mityczny Kraken")) {
+            addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
+                addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 11) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Podwodny Straznik Lvl. 104") || entityName.equals("Podwodny Straznik Lvl. 106") || entityName.equals("Podwodny Straznik Lvl. 109")) {
+            addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 11) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("100-110")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 12) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 11) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("100-110"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 13 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Hades")) {
+            addDropPlayer(player, Skrzynki.getItem("I23", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 12) {
+                addDropPlayer(player, LowcaItems.getItem("110-120", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 12) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Centaur Lvl. 114") || entityName.equals("Centaur Lvl. 116") || entityName.equals("Centaur Lvl. 118")) {
+            addDropPlayer(player, NiesyItems.N12.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 12) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("110-120")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 13) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 12) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("110-120"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
+        // ----------------------------------------- EXPOWISKO 14 -----------------------------------------
+        // BOSS
+        if (entityName.equals("[BOSS] Archaniol")) {
+            addDropPlayer(player, Skrzynki.getItem("I25", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 13) {
+                addDropPlayer(player, LowcaItems.getItem("120-130", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 13) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
+        }
+        // MOB
+        if (entityName.equals("Straznik Nieba Lvl. 123") || entityName.equals("Straznik Nieba Lvl. 126") || entityName.equals("Straznik Nieba Lvl. 129")) {
+            addDropPlayer(player, NiesyItems.N13.getItemStack(), niesDropChance50plus, true, false, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 13) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("120-130")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 14) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
+            }
+            if (przyrodnikMission.getNumber() == 13) {
+                addDropPlayer(player, PrzyrodnikItems.getItem("120-130"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
+            }
+        }
         // ----------------------------------------- ICE TOWER -----------------------------------------
         if (entityName.equals("Lodowy Sluga Lvl. 57")) {
-            //TODO dodac expa
-            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
             if (!player.getWorld().getName().equals("demontower")) return;
             RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
             if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 50) {
@@ -235,8 +442,7 @@ public class MobDropHelper {
             }
         }
         if (entityName.equals("Lodowy Sluga Lvl. 58")) {
-            //TODO dodac expa
-            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
             if (!player.getWorld().getName().equals("demontower")) return;
             RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
             if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
@@ -247,8 +453,7 @@ public class MobDropHelper {
             }
         }
         if (entityName.equals("Lodowy Sluga Lvl. 59")) {
-            //TODO dodac expa
-            //TODO dodac drop jakichs skrzynek (moze kowala z wiekszym % na drop ?)
+            addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
             if (!player.getWorld().getName().equals("demontower")) return;
             RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
             if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
@@ -259,8 +464,13 @@ public class MobDropHelper {
             }
         }
         if (entityName.equals("[BOSS] Mrozny Wladca")) {
-            //TODO dodac expa
-            //TODO dodac skrzynke z bossa
+            addDropPlayer(player, Skrzynki.getItem("I_DEMONTOWER_BOSS", 1), 100, true, true, entity);
+            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 6) {
+                addDropPlayer(player, LowcaItems.getItem("50-60", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 6) {
+                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+            }
             if (!player.getWorld().getName().equals("demontower")) return;
             IceTowerManager.teleportKowal();
         }

@@ -131,5 +131,11 @@ public class AdminPanelInventoryClick implements Listener {
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
+        if (title.equals("Przedmioty Specjalne - ADMINISRTACJA")) {
+            if (slot == 26) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+            }
+        }
     }
 }

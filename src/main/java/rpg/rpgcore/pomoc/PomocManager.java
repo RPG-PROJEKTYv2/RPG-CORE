@@ -48,7 +48,7 @@ public class PomocManager {
         gui.setItem(16, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/bony, /akcesoria, /dodatki").addGlowing().toItemStack().clone());
         gui.setItem(17, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/artefakty").addGlowing().toItemStack().clone());
 
-        gui.setItem(27, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
 }

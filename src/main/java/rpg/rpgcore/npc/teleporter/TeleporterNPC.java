@@ -106,7 +106,7 @@ public class TeleporterNPC {
 
         // expowisko 5
         if (user.getLvl() > 39) {
-            expowisko5.setName("&b&lPodwodna Swiatynia");
+            expowisko5.setName("&b&lPodwodna Krypta");
             this.loreEXPOWISKA("&cOFF", "&f40");
             expowisko5.addGlowing();
             expowisko5.setLore(lore);

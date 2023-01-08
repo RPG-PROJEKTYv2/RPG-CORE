@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -58,9 +59,17 @@ public class AdminPanelManager {
                 "&8* &f/rozdaj <all/jeden>"
         )).addGlowing().toItemStack().clone());
         gui.setItem(19, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Itemy Gornika").addGlowing().toItemStack().clone());
+        gui.setItem(20, new ItemBuilder(Material.NETHER_STAR).setName("&ePrzedmioty Specjalne").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
+    public void openPrzedmiotySpecjalneGui(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lPrzedmioty Specjalne &f- ADMINISTRACJA"));
 
+        gui.setItem(0, GlobalItem.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
+        gui.setItem(1, GlobalItem.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+    }
     public void openAllCaseGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&2&lSkrzynki &f- ADMINISTRACJA"));
 
@@ -88,6 +97,11 @@ public class AdminPanelManager {
         gui.setItem(2, Skrzynki.getItem("I6",1));
         gui.setItem(3, Skrzynki.getItem("I8",1));
         gui.setItem(4, Skrzynki.getItem("I10",1));
+        gui.setItem(5, Skrzynki.getItem("I12",1));
+        gui.setItem(6, Skrzynki.getItem("I14",1));
+        gui.setItem(7, Skrzynki.getItem("I16",1));
+
+
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
@@ -98,6 +112,14 @@ public class AdminPanelManager {
         gui.setItem(2, Skrzynki.getItem("I5",1));
         gui.setItem(3, Skrzynki.getItem("I7",1));
         gui.setItem(4, Skrzynki.getItem("I9",1));
+        gui.setItem(5, Skrzynki.getItem("I11",1));
+        gui.setItem(6, Skrzynki.getItem("I13",1));
+        gui.setItem(7, Skrzynki.getItem("I15",1));
+        gui.setItem(8, Skrzynki.getItem("I17",1));
+        gui.setItem(9, Skrzynki.getItem("I19",1));
+        gui.setItem(10, Skrzynki.getItem("I21",1));
+        gui.setItem(11, Skrzynki.getItem("I23",1));
+        gui.setItem(12, Skrzynki.getItem("I25",1));
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
@@ -170,7 +192,7 @@ public class AdminPanelManager {
         gui.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(33, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
-        gui.setItem(45, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
+        //gui.setItem(45, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(47, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(49, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(51, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
@@ -210,10 +232,10 @@ public class AdminPanelManager {
         gui.setItem(32, ItemShop.IS9.getItems().get(0));
         gui.setItem(41, ItemShop.IS20.getItems().get(0));
 
-        //gui.setItem(16, GlobalItem.getItem("I52", 1));
-        //gui.setItem(25, GlobalItem.getItem("I53", 1));
-        //gui.setItem(34, GlobalItem.getItem("I54", 1));
-        //gui.setItem(43, GlobalItem.getItem("I55", 1));
+        gui.setItem(16, GlobalItem.getItem("I52", 1));
+        gui.setItem(25, GlobalItem.getItem("I53", 1));
+        gui.setItem(34, GlobalItem.getItem("I54", 1));
+        gui.setItem(43, GlobalItem.getItem("I55", 1));
 
 
         gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());

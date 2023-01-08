@@ -15,16 +15,16 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map10_20 {
-    I10_20_1("10-20-1", 10, ItemHelper.createArmor("&2Zielony Beret", Material.LEATHER_HELMET, 8, 2)),
-    I10_20_2("10-20-2", 10, ItemHelper.createArmor("&2Zielony Kubrak", Material.LEATHER_CHESTPLATE, 8, 2)),
-    I10_20_3("10-20-3", 10, ItemHelper.createArmor("&2Zielone Spodnie", Material.LEATHER_LEGGINGS, 8, 1)),
-    I10_20_4("10-20-4", 10, ItemHelper.createArmor("&2Zielone Buty", Material.LEATHER_BOOTS, 7, 2)),
-    I10_20_5("10-20-5", 10, ItemHelper.createSword("&2Zielona Maczeta", Material.STONE_SWORD, 6, 3,true)),
+    I10_20_1("10-20-1", 10, ItemHelper.createArmor("&2&lZielony Beret", Material.LEATHER_HELMET, 8, 2)),
+    I10_20_2("10-20-2", 10, ItemHelper.createArmor("&2&lZielony Kubrak", Material.LEATHER_CHESTPLATE, 8, 2)),
+    I10_20_3("10-20-3", 10, ItemHelper.createArmor("&2&lZielone Spodnie", Material.LEATHER_LEGGINGS, 8, 1)),
+    I10_20_4("10-20-4", 10, ItemHelper.createArmor("&2&lZielone Buty", Material.LEATHER_BOOTS, 7, 2)),
+    I10_20_5("10-20-5", 10, ItemHelper.createSword("&2&lZielona Maczeta", Material.STONE_SWORD, 6, 3,true)),
 
-    I10_20_6("10-20-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&2Zielony Naszyjnik").toItemStack()),
-    I10_20_7("10-20-7", 10, new ItemBuilder(Material.WATCH).setName("&2Zielony Diadem").toItemStack()),
-    I10_20_8("10-20-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&2Zielona Tarcza").toItemStack()),
-    I10_20_9("10-20-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&2Zielony Pierscien").toItemStack());
+    I10_20_6("10-20-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&2&lZielony Naszyjnik").toItemStack()),
+    I10_20_7("10-20-7", 10, new ItemBuilder(Material.WATCH).setName("&2&lZielony Diadem").toItemStack()),
+    I10_20_8("10-20-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&2&lZielona Tarcza").toItemStack()),
+    I10_20_9("10-20-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&2&lZielony Pierscien").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -66,22 +66,22 @@ public enum Map10_20 {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(3, 10),
-                            ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(3, 9), ChanceHelper.getRandInt(10, 20), "&2Zielony Naszyjnik"));
+                            ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(3, 9), ChanceHelper.getRandInt(10, 20), "&2&lZielony Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(3, 8), ChanceHelper.getRandInt(4, 10), ChanceHelper.getRandInt(1, 3),
-                            ChanceHelper.getRandInt(10, 20), "&2Zielony Diadem"));
+                            ChanceHelper.getRandInt(10, 20), "&2&lZielony Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(8, 13),
-                            ChanceHelper.getRandInt(15, 26), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(10, 20), "&2Zielona Tarcza"));
+                            ChanceHelper.getRandInt(15, 26), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(10, 20), "&2&lZielona Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(1, 6), ChanceHelper.getRandInt(2, 8), ChanceHelper.getRandInt(5, 25),
-                            ChanceHelper.getRandInt(1, 10), "&2Zielony Pierscien"));
+                            ChanceHelper.getRandInt(10, 20), "&2&lZielony Pierscien"));
                     return;
                 }
                 player.getInventory().addItem(item.getRewardItem());

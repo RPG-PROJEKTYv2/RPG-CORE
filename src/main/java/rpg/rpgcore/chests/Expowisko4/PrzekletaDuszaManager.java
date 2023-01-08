@@ -16,15 +16,15 @@ public class PrzekletaDuszaManager {
     private final Set<Items> przekletadusza = Sets.newConcurrentHashSet();
 
     public PrzekletaDuszaManager() {
-        this.przekletadusza.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Przekletej Duszy", Material.CHAINMAIL_HELMET, 25, 0), 1));
-        this.przekletadusza.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Przekletej Duszy", Material.CHAINMAIL_CHESTPLATE, 25, 0), 1));
-        this.przekletadusza.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Przekletej Duszy", Material.CHAINMAIL_LEGGINGS, 25, 0), 1));
-        this.przekletadusza.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Przekletej Duszy", Material.CHAINMAIL_BOOTS, 25, 0), 1));
-        this.przekletadusza.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Przekletej Duszy", Material.STONE_SWORD, 15, 8,false), 1));
-        this.przekletadusza.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lNaszyjnik Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&f&lDiadem Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lPierscien Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lTarcza Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("1", 8.0, ItemHelper.createArmor("&7&lHelm Przekletej Duszy", Material.CHAINMAIL_HELMET, 25, 0), 1));
+        this.przekletadusza.add(new Items("2", 8.0, ItemHelper.createArmor("&7&lZbroja Przekletej Duszy", Material.CHAINMAIL_CHESTPLATE, 25, 0), 1));
+        this.przekletadusza.add(new Items("3", 8.0, ItemHelper.createArmor("&7&lSpodnie Przekletej Duszy", Material.CHAINMAIL_LEGGINGS, 25, 0), 1));
+        this.przekletadusza.add(new Items("4", 8.0, ItemHelper.createArmor("&7&lButy Przekletej Duszy", Material.CHAINMAIL_BOOTS, 25, 0), 1));
+        this.przekletadusza.add(new Items("5", 6.0, ItemHelper.createSword("&7&lMiecz Przekletej Duszy", Material.STONE_SWORD, 15, 8,false), 1));
+        this.przekletadusza.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7&lNaszyjnik Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&7&lDiadem Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&7&lPierscien Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&7&lTarcza Przekletej Duszy").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

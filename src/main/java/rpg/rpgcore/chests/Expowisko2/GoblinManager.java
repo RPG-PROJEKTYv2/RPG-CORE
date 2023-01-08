@@ -15,11 +15,11 @@ public class GoblinManager {
     private final Set<Items> goblin = Sets.newConcurrentHashSet();
 
     public GoblinManager() {
-        this.goblin.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Goblina", Material.LEATHER_HELMET, 7, 0), 1));
-        this.goblin.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Goblina", Material.LEATHER_CHESTPLATE, 7, 0), 1));
-        this.goblin.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Goblina", Material.LEATHER_LEGGINGS, 7, 0), 1));
-        this.goblin.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Goblina", Material.LEATHER_BOOTS, 7, 0), 1));
-        this.goblin.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Goblina", Material.WOOD_SWORD, 3, 2,false), 1));
+        this.goblin.add(new Items("1", 8.0, ItemHelper.createArmor("&2Helm Goblina", Material.LEATHER_HELMET, 7, 0), 1));
+        this.goblin.add(new Items("2", 8.0, ItemHelper.createArmor("&2Zbroja Goblina", Material.LEATHER_CHESTPLATE, 7, 0), 1));
+        this.goblin.add(new Items("3", 8.0, ItemHelper.createArmor("&2Spodnie Goblina", Material.LEATHER_LEGGINGS, 7, 0), 1));
+        this.goblin.add(new Items("4", 8.0, ItemHelper.createArmor("&2Buty Goblina", Material.LEATHER_BOOTS, 7, 0), 1));
+        this.goblin.add(new Items("5", 6.0, ItemHelper.createSword("&2Miecz Goblina", Material.WOOD_SWORD, 3, 2,false), 1));
     }
 
 

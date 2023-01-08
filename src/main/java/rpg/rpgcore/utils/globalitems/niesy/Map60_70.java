@@ -16,17 +16,17 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map60_70 {
-    I60_70_1("60-70-1", 12, ItemHelper.createArmor("&4Ognisty Kask", Material.DIAMOND_HELMET, 50, 13)),
-    I60_70_2("60-70-2", 12, ItemHelper.createArmor("&4Ognista Kurtka", Material.DIAMOND_CHESTPLATE, 53, 13)),
-    I60_70_3("60-70-3", 12, ItemHelper.createArmor("&4Ogniste Spodnie", Material.DIAMOND_LEGGINGS, 52, 13)),
-    I60_70_4("60-70-4", 12, ItemHelper.createArmor("&4Ogniste Buty", Material.DIAMOND_BOOTS, 55, 13)),
-    I60_70_5("60-70-5", 12, ItemHelper.createSword("&4Ognista Szpada", Material.DIAMOND_SWORD, 38, 19,true)),
+    I60_70_1("60-70-1", 12, ItemHelper.createArmor("&4&lOgnisty Kask", Material.DIAMOND_HELMET, 50, 13)),
+    I60_70_2("60-70-2", 12, ItemHelper.createArmor("&4&lOgnista Kurtka", Material.DIAMOND_CHESTPLATE, 53, 13)),
+    I60_70_3("60-70-3", 12, ItemHelper.createArmor("&4&lOgniste Spodnie", Material.DIAMOND_LEGGINGS, 52, 13)),
+    I60_70_4("60-70-4", 12, ItemHelper.createArmor("&4&lOgniste Buty", Material.DIAMOND_BOOTS, 55, 13)),
+    I60_70_5("60-70-5", 12, ItemHelper.createSword("&4&lOgnista Szpada", Material.DIAMOND_SWORD, 38, 19,true)),
 
-    I60_70_6("60-70-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&4Ognisty Naszyjnik").toItemStack()),
-    I60_70_7("60-70-7", 10, new ItemBuilder(Material.WATCH).setName("&4Ognisty Diadem").toItemStack()),
-    I60_70_8("60-70-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&4Ognista Tarcza").toItemStack()),
-    I60_70_9("60-70-9", 10, new ItemBuilder(Material.HOPPER_MINECART).setName("&4Ogniste Kolczyki").toItemStack()),
-    I60_70_10("60-70-10", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4Ognisty Pierscien").toItemStack()),
+    I60_70_6("60-70-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&4&lOgnisty Naszyjnik").toItemStack()),
+    I60_70_7("60-70-7", 10, new ItemBuilder(Material.WATCH).setName("&4&lOgnisty Diadem").toItemStack()),
+    I60_70_8("60-70-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&4&lOgnista Tarcza").toItemStack()),
+    I60_70_9("60-70-9", 10, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lOgniste Kolczyki").toItemStack()),
+    I60_70_10("60-70-10", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lOgnisty Pierscien").toItemStack()),
     I60_70_11("60-70-11", 6, new ItemBuilder(Material.MINECART).setName("&fOgnista Energia").toItemStack()),
     I60_70_12("60-70-12", 6, new ItemBuilder(Material.FIREBALL).setName("&fOgnisty Medalion").toItemStack());
 
@@ -70,36 +70,36 @@ public enum Map60_70 {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(46, 200),
-                            ChanceHelper.getRandInt(16, 22), ChanceHelper.getRandInt(12, 18), ChanceHelper.getRandInt(60, 70), "&4Ognisty Naszyjnik"));
+                            ChanceHelper.getRandInt(16, 22), ChanceHelper.getRandInt(12, 18), ChanceHelper.getRandInt(60, 70), "&4&lOgnisty Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(12, 22),
-                            ChanceHelper.getRandInt(12, 29), ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(60, 70), "&4Ognisty Diadem"));
+                            ChanceHelper.getRandInt(12, 29), ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(60, 70), "&4&lOgnisty Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(20, 37),
-                            ChanceHelper.getRandInt(25, 46), ChanceHelper.getRandInt(12, 16), ChanceHelper.getRandInt(60, 70), "&4Ognista Tarcza"));
+                            ChanceHelper.getRandInt(25, 46), ChanceHelper.getRandInt(12, 16), ChanceHelper.getRandInt(60, 70), "&4&lOgnista Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(12 ,16),
-                            ChanceHelper.getRandInt(17, 23), ChanceHelper.getRandInt(-65, -50), ChanceHelper.getRandInt(60, 70), "&4Ogniste Kolczyki"));
+                            ChanceHelper.getRandInt(17, 23), ChanceHelper.getRandInt(-65, -50), ChanceHelper.getRandInt(60, 70), "&4&lOgniste Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(3, 22), ChanceHelper.getRandInt(6, 23), ChanceHelper.getRandInt(20, 80),
-                            ChanceHelper.getRandInt(60, 70), "&4Ognisty Pierscien"));
+                            ChanceHelper.getRandInt(60, 70), "&4&lOgnisty Pierscien"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.MINECART) {
                     player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-25, -15), ChanceHelper.getRandInt(27, 41),
-                            ChanceHelper.getRandInt(33, 53), ChanceHelper.getRandDouble(0.1, 0.2), ChanceHelper.getRandInt(-50, -35),ChanceHelper.getRandInt(60, 70), "&4Ognista Energia"));
+                            ChanceHelper.getRandInt(33, 53), ChanceHelper.getRandDouble(0.1, 0.2), ChanceHelper.getRandInt(-50, -35),ChanceHelper.getRandInt(60, 70), "&4&lOgnista Energia"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.FIREBALL) {
-                    player.getInventory().addItem(AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(10, 16), ChanceHelper.getRandInt(7, 10), ChanceHelper.getRandInt(60, 70),"&4Ognisty Medalion"));
+                    player.getInventory().addItem(AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(10, 16), ChanceHelper.getRandInt(7, 10), ChanceHelper.getRandInt(60, 70),"&4&lOgnisty Medalion"));
                     return;
                 }
                 player.getInventory().addItem(item.getRewardItem());
