@@ -16,9 +16,9 @@ public class NajemnikManager {
 
     public NajemnikManager() {
         this.najemnik.add(new Items("1", 12.0 , ItemHelper.createArmor("&8Helm Najemnika", Material.LEATHER_HELMET, 3, 0), 1));
-        this.najemnik.add(new Items("2", 12.0 , ItemHelper.createArmor("&8Zbroja Najemnika", Material.LEATHER_CHESTPLATE, 3, 0), 1));
+        this.najemnik.add(new Items("2", 12.0 , ItemHelper.createArmor("&8Zbroja Najemnika", Material.LEATHER_CHESTPLATE, 3, 1), 1));
         this.najemnik.add(new Items("3", 12.0 , ItemHelper.createArmor("&8Spodnie Najemnika", Material.LEATHER_LEGGINGS, 3, 0), 1));
-        this.najemnik.add(new Items("4", 12.0 , ItemHelper.createArmor("&8Buty Najemnika", Material.LEATHER_BOOTS, 3, 0), 1));
+        this.najemnik.add(new Items("4", 12.0 , ItemHelper.createArmor("&8Buty Najemnika", Material.LEATHER_BOOTS, 2, 0), 1));
         this.najemnik.add(new Items("5", 10.0, ItemHelper.createSword("&8Tepy Miecz Najemnika", Material.WOOD_SWORD, 1, 1,false), 1));
     }
 

@@ -16,15 +16,19 @@ public class WodzGoblinowManager {
     private final Set<Items> wodzgoblin = Sets.newConcurrentHashSet();
 
     public WodzGoblinowManager() {
-        this.wodzgoblin.add(new Items("1", 8.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 0), 1));
-        this.wodzgoblin.add(new Items("2", 8.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 9, 0), 1));
-        this.wodzgoblin.add(new Items("3", 8.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 9, 0), 1));
-        this.wodzgoblin.add(new Items("4", 8.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 9, 0), 1));
-        this.wodzgoblin.add(new Items("5", 6.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
-        this.wodzgoblin.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lNaszyjnik Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&a&lDiadem Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lPierscien Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lTarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("1", 10.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 2), 1));
+        this.wodzgoblin.add(new Items("2", 10.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 10, 2), 1));
+        this.wodzgoblin.add(new Items("3", 10.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 8, 2), 1));
+        this.wodzgoblin.add(new Items("4", 10.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 6, 2), 1));
+        this.wodzgoblin.add(new Items("5", 10.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
+        this.wodzgoblin.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lZwykly Naszyjnik Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&a&lZwykly Diadem Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lZwykly Pierscien Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("9", 7.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lZwykla Tarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("10", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lUlepszony Naszyjnik Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("11", 2.0, new ItemBuilder(Material.WATCH).setName("&a&lUlepszony Diadem Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("12", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lUlepszony Pierscien Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("13", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lUlepszona Tarcza Wodza Goblinow").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

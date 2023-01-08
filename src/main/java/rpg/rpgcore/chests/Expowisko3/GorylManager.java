@@ -16,10 +16,10 @@ public class GorylManager {
     private final Set<Items> goryl = Sets.newConcurrentHashSet();
 
     public GorylManager() {
-        this.goryl.add(new Items("1", 8.0, ItemHelper.createArmor("&6Helm Goryla", Material.LEATHER_HELMET, 14, 0), 1));
-        this.goryl.add(new Items("2", 8.0, ItemHelper.createArmor("&6Zbroja Goryla", Material.CHAINMAIL_CHESTPLATE, 14, 0), 1));
-        this.goryl.add(new Items("3", 8.0, ItemHelper.createArmor("&6Spodnie Goryla", Material.LEATHER_LEGGINGS, 14, 0), 1));
-        this.goryl.add(new Items("4", 8.0, ItemHelper.createArmor("&6Buty Goryla", Material.LEATHER_BOOTS, 14, 0), 1));
+        this.goryl.add(new Items("1", 8.0, ItemHelper.createArmor("&6Helm Goryla", Material.LEATHER_HELMET, 12, 2), 1));
+        this.goryl.add(new Items("2", 8.0, ItemHelper.createArmor("&6Zbroja Goryla", Material.CHAINMAIL_CHESTPLATE, 11, 2), 1));
+        this.goryl.add(new Items("3", 8.0, ItemHelper.createArmor("&6Spodnie Goryla", Material.LEATHER_LEGGINGS, 11, 2), 1));
+        this.goryl.add(new Items("4", 8.0, ItemHelper.createArmor("&6Buty Goryla", Material.LEATHER_BOOTS, 11, 2), 1));
         this.goryl.add(new Items("5", 6.0, ItemHelper.createSword("&6Miecz Goryla", Material.IRON_SWORD, 5, 3,false), 1));
     }
 

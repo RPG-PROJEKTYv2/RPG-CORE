@@ -97,6 +97,8 @@ public class MobDropHelper {
             addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance50lvl, true, true, entity);
             // NIESAMOWITY PRZEDMIOT
             addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance50lvl, true, false, entity);
+            // Ulepszacze
+            addDropPlayer(player, GlobalItem.getItem("I_SZATANAJEMNIKA", 1), getDropChance(szczescie, 2.5), true, true, entity);
             // PRZYRODNIK MISJE
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 0) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("1-10")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
@@ -107,6 +109,7 @@ public class MobDropHelper {
             if (przyrodnikMission.getNumber() == 0) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("1-10"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
+
             // DUSZOLOG MISJE
             /*if (rpgcore.getDuszologNPC().find(uuid).getDuszologUser().getMission() == 0) {
                 if (ChanceHelper.getChance(100)) {
@@ -130,8 +133,9 @@ public class MobDropHelper {
         if (entityName.equals("Goblin Lvl. 14") || entityName.equals("Goblin Lvl. 16") || entityName.equals("Goblin Lvl. 19")) {
             addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance50lvl, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_OKOGOBLINA", 1), getDropChance(szczescie, 2.0), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 1) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("10-20")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 2) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -156,8 +160,9 @@ public class MobDropHelper {
         if (entityName.equals("Goryl Lvl. 21") || entityName.equals("Goryl Lvl. 25") || entityName.equals("Goryl Lvl. 28")) {
             addDropPlayer(player, Skrzynki.getItem("I6", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance50lvl, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_SKORAGORYLA", 1), getDropChance(szczescie, 1.6), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 2) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("20-30")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 3) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -182,8 +187,9 @@ public class MobDropHelper {
         if (entityName.equals("Zjawa Lvl. 32") || entityName.equals("Zjawa Lvl. 36") || entityName.equals("Zjawa Lvl. 39")) {
             addDropPlayer(player, Skrzynki.getItem("I8", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance50lvl, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_PROCHYZJAWY", 1), getDropChance(szczescie, 2.5), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 4) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -208,8 +214,9 @@ public class MobDropHelper {
         if (entityName.equals("Straznik Swiatyni Lvl. 43") || entityName.equals("Straznik Swiatyni Lvl. 46") || entityName.equals("Straznik Swiatyni Lvl. 47")) {
             addDropPlayer(player, Skrzynki.getItem("I10", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance50lvl, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_LZAOCEANU", 1), getDropChance(szczescie, 2.5), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 4) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("40-50")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 5) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -225,8 +232,9 @@ public class MobDropHelper {
         if (entityName.equals("Mrozny Wilk Lvl. 52") || entityName.equals("Mrozny Wilk Lvl. 54") || entityName.equals("Mrozny Wilk Lvl. 56")) {
             addDropPlayer(player, Skrzynki.getItem("I12", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N6.getItemStack(), niesDropChance50lvl, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_MROZNYPAZUR", 1), getDropChance(szczescie, 2.0), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 5) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("50-60")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("50-60")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 6) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -250,8 +258,9 @@ public class MobDropHelper {
         if (entityName.equals("Zywiolak Ognia Lvl. 64") || entityName.equals("Zywiolak Ognia Lvl. 66") || entityName.equals("Zywiolak Ognia Lvl. 68")) {
             addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
             addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_OGNISTYPYL", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 6) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("60-70")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("60-70")).getItemStack(), getDropChance(szczescie, 0.60), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 7) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
@@ -275,37 +284,14 @@ public class MobDropHelper {
         if (entityName.equals("Mroczna Dusza Lvl. 71") || entityName.equals("Mroczna Dusza Lvl. 75") || entityName.equals("Mroczna Dusza Lvl. 78")) {
             addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
             addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_TRUJACAROSLINA", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 7) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("70-80")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("70-80")).getItemStack(), getDropChance(szczescie, 0.40), true, true, entity);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 8) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
             if (przyrodnikMission.getNumber() == 7) {
-                addDropPlayer(player, PrzyrodnikItems.getItem("70-80"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
-            }
-        }
-        // ----------------------------------------- EXPOWISKO 9 -----------------------------------------
-        // BOSS
-        if (entityName.equals("[BOSS] Mityczny Pajak")) {
-            addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
-            if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
-                addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 15), true, true, entity);
-            }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 9) {
-                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
-            }
-        }
-        // MOB
-        if (entityName.equals("Mroczna Dusza Lvl. 71") || entityName.equals("Mroczna Dusza Lvl. 75") || entityName.equals("Mroczna Dusza Lvl. 78")) {
-            addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 8) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("70-80")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
-            }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 9) {
-                rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
-            }
-            if (przyrodnikMission.getNumber() == 8) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("70-80"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
@@ -323,13 +309,14 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Pustynny Ptasznik Lvl. 84") || entityName.equals("Pustynny Ptasznik Lvl. 87") || entityName.equals("Pustynny Ptasznik Lvl. 89")) {
             addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 9) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("80-90")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_JADPTASZNIKA", 1), getDropChance(szczescie, 1.4), true, true, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 8) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("80-90")).getItemStack(), getDropChance(szczescie, 0.30), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 10) {
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 9) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
-            if (przyrodnikMission.getNumber() == 9) {
+            if (przyrodnikMission.getNumber() == 8) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("80-90"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
@@ -347,13 +334,14 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Podziemna Lowczyni Lvl. 92") || entityName.equals("Podziemna Lowczyni Lvl. 95") || entityName.equals("Podziemna Lowczyni Lvl. 98")) {
             addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 10) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("90-100")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_MROCZNYMATERIAL", 1), getDropChance(szczescie, 1.35), true, true, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 9) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("90-100")).getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 11) {
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 10) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
-            if (przyrodnikMission.getNumber() == 10) {
+            if (przyrodnikMission.getNumber() == 9) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("90-100"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
@@ -371,13 +359,14 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Podwodny Straznik Lvl. 104") || entityName.equals("Podwodny Straznik Lvl. 106") || entityName.equals("Podwodny Straznik Lvl. 109")) {
             addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 11) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("100-110")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_SZAFIROWESERCE", 1), getDropChance(szczescie, 2.0), true, true, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 10) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("100-110")).getItemStack(), getDropChance(szczescie, 0.10), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 12) {
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 11) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
-            if (przyrodnikMission.getNumber() == 11) {
+            if (przyrodnikMission.getNumber() == 10) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("100-110"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
@@ -385,6 +374,7 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Hades")) {
             addDropPlayer(player, Skrzynki.getItem("I23", 1), 100, true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_SERCEDEMONA", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 12) {
                 addDropPlayer(player, LowcaItems.getItem("110-120", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -395,13 +385,13 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Centaur Lvl. 114") || entityName.equals("Centaur Lvl. 116") || entityName.equals("Centaur Lvl. 118")) {
             addDropPlayer(player, NiesyItems.N12.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 12) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("110-120")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 11) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("110-120")).getItemStack(), getDropChance(szczescie, 0.08), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 13) {
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 12) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
-            if (przyrodnikMission.getNumber() == 12) {
+            if (przyrodnikMission.getNumber() == 11) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("110-120"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }
@@ -409,6 +399,7 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Archaniol")) {
             addDropPlayer(player, Skrzynki.getItem("I25", 1), 100, true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_NIEBIANSKIMATERIAL", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 13) {
                 addDropPlayer(player, LowcaItems.getItem("120-130", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -419,13 +410,13 @@ public class MobDropHelper {
         // MOB
         if (entityName.equals("Straznik Nieba Lvl. 123") || entityName.equals("Straznik Nieba Lvl. 126") || entityName.equals("Straznik Nieba Lvl. 129")) {
             addDropPlayer(player, NiesyItems.N13.getItemStack(), niesDropChance50plus, true, false, entity);
-            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 13) {
-                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("120-130")).getItemStack(), getDropChance(szczescie, 1), true, true, entity);
+            if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 12) {
+                addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("120-130")).getItemStack(), getDropChance(szczescie, 0.04), true, true, entity);
             }
-            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 14) {
+            if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMission() == 13) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillMobsMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillMobsMissionProgress() + 1);
             }
-            if (przyrodnikMission.getNumber() == 13) {
+            if (przyrodnikMission.getNumber() == 12) {
                 addDropPlayer(player, PrzyrodnikItems.getItem("120-130"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
             }
         }

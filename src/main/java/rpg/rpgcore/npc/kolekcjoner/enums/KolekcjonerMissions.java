@@ -11,14 +11,14 @@ public enum KolekcjonerMissions {
     M3(3, new ItemStack[]{Map20_30.I20_30_1.getItemStack(), Map20_30.I20_30_2.getItemStack(), Map20_30.I20_30_3.getItemStack(), Map20_30.I20_30_4.getItemStack(), Map20_30.I20_30_5.getItemStack()}, 2, 3, 5),
     M4(4, new ItemStack[]{Map30_40.I30_40_1.getItemStack(), Map30_40.I30_40_2.getItemStack(), Map30_40.I30_40_3.getItemStack(), Map30_40.I30_40_4.getItemStack(), Map30_40.I30_40_5.getItemStack()}, 2, 3, 10),
     M5(5, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 3, 12),
-    M6(6, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 3, 20),
-    M7(7, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 2, 50),
-    M8(8, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 4, 100),
-    M9(9, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 3, 200),
-    M10(10, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 3, 400),
-    M11(11, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 3, 600),
-    M12(12, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 4, 900),
-    M13(13, new ItemStack[]{Map40_50.I40_50_1.getItemStack(), Map40_50.I40_50_2.getItemStack(), Map40_50.I40_50_3.getItemStack(), Map40_50.I40_50_4.getItemStack(), Map40_50.I40_50_5.getItemStack()}, 2, 4, 1100),
+    M6(6, new ItemStack[]{Map50_60.I50_60_1.getItemStack(), Map50_60.I50_60_2.getItemStack(), Map50_60.I50_60_3.getItemStack(), Map50_60.I50_60_4.getItemStack(), Map50_60.I50_60_5.getItemStack()}, 2, 3, 20),
+    M7(7, new ItemStack[]{Map60_70.I60_70_1.getItemStack(), Map60_70.I60_70_2.getItemStack(), Map60_70.I60_70_3.getItemStack(), Map60_70.I60_70_4.getItemStack(), Map60_70.I60_70_5.getItemStack()}, 2, 2, 50),
+    M8(8, new ItemStack[]{Map70_80.I70_80_1.getItemStack(), Map70_80.I70_80_2.getItemStack(), Map70_80.I70_80_3.getItemStack(), Map70_80.I70_80_4.getItemStack(), Map70_80.I70_80_5.getItemStack()}, 2, 4, 100),
+    M9(9, new ItemStack[]{Map80_90.I80_90_1.getItemStack(), Map80_90.I80_90_2.getItemStack(), Map80_90.I80_90_3.getItemStack(), Map80_90.I80_90_4.getItemStack(), Map80_90.I80_90_5.getItemStack()}, 2, 3, 200),
+    M10(10, new ItemStack[]{Map90_100.I90_100_1.getItemStack(), Map90_100.I90_100_2.getItemStack(), Map90_100.I90_100_3.getItemStack(), Map90_100.I90_100_4.getItemStack(), Map90_100.I90_100_5.getItemStack()}, 2, 3, 400),
+    M11(11, new ItemStack[]{Map100_110.I100_110_1.getItemStack(), Map100_110.I100_110_2.getItemStack(), Map100_110.I100_110_3.getItemStack(), Map100_110.I100_110_4.getItemStack(), Map100_110.I100_110_5.getItemStack()}, 2, 3, 600),
+    M12(12, new ItemStack[]{Map110_120.I110_120_1.getItemStack(), Map110_120.I110_120_2.getItemStack(), Map110_120.I110_120_3.getItemStack(), Map110_120.I110_120_4.getItemStack(), Map110_120.I110_120_5.getItemStack()}, 2, 4, 900),
+    M13(13, new ItemStack[]{Map120_130.I120_130_1.getItemStack(), Map120_130.I120_130_2.getItemStack(), Map120_130.I120_130_3.getItemStack(), Map120_130.I120_130_4.getItemStack(), Map120_130.I120_130_5.getItemStack()}, 2, 4, 1100),
     M99(99, new ItemStack[]{KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack(), KolekcjonerItems.I99.getItemStack()}, 0, 0, 0);
 
     private final int number;
