@@ -33,7 +33,7 @@ DIADEM
  */
 
 public class AkcesoriaPodsHelper {
-    public static ItemStack createTarcza(final double def, final double blok, final int hp, final int lvl, final String... name) {
+    public static ItemStack createTarcza(final int def, final int blok, final int hp, final int lvl, final String... name) {
         return new ItemBuilder(Material.ITEM_FRAME).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Zwiekszona Defensywa: &c" + def + "%",
@@ -44,7 +44,7 @@ public class AkcesoriaPodsHelper {
         )).addTagDouble("def", def).addTagDouble("blok", blok).addTagInt("hp", hp).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createKolczyki(final double ludzie, final double odpo, final int mspeed, final int lvl, final String... name) {
+    public static ItemStack createKolczyki(final int ludzie, final int odpo, final int mspeed, final int lvl, final String... name) {
         return new ItemBuilder(Material.HOPPER_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Silny przeciwko ludziom: &c" + ludzie + "%",
@@ -55,7 +55,7 @@ public class AkcesoriaPodsHelper {
         )).addTagDouble("ludzie", ludzie).addTagDouble("odpo", odpo).addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createNaszyjnik(final int ddmg, final double kryt, final double srdmg, final int lvl, final String... name) {
+    public static ItemStack createNaszyjnik(final int ddmg, final int kryt, final int srdmg, final int lvl, final String... name) {
         return new ItemBuilder(Material.STORAGE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Dodatkowe Obrazenia: &c+" + ddmg,
@@ -66,7 +66,7 @@ public class AkcesoriaPodsHelper {
         )).addTagInt("ddmg", ddmg).addTagDouble("kryt", kryt).addTagDouble("srdmg", srdmg).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createPierscien(final double przeszycie, final double kryt, final int speed, final int lvl, final String... name) {
+    public static ItemStack createPierscien(final int przeszycie, final int kryt, final int speed, final int lvl, final String... name) {
         return new ItemBuilder(Material.EXPLOSIVE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Szansa na Przeszycie Bloku: &c" + przeszycie + "%",
@@ -77,7 +77,7 @@ public class AkcesoriaPodsHelper {
         )).addTagDouble("przebicie", przeszycie).addTagDouble("wkryt", kryt).addTagInt("speed", speed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createDiadem(final double srdmg, final double potwory, final double exp, final int lvl, final String... name) {
+    public static ItemStack createDiadem(final int srdmg, final int potwory, final double exp, final int lvl, final String... name) {
         return new ItemBuilder(Material.WATCH).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Srednie Obrazenia: &c" + srdmg + "%",

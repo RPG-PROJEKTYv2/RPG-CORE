@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -80,17 +81,27 @@ public class PrzyrodnikInventoryClick implements Listener {
                 }
                 reqItem.setAmount(amount);
                 player.getInventory().removeItem(reqItem);
-                user.setProgress(user.getProgress() + amount);
+                for (int i = 0; i < amount; i++) {
+                    if (ChanceHelper.getChance(mission.getAcceptPercent())) {
+                        user.setProgress(user.getProgress() + 1);
+                        player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &aDziekuje ci za ten przedmiot!"));
+                    } else {
+                        player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &cNiestety ten przedmiot sie nie nadaje!"));
+                    }
+                }
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataPrzyrodnik(uuid, RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid)));
-                player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &7Pomyslnie oddales/as &6" + amount + " &7" + mission.getItemStack().getItemMeta().getDisplayName() + " &7do misji"));
                 RPGCORE.getInstance().getPrzyrodnikNPC().openMainGUI(player);
                 return;
             }
 
             player.getInventory().removeItem(mission.getItemStack());
-            user.setProgress(user.getProgress() + 1);
+            if (ChanceHelper.getChance(mission.getAcceptPercent())) {
+                user.setProgress(user.getProgress() + 1);
+                player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &aDziekuje ci za ten przedmiot!"));
+            } else {
+                player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &cNiestety ten przedmiot sie nie nadaje!"));
+            }
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataPrzyrodnik(uuid, RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid)));
-            player.sendMessage(Utils.format("&2&lPrzyrodnik &8>> &7Pomyslnie oddales/as &6" + 1 + " &7" + mission.getItemStack().getItemMeta().getDisplayName() + " &7do misji"));
             RPGCORE.getInstance().getPrzyrodnikNPC().openMainGUI(player);
 
         }

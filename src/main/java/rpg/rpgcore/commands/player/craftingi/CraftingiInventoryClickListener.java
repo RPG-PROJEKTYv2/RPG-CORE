@@ -76,8 +76,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(10).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(10).toItemStack());
                     user.setKasa(user.getKasa() - 50_000);
-                    final double def = ChanceHelper.getRandDouble(1, 17);
-                    final double blok = ChanceHelper.getRandDouble(1, 10);
+                    final int def = ChanceHelper.getRandInt(1, 17);
+                    final int blok = ChanceHelper.getRandInt(1, 10);
                     final int hp = ChanceHelper.getRandInt(1, 5);
                     final int lvl = ChanceHelper.getRandInt(1, 30);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(def, blok, hp, lvl, "&f&lAnielska Tarcza"));
@@ -102,8 +102,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(16).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(16).toItemStack());
                     user.setKasa(user.getKasa() - 150_000);
-                    final double srdmg = ChanceHelper.getRandDouble(1, 8);
-                    final double potwory = ChanceHelper.getRandDouble(1, 10);
+                    final int srdmg = ChanceHelper.getRandInt(1, 8);
+                    final int potwory = ChanceHelper.getRandInt(1, 10);
                     final double exp = ChanceHelper.getRandDouble(1, 2);
                     final int lvl = ChanceHelper.getRandInt(1, 30);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(srdmg, potwory, exp, lvl, "&f&lAnielski Diadem"));
@@ -129,8 +129,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(24).toItemStack());
                     user.setKasa(user.getKasa() - 200_000);
                     final int ddmg = ChanceHelper.getRandInt(1, 20);
-                    final double kryt = ChanceHelper.getRandDouble(1, 10);
-                    final double srdmg = ChanceHelper.getRandDouble(1, 7);
+                    final int kryt = ChanceHelper.getRandInt(1, 10);
+                    final int srdmg = ChanceHelper.getRandInt(1, 7);
                     final int lvl = ChanceHelper.getRandInt(1, 30);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ddmg, kryt, srdmg, lvl, "&f&lAnielski Naszyjnik"));
                     Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &f&lAnielski Naszyjnik &7(&f" + ddmg + "&7/&f" + kryt + "&7/&f" + srdmg + "&7/&f" + lvl + "&7)"));
@@ -154,8 +154,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(16).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(16).toItemStack());
                     user.setKasa(user.getKasa() - 100_000);
-                    final double przeszycie = ChanceHelper.getRandDouble(1, 1); // TODO Zmienic jak fabi zmieni
-                    final double kryt = ChanceHelper.getRandDouble(1, 5);
+                    final int przeszycie = ChanceHelper.getRandInt(1, 6);
+                    final int kryt = ChanceHelper.getRandInt(1, 5);
                     final int speed = ChanceHelper.getRandInt(1, 10);
                     final int lvl = ChanceHelper.getRandInt(1, 30);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(przeszycie, kryt, speed, lvl, "&f&lAnielski Pierscien"));
@@ -190,8 +190,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(32).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(32).toItemStack());
                     user.setKasa(user.getKasa() - 200_000);
-                    final double def = ChanceHelper.getRandDouble(5, 35);
-                    final double blok = ChanceHelper.getRandDouble(3, 20);
+                    final int def = ChanceHelper.getRandInt(5, 35);
+                    final int blok = ChanceHelper.getRandInt(3, 20);
                     final int hp = ChanceHelper.getRandInt(1, 10);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(def, blok, hp, lvl, "&4&lDiabelska Tarcza"));
@@ -216,8 +216,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(48).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(48).toItemStack());
                     user.setKasa(user.getKasa() - 400_000);
-                    final double srdmg = ChanceHelper.getRandDouble(3, 15);
-                    final double potwory = ChanceHelper.getRandDouble(3, 15);
+                    final int srdmg = ChanceHelper.getRandInt(3, 15);
+                    final int potwory = ChanceHelper.getRandInt(3, 15);
                     final double exp = ChanceHelper.getRandDouble(1, 3);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(srdmg, potwory, exp, lvl, "&4&lDiabelski Diadem"));
@@ -242,8 +242,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(56).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(56).toItemStack());
                     user.setKasa(user.getKasa() - 400_000);
-                    final double ludzie = ChanceHelper.getRandDouble(3, 18);
-                    final double def = ChanceHelper.getRandDouble(2, 15);
+                    final int ludzie = ChanceHelper.getRandInt(3, 18);
+                    final int def = ChanceHelper.getRandInt(2, 15);
                     final int mspeed = ChanceHelper.getRandInt(10, 30);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ludzie, def, mspeed, lvl, "&4&lDiabelskie Kolczyki"));
@@ -269,8 +269,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(64).toItemStack());
                     user.setKasa(user.getKasa() - 500_000);
                     final int ddmg = ChanceHelper.getRandInt(12, 60);
-                    final double kryt = ChanceHelper.getRandDouble(5, 18);
-                    final double srdmg = ChanceHelper.getRandDouble(5, 18);
+                    final int kryt = ChanceHelper.getRandInt(5, 18);
+                    final int srdmg = ChanceHelper.getRandInt(5, 18);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ddmg, kryt, srdmg, lvl, "&4&lDiabelski Naszyjnik"));
                     Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &4&lDiabelski Naszyjnik &7(&f" + ddmg + "&7/&f" + kryt + "&7/&f" + srdmg + "&7/&f" + lvl + "&7)"));
@@ -294,8 +294,8 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(48).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(48).toItemStack());
                     user.setKasa(user.getKasa() - 300_000);
-                    final double przeszycie = ChanceHelper.getRandDouble(1, 1); // TODO Zmienic jak fabi zmieni
-                    final double kryt = ChanceHelper.getRandDouble(3, 10);
+                    final int przeszycie = ChanceHelper.getRandInt(4, 12);
+                    final int kryt = ChanceHelper.getRandInt(3, 10);
                     final int speed = ChanceHelper.getRandInt(15, 30);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(przeszycie, kryt, speed, lvl, "&4&lDiabelski Pierscien"));

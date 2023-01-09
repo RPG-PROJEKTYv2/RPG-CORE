@@ -65,6 +65,10 @@ public class EntityDeathListener implements Listener {
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(killer,
                 rpgcore.getNmsManager().makeTitle("&a&lZABOJSTWO!", 5, 20, 5),
                 rpgcore.getNmsManager().makeSubTitle("&7Zabijasz &c" + victim.getName(), 5, 20, 5)));
+        if (RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().getSelectedMission() == 11) {
+            RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().getProgress() + 1);
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(killer.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId())));
+        }
 
         if (rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()).equals("Brak Klanu") || rpgcore.getGuildManager().getGuildTag(victim.getUniqueId()).equals("Brak Klanu")) {
 

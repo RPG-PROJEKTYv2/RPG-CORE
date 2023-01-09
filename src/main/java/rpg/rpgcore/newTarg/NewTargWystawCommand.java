@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -58,7 +59,7 @@ public class NewTargWystawCommand extends CommandAPI {
                 return;
             }
             rpgcore.getNewTargManager().addToWystawia(player.getUniqueId());
-            this.wystawGUI(player, player.getItemInHand(), cena);
+            this.wystawGUI(player, player.getItemInHand(), DoubleUtils.round(cena, 2));
             player.getInventory().removeItem(player.getItemInHand());
         } catch (NumberFormatException e) {
             player.sendMessage(Utils.poprawneUzycie("wystaw <cena>"));

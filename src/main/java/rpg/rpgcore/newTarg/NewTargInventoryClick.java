@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.discord.EmbedUtil;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -333,7 +334,7 @@ public class NewTargInventoryClick implements Listener {
     private double getItemPrice(final ItemStack is) {
         for (String s : is.getItemMeta().getLore()) {
             if (s.contains("Cena: ")) {
-                return Double.parseDouble(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim());
+                return DoubleUtils.round(Double.parseDouble(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim()), 2);
             }
         }
         return 0.0;

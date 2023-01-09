@@ -45,6 +45,7 @@ public class MongoConnectionPoolManager {
     //private final MongoCollection<Document> hellrpg_przykladowyNPC; // TU TWORZYSZ ZMIENNA DO KOLEKCJI ZEBY MOC SIE DO NIEJ ODOWLAC !!!!
     private final MongoCollection<Document> hellrpg_kociolki;
     private final MongoCollection<Document> hellrpg_serwerWhiteList;
+    private final MongoCollection<Document> hellrpg_artefaktyZaLvL;
 
 
     public MongoConnectionPoolManager() {
@@ -141,6 +142,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_serwerWhiteList")) {
             database.createCollection("hellrpg_serwerWhiteList");
         }
+        if (!collections.contains("hellrpg_artefaktyZaLvL")) {
+            database.createCollection("hellrpg_artefaktyZaLvL");
+        }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
             database.createCollection("hellrpg_przykladowyNPC");
@@ -174,6 +178,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_wyslannik = database.getCollection("hellrpg_wyslannik");
         this.hellrpg_kociolki = database.getCollection("hellrpg_kociolki");
         this.hellrpg_serwerWhiteList = database.getCollection("hellrpg_serwerWhiteList");
+        this.hellrpg_artefaktyZaLvL = database.getCollection("hellrpg_artefaktyZaLvL");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -186,90 +191,69 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getSpawn() {
         return this.hellrpg_spawn;
     }
-
     public MongoCollection<Document> getGracze() {
         return this.hellrpg_gracze;
     }
-
     public MongoCollection<Document> getGildie() {
         return this.hellrpg_gildie;
     }
-
     public MongoCollection<Document> getDodatki() {
         return this.hellrpg_dodatki;
     }
-
     public MongoCollection<Document> getMetiny() {
         return this.hellrpg_metiny;
     }
-
     public MongoCollection<Document> getTargi() {
         return this.hellrpg_targi;
     }
-
     public MongoCollection<Document> getOsiagniecia() {
         return this.hellrpg_osiagniecia;
     }
-
     public MongoCollection<Document> getBao() {
         return this.hellrpg_bao;
     }
-
     public MongoCollection<Document> getRybak() {
         return this.hellrpg_rybak;
     }
-
     public MongoCollection<Document> getKolekcjoner() {
         return this.hellrpg_kolekcjoner;
     }
-
     public MongoCollection<Document> getMagazynier() {
         return this.hellrpg_magazynier;
     }
-
     public MongoCollection<Document> getTrener() {
         return this.hellrpg_trener;
     }
-
     public MongoCollection<Document> getMetinolog() {
         return this.hellrpg_metinolog;
     }
-
     public MongoCollection<Document> getOther() {
         return this.hellrpg_other;
     }
-
     public MongoCollection<Document> getKlasy() {
         return this.hellrpg_klasy;
     }
-
     public MongoCollection<Document> getMedyk() {
         return this.hellrpg_medyk;
     }
-
     public MongoCollection<Document> getGornik() {
         return this.hellrpg_gornik;
     }
-
     public MongoCollection<Document> getDuszolog() {
         return this.hellrpg_duszolog;
     }
-
     public MongoCollection<Document> getPrzyrodnik() {
         return this.hellrpg_przyrodnik;
     }
-
     public MongoCollection<Document> getBonuses() {
         return this.hellrpg_bonuses;
     }
     public MongoCollection<Document> getChatUsers() {
         return this.hellrpg_chatUsers;
     }
-
     public MongoCollection<Document> getLowca() {
         return this.hellrpg_lowca;
     }
-
     public MongoCollection<Document> getLesnik() {
         return this.hellrpg_lesnik;
     }
@@ -285,12 +269,14 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getWyslannik() {
         return this.hellrpg_wyslannik;
     }
-
     public MongoCollection<Document> getKociolki() {
         return this.hellrpg_kociolki;
     }
     public MongoCollection<Document> getSerwerWhiteList() {
         return this.hellrpg_serwerWhiteList;
+    }
+    public MongoCollection<Document> getArtefaktyZaLvL() {
+        return this.hellrpg_artefaktyZaLvL;
     }
 
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI

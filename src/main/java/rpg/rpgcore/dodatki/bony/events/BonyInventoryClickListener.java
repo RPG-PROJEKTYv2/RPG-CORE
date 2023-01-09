@@ -141,7 +141,7 @@ public class BonyInventoryClickListener implements Listener {
                 return;
         }
         player.getInventory().addItem(item);
-        rpgcore.getDodatkiManager().openBonyGUI(player, player);
+        rpgcore.getDodatkiManager().openBonyGUI(player, player.getUniqueId());
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
             rpgcore.getMongoManager().saveDataDodatki(uuid, user);

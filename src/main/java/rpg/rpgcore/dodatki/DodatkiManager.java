@@ -37,10 +37,9 @@ public class DodatkiManager {
         player.openInventory(gui);
     }
 
-    public void openAkcePodsGUI(final Player player, final Player target) {
+    public void openAkcePodsGUI(final Player player, final UUID targetUUID) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&c&lAkcesorium Podstawowe"));
-        AkcesoriaPodstUser user = find(player.getUniqueId()).getAkcesoriaPodstawowe();
-        if (target != player) user = find(target.getUniqueId()).getAkcesoriaPodstawowe();
+        final AkcesoriaPodstUser user = find(targetUUID).getAkcesoriaPodstawowe();
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
@@ -81,10 +80,9 @@ public class DodatkiManager {
         player.openInventory(gui);
     }
 
-    public void openBonyGUI(final Player player, final Player target) {
+    public void openBonyGUI(final Player player, final UUID targetUUID) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lBony"));
-        BonyUser user = find(player.getUniqueId()).getBony();
-        if (target != player) user = find(target.getUniqueId()).getBony();
+        final BonyUser user = find(targetUUID).getBony();
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName(" ").toItemStack());
@@ -197,10 +195,9 @@ public class DodatkiManager {
         player.openInventory(gui);
     }
 
-    public void openAkceDodaGUI(final Player player, final Player target) {
+    public void openAkceDodaGUI(final Player player, final UUID targetUUID) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&c&lAkcesorium Dodatkowe"));
-        AkcesoriaDodatUser user = find(player.getUniqueId()).getAkcesoriaDodatkowe();
-        if (player != target) user = find(target.getUniqueId()).getAkcesoriaDodatkowe();
+        final AkcesoriaDodatUser user = find(targetUUID).getAkcesoriaDodatkowe();
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());

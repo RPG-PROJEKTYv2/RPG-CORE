@@ -167,7 +167,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
             }
             player.getInventory().addItem(item);
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zdjales " + item.getItemMeta().getDisplayName() + "&a!"));
-            rpgcore.getDodatkiManager().openAkcePodsGUI(player, player);
+            rpgcore.getDodatkiManager().openAkcePodsGUI(player, player.getUniqueId());
         }
     }
 }

@@ -1,6 +1,9 @@
 package rpg.rpgcore.chat;
 
 import com.google.common.collect.ImmutableSet;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -42,33 +46,39 @@ public class ChatManager {
         this.messageWithEQ.put(uuid, message);
     }
 
-    public String formatujChat(final Player player, String format, String message) {
-        final int playerLVL = rpgcore.getUserManager().find(player.getUniqueId()).getLvl();
-        String lvlInString = String.valueOf(playerLVL);
+    public TextComponent formmatPrzed(final Player player) {
+        final TextComponent main = new TextComponent("");
+        if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
+            final String tag = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
+            final Guild guild = rpgcore.getGuildManager().find(tag).getGuild();
+            final TextComponent guildM = new TextComponent(Utils.format("&8[&e" + tag + "&8] "));
+            guildM.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                    new TextComponent(Utils.format("&7Tag gildii: &6" + tag +
+                            "\n&7Opis gildi: &6" + guild.getDescription() +
+                            "\n&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()).isOnline() ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()) +
+                            "\n&7Ilosc czlonkow: &6" + guild.getMembers().size() + "&7/&615" +
+                            "\n&7Poziom: &6" + guild.getLevel() +
+                            "\n&7Doswiadczenie: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag))) + "%"))}));
+            guildM.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/klan info " + tag));
+            main.addExtra(guildM);
+        }
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
-        final String playerName = player.getName();
-        String playerRank = user.getRankPlayerUser().getRankType().getPrefix();
-        final String playerGuild = rpgcore.getGuildManager().getGuildTag(player.getUniqueId());
+        final TextComponent lvl = (user.getLvl() == 130 ? new TextComponent(Utils.format("&8[&bLvl. &4&lMAX&8] ")) : new TextComponent(Utils.format("&8[&bLvl. &f" + user.getLvl() + "&8] ")));
+        lvl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                new TextComponent(Utils.format("&7Poziom: &6" + user.getLvl() +
+                        "\n&7Postep do nastepnego poziomu: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(user.getExp(), rpgcore.getLvlManager().getExpForLvl(user.getLvl()))) + "%"))}));
+        main.addExtra(lvl);
 
-        if (playerLVL == Utils.MAXLVL) {
-            lvlInString = "&4&lMAX";
-        }
-
-        if (!user.getRankUser().isHighStaff()) {
-            message = Utils.removeColor(message);
-        }
-
-        if (user.getRankUser().isStaff()) {
-            playerRank = user.getRankUser().getRankType().getPrefix();
-        }
-
-        if (playerGuild.equals("Brak Klanu")) {
-            format = format.replace("<player-klan>", "");
+        TextComponent rank;
+        if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
+            rank = new TextComponent(Utils.format(user.getRankUser().getRankType().getPrefix() + player.getName() + "&f: "));
         } else {
-            format = format.replace("<player-klan>", Utils.format("&8[&e" + playerGuild + "&8] "));
+            rank = new TextComponent(Utils.format(user.getRankPlayerUser().getRankType().getPrefix() + player.getName() + "&f: "));
         }
-
-        return format.replace("<player-group>", Utils.format(playerRank)).replace("<player-lvl>", Utils.format(lvlInString)).replace("<player-name>", playerName).replace("<message>", Utils.format(message));
+        rank.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Kliknij, zeby napisac wiadomosc"))}));
+        rank.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + player.getName() + " "));
+        main.addExtra(rank);
+        return main;
     }
 
 

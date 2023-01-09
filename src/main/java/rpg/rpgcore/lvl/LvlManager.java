@@ -12,6 +12,7 @@ import rpg.rpgcore.lvl.enums.Levels;
 import rpg.rpgcore.lvl.enums.mobs.Dungeons;
 import rpg.rpgcore.lvl.enums.mobs.Events;
 import rpg.rpgcore.lvl.enums.mobs.Maps;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
@@ -55,10 +56,32 @@ public class LvlManager {
         }
     }
 
+    public boolean checkPlayer(final String mob, final int lvl) {
+        if (Maps.isMob(mob)) {
+            return Maps.getByName(mob).getMinLvl() <= lvl && lvl < Maps.getByName(mob).getReqLvl();
+        } else if (Dungeons.isDungeonMob(mob)) {
+            return Dungeons.getByName(mob).getMinLvl() <= lvl && lvl < Dungeons.getByName(mob).getReqLvl();
+        } else if (Events.isEventMob(mob)) {
+            return Events.getByName(mob).getMinLvl() <= lvl && lvl < Events.getByName(mob).getReqLvl();
+        } else {
+            return false;
+        }
+    }
+
     private double getDodatkowyExp(final UUID uuid) {
         double dodatkowyExp = 0;
         if (rpgcore.getServerManager().isServerUser("dodatkowyExp") && rpgcore.getServerManager().find("dodatkowyExp").getServer().isAktywny()) {
             dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
+        }
+        final User user = rpgcore.getUserManager().find(uuid);
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) {
+            dodatkowyExp += 5;
+        }
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.SVIP) {
+            dodatkowyExp += 10;
+        }
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) {
+            dodatkowyExp += 15;
         }
         dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 
@@ -89,14 +112,22 @@ public class LvlManager {
         double aktualnyExpGracza = user.getExp();
         final double expNaNextLvlGracza = this.getExpForLvl(nextLvlGracza);
 
+
+        aktualnyExpGracza += expDoDodania;
+
+        final double expDoDodaniaL = expDoDodania;
+        final double aktualnyExpGraczaL = aktualnyExpGracza;
+
+        if (!checkPlayer(mob, user.getLvl())) {
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+0.0 exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8| &2+ " + Utils.spaceNumber(String.format("%.2f", kasa)) + "$ &8&8[&6EXP&8]"));
+            return;
+        }
+
+        user.setExp(aktualnyExpGracza);
         if (aktualnyExpGracza >= expNaNextLvlGracza) {
             Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> this.updateLVL(killer));
             return;
         }
-        aktualnyExpGracza += expDoDodania;
-        user.setExp(aktualnyExpGracza);
-        final double expDoDodaniaL = expDoDodania;
-        final double aktualnyExpGraczaL = aktualnyExpGracza;
         killer.setLevel(lvlGracza);
         killer.setExp((float) (aktualnyExpGraczaL / expNaNextLvlGracza));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + String.format("%.2f", expDoDodaniaL) + " exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8| &2+ " + Utils.spaceNumber(String.format("%.2f", kasa)) + "$ &8&8[&6EXP&8]"));
@@ -129,6 +160,7 @@ public class LvlManager {
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
         }
+        rpgcore.getArtefaktyZaLvlManager().checkArteZaLvl(killer, nextLvlGracza);
     }
 
     public void getPlayerLvl(final Player sender, final UUID uuid) {

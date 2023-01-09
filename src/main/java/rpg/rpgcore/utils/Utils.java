@@ -16,6 +16,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.ranks.types.RankType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-    public static final String CHAT_FORMAT = format("<player-klan>&8[&bLvl. &f<player-lvl>&8] <player-group><player-name>:&f <message>");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 ");
     public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 ");
@@ -42,7 +42,6 @@ public class Utils {
     public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 ");
     public static final String RYBAK = format("&6&lRybak &8>> &7");
     public static final String KUPIEC = format("&2&lKupiec &8>> &a");
-    public static final String KOLEKCJONER = format("&6&lKolekcjoner &8>> &7");
     public static final String TRENER = format("&6&lTrener &8>> &7");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
@@ -306,7 +305,7 @@ public class Utils {
 
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.sendMessage(format("&4&lHell&6&lINFO " + message));
             }
         }
@@ -314,7 +313,7 @@ public class Utils {
 
     public static void sendToHighStaff(final TextComponent message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
-            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 player.spigot().sendMessage(new TextComponent(format("&4&lHell&6&lINFO ")), message);
             }
         }
@@ -672,7 +671,7 @@ public class Utils {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return 0;
         NBTTagCompound tagCompound = nmsStack.getTag();
-        return tagCompound.getDouble(tag);
+        return DoubleUtils.round(tagCompound.getDouble(tag), 2);
     }
 
     public static int getTagInt(final ItemStack is, final String tag){
@@ -710,7 +709,7 @@ public class Utils {
         } else {
             tagCompound = nmsStack.getTag();
         }
-        tagCompound.setDouble(tag, value);
+        tagCompound.setDouble(tag, DoubleUtils.round(value, 2));
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 

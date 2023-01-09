@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 
 public class BossyCommand extends CommandAPI {
-    private final ArrayList<String> lore = new ArrayList<>();
     public BossyCommand() {
         super("bossy");
         this.setRankLevel(RankType.GRACZ);
@@ -37,7 +36,7 @@ public class BossyCommand extends CommandAPI {
     }
 
     private void openBossyInventory(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&3&lLista bossów"));
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&3&lLista bossow"));
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());

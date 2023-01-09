@@ -2,6 +2,7 @@ package rpg.rpgcore.utils.globalitems;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -82,6 +83,10 @@ public enum GlobalItem {
             "&8Uzycie go powoduje zwiekszenie",
             "&8twojego bonusu doswiadczenia o &650%"
     )).addTagDouble("exp", 50).addTagString("time", "1h").addGlowing().toItemStack().clone()),
+
+    // MIKSTURA MEDYKA
+    I56("I56", new ItemBuilder(Material.POTION).setName("&5Metna Mikstura Medyka").setLore(Arrays.asList("&8Mikstura ta jest niezdatna do picia.")).addFlag(ItemFlag.HIDE_POTION_EFFECTS).toItemStack().clone()),
+    I57("I57", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4Fragment Serca").setLore(Arrays.asList("&8Chyba Medyk tego potrzebuje...")).toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 

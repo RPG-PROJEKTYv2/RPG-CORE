@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class BAOPlayerInteract implements Listener {
             return;
         }
 
-        if (!eventItem.equals(rpgcore.getBaoManager().getItemDoZmianki())) {
+        if (!eventItem.equals(GlobalItem.getItem("I_KSIEGAMAGII", 1))) {
             return;
         }
         e.setCancelled(true);

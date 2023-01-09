@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.UUID;
 
@@ -36,15 +37,13 @@ public class BAOInventoryClick implements Listener {
         if (clickedInventoryTitle.equals(Utils.format("&6&lSTOL MAGII"))) {
 
             if (clickedSlot == 16) {
-                if (!(player.getInventory().containsAtLeast(rpgcore.getBaoManager().getItemDoLosowania(), 1))) {
+                if (!(player.getInventory().containsAtLeast(GlobalItem.getItem("I_KAMIENBAO", 1), 1))) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz &3&lKamien Bao&c!"));
                     player.closeInventory();
-                    player.getInventory().addItem(rpgcore.getBaoManager().getItemDoLosowania());
-                    player.getInventory().addItem(rpgcore.getBaoManager().getItemDoZmianki());
                     return;
                 }
                 rpgcore.getBaoManager().losujNoweBonusy(playerUUID, player.getName());
-                player.getInventory().removeItem(rpgcore.getBaoManager().getItemDoLosowania());
+                player.getInventory().removeItem(GlobalItem.getItem("I_KAMIENBAO", 1));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zmieniles swoje bonusy w &6Stole Magi"));
                 player.closeInventory();
 
@@ -86,6 +85,7 @@ public class BAOInventoryClick implements Listener {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Twoj nowy bonus to: &c" + user.getBonus5() + " " + user.getValue5() + " %"));
                 }
             }
+            player.getInventory().removeItem(GlobalItem.getItem("I_KSIEGAMAGII", 1));
             player.closeInventory();
         }
     }

@@ -100,7 +100,7 @@ public class CraftingiManager {
 
         gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lAnielski Pierscien").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Szansa na Przeszycie Bloku: &c1% - 1%",
+                "&7Szansa na Przeszycie Bloku: &c1% - 6%",
                 "&7Wzmocnienie Ciosu Krytycznego: &c1% - 5%",
                 "&7Zwiekszona Szybkosc Ruchu, &c+1 - 10",
                 "",
@@ -218,7 +218,7 @@ public class CraftingiManager {
 
         gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lDiabelski Pierscien").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Szansa na Przeszycie Bloku: &c1% - 1%",
+                "&7Szansa na Przeszycie Bloku: &c4% - 12%",
                 "&7Wzmocnienie Ciosu Krytycznego: &c3% - 10%",
                 "&7Zwiekszona Szybkosc Ruchu, &c+15 - 30",
                 "",

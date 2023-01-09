@@ -14,11 +14,9 @@ import java.util.*;
 
 public class TrenerNPC {
 
-    private final RPGCORE rpgcore;
     private final Map<UUID, TrenerObject> userMap;
 
     public TrenerNPC(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllTrener();
     }
 
@@ -48,57 +46,57 @@ public class TrenerNPC {
 
 
     public ItemStack getSredniDmgItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6Srednie Obrazenia").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDmg() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6Srednie Obrazenia").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDmg() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6Srednie Obrazenia").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDmg() + "%&7/&c20%")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getSredniDefItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&6Srednia Defensywa").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDef() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&6Srednia Defensywa").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDef() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&6Srednia Defensywa").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSredniDef() + "%&7/&c20%")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getHpItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Dodatkowe HP").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDodatkoweHp() + "&7/&c10", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Dodatkowe HP").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDodatkoweHp() + "&7/&c10", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Dodatkowe HP").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDodatkoweHp() + "&7/&c10")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getBlokItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setName("&6Blok Ciosu").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getBlokCiosu() + "%&7/&c10%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setName("&6Blok Ciosu").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getBlokCiosu() + "%&7/&c10%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setName("&6Blok Ciosu").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getBlokCiosu() + "%&7/&c10%")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getSzczescieItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.GOLD_NUGGET).setName("&6Szczescie").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSzczescie() + "&7/&c20", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.GOLD_NUGGET).setName("&6Szczescie").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSzczescie() + "&7/&c20", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.GOLD_NUGGET).setName("&6Szczescie").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSzczescie() + "&7/&c20")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getSilnyNaludzItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.IRON_SWORD).setName("&6Silny Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSilnyNaLudzi() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.IRON_SWORD).setName("&6Silny Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSilnyNaLudzi() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.IRON_SWORD).setName("&6Silny Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getSilnyNaLudzi() + "%&7/&c20%")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getDefNaLudziItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.IRON_CHESTPLATE).setName("&6Odpornosc Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDefNaLudzi() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.IRON_CHESTPLATE).setName("&6Odpornosc Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDefNaLudzi() + "%&7/&c20%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.IRON_CHESTPLATE).setName("&6Odpornosc Przeciwko Ludziom").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getDefNaLudzi() + "%&7/&c20%")).hideFlag().toItemStack().clone();
     }
 
     public ItemStack getKrytItem(final TrenerObject object) {
-        if (rpgcore.getCooldownManager().hasTrenerCooldown(object.getId())) {
-            return new ItemBuilder(Material.GOLD_SWORD).setName("&6Cios Krytyczny").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getKryt() + "%&7/&c10%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + rpgcore.getCooldownManager().getPlayerTrenerCooldown(object.getId()))).hideFlag().toItemStack().clone();
+        if (object.hasCooldown()) {
+            return new ItemBuilder(Material.GOLD_SWORD).setName("&6Cios Krytyczny").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getKryt() + "%&7/&c10%", "&cNastepny punkt mozesz dodac dopiero za:", "&f" + object.getCooldown())).hideFlag().toItemStack().clone();
         }
         return new ItemBuilder(Material.GOLD_SWORD).setName("&6Cios Krytyczny").setLore(Arrays.asList("", "&7Postep ulepszenia: &c" + object.getTrenerUser().getKryt() + "%&7/&c10%")).hideFlag().toItemStack().clone();
     }

@@ -50,20 +50,21 @@ public class MessageCommand extends CommandAPI {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Podany gracz jest &coffline"));
             return;
         }
+        if (!rpgcore.getUserManager().find(playerUUID).getRankUser().isStaff() ||
+                (rpgcore.getUserManager().find(playerUUID).getRankUser().isStaff() && !rpgcore.getUserManager().find(playerUUID).isAdminCodeLogin())) {
+            if (rpgcore.getUserManager().find(targetUUID).getRankUser().isHighStaff() && rpgcore.getUserManager().find(targetUUID).isAdminCodeLogin()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz napisac do tego gracza. Jesli potrzebujesz pomocy uzyj &ckomendy /helpop &7lub napisz &cticket na naszym dc &8(&cdc.hellrpg.pl&8)"));
+                return;
+            }
+            if (!rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
+                return;
+            }
 
-        if (rpgcore.getUserManager().find(targetUUID).getRankUser().isHighStaff() && rpgcore.getUserManager().find(targetUUID).isAdminCodeLogin()) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz napisac do tego gracza. Jesli potrzebujesz pomocy uzyj &ckomendy /helpop &7lub napisz &cticket na naszym dc &8(&cdc.hellrpg.pl&8)"));
-            return;
-        }
-
-        if (!rpgcore.getChatManager().find(targetUUID).isMsgEnabled()) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ten gracz ma wylaczone prywatne wiadomosci"));
-            return;
-        }
-
-        if (rpgcore.getChatManager().find(targetUUID).getIgnoredPlayers().contains(playerUUID)) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz ignoruje twoje wiadomosci!"));
-            return;
+            if (rpgcore.getChatManager().find(targetUUID).getIgnoredPlayers().contains(playerUUID)) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz ignoruje twoje wiadomosci!"));
+                return;
+            }
         }
 
         args[0] = "";

@@ -2,9 +2,11 @@ package rpg.rpgcore.commands.player.profile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bonuses.BonusesUser;
@@ -14,6 +16,7 @@ import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class ProfileCommand extends CommandAPI {
     public ProfileCommand() {
@@ -25,20 +28,26 @@ public class ProfileCommand extends CommandAPI {
 
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().getRankType().getPriority() >= RankType.HA.getPriority()) {
+        if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
             if (args.length < 1) {
                 this.createProfileGUI(player);
                 return;
             }
             if (args.length == 1) {
-                final Player target = Bukkit.getOfflinePlayer(args[0]).getPlayer();
+                final OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
 
-                if (target == null) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza!"));
+                if (offlineTarget == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
                     return;
                 }
 
-                this.createProfileGUI(player, target);
+                if (RPGCORE.getInstance().getUserManager().find(offlineTarget.getUniqueId()) == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
+                    return;
+                }
+
+                this.createProfileGUI(player, offlineTarget.getUniqueId(), offlineTarget.getName());
+                return;
             }
             player.sendMessage(Utils.poprawneUzycie("profile <player>"));
             return;
@@ -99,7 +108,8 @@ public class ProfileCommand extends CommandAPI {
                 "&7Silny Na Ludzi: &f" + user.getSilnynaludzi() + "%",
                 "&7Silny Na Potwory: &f" + user.getSilnynapotwory() + "%",
                 "&7Szansa Na Cios Krytyczny: &f" + user.getSzansanakryta() + "%",
-                "&7Szansa Na Wzmocnioony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
+                "&7Szansa Na Wzmocniony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
+                "&7Wzmocnienie Ciosu Krytycznego: &f" + user.getWzmocnienieKryta() + "%",
                 "&7Przeszycie Bloku Ciosu: &f" + user.getPrzeszyciebloku() + "%",
                 "&7Zmniejszone Obrazenia: &f" + user.getMinussrednieobrazenia() + "%",
                 "&7Zmniejszone Obrazenia W Ludzi: &f" + user.getMinusobrazenianaludzi() + "%",
@@ -146,41 +156,38 @@ public class ProfileCommand extends CommandAPI {
         player.openInventory(gui);
     }
 
-    private void createProfileGUI(final Player player, final Player target) {
-        final BonusesUser user = RPGCORE.getInstance().getBonusesManager().find(target.getUniqueId()).getBonusesUser();
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + target.getName()));
+    private void createProfileGUI(final Player player, final UUID targetUUID, final String targetName) throws IOException {
+        final BonusesUser user = RPGCORE.getInstance().getBonusesManager().find(targetUUID).getBonusesUser();
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + targetName));
 
         for (int i = 0; i < 54; i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         }
 
-        if (target.getInventory().getHelmet() != null) {
-            gui.setItem(11, target.getInventory().getHelmet().clone());
+        final ItemStack[] armor = Utils.itemStackArrayFromBase64(RPGCORE.getInstance().getUserManager().find(targetUUID).getInventoriesUser().getArmor());
+
+        if (armor[0] != null && armor[0].getType() != Material.AIR) {
+            gui.setItem(11, armor[0].clone());
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
-        if (target.getItemInHand() != null && target.getItemInHand().getType() != Material.AIR) {
-            gui.setItem(19, target.getItemInHand().clone());
-        } else {
-            gui.setItem(19, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Przedmiotu").toItemStack());
-        }
-        if (target.getInventory().getChestplate() != null) {
-            gui.setItem(20, target.getInventory().getChestplate().clone());
+        if (armor[1] != null && armor[1].getType() != Material.AIR) {
+            gui.setItem(20, armor[1].clone());
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
-        if (target.getInventory().getLeggings() != null) {
-            gui.setItem(29, target.getInventory().getLeggings().clone());
+        if (armor[2] != null && armor[2].getType() != Material.AIR) {
+            gui.setItem(29, armor[2].clone());
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
-        if (target.getInventory().getBoots() != null) {
-            gui.setItem(38, target.getInventory().getBoots().clone());
+        if (armor[3] != null && armor[3].getType() != Material.AIR) {
+            gui.setItem(38, armor[3].clone());
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
-
-        gui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&6&l" + target.getName()).setSkullOwner(target.getName()).toItemStack());
+        gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisje").setLore(Arrays.asList("&8Kliknij, aby zobaczyc postep oraz aktualne misje")).toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&6&l" + targetName).setSkullOwner(targetName).toItemStack());
         /*if (RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem() != null) {
             gui.setItem(31, RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem().clone());
         } else {
@@ -193,7 +200,8 @@ public class ProfileCommand extends CommandAPI {
                 "&7Silny Na Ludzi: &f" + user.getSilnynaludzi() + "%",
                 "&7Silny Na Potwory: &f" + user.getSilnynapotwory() + "%",
                 "&7Szansa Na Cios Krytyczny: &f" + user.getSzansanakryta() + "%",
-                "&7Szansa Na Wzmocnioony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
+                "&7Szansa Na Wzmocniony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
+                "&7Wzmocnienie Ciosu Krytycznego: &f" + user.getWzmocnienieKryta() + "%",
                 "&7Przeszycie Bloku Ciosu: &f" + user.getPrzeszyciebloku() + "%",
                 "&7Zmniejszone Obrazenia: &f" + user.getMinussrednieobrazenia() + "%",
                 "&7Zmniejszone Obrazenia W Ludzi: &f" + user.getMinusobrazenianaludzi() + "%",
@@ -222,16 +230,18 @@ public class ProfileCommand extends CommandAPI {
         )).addGlowing().toItemStack().clone());
 
         gui.setItem(34, new ItemBuilder(Material.GOLDEN_APPLE).setName("&cStatystyki Zdrowia").setLore(Arrays.asList(
-                "&7Aktualne Zdrowie: &f" + target.getHealth() + "&c❤️",
-                "&7Maksymalne Zdrowie: &f" + target.getMaxHealth() + "&c♥",
-                "&7Dodatkowe Zdrowie: &f" + user.getDodatkowehp() + "&c❤️",
-                "&7Dodatkowe Zlote Serca: &f" + user.getDodatkowezlotehp() + "&6❤️"
+                "&7Dodatkowe Zdrowie: &f" + user.getDodatkowehp() + "&c❤",
+                "&7Dodatkowe Zlote Serca: &f" + user.getDodatkowezlotehp() + "&6❤"
         )).toItemStack().clone());
 
         gui.setItem(43, new ItemBuilder(Material.DIAMOND_BOOTS).setName("&fStatystyki Predkosci").setLore(Arrays.asList(
                 "&7Podstawowa Szybkosc: &f100",
                 "&7Szybkosc: &f" + user.getSzybkosc()
         )).addGlowing().toItemStack().clone());
+
+        gui.setItem(48, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lAkcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack().clone());
+        gui.setItem(49, new ItemBuilder(Material.SIGN).setName("&6&lBony").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu bonow")).toItemStack().clone());
+        gui.setItem(50, new ItemBuilder(Material.LEASH).setName("&6&lAkcesorium Dodatkowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu dodatkowego akcesorium")).toItemStack().clone());
 
         player.openInventory(gui);
     }

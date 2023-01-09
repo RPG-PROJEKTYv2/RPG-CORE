@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.przyrodnik;
 
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
@@ -46,21 +47,16 @@ public enum Missions {
         return M_ERROR;
     }
 
-    public static ItemStack getReqItem(int number) {
-        ItemStack itemStack = Missions.getByNumber(number).getItemStack();
-        return itemStack;
-    }
-
     public int getNumber() {
         return number;
     }
 
     public double getDmg() {
-        return dmg;
+        return DoubleUtils.round(dmg, 2);
     }
 
     public double getDef() {
-        return def;
+        return DoubleUtils.round(def, 2);
     }
 
     public int getReqAmount() {
@@ -68,7 +64,7 @@ public enum Missions {
     }
 
     public double getAcceptPercent() {
-        return acceptPercent;
+        return DoubleUtils.round(acceptPercent, 2);
     }
 
     public String getMobName() {
@@ -76,7 +72,7 @@ public enum Missions {
     }
 
     public double getDropChance() {
-        return dropChance;
+        return DoubleUtils.round(dropChance, 2);
     }
 
     public ItemStack getItemStack() {

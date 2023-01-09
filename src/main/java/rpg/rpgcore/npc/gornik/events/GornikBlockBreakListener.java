@@ -140,7 +140,10 @@ public class GornikBlockBreakListener implements Listener {
                         break;
                 }
 
-
+                if (RPGCORE.getInstance().getMagazynierNPC().find(e.getPlayer().getUniqueId()).getMissions().getSelectedMission() == 8) {
+                    RPGCORE.getInstance().getMagazynierNPC().find(e.getPlayer().getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(e.getPlayer().getUniqueId()).getMissions().getProgress() + 1);
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(e.getPlayer().getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(e.getPlayer().getUniqueId())));
+                }
                 e.getPlayer().getInventory().addItem(gornikOre.getDrop());
                 e.getPlayer().setItemInHand(RPGCORE.getInstance().getGornikNPC().updateKilofExp(e.getPlayer().getItemInHand(), gornikOre.getExp()));
                 ore.setOreMaterial(Material.BEDROCK);

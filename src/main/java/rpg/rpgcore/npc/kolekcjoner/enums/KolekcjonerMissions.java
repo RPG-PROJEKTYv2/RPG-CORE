@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.kolekcjoner.enums;
 
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.niesy.*;
 import rpg.rpgcore.utils.globalitems.npc.KolekcjonerItems;
 
@@ -47,7 +48,7 @@ public enum KolekcjonerMissions {
     }
 
     public double getSilnyNaLudzi() {
-        return this.silnyNaLudzi;
+        return DoubleUtils.round(this.silnyNaLudzi, 2);
     }
 
     public int getDodatkowe() {

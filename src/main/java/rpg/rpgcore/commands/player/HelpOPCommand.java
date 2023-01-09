@@ -40,6 +40,7 @@ public class HelpOPCommand extends CommandAPI {
         for (String s : args) {
             sb.append(Utils.removeColor(s)).append(" ");
         }
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoja wiadomosc zostala wyslana do &cAdministracji&7!"));
         Utils.sendToStaff(Utils.format("&4&lHELP&8&lOP &7&l| &6&l" + player.getName() + "&7: " + sb));
         rpgcore.getCooldownManager().givePlayerHelpopCooldown(player.getUniqueId());
     }

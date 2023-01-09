@@ -35,6 +35,7 @@ public class SpawnCommand extends CommandAPI {
                 }
             }
             player.teleport(rpgcore.getSpawnManager().getSpawn());
+            player.setHealth(player.getMaxHealth());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));
             if (player.hasPotionEffect(PotionEffectType.SLOW)) {
                 player.removePotionEffect(PotionEffectType.SLOW);

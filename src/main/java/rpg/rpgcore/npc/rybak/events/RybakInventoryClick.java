@@ -89,8 +89,23 @@ public class RybakInventoryClick implements Listener {
                     rpgcore.getMongoManager().saveDataRybak(uuid, rybakObject);
                     rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 });
-
-                rpgcore.getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7ukonczyl &6" + (mission.getMission() + " &7misje!")));
+                if (user.getMission() == 27) {
+                        RPGCORE.getInstance().getServer().broadcastMessage(" ");
+                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &c" + player.getName() + " &7ukonczyl moja &4KAMPANIE&7. &6&lGratulacje!"));
+                        if (RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() < 4) {
+                            if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().contains(uuid)) {
+                                RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().setNadanych(RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + 1);
+                                RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().add(player.getUniqueId());
+                                RPGCORE.getInstance().getArtefaktyZaLvlManager().save();
+                                RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Doodatkowo gracz ten ukonczyl ja jako &c" + RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + " &7osoba na serwerze!"));
+                                RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8Po odbior artefaktu prosimy zglosic sie"));
+                                RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8do &4Wyzszej Administracji&8."));
+                            }
+                        }
+                        RPGCORE.getInstance().getServer().broadcastMessage(" ");
+                } else {
+                    rpgcore.getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7ukonczyl &6" + mission.getMission() + " &7misje!"));
+                }
                 return;
             }
 
@@ -128,7 +143,7 @@ public class RybakInventoryClick implements Listener {
             final RybakObject rybakObject = rpgcore.getRybakNPC().find(uuid);
             final User user = rpgcore.getUserManager().find(uuid);
             int amount = 0;
-            ItemStack toRemove = new ItemStack(Material.AIR);
+            ItemStack toRemove;
             switch (slot) {
                 case 0:
                     if (user.getKasa() < 25000000) {

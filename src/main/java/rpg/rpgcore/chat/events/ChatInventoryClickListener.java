@@ -1,5 +1,6 @@
 package rpg.rpgcore.chat.events;
 
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -48,7 +49,7 @@ public class ChatInventoryClickListener implements Listener {
                 return;
             }
             final String message = rpgcore.getChatManager().getMessageWithEQ(uuid);
-            final String formatPrzed = rpgcore.getChatManager().formatujChat(player, Utils.CHAT_FORMAT, "");
+            final TextComponent formatPrzed = rpgcore.getChatManager().formmatPrzed(player);
             List<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
             if (message.contains("[i]")) {
                 msg = new ArrayList<>(Arrays.asList(message.split("\\[i]")));
@@ -57,7 +58,7 @@ public class ChatInventoryClickListener implements Listener {
             }
 
             StringBuilder finalMessage;
-            String color = "&7";
+            String color = "&f";
             if (message.contains("&")) {
                 color = message.substring(message.lastIndexOf("&"), message.lastIndexOf("&") + 2);
             }
@@ -71,7 +72,6 @@ public class ChatInventoryClickListener implements Listener {
                         return;
                     }
 
-                    final TextComponent before = new TextComponent(formatPrzed);
                     String itemName = player.getItemInHand().getType().name();
 
                     if (player.getItemInHand().getItemMeta().getDisplayName() != null) {
@@ -80,27 +80,35 @@ public class ChatInventoryClickListener implements Listener {
 
                     final TextComponent itemComponent = new TextComponent(Utils.format("&8[&6x" + player.getItemInHand().getAmount() + " " + itemName + "&8]"));
                     itemComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getItemInHand()).save(new NBTTagCompound()).toString()).create()));
+                    rpgcore.getShowcaseItemManager().addShowcaseItem(player.getName(), player.getItemInHand().clone());
+                    if (item.getItemMeta().hasDisplayName()) {
+                        itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName().replace(" ", "_"))));
+                    } else {
+                        itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getType().name().replace(" ", "_"))));
+                    }
 
                     if (msg.isEmpty()) {
-                        before.addExtra(itemComponent);
+                        formatPrzed.addExtra(itemComponent);
                     } else {
                         if (!isHighStaff) {
-                            before.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
+                            formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
                         } else {
-                            before.addExtra(Utils.format(" " + color + msg.get(0)));
+                            formatPrzed.addExtra(Utils.format(" " + color + msg.get(0)));
                         }
-                        before.addExtra(itemComponent);
+                        formatPrzed.addExtra(itemComponent);
                         for (int i = 1; i < msg.size(); i++) {
                             if (!isHighStaff) {
-                                before.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
+                                formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
                             } else {
-                                before.addExtra(Utils.format(" " + color + msg.get(i)));
+                                formatPrzed.addExtra(Utils.format(" " + color + msg.get(i)));
                             }
                         }
                     }
 
 
-                    Bukkit.getServer().spigot().broadcast(before);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
                     break;
                 case 1:
                     // POKAZYWANIE SETA NA CHAT
@@ -124,7 +132,10 @@ public class ChatInventoryClickListener implements Listener {
                             }
                         }
                     }
-                    Bukkit.broadcastMessage(formatPrzed + finalMessage);
+                    formatPrzed.addExtra(finalMessage.toString());
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
                     break;
                 case 2:
                     // POKAZYWANIE BAO NA CHAT
@@ -141,48 +152,56 @@ public class ChatInventoryClickListener implements Listener {
                         break;
                     }
                     final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
-                    final TextComponent beforeMessageBao = new TextComponent(formatPrzed);
                     final TextComponent stolMagii = new TextComponent("§8[§bStol Magii§8]");
-                    final TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + user.getBonus1() + ": §c" + user.getValue1() + "% §8\n§6" + user.getBonus2() + ": §c" + user.getValue2() + "% §8\n§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
+                    final TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + user.getBonus1() + ": §c" + user.getValue1() + "% §8\n§6" + user.getBonus2() + ": §c" + user.getValue2() + "% §8\n");
                     TextComponent text2;
                     TextComponent text3;
+                    TextComponent text4;
 
 
-                    if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + " DMG §8\n");
+                    if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
+                        text2 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + " DMG §8\n");
                     } else {
-                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + "% §8\n");
+                        text2 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
+                    }
+                    if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
+                        text3 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + " §8\n");
+                    } else {
+                        text3 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
                     }
                     if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
+                        text4 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
                     } else {
-                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + "%");
+                        text4 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + "%");
                     }
                     text.addExtra(text2);
                     text.addExtra(text3);
+                    text.addExtra(text4);
                     stolMagii.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{text}));
 
 
                     if (msg.isEmpty()) {
-                        beforeMessageBao.addExtra(stolMagii);
+                        formatPrzed.addExtra(stolMagii);
                     } else {
                         if (!isHighStaff) {
-                            beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
+                            formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
                         } else {
-                            beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(0)));
+                            formatPrzed.addExtra(Utils.format(" " + color + msg.get(0)));
                         }
-                        beforeMessageBao.addExtra(stolMagii);
+                        formatPrzed.addExtra(stolMagii);
                         for (int i = 1; i < msg.size(); i++) {
                             if (!isHighStaff) {
-                                beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
+                                formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
                             } else {
-                                beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(i)));
+                                formatPrzed.addExtra(Utils.format(" " + color + msg.get(i)));
                             }
                         }
                     }
 
 
-                    Bukkit.getServer().spigot().broadcast(beforeMessageBao);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
                     break;
                 case 3:
                     // POOKAZYWANIE DOSWIADCZENIA NA CHAT
@@ -192,45 +211,71 @@ public class ChatInventoryClickListener implements Listener {
                     final double expNaNextLvlGracza = rpgcore.getLvlManager().getExpForLvl(lvlGracza + 1);
 
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
+                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" &f").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.df.format(expGracza) + " &bexp &7/&f " + Utils.df.format(expNaNextLvlGracza) + " &bexp" + "&7(&b" + Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) + "%&7)&8]"));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = new StringBuilder(Utils.format(finalMessage + " " + color + msg.get(i)));
+                                finalMessage.append(color).append(msg.get(i));
                             }
                         }
                     }
-
-                    Bukkit.broadcastMessage(formatPrzed + finalMessage);
+                    formatPrzed.addExtra(finalMessage.toString());
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
 
                     break;
                 case 4:
                     // POKAZYWANIE KASY NA CHAT
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(" &8[&2Kasa: &a" + Utils.df.format(rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]"));
+                        finalMessage = new StringBuilder(Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&2Kasa: &a" + Utils.df.format(rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]"));
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" &f").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&2Kasa: &a" + Utils.df.format(rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]"));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = new StringBuilder(Utils.format(finalMessage + " " + color + msg.get(i)));
+                                finalMessage.append(color).append(msg.get(i));
                             }
                         }
                     }
 
-                    Bukkit.broadcastMessage(formatPrzed + finalMessage);
+                    formatPrzed.addExtra(finalMessage.toString());
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
                     break;
                 case 5:
+                    // POKAZYWANIE CZASU NA CHAT
+                    if (msg.isEmpty()) {
+                        finalMessage = new StringBuilder(Utils.format(" &8[&6Spedzony Czas: &7" + Utils.durationToString(rpgcore.getOsManager().find(uuid).getCzasProgress(), true) + "&8]"));
+                    } else {
+                        if (!isHighStaff) {
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&6Spedzony Czas: &7" + Utils.durationToString(rpgcore.getOsManager().find(uuid).getCzasProgress(), true) + "&8]"));
+                            for (int i = 1; i < msg.size(); i++) {
+                                finalMessage.append("&f").append(msg.get(i));
+                            }
+                        } else {
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&6Spedzony Czas: &7" + Utils.durationToString(rpgcore.getOsManager().find(uuid).getCzasProgress(), true) + "&8]"));
+                            for (int i = 1; i < msg.size(); i++) {
+                                finalMessage.append(color).append(msg.get(i));
+                            }
+                        }
+                    }
+
+                    formatPrzed.addExtra(finalMessage.toString());
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
                     break;
             }
             if (message.contains("@")) {

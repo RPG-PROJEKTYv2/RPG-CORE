@@ -108,6 +108,10 @@ public class PlayerInteractEntityListener implements Listener {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // DUNGEONS
             if (entityName.equals("Dungeony")) {
+                if (!rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff()) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen NPC jest aktualnie niedostepny dla graczy, pozniewaz trwaja nad nim prace!"));
+                    return;
+                }
                 rpgcore.getDungeonsManager().openDungeonMenu(player);
                 return;
             }
@@ -171,6 +175,10 @@ public class PlayerInteractEntityListener implements Listener {
 
             // MEDYK
             if (entityName.equalsIgnoreCase("Medyk")) {
+                if (rpgcore.getMedykNPC().find(uuid).getMedykUser().getBonus() == 50) {
+                    player.sendMessage(Utils.format("&c&lMedyk &8>> &7Dalem Ci juz wszystko co moglem. Czego wiecej odemnie chcesz?"));
+                    return;
+                }
                 rpgcore.getMedykNPC().openMedykGUI(player);
                 return;
             }

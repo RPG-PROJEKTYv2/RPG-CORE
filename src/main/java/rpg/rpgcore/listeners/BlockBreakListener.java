@@ -9,7 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.Utils;
 
 public class BlockBreakListener implements Listener {
 
@@ -24,22 +23,19 @@ public class BlockBreakListener implements Listener {
         final Player player = e.getPlayer();
         if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             e.setCancelled(true);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow!"));
             return;
         } else {
             if (!rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 e.setCancelled(true);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow!"));
                 return;
             }
         }
         if (player.getGameMode() != GameMode.CREATIVE) {
             e.setCancelled(true);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow na tym trybie gry!"));
         }
 
         if (e.getBlock().getLocation().getWorld().getName().equals("Gornik")) {
-            return;
+            e.setCancelled(false);
         }
     }
 

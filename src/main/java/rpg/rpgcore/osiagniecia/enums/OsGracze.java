@@ -13,7 +13,7 @@ public enum OsGracze {
     M3(3, 2, 50, ItemHelper.createArmor("&8Zbroja Skrytobojcy", Material.IRON_CHESTPLATE, 55, 15).clone()),
     M4(4, 3, 120, GlobalItem.getItem("I1", 1).clone()),
     M5(5, 4, 300, GlobalItem.getItem("I1", 5).clone()),
-    M6(6, 5, 750, AkcesoriaPodsHelper.createNaszyjnik(155, 28.5, 36.5, 76, "&8Tarcza Skrytobojcy").clone()),
+    M6(6, 5, 750, AkcesoriaPodsHelper.createNaszyjnik(155, 28, 36, 76, "&8Tarcza Skrytobojcy").clone()),
     M7(7, 6, 1_500, GlobalItem.getItem("I4", 2).clone()),
     M8(8, 7, 4_500, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone()),
     M9(9, 8, 7_500, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone());

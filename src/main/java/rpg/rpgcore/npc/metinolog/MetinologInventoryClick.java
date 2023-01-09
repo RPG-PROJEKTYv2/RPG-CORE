@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.utils.Utils;
 
@@ -49,7 +50,7 @@ public class MetinologInventoryClick implements Listener {
                     ms.setPostepGive(ms.getPostepGive() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
                     bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + Integer.parseInt(mission[4]));
-                    bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + Double.parseDouble(mission[5]));
+                    bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + DoubleUtils.round(Double.parseDouble(mission[5]), 2));
 
 
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
@@ -81,8 +82,8 @@ public class MetinologInventoryClick implements Listener {
                     ms.setValue4(ms.getValue4() + Double.parseDouble(mission[3]));
                     ms.setPostepKill(ms.getPostepKill() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
-                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + Double.parseDouble(mission[2]));
-                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + Double.parseDouble(mission[3]));
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(Double.parseDouble(mission[2]), 2));
+                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + DoubleUtils.round(Double.parseDouble(mission[3]), 2));
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);

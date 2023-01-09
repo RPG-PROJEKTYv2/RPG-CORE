@@ -16,7 +16,7 @@ public class BroadcastCommand extends CommandAPI {
     public BroadcastCommand() {
         super("broadcast");
         this.setAliases(Arrays.asList("bc", "alert", "ogloszenie", "title"));
-        this.setRankLevel(RankType.ADMIN);
+        this.setRankLevel(RankType.GM);
         this.setRestrictedForPlayer(true);
     }
 

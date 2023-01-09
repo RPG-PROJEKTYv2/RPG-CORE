@@ -6,11 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
-
-import java.util.UUID;
 
 public class DodatkiInventoryClick implements Listener {
 
@@ -28,15 +25,15 @@ public class DodatkiInventoryClick implements Listener {
         if (title.equals("Menu Dodatkow")) {
             e.setCancelled(true);
             if (slot == 10) {
-                RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player);
+                RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player.getUniqueId());
                 return;
             }
             if (slot == 13) {
-                RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player);
+                RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player.getUniqueId());
                 return;
             }
             if (slot == 16) {
-                RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player);
+                RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player.getUniqueId());
             }
         }
     }

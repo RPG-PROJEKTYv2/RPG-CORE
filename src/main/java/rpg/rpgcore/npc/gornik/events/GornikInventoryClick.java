@@ -191,6 +191,23 @@ public class GornikInventoryClick implements Listener {
                 bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + mission.getBlok());
             }
             gornikUser.setMission(gornikUser.getMission() + 1);
+
+            if (gornikUser.getMission() == 28) {
+                RPGCORE.getInstance().getServer().broadcastMessage(" ");
+                RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl moja &4KAMPANIE&7. &6&lGratulacje!"));
+                if (RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() < 4) {
+                    if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().contains(uuid)) {
+                        RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().setNadanych(RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + 1);
+                        RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().add(uuid);
+                        RPGCORE.getInstance().getArtefaktyZaLvlManager().save();
+                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Doodatkowo gracz ten ukonczyl ja jako &c" + RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + " &7osoba na serwerze!"));
+                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8Po odbior artefaktu prosimy zglosic sie"));
+                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8do &4Wyzszej Administracji&8."));
+                    }
+                }
+                RPGCORE.getInstance().getServer().broadcastMessage(" ");
+            }
+
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                 RPGCORE.getInstance().getMongoManager().saveDataGornik(uuid, object);
                 RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);

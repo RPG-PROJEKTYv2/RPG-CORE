@@ -19,8 +19,6 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -330,7 +328,6 @@ public class DamageManager {
         if (victim.getInventory().getBoots() != null) {
             thornsDmg += Utils.getTagInt(victim.getInventory().getBoots(), "thorns");
         }
-        System.out.println(thornsDmg);
 
         thornsDmg = (thornsDmg * (mnoznik / 100));
 

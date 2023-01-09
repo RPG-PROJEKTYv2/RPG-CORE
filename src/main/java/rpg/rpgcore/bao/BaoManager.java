@@ -63,22 +63,24 @@ public class BaoManager {
 
             gui.setItem(17, new ItemBuilder(Material.BOOK).setName("&c&lMaxymalne Wartosci Bonusow").setLore(Arrays.asList(
                     "&8Bonus 1:",
-                    "&8-&6Srednie obrazenia: &c25%",
-                    "&8-&6Silny Na Ludzi: &c30%",
-                    "&8-&6Silny Na Potwory: &c30%",
+                    "&8-&6Srednie obrazenia: &c40%",
+                    "&8-&6Silny Na Ludzi: &c50%",
+                    "&8-&6Silny Na Potwory: &c50%",
                     "&8Bonus 2:",
-                    "&8-&6Srednia defensywa: &c25%",
-                    "&8-&6Srednia defensywa przeciwko Ludziom: &c30%",
-                    "&8-&6Srednia defensywa przeciwko Potworom: &c30%",
+                    "&8-&6Srednia defensywa: &c40%",
+                    "&8-&6Srednia defensywa przeciwko Ludziom: &c50%",
+                    "&8-&6Srednia defensywa przeciwko Potworom: &c50%",
                     "&8Bonus 3:",
-                    "&8-&6Przeszycie Bloku Ciosu: &c15%",
-                    "&8-&6Szansa na Cios Krytyczny: &c20%",
-                    "&8Bonus 4:",
-                    "&8-&6Blok Ciosu: &c15%",
+                    "&8-&6Szansa Na Cios Krytyczny: &c50%",
+                    "&8-&6Szansa Na Wzmocnienie Ciosu Krytycznego: &c30%",
                     "&8-&6Dodatkowe Obrazenia: &c400 DMG",
+                    "&8Bonus 4:",
+                    "&8-&6Predkosc Ruchu: &c50",
+                    "&8-&6Dodatkowy EXP: &c10%",
+                    "&8-&6Szczescie: &c10",
                     "&8Bonus 5:",
-                    "&8-&6Dodatkowe HP: &c10 HP",
-                    "&8-&6Dodatkowy EXP: &c10%"
+                    "&8-&6Dodatkowe HP: &c15 HP",
+                    "&8-&6Blok Ciosu: &c20%"
             )).addGlowing().toItemStack());
             if (isNotRolled(uuid)) {
                 for (int i = 10; i < 15; i++) {
@@ -88,9 +90,13 @@ public class BaoManager {
         } else {
             gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus1() + ": &c" + user.getValue1() + "%").toItemStack().clone());
             gui.setItem(12, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus2() + ": &c" + user.getValue2() + "%").toItemStack().clone());
-            gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
-            if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " DMG").toItemStack().clone());
+            if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + " DMG").toItemStack().clone());
+            } else {
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
+            }
+            if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
+                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4()).toItemStack().clone());
             } else {
                 gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + "%").toItemStack().clone());
             }
@@ -119,19 +125,23 @@ public class BaoManager {
         final BaoUser user = this.rpgcore.getBaoManager().find(uuid).getBaoUser();
 
         rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
-        rpgcore.getServer().broadcastMessage(Utils.format("&7Nowe bonusy gracza &c " + playerName));
-        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus1() + ": &f" + user.getValue1() + "%"));
-        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus2() + ": &f" + user.getValue2() + "%"));
-        rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus3() + ": &f" + user.getValue3() + "%"));
-        if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus4() + ": &f" + user.getValue4() + " DMG"));
+        rpgcore.getServer().broadcastMessage(Utils.format("  &7Nowe bonusy gracza &c " + playerName));
+        rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus1() + ": &f" + user.getValue1() + "%"));
+        rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus2() + ": &f" + user.getValue2() + "%"));
+        if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + " DMG"));
         } else {
-            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus4() + ": &f" + user.getValue4() + "%"));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + "%"));
+        }
+        if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4()));
+        } else {
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4() + "%"));
         }
         if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus5() + ": &f" + user.getValue5() + " HP"));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + " HP"));
         } else {
-            rpgcore.getServer().broadcastMessage(Utils.format("&7" + user.getBonus5() + ": &f" + user.getValue5() + "%"));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + "%"));
         }
         rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
     }
@@ -144,24 +154,25 @@ public class BaoManager {
         switch (nowyBaoBonus1) {
             case 1:
                 user.setBonus1("Srednie obrazenia");
-                user.setValue1(random.nextInt(25) + 1);
+                user.setValue1(random.nextInt(40) + 1);
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + user.getValue1());
                 break;
             case 2:
                 user.setBonus1("Silny Na Ludzi");
-                user.setValue1(random.nextInt(30) + 1);
+                user.setValue1(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + user.getValue1());
                 break;
             case 3:
                 user.setBonus1("Silny Na Potwory");
-                user.setValue1(random.nextInt(30) + 1);
+                user.setValue1(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + user.getValue1());
                 break;
         }
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBao(uuid, this.find(uuid));
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
-        });    }
+        });
+    }
 
     public void losujNowyBonus2(final UUID uuid) {
         this.removePrevBonuses(uuid, 2);
@@ -171,17 +182,17 @@ public class BaoManager {
         switch (nowyBaoBonus2) {
             case 1:
                 user.setBonus2("Srednia defensywa");
-                user.setValue2(random.nextInt(25) + 1);
+                user.setValue2(random.nextInt(40) + 1);
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + user.getValue2());
                 break;
             case 2:
                 user.setBonus2("Srednia defensywa przeciwko ludziom");
-                user.setValue2(random.nextInt(30) + 1);
+                user.setValue2(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + user.getValue2());
                 break;
             case 3:
                 user.setBonus2("Srednia defensywa przeciwko potworom");
-                user.setValue2(random.nextInt(30) + 1);
+                user.setValue2(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + user.getValue2());
                 break;
         }
@@ -195,45 +206,57 @@ public class BaoManager {
         this.removePrevBonuses(uuid, 3);
         final BaoUser user = this.find(uuid).getBaoUser();
         final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
-        final int nowyBaoBonus3 = random.nextInt(2) + 1;
+        final int nowyBaoBonus3 = random.nextInt(3) + 1;
         switch (nowyBaoBonus3) {
             case 1:
-                user.setBonus3("Przeszycie bloku ciosu");
-                user.setValue3(random.nextInt(15) + 1);
-                bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + user.getValue3());
+                user.setBonus3("Szansa na cios krytyczny");
+                user.setValue3(random.nextInt(50) + 1);
+                bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + user.getValue3());
                 break;
             case 2:
-                user.setBonus3("Szansa na cios krytyczny");
-                user.setValue3(random.nextInt(20) + 1);
-                bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + user.getValue3());
+                user.setBonus3("Wzmocnienie ciosu krytycznego");
+                user.setValue3(random.nextInt(30) + 1);
+                bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + user.getValue3());
+                break;
+            case 3:
+                user.setBonus3("Dodatkowe obrazenia");
+                user.setValue3(random.nextInt(400) + 1);
+                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + user.getValue3());
                 break;
         }
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBao(uuid, this.find(uuid));
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
-        });    }
+        });
+    }
 
     public void losujNowyBonus4(final UUID uuid) {
         this.removePrevBonuses(uuid, 4);
         final BaoUser user = this.find(uuid).getBaoUser();
         final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
-        final int nowyBaoBonus4 = random.nextInt(2) + 1;
+        final int nowyBaoBonus4 = random.nextInt(3) + 1;
         switch (nowyBaoBonus4) {
             case 1:
-                user.setBonus4("Blok ciosu");
-                user.setValue4(random.nextInt(15) + 1);
-                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + user.getValue4());
+                user.setBonus4("Predkosc ruchu");
+                user.setValue4(random.nextInt(50) + 1);
+                bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + user.getValue4());
                 break;
             case 2:
-                user.setBonus4("Dodatkowe obrazenia");
-                user.setValue4(random.nextInt(400) + 1);
-                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + user.getValue4());
+                user.setBonus4("Dodatkowy EXP");
+                user.setValue4(random.nextInt(10) + 1);
+                bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() + user.getValue4());
+                break;
+            case 3:
+                user.setBonus4("Szczescie");
+                user.setValue4(random.nextInt(10) + 1);
+                bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() + user.getValue4());
                 break;
         }
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBao(uuid, this.find(uuid));
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
-        });    }
+        });
+    }
 
     public void losujNowyBonus5(final UUID uuid) {
         this.removePrevBonuses(uuid, 5);
@@ -249,20 +272,21 @@ public class BaoManager {
         switch (nowyBaoBonus5) {
             case 1:
                 user.setBonus5("Dodatkowe HP");
-                user.setValue5(random.nextInt(10) + 1);
+                user.setValue5(random.nextInt(15) + 1);
                 Bukkit.getPlayer(uuid).setMaxHealth(Bukkit.getPlayer(uuid).getMaxHealth() + user.getValue5() * 2);
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + user.getValue5());
                 break;
             case 2:
-                user.setBonus5("Dodatkowy EXP");
-                user.setValue5(random.nextInt(10) + 1);
-                bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() + user.getValue5());
+                user.setBonus5("Blok Ciosu");
+                user.setValue5(random.nextInt(20) + 1);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + user.getValue5());
                 break;
         }
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBao(uuid, this.find(uuid));
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
-        });    }
+        });
+    }
 
     public void removePrevBonuses(final UUID uuid, final int number) {
         final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
@@ -296,21 +320,27 @@ public class BaoManager {
                 break;
             case 3:
                 switch (bao.getBaoUser().getBonus3()) {
-                    case "Przeszycie bloku ciosu":
-                        bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() - bao.getBaoUser().getValue3());
-                        break;
                     case "Szansa na cios krytyczny":
                         bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - bao.getBaoUser().getValue3());
+                        break;
+                    case "Wzmocnienie ciosu krytycznego":
+                        bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() - bao.getBaoUser().getValue3());
+                        break;
+                    case "Dodatkowe Obrazenia":
+                        bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() - bao.getBaoUser().getValue3());
                         break;
                 }
                 break;
             case 4:
                 switch (bao.getBaoUser().getBonus4()) {
-                    case "Blok ciosu":
-                        bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - bao.getBaoUser().getValue4());
+                    case "Predkosc ruchu":
+                        bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - bao.getBaoUser().getValue4());
                         break;
-                    case "Dodatkowe obrazenia":
-                        bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() - bao.getBaoUser().getValue4());
+                    case "Dodatkowy EXP":
+                        bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - bao.getBaoUser().getValue4());
+                        break;
+                    case "Szczescie":
+                        bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() - bao.getBaoUser().getValue4());
                         break;
                 }
                 break;
@@ -319,8 +349,8 @@ public class BaoManager {
                     case "Dodatkowe HP":
                         bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - bao.getBaoUser().getValue5());
                         break;
-                    case "Dodatkowy EXP":
-                        bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - bao.getBaoUser().getValue5());
+                    case "Blok Ciosu":
+                        bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - bao.getBaoUser().getValue5());
                         break;
                 }
                 break;

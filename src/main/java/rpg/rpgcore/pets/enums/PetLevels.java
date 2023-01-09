@@ -1,5 +1,7 @@
 package rpg.rpgcore.pets.enums;
 
+import rpg.rpgcore.utils.DoubleUtils;
+
 public enum PetLevels {
     I2(2, 100),
     I3(3, 200),
@@ -113,7 +115,7 @@ public enum PetLevels {
     }
 
     public double getReqExp() {
-        return this.reqExp;
+        return DoubleUtils.round(this.reqExp, 2);
     }
 
     public static double getExp(final int lvl, final String rarity) {

@@ -64,7 +64,7 @@ public class OreCommand extends CommandAPI {
                 oreMap.put(ore.getId(), ore);
             }
 
-            Stream<Map.Entry<Integer, Ore>> sortedDesc = oreMap.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByKey()));
+            Stream<Map.Entry<Integer, Ore>> sortedDesc = oreMap.entrySet().stream().sorted(Map.Entry.comparingByKey());
             sortedDesc.forEach(e -> player.sendMessage(Utils.format("&8ID: &6" + e.getKey() + " &8Material: &6" + e.getValue().getOreMaterial().name() + " &8X:&6" + e.getValue().getLocation().getBlockX() + " &8Y:&6" + e.getValue().getLocation().getBlockY() + " &8Z:&6" + e.getValue().getLocation().getBlockZ())));
 
             return;

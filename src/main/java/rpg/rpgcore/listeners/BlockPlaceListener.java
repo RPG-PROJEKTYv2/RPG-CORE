@@ -7,7 +7,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.utils.Utils;
 
 public class BlockPlaceListener implements Listener {
     private final RPGCORE rpgcore;
@@ -22,18 +21,15 @@ public class BlockPlaceListener implements Listener {
 
         if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             e.setCancelled(true);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz stawiac blokow!"));
             return;
         } else {
             if (!rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 e.setCancelled(true);
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz stawiac blokow!"));
                 return;
             }
         }
         if (player.getGameMode() != GameMode.CREATIVE) {
             e.setCancelled(true);
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz niszczyc blokow na tym trybie gry!"));
         }
     }
 }

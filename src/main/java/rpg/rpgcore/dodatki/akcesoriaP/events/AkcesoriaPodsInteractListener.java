@@ -205,6 +205,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.WATCH) {
             e.setCancelled(true);
 
+            if (eventItem.hasItemMeta() && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Zardzewialy Pierscien")) return;
+
             if (!user.getAkcesoriaPodstawowe().getDiadem().isEmpty()) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony diadem!"));
                 return;

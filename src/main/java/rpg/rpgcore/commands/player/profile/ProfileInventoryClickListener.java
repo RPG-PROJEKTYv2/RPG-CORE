@@ -1,6 +1,7 @@
 package rpg.rpgcore.commands.player.profile;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,18 +27,23 @@ public class ProfileInventoryClickListener implements Listener {
             final Player player = (Player) e.getWhoClicked();
             Player target = Bukkit.getPlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", ""));
             if (target == null) {
-                target = Bukkit.getOfflinePlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "")).getPlayer();
+                final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", ""));
+                if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje " + offlinePlayer.getName());
+                if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, offlinePlayer.getUniqueId());
+                if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, offlinePlayer.getUniqueId());
+                if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, offlinePlayer.getUniqueId());
+                return;
             }
             if (target.getName().equals(player.getName())) {
                 if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje");
-                if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player);
-                if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player);
-                if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player);
+                if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, player.getUniqueId());
+                if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, player.getUniqueId());
+                if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, player.getUniqueId());
             } else {
                 if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje " + target.getName());
-                if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, target);
-                if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, target);
-                if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, target);
+                if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, target.getUniqueId());
+                if (slot == 49) RPGCORE.getInstance().getDodatkiManager().openBonyGUI(player, target.getUniqueId());
+                if (slot == 50) RPGCORE.getInstance().getDodatkiManager().openAkceDodaGUI(player, target.getUniqueId());
             }
         }
     }

@@ -151,6 +151,9 @@ public class MetinyHelper {
             }
 
             getDropMetin(id, player, entity);
+            if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 5) {
+                RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+            }
             entity.remove();
             metiny.getMetins().setHealth(0);
             player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
@@ -166,7 +169,6 @@ public class MetinyHelper {
         final MetinologObject metinolog = RPGCORE.getInstance().getMetinologNPC().find(player.getUniqueId());
         //MobDropHelper.addDropPlayer(player, "I183", 1, 100.0, true, true, entity);
         double kasaToAdd = 0;
-        final double kasa = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa();
         if ((id >= 1 && id <= 10) || (id >= 10001 && id <= 10010)) {
             kasaToAdd = 50;
             if (metinolog.getMetinologUser().getPostepGive() == 0) {
@@ -298,7 +300,12 @@ public class MetinyHelper {
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
-        RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(kasa + kasaToAdd);
+        RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa() + kasaToAdd);
+        if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
+            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + kasaToAdd);
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
+        }
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(player.getUniqueId(), RPGCORE.getInstance().getUserManager().find(player.getUniqueId())));
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
         player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));
     }

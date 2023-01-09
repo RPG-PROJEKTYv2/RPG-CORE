@@ -298,19 +298,17 @@ public class IceTowerManager {
                             + "&1>>-------------&bIce Tower&1-------------<<"));
                 }
             }
-            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-BOSS 1 demontower,16.5,10,141.5");
-            }, 100L);
+            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-BOSS 1 demontower,16.5,10,141.5"), 100L);
         }, 1400L);
     }
 
     public static void actionBar(final int reqMobAmount, final String barText) {
         for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-            if (!BossBarUtil.getPlayers().contains(player.getName())) {
+            /*if (!BossBarUtil.getPlayers().contains(player.getName())) {
                 BossBarUtil.setBar(player.getPlayer(), Utils.format(barText), reqMobAmount - rpgcore.getIceTowerManager().getMobsAmount());
             }
-            BossBarUtil.updateBar(player.getPlayer(), Utils.format(barText), reqMobAmount - rpgcore.getIceTowerManager().getMobsAmount());
-            //rpgcore.getNmsManager().sendActionBar(player, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount());
+            BossBarUtil.updateBar(player.getPlayer(), Utils.format(barText), reqMobAmount - rpgcore.getIceTowerManager().getMobsAmount());*/
+            rpgcore.getNmsManager().sendActionBar(player, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount());
         }
     }
 
@@ -335,13 +333,13 @@ public class IceTowerManager {
                     user.getMissions().setProgress(user.getMissions().getProgress() + 1);
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));
                 }
-                Block block = Bukkit.getWorld("demontower").getBlockAt(16, 9, 97);
-                block.setType(Material.ANVIL);
-                block.setData((byte) 1);
-
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
             }
+            Block block = Bukkit.getWorld("demontower").getBlockAt(16, 9, 97);
+            block.setType(Material.ANVIL);
+            block.setData((byte) 1);
+
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
         }
     }
 

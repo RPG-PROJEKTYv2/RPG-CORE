@@ -1,6 +1,5 @@
 package rpg.rpgcore.commands.player.bossy;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,11 +22,9 @@ public class BossyInventoryClick implements Listener {
         }
 
         final Inventory clickedInventory = e.getClickedInventory();
-        final Player player = (Player) e.getWhoClicked();
-
         final String clickedInventoryTitle = clickedInventory.getTitle();
 
-        if (Utils.removeColor(clickedInventoryTitle).equals("Lista bossów")) {
+        if (Utils.removeColor(clickedInventoryTitle).equals("Lista bossow")) {
             e.setCancelled(true);
         }
     }

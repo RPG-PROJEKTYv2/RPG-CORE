@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.medyk;
+package rpg.rpgcore.npc.medyk.objects;
 
 import lombok.Getter;
 import lombok.Setter;

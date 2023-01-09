@@ -9,8 +9,9 @@ public class TrenerUser {
     private int points;
     private double sredniDmg, sredniDef, blokCiosu, silnyNaLudzi, defNaLudzi, kryt;
     private int dodatkoweHp, szczescie;
+    private long cooldown;
 
-    public TrenerUser(int points, double sredniDmg, double sredniDef, double blokCiosu, int szczescie, double silnyNaLudzi, double defNaLudzi, double kryt, int dodatkoweHp) {
+    public TrenerUser(int points, double sredniDmg, double sredniDef, double blokCiosu, int szczescie, double silnyNaLudzi, double defNaLudzi, double kryt, int dodatkoweHp, long cooldown) {
         this.points = points;
         this.sredniDmg = sredniDmg;
         this.sredniDef = sredniDef;
@@ -20,6 +21,7 @@ public class TrenerUser {
         this.defNaLudzi = defNaLudzi;
         this.kryt = kryt;
         this.dodatkoweHp = dodatkoweHp;
+        this.cooldown = cooldown;
     }
 
     public void reset() {
@@ -32,6 +34,7 @@ public class TrenerUser {
         this.defNaLudzi = 0;
         this.kryt = 0;
         this.dodatkoweHp = 0;
+        this.cooldown = 0;
     }
 
 }

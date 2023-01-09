@@ -58,7 +58,7 @@ public class BanManager {
         final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().banPlayer(uuidPlayerToBan, banInfo));
 
-        this.addToPunishmentHistory(uuidPlayerToBan, "BanCommand;" + banInfo);
+        this.addToPunishmentHistory(uuidPlayerToBan, "Ban;" + banInfo);
     }
 
     public void kickPlayer(final String sederName, final Player playerToKick, final String reason, final boolean silent) {
@@ -75,7 +75,7 @@ public class BanManager {
         }
 
         final String kick = sederName + ";" + reason + ";" + dateOfBan;
-        this.addToPunishmentHistory(playerUUID, "KickCommand;" + kick);
+        this.addToPunishmentHistory(playerUUID, "Kick;" + kick);
     }
 
     //                      TEMPBAN                      \\
@@ -118,7 +118,7 @@ public class BanManager {
         final String tempBanInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempBanExpireDate) + ";" + Utils.dateFormat.format(tempBanDate);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().banPlayer(uuidPlayerToTempBan, tempBanInfo));
 
-        this.addToPunishmentHistory(uuidPlayerToTempBan, "TempBanCommand;" + tempBanInfo);
+        this.addToPunishmentHistory(uuidPlayerToTempBan, "TempBan;" + tempBanInfo);
     }
 
 

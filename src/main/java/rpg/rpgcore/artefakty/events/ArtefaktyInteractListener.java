@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -119,11 +120,11 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 if (rpgcore.getKociolkiManager().find(uuid).isEliksirPotegi()) {
-                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() - 10);
+                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() - DoubleUtils.round(10, 2));
                 }
                 rpgcore.getKociolkiManager().find(uuid).setEliksirPotegi(true);
                 rpgcore.getKociolkiManager().find(uuid).setEliksirPotegiTime(300);
-                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() + 10);
+                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() + DoubleUtils.round(10, 2));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
                     rpgcore.getMongoManager().saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
@@ -144,11 +145,11 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 if (rpgcore.getKociolkiManager().find(uuid).isEliksirObroncy()) {
-                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() - 10);
+                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() - DoubleUtils.round(10, 2));
                 }
                 rpgcore.getKociolkiManager().find(uuid).setEliksirObroncy(true);
                 rpgcore.getKociolkiManager().find(uuid).setEliksirObroncyTime(300);
-                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() + 10);
+                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() + DoubleUtils.round(10, 2));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
                     rpgcore.getMongoManager().saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));

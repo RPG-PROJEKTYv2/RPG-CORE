@@ -14,6 +14,7 @@ import rpg.rpgcore.commands.admin.serverwhitelist.objects.SerwerWhiteList;
 import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.kociolki.KociolkiUser;
+import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -22,7 +23,7 @@ import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
-import rpg.rpgcore.npc.medyk.MedykObject;
+import rpg.rpgcore.npc.medyk.objects.MedykObject;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
@@ -1274,6 +1275,21 @@ public class MongoManager {
 
     public void saveSerwerWhiteList(final SerwerWhiteList serwerWhiteList) {
         this.pool.getSerwerWhiteList().findOneAndReplace(new Document("_id", "SerwerWhiteList"), serwerWhiteList.toDocument());
+    }
+
+    // ARTEFAKTY ZA LVL
+    public ArtefaktyZaLvl loadArtefaktyZaLvl() {
+        final Document document = this.pool.getArtefaktyZaLvL().find().first();
+        if (document == null) {
+            final ArtefaktyZaLvl artefaktyZaLvl = new ArtefaktyZaLvl();
+            this.pool.getArtefaktyZaLvL().insertOne(artefaktyZaLvl.toDocument());
+            return artefaktyZaLvl;
+        }
+        return new ArtefaktyZaLvl(document);
+    }
+
+    public void saveArtefaktyZaLvl(final ArtefaktyZaLvl artefaktyZaLvl) {
+        this.pool.getArtefaktyZaLvL().findOneAndReplace(new Document("_id", "artefaktyZaLvl"), artefaktyZaLvl.toDocument());
     }
 
     public void onDisable() {

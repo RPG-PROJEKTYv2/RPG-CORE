@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.kupiec.enums.KupiecItems;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -67,12 +68,21 @@ public class KupiecInventoryClick implements Listener {
                     return;
                 }
 
-                final double moneyToAdd = rpgcore.getKupiecNPC().getPlayerSellValueItems(playerUUID);
+                final double moneyToAdd = DoubleUtils.round(rpgcore.getKupiecNPC().getPlayerSellValueItems(playerUUID), 2);
                 rpgcore.getUserManager().find(playerUUID).setKasa(rpgcore.getUserManager().find(playerUUID).getKasa() + moneyToAdd);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
 
+                int itemAmount = 0;
                 for (ItemStack is : playerItems.keys()) {
                     clickedInventory.remove(is);
+                    itemAmount += is.getAmount();
+                }
+                if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 6) {
+                    rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + itemAmount);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), rpgcore.getMagazynierNPC().find(player.getUniqueId())));
+                } else if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
+                    rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + moneyToAdd);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), rpgcore.getMagazynierNPC().find(player.getUniqueId())));
                 }
                 rpgcore.getKupiecNPC().resetPlayerSellValueItems(playerUUID);
                 rpgcore.getKupiecNPC().resetPlayerItemStack(playerUUID);

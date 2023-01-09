@@ -21,7 +21,15 @@ public class EnderChestCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
-        if (user.getRankPlayerUser().getRankType().getPriority() < RankTypePlayer.SVIP.getPriority() && !user.getRankUser().isStaff() || (user.getRankUser().isStaff() && !user.isAdminCodeLogin())) {
+        if (user.isAdminCodeLogin() && user.getRankUser().isStaff()) {
+            if (args.length != 0) {
+                player.sendMessage(Utils.poprawneUzycie("enderchest"));
+                return;
+            }
+            player.openInventory(player.getEnderChest());
+            return;
+        }
+        if (user.getRankPlayerUser().getRankType().getPriority() < RankTypePlayer.SVIP.getPriority()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ta komenda jest przeznaczona dla graczy z ranga &6&lS&e&lvip&7 lub wyzsza!"));
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&5Enderchesty &7mozesz znalezc na spawnie."));
             return;

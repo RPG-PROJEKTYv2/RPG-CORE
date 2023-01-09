@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.gornik.enums;
 
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 
@@ -72,15 +73,15 @@ public enum GornikMissions {
     }
 
     public double getDef() {
-        return def;
+        return DoubleUtils.round(def, 2);
     }
 
     public double getPrzeszycie() {
-        return przeszycie;
+        return DoubleUtils.round(przeszycie, 2);
     }
 
     public double getBlok() {
-        return blok;
+        return DoubleUtils.round(blok, 2);
     }
 
     public static GornikMissions getMission(int number) {

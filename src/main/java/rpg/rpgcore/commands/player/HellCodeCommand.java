@@ -3,6 +3,7 @@ package rpg.rpgcore.commands.player;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
@@ -52,6 +53,32 @@ public class HellCodeCommand extends CommandAPI {
         }
 
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
+
+        if (args[0].equals("przypomnij")) {
+            if (args.length < 2) {
+                player.sendMessage(Utils.poprawneUzycie("hellcode przypomnij <nick>"));
+                return;
+            }
+            if (user.getRankUser().isHighStaff() && user.isAdminCodeLogin()) {
+                final User target = rpgcore.getUserManager().find(args[1]);
+
+                if (target == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku: &7" + args[1]));
+                    return;
+                }
+
+                final Player targetPlayer = Bukkit.getPlayer(target.getId());
+                if (targetPlayer == null) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cGracz &6" + target.getName() + " &cnie jest online!"));
+                    return;
+                }
+
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie przypomniales hellcode gracza &6" + target.getName() + "&a!"));
+                targetPlayer.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoj hellcode to: &c" + target.getHellCode()));
+                return;
+            }
+            return;
+        }
 
         if (args[0].equalsIgnoreCase("stworz")) {
 

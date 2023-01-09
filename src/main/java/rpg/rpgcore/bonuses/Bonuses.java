@@ -13,7 +13,8 @@ public class Bonuses {
         this.bonusesUser = new BonusesUser(10,0,0,0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
                 0.0,0.0,0.0,0.0,0.0,0.0,
-                0.0,0.0,0.0,0.0,0.0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0);
+                0.0,0.0,0.0,0.0,0.0, 0,
+                0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     public Bonuses(final Document document) {
@@ -22,7 +23,7 @@ public class Bonuses {
                 document.getDouble("srednieobrazenia"), document.getDouble("silnynaludzi"), document.getDouble("silnynapotwory"), document.getDouble("sredniadefensywa"), document.getDouble("defnaludzi"), document.getDouble("defnamoby"),
                 document.getDouble("szansanakryta"), document.getDouble("szansanawzmocnieniekryta"), document.getDouble("blokciosu"), document.getDouble("przeszyciebloku"), document.getDouble("szansanakrwawienie"), document.getDouble("minussrednieobrazenia"),
                 document.getDouble("minussredniadefensywa"), document.getDouble("minusdefnaludzi"), document.getDouble("minusdefnamoby"), document.getDouble("minusobrazenianaludzi"), document.getDouble("minusobrazenianamoby"), document.getInteger("szczescie"),
-                document.getInteger("szybkosc"), 0,0,0,0, 0); //document.getDouble("spowolnienie"), document.getDouble("dodatkowyExp"), document.getDouble("oslepienie"), document.getDouble("przebiciePancerza"), document.getDouble("wampiryzm")
+                document.getInteger("szybkosc"), document.getDouble("spowolnienie"), document.getDouble("dodatkowyExp"), document.getDouble("oslepienie"), document.getDouble("przebiciePancerza"), document.getDouble("wampiryzm"), document.getDouble("wzmocnienieKryta"));
     }
 
     public UUID getId() {
@@ -62,7 +63,8 @@ public class Bonuses {
                 .append("dodatkowyExp", this.bonusesUser.getDodatkowyExp())
                 .append("oslepienie", this.bonusesUser.getOslepienie())
                 .append("przebiciePancerza", this.bonusesUser.getPrzebiciePancerza())
-                .append("wampiryzm", this.bonusesUser.getWampiryzm());
+                .append("wampiryzm", this.bonusesUser.getWampiryzm())
+                .append("wzmocnienieKryta", this.bonusesUser.getWzmocnienieKryta());
 
     }
 }

@@ -78,6 +78,7 @@ public class GuildManager {
         player.sendMessage(Utils.format("&6/klan info <TAG> &8- &7wyswietla informacje o podanym klanie"));
         player.sendMessage(Utils.format("&6/klan stats &8- &7wyswietla statystyki twojego klanu"));
         player.sendMessage(Utils.format("&6/klan chat <wiadomosc> &8- &7wysyla wiadomosc na chacie klanowym"));
+        player.sendMessage(Utils.format("&6/klan alert <wiadomosc> &8- &7wysyla alert do twojego klanu"));
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6KLANY&8}&8&m-_-_-_-_-_-_-_-_-"));
     }
 
@@ -432,6 +433,16 @@ public class GuildManager {
         }
     }
 
+    public void sendAlertToGuild(final String tag, final String message) {
+        for (final UUID uuid : this.getGuildMembers(tag)) {
+            if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
+                final Player player = Bukkit.getPlayer(uuid);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&8&l[&4&l" + tag + "&8&l]", 5, 20, 5),
+                        rpgcore.getNmsManager().makeSubTitle("&f" + Utils.removeColor(message), 5, 20, 5)));
+            }
+        }
+    }
+
     public void showGuildStats(final String tag, final Player player) {
         if (tag.equals("Brak Klanu")) {
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
@@ -477,7 +488,7 @@ public class GuildManager {
         for (UUID uuid : guild.getMembers()) {
             killsMap.put(uuid, guild.getKills().get(uuid));
         }
-        Stream<Map.Entry<UUID, Integer>> sorted = killsMap.entries().stream().sorted(Map.Entry.comparingByValue());
+        Stream<Map.Entry<UUID, Integer>> sorted = killsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
 
         final List<String> topka = new ArrayList<>();
         sorted.limit(10).forEach(entry -> {
@@ -513,7 +524,7 @@ public class GuildManager {
         for (UUID uuid : guild.getMembers()) {
             deathsMap.put(uuid, guild.getDeaths().get(uuid));
         }
-        Stream<Map.Entry<UUID, Integer>> sorted = deathsMap.entries().stream().sorted(Map.Entry.comparingByValue());
+        Stream<Map.Entry<UUID, Integer>> sorted = deathsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
 
         final List<String> topka = new ArrayList<>(10);
         sorted.limit(10).forEach(entry -> {
@@ -549,7 +560,7 @@ public class GuildManager {
         for (UUID uuid : guild.getMembers()) {
             expMap.put(uuid, guild.getExpEarned().get(uuid));
         }
-        Stream<Map.Entry<UUID, Double>> sorted = expMap.entries().stream().sorted(Map.Entry.comparingByValue());
+        Stream<Map.Entry<UUID, Double>> sorted = expMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
 
         final List<String> topka = new ArrayList<>(10);
         sorted.limit(10).forEach(entry -> {
@@ -585,7 +596,7 @@ public class GuildManager {
         for (UUID uuid : guild.getMembers()) {
             timeMap.put(uuid, rpgcore.getOsManager().find(uuid).getCzasProgress());
         }
-        Stream<Map.Entry<UUID, Long>> sorted = timeMap.entries().stream().sorted(Map.Entry.comparingByValue());
+        Stream<Map.Entry<UUID, Long>> sorted = timeMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
         final List<String> topka = new ArrayList<>(10);
         sorted.limit(10).forEach(entry -> {
             final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
@@ -684,7 +695,7 @@ public class GuildManager {
     }
 
     public void setGuildExp(final String tag, final double exp) {
-        this.find(tag).getGuild().setExp(exp);
+        this.find(tag).getGuild().setExp(DoubleUtils.round(exp, 2));
     }
 
     public void setGuildBalance(final String tag, final int balance) {
@@ -700,7 +711,7 @@ public class GuildManager {
     }
 
     public void updateGuildExp(final String tag, final double exp) {
-        this.find(tag).getGuild().setExp(this.find(tag).getGuild().getExp() + exp);
+        this.find(tag).getGuild().setExp(this.find(tag).getGuild().getExp() + DoubleUtils.round(exp, 2));
         if (this.getGuildExp(tag) >= this.getGuildNextLvlExp(tag)) {
             this.updateGuildLvl(tag, 1);
             this.setGuildExp(tag, 0);
@@ -715,23 +726,23 @@ public class GuildManager {
     }
 
     public void updateGuildDodatkowyExp(final String tag, final double dodatkowyExp) {
-        this.find(tag).getGuild().setDodatkowyExp(this.find(tag).getGuild().getDodatkowyExp() + dodatkowyExp);
+        this.find(tag).getGuild().setDodatkowyExp(this.find(tag).getGuild().getDodatkowyExp() + DoubleUtils.round(dodatkowyExp, 2));
     }
 
     public void updateGuildSredniDmg(final String tag, final double sredniDmg) {
-        this.find(tag).getGuild().setSredniDmg(this.find(tag).getGuild().getSredniDmg() + sredniDmg);
+        this.find(tag).getGuild().setSredniDmg(this.find(tag).getGuild().getSredniDmg() + DoubleUtils.round(sredniDmg, 2));
     }
 
     public void updateGuildSredniDef(final String tag, final double sredniDef) {
-        this.find(tag).getGuild().setSredniDef(this.find(tag).getGuild().getSredniDef() + sredniDef);
+        this.find(tag).getGuild().setSredniDef(this.find(tag).getGuild().getSredniDef() + DoubleUtils.round(sredniDef,2 ));
     }
 
     public void updateGuildSilnyNaLudzi(final String tag, final double silnyNaLudzi) {
-        this.find(tag).getGuild().setSilnyNaLudzi(this.find(tag).getGuild().getSilnyNaLudzi() + silnyNaLudzi);
+        this.find(tag).getGuild().setSilnyNaLudzi(this.find(tag).getGuild().getSilnyNaLudzi() + DoubleUtils.round(silnyNaLudzi, 2));
     }
 
     public void updateGuildDefNaLudzi(final String tag, final double defNaLudzi) {
-        this.find(tag).getGuild().setDefNaLudzi(this.find(tag).getGuild().getDefNaLudzi() + defNaLudzi);
+        this.find(tag).getGuild().setDefNaLudzi(this.find(tag).getGuild().getDefNaLudzi() + DoubleUtils.round(defNaLudzi, 2));
     }
 
     public void updateGuildKills(final String tag, final UUID player, final int kills) {
@@ -743,7 +754,7 @@ public class GuildManager {
     }
 
     public void updateGuildExpEarned(final String tag, final UUID player, final double expEarned) {
-        this.find(tag).getGuild().getExpEarned().replace(player, this.find(tag).getGuild().getExpEarned().get(player) + expEarned);
+        this.find(tag).getGuild().getExpEarned().replace(player, this.find(tag).getGuild().getExpEarned().get(player) + DoubleUtils.round(expEarned, 2));
     }
 
     public void putGuildLastOnline(final String tag, final UUID player, final Date lastOnline) {
@@ -825,7 +836,7 @@ public class GuildManager {
     }
 
     public double getGuildNextLvlExp(final String tag) {
-        return this.guildLvlMap.get(this.getGuildLvl(tag) + 1);
+        return DoubleUtils.round(this.guildLvlMap.get(this.getGuildLvl(tag) + 1), 2);
     }
 
     public GuildObject find(final String tag) {

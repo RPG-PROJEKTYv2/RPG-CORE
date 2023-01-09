@@ -2,6 +2,7 @@ package rpg.rpgcore.npc.magazynier.enums;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -17,18 +18,18 @@ public enum MagazynierMissions {
             "&8- &b30 punktow",
             "&8- &a&lKufer Rybacki")).addTagInt("mission", 1).toItemStack(), 200, 30, RybakItems.getByName("I11").getItemStack()),
     M2(2, new ItemBuilder(Material.BOOK).setName("&c&lKolekcjoner").setLore(Arrays.asList(
-            "&7Oddaj &e450 &7skrzyn &8(ogolnie)",
+            "&7Otworz &e450 &7skrzyn",
             "",
             "&f&lNAGRODA",
             "&8- &b50 punktow",
             "&8- &6x2 &f&lSkrzynia Kowala")).addTagInt("mission", 2).toItemStack(), 450, 50, GlobalItem.getItem("I2", 2)),
     M3(3, new ItemBuilder(Material.BOOK).setName("&c&lPogromca Bossow").setLore(Arrays.asList(
-            "&7Zabij &e10 &fNAZWA BOSSA 3-4 &8(Mapa 30-40)",
+            "&7Zabij &e10 &8&l[&4&lBOSS&8&l] &7&lPrzekleta Dusza &8(Mapa 30-40)",
             "",
             "&f&lNAGRODA",
             "&8- &b75 punktow")).addTagInt("mission", 3).toItemStack(), 10, 75, null),
     M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb").setLore(Arrays.asList(
-            "&7Ukoncz &e3 &7dungeony&7! &8(ogolnie)",
+            "&7Ukoncz &e3 &7dungeony &8(&4&SOON&8)",
             "",
             "&f&lNAGRODA",
             "&8- &b150 punktow",
@@ -48,7 +49,7 @@ public enum MagazynierMissions {
             "&8- &6&lWartsciowy Kufer"
     )).addTagInt("mission", 6).toItemStack(), 50, 80, GlobalItem.getItem("I1", 1)),
     M7(7, new ItemBuilder(Material.BOOK).setName("&c&lPierwszy Milion Trzeba Ukrasc").setLore(Arrays.asList(
-            "&7Zarob &e1 000 000&2$ &8(moby, kupiec)",
+            "&7Zarob &e1 000 000&2$ &8(moby, metiny, kupiec)",
             "",
             "&f&lNAGRODA",
             "&8- &b100 punktow"
@@ -108,7 +109,7 @@ public enum MagazynierMissions {
     }
 
     public double getReqAmount() {
-        return this.reqAmount;
+        return DoubleUtils.round(this.reqAmount, 2);
     }
 
     public int getPoints() {

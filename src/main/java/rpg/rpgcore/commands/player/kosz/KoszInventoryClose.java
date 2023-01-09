@@ -8,8 +8,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.UUID;
-
 public class KoszInventoryClose implements Listener {
 
 
@@ -22,9 +20,8 @@ public class KoszInventoryClose implements Listener {
 
         final Inventory closedInventory = e.getInventory();
         final String closedInventoryTitle = closedInventory.getTitle();
-        final Player player = (Player) e.getPlayer();
 
-        if (Utils.removeColor(closedInventoryTitle).equals("KoszCommand")) {
+        if (Utils.removeColor(closedInventoryTitle).equals("Kosz")) {
             e.getInventory().clear();
         }
     }

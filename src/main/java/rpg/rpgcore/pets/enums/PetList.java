@@ -1,6 +1,8 @@
 package rpg.rpgcore.pets.enums;
 
 
+import rpg.rpgcore.utils.DoubleUtils;
+
 public enum PetList {
     DUSZEK_ZWYKLY("Duszek - Zwykly", 1, 0.03, 1, 0.03, 1, 0, 1, 0),
     DUSZEK_RZADKI("Duszek - Rzadki", 1, 0.05, 1, 0.065, 1, 0, 1, 0),
@@ -61,7 +63,6 @@ public enum PetList {
 
     private static int getPer(final String rarity, final int abNumber) {
         if (getByName(rarity) == null) {
-            System.out.println("null");
             return 0;
         }
         switch (abNumber) {
@@ -74,7 +75,6 @@ public enum PetList {
             case 4:
                 return getByName(rarity).per4;
             default:
-                System.out.println("0 - int");
                 return 0;
         }
     }
@@ -90,7 +90,6 @@ public enum PetList {
 
     public static double getAbilityIncrease(final String petNamePlusRarity, final int abNumber, final int petLvl) {
         if (getPer(petNamePlusRarity, abNumber) == 0) {
-            System.out.println("getPer(petNamePlusRarity, abNumber) == 0");
             return 0;
         }
         final PetList pet = getByName(petNamePlusRarity);
@@ -98,15 +97,14 @@ public enum PetList {
         if (petLvl % getPer(petNamePlusRarity, abNumber) == 0) {
             switch (abNumber) {
                 case 1:
-                    return pet.ab1;
+                    return DoubleUtils.round(pet.ab1, 2);
                 case 2:
-                    return pet.ab2;
+                    return DoubleUtils.round(pet.ab2, 2);
                 case 3:
-                    return pet.ab3;
+                    return DoubleUtils.round(pet.ab3, 2);
                 case 4:
-                    return pet.ab4;
+                    return DoubleUtils.round(pet.ab4, 2);
                 default:
-                    System.out.println("0");
                     return 0;
             }
         }

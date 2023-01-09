@@ -50,7 +50,8 @@ public class LvlCommand extends CommandAPI {
         }
 
         if (args.length < 3) {
-            if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
+            if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()
+                    || (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin())) {
                 return;
             }
             player.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-_-_-"));
@@ -61,7 +62,8 @@ public class LvlCommand extends CommandAPI {
             return;
         }
         if (args.length == 3) {
-            if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
+            if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()
+                    || (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin())) {
                 return;
             }
             if (!rpgcore.getUserManager().isUserName(args[0])) {

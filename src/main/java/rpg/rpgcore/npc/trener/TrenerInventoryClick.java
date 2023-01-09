@@ -48,7 +48,7 @@ public class TrenerInventoryClick implements Listener {
                 return;
             }
 
-            if (clickedSlot != 8 && rpgcore.getCooldownManager().hasTrenerCooldown(uuid)) {
+            if (clickedSlot != 8 && object.hasCooldown()) {
                 return;
             }
 
@@ -157,12 +157,12 @@ public class TrenerInventoryClick implements Listener {
                     return;
             }
             user.setPoints(user.getPoints() - 1);
+            object.giveCooldown();
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataTrener(object.getId(), object);
                 rpgcore.getMongoManager().saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
                 rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
             });
-            rpgcore.getCooldownManager().givePlayerTrenerCooldown(uuid);
             player.closeInventory();
             player.sendMessage(Utils.format(Utils.TRENER + "&aPomyslnie rozwinales/as " + clickedItem.getItemMeta().getDisplayName() + " &ao 1 punkt"));
             rpgcore.getTrenerNPC().openTrenerGUI(player);

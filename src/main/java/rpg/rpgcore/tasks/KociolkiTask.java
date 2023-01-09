@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.dungeons.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.icetower.ResetType;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
@@ -13,7 +15,7 @@ public class KociolkiTask implements Runnable {
 
     public KociolkiTask(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, this, 0L, 20L);
+        this.rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, this, 20L, 20L);
     }
 
     @Override
@@ -71,6 +73,15 @@ public class KociolkiTask implements Runnable {
                 });
             }
             rpgcore.getOsManager().find(player.getUniqueId()).setCzasProgress(rpgcore.getOsManager().find(player.getUniqueId()).getCzasProgress() + 1_000L);
+            // DT ANTYAFK
+            if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() != -1) {
+                if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() > 0) {
+                    RPGCORE.getInstance().getIceTowerManager().setAntyAfk(RPGCORE.getInstance().getIceTowerManager().getAntyAfk() - 1);
+                    if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() == 0) {
+                        IceTowerManager.resetIceTower(ResetType.BYPASS);
+                    }
+                }
+            }
         }
     }
 }

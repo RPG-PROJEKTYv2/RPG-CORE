@@ -2,6 +2,7 @@ package rpg.rpgcore.npc.lesnik;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 
@@ -60,7 +61,7 @@ public enum LesnikMissions {
     }
 
     public double getChance() {
-        return chance;
+        return DoubleUtils.round(chance, 2);
     }
 
     public ItemStack getReqItem() {
@@ -68,14 +69,14 @@ public enum LesnikMissions {
     }
 
     public double getPrzeszywka() {
-        return przeszywka;
+        return DoubleUtils.round(przeszywka, 2);
     }
 
     public double getWzmKryta() {
-        return wzmKryta;
+        return DoubleUtils.round(wzmKryta, 2);
     }
 
     public double getDefNaLudzi() {
-        return defNaLudzi;
+        return DoubleUtils.round(defNaLudzi, 2);
     }
 }

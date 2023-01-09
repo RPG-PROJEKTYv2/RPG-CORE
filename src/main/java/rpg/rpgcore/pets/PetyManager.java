@@ -14,6 +14,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.pets.enums.PetLevels;
 import rpg.rpgcore.pets.enums.PetList;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
@@ -155,13 +156,13 @@ public class PetyManager {
     public double getReqPetExp(final ItemStack is) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        return compound.getDouble("ReqPetExp");
+        return DoubleUtils.round(compound.getDouble("ReqPetExp"), 2);
     }
 
     public double getPetTotalExp(final ItemStack is) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        return compound.getDouble("PetTotalExp");
+        return DoubleUtils.round(compound.getDouble("PetTotalExp"), 2);
     }
 
     public String getPetRarity(final ItemStack is) {
@@ -178,7 +179,7 @@ public class PetyManager {
         final ItemMeta im = is.getItemMeta();
         final List<String> lore = im.getLore();
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
-        lore.add(Utils.format("&8Exp: &6" + nmsStack.getTag().getDouble("PetExp") + "&8/&6" + nmsStack.getTag().getDouble("ReqPetExp")));
+        lore.add(Utils.format("&8Exp: &6" + DoubleUtils.round(nmsStack.getTag().getDouble("PetExp"), 2) + "&8/&6" + DoubleUtils.round(nmsStack.getTag().getDouble("ReqPetExp"), 2)));
         im.setLore(lore);
         is.setItemMeta(im);
         return is;

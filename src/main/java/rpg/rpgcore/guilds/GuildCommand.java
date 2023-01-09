@@ -238,43 +238,6 @@ public class GuildCommand extends CommandAPI {
                 }
             }
 
-            /*if (args[0].equalsIgnoreCase("lider")) {
-
-                if (tag.equals("Brak Klanu")) {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
-                    return;
-                }
-
-                if (!rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid)) {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem klanu"));
-                    return;
-                }
-
-                final UUID uuidToSet = rpgcore.getUserManager().find(args[1]).getId();
-
-                if (uuidToSet == null) {
-                    player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
-                    return;
-                }
-
-                if (args[1].equalsIgnoreCase(player.getName())) {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cJestes juz liderem tego klanu"));
-                    return;
-                }
-
-                if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToSet)) {
-                    rpgcore.getGuildManager().setGuildOwner(tag, uuidToSet);
-                    if (rpgcore.getGuildManager().getGuildCoOwner(tag) != null && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuidToSet)) {
-                        rpgcore.getGuildManager().setGuildCoOwner(tag, null);
-                    }
-                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &awlasnie zostal nowym liderem klanu &6" + tag));
-                    return;
-                } else {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &cnie jest czlonkiem twojego klanu"));
-                    return;
-                }
-            }*/
-
             if (args[0].equalsIgnoreCase("zastepca")) {
 
                 if (tag.equals("Brak Klanu")) {
@@ -317,7 +280,7 @@ public class GuildCommand extends CommandAPI {
 
         }
 
-        if (args.length > 2) {
+        if (args.length >= 2) {
             if (args[0].equalsIgnoreCase("zaloz")) {
 
                 if (user.getLvl() < 75) {
@@ -377,6 +340,28 @@ public class GuildCommand extends CommandAPI {
                 final String message = sb.toString().trim();
 
                 rpgcore.getGuildManager().sendMessageToGuild(tag, message, player);
+            }
+            if (args[0].equalsIgnoreCase("alert")) {
+                if (tag.equals("Brak Klanu")) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
+                    return;
+                }
+
+                if (!rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid)) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem klanu"));
+                    return;
+                }
+
+                final StringBuilder sb = new StringBuilder();
+                args[0] = "";
+
+                for (String s : args) {
+                    sb.append(s).append(" ");
+                }
+
+                final String message = sb.toString().trim();
+
+                rpgcore.getGuildManager().sendAlertToGuild(tag, message);
             }
         }
     }

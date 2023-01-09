@@ -1,15 +1,22 @@
 package rpg.rpgcore.lvl.enums.mobs;
+
+import rpg.rpgcore.utils.DoubleUtils;
+
 public enum Events {
-    NAZWA_MOBA_EVENTOWEGO("NAZWA_MOOBA", 0, 0),
-    ERROR("Error", 0, 0);
+    NAZWA_MOBA_EVENTOWEGO("NAZWA_MOOBA", 0, 0, 1, 1),
+    ERROR("Error", 0, 0, 1, 1);
     private final String name;
     private final double kasa;
     private final double exp;
+    private final int minLvl;
+    private final int reqLvl;
 
-    Events(final String name, final double exp, final double kasa) {
+    Events(final String name, final double exp, final double kasa, final int minLvl, final int reqLvl) {
         this.name = name;
         this.exp = exp;
         this.kasa = kasa;
+        this.minLvl = minLvl;
+        this.reqLvl = reqLvl;
     }
 
     public String getName() {
@@ -17,11 +24,19 @@ public enum Events {
     }
 
     public double getKasa() {
-        return kasa;
+        return DoubleUtils.round(kasa, 2);
     }
 
     public double getExp() {
-        return exp;
+        return DoubleUtils.round(exp, 2);
+    }
+
+    public int getMinLvl() {
+        return minLvl;
+    }
+
+    public int getReqLvl() {
+        return reqLvl;
     }
 
     public static Events getByName(String name) {

@@ -1,11 +1,7 @@
 package rpg.rpgcore.armor;
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutSetSlot;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,11 +14,9 @@ import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.user.User;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Arrays;
 
 import static org.bukkit.event.EventPriority.HIGHEST;
 import static org.bukkit.event.EventPriority.LOWEST;
@@ -44,6 +38,19 @@ public class ArmorEffectListener implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onTeleport(final PlayerTeleportEvent e) {
         ArmorEffectsHelper.addEffectsArmor(e.getPlayer());
+    }
+
+    @EventHandler(priority = HIGHEST)
+    public void onInventoryClick(final InventoryClickEvent e) {
+        if (e.getClickedInventory() == null || e.getInventory() == null) return;
+
+        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            final Player player = (Player) e.getWhoClicked();
+            if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin()) {
+                e.setCancelled(true);
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
+            }
+        }
     }
 
     @EventHandler(priority = LOWEST)
@@ -158,18 +165,23 @@ public class ArmorEffectListener implements Listener {
                     player.removePotionEffect(PotionEffectType.SPEED);
                 }
             }
-            final PacketPlayOutSetSlot[] packets = {new PacketPlayOutSetSlot(0, 1, CraftItemStack.asNMSCopy(new ItemBuilder(Material.CHEST).setName("&6Magazyny").setLore(Arrays.asList("&8Kliknij, aby otworzyc liste magazynow")).toItemStack())),
-                    new PacketPlayOutSetSlot(0, 2, CraftItemStack.asNMSCopy(new ItemBuilder(Material.ITEM_FRAME).setName("&6Akcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack())),
-                    new PacketPlayOutSetSlot(0, 3, CraftItemStack.asNMSCopy(new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&cKosz").setLore(Arrays.asList("&8Kliknij, aby otworzyc kosz")).toItemStack())),
-                    new PacketPlayOutSetSlot(0, 4, CraftItemStack.asNMSCopy(new ItemBuilder(Material.WORKBENCH).setName("&6Craftingi").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu craftingow")).toItemStack())),
-                    new PacketPlayOutSetSlot(0, 0, CraftItemStack.asNMSCopy(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwner(player.getName()).setName("&6Profil").setLore(Arrays.asList("&8Kliknij, aby otworzyc swoj profil")).toItemStack().clone())),
-            };
-            final PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
-            for (final PacketPlayOutSetSlot packet : packets) {
-                connection.sendPacket(packet);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onInteract(final PlayerInteractEvent e) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
+                    if (!rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin()) {
+                        e.setCancelled(true);
+                        e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
+                    }
+                }
             }
         }
     }
+
 
     @EventHandler(priority = LOWEST)
     public void interactArmorContents(final PlayerInteractEvent e) {

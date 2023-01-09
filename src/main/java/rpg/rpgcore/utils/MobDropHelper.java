@@ -65,15 +65,15 @@ public class MobDropHelper {
         // SKRZYNIA KOWALA
         addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.025), true, true, entity);
         // SKRZYNIA ZE ZWIERZAKAMI
-        addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
+        //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
         // TAJEMNICZA SKRZYNIA
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 1.0), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
         addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2.0), true, true, entity);
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
         // FRAGMENT STALI
-        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.4), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.035), true, true, entity);
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
@@ -178,6 +178,9 @@ public class MobDropHelper {
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-30-40 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
                 addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 15), true, true, entity);
+            }
+            if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 3) {
+                rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
             }
             if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 4) {
                 rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
@@ -447,10 +450,10 @@ public class MobDropHelper {
             addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
             if (!player.getWorld().getName().equals("demontower")) return;
             RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
-            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 75) {
                 IceTowerManager.actionBar(80, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f80");
             }
-            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 80) {
+            if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 75) {
                 IceTowerManager.startIceTowerEtap3();
             }
         }
@@ -469,6 +472,12 @@ public class MobDropHelper {
         // TODO Dodac drop Czastki Magii powyzej mobow 60Lvl
 
         rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + rpgcore.getLvlManager().getKasa(entityName));
+        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
+            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + rpgcore.getLvlManager().getKasa(entityName));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), rpgcore.getMagazynierNPC().find(player.getUniqueId())));
+        } else if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 12) {
+            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+        }
         rpgcore.getLvlManager().updateExp(player, entityName);
     }
 

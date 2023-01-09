@@ -65,42 +65,50 @@ public class TeleporterInventoryClick implements Listener {
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
                 if (slot == 5) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp6(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
                 if (slot == 6) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp7(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 if (slot == 7) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp8(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
                 if (slot == 8) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp9(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
                 if (slot == 9) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp10(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
                 if (slot == 10) {
+                    player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp11(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
                 if (slot == 11) {
+                    player.closeInventory();
                     player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
                     //rpgcore.getTeleporterNPC().teleportExp12(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {
                 if (slot == 12) {
+                    player.closeInventory();
                     player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
                     //rpgcore.getTeleporterNPC().teleportExp13(player);
                 }

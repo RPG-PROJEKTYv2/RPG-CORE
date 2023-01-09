@@ -68,6 +68,9 @@ import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
 import rpg.rpgcore.commands.player.rangi.RangiInventoryClick;
+import rpg.rpgcore.commands.player.showcase.ShowcaseItemCommand;
+import rpg.rpgcore.commands.player.showcase.ShowcaseItemInventoryClickListener;
+import rpg.rpgcore.commands.player.showcase.ShowcaseItemManager;
 import rpg.rpgcore.commands.player.topki.TopkiCommand;
 import rpg.rpgcore.commands.player.topki.TopkiInventoryClickListener;
 import rpg.rpgcore.commands.player.topki.TopkiManager;
@@ -104,6 +107,7 @@ import rpg.rpgcore.kociolki.KociolkiManager;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
+import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
 import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
@@ -127,7 +131,9 @@ import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.magazynier.MagazynyCommand;
-import rpg.rpgcore.npc.medyk.MedykInventoryClick;
+import rpg.rpgcore.npc.medyk.events.MedykInteractListener;
+import rpg.rpgcore.npc.medyk.events.MedykInventoryClickListener;
+import rpg.rpgcore.npc.medyk.events.MedykInventoryCloseListener;
 import rpg.rpgcore.npc.medyk.MedykNPC;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
@@ -146,7 +152,7 @@ import rpg.rpgcore.pets.PetyManager;
 import rpg.rpgcore.pets.listeners.PetInteractListener;
 import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
 import rpg.rpgcore.playerInventory.PlayerOpenInventoryListener;
-import rpg.rpgcore.playerInventory.tasks.PacketTask;
+import rpg.rpgcore.playerInventory.tasks.PlayerInventoryTask;
 import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
@@ -325,6 +331,8 @@ public final class RPGCORE extends JavaPlugin {
     private TopkiManager topkiManager;
     private CraftingiManager craftingiManager;
     private SerwerWhiteListManager serwerWhiteListManager;
+    private ArtefaktyZaLvlManager artefaktyZaLvlManager;
+    private ShowcaseItemManager showcaseItemManager;
 
 
 
@@ -376,16 +384,14 @@ public final class RPGCORE extends JavaPlugin {
         new ReloadPetsTask(this);
         // ...KOPALNIA
         new KopalniaTask(this);
-        // ...ANTY AFK ICE TOWER
-        new AntyAfktIceTowerTask(this);
         // ...BOSS BAR
         new BossBarTask(this);
         // ... KOCIOLKI I ARTEFAKTY
         new KociolkiTask(this);
         // ... TOPKI
         new TopkiTask(this);
-        // ... ITEMY W CRAFTING GUI
-        new PacketTask(this);
+        // ... PLAYER CRAFTIN ITEMS
+        new PlayerInventoryTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -415,6 +421,7 @@ public final class RPGCORE extends JavaPlugin {
         Bukkit.clearRecipes();
         IceTowerManager.resetIceTower(ResetType.BYPASS);
     }
+
     public void onDisable() {
         this.mongo.saveAllUsers();
         this.mongo.saveAllMetins();
@@ -441,6 +448,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
         this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
+        this.mongo.saveArtefaktyZaLvl(this.artefaktyZaLvlManager.getArtefaktyZaLvl());
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -526,6 +534,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new TopkiCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new CraftingiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SerwerWhiteListCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ShowcaseItemCommand());
     }
 
     private void initEvents() {
@@ -545,6 +554,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
@@ -663,7 +673,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
 
         // ...MEDYK
-        this.getServer().getPluginManager().registerEvents(new MedykInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new MedykInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new MedykInventoryCloseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MedykInteractListener(), this);
 
         // ...GORNIK
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
@@ -719,6 +731,9 @@ public final class RPGCORE extends JavaPlugin {
         // PLAYER INVENTORY
         this.getServer().getPluginManager().registerEvents(new PlayerOpenInventoryListener(), this);
 
+        // SHOWCASE ITEM
+        this.getServer().getPluginManager().registerEvents(new ShowcaseItemInventoryClickListener(), this);
+
     }
 
     private void initDatabase() {
@@ -764,6 +779,8 @@ public final class RPGCORE extends JavaPlugin {
         this.topkiManager = new TopkiManager(this);
         this.craftingiManager = new CraftingiManager();
         this.serwerWhiteListManager = new SerwerWhiteListManager(this);
+        this.artefaktyZaLvlManager = new ArtefaktyZaLvlManager(this);
+        this.showcaseItemManager = new ShowcaseItemManager();
     }
 
     private void initNPCS() {
@@ -877,7 +894,7 @@ public final class RPGCORE extends JavaPlugin {
     private void saveGuilds() {
         this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveAllGuilds());
     }
-    
+
 
     public MongoManager getMongoManager() {
         return mongo;
@@ -1198,5 +1215,13 @@ public final class RPGCORE extends JavaPlugin {
     }
     public SerwerWhiteListManager getSerwerWhiteListManager() {
         return serwerWhiteListManager;
+    }
+
+    public ArtefaktyZaLvlManager getArtefaktyZaLvlManager() {
+        return artefaktyZaLvlManager;
+    }
+
+    public ShowcaseItemManager getShowcaseItemManager() {
+        return showcaseItemManager;
     }
 }

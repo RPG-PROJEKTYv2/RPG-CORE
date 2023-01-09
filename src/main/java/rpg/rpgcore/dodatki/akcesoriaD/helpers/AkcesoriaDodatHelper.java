@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class AkcesoriaDodatHelper {
 
-    public static ItemStack createSzarfa(final double ludize, final double moby, final int lvl, final String... name) {
+    public static ItemStack createSzarfa(final int ludize, final int moby, final int lvl, final String... name) {
         return new ItemBuilder(Material.LADDER).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Silny przeciwko ludziom: &c" + ludize + "%",
@@ -20,7 +20,7 @@ public class AkcesoriaDodatHelper {
         )).addTagDouble("ludzie", ludize).addTagDouble("moby", moby).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createPas(final double defLudzie, final double defMoby, final int lvl, final String... name) {
+    public static ItemStack createPas(final int defLudzie, final int defMoby, final int lvl, final String... name) {
         return new ItemBuilder(Material.LEASH).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Defensywa przeciwko ludziom: &c" + defLudzie + "%",
@@ -30,7 +30,7 @@ public class AkcesoriaDodatHelper {
         )).addTagDouble("defLudzie", defLudzie).addTagDouble("defMoby", defMoby).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createMedalion(final double srdmg, final int zloteSerca, final int lvl, final String... name) {
+    public static ItemStack createMedalion(final int srdmg, final int zloteSerca, final int lvl, final String... name) {
         return new ItemBuilder(Material.FIREBALL).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Srednie obrazenia: &c" + srdmg + "%",
@@ -40,11 +40,11 @@ public class AkcesoriaDodatHelper {
         )).addTagDouble("srdmg", srdmg).addTagInt("zloteSerca", zloteSerca).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createEnergia(final double mDmg, final double def, final double blok, final double przebicie, final int mspeed, final int lvl, final String... name) {
+    public static ItemStack createEnergia(final int mDmg, final int def, final int blok, final double przebicie, final int mspeed, final int lvl, final String... name) {
         return new ItemBuilder(Material.MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Zmniejszone Obrazenia: &c" + mDmg + "%",
-                "&7Zwiekszona Defensywa: &c" + def,
+                "&7Zwiekszona Defensywa: &c" + def + "%",
                 "&7Blok Ciosu: &c" + blok + "%",
                 "&7Przebicie Pancerza: &c" + przebicie + "%",
                 "&7Zmniejszona Predkosc Ruchu: &c" + mspeed,

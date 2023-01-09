@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -38,8 +39,8 @@ public class ItemShopInteractListener implements Listener {
         if (eventItem.getType() == Material.BOOK && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Voucher na range")) {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
 
-            if (user.getRankPlayerUser().getRankType().getPriority() != 0) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAktualnie posiadasz aktywowana range."));
+            if (user.getRankPlayerUser().getRankType().getPriority() > RankTypePlayer.getByName(Utils.getTagString(eventItem, "rank")).getPriority()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTwoja ."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cUzyj tego voucher, kiedy czas twojej rangi dobiegnie konca."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cCzas swojej rangi mozesz sprawdzic pod /ranktime."));
                 return;
@@ -76,7 +77,7 @@ public class ItemShopInteractListener implements Listener {
         if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przeklety Smoczy Zwoj")) {
             final int range = Utils.getTagInt(eventItem, "range");
 
-            for (Entity entity : player.getNearbyEntities(range/2.0, 5, range/2.0)) {
+            for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
                     final Creature creature = (Creature) entity;
                     creature.setTarget(player);
