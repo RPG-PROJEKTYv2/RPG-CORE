@@ -25,10 +25,10 @@ public class PrzekletaDuszaManager {
         this.przekletadusza.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&7&lZwykly Diadem Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&7&lZwykly Pierscien Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("9", 7.0, new ItemBuilder(Material.ITEM_FRAME).setName("&7&lZwykla Tarcza Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("10", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7&lUlepszony Naszyjnik Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("11", 2.0, new ItemBuilder(Material.WATCH).setName("&7&lUlepszony Diadem Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("12", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&7&lUlepszony Pierscien Przekletej Duszy").toItemStack(),1 ));
-        this.przekletadusza.add(new Items("13", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&7&lUlepszona Tarcza Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("10", 0.5, new ItemBuilder(Material.STORAGE_MINECART).setName("&7&lUlepszony Naszyjnik Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("11", 0.5, new ItemBuilder(Material.WATCH).setName("&7&lUlepszony Diadem Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("12", 0.5, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&7&lUlepszony Pierscien Przekletej Duszy").toItemStack(),1 ));
+        this.przekletadusza.add(new Items("13", 0.5, new ItemBuilder(Material.ITEM_FRAME).setName("&7&lUlepszona Tarcza Przekletej Duszy").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -134,7 +134,7 @@ public class EntityDamageEntityListener implements Listener {
 
                     final double redukcja = DoubleUtils.round( wartoscDefa / (wartoscDefa + 40), 2);
 
-                    double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
+                    final double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
 
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
 
@@ -150,8 +150,8 @@ public class EntityDamageEntityListener implements Listener {
                     return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager(), e.getEntity());
-                    final double entityDamage = DoubleUtils.round(EntityDamage.getByName(Utils.removeColor(e.getEntity().getCustomName())), 2);
-                    final double finalDmg = DoubleUtils.round(entityDamage * mnoznik, 2);
+                    final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity()), 2);
+                    final double finalDmg = DoubleUtils.round(playerDamage * mnoznik, 2);
                     if (mnoznik > 0) {
                         e.setDamage(finalDmg);
                     } else {
@@ -247,7 +247,6 @@ public class EntityDamageEntityListener implements Listener {
                 double wartoscDefa  = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
 
-                //TODO dodac dzialanie efektu oslabienia (I = -20% final def, II = -50% final def)
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
                     attackerDmg *= 1.75;
                     victim.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 1));
@@ -267,6 +266,7 @@ public class EntityDamageEntityListener implements Listener {
                         }
                     }
                 }
+
                 if (przebicie) {
                     wartoscDefa *= 0.5;
                 }
@@ -320,13 +320,8 @@ public class EntityDamageEntityListener implements Listener {
                     e.setCancelled(true);
                     return;
                 }
-                final double attackerDmg = EntityDamage.getByName(Utils.removeColor(e.getDamager().getCustomName()));
-                final double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
+                double finalDmg = rpgcore.getDamageManager().calculateEntityDamageToPlayer(e.getDamager(), victim);
 
-
-                final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
-
-                double finalDmg = DoubleUtils.round((1 - redukcja) * attackerDmg, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
