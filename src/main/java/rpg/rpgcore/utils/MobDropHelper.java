@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.icetower.IceTowerManager;
 import rpg.rpgcore.npc.przyrodnik.Missions;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -48,7 +49,11 @@ public class MobDropHelper {
             rpgcore.getMedykNPC().find(uuid).getMedykUser().setProgress(rpgcore.getMedykNPC().find(uuid).getMedykUser().getProgress() + 1);
         }
 
-        final int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
+        int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
+        final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
+        if (rank == RankTypePlayer.VIP) szczescie += 15;
+        if (rank == RankTypePlayer.SVIP) szczescie += 25;
+        if (rank == RankTypePlayer.ELITA) szczescie += 35;
         final double niesDropChance50lvl = 0.02 + ((0.02 * szczescie) / 1000.0);
         final double niesDropChance50plus = 0.01 + ((0.01 * szczescie) / 1000.0);
         final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
@@ -470,10 +475,10 @@ public class MobDropHelper {
         }
 
         // TODO Dodac drop Czastki Magii powyzej mobow 60Lvl
-
-        rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + rpgcore.getLvlManager().getKasa(entityName));
+        final double kasa = rpgcore.getLvlManager().getKasa(entityName, uuid);
+        rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + kasa);
         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
-            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + rpgcore.getLvlManager().getKasa(entityName));
+            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + kasa);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), rpgcore.getMagazynierNPC().find(player.getUniqueId())));
         } else if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 12) {
             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
@@ -482,6 +487,6 @@ public class MobDropHelper {
     }
 
     private static double getDropChance(int szczescie, double chance) {
-        return chance + ((chance * szczescie) / 1000.0);
+        return DoubleUtils.round(chance + ((chance * szczescie) / 1000.0), 2);
     }
 }

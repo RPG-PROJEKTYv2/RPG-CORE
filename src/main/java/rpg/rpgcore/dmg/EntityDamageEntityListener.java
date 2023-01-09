@@ -54,29 +54,115 @@ public class EntityDamageEntityListener implements Listener {
             }
         }
 
+        if (e.getEntityType() == EntityType.ARMOR_STAND) return;
+
+        final String entityName = Utils.removeColor(e.getEntity().getName());
+        if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Kupiec") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
+            entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
+            entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
+            entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
+            entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
+            entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
+            e.setCancelled(true);
+            return;
+        }
+
         if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
             if (e.getDamager() instanceof Player) {
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
-                final double victimThornsDmg = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
                 if (e.getEntity() instanceof Player) {
-                    if (victimThornsDmg > 0) {
-                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, victimThornsDmg / 2);
+                    final Player victim = (Player) e.getDamager();
+                    final Player attacker = (Player) e.getEntity();
+
+                    if (victim.getInventory().contains(Artefakty.getArtefakt("Egzekutor", victim))) {
+                        if (ChanceHelper.getChance(5.0)) {
+                            if (!rpgcore.getCooldownManager().hasEgzekutorCooldown(victim.getUniqueId())) {
+                                rpgcore.getKociolkiManager().find(victim.getUniqueId()).setEgzekutor(true);
+                                rpgcore.getKociolkiManager().find(victim.getUniqueId()).setEgzekutorTime(5);
+                                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataKociolki(victim.getUniqueId(), rpgcore.getKociolkiManager().find(victim.getUniqueId())));
+                                rpgcore.getCooldownManager().givePlayerEgzekutorCooldown(victim.getUniqueId());
+                                victim.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie aktywowano &c&lEgzekutora &a!"));
+                            }
+                        }
+                    }
+                    boolean przebicie = false;
+                    if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(victim))) {
+                        if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(attacker, victim))) {
+                            e.setCancelled(true);
+                            if (ChanceHelper.getChance(15.0)) {
+                                final int trueDmg = rpgcore.getBonusesManager().find(victim.getUniqueId()).getBonusesUser().getTruedamage();
+                                attacker.setHealth(attacker.getHealth() - trueDmg);
+                                attacker.sendMessage(Utils.format("&cGracz " + victim.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
+                                victim.sendMessage(Utils.format("&aZadales/-as graczu " + attacker.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
+                            }
+                            victim.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + attacker.getName() + "&c!"));
+                            attacker.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + victim.getName() + "&a!"));
+                            return;
+                        }
+                    } else {
+                        przebicie = true;
+                        victim.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + attacker.getName() + "&c!"));
+                        attacker.sendMessage(Utils.format("&aGracz " + victim.getName() + " przebil twoj pancerz!"));
+                    }
+
+                    double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim), 2);
+                    double wartoscDefa  = rpgcore.getDamageManager().calculatePlayerDef(victim);
+
+                    if (rpgcore.getKociolkiManager().find(victim.getUniqueId()).isEgzekutor()) {
+                        playerDamage *= 1.75;
+                        attacker.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 1));
+                        attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 3));
+                        attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 1));
+                        attacker.sendMessage(Utils.format("&4&lArtefakty &8>> &7Gracz &c" + victim.getName() + " &7nalozyl na Ciebie efekt &c&lEgzekutora&7!"));
+                    }
+
+                    if (attacker.hasPotionEffect(PotionEffectType.WEAKNESS)) {
+                        for (PotionEffect effect : attacker.getActivePotionEffects()) {
+                            if (effect.getType().equals(PotionEffectType.WEAKNESS)) {
+                                if (effect.getAmplifier() == 0) {
+                                    wartoscDefa *= 0.9;
+                                } else if (effect.getAmplifier() == 1) {
+                                    wartoscDefa *= 0.8;
+                                }
+                            }
+                        }
+                    }
+                    if (przebicie) {
+                        wartoscDefa *= 0.5;
+                    }
+
+                    final double redukcja = DoubleUtils.round( wartoscDefa / (wartoscDefa + 40), 2);
+
+                    double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
+
+                    final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
+
+                    if (finalThornsDamage > 0) {
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalThornsDamage);
                     } else {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     }
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
+                    if (finalThornsDamage < ((LivingEntity) e.getEntity()).getHealth()) {
+                        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getDamager(), e.getFinalDamage(), (LivingEntity) e.getEntity()));
+                    }
+                    return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
-                    if (victimThornsDmg > 0) {
-                        e.setDamage(victimThornsDmg);
+                    final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager(), e.getEntity());
+                    final double entityDamage = DoubleUtils.round(EntityDamage.getByName(Utils.removeColor(e.getEntity().getCustomName())), 2);
+                    final double finalDmg = DoubleUtils.round(entityDamage * mnoznik, 2);
+                    if (mnoznik > 0) {
+                        e.setDamage(finalDmg);
                     } else {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     }
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
+                    if (finalDmg < ((LivingEntity) e.getEntity()).getHealth()) {
+                        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getDamager(), e.getFinalDamage(), (LivingEntity) e.getEntity()));
+                    }
+                    return;
                 }
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
-                if (victimThornsDmg < ((LivingEntity) e.getEntity()).getHealth()) {
-                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getDamager(), e.getFinalDamage(), (LivingEntity) e.getEntity()));
-                }
-                return;
             }
         }
 
@@ -97,6 +183,13 @@ public class EntityDamageEntityListener implements Listener {
             if (e.getEntity() instanceof Player) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
                     e.setCancelled(true);
+                    return;
+                }
+
+                if (rpgcore.getCooldownManager().hasPvpCooldown(attacker.getUniqueId())) {
+                    attacker.sendMessage("cd");
+                    e.setDamage(0);
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     return;
                 }
 
@@ -140,6 +233,7 @@ public class EntityDamageEntityListener implements Listener {
                         }
                         attacker.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + victim.getName() + "&c!"));
                         victim.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + attacker.getName() + "&a!"));
+                        rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
                         return;
                     }
                 } else {
@@ -150,7 +244,8 @@ public class EntityDamageEntityListener implements Listener {
 
 
                 double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
-                double victimDmgReduction = rpgcore.getDamageManager().calculatePlayerDef(victim);
+                double wartoscDefa  = rpgcore.getDamageManager().calculatePlayerDef(victim);
+
 
                 //TODO dodac dzialanie efektu oslabienia (I = -20% final def, II = -50% final def)
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
@@ -165,18 +260,20 @@ public class EntityDamageEntityListener implements Listener {
                     for (PotionEffect effect : victim.getActivePotionEffects()) {
                         if (effect.getType().equals(PotionEffectType.WEAKNESS)) {
                             if (effect.getAmplifier() == 0) {
-                                victimDmgReduction *= 0.9;
+                                wartoscDefa *= 0.9;
                             } else if (effect.getAmplifier() == 1) {
-                                victimDmgReduction *= 0.8;
+                                wartoscDefa *= 0.8;
                             }
                         }
                     }
                 }
                 if (przebicie) {
-                    victimDmgReduction = 0.5;
+                    wartoscDefa *= 0.5;
                 }
 
-                double finalDmg = DoubleUtils.round(attackerDmg - (attackerDmg * victimDmgReduction), 2);
+                final double redukcja = DoubleUtils.round( wartoscDefa / (wartoscDefa + 40), 2);
+
+                double finalDmg = DoubleUtils.round((1 - redukcja) * attackerDmg, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
@@ -184,6 +281,7 @@ public class EntityDamageEntityListener implements Listener {
                 e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
+                rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
 
             } else {
                 // ... Victim jest Mobem
@@ -209,6 +307,7 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
+                rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
             }
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
@@ -222,10 +321,12 @@ public class EntityDamageEntityListener implements Listener {
                     return;
                 }
                 final double attackerDmg = EntityDamage.getByName(Utils.removeColor(e.getDamager().getCustomName()));
-                final double victimDef = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
+                final double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDefToEntity(victim);
 
 
-                double finalDmg = DoubleUtils.round(attackerDmg - (attackerDmg * victimDef), 2);
+                final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
+
+                double finalDmg = DoubleUtils.round((1 - redukcja) * attackerDmg, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }

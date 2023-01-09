@@ -89,6 +89,7 @@ public class PlayerOpenInventoryListener implements Listener {
     public void onTeleport(final PlayerTeleportEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
             if (e.getPlayer().getOpenInventory().getTopInventory().getType().equals(InventoryType.CRAFTING)) {
+                e.getPlayer().closeInventory();
                 e.getPlayer().getOpenInventory().getTopInventory().clear();
             }
         }
@@ -98,6 +99,7 @@ public class PlayerOpenInventoryListener implements Listener {
     public void onEntityDeath(final PlayerDeathEvent e) {
         e.getDrops().clear();
         if (e.getEntity().getOpenInventory().getTopInventory().getType().equals(InventoryType.CRAFTING)) {
+            e.getEntity().closeInventory();
             e.getEntity().getInventory().removeItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwner(e.getEntity().getName()).setName("&6Profil").setLore(Arrays.asList("&8Kliknij, aby otworzyc swoj profil")).toItemStack().clone(),
                     new ItemBuilder(Material.CHEST).setName("&6Magazyny").setLore(Arrays.asList("&8Kliknij, aby otworzyc liste magazynow")).toItemStack(),
                     new ItemBuilder(Material.ITEM_FRAME).setName("&6Akcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack(),

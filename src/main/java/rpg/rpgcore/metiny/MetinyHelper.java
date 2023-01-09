@@ -6,6 +6,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.utils.LocationHelper;
@@ -300,13 +302,19 @@ public class MetinyHelper {
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
-        RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa() + kasaToAdd);
+        double mnozik = 1;
+        final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();
+        if (rank == RankTypePlayer.VIP) mnozik = 1.15;
+        if (rank == RankTypePlayer.SVIP) mnozik = 1.25;
+        if (rank == RankTypePlayer.ELITA) mnozik = 1.35;
+
+        RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa() + DoubleUtils.round((kasaToAdd * mnozik), 2));
         if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
-            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + kasaToAdd);
+            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + DoubleUtils.round((kasaToAdd * mnozik), 2));
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
         }
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(player.getUniqueId(), RPGCORE.getInstance().getUserManager().find(player.getUniqueId())));
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
-        player.sendMessage(Utils.format("&2+ &a" + kasaToAdd + "&2$"));
+        player.sendMessage(Utils.format("&2+ &a" + DoubleUtils.round((kasaToAdd * mnozik), 2) + "&2$"));
     }
 }

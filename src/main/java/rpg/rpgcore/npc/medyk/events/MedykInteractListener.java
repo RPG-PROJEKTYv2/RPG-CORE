@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.medyk.objects.MedykUser;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.UUID;
 
@@ -32,9 +33,8 @@ public class MedykInteractListener implements Listener {
 
         if (eventItem.getType() == Material.POTION && eventItem.getDurability() == 8197 && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Mikstura Medyka")) {
             e.setCancelled(true);
-            player.sendMessage("1");
             final MedykUser medykUser = RPGCORE.getInstance().getMedykNPC().find(uuid).getMedykUser();
-            if (Utils.getTagInt(eventItem, "maxBonus") >= medykUser.getBonus() && Utils.getTagInt(eventItem, "minBonus") <= medykUser.getProgress()) {
+            if (Utils.getTagInt(eventItem, "maxBonus") >= medykUser.getBonus() && Utils.getTagInt(eventItem, "minBonus") <= medykUser.getBonus()) {
                 medykUser.setBonus(medykUser.getBonus() + 1);
                 player.setMaxHealth(player.getMaxHealth() + 2);
                 player.setHealth(player.getMaxHealth());
@@ -43,6 +43,10 @@ public class MedykInteractListener implements Listener {
             } else {
                 player.sendMessage(Utils.format("&c&lMedyk &8>> &cNie mozesz uzyc tej mikstury!"));
             }
+            return;
+        }
+        if (eventItem.getType() == Material.POTION && eventItem.equals(GlobalItem.getItem("I56", 1))) {
+            e.setCancelled(true);
         }
     }
 }

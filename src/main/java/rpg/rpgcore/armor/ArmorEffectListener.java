@@ -37,7 +37,10 @@ public class ArmorEffectListener implements Listener {
 
     @EventHandler(priority = HIGHEST)
     public void onTeleport(final PlayerTeleportEvent e) {
-        ArmorEffectsHelper.addEffectsArmor(e.getPlayer());
+        if (e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN || e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND) {
+            e.getPlayer().closeInventory();
+            ArmorEffectsHelper.addEffectsArmor(e.getPlayer());
+        }
     }
 
     @EventHandler(priority = HIGHEST)

@@ -39,6 +39,7 @@ public class User {
     private int pierscienDoswiadczenia;
     private long pierscienDoswiadczeniaTime;
     private double krytyk;
+    private long kitCooldown;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -62,6 +63,7 @@ public class User {
         this.pierscienDoswiadczenia = 0;
         this.pierscienDoswiadczeniaTime = 0L;
         this.krytyk = 0.0;
+        this.kitCooldown = 0;
     }
 
     public User(final Document document) {
@@ -86,6 +88,7 @@ public class User {
         this.pierscienDoswiadczenia = document.getInteger("pierscienDoswiadczenia");
         this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
         this.krytyk = document.getDouble("krytyk");
+        this.kitCooldown = document.getLong("kitCooldown");
     }
 
     public boolean isBanned() {
@@ -120,7 +123,8 @@ public class User {
                 .append("armor", this.inventoriesUser.getArmor())
                 .append("pierscienDoswiadczenia", this.pierscienDoswiadczenia)
                 .append("pierscienDoswiadczeniaTime", this.pierscienDoswiadczeniaTime)
-                .append("krytyk", this.krytyk);
+                .append("krytyk", this.krytyk)
+                .append("kitCooldown", this.kitCooldown);
     }
 
 

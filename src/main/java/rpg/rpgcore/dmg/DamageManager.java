@@ -8,9 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.BonusesUser;
@@ -69,10 +67,10 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 2;
+        double dmg = 4;
         double mnoznik = 100;
-        double krytyk = 1;
-        double wzmKryt = 1;
+        double krytyk = 0;
+        double wzmKryt = 0;
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
@@ -175,9 +173,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = def * (mnoznik / 100);
-
-        return DoubleUtils.round(def / (def + 100), 3);
+        return DoubleUtils.round(((def) * 2) * ((mnoznik * mnoznik) * 0.5), 3);
     }
 
     public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim) {
@@ -185,10 +181,10 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 2;
+        double dmg = 4;
         double mnoznik = 100;
-        double krytyk = 1;
-        double wzmKryt = 1;
+        double krytyk = 0;
+        double wzmKryt = 0;
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
@@ -269,9 +265,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = def * (mnoznik / 100);
-
-        return DoubleUtils.round(def / (def + 100), 3);
+        return DoubleUtils.round(((def) * 2) * ((mnoznik * mnoznik) * 0.5), 3);
     }
 
     public double calculateVictimBlok(final Player victim, final Player attacker) {
@@ -298,40 +292,91 @@ public class DamageManager {
         return DoubleUtils.round(przebicie, 2);
     }
 
-    public double calculatePlayerThornsDmg(final Player victim) {
-        final UUID uuid = victim.getUniqueId();
-        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double thornsDmg = 0;
-        double mnoznik = 100;
-
-        mnoznik += bonuses.getSrednieobrazenia();
-        mnoznik += bonuses.getSilnynapotwory();
-        mnoznik -= bonuses.getMinussrednieobrazenia();
-        mnoznik -= bonuses.getMinusobrazenianamoby();
-        thornsDmg += bonuses.getDodatkoweobrazenia();
-
-        // GILDIA
-        if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
-            final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
-            mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
+    public int calculatePlayerThorns(final Player player) {
+        int thorns = 0;
+        if (player.getInventory().getHelmet() != null) {
+            thorns += Utils.getTagInt(player.getInventory().getHelmet(), "thorns");
         }
-
-        if (victim.getInventory().getHelmet() != null) {
-            thornsDmg += Utils.getTagInt(victim.getInventory().getHelmet(), "thorns");
+        if (player.getInventory().getChestplate() != null) {
+            thorns += Utils.getTagInt(player.getInventory().getChestplate(), "thorns");
         }
-        if (victim.getInventory().getChestplate() != null) {
-            thornsDmg += Utils.getTagInt(victim.getInventory().getChestplate(), "thorns");
+        if (player.getInventory().getLeggings() != null) {
+            thorns += Utils.getTagInt(player.getInventory().getLeggings(), "thorns");
         }
-        if (victim.getInventory().getLeggings() != null) {
-            thornsDmg += Utils.getTagInt(victim.getInventory().getLeggings(), "thorns");
+        if (player.getInventory().getBoots() != null) {
+            thorns += Utils.getTagInt(player.getInventory().getBoots(), "thorns");
         }
-        if (victim.getInventory().getBoots() != null) {
-            thornsDmg += Utils.getTagInt(victim.getInventory().getBoots(), "thorns");
+        return thorns;
+    }
+
+    public double calculatePlayerThornsDmg(final Player victim, final Entity attacker) {
+        if (attacker instanceof Creature || attacker instanceof Monster) {
+            final UUID uuid = victim.getUniqueId();
+            final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+            double thornsDmg = 0;
+            double mnoznik = 100;
+
+            thornsDmg += calculatePlayerThorns(victim);
+
+            if (thornsDmg < 15) {
+                mnoznik = 0.1;
+            }
+            if (thornsDmg > 15) {
+                mnoznik = 0.13;
+            }
+            if (thornsDmg > 25) {
+                mnoznik = 0.17;
+            }
+            if (thornsDmg > 45) {
+                mnoznik = 0.23;
+            }
+            if (thornsDmg > 80) {
+                mnoznik = 0.29;
+            }
+            if (thornsDmg > 140) {
+                mnoznik = 0.34;
+            }
+            if (thornsDmg > 185) {
+                mnoznik = 0.38;
+            }
+            if (thornsDmg > 199) {
+                mnoznik = 0.4;
+            }
+
+
+            return DoubleUtils.round(mnoznik * thornsDmg, 2);
         }
+        if (attacker instanceof Player) {
+            final UUID uuid = victim.getUniqueId();
+            final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
+            double thornsDmg = 0;
+            double mnoznik = 100;
 
-        thornsDmg = (thornsDmg * (mnoznik / 100));
+            mnoznik += bonuses.getSrednieobrazenia();
+            mnoznik += bonuses.getSilnynapotwory();
+            mnoznik -= bonuses.getMinussrednieobrazenia();
+            mnoznik -= bonuses.getMinusobrazenianamoby();
+            thornsDmg += bonuses.getDodatkoweobrazenia();
 
+            // GILDIA
+            if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
+                final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
+                mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
+            }
 
-        return DoubleUtils.round(thornsDmg, 2);
+            if (victim.getInventory().getHelmet() != null) {
+                thornsDmg += Utils.getTagInt(victim.getInventory().getHelmet(), "thorns");
+            }
+            if (victim.getInventory().getChestplate() != null) {
+                thornsDmg += Utils.getTagInt(victim.getInventory().getChestplate(), "thorns");
+            }
+            if (victim.getInventory().getLeggings() != null) {
+                thornsDmg += Utils.getTagInt(victim.getInventory().getLeggings(), "thorns");
+            }
+            if (victim.getInventory().getBoots() != null) {
+                thornsDmg += Utils.getTagInt(victim.getInventory().getBoots(), "thorns");
+            }
+        }
+        return 0;
     }
 }

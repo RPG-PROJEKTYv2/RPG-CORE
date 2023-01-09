@@ -20,7 +20,8 @@ public class CooldownManager {
     private final Cache<UUID, Long> serceCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> eliksirPotegiCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> eliksirObronncyCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
-    private final Cache<UUID, Long> egzekutorCooldoown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> egzekutorCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -55,7 +56,7 @@ public class CooldownManager {
     }
 
     public void givePlayerEgzekutorCooldown(final UUID uuid) {
-        this.egzekutorCooldoown.put(uuid, System.currentTimeMillis() + 600000L);
+        this.egzekutorCooldown.put(uuid, System.currentTimeMillis() + 600000L);
     }
 
     public void givePlayerEliksirPotegiCooldown(final UUID uuid) {
@@ -79,7 +80,7 @@ public class CooldownManager {
     }
 
     public boolean hasEgzekutorCooldown(final UUID uuid) {
-        return this.egzekutorCooldoown.asMap().containsKey(uuid);
+        return this.egzekutorCooldown.asMap().containsKey(uuid);
     }
 
     public boolean hasEliksirPotegiCooldown(final UUID uuid) {
@@ -103,7 +104,7 @@ public class CooldownManager {
     }
 
     public String getEgzekutorCooldown(final UUID uuid) {
-        return Utils.durationToString(this.egzekutorCooldoown.asMap().get(uuid), false);
+        return Utils.durationToString(this.egzekutorCooldown.asMap().get(uuid), false);
     }
 
     public String getEliksirPotegiCooldown(final UUID uuid) {
@@ -164,5 +165,13 @@ public class CooldownManager {
 
     public long getPlayerMagazynyCooldown(final UUID uuid) {
         return this.magazynyCooldown.asMap().get(uuid);
+    }
+
+    public void givePvpCooldown(final UUID uuid) {
+        this.pvpCooldown.put(uuid, System.currentTimeMillis() + 300L);
+    }
+
+    public boolean hasPvpCooldown(final UUID uuid) {
+        return this.pvpCooldown.asMap().containsKey(uuid);
     }
 }

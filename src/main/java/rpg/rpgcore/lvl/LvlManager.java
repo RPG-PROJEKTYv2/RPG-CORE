@@ -14,6 +14,7 @@ import rpg.rpgcore.lvl.enums.mobs.Events;
 import rpg.rpgcore.lvl.enums.mobs.Maps;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -44,13 +45,18 @@ public class LvlManager {
         }
     }
 
-    public double getKasa(final String mob) {
+    public double getKasa(final String mob, final UUID uuid) {
+        double mnozik = 1;
+        final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
+        if (rank == RankTypePlayer.VIP) mnozik = 1.15;
+        if (rank == RankTypePlayer.SVIP) mnozik = 1.25;
+        if (rank == RankTypePlayer.ELITA) mnozik = 1.35;
         if (Maps.isMob(mob)) {
-            return Maps.getByName(mob).getKasa();
+            return DoubleUtils.round(Maps.getByName(mob).getKasa() * mnozik, 2);
         } else if (Dungeons.isDungeonMob(mob)) {
-            return Dungeons.getByName(mob).getKasa();
+            return DoubleUtils.round(Dungeons.getByName(mob).getKasa() * mnozik, 2);
         } else if (Events.isEventMob(mob)) {
-            return Events.getByName(mob).getKasa();
+            return DoubleUtils.round(Events.getByName(mob).getKasa() * mnozik, 2);
         } else {
             return 0;
         }
@@ -74,15 +80,9 @@ public class LvlManager {
             dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
         }
         final User user = rpgcore.getUserManager().find(uuid);
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) {
-            dodatkowyExp += 5;
-        }
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.SVIP) {
-            dodatkowyExp += 10;
-        }
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) {
-            dodatkowyExp += 15;
-        }
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) dodatkowyExp += 15;
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.SVIP) dodatkowyExp += 25;
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) dodatkowyExp += 35;
         dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 
         return dodatkowyExp;
@@ -92,12 +92,12 @@ public class LvlManager {
         final UUID killerUUID = killer.getUniqueId();
         final User user = rpgcore.getUserManager().find(killerUUID);
         final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
-        final double kasa = this.getKasa(mob);
+        final double kasa = this.getKasa(mob, killerUUID);
         double expDoDodania = this.getExp(mob);
-        expDoDodania += expDoDodania * dodatkowyExp / 100;
+        expDoDodania += DoubleUtils.round(expDoDodania * dodatkowyExp / 100, 2);
 
         if (rpgcore.getPetyManager().findActivePet(killerUUID).getPet().getItem() != null) {
-            rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), expDoDodania / 100);
+            rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), DoubleUtils.round(expDoDodania / 100, 2));
         }
 
         if (user.getLvl() == 130) {

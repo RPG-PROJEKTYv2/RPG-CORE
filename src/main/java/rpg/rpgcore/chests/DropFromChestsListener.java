@@ -10,7 +10,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -104,7 +106,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
 
                         /*if (is.getType().equals(Material.STORAGE_MINECART)) {
-                            is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1, 10), ChanceHelper.getRandDouble(0.01, 0.05), ChanceHelper.getRandDouble(0.01, 0.05), ChanceHelper.getRandInt(1, 10), "&7Naszyjnik Najemnika");
+                            is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1, 10), ChanceHelper.getRandInt(1, 5), ChanceHelper.getRandInt(1, 5), ChanceHelper.getRandInt(1, 10), "&7Naszyjnik Najemnika");
                         }*/
 
                         is.setAmount(item.getAmount());
@@ -126,7 +128,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         if (is.equals(BonType.SREDNIE_5.getBon()) || is.equals(BonType.KRYTYK_5.getBon()) || is.equals(BonType.DEFENSYWA_5.getBon())) {
                             Bukkit.broadcastMessage(" ");
-                            Bukkit.broadcastMessage(Utils.format("&3Tajemnicza Skrzynia &8>> &7Gracz &6" + player.getName() + " &7znalazl jeden z rzadkich przedmiotow!"));
+                            Bukkit.broadcastMessage(Utils.format("&3Tajemnicza Skrzynia &8>> &7Gracz &6" + player.getName() + " &7znalazl jeden z &6rzadkich &7przedmiotow!"));
                             Bukkit.broadcastMessage(" ");
                         }
                         is.setAmount(item.getAmount());

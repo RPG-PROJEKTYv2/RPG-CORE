@@ -882,6 +882,9 @@ public class MongoManager {
     public Map<UUID, User> loadAllUsers() {
         Map<UUID, User> users = new HashMap<>();
         for (Document document : this.pool.getGracze().find()) {
+            document.remove("kitCooldown");
+            document.append("kitCooldown", 0L);
+            this.pool.getGracze().findOneAndReplace(new Document("_id", document.getString("_id")), document);
             User user = new User(document);
             users.put(user.getId(), user);
         }
