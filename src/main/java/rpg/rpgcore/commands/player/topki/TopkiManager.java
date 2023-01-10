@@ -43,7 +43,7 @@ public class TopkiManager {
     public void initTopkaCzasu() {
         final Multimap<String, Long> czasMap = ArrayListMultimap.create();
         for (OsUser osUser : this.rpgcore.getOsManager().getOsUsers()) {
-            if (!rpgcore.getUserManager().find(osUser.getUuid()).getRankUser().isHighStaff()) {
+            if (rpgcore.getUserManager().find(osUser.getUuid()) != null && !rpgcore.getUserManager().find(osUser.getUuid()).getRankUser().isHighStaff()) {
                 czasMap.put(rpgcore.getUserManager().find(osUser.getUuid()).getName(), osUser.getCzasProgress());
             }
         }

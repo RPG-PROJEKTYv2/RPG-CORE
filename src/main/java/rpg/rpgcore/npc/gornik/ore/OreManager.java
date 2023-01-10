@@ -27,6 +27,10 @@ public class OreManager {
         return this.oreMap.values().stream().filter(ore -> ore.getId() == id).findFirst().orElse(null);
     }
 
+    public int getHighestId() {
+        return this.oreMap.values().stream().mapToInt(Ore::getId).max().orElse(0);
+    }
+
     public boolean isOre(Location location) {
         for (final Ore ore : this.oreMap.values()) {
             if (ore.getLocation().equals(location)) {

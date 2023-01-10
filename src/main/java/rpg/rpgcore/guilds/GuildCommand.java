@@ -305,6 +305,11 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
+                if (args.length < 3) {
+                    player.sendMessage(Utils.poprawneUzycie("klan zaloz <tag> <opis>"));
+                    return;
+                }
+
                 final StringBuilder sb = new StringBuilder();
                 args[0] = "";
                 args[1] = "";

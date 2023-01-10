@@ -352,7 +352,7 @@ public class DamageManager {
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double mnoznikProcenty = 100;
         int prot = 0;
-        double protMnoznik = 100;
+        double protMnoznik;
         final double mnoznikBaza = 0.1;
         final double mobDamage = EntityDamage.getByName(Utils.removeColor(entity.getName()));
 
@@ -382,10 +382,10 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / (((1 + (mnoznikProcenty /100)) * ((protMnoznik / 100) + mnoznikBaza)));
+        double finalDmg = mobDamage / (((1 + (mnoznikProcenty /100)) * (protMnoznik + mnoznikBaza)));
 
         finalDmg = finalDmg / (1+ (mnoznikProcenty / 100));
 
-        return DoubleUtils.round(finalDmg, 3);
+        return DoubleUtils.round(finalDmg / 2, 3);
     }
 }

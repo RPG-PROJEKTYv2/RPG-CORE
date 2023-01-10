@@ -36,7 +36,7 @@ public class RozdajCommand extends CommandAPI {
         }
 
         if (args[0].equals("all")) {
-            final ItemStack item = player.getItemInHand();
+            final ItemStack item = player.getItemInHand().clone();
             RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8[&6&lRozdanie&8] &7Administrator &6" + player.getName() + " &7rozdal wszystkim graczom &6x" + item.getAmount() + " " + item.getItemMeta().getDisplayName() + "&7!"));
             for (final Player p : Bukkit.getOnlinePlayers()) {
                 p.getInventory().addItem(item);
@@ -44,7 +44,7 @@ public class RozdajCommand extends CommandAPI {
             return;
         }
         if (args[0].equals("jeden")) {
-            final ItemStack item = player.getItemInHand();
+            final ItemStack item = player.getItemInHand().clone();
             RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
                 RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8[&6&lRozdanie&8] &7Administrator &6" + player.getName() + " &7rozpoczal losowanie na &6x" + item.getAmount() + " " + item.getItemMeta().getDisplayName() + "&7!"));
                 RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {

@@ -216,7 +216,7 @@ public class BaoManager {
             case 2:
                 user.setBonus3("Wzmocnienie ciosu krytycznego");
                 user.setValue3(random.nextInt(30) + 1);
-                bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + user.getValue3());
+                bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() + user.getValue3());
                 break;
             case 3:
                 user.setBonus3("Dodatkowe obrazenia");
@@ -326,7 +326,7 @@ public class BaoManager {
                     case "Wzmocnienie ciosu krytycznego":
                         bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() - bao.getBaoUser().getValue3());
                         break;
-                    case "Dodatkowe Obrazenia":
+                    case "Dodatkowe obrazenia":
                         bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() - bao.getBaoUser().getValue3());
                         break;
                 }

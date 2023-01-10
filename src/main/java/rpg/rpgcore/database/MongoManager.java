@@ -105,9 +105,12 @@ public class MongoManager {
 
         }
     }
-/*
+
     public void clearDatabase(final UUID uuid) {
         Document document;
+        if (pool.getGracze().find(new Document("_id", uuid.toString())).first() != null) {
+            pool.getGracze().deleteOne(new Document("_id", uuid.toString()));
+        }
         if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
             pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
         }
@@ -140,7 +143,7 @@ public class MongoManager {
         if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() != null) {
             pool.getMetinolog().deleteOne(new Document("_id", uuid.toString()));
         }
-        /*if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
+        if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
             pool.getKlasy().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() != null) {
@@ -178,7 +181,7 @@ public class MongoManager {
         if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
             pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
         }
-    }*/
+    }
 
 
     public void loadAll() {

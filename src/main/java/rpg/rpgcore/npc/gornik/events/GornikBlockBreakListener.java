@@ -11,6 +11,7 @@ import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.GornikUser;
 import rpg.rpgcore.npc.gornik.enums.GornikOres;
 import rpg.rpgcore.npc.gornik.ore.Ore;
+import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -26,7 +27,7 @@ public class GornikBlockBreakListener implements Listener {
     public void onMine(final BlockBreakEvent e) {
         if (e.getPlayer().getWorld().getName().equals("Gornik")) {
             e.setCancelled(true);
-            if (rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isAdminCodeLogin()) {
+            if (rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().getRankType().getPriority() > RankType.HA.getPriority() && rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isAdminCodeLogin()) {
                 e.setCancelled(false);
                 return;
             }

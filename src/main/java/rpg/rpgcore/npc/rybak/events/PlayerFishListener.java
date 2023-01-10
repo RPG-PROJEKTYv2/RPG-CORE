@@ -87,8 +87,9 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                     return;
                 }
+                final float finalCheck = Math.abs(toCheckBefore - toCheckAfter);
                 if (check == 1) {
-                    if (toCheckAfter <= 20) {
+                    if (finalCheck <= 20) {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
@@ -96,7 +97,7 @@ public class PlayerFishListener implements Listener {
                     return;
                 }
                 if (check == 2) {
-                    if (toCheckAfter >= -20) {
+                    if (finalCheck <= 20) {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
@@ -104,7 +105,7 @@ public class PlayerFishListener implements Listener {
                     return;
                 }
                 if (check == 3) {
-                    if (toCheckAfter >= -35) {
+                    if (finalCheck <= 35) {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }
@@ -112,7 +113,7 @@ public class PlayerFishListener implements Listener {
                     return;
                 }
                 if (check == 4) {
-                    if (toCheckAfter <= 35) {
+                    if (finalCheck <= 35) {
                         player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                         return;
                     }

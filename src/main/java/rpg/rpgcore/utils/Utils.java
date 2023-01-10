@@ -665,26 +665,30 @@ public class Utils {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return "";
         NBTTagCompound tagCompound = nmsStack.getTag();
-        return tagCompound.getString(tag);
+        if (tagCompound.hasKey(tag)) return tagCompound.getString(tag);
+        return "";
     }
     public static double getTagDouble(final ItemStack is, final String tag){
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return 0;
         NBTTagCompound tagCompound = nmsStack.getTag();
-        return DoubleUtils.round(tagCompound.getDouble(tag), 2);
+        if (tagCompound.hasKey(tag)) return DoubleUtils.round(tagCompound.getDouble(tag), 2);
+        return 0;
     }
 
     public static int getTagInt(final ItemStack is, final String tag){
         final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         final NBTTagCompound tagCompound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        return tagCompound.getInt(tag);
+        if (tagCompound.hasKey(tag)) return tagCompound.getInt(tag);
+        return 0;
     }
 
     public static boolean getTagBoolean(final ItemStack is, final String tag){
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return false;
         NBTTagCompound tagCompound = nmsStack.getTag();
-        return tagCompound.getBoolean(tag);
+        if (tagCompound.hasKey(tag)) return tagCompound.getBoolean(tag);
+        return false;
     }
 
     public static void setTagString(final ItemStack is, final String tag, final String value){

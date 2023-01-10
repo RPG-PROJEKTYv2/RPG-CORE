@@ -35,7 +35,7 @@ public class BlockBreakListener implements Listener {
         }
 
         if (e.getBlock().getLocation().getWorld().getName().equals("Gornik")) {
-            e.setCancelled(false);
+            e.setCancelled(true);
         }
     }
 

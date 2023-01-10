@@ -41,10 +41,15 @@ public class WyplacCommand extends CommandAPI {
             final double playerKasa = user.getKasa();
             if (args[0].contains("k")) {
                 int kIndex = args[0].indexOf('k');
-                double beforeK = Double.parseDouble(args[0].substring(0, kIndex));
-                double afterK = Double.parseDouble(args[0].substring(kIndex).replaceAll("k", "000").replaceFirst("0", "1") + "0");
+                try {
+                    double beforeK = Double.parseDouble(args[0].substring(0, kIndex));
+                    double afterK = Double.parseDouble(args[0].substring(kIndex).replaceAll("k", "000").replaceFirst("0", "1") + "0");
 
-                args[0] = String.valueOf(beforeK * afterK);
+                    args[0] = String.valueOf(beforeK * afterK);
+                } catch (NumberFormatException e) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Niepoprawna liczba!"));
+                    return;
+                }
             }
             try {
                 final double wyplac = Double.parseDouble(args[0]);

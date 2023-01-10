@@ -43,7 +43,7 @@ public class GornikNPC {
         final GornikUser user = find(uuid).getGornikUser();
 
         if (rpgcore.getUserManager().find(uuid).getLvl() < 60) {
-            player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Musisz zdobyc jescze troche doswiadczenia aby uzyskac dostep do mojej kopalni."));
+            player.sendMessage(Utils.format("&6&lGornik &8&l>> &7Musisz zdobyc jeszcze troche doswiadczenia aby uzyskac dostep do mojej kopalni."));
             return;
         }
 

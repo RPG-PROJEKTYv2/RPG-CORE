@@ -55,6 +55,9 @@ public class PlayerQuitListener implements Listener {
             }
         }
 
+        player.closeInventory();
+        player.getOpenInventory().getTopInventory().clear();
+
         TabManager.removePlayer(player);
         NameTagUtil.setPlayerNameTag(player, "delete");
 

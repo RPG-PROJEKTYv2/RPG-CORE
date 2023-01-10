@@ -165,9 +165,9 @@ public class ChatInventoryClickListener implements Listener {
                         text2 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
                     }
                     if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
-                        text3 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + " §8\n");
+                        text3 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + " §8\n");
                     } else {
-                        text3 = new TextComponent("§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
+                        text3 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + "% §8\n");
                     }
                     if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
                         text4 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
@@ -211,15 +211,15 @@ public class ChatInventoryClickListener implements Listener {
                     final double expNaNextLvlGracza = rpgcore.getLvlManager().getExpForLvl(lvlGracza + 1);
 
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
+                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" &f").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + (((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]")));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(color).append(msg.get(i));
                             }

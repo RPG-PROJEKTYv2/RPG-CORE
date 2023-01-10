@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
@@ -37,7 +38,8 @@ public class TRADEInventoryClick implements Listener {
             final UUID firstViewerUUID = firstViewer.getUniqueId();
             if (clickedInventoryTitle.equals(rpgcore.getTradeManager().createTradeGUI(firstViewerUUID, secViewerUUID).getName())) {
 
-                if (e.getClick().isShiftClick() || e.getClick().isKeyboardClick() || e.getClick().isCreativeAction()){
+                if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT || e.getClick() == ClickType.CREATIVE || e.getClick() == ClickType.MIDDLE
+                || e.getClick() == ClickType.NUMBER_KEY){
                     e.setCancelled(true);
                     return;
                 }

@@ -73,7 +73,12 @@ public class KowalInventoryClick implements Listener {
                 return;
             }
             final ItemStack itemToGui = item.clone();
-            final String itemDisplayName = itemToGui.getItemMeta().getDisplayName();
+            String itemDisplayName = "";
+            if (!itemToGui.getItemMeta().hasDisplayName()) {
+                itemDisplayName = itemToGui.getType().name();
+            } else {
+                itemDisplayName = itemToGui.getItemMeta().getDisplayName();
+            }
 
             if (itemDisplayName.contains("+3")) {
                 return;

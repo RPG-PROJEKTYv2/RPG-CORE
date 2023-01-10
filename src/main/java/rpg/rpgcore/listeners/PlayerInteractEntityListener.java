@@ -33,6 +33,11 @@ public class PlayerInteractEntityListener implements Listener {
             return;
         }
 
+        if (e.getRightClicked().getCustomName() == null && !(e.getRightClicked() instanceof Player)) {
+            e.setCancelled(true);
+            return;
+        }
+
 
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             e.setCancelled(true);
@@ -155,7 +160,7 @@ public class PlayerInteractEntityListener implements Listener {
             // RYBAK
             if (entityName.equalsIgnoreCase("Rybak")) {
                 if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 30) {
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Osiagnij przynajmniej &630 &7poziom, odblokowac kampanie rybaka!"));
+                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Osiagnij przynajmniej &630 &7poziom, aby odblokowac kampanie rybaka!"));
                     return;
                 }
                 rpgcore.getRybakNPC().openRybakGUI(player);

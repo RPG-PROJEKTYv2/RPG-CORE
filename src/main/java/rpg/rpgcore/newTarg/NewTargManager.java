@@ -379,8 +379,11 @@ public class NewTargManager {
 
     public void givePlayerBoughtItem(final Player player, final ItemStack is) {
         final ItemMeta meta = is.getItemMeta();
+        List<String> lore = new ArrayList<>();
 
-        final List<String> lore = meta.getLore();
+        if (meta.hasLore()) {
+            lore = meta.getLore();
+        }
 
         final int loreSize = lore.size();
 

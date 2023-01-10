@@ -535,6 +535,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new CraftingiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SerwerWhiteListCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ShowcaseItemCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new SetNameCommand());
     }
 
     private void initEvents() {

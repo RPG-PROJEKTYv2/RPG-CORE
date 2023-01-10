@@ -11,7 +11,7 @@ public class MetinyTask implements Runnable{
 
     public MetinyTask(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.rpgcore.getServer().getScheduler().runTaskTimer(this.rpgcore, this, 20L, 6000L);
+        this.rpgcore.getServer().getScheduler().runTaskTimer(this.rpgcore, this, 20L, 3600L);
     }
 
     @Override

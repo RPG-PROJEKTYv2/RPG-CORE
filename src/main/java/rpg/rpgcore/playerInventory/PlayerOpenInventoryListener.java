@@ -11,6 +11,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -67,6 +69,20 @@ public class PlayerOpenInventoryListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.LOW)
+    public void onPlayerJoin(final PlayerJoinEvent e) {
+        if (e.getPlayer().getOpenInventory().getTopInventory().getType().equals(InventoryType.CRAFTING)) {
+            e.getPlayer().getOpenInventory().getTopInventory().clear();
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerJoin(final PlayerQuitEvent e) {
+        if (e.getPlayer().getOpenInventory().getTopInventory().getType().equals(InventoryType.CRAFTING)) {
+            e.getPlayer().getOpenInventory().getTopInventory().clear();
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClose(final InventoryCloseEvent e) {
         if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) {
@@ -78,10 +94,8 @@ public class PlayerOpenInventoryListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onGameModeChange(final PlayerGameModeChangeEvent e) {
-        if (e.getNewGameMode() == GameMode.CREATIVE) {
-            if (e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING)) {
-                e.getPlayer().getOpenInventory().getTopInventory().clear();
-            }
+        if (e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING)) {
+            e.getPlayer().getOpenInventory().getTopInventory().clear();
         }
     }
 
@@ -98,6 +112,7 @@ public class PlayerOpenInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(final PlayerDeathEvent e) {
         e.getDrops().clear();
+        e.getEntity().closeInventory();
         if (e.getEntity().getOpenInventory().getTopInventory().getType().equals(InventoryType.CRAFTING)) {
             e.getEntity().closeInventory();
             e.getEntity().getInventory().removeItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwner(e.getEntity().getName()).setName("&6Profil").setLore(Arrays.asList("&8Kliknij, aby otworzyc swoj profil")).toItemStack().clone(),

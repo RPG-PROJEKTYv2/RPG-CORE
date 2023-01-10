@@ -177,7 +177,7 @@ public class CraftingiManager {
                 "&8- &6400 000&2$"
         )).toItemStack());
         
-        gui.setItem(13, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lDiabelskie Kolcyki").setLore(Arrays.asList(
+        gui.setItem(13, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lDiabelskie Kolczyki").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Silny przeciwko ludziom: &c3% - 18%",
                 "&7Odpornosc na Ludzi: &c2% - 15%",

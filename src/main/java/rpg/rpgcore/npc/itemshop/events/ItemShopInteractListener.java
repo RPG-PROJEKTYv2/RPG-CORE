@@ -61,6 +61,7 @@ public class ItemShopInteractListener implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPosiadasz juz aktywowany pierscien doswiadczenia."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cUzyj tego pierscienia, kiedy czas poprzedniego pierscienia dobiegnie konca."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cCzas swojego pierscienia mozesz sprawdzic pod /pd."));
+                return;
             }
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             final String time = Utils.getTagString(eventItem, "time");

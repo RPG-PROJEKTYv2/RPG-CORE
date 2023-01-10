@@ -501,7 +501,7 @@ public class CraftingiInventoryClickListener implements Listener {
                 }
             }
             if (slot == 16) {
-                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_CZASTKA_MAGII", 1), 1) && player.getInventory().containsAtLeast(GlobalItem.getItem("I12", 1), 32)
+                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_CZASTkA_MAGII", 1), 1) && player.getInventory().containsAtLeast(GlobalItem.getItem("I12", 1), 32)
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I13", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I14", 1), 32)
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I15", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I18", 1), 32)
                         && user.getKasa() >= 7_500_000) {

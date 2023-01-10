@@ -43,9 +43,6 @@ public class MedykInventoryClickListener implements Listener {
             final MedykUser medykUser = rpgcore.getMedykNPC().find(playerUUID).getMedykUser();
 
             if (slot == 0) {
-                medykUser.setProgress(Utils.getTagInt(clickedInventory.getItem(0), "req"));
-                player.getInventory().addItem(GlobalItem.getItem("I57", 1));
-                player.getInventory().addItem(GlobalItem.getItem("I56", 1));
                 return;
             }
 

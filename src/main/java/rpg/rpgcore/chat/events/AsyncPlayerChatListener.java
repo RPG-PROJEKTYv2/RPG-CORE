@@ -114,7 +114,7 @@ public class AsyncPlayerChatListener implements Listener {
             guildM.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
                     new TextComponent(Utils.format("&7Tag gildii: &6" + tag +
                             "\n&7Opis gildi: &6" + guild.getDescription() +
-                            "\n&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()).isOnline() ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()) +
+                            "\n&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()) != null ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()) +
                             "\n&7Ilosc czlonkow: &6" + guild.getMembers().size() + "&7/&615" +
                             "\n&7Poziom: &6" + guild.getLevel() +
                             "\n&7Doswiadczenie: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag))) + "%"))}));

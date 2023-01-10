@@ -8,6 +8,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 
+import java.util.UUID;
+
 
 public class TestCommand extends CommandAPI {
 
@@ -38,5 +40,7 @@ public class TestCommand extends CommandAPI {
                 RPGCORE.getInstance().getZamekNieskonczonosciManager().endDungeon(RPGCORE.getInstance().getPartyManager().find(player1.getUniqueId()));
             }
         }
+
+
     }
 }

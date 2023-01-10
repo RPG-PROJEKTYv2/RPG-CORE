@@ -52,6 +52,7 @@ public class PlayerJoinListener implements Listener {
             }
             final Player player = e.getPlayer();
             final UUID uuid = player.getUniqueId();
+            player.getOpenInventory().getTopInventory().clear();
 
             player.getInventory().clear();
             player.getInventory().setArmorContents(null);
@@ -92,6 +93,8 @@ public class PlayerJoinListener implements Listener {
             player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
             return;
         }
+
+        player.getOpenInventory().getTopInventory().clear();
 
 
         player.teleport(rpgcore.getSpawnManager().getSpawn());

@@ -13,7 +13,7 @@ public class NewTargInventoryClose implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClose(final InventoryCloseEvent e) {
         if (Utils.removeColor(e.getInventory().getName()).equals("Wystaw przedmiot")) {
-            if (e.getInventory().getItem(4).getType() != Material.AIR) {
+            if (e.getInventory().getItem(4) != null && e.getInventory().getItem(4).getType() != Material.AIR) {
                 RPGCORE.getInstance().getNewTargManager().returnPlayerItem((Player) e.getPlayer(), e.getInventory().getItem(4));
                 RPGCORE.getInstance().getNewTargManager().removeFromWystawia(e.getPlayer().getUniqueId());
             }

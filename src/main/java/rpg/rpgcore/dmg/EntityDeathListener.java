@@ -34,6 +34,7 @@ public class EntityDeathListener implements Listener {
         e.setDeathMessage(null);
         e.setKeepInventory(true);
         e.setKeepLevel(true);
+        e.getEntity().closeInventory();
 
         if (e.getEntity().getWorld().getName().equals("demontower")) {
             if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {

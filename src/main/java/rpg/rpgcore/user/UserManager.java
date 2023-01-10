@@ -45,6 +45,10 @@ public class UserManager {
         usersUUIDMap.put(user.getId(), user);
     }
 
+    public void remove(final User user) {
+        usersUUIDMap.remove(user.getId());
+    }
+
     public ImmutableSet<User> getUserObjects() {
         return ImmutableSet.copyOf(usersUUIDMap.values());
     }
