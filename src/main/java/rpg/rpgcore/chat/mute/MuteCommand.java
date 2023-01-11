@@ -73,7 +73,7 @@ public class MuteCommand extends CommandAPI {
         final StringBuilder reason = new StringBuilder();
         for (final String arg : args) {
             if (!(arg.equalsIgnoreCase(""))) {
-                reason.append(" ").append(arg);
+                reason.append(arg).append(" ");
             }
         }
         if (reason.length() == 0) {

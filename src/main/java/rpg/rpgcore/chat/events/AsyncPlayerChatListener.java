@@ -52,7 +52,7 @@ public class AsyncPlayerChatListener implements Listener {
         }
 
         if (!rpgcore.getChatManager().getRankReqForChat().equals(RankType.GRACZ)) {
-            if (!rpgcore.getChatManager().getRankReqForChat().can(user.getRankUser().getRankType())) {
+            if (user.getRankPlayerUser().getRankType().getPriority() < rpgcore.getChatManager().getRankReqForChat().getPriority()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie wlaczony od rangi &6" + rpgcore.getChatManager().getRankReqForChat().getName() + "&7!"));
                 return;
             }
@@ -65,7 +65,7 @@ public class AsyncPlayerChatListener implements Listener {
             }
         }
 
-        if (user.isMuted() && (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
+        if ((user.isMuted() && !user.getRankUser().isHighStaff()) || (user.isMuted() && user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
             final String[] muteInfo = user.getMuteInfo().split(";");
             if (muteInfo[2].equalsIgnoreCase("Permamentny")) {
                 Utils.youAreMuted(player, muteInfo[0], muteInfo[1], muteInfo[2]);

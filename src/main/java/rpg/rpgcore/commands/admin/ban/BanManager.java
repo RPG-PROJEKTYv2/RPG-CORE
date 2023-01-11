@@ -71,7 +71,7 @@ public class BanManager {
         playerToKick.kickPlayer(Utils.kickMessage(sederName, reason));
 
         if (!(silent)) {
-            Bukkit.getServer().broadcastMessage(Utils.kickBroadcast(playerName, sederName, reason));
+            Bukkit.getServer().broadcastMessage(Utils.kick(playerName, sederName, reason));
         }
 
         final String kick = sederName + ";" + reason + ";" + dateOfBan;

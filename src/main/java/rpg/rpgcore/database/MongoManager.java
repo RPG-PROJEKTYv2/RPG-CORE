@@ -637,6 +637,9 @@ public class MongoManager {
     }
 
     public void addDataMetinolog(final MetinologObject metinolog) {
+        if (this.pool.getMetinolog().find(new Document("_id", metinolog.getID().toString())).first() != null) {
+            this.pool.getMetinolog().deleteOne(new Document("_id", metinolog.getID().toString()));
+        }
         this.pool.getMetinolog().insertOne(metinolog.toDocument());
     }
 
@@ -695,6 +698,9 @@ public class MongoManager {
     }
 
     public void addDataMedyk(final MedykObject medyk) {
+        if (this.pool.getMedyk().find(new Document("_id", medyk.getID().toString())).first() != null) {
+            this.pool.getMedyk().deleteOne(new Document("_id", medyk.getID().toString()));
+        }
         this.pool.getMedyk().insertOne(medyk.toDocument());
     }
 
@@ -745,6 +751,9 @@ public class MongoManager {
     }
 
     public void addDataOs(final OsUser osUser) {
+        if (this.pool.getOsiagniecia().find(new Document("_id", osUser.getUuid().toString())).first() != null) {
+            this.pool.getOsiagniecia().deleteOne(new Document("_id", osUser.getUuid().toString()));
+        }
         this.pool.getOsiagniecia().insertOne(osUser.toDocument());
     }
 
@@ -769,6 +778,9 @@ public class MongoManager {
     }
 
     public void addDataKolekcjner(final KolekcjonerObject kolekcjonerObject) {
+        if (this.pool.getKolekcjoner().find(new Document("_id", kolekcjonerObject.getID().toString())).first() != null) {
+            this.pool.getKolekcjoner().deleteOne(new Document("_id", kolekcjonerObject.getID().toString()));
+        }
         this.pool.getKolekcjoner().insertOne(kolekcjonerObject.toDocument());
     }
 
@@ -793,6 +805,9 @@ public class MongoManager {
     }
 
     public void addDataDuszolog(final DuszologObject duszologObject) {
+        if (this.pool.getDuszolog().find(new Document("_id", duszologObject.getID().toString())).first() != null) {
+            this.pool.getDuszolog().deleteOne(new Document("_id", duszologObject.getID().toString()));
+        }
         this.pool.getDuszolog().insertOne(duszologObject.toDocument());
     }
 
@@ -818,6 +833,9 @@ public class MongoManager {
     }
 
     public void addDataPrzyrodnik(final PrzyrodnikObject przyrodnikObject) {
+        if (this.pool.getPrzyrodnik().find(new Document("_id", przyrodnikObject.getId().toString())).first() != null) {
+            this.pool.getPrzyrodnik().deleteOne(new Document("_id", przyrodnikObject.getId().toString()));
+        }
         this.pool.getPrzyrodnik().insertOne(przyrodnikObject.toDocument());
     }
 
@@ -843,6 +861,9 @@ public class MongoManager {
     }
 
     public void addDataBao(final BaoObject baoObject) {
+        if (this.pool.getBao().find(new Document("_id", baoObject.getId().toString())).first() != null) {
+            this.pool.getBao().deleteOne(new Document("_id", baoObject.getId().toString()));
+        }
         this.pool.getBao().insertOne(baoObject.toDocument());
     }
 
@@ -867,6 +888,9 @@ public class MongoManager {
     }
 
     public void addDataDodatki(final DodatkiUser dodatkiUser) {
+        if (this.pool.getDodatki().find(new Document("_id", dodatkiUser.getUuid().toString())).first() != null) {
+            this.pool.getDodatki().deleteOne(new Document("_id", dodatkiUser.getUuid().toString()));
+        }
         this.pool.getDodatki().insertOne(dodatkiUser.toDocument());
     }
 
@@ -895,6 +919,9 @@ public class MongoManager {
     }
 
     public void addDataUser(final User user) {
+        if (this.pool.getGracze().find(new Document("_id", user.getId().toString())).first() != null) {
+            this.pool.getGracze().deleteOne(new Document("_id", user.getId().toString()));
+        }
         this.pool.getGracze().insertOne(user.toDocument());
     }
 
@@ -920,6 +947,9 @@ public class MongoManager {
     }
 
     public void addDataRybak(final RybakObject rybakObject) {
+        if (this.pool.getRybak().find(new Document("_id", rybakObject.getId().toString())).first() != null) {
+            this.pool.getRybak().deleteOne(new Document("_id", rybakObject.getId().toString()));
+        }
         this.pool.getRybak().insertOne(rybakObject.toDocument());
     }
 
@@ -945,6 +975,9 @@ public class MongoManager {
     }
 
     public void addDataBonuses(final Bonuses bonuses) {
+        if (this.pool.getBonuses().find(new Document("_id", bonuses.getId().toString())).first() != null) {
+            this.pool.getBonuses().deleteOne(new Document("_id", bonuses.getId().toString()));
+        }
         this.pool.getBonuses().insertOne(bonuses.toDocument());
     }
 
@@ -994,6 +1027,9 @@ public class MongoManager {
     }
 
     public void addDataMagazynier(final MagazynierUser magazynierUser) {
+        if (this.pool.getMagazynier().find(new Document("_id", magazynierUser.getUuid().toString())).first() != null) {
+            this.pool.getMagazynier().deleteOne(new Document("_id", magazynierUser.getUuid().toString()));
+        }
         this.pool.getMagazynier().insertOne(magazynierUser.toDocument());
     }
 
@@ -1018,6 +1054,9 @@ public class MongoManager {
     }
 
     public void addDataLowca(final LowcaObject lowcaObject) {
+        if (this.pool.getLowca().find(new Document("_id", lowcaObject.getId().toString())).first() != null) {
+            this.pool.getLowca().deleteOne(new Document("_id", lowcaObject.getId().toString()));
+        }
         this.pool.getLowca().insertOne(lowcaObject.toDocument());
     }
 
@@ -1042,6 +1081,9 @@ public class MongoManager {
     }
 
     public void addDataLesnik(final LesnikObject lesnikObject) {
+        if (this.pool.getLesnik().find(new Document("_id", lesnikObject.getId().toString())).first() != null) {
+            this.pool.getLesnik().deleteOne(new Document("_id", lesnikObject.getId().toString()));
+        }
         this.pool.getLesnik().insertOne(lesnikObject.toDocument());
     }
 
@@ -1067,6 +1109,9 @@ public class MongoManager {
     }
 
     public void addDataTrener(final TrenerObject trenerObject) {
+        if (this.pool.getTrener().find(new Document("_id", trenerObject.getId().toString())).first() != null) {
+            this.pool.getTrener().deleteOne(new Document("_id", trenerObject.getId().toString()));
+        }
         this.pool.getTrener().insertOne(trenerObject.toDocument());
     }
 
@@ -1092,6 +1137,9 @@ public class MongoManager {
     }
 
     public void addDataActivePets(final PetObject petObject) {
+        if (this.pool.getPety().find(new Document("_id", petObject.getId().toString())).first() != null) {
+            this.pool.getPety().deleteOne(new Document("_id", petObject.getId().toString()));
+        }
         this.pool.getPety().insertOne(petObject.toDocument());
     }
 
@@ -1115,6 +1163,9 @@ public class MongoManager {
     }
 
     public void addDataUserPets(final UserPets userPets) {
+        if (this.pool.getUserPets().find(new Document("_id", userPets.getUuid().toString())).first() != null) {
+            this.pool.getUserPets().deleteOne(new Document("_id", userPets.getUuid().toString()));
+        }
         this.pool.getUserPets().insertOne(userPets.toDocument());
     }
 
@@ -1196,6 +1247,9 @@ public class MongoManager {
     }
 
     public void addDataWyslannik(final WyslannikObject wyslannikObject) {
+        if (this.pool.getWyslannik().find(new Document("_id", wyslannikObject.getUuid().toString())).first() != null) {
+            this.pool.getWyslannik().deleteOne(new Document("_id", wyslannikObject.getUuid().toString()));
+        }
         this.pool.getWyslannik().insertOne(wyslannikObject.toDocument());
     }
 
@@ -1255,6 +1309,9 @@ public class MongoManager {
     }
 
     public void addDataKociolki(final KociolkiUser kociolkiUser) {
+        if (this.pool.getKociolki().find(new Document("_id", kociolkiUser.getUuid().toString())).first() != null) {
+            this.pool.getKolekcjoner().deleteOne(new Document("_id", kociolkiUser.getUuid().toString()));
+        }
         this.pool.getKociolki().insertOne(kociolkiUser.toDocument());
     }
 

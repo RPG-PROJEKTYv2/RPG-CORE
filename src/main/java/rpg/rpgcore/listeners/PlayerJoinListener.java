@@ -70,16 +70,6 @@ public class PlayerJoinListener implements Listener {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
             player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
         }
-        if (rpgcore.getSerwerWhiteListManager().getWhitelist().isEnabled() && !rpgcore.getSerwerWhiteListManager().isWhiteListed(e.getPlayer().getUniqueId())) {
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format("&4&lHELL&8&lRPG.PL\n\n" +
-                    "&7Witaj &6" + e.getPlayer().getName() + "&7!\n" +
-                    "&7Niestety aktualnie serwer jest nie dostepny dla graczy\n" +
-                    "&7ale zapewniamy, ze jest ku temu odpowiedni powod.\n" +
-                    "\n" +
-                    "&7Zapraszamy ponownie wkrotce!\n\n"+
-                    "&8Po wiecej informacji zapraszamy na\n" +
-                    "  &6dc.hellrpg.pl  &8|  &6fb.com/HELLRPGPL")), 1L);
-        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -172,6 +162,17 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerPreLoginListener(final AsyncPlayerPreLoginEvent e) {
         final UUID uuid = e.getUniqueId();
+        if (rpgcore.getSerwerWhiteListManager().getWhitelist().isEnabled() && !rpgcore.getSerwerWhiteListManager().isWhiteListed(e.getUniqueId())) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Utils.format("&4&lHELL&8&lRPG.PL\n\n" +
+                    "&7Witaj &6" + e.getName() + "&7!\n" +
+                    "&7Niestety aktualnie serwer jest nie dostepny dla graczy\n" +
+                    "&7Powod: &6Przerwa Techniczna\n" +
+                    "\n" +
+                    "&7Zapraszamy ponownie wkrotce!\n\n" +
+                    "&8Po wiecej informacji zapraszamy na\n" +
+                    "  &6dc.hellrpg.pl  &8|  &6fb.com/HELLRPGPL"));
+            return;
+        }
 
 
         if (rpgcore.getUserManager().find(uuid) != null && rpgcore.getUserManager().find(uuid).isBanned()) {

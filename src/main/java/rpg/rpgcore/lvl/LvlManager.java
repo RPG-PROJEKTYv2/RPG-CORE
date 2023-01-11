@@ -194,7 +194,7 @@ public class LvlManager {
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana lvla"));
         }
-        rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana lvla"));
+        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana lvla"));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
@@ -209,7 +209,7 @@ public class LvlManager {
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana ilosci expa"));
         }
-        rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana ilosci expa"));
+        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana ilosci expa"));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
@@ -225,7 +225,7 @@ public class LvlManager {
         if (playerToKick != null) {
             playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
         }
-        rpgcore.getServer().broadcastMessage(Utils.normalKickBroadcast(playerToKickName, adminName, "Zmiana postepu do nastepnego lvla"));
+        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana postepu do nastepnego lvla"));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
