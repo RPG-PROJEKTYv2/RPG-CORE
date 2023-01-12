@@ -33,81 +33,81 @@ public class TeleporterInventoryClick implements Listener {
         final int slot = e.getSlot();
 
 
-        if (Utils.removeColor(title).equals("TELEPORTER - EXPOWISKA")) {
+        if (Utils.removeColor(title).equals("TELEPORTER")) {
             e.setCancelled(true);
-            if (slot == 0) {
+            if (slot == 11) {
                 player.closeInventory();
                 rpgcore.getTeleporterNPC().teleportExp1(player);
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 9) {
-                if (slot == 1) {
+                if (slot == 12) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp2(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 19) {
-                if (slot == 2) {
+                if (slot == 13) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp3(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 29) {
-                if (slot == 3) {
+                if (slot == 14) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp4(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 39) {
-                if (slot == 4) {
+                if (slot == 15) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp5(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
-                if (slot == 5) {
+                if (slot == 28) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp6(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
-                if (slot == 6) {
+                if (slot == 29) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp7(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
-                if (slot == 7) {
+                if (slot == 30) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp8(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
-                if (slot == 8) {
+                if (slot == 31) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp9(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
-                if (slot == 9) {
+                if (slot == 32) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp10(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
-                if (slot == 10) {
+                if (slot == 33) {
                     player.closeInventory();
                     rpgcore.getTeleporterNPC().teleportExp11(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
-                if (slot == 11) {
+                if (slot == 34) {
                     player.closeInventory();
                     player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
                     //rpgcore.getTeleporterNPC().teleportExp12(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {
-                if (slot == 12) {
+                if (slot == 40) {
                     player.closeInventory();
                     player.sendMessage(Utils.format(Utils.SERVERNAME+ "&cTo expowisko zostalo zablokowane przez administracje."));
                     //rpgcore.getTeleporterNPC().teleportExp13(player);

@@ -56,6 +56,8 @@ import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListCommand;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListManager;
 import rpg.rpgcore.commands.player.*;
+import rpg.rpgcore.commands.player.administracja.AdministracjaCommand;
+import rpg.rpgcore.commands.player.administracja.AdministracjaInventoryClick;
 import rpg.rpgcore.commands.player.bossy.BossyCommand;
 import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.craftingi.CraftingiCommand;
@@ -489,6 +491,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ChatCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BossyCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new OnlineCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PingCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RangiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ListaNPCCommand());
@@ -607,6 +610,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // Rangi command
         this.getServer().getPluginManager().registerEvents(new RangiInventoryClick(), this);
+
+        // Administracja command
+        this.getServer().getPluginManager().registerEvents(new AdministracjaInventoryClick(), this);
 
         // KOSZ
         this.getServer().getPluginManager().registerEvents(new KoszInventoryClick(), this);

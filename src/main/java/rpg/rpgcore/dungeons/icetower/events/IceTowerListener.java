@@ -66,7 +66,7 @@ public class IceTowerListener implements Listener {
                     }
                     if (RPGCORE.getInstance().getIceTowerManager().getHp() == 0) {
                         IceTowerManager.startIceTower();
-                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&b&oKrysztal Lodowej Wiezy zostal naruszony przez  " + player.getName()));
+                        RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&b&oKrysztal Lodowej Wiezy zostal naruszony przez: " + player.getName()));
                     }
                 }
             }

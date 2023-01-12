@@ -11,6 +11,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class TeleporterNPC {
@@ -45,19 +46,18 @@ public class TeleporterNPC {
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
 
     public void openTeleporterEXPOWISKA(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&9&lTELEPORTER &7- EXPOWISKA"));
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&9&lTELEPORTER"));
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         fillInventory.setName(" ");
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, fillInventory.toItemStack());
         }
 
-        // expowisko 1
         expowisko1.setName("&9&lPrzelecz Najemnikow");
         this.loreEXPOWISKA("&cOFF", "&f1");
         expowisko1.addGlowing();
         expowisko1.setLore(lore);
-        gui.setItem(0, expowisko1.toItemStack());
+        gui.setItem(11, expowisko1.toItemStack());
 
         // expowisko 2
         if (user.getLvl() > 9) {
@@ -65,13 +65,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&cOFF", "&f10");
             expowisko2.addGlowing();
             expowisko2.setLore(lore);
-            gui.setItem(1, expowisko2.toItemStack());
+            gui.setItem(12, expowisko2.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a2. &8]");
             this.loreBRAKDOSTEPU("10");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(1, brakdostepu.toItemStack());
+            gui.setItem(12, brakdostepu.toItemStack());
         }
 
         // expowisko 3
@@ -80,13 +80,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&cOFF", "&f20");
             expowisko3.addGlowing();
             expowisko3.setLore(lore);
-            gui.setItem(2, expowisko3.toItemStack());
+            gui.setItem(13, expowisko3.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a3. &8]");
             this.loreBRAKDOSTEPU("20");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(2, brakdostepu.toItemStack());
+            gui.setItem(13, brakdostepu.toItemStack());
         }
 
         // expowisko 4
@@ -95,13 +95,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&cOFF", "&f30");
             expowisko4.addGlowing();
             expowisko4.setLore(lore);
-            gui.setItem(3, expowisko4.toItemStack());
+            gui.setItem(14, expowisko4.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a4. &8]");
             this.loreBRAKDOSTEPU("30");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(3, brakdostepu.toItemStack());
+            gui.setItem(14, brakdostepu.toItemStack());
         }
 
         // expowisko 5
@@ -110,13 +110,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&cOFF", "&f40");
             expowisko5.addGlowing();
             expowisko5.setLore(lore);
-            gui.setItem(4, expowisko5.toItemStack());
+            gui.setItem(15, expowisko5.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a5. &8]");
             this.loreBRAKDOSTEPU("40");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(4, brakdostepu.toItemStack());
+            gui.setItem(15, brakdostepu.toItemStack());
         }
 
         // expowisko 6
@@ -125,13 +125,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f50");
             expowisko6.addGlowing();
             expowisko6.setLore(lore);
-            gui.setItem(5, expowisko6.toItemStack());
+            gui.setItem(28, expowisko6.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a6. &8]");
             this.loreBRAKDOSTEPU("50");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(5, brakdostepu.toItemStack());
+            gui.setItem(28, brakdostepu.toItemStack());
         }
 
         // expowisko 7
@@ -140,13 +140,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f60");
             expowisko7.addGlowing();
             expowisko7.setLore(lore);
-            gui.setItem(6, expowisko7.toItemStack());
+            gui.setItem(29, expowisko7.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a7. &8]");
             this.loreBRAKDOSTEPU("60");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(6, brakdostepu.toItemStack());
+            gui.setItem(29, brakdostepu.toItemStack());
         }
 
         // expowisko 8
@@ -155,13 +155,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f70");
             expowisko8.addGlowing();
             expowisko8.setLore(lore);
-            gui.setItem(7, expowisko8.toItemStack());
+            gui.setItem(30, expowisko8.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a8. &8]");
             this.loreBRAKDOSTEPU("70");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(7, brakdostepu.toItemStack());
+            gui.setItem(30, brakdostepu.toItemStack());
         }
 
         // expowisko 9
@@ -170,13 +170,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f80");
             expowisko9.addGlowing();
             expowisko9.setLore(lore);
-            gui.setItem(8, expowisko9.toItemStack());
+            gui.setItem(31, expowisko9.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a9. &8]");
             this.loreBRAKDOSTEPU("80");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(8, brakdostepu.toItemStack());
+            gui.setItem(31, brakdostepu.toItemStack());
         }
 
         // expowisko 10
@@ -185,13 +185,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f90");
             expowisko10.addGlowing();
             expowisko10.setLore(lore);
-            gui.setItem(9, expowisko10.toItemStack());
+            gui.setItem(32, expowisko10.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a10. &8]");
             this.loreBRAKDOSTEPU("90");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(9, brakdostepu.toItemStack());
+            gui.setItem(32, brakdostepu.toItemStack());
         }
 
         // expowisko 11
@@ -200,13 +200,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f100");
             expowisko11.addGlowing();
             expowisko11.setLore(lore);
-            gui.setItem(10, expowisko11.toItemStack());
+            gui.setItem(33, expowisko11.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a11. &8]");
             this.loreBRAKDOSTEPU("100");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(10, brakdostepu.toItemStack());
+            gui.setItem(33, brakdostepu.toItemStack());
         }
         // expowisko 12
         if (user.getLvl() > 109) {
@@ -214,13 +214,13 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f110");
             expowisko12.addGlowing();
             expowisko12.setLore(lore);
-            gui.setItem(11, expowisko12.toItemStack());
+            gui.setItem(34, expowisko12.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a12. &8]");
             this.loreBRAKDOSTEPU("110");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(11, brakdostepu.toItemStack());
+            gui.setItem(34, brakdostepu.toItemStack());
         }
         // expowisko 13
         if (user.getLvl() > 119) {
@@ -228,18 +228,18 @@ public class TeleporterNPC {
             this.loreEXPOWISKA("&aON", "&f120");
             expowisko13.addGlowing();
             expowisko13.setLore(lore);
-            gui.setItem(12, expowisko13.toItemStack());
+            gui.setItem(40, expowisko13.toItemStack());
         } else {
             brakdostepu.setName("&2Expowisko &8[ &a13. &8]");
             this.loreBRAKDOSTEPU("120");
             brakdostepu.addGlowing();
             brakdostepu.setLore(lore);
-            gui.setItem(12, brakdostepu.toItemStack());
+            gui.setItem(40, brakdostepu.toItemStack());
         }
         player.openInventory(gui);
     }
 
-    private void loreEXPOWISKA(final String lorePVP, final String lorePOZIOM) {
+    private String loreEXPOWISKA(final String lorePVP, final String lorePOZIOM) {
         this.lore.clear();
         this.lore.add(" ");
         this.lore.add("&8* &fWymagany poziom: &6" + lorePOZIOM);
@@ -247,13 +247,14 @@ public class TeleporterNPC {
         this.lore.add(" ");
         this.lore.add("&8* &9Status: &a&lODBLOKOWANE");
         this.lore.add(" ");
+        return lorePVP;
     }
 
     private void loreBRAKDOSTEPU(final String lorePOZIOM) {
         this.lore.clear();
         this.lore.add(" ");
         this.lore.add("&8* &9Status: &4&lZABLOKOWANE");
-        this.lore.add("&8* &bWymagany poziom: &f" + lorePOZIOM);
+        this.lore.add("&8* &fWymagany poziom: &f" + lorePOZIOM);
         this.lore.add(" ");
     }
 

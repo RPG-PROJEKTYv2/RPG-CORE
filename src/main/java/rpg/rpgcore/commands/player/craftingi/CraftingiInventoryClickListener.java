@@ -104,7 +104,7 @@ public class CraftingiInventoryClickListener implements Listener {
                     user.setKasa(user.getKasa() - 150_000);
                     final int srdmg = ChanceHelper.getRandInt(1, 8);
                     final int potwory = ChanceHelper.getRandInt(1, 10);
-                    final double exp = ChanceHelper.getRandDouble(1, 2);
+                    final double exp = ChanceHelper.getRandInt(1, 2);
                     final int lvl = ChanceHelper.getRandInt(1, 30);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(srdmg, potwory, exp, lvl, "&f&lAnielski Diadem"));
                     Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &f&lAnielski Diadem &7(&f" + srdmg + "&7/&f" + potwory + "&7/&f" + exp + "&7/&f" + lvl + "&7)"));
@@ -218,7 +218,7 @@ public class CraftingiInventoryClickListener implements Listener {
                     user.setKasa(user.getKasa() - 400_000);
                     final int srdmg = ChanceHelper.getRandInt(3, 15);
                     final int potwory = ChanceHelper.getRandInt(3, 15);
-                    final double exp = ChanceHelper.getRandDouble(1, 3);
+                    final double exp = ChanceHelper.getRandInt(1, 3);
                     final int lvl = ChanceHelper.getRandInt(30, 60);
                     player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(srdmg, potwory, exp, lvl, "&4&lDiabelski Diadem"));
                     Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &4&lDiabelski Diadem &7(&f" + srdmg + "&7/&f" + potwory + "&7/&f" + exp + "&7/&f" + lvl + "&7)"));

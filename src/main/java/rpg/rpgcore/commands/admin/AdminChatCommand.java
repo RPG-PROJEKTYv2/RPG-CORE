@@ -10,11 +10,13 @@ import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AdminChatCommand extends CommandAPI {
 
     public AdminChatCommand() {
         super("adminchat");
+        this.setAliases(Arrays.asList("adminc", "achat", "ac"));
         this.setRankLevel(RankType.JUNIORHELPER);
         this.setRestrictedForPlayer(true);
     }

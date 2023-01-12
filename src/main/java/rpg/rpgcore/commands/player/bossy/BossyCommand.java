@@ -42,7 +42,7 @@ public class BossyCommand extends CommandAPI {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         }
         // czasowe
-        gui.setItem(0, this.makeBOSSY("&9&lKrol Wygnancow", -43, 74, -146, 3));
+        gui.setItem(0, this.makeBOSSY("&9&lKrol Wygnancow", -43, 74, -146, 1));
         gui.setItem(1, this.makeBOSSY("&a&lWodz Goblinow", 39, 75, 88, 5));
         gui.setItem(2, this.makeBOSSY("&f&lKrol Goryli", 146, 75, 126, 8));
         gui.setItem(3, this.makeBOSSY("&7&lPrzekleta Dusza", 211, 78, -14, 15));
@@ -62,7 +62,7 @@ public class BossyCommand extends CommandAPI {
         return new ItemBuilder(Material.PAPER, 1).setName(Utils.format(nazwabossa)).setLore(Arrays.asList(
         " ",
         "&f&lLokalizacja: &6&lx:" + x + " y:" + y + " z:" + z,
-        "&f&lResp: &6&lco " + (czas > 5 ? czas + " minut" : czas + " minuty"),
+        "&f&lResp: &6&l" + (czas > 5 ? czas + " minut" : czas + " minuty"),
         " "
         )).addGlowing().toItemStack().clone();
     }

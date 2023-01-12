@@ -58,6 +58,10 @@ public class AdminPanelInventoryClick implements Listener {
                 rpgcore.getAdminPanelManager().openGornikItemsGUI(player);
                 return;
             }
+            if (slot == 20) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+                return;
+            }
         }
 
         if (title.equals("Skrzynki - ADMINISTRACJA")) {

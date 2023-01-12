@@ -1,4 +1,4 @@
-package rpg.rpgcore.commands.player;
+package rpg.rpgcore.commands.player.administracja;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -23,10 +23,9 @@ public class AdministracjaCommand extends CommandAPI {
         final Player player = (Player) sender;
 
         if (args.length != 0) {
-            player.sendMessage("Poprawne uzycie: /administracja");
+            player.sendMessage(Utils.poprawneUzycie("administracja"));
             return;
         }
-
         /*player.sendMessage(Utils.format("&8&m--------{--&3&l Lista Administracji &8&m--}--------"));
         player.sendMessage(Utils.format("&4&lDeveloper"));
         player.sendMessage(Utils.format("&8- &cMires_"));
