@@ -16,7 +16,7 @@ public class AdminChatCommand extends CommandAPI {
 
     public AdminChatCommand() {
         super("adminchat");
-        this.setAliases(Arrays.asList("adminc", "achat", "ac"));
+        this.setAliases(Arrays.asList("adminc", "achat", "adc"));
         this.setRankLevel(RankType.JUNIORHELPER);
         this.setRestrictedForPlayer(true);
     }

@@ -32,13 +32,13 @@ public class Utils {
 
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
-    public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 ");
-    public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 ");
-    public static final String MUTEPREFIX = format("&4&lHELL&8&lMUTE&7 ");
-    public static final String LVLPREFIX = format("&4&lHELL&6&lLVL&7 ");
-    public static final String KICKPREFIX = format("&4&lHELL&8&lKICK&7 ");
-    public static final String TRADEPREFIX = format("&4&lHELL&8&lTRADE&7 ");
-    public static final String GUILDSPREFIX = format("&4&lHELL&8&lKLANY&7 ");
+    public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 &8>> ");
+    public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 &8>> ");
+    public static final String MUTEPREFIX = format("&4&lHELL&8&lMUTE&7 &8>> ");
+    public static final String LVLPREFIX = format("&4&lHELL&6&lLVL&7 &8>> ");
+    public static final String KICKPREFIX = format("&4&lHELL&8&lKICK&7 &8>> ");
+    public static final String TRADEPREFIX = format("&4&lHELL&8&lTRADE&7 &8>> ");
+    public static final String GUILDSPREFIX = format("&4&lHELL&8&lKLANY&7 &8>> ");
     public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 ");
     public static final String RYBAK = format("&6&lRybak &8>> &7");
     public static final String KUPIEC = format("&2&lKupiec &8>> &a");
