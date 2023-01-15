@@ -8,8 +8,6 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 
-import java.util.UUID;
-
 
 public class TestCommand extends CommandAPI {
 
@@ -40,7 +38,14 @@ public class TestCommand extends CommandAPI {
                 RPGCORE.getInstance().getZamekNieskonczonosciManager().endDungeon(RPGCORE.getInstance().getPartyManager().find(player1.getUniqueId()));
             }
         }
-
+        /*player.sendMessage("zaczeto czyszczenie bazy");
+        for (User user : rpgcore.getUserManager().getUserObjects()) {
+            if (user.getId().toString().equals("dd3d637b-aff4-4fa5-8484-d120ed492d43") || user.getId().toString().equals("c166a38d-6ddf-47cb-8aed-2b05fb502051") ||
+            user.getId().toString().equals("672d510e-083b-39f8-9681-4d8bc892586d") || user.getId().toString().equals("4d335d52-df9f-479c-8d0a-57de4a4cb2fe")) continue;
+            player.sendMessage("wyczyszczono: " + user.getName());
+            rpgcore.getMongoManager().clearDatabase(user.getId());
+        }
+        player.sendMessage("zakonczono czyszczenie bazy");*/
 
     }
 }

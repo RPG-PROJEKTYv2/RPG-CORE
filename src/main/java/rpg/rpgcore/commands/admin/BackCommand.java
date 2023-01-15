@@ -15,7 +15,7 @@ public class BackCommand extends CommandAPI {
 
     public BackCommand(RPGCORE rpgcore) {
         super("back");
-        this.setRankLevel(RankType.GM);
+        this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }

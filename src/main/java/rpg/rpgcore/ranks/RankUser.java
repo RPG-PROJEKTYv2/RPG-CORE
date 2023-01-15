@@ -26,6 +26,6 @@ public class RankUser {
     }
 
     public boolean isHighStaff() {
-        return hasRank(RankType.GM);
+        return hasRank(RankType.ADMIN);
     }
 }

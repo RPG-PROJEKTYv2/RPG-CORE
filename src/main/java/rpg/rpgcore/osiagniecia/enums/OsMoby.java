@@ -16,7 +16,7 @@ public enum OsMoby {
     M5(5, 4, 25_000, GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()),
     M6(6, 5, 75_000, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l10 000 000&2$").addGlowing().toItemStack().clone().clone()),
     M7(7, 6, 200_000, GlobalItem.getItem("I52", 3).clone()),
-    M8(8, 7, 750_000, ItemShop.IS15.getItems().get(0).clone()),
+    M8(8, 7, 750_000, ItemShop.IS12.getItems().get(0).clone()),
     M9(9, 8, 2_000_000, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone());
 
     private final int mission;

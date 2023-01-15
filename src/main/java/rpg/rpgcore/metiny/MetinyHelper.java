@@ -304,9 +304,8 @@ public class MetinyHelper {
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
         double mnozik = 1;
         final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();
-        if (rank == RankTypePlayer.VIP) mnozik = 1.15;
-        if (rank == RankTypePlayer.SVIP) mnozik = 1.25;
-        if (rank == RankTypePlayer.ELITA) mnozik = 1.35;
+        if (rank == RankTypePlayer.VIP) mnozik = 1.25;
+        if (rank == RankTypePlayer.ELITA) mnozik = 1.5;
 
         RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa() + DoubleUtils.round((kasaToAdd * mnozik), 2));
         if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {

@@ -182,6 +182,10 @@ public class MongoManager {
             pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
         }
     }
+    //dd3d637b-aff4-4fa5-8484-d120ed492d43 - Mires
+    //c166a38d-6ddf-47cb-8aed-2b05fb502051 - Chytryy
+    //672d510e-083b-39f8-9681-4d8bc892586d - Orzel
+    //4d335d52-df9f-479c-8d0a-57de4a4cb2fe - Fabi
 
 
     public void loadAll() {

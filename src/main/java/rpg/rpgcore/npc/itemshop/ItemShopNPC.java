@@ -57,14 +57,11 @@ public class ItemShopNPC {
         gui.setItem(50, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName("").toItemStack());
         gui.setItem(52, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName("").toItemStack());
 
-        gui.setItem(10, addPrice(ItemShop.IS18.getItems().get(0), 400));
-        gui.setItem(19, addPrice(ItemShop.IS17.getItems().get(0), 280));
-        gui.setItem(28, addPrice(ItemShop.IS16.getItems().get(0), 195));
-        gui.setItem(37, addPrice(ItemShop.IS15.getItems().get(0), 150));
+        gui.setItem(10, addPrice(ItemShop.IS15.getItems().get(0), 400));
+        gui.setItem(19, addPrice(ItemShop.IS14.getItems().get(0), 280));
+        gui.setItem(28, addPrice(ItemShop.IS13.getItems().get(0), 195));
+        gui.setItem(37, addPrice(ItemShop.IS12.getItems().get(0), 150));
 
-        gui.setItem(12, addPrice(ItemShop.IS14.getItems().get(0), 200));
-        gui.setItem(21, addPrice(ItemShop.IS13.getItems().get(0), 150));
-        gui.setItem(30, addPrice(ItemShop.IS12.getItems().get(0), 100));
         gui.setItem(39, addPrice(ItemShop.IS19.getItems().get(0), 650));
 
         gui.setItem(14, addPrice(ItemShop.IS11.getItems().get(0), 150));

@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class RangiCommand extends CommandAPI {
     public RangiCommand() {
         super("rangi");
-        this.setAliases(Arrays.asList("vip", "svip", "elita"));
+        this.setAliases(Arrays.asList("vip", "elita"));
         this.setRankLevel(RankType.GRACZ);
         this.setRestrictedForPlayer(true);
     }
@@ -39,26 +39,33 @@ public class RangiCommand extends CommandAPI {
         gui.setItem(0, new ItemBuilder(Material.BOOK).setName("&e&lVip").setLore(Arrays.asList(" ",
                 "&7Ranga ta posiada:",
                 "&7* Prefix: &8[&bLvl. &fX&8] &e&lVip &7" + player.getName() + "&f: wiadomosc",
-                "&7* &eDodatkowy exp: &c+15%",
-                "&7* &eDodatkowa kasa z mobow i metinow: &c+5%",
-                "&7* &eZwiekszony % na drop z mobow: &c+5%",
+                "&7* &eDodatkowy exp: &c+25%",
+                "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
+                "&7* &eZwiekszony % na drop z mobow: &c+25%",
                 "&7* &e/zestawvip &c- co 24 godziny"
         )).addGlowing().toItemStack().clone());
-        gui.setItem(1, new ItemBuilder(Material.BOOK).setName("&6&lS&e&lvip").setLore(Arrays.asList(" ",
+        gui.setItem(1, new ItemBuilder(Material.BOOK).setName("&9&lTworca").setLore(Arrays.asList(" ",
                 "&7Ranga ta posiada:",
-                "&7* Prefix: &8[&bLvl. &fX&8] &6&lS&e&lvip &7" + player.getName() + "&f: wiadomosc",
+                "&7* Prefix: &8[&bLvl. &fX&8] &9&lTworca &7" + player.getName() + "&f: wiadomosc",
                 "&7* &eDodatkowy exp: &c+25%",
-                "&7* &eDodatkowa kasa z mobow i metinow: &c+10%",
-                "&7* &eZwiekszony % na drop z mobow: &c+10%",
-                "&7* &e/zestawsvip &c- co 24 godziny",
-                "&7 &e/enderchest"
+                "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
+                "&7* &eZwiekszony % na drop z mobow: &c+25%",
+                "&7* &e/zestawvip &c- co 24 godziny",
+                "",
+                "&7Wymagania:",
+                "&4&lYou&f&lTube&7: &eminimum 200 subskrypcji",
+                "                  &eoraz 500 wyswietlen/mies.",
+                "&5&lTwitch&7: &eminimum 100 follow",
+                "&8&lTik&d&lTok&7: &eminimum 1 000 obserwujacych",
+                "              &eoraz 5000 wyswietlen (najlepszy film)",
+                "&9&lDiscord&7: &epo wspolprace zapraszammy na dc.hellrpg.pl"
         )).addGlowing().toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.BOOK).setName("&5&lELITA").setLore(Arrays.asList(" ",
                 "&7Ranga ta posiada:",
                 "&7* Prefix: &8[&bLvl. &fX&8] &5&lELITA &7" + player.getName() + "&f: wiadomosc",
-                "&7* &eDodatkowy exp: &c+35%",
-                "&7* &eDodatkowa kasa z mobow i metinow: &c+15%",
-                "&7* &eZwiekszony % na drop z mobow: &c+15%",
+                "&7* &eDodatkowy exp: &c+50%",
+                "&7* &eDodatkowa kasa z mobow i metinow: &c+50%",
+                "&7* &eZwiekszony % na drop z mobow: &c+50%",
                 "&7* &e/zestawelita &c- co 24 godziny",
                 "&7 &e/enderchest"
         )).addGlowing().toItemStack().clone());

@@ -34,7 +34,7 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Vip").addTagString("time", "7d").toItemStack().clone())),
-    IS11("Vip_14d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &e&lVIP").setLore(Arrays.asList(
+    IS11("Vip_14d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &e&lVip").setLore(Arrays.asList(
             "&8Waznosc: &e14 dni",
             "",
             "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
@@ -42,31 +42,7 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Vip").addTagString("time", "14d").toItemStack().clone())),
-    IS12("Svip_3d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &6&lS&e&lvip").setLore(Arrays.asList(
-            "&8Waznosc: &e3 dni",
-            "",
-            "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
-            "",
-            "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
-            "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
-    )).addGlowing().addTagString("rank", "Svip").addTagString("time", "3d").toItemStack().clone())),
-    IS13("Svip_7d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &6&lS&e&lvip").setLore(Arrays.asList(
-            "&8Waznosc: &e7 dni",
-            "",
-            "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
-            "",
-            "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
-            "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
-    )).addGlowing().addTagString("rank", "Svip").addTagString("time", "7d").toItemStack().clone())),
-    IS14("Svip_14d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &6&lS&e&lvip").setLore(Arrays.asList(
-            "&8Waznosc: &e14 dni",
-            "",
-            "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
-            "",
-            "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
-            "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
-    )).addGlowing().addTagString("rank", "Svip").addTagString("time", "14d").toItemStack().clone())),
-    IS15("ELITA_3d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
+    IS12("ELITA_3d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
             "&8Waznosc: &e3 dni",
             "",
             "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
@@ -74,7 +50,7 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "3d").toItemStack().clone())),
-    IS16("ELITA_7d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
+    IS13("ELITA_7d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
             "&8Waznosc: &e7 dni",
             "",
             "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
@@ -82,7 +58,7 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "7d").toItemStack().clone())),
-    IS17("ELITA_14d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
+    IS14("ELITA_14d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
             "&8Waznosc: &e14 dni",
             "",
             "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
@@ -90,7 +66,7 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "14d").toItemStack().clone())),
-    IS18("ELITA_30d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
+    IS15("ELITA_30d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
             "&8Waznosc: &e30 dni",
             "",
             "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
@@ -104,14 +80,14 @@ public enum ItemShop {
             "&8Tajemnicza skora, zdarta z pradawnego smoka",
             "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
             "&8jej dzialania zostana zwrocone przeciwko tobie"
-    )).addTagInt("range", 10).addGlowing().toItemStack().clone())),
+    )).addTagInt("range", 15).addGlowing().toItemStack().clone())),
     IS20("PELERYNKA+", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora&b&l+").setLore(Arrays.asList(
             "&7Zasieg: &620 kratek",
             "",
             "&8Tajemnicza skora, zdarta z pradawnego smoka",
             "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
             "&8jej dzialania zostana zwrocone przeciwko tobie"
-    )).addTagInt("range", 20).addGlowing().toItemStack().clone()));
+    )).addTagInt("range", 30).addGlowing().toItemStack().clone()));
 
 
     private final String name;

@@ -169,11 +169,19 @@ public class RybakNPC {
     }
 
     public void addFailedAttempt(final UUID uuid) {
-        failedAttemptMap.replace(uuid, failedAttemptMap.get(uuid) + 1);
+        if (failedAttemptMap.containsKey(uuid)) {
+            failedAttemptMap.put(uuid, failedAttemptMap.get(uuid) + 1);
+        } else {
+            failedAttemptMap.put(uuid, 1);
+        }
     }
 
     public void resetFailedAttempt(final UUID uuid) {
-        failedAttemptMap.replace(uuid, 0);
+        if (failedAttemptMap.containsKey(uuid)) {
+            failedAttemptMap.replace(uuid, 0);
+        } else {
+            failedAttemptMap.put(uuid, 0);
+        }
     }
 
     public int getFishingCount(final UUID uuid) {

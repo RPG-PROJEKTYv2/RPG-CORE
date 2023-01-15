@@ -48,9 +48,8 @@ public class LvlManager {
     public double getKasa(final String mob, final UUID uuid) {
         double mnozik = 1;
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
-        if (rank == RankTypePlayer.VIP) mnozik = 1.15;
-        if (rank == RankTypePlayer.SVIP) mnozik = 1.25;
-        if (rank == RankTypePlayer.ELITA) mnozik = 1.35;
+        if (rank == RankTypePlayer.VIP) mnozik = 1.25;
+        if (rank == RankTypePlayer.ELITA) mnozik = 1.5;
         if (Maps.isMob(mob)) {
             return DoubleUtils.round(Maps.getByName(mob).getKasa() * mnozik, 2);
         } else if (Dungeons.isDungeonMob(mob)) {
@@ -80,9 +79,8 @@ public class LvlManager {
             dodatkowyExp += rpgcore.getServerManager().find("dodatkowyExp").getServer().getDodatkowyExp();
         }
         final User user = rpgcore.getUserManager().find(uuid);
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) dodatkowyExp += 15;
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.SVIP) dodatkowyExp += 25;
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) dodatkowyExp += 35;
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) dodatkowyExp += 25;
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) dodatkowyExp += 50;
         dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 
         return dodatkowyExp;

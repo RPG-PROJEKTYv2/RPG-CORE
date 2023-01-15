@@ -15,7 +15,7 @@ public enum OsRybak {
     M5(5, 4, 3_000, GlobalItem.getItem("I1", 2).clone()),
     M6(6, 5, 7_500, GlobalItem.getItem("I1", 4).clone()),
     M7(7, 6, 12_500, GlobalItem.getItem("I1", 6).clone()),
-    M8(8, 7, 30_000, ItemShop.IS12.getItems().get(0).clone()),
+    M8(8, 7, 30_000, ItemShop.IS10.getItems().get(0).clone()),
     M9(9, 8, 50_000, new ItemBuilder(Material.STONE).setName("&d&lTajemnicza Moc &4&l(SOON)").toItemStack().clone());
 
 

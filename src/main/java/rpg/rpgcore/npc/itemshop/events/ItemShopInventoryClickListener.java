@@ -52,24 +52,15 @@ public class ItemShopInventoryClickListener implements Listener {
             player.sendMessage(Utils.format("&6&lItem&2&lShop &8>> &aPomyslnie zakupiles/-as " + item.getItemMeta().getDisplayName()));
             switch (slot) {
                 case 10:
-                    player.getInventory().addItem(ItemShop.IS18.getItems().get(0));
-                    return;
-                case 19:
-                    player.getInventory().addItem(ItemShop.IS17.getItems().get(0));
-                    return;
-                case 28:
-                    player.getInventory().addItem(ItemShop.IS16.getItems().get(0));
-                    return;
-                case 37:
                     player.getInventory().addItem(ItemShop.IS15.getItems().get(0));
                     return;
-                case 12:
+                case 19:
                     player.getInventory().addItem(ItemShop.IS14.getItems().get(0));
                     return;
-                case 21:
+                case 28:
                     player.getInventory().addItem(ItemShop.IS13.getItems().get(0));
                     return;
-                case 30:
+                case 37:
                     player.getInventory().addItem(ItemShop.IS12.getItems().get(0));
                     return;
                 case 39:

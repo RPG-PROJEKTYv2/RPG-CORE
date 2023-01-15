@@ -99,6 +99,7 @@ import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
 import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
+import rpg.rpgcore.economy.HsCommand;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
 import rpg.rpgcore.guilds.events.GuildsInventoryClick;
@@ -539,6 +540,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SerwerWhiteListCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ShowcaseItemCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetNameCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new HsCommand(this));
     }
 
     private void initEvents() {

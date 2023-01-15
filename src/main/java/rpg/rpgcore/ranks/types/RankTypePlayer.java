@@ -1,11 +1,11 @@
 package rpg.rpgcore.ranks.types;
 
 public enum RankTypePlayer {
-    GRACZ("GRACZ", "&7", 0),
-    BUDOWNICZY("BUDOWNICZY", "&d&lBud &7", 1),
+    TWORCA("Tworca", "&9&lTworca &7",  4),
+    ELITA("ELITA", "&5&lELITA &7",  3),
     VIP("VIP", "&e&lVip &7", 1),
-    SVIP("SVIP", "&6&lS&e&lvip &7", 2),
-    ELITA("ELITA", "&5&lELITA &7",  3);
+    BUDOWNICZY("BUDOWNICZY", "&d&lBud &7", 1),
+    GRACZ("GRACZ", "&7", 0);
 
     private final String name, prefix;
     private final int priority;

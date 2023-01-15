@@ -16,7 +16,7 @@ public enum OsGornik {
     M6(6, 5, 7_500, GlobalItem.getItem("I21", 16).clone()),
     M7(7, 6, 12_500, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l150 000 000&2$").addGlowing().toItemStack().clone().clone()),
     M8(8, 7, 50_000, GornikItems.getItem("I1", 3).clone()),
-    M9(9, 8, 100_000, ItemShop.IS15.getItems().get(0).clone());
+    M9(9, 8, 100_000, ItemShop.IS12.getItems().get(0).clone());
 
 
     private final int mission;

@@ -32,7 +32,6 @@ public class KasaCommand extends CommandAPI {
 
         if (args.length == 0) {
             player.sendMessage(Utils.format("&7Twoj aktualny stan konta wynosi: &6&o" + Utils.spaceNumber(String.valueOf(Utils.kasaFormat.format(rpgcore.getUserManager().find(player.getUniqueId()).getKasa()))) + "&2$"));
-            player.sendMessage(Utils.format("&7Twoj aktualny stan &4&lH&6&lS&7: &c" + Utils.spaceNumber(String.valueOf(rpgcore.getUserManager().find(player.getUniqueId()).getHellcoins()))));
             return;
         }
 

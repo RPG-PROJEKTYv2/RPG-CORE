@@ -3,7 +3,6 @@ package rpg.rpgcore.commands.admin;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -23,7 +22,7 @@ public class SetNameCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
-            player.sendMessage(Utils.poprawneUzycie("/setname <nazwa>"));
+            player.sendMessage(Utils.poprawneUzycie("setname <nazwa>"));
             return;
         }
 
@@ -34,10 +33,10 @@ public class SetNameCommand extends CommandAPI {
 
         StringBuilder sb = new StringBuilder();
         for (String s : args) {
-            sb.append(s);
+            sb.append(s).append(" ");
         }
 
-        player.setItemInHand(new ItemBuilder(player.getItemInHand().clone()).setName(Utils.format(sb.toString())).toItemStack());
+        player.setItemInHand(new ItemBuilder(player.getItemInHand().clone()).setName(Utils.format(sb.toString().trim())).toItemStack());
         player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zmieniono nazwe przedmiotu!"));
     }
 }

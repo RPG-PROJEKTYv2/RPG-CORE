@@ -22,18 +22,18 @@ public class SetPremiumCommand extends CommandAPI {
     public SetPremiumCommand(final RPGCORE rpgcore) {
         super("setpremium");
         this.setRankLevel(RankType.HA);
-        this.setAliases(Arrays.asList("spremium","setp", "setpremium", "premium"));
+        this.setAliases(Arrays.asList("spremium","setp", "setpremium", "premium", "tworca"));
         this.rpgcore = rpgcore;
     }
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
         if (args.length < 4) {
-            sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Svip/Elita/Budwniczy> <czas/-1> <broadcast?>"));
+            sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Elita/Budwniczy/Tworca> <czas/-1> <broadcast?>"));
             return;
         }
 
         if (args[0] == null || args[1] == null || args[2] == null || args[3] == null) {
-            sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Svip/Elita/Budwniczy> <czas/-1> <broadcast?>"));
+            sender.sendMessage(Utils.poprawneUzycie("setpremium <nick> <Player/Vip/Elita/Budwniczy/Tworca> <czas/-1> <broadcast?>"));
             return;
         }
 
@@ -58,6 +58,39 @@ public class SetPremiumCommand extends CommandAPI {
             return;
         }
         user.getRankPlayerUser().setRank(RankTypePlayer.valueOf(args[1].toUpperCase(Locale.ROOT)));
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.TWORCA) {
+            user.getRankPlayerUser().setTime(-1);
+            sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZmieniono rangę gracza &6" + args[0] + " &ana &9&lTworca&7!"));
+
+            rpgcore.getServer().broadcastMessage(" ");
+            rpgcore.getServer().broadcastMessage(Utils.format("               &4&&lHELL&8&lRPG            "));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &7Gracz &c" + user.getName() + " &aotrzymmal range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a!"));
+            rpgcore.getServer().broadcastMessage(Utils.format("               &4&&lHELL&8&lRPG            "));
+            rpgcore.getServer().broadcastMessage(" ");
+
+            if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
+                final Player player = Bukkit.getPlayer(args[0]);
+                rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME.trim(), 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a!", 5, 20, 5));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    NameTagUtil.setPlayerNameTag(player, "updatePrefix");
+                    TabManager.removePlayer(player);
+                    TabManager.addPlayer(player);
+                    for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                        TabManager.update(restOfServer.getUniqueId());
+                    }
+                });
+            }
+
+            RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
+                    "**Gracz:** `" + user.getName() + "`**uzyskal nowa range**\n" +
+                            "**Ranga**: " + user.getRankPlayerUser().getRankType().getName() + "\n" +
+                            "**Czas**: LifeTime\n" +
+                            "**Nadane Przez**: " + sender.getName(), Color.GREEN));
+
+
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            return;
+        }
         if (args[2].equals("-1")) {
             user.getRankPlayerUser().setTime(-1);
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyślnie ustawiono rangę gracza &6" + args[0] + " &a na &6" + args[1] + " &a na okres &6LifeTime&a!"));
@@ -71,7 +104,16 @@ public class SetPremiumCommand extends CommandAPI {
                 rpgcore.getServer().broadcastMessage(" ");
 
                 if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
-                    rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(args[0]), rpgcore.getNmsManager().makeTitle("&6&lItem&2&lShop", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a! &cDziekujemy za wsparcie ❤", 5, 20, 5));
+                    final Player player = Bukkit.getPlayer(args[0]);
+                    rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lItem&2&lShop", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a! &cDziekujemy za wsparcie ❤", 5, 20, 5));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                        NameTagUtil.setPlayerNameTag(player, "updatePrefix");
+                        TabManager.removePlayer(player);
+                        TabManager.addPlayer(player);
+                        for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                            TabManager.update(restOfServer.getUniqueId());
+                        }
+                    });
                 }
             }
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",

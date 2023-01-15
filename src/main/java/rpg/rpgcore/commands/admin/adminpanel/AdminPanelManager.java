@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -69,6 +68,8 @@ public class AdminPanelManager {
         gui.setItem(1, GlobalItem.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
 
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+
+        player.openInventory(gui);
     }
     public void openAllCaseGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&2&lSkrzynki &f- ADMINISTRACJA"));
@@ -217,14 +218,11 @@ public class AdminPanelManager {
         gui.setItem(50, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName("").toItemStack());
         gui.setItem(52, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName("").toItemStack());
 
-        gui.setItem(10, ItemShop.IS18.getItems().get(0));
-        gui.setItem(19, ItemShop.IS17.getItems().get(0));
-        gui.setItem(28, ItemShop.IS16.getItems().get(0));
-        gui.setItem(37, ItemShop.IS15.getItems().get(0));
+        gui.setItem(10, ItemShop.IS15.getItems().get(0));
+        gui.setItem(19, ItemShop.IS14.getItems().get(0));
+        gui.setItem(28, ItemShop.IS13.getItems().get(0));
+        gui.setItem(37, ItemShop.IS12.getItems().get(0));
 
-        gui.setItem(12, ItemShop.IS14.getItems().get(0));
-        gui.setItem(21, ItemShop.IS13.getItems().get(0));
-        gui.setItem(30, ItemShop.IS12.getItems().get(0));
         gui.setItem(39, ItemShop.IS19.getItems().get(0));
 
         gui.setItem(14, ItemShop.IS11.getItems().get(0));

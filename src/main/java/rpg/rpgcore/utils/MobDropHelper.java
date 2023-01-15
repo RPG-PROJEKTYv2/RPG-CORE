@@ -51,14 +51,13 @@ public class MobDropHelper {
 
         int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
-        if (rank == RankTypePlayer.VIP) szczescie += 15;
-        if (rank == RankTypePlayer.SVIP) szczescie += 25;
-        if (rank == RankTypePlayer.ELITA) szczescie += 35;
-        final double niesDropChance50lvl = 0.02 + ((0.02 * szczescie) / 1000.0);
-        final double niesDropChance50plus = 0.01 + ((0.01 * szczescie) / 1000.0);
-        final double chestDropChance50lvl = 2.5 + ((2.5 * szczescie) / 1000.0);
-        final double chestDropChance50plus = 1.25 + ((1.25 * szczescie) / 1000.0);
-        final double sakwaDropChance = 0.03 + ((0.03 * szczescie) / 1000.0);
+        if (rank == RankTypePlayer.VIP) szczescie += 25;
+        if (rank == RankTypePlayer.ELITA) szczescie += 50;
+        final double niesDropChance50lvl = getDropChance(szczescie, 0.02);
+        final double niesDropChance50plus = getDropChance(szczescie, 0.01);
+        final double chestDropChance50lvl = getDropChance(szczescie, 2.5);
+        final double chestDropChance50plus = getDropChance(szczescie, 1.25);
+        final double sakwaDropChance = getDropChance(szczescie, 0.03);
 
 
         rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
