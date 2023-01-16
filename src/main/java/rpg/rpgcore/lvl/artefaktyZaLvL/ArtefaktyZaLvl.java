@@ -72,7 +72,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom50 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom50() {
             nadanych = 0;
@@ -81,22 +81,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom50(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(5);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom50");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(5);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -105,7 +96,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom60 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom60() {
             nadanych = 0;
@@ -114,22 +105,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom60(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(5);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom60");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(5);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -138,7 +120,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom70 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom70() {
             nadanych = 0;
@@ -147,22 +129,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom70(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(5);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom70");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(5);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -171,7 +144,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom80 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom80() {
             nadanych = 0;
@@ -180,22 +153,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom80(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom80");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -204,7 +168,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom90 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom90() {
             nadanych = 0;
@@ -213,22 +177,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom90(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom90");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -237,7 +192,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom100 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom100() {
             nadanych = 0;
@@ -246,22 +201,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom100(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom100");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -270,7 +216,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom110 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom110() {
             nadanych = 0;
@@ -279,22 +225,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom110(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom110");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -303,7 +240,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom120 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom120() {
             nadanych = 0;
@@ -312,22 +249,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom120(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom120");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -336,7 +264,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Poziom130 {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Poziom130() {
             nadanych = 0;
@@ -345,22 +273,13 @@ public class ArtefaktyZaLvl {
 
         public Poziom130(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "Poziom130");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -369,7 +288,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Rybak {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Rybak() {
             nadanych = 0;
@@ -378,22 +297,13 @@ public class ArtefaktyZaLvl {
 
         public Rybak(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "rybak");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }
@@ -402,7 +312,7 @@ public class ArtefaktyZaLvl {
     @Setter
     public static class Gornik {
         private int nadanych;
-        private List<UUID> gracze;
+        private List<String> gracze;
 
         public Gornik() {
             nadanych = 0;
@@ -411,22 +321,13 @@ public class ArtefaktyZaLvl {
 
         public Gornik(final Document document) {
             nadanych = document.getInteger("nadanych");
-            final List<String> graczeString = (List<String>) document.get("gracze");
-            final List<UUID> graczeUUID = new ArrayList<>(4);
-            for (final String string : graczeString) {
-                graczeUUID.add(UUID.fromString(string));
-            }
-            gracze = graczeUUID;
+            gracze = document.getList("gracze", String.class);
         }
 
         public Document toDocument() {
             final Document document = new Document("_id", "gornik");
             document.append("nadanych", nadanych);
-            final List<String> graczeString = new ArrayList<>(4);
-            for (final UUID uuid : gracze) {
-                graczeString.add(uuid.toString());
-            }
-            document.append("gracze", graczeString);
+            document.append("gracze", gracze);
             return document;
         }
     }

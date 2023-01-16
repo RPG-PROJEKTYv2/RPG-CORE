@@ -127,6 +127,8 @@ import rpg.rpgcore.npc.itemshop.ItemShopNPC;
 import rpg.rpgcore.npc.itemshop.events.ItemShopInteractListener;
 import rpg.rpgcore.npc.itemshop.events.ItemShopInventoryClickListener;
 import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
+import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
+import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryCloseListener;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
@@ -191,9 +193,7 @@ import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
 import rpg.rpgcore.npc.kowal.KowalInventoryClick;
 import rpg.rpgcore.npc.kowal.KowalNPC;
-import rpg.rpgcore.npc.kupiec.KupiecInventoryClick;
-import rpg.rpgcore.npc.kupiec.KupiecInventoryClose;
-import rpg.rpgcore.npc.kupiec.KupiecNPC;
+import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClick;
 import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClose;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
@@ -257,7 +257,7 @@ public final class RPGCORE extends JavaPlugin {
     private RybakNPC rybakNPC;
     private GuildManager guildManager;
     private BackupManager backup;
-    private KupiecNPC kupiecNPC;
+    private HandlarzNPC handlarzNPC;
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
@@ -358,7 +358,6 @@ public final class RPGCORE extends JavaPlugin {
 
         this.mongo.loadAll();
 
-        this.getKupiecNPC().loadAll();
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
 
@@ -665,8 +664,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
 
         // ...KUPIEC
-        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new KupiecInventoryClose(this), this);
+        this.getServer().getPluginManager().registerEvents(new HandlarzInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new HandlarzInventoryCloseListener(this), this);
 
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
@@ -797,7 +796,7 @@ public final class RPGCORE extends JavaPlugin {
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
         this.kolekcjonerNPC = new KolekcjonerNPC(this);
-        this.kupiecNPC = new KupiecNPC(this);
+        this.handlarzNPC = new HandlarzNPC(this);
         this.kowalNPC = new KowalNPC(this);
         this.trenerNPC = new TrenerNPC(this);
         this.metinologNPC = new MetinologNPC(this);
@@ -1012,8 +1011,8 @@ public final class RPGCORE extends JavaPlugin {
         return backup;
     }
 
-    public KupiecNPC getKupiecNPC() {
-        return kupiecNPC;
+    public HandlarzNPC getHandlarzNPC() {
+        return handlarzNPC;
     }
 
     public KowalNPC getKowalNPC() {

@@ -93,9 +93,9 @@ public class RybakInventoryClick implements Listener {
                         RPGCORE.getInstance().getServer().broadcastMessage(" ");
                         RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &c" + player.getName() + " &7ukonczyl moja &4KAMPANIE&7. &6&lGratulacje!"));
                         if (RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() < 4) {
-                            if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().contains(uuid)) {
+                            if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().contains(player.getName())) {
                                 RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().setNadanych(RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + 1);
-                                RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().add(player.getUniqueId());
+                                RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().add(player.getName());
                                 RPGCORE.getInstance().getArtefaktyZaLvlManager().save();
                                 RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Doodatkowo gracz ten ukonczyl ja jako &c" + RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + " &7osoba na serwerze!"));
                                 RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8Po odbior artefaktu prosimy zglosic sie"));

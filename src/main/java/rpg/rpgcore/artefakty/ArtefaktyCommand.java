@@ -73,9 +73,7 @@ public class ArtefaktyCommand extends CommandAPI {
         final ArtefaktyZaLvl arteZaLvl = RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl();
         final List<String> poziom50Names = new ArrayList<>(5);
         if (!arteZaLvl.getPoziom50().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom50().getGracze()) {
-                poziom50Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom50Names.addAll(arteZaLvl.getPoziom50().getGracze());
         }
         if (poziom50Names.size() < 5) {
             for (int i = poziom50Names.size(); i < 5; i++) {
@@ -84,9 +82,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom60Names = new ArrayList<>(5);
         if (!arteZaLvl.getPoziom60().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom60().getGracze()) {
-                poziom60Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom60Names.addAll(arteZaLvl.getPoziom60().getGracze());
         }
         if (poziom60Names.size() < 5) {
             for (int i = poziom60Names.size(); i < 5; i++) {
@@ -95,9 +91,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom70Names = new ArrayList<>(5);
         if (!arteZaLvl.getPoziom70().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom70().getGracze()) {
-                poziom70Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom70Names.addAll(arteZaLvl.getPoziom70().getGracze());
         }
         if (poziom70Names.size() < 5) {
             for (int i = poziom70Names.size(); i < 5; i++) {
@@ -106,9 +100,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom80Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom80().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom80().getGracze()) {
-                poziom80Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom80Names.addAll(arteZaLvl.getPoziom80().getGracze());
         }
         if (poziom80Names.size() < 4) {
             for (int i = poziom80Names.size(); i < 4; i++) {
@@ -117,9 +109,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom90Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom90().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom90().getGracze()) {
-                poziom90Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom90Names.addAll(arteZaLvl.getPoziom90().getGracze());
         }
         if (poziom90Names.size() < 4) {
             for (int i = poziom90Names.size(); i < 4; i++) {
@@ -128,9 +118,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom100Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom100().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom100().getGracze()) {
-                poziom100Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom100Names.addAll(arteZaLvl.getPoziom100().getGracze());
         }
         if (poziom100Names.size() < 4) {
             for (int i = poziom100Names.size(); i < 4; i++) {
@@ -139,9 +127,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> poziom110Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom110().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getPoziom110().getGracze()) {
-                poziom110Names.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            poziom110Names.addAll(arteZaLvl.getPoziom110().getGracze());
         }
         if (poziom110Names.size() < 4) {
             for (int i = poziom110Names.size(); i < 4; i++) {
@@ -150,9 +136,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> rybakNames = new ArrayList<>(4);
         if (!arteZaLvl.getRybak().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getRybak().getGracze()) {
-                rybakNames.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            rybakNames.addAll(arteZaLvl.getRybak().getGracze());
         }
         if (rybakNames.size() < 4) {
             for (int i = rybakNames.size(); i < 4; i++) {
@@ -161,9 +145,7 @@ public class ArtefaktyCommand extends CommandAPI {
         }
         final List<String> gornikNames = new ArrayList<>(4);
         if (!arteZaLvl.getGornik().getGracze().isEmpty()) {
-            for (final UUID uuid : arteZaLvl.getGornik().getGracze()) {
-                gornikNames.add(RPGCORE.getInstance().getUserManager().find(uuid).getName());
-            }
+            gornikNames.addAll(arteZaLvl.getGornik().getGracze());
         }
         if (gornikNames.size() < 4) {
             for (int i = gornikNames.size(); i < 4; i++) {

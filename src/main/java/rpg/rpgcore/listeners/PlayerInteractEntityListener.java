@@ -68,7 +68,7 @@ public class PlayerInteractEntityListener implements Listener {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // KUPIEC
             if (entityName.equalsIgnoreCase("Kupiec")) {
-                rpgcore.getKupiecNPC().openKupiecInventory(player);
+                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
                 return;
             }
         }

@@ -196,9 +196,9 @@ public class GornikInventoryClick implements Listener {
                 RPGCORE.getInstance().getServer().broadcastMessage(" ");
                 RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &c" + player.getName() + " &7ukonczyl moja &4KAMPANIE&7. &6&lGratulacje!"));
                 if (RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() < 4) {
-                    if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().contains(uuid)) {
+                    if (!RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().contains(player.getName())) {
                         RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().setNadanych(RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + 1);
-                        RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().add(uuid);
+                        RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().add(player.getName());
                         RPGCORE.getInstance().getArtefaktyZaLvlManager().save();
                         RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Doodatkowo gracz ten ukonczyl ja jako &c" + RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + " &7osoba na serwerze!"));
                         RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&8Po odbior artefaktu prosimy zglosic sie"));
