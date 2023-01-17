@@ -205,7 +205,8 @@ public class ArmorEffectListener implements Listener {
                         e.getClickedBlock().getType().equals(Material.DROPPER) || e.getClickedBlock().getType().equals(Material.WORKBENCH) ||
                         e.getClickedBlock().getType().equals(Material.JUKEBOX) || e.getClickedBlock().getType().equals(Material.ITEM_FRAME) ||
                         e.getClickedBlock().getType().equals(Material.BED) || e.getClickedBlock().getType().equals(Material.BREWING_STAND)) {
-                    if (!player.isOp()) {
+                    if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() ||
+                            (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin())) {
                         e.setCancelled(true);
                         return;
                     }

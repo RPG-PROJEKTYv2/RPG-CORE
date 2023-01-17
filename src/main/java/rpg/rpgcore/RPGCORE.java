@@ -449,6 +449,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllOreLocations();
         this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
+        this.mongo.saveAllHandlarz();
         this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
         this.mongo.saveArtefaktyZaLvl(this.artefaktyZaLvlManager.getArtefaktyZaLvl());
         this.mongo.onDisable();

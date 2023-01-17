@@ -46,6 +46,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_kociolki;
     private final MongoCollection<Document> hellrpg_serwerWhiteList;
     private final MongoCollection<Document> hellrpg_artefaktyZaLvL;
+    private final MongoCollection<Document> hellrpg_handlarz;
 
 
     public MongoConnectionPoolManager() {
@@ -145,6 +146,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_artefaktyZaLvL")) {
             database.createCollection("hellrpg_artefaktyZaLvL");
         }
+        if (!collections.contains("hellrpg_handlarz")) {
+            database.createCollection("hellrpg_handlarz");
+        }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
             database.createCollection("hellrpg_przykladowyNPC");
@@ -179,6 +183,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_kociolki = database.getCollection("hellrpg_kociolki");
         this.hellrpg_serwerWhiteList = database.getCollection("hellrpg_serwerWhiteList");
         this.hellrpg_artefaktyZaLvL = database.getCollection("hellrpg_artefaktyZaLvL");
+        this.hellrpg_handlarz = database.getCollection("hellrpg_handlarz");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -277,6 +282,10 @@ public class MongoConnectionPoolManager {
     }
     public MongoCollection<Document> getArtefaktyZaLvL() {
         return this.hellrpg_artefaktyZaLvL;
+    }
+
+    public MongoCollection<Document> getHandlarz() {
+        return hellrpg_handlarz;
     }
 
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI

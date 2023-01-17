@@ -19,6 +19,7 @@ import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.gornik.ore.Ore;
+import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
@@ -181,12 +182,15 @@ public class MongoManager {
         if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
             pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
         }
+        if (pool.getHandlarz().find(new Document("_id", uuid.toString())).first() == null) {
+            pool.getHandlarz().deleteOne(new Document("_id", uuid.toString()));
+        }
     }
     //dd3d637b-aff4-4fa5-8484-d120ed492d43 - Mires
     //c166a38d-6ddf-47cb-8aed-2b05fb502051 - Chytryy
     //672d510e-083b-39f8-9681-4d8bc892586d - Orzel
-    //4d335d52-df9f-479c-8d0a-57de4a4cb2fe - Fabi
 
+    //4d335d52-df9f-479c-8d0a-57de4a4cb2fe - Fabi
 
     public void loadAll() {
 
@@ -329,6 +333,11 @@ public class MongoManager {
                 this.addDataKociolki(user);
                 rpgcore.getKociolkiManager().add(user);
             }
+            if (pool.getHandlarz().find(new Document("_id", uuid.toString())).first() == null) {
+                final HandlarzUser user = new HandlarzUser(uuid);
+                this.addDataHandlarz(user);
+                rpgcore.getHandlarzNPC().add(user);
+            }
             // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
             // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
             // TEZ BARDZO WAZEN I NIE ZAPOMNIEC O TYM.
@@ -341,42 +350,6 @@ public class MongoManager {
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             addOtherData(new ServerUser("dodatkowyExp"));
         }
-    }
-
-    public Map<Integer, Metiny> loadMetins() {
-        Map<Integer, Metiny> metiny = new ConcurrentHashMap<>();
-        for (Document document : pool.getMetiny().find()) {
-            Metiny metiny1 = new Metiny(document);
-            metiny.put(metiny1.getId(), metiny1);
-        }
-        return metiny;
-    }
-
-
-    public void setSpawn(final Location spawn) {
-
-        final String w = spawn.getWorld().getName();
-        final double x = spawn.getX();
-        final double y = spawn.getY();
-        final double z = spawn.getZ();
-        final float yaw = spawn.getYaw();
-        final float pitch = spawn.getPitch();
-
-        Document query = new Document();
-        query.append("_id", "spawn");
-
-        Document document = new Document();
-        document.append("_id", "spawn");
-        document.append("world", w);
-        document.append("x", x);
-        document.append("y", y);
-        document.append("z", z);
-        document.append("yaw", yaw);
-        document.append("pitch", pitch);
-
-        pool.getSpawn().findOneAndReplace(query, document);
-
-        rpgcore.getSpawnManager().setSpawn(spawn);
     }
 
     public void createPlayer(final Player player, final UUID uuid, final String nick) {
@@ -464,6 +437,10 @@ public class MongoManager {
         this.addDataKociolki(kociolkiUser);
         rpgcore.getKociolkiManager().add(kociolkiUser);
 
+        final HandlarzUser handlarzUser = new HandlarzUser(uuid);
+        this.addDataHandlarz(handlarzUser);
+        rpgcore.getHandlarzNPC().add(handlarzUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -537,6 +514,7 @@ public class MongoManager {
             this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
             this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
             this.saveDataTarg(uuid, user.getName());
+            this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -549,6 +527,42 @@ public class MongoManager {
             System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
             e.printStackTrace();
         }
+    }
+
+    public Map<Integer, Metiny> loadMetins() {
+        Map<Integer, Metiny> metiny = new ConcurrentHashMap<>();
+        for (Document document : pool.getMetiny().find()) {
+            Metiny metiny1 = new Metiny(document);
+            metiny.put(metiny1.getId(), metiny1);
+        }
+        return metiny;
+    }
+
+
+    public void setSpawn(final Location spawn) {
+
+        final String w = spawn.getWorld().getName();
+        final double x = spawn.getX();
+        final double y = spawn.getY();
+        final double z = spawn.getZ();
+        final float yaw = spawn.getYaw();
+        final float pitch = spawn.getPitch();
+
+        Document query = new Document();
+        query.append("_id", "spawn");
+
+        Document document = new Document();
+        document.append("_id", "spawn");
+        document.append("world", w);
+        document.append("x", x);
+        document.append("y", y);
+        document.append("z", z);
+        document.append("yaw", yaw);
+        document.append("pitch", pitch);
+
+        pool.getSpawn().findOneAndReplace(query, document);
+
+        rpgcore.getSpawnManager().setSpawn(spawn);
     }
 
     public void banPlayer(final UUID uuid, final String banInfo) {
@@ -1358,6 +1372,36 @@ public class MongoManager {
     public void saveArtefaktyZaLvl(final ArtefaktyZaLvl artefaktyZaLvl) {
         this.pool.getArtefaktyZaLvL().findOneAndReplace(new Document("_id", "artefaktyZaLvl"), artefaktyZaLvl.toDocument());
     }
+
+
+    // HANDLARZ
+    public Map<UUID, HandlarzUser> loadAllHandlarz() {
+        Map<UUID, HandlarzUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getHandlarz().find()) {
+            final HandlarzUser handlarzUser = new HandlarzUser(document);
+            userMap.put(handlarzUser.getUuid(), handlarzUser);
+        }
+        return userMap;
+    }
+
+    public void addDataHandlarz(final HandlarzUser handlarzUser) {
+        if (this.pool.getHandlarz().find(new Document("_id", handlarzUser.getUuid().toString())).first() != null) {
+            this.pool.getHandlarz().deleteOne(new Document("_id", handlarzUser.getUuid().toString()));
+        }
+        this.pool.getHandlarz().insertOne(handlarzUser.toDocument());
+    }
+
+    public void saveDataHandlarz(final UUID uuid, final HandlarzUser handlarzUser) {
+        this.pool.getHandlarz().findOneAndReplace(new Document("_id", uuid.toString()), handlarzUser.toDocument());
+    }
+
+    public void saveAllHandlarz() {
+        for (final HandlarzUser handlarzUser : rpgcore.getHandlarzNPC().getHandlarzUsers()) {
+            this.saveDataHandlarz(handlarzUser.getUuid(), handlarzUser);
+        }
+    }
+
+
 
     public void onDisable() {
         pool.closePool();
