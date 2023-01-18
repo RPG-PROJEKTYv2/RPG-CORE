@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.npc.handlarz.enums.HandlarzSellItems;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -23,13 +22,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class HandlarzNPC {
-    private final RPGCORE rpgcore;
     private final Map<UUID, HandlarzUser> userMap;
 
     private final Map<UUID, Multimap<ItemStack, Double>> userItemMap = new HashMap<>();
 
     public HandlarzNPC(RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllHandlarz();
     }
 
@@ -171,18 +168,25 @@ public class HandlarzNPC {
     }
 
     public Multimap<ItemStack, Double> getUserItemMap(final UUID uuid) {
-        return this.userItemMap.getOrDefault(uuid, ArrayListMultimap.create());
-    }
-
-    public void addItem(final UUID uuid, final ItemStack item) {
         if (!this.userItemMap.containsKey(uuid)) {
             this.userItemMap.put(uuid, ArrayListMultimap.create());
         }
-        this.userItemMap.get(uuid).put(item.clone(), HandlarzSellItems.getItemPrice(item.clone()) * item.getAmount());
+        return this.userItemMap.get(uuid);
     }
 
-    public void removeItem(final UUID uuid, final ItemStack item) {
-        this.userItemMap.get(uuid).remove(item.clone(), HandlarzSellItems.getItemPrice(item.clone()) * item.getAmount());
+    public void removeUserItemMap(final UUID uuid) {
+        this.userItemMap.remove(uuid);
+    }
+
+    public void addItem(final UUID uuid, final ItemStack item, final double price) {
+        if (!this.userItemMap.containsKey(uuid)) {
+            this.userItemMap.put(uuid, ArrayListMultimap.create());
+        }
+        this.userItemMap.get(uuid).put(item.clone(), price * item.getAmount());
+    }
+
+    public void removeItem(final UUID uuid, final ItemStack item, final double price) {
+        this.userItemMap.get(uuid).remove(item.clone(), price * item.getAmount());
     }
 
     public HandlarzUser find(final UUID uuid) {

@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.handlarz.enums.HandlarzSellItems;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -133,17 +134,62 @@ public class HandlarzInventoryClickListener implements Listener {
             return;
         }
 
-        if (title.equals("Handlarz » Sprzedaz")) {
+        if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Handlarz » Sprzedaz")) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
 
-            player.sendMessage(player.getOpenInventory().getBottomInventory() + "");
-            player.sendMessage(gui + "");
-            player.sendMessage((player.getOpenInventory().getBottomInventory() == gui) + "");
+            if (item == null || item.getType() == Material.AIR) return;
+
+            if (e.getClickedInventory() == player.getOpenInventory().getBottomInventory()) {
+
+                final HandlarzSellItems sellItem = HandlarzSellItems.checkIfSellItem(item.clone());
+
+                if (sellItem == null) return;
+
+                if (rpgcore.getHandlarzNPC().getUserItemMap(uuid).size() == 45) {
+                    player.sendMessage(Utils.format("&6&lHandlarz &8>> &7Nie mozesz sprzedac wiecej przedmiotow!"));
+                    return;
+                }
+
+                rpgcore.getHandlarzNPC().addItem(player.getUniqueId(), item.clone(), sellItem.getPrice(item.clone()));
+                player.getInventory().removeItem(item.clone());
+                player.getOpenInventory().getTopInventory().setItem(player.getOpenInventory().getTopInventory().firstEmpty(), item.clone());
+                player.getOpenInventory().getTopInventory().setItem(49, rpgcore.getHandlarzNPC().getSprzedajItem(uuid));
+                return;
+            }
+
+            if (slot == 49) {
+
+                if (rpgcore.getHandlarzNPC().getUserItemMap(uuid).size() == 0) {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&6&lHandlarz &8>> &7Nie posiadasz zadnych przedmiotow do sprzedazy!"));
+                    return;
+                }
+
+                final double price = Utils.getTagDouble(item, "sellValue");
+
+                player.sendMessage(Utils.format("&6&lHandlarz &8>> &aPomyslnie sprzedales/-as &6" + rpgcore.getHandlarzNPC().getUserItemMap(uuid).entries().stream().mapToInt(stream -> stream.getKey().getAmount()).sum() + " &aprzedmiotow za &6" + Utils.spaceNumber(price) + "&2$&a!"));
+
+                rpgcore.getHandlarzNPC().removeUserItemMap(uuid);
+                player.closeInventory();
+
+                final User user = rpgcore.getUserManager().find(uuid);
+
+                user.setKasa(user.getKasa() + price);
+
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
+                return;
+            }
+
+            final HandlarzSellItems sellItem = HandlarzSellItems.checkIfSellItem(item.clone());
+
+            if (sellItem == null) return;
+
+            rpgcore.getHandlarzNPC().removeItem(uuid, item.clone(), sellItem.getPrice(item.clone()));
+            player.getInventory().addItem(item.clone());
+            player.getOpenInventory().getTopInventory().removeItem(item.clone());
+            player.getOpenInventory().getTopInventory().setItem(49, rpgcore.getHandlarzNPC().getSprzedajItem(uuid));
         }
-
-
-
     }
 }
