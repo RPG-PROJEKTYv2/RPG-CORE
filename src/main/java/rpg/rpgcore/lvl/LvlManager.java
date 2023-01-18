@@ -147,7 +147,9 @@ public class LvlManager {
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
         if (nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) {
+            rpgcore.getServer().broadcastMessage(" ");
             rpgcore.getServer().broadcastMessage(Utils.format(Utils.LVLPREFIX + "&fGracz &3" + killer.getName() + " &fosiagnal &3" + nextLvlGracza + " &fpoziom. Gratulacje!"));
+            rpgcore.getServer().broadcastMessage(" ");
         }
         PacketPlayOutTitle title = rpgcore.getNmsManager().makeTitle("&b&lLVL UP!", 5, 25, 5);
         PacketPlayOutTitle subtitle = rpgcore.getNmsManager().makeSubTitle("&fAwansowales na &3" + nextLvlGracza + " &fpoziom", 5, 25, 5);
@@ -166,18 +168,23 @@ public class LvlManager {
         final String playerName = user.getName();
         final int aktualnyLvlGracza = user.getLvl();
         final double aktualnyExpGracza = user.getExp();
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&c&lLVL&8}-_-_-_-_-_-_-_-_-"));
-        sender.sendMessage(Utils.format("&7Informacje odnoscie gracza &c" + playerName));
-        sender.sendMessage(Utils.format("&7Poziom: &c" + aktualnyLvlGracza));
+        sender.sendMessage(Utils.format("&8------------ &f( &b&lStatystyki &f) &8------------ "));
+        sender.sendMessage(Utils.format("&7Nick: &c" + playerName));
+        sender.sendMessage(Utils.format("&7Poziom doswiadczenia: &c" + aktualnyLvlGracza));
         if (aktualnyLvlGracza < Utils.MAXLVL) {
             final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
-            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + Utils.spaceNumber(String.format("%.2f", aktualnyExpGracza)) + " &7exp / &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl)) + " &7exp (&c" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&7)"));
+            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + Utils.spaceNumber(String.format("%.2f", aktualnyExpGracza)) + "&7exp / &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl)) + "&7exp (&c" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&7)"));
             sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl - aktualnyExpGracza)) + " &7exp"));
         } else {
             sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + aktualnyExpGracza + " &7exp / &4&lMAX LVL (&4&lMAX LVL&7)"));
             sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &4&lMAX LVL"));
         }
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-{&c&lLVL&8}-_-_-_-_-_-_-_-_-"));
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.GRACZ) {
+            sender.sendMessage(Utils.format("&7Ranga: &7Gracz"));
+        } else {
+            sender.sendMessage(Utils.format("&7Ranga: " + user.getRankPlayerUser().getRankType().getPrefix()));
+        }
+        sender.sendMessage(Utils.format("&8------------  &f( &b&lStatystyki &f) &8------------ "));
     }
 
     public void setPlayerLvl(final String adminName, final UUID uuid, int nowyLvl) {

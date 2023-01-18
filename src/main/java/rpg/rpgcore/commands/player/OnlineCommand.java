@@ -24,6 +24,6 @@ public class OnlineCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("list"));
             return;
         }
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Graczy na serwerze: &c" + player.getServer().getOnlinePlayers()));
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Graczy na serwerze: &c" + player.getServer().getOnlinePlayers().size()));
     }
 }

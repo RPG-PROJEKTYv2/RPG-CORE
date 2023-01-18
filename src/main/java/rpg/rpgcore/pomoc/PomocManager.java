@@ -47,6 +47,16 @@ public class PomocManager {
         gui.setItem(15, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/rangi").addGlowing().toItemStack().clone());
         gui.setItem(16, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/bony, /akcesoria, /dodatki").addGlowing().toItemStack().clone());
         gui.setItem(17, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/artefakty").addGlowing().toItemStack().clone());
+        gui.setItem(18, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/administracja").addGlowing().toItemStack().clone());
+        gui.setItem(19, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/craftingi").addGlowing().toItemStack().clone());
+        gui.setItem(20, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/kosz").addGlowing().toItemStack().clone());
+        gui.setItem(21, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/topki").addGlowing().toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/helpop").addGlowing().toItemStack().clone());
+        gui.setItem(23, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/listagraczy").addGlowing().toItemStack().clone());
+        gui.setItem(24, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/piersciendoswiadczenia").addGlowing().toItemStack().clone());
+        gui.setItem(25, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/sprawdzefekty <gracz>").addGlowing().toItemStack().clone());
+        gui.setItem(26, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e[item] &f- interakcja gui z chatem").addGlowing().toItemStack().clone());
+
 
         gui.setItem(26, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);

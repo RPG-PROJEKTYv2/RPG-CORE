@@ -39,7 +39,6 @@ public class MobDropHelper {
             }
         }
     }
-
     public static void dropFromMob(final Player player, final Entity entity) {
         final RPGCORE rpgcore = RPGCORE.getInstance();
         final UUID uuid = player.getUniqueId();
@@ -81,10 +80,10 @@ public class MobDropHelper {
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
-
         // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Krol Wygnancow")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &9&lKrol Wygnancow &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             // LOWCA
@@ -124,6 +123,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Wodz Goblinow")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-10-20 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
@@ -151,6 +151,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Krol Goryli")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-20-30 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
@@ -178,6 +179,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 4 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Przekleta Dusza")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-30-40 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
@@ -194,7 +196,7 @@ public class MobDropHelper {
         if (entityName.equals("Zjawa Lvl. 32") || entityName.equals("Zjawa Lvl. 36") || entityName.equals("Zjawa Lvl. 39")) {
             addDropPlayer(player, Skrzynki.getItem("I8", 1), chestDropChance50lvl, true, true, entity);
             addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance50lvl, true, false, entity);
-            addDropPlayer(player, GlobalItem.getItem("I_PROCHYZJAWY", 1), getDropChance(szczescie, 2.5), true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_ZLAMANAKOSC", 1), getDropChance(szczescie, 2.5), true, true, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 3) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("30-40")).getItemStack(), getDropChance(szczescie, 0.70), true, true, entity);
             }
@@ -208,6 +210,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 5 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Tryton")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
             rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-40-50 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
@@ -252,7 +255,8 @@ public class MobDropHelper {
         }
         // ----------------------------------------- EXPOWISKO 7 -----------------------------------------
         // BOSS
-        if (entityName.equals("[BOSS] Piekielny Rycerz")) {
+        if (entityName.equals("[BOSS] Piekielna Dusza")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lPiekielna Dusza &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I13", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 7) {
                 addDropPlayer(player, LowcaItems.getItem("60-70", 1), getDropChance(szczescie, 15), true, true, entity);
@@ -279,6 +283,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 8 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Przeklety Czarnoksieznik")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
                 addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);
@@ -305,6 +310,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 10 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Mityczny Pajak")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lMityczny Pajak &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
                 addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 15), true, true, entity);
@@ -330,6 +336,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 11 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Podziemny Rozpruwacz")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I19", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 10) {
                 addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 15), true, true, entity);
@@ -355,6 +362,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 12 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Mityczny Kraken")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
                 addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 15), true, true, entity);
@@ -379,9 +387,10 @@ public class MobDropHelper {
         }
         // ----------------------------------------- EXPOWISKO 13 -----------------------------------------
         // BOSS
-        if (entityName.equals("[BOSS] Hades")) {
+        if (entityName.equals("[BOSS] Krysztalowy Wladca")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &1&lKrysztalowy Wladca &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I23", 1), 100, true, true, entity);
-            addDropPlayer(player, GlobalItem.getItem("I_SERCEDEMONA", 1), getDropChance(szczescie, 1.5), true, true, entity);
+            addDropPlayer(player, GlobalItem.getItem("I_KRYSZTAL", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 12) {
                 addDropPlayer(player, LowcaItems.getItem("110-120", 1), getDropChance(szczescie, 15), true, true, entity);
             }
@@ -390,7 +399,7 @@ public class MobDropHelper {
             }
         }
         // MOB
-        if (entityName.equals("Centaur Lvl. 114") || entityName.equals("Centaur Lvl. 116") || entityName.equals("Centaur Lvl. 118")) {
+        if (entityName.equals("Mrozny Stroz Lvl. 114") || entityName.equals("Mrozny Stroz Lvl. 116") || entityName.equals("Mrozny Stroz Lvl. 118")) {
             addDropPlayer(player, NiesyItems.N12.getItemStack(), niesDropChance50plus, true, false, entity);
             if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 11) {
                 addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("110-120")).getItemStack(), getDropChance(szczescie, 0.08), true, true, entity);
@@ -405,6 +414,7 @@ public class MobDropHelper {
         // ----------------------------------------- EXPOWISKO 14 -----------------------------------------
         // BOSS
         if (entityName.equals("[BOSS] Archaniol")) {
+            Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lArchaniol &fzostal zabity przez: &e" + player.getName()));
             addDropPlayer(player, Skrzynki.getItem("I25", 1), 100, true, true, entity);
             addDropPlayer(player, GlobalItem.getItem("I_NIEBIANSKIMATERIAL", 1), getDropChance(szczescie, 1.5), true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 13) {

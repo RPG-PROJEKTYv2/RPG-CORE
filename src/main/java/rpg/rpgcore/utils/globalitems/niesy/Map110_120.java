@@ -16,11 +16,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map110_120 {
-    I110_120_1("110-120-1", 12, ItemHelper.createArmor("&c&lKrwisty Kaszkiet", Material.DIAMOND_HELMET, 84, 15)),
-    I110_120_2("110-120-2", 12, ItemHelper.createArmor("&c&lKrwista Koszula", Material.DIAMOND_CHESTPLATE, 87, 15)),
-    I110_120_3("110-120-3", 12, ItemHelper.createArmor("&c&lKrwiste Spodnie", Material.DIAMOND_LEGGINGS, 86, 15)),
-    I110_120_4("110-120-4", 12, ItemHelper.createArmor("&c&lKrwiste Buty", Material.DIAMOND_BOOTS, 82, 15)),
-    I110_120_5("110-120-5", 12, ItemHelper.createSword("&c&lKrwista Katana", Material.DIAMOND_SWORD, 77, 43,true)),
+    I110_120_1("110-120-1", 12, ItemHelper.createArmor("&f&fMrozny Kaszkiet", Material.DIAMOND_HELMET, 84, 15)),
+    I110_120_2("110-120-2", 12, ItemHelper.createArmor("&f&fMrozna Koszula", Material.DIAMOND_CHESTPLATE, 87, 15)),
+    I110_120_3("110-120-3", 12, ItemHelper.createArmor("&f&lMrozne Spodnie", Material.DIAMOND_LEGGINGS, 86, 15)),
+    I110_120_4("110-120-4", 12, ItemHelper.createArmor("&f&lMrozne Buty", Material.DIAMOND_BOOTS, 82, 15)),
+    I110_120_5("110-120-5", 12, ItemHelper.createSword("&f&lMrozna Katana", Material.DIAMOND_SWORD, 77, 43,true)),
 
     I110_120_6("110-120-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&3&lSzkarlatny Naszyjnik").toItemStack()),
     I110_120_7("110-120-7", 10, new ItemBuilder(Material.WATCH).setName("&3&lSzkarlatny Diadem").toItemStack()),

@@ -25,8 +25,8 @@ public class MSGManager {
 
     public void sendMessages(final Player sender, final Player target, String message) {
 
-        final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&3" + sender.getName() + " &8-> &3" + target.getName() + "&8]:"));
-        final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&3" + sender.getName() + " &8-> &3" + target.getName() + "&8]:"));
+        final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&e" + sender.getName() + " &8-> &6" + target.getName() + "&8]:&e"));
+        final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&6" + sender.getName() + " &8-> &e" + target.getName() + "&8]:&e"));
 
         senderPrefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.format("&7Kliknij, aby odpowiedziec " + target.getName())).create()));
         senderPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + target.getName() + " "));

@@ -96,14 +96,14 @@ public class RybakNPC {
 
         for (int i = 0; i < gui.getSize(); i++) {
             if (user.getMission() > i + 1) {
-                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&c&lMisja #" + (i + 1)).setLore(Arrays.asList("&7Postep: &a&lWYKONANA!")).addGlowing().toItemStack().clone());
+                gui.setItem(i, new ItemBuilder(Material.BOOK).setName("&cMisja #" + (i + 1)).setLore(Arrays.asList("&7Postep: &a&lWYKONANA!")).addGlowing().toItemStack().clone());
             } else if (user.getMission() == i + 1) {
                 final RybakMissions mission = RybakMissions.getMission(i + 1);
                 assert mission != null;
-                gui.setItem(i, new ItemBuilder(mission.getMissionItem().clone()).setName("&c&lMisja #" + (i + 1)).setLoreCrafting(mission.getMissionItem().getItemMeta().getLore(),
+                gui.setItem(i, new ItemBuilder(mission.getMissionItem().clone()).setName("&cMisja #" + (i + 1)).setLoreCrafting(mission.getMissionItem().getItemMeta().getLore(),
                         Arrays.asList(" ", "&7Postep: &6" + user.getProgress() + "&7/&6" + mission.getReqAmount())).toItemStack().clone());
             } else {
-                gui.setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisja #" + (i + 1)).setLore(Arrays.asList("&c&lUkoncz poprzednia", "&c&lmisje, zeby odblokowac")).toItemStack().clone());
+                gui.setItem(i, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&cMisja #" + (i + 1)).setLore(Arrays.asList("&bUkoncz poprzednia", "&bmisje, zeby odblokowac")).toItemStack().clone());
             }
         }
 

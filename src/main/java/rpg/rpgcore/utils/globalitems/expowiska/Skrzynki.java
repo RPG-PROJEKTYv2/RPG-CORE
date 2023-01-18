@@ -27,24 +27,24 @@ public enum Skrzynki {
     I9("I9", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &e&lTrytona").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I10("I10", new ItemBuilder(Material.CHEST).setName("&3Skrzynia Straznika Swiatyni").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 6
-    I11("I11", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &f&lSkrzynia Mitycznego Lodowego Golema").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I11("I11", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &f&lMitycznego Lodowego Golema").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I12("I12", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Mroznego Wilka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 7
-    I13("I13", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &1&lSkrzynia Piekielnego Rycerza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I13("I13", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &c&lPiekielnej Duszy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I14("I14", new ItemBuilder(Material.CHEST).setName("&6Skrzynia Zywiolaka Ognia").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 8
-    I15("I15", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &5&lSkrzynia Przekletego Czarnoksieznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I15("I15", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &5&lPrzekletego Czarnoksieznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I16("I16", new ItemBuilder(Material.CHEST).setName("&fSkrzynia Mrocznej Duszy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 9
-    I17("I17", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &e&lSkrzynia Mitycznego Pajaka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I17("I17", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &e&lMitycznego Pajaka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 10
-    I19("I19", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &6&lSkrzynia Podziemnego Rozpruwacza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I19("I19", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &5&lPodziemnego Rozpruwacza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 11
-    I21("I21", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &b&lSkrzynia Mitycznego Krakena").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I21("I21", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &b&lMitycznego Krakena").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 12
-    I23("I23", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &c&lSkrzynia Hadesu").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I23("I23", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &1&lKrysztalowego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 13
-    I25("I25", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &f&lSkrzynia Archaniola").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
+    I25("I25", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &f&lArchaniola").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
     private final ItemStack itemStack;
     private final String name;
 

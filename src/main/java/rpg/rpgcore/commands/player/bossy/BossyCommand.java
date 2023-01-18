@@ -42,13 +42,18 @@ public class BossyCommand extends CommandAPI {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         }
         // czasowe
-        gui.setItem(0, this.makeBOSSY("&9&lKrol Wygnancow", -43, 74, -146, 1));
+        gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&9&lKrol Wygnancow").setLore(Arrays.asList(
+                " ",
+                "&7Lokalizacja XYZ: &6&l158 | 73 | 243",
+                "&7Lokalizacja XYZ: &6&l59 | 73 | 59",
+                "&7Czas odrodzenia: &6&l1 minuta"
+        )).addGlowing().toItemStack().clone());
         gui.setItem(1, this.makeBOSSY("&a&lWodz Goblinow", 39, 75, 88, 5));
         gui.setItem(2, this.makeBOSSY("&f&lKrol Goryli", 146, 75, 126, 8));
         gui.setItem(3, this.makeBOSSY("&7&lPrzekleta Dusza", 211, 78, -14, 15));
         gui.setItem(4, this.makeBOSSY("&e&lTryton", -89, 68, -248, 30));
         // przepustki
-        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&f&lMityczny Lodowy Golem").setLore(Arrays.asList(" ", "&f&lLokalizacja: &6&lx56 y:34 z:76 &f&l- &4&lDemonTower", " ")).addGlowing().toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&f&lMityczny Lodowy Golem").setLore(Arrays.asList(" ", "&7Lokalizacja XYZ: &6&l56 | 34 | 76 &8(&4&lDEMONTOWER&8)")).addGlowing().toItemStack().clone());
         gui.setItem(6, this.makeWBOSSY("&1&lPiekielny Rycerz", 43,79,106));
         gui.setItem(7, this.makeWBOSSY("&5&lPrzeklety  Czarnoksieznik", 2,32,15));
         gui.setItem(8, this.makeWBOSSY("&e&lMityczny Pajak", -40,67,146));
@@ -61,16 +66,14 @@ public class BossyCommand extends CommandAPI {
     private ItemStack makeBOSSY(final String nazwabossa, int x, int y, int z, int czas) {
         return new ItemBuilder(Material.PAPER, 1).setName(Utils.format(nazwabossa)).setLore(Arrays.asList(
         " ",
-        "&f&lLokalizacja: &6&lx:" + x + " y:" + y + " z:" + z,
-        "&f&lResp: &6&l" + (czas > 5 ? czas + " minut" : czas + " minuty"),
-        " "
+        "&7Lokalizacja XYZ: &6&l" + x + " | " + y + " | " + z,
+        "&7Czas odrodzenia: &6&l" + (czas > 5 ? czas + " minut" : czas + " minuty")
         )).addGlowing().toItemStack().clone();
     }
     private ItemStack makeWBOSSY(final String nazwabossa, int x, int y, int z) {
         return new ItemBuilder(Material.PAPER, 1).setName(Utils.format(nazwabossa)).setLore(Arrays.asList(
                 " ",
-                "&f&lLokalizacja: &6&lx:" + x + " y:" + y + " z:" + z,
-                " "
+                "&7Lokalizacja XYZ: &6&l" + x + " | " + y + " | " + z
         )).addGlowing().toItemStack().clone();
     }
 }

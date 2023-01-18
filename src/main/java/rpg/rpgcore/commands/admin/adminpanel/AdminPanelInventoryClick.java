@@ -47,19 +47,30 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
             if (slot == 13) {
-                rpgcore.getAdminPanelManager().openItemShopGUI(player);
-                return;
-            }
-            if (slot == 14) {
                 rpgcore.getAdminPanelManager().openUlepszaczeGUI(player);
                 return;
             }
-            if (slot == 19) {
+            if (slot == 14) {
+                rpgcore.getAdminPanelManager().openItemShopGUI(player);
+                return;
+            }
+            if (slot == 15) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+                return;
+            }
+
+            if (slot == 28) {
                 rpgcore.getAdminPanelManager().openGornikItemsGUI(player);
                 return;
             }
-            if (slot == 20) {
-                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+            if (slot == 29) {
+                rpgcore.getAdminPanelManager().openRybakItemsGUI(player);
+                return;
+            }
+            if (slot == 30) {
+                player.closeInventory();
+                player.sendMessage(Utils.format("&7Brak aktualizacji &4&lDRWALA&7!"));
+                //rpgcore.getAdminPanelManager().openDrwalItemsGUI(player);
                 return;
             }
         }
@@ -116,7 +127,7 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
         if (title.equals("ItemShop - ADMINISTRACJA")) {
-            if (slot == 35) {
+            if (slot == 53) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
                 return;
@@ -129,16 +140,23 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
         }
-        if (title.equals("GORNIK - ADMINISTRACJA")) {
+        if (title.equals("Rybak - ADMINISTRACJA")) {
+            if (slot == 17) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
+            }
+        }
+        if (title.equals("Gornik - ADMINISTRACJA")) {
             if (slot == 53) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
-        if (title.equals("Przedmioty Specjalne - ADMINISRTACJA")) {
+        if (title.equals("Przedmioty S - ADMINISTRACJA")) {
             if (slot == 26) {
                 e.setCancelled(true);
-                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
     }

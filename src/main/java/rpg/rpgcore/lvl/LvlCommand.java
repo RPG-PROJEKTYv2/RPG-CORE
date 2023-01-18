@@ -54,11 +54,11 @@ public class LvlCommand extends CommandAPI {
                     || (rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff() && !rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin())) {
                 return;
             }
-            player.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-_-_-"));
+            player.sendMessage(Utils.format("&8-------- &f( &b&lUstawienia &f) &8--------"));
             player.sendMessage(Utils.format("&8/&clvl <gracz> <setlvl> <int> &7- pozwala usatwic lvl podanego gracza"));
             player.sendMessage(Utils.format("&8/&clvl <gracz> <setexp> <double> &7- pozwala usatwic exp podanego gracza"));
             player.sendMessage(Utils.format("&8/&clvl <gracz> <setprocent> <double> &7- pozwala usatwic procent expa podanego gracza"));
-            player.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&b&lLVL&8}-_-_-_-_-_-_-_-_-_-_-"));
+            player.sendMessage(Utils.format("&8-------- &f( &b&lUstawienia &f) &8--------"));
             return;
         }
         if (args.length == 3) {

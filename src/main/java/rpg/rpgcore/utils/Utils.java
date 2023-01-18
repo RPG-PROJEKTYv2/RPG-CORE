@@ -61,7 +61,6 @@ public class Utils {
         lore.replaceAll(Utils::format);
         return lore;
     }
-
     public static String permisje(final String perm) {
         return format(SERVERNAME + "&6Nie masz wystarczajacych permisji &8(&6" + perm + "&8)");
     }

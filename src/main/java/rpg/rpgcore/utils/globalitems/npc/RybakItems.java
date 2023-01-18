@@ -79,4 +79,7 @@ public enum RybakItems {
                 .addTagDouble("reqExp", wedkaStats.getExp()).addTagDouble("szczescie", wedkaStats.getMorskieSzczescie()).addTagDouble("podwojnyDrop", wedkaStats.getPodwojnyDrop())
                 .addTagDouble("kufer", wedkaStats.getKufer()).addTagDouble("nies", wedkaStats.getNies()).addTagString("owner", playerName).hideFlag().toItemStack().clone();
     }
+    public ItemStack getRybak() {
+        return this.itemStack;
+    }
 }
