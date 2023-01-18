@@ -1,6 +1,9 @@
 package rpg.rpgcore.npc.handlarz.enums;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.Utils;
 
 public enum HandlarzSellItems {
 
@@ -25,24 +28,15 @@ public enum HandlarzSellItems {
     }
 
     public double getPrice() {
-        return price;
+        return DoubleUtils.round(price, 2);
     }
 
-    public static HandlarzSellItems getByMaterial(Material material) {
-        for (HandlarzSellItems kupiecItem : HandlarzSellItems.values()) {
-            if (kupiecItem.getMaterial() == material) {
-                return kupiecItem;
+    public static double getItemPrice(final ItemStack item) {
+        for (final HandlarzSellItems items : HandlarzSellItems.values()) {
+            if (items.getMaterial() == item.getType() && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && Utils.removeColor(item.getItemMeta().getDisplayName()).equalsIgnoreCase(items.getName())) {
+                return items.getPrice();
             }
         }
-        return I_ERROR;
-    }
-
-    public static HandlarzSellItems getByName(String name) {
-        for (HandlarzSellItems kupiecItem : HandlarzSellItems.values()) {
-            if (kupiecItem.getName().equalsIgnoreCase(name)) {
-                return kupiecItem;
-            }
-        }
-        return I_ERROR;
+        return 0.0;
     }
 }

@@ -298,6 +298,23 @@ public class Utils {
         return reverseString(numberInString) + afterDot;
     }
 
+    public static String spaceNumber(double number) {
+        String numberInString = String.format("%.2f", number);
+        String afterDot = "";
+        if (numberInString.contains(".")) {
+            int dotIndex = numberInString.indexOf('.');
+            afterDot = numberInString.substring(dotIndex, dotIndex + 3);
+            numberInString = numberInString.substring(0, dotIndex);
+        }
+        numberInString = reverseString(numberInString).replaceAll("...(?!$)", "$0 ");
+
+        if (afterDot.equals("")) {
+            return reverseString(numberInString);
+        }
+
+        return reverseString(numberInString) + afterDot;
+    }
+
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().getRankType() == RankType.DEV && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
