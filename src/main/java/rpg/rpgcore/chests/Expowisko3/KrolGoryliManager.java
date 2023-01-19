@@ -19,7 +19,7 @@ public class KrolGoryliManager {
         this.krolgoryli.add(new Items("2", 10.0, ItemHelper.createArmor("&f&lZbroja Krola Goryli", Material.GOLD_CHESTPLATE, 20, 5), 1));
         this.krolgoryli.add(new Items("3", 10.0, ItemHelper.createArmor("&f&lSpodnie Krola Goryli", Material.GOLD_LEGGINGS, 13, 3), 1));
         this.krolgoryli.add(new Items("4", 10.0, ItemHelper.createArmor("&f&lButy Krola Goryli", Material.GOLD_BOOTS, 13, 3), 1));
-        this.krolgoryli.add(new Items("5", 10.0, ItemHelper.createSword("&f&lMiecz Krola Goryli", Material.GOLD_SWORD, 10, 4,false), 1));
+        this.krolgoryli.add(new Items("5", 9.0, ItemHelper.createSword("&f&lMiecz Krola Goryli", Material.GOLD_SWORD, 10, 4,false), 1));
         this.krolgoryli.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lZwykly Naszyjnik Krola Goryli").toItemStack(),1 ));
         this.krolgoryli.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&f&lZwykly Diadem Krola Goryli").toItemStack(),1 ));
         this.krolgoryli.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lZwykly Pierscien Krola Goryli").toItemStack(),1 ));

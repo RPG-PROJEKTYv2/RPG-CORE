@@ -20,7 +20,7 @@ public class TrytonManager {
         this.tryton.add(new Items("2", 10.0, ItemHelper.createArmor("&6&lZbroja Trytona", Material.IRON_CHESTPLATE, 30, 7), 1));
         this.tryton.add(new Items("3", 10.0, ItemHelper.createArmor("&6&lSpodnie Trytona", Material.IRON_LEGGINGS, 44, 15), 1));
         this.tryton.add(new Items("4", 10.0, ItemHelper.createArmor("&6&lButy Trytona", Material.IRON_BOOTS, 33, 8), 1));
-        this.tryton.add(new Items("5", 10.0, ItemHelper.createSword("&6&lMiecz Trytona", Material.IRON_SWORD, 23, 15,false), 1));
+        this.tryton.add(new Items("5", 9.0, ItemHelper.createSword("&6&lMiecz Trytona", Material.IRON_SWORD, 23, 15,false), 1));
         this.tryton.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lZwykly Naszyjnik Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&5&lZwykly Diadem Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lZwykly Pierscien Trytona").toItemStack(),1 ));

@@ -24,7 +24,7 @@ public class PomocManager {
         player.openInventory(gui);
     }
     public void openAllKomendyInventory(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&b&lSpis komend"));
+        final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&b&lSpis komend"));
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         }
@@ -56,9 +56,10 @@ public class PomocManager {
         gui.setItem(24, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/piersciendoswiadczenia").addGlowing().toItemStack().clone());
         gui.setItem(25, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/sprawdzefekty <gracz>").addGlowing().toItemStack().clone());
         gui.setItem(26, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e[item] &f- interakcja gui z chatem").addGlowing().toItemStack().clone());
+        gui.setItem(27, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/ranktime").addGlowing().toItemStack().clone());
 
 
-        gui.setItem(26, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(35, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
 }

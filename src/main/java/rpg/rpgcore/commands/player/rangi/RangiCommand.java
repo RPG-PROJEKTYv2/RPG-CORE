@@ -58,7 +58,8 @@ public class RangiCommand extends CommandAPI {
                 "&5&lTwitch&7: &eminimum 100 follow",
                 "&8&lTik&d&lTok&7: &eminimum 1 000 obserwujacych",
                 "              &eoraz 5000 wyswietlen (najlepszy film)",
-                "&9&lDiscord&7: &epo wspolprace zapraszammy na dc.hellrpg.pl"
+                " ",
+                "&4&lPo wspolprace zapraszamy: &e&ldc.hellrpg.pl"
         )).addGlowing().toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.BOOK).setName("&5&lELITA").setLore(Arrays.asList(" ",
                 "&7Ranga ta posiada:",
@@ -69,8 +70,14 @@ public class RangiCommand extends CommandAPI {
                 "&7* &e/zestawelita &c- co 24 godziny",
                 "&7 &e/enderchest"
         )).addGlowing().toItemStack().clone());
-        gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(" ", "&7Wszystkie rangi mozna zakupic na discordzie:", "&7* &edc.hellrpg.pl", "&7lub na naszej stronie", "&7* &ewww.hellrpg.pl")).addGlowing().toItemStack().clone());
-
+        gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(
+                " ",
+                "&7Wszystkie rangi mozesz zakupic u &a&lHandlarza",
+                "&7za walute serwerowa '&4&lHell&6&lS'y&7' ktora zakupisz",
+                "&7na stronie serwera: &ewww.hellrpg.pl",
+                " ",
+                "&7Sprawdz swoj pozostaly czas rangi: &e/ranktime"
+        )).addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
 }
