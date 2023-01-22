@@ -20,7 +20,7 @@ public class PrzekletaDuszaManager {
         this.przekletadusza.add(new Items("2", 10.0, ItemHelper.createArmor("&7&lZbroja Przekletej Duszy", Material.CHAINMAIL_CHESTPLATE, 29, 8), 1));
         this.przekletadusza.add(new Items("3", 10.0, ItemHelper.createArmor("&7&lSpodnie Przekletej Duszy", Material.CHAINMAIL_LEGGINGS, 20, 5), 1));
         this.przekletadusza.add(new Items("4", 10.0, ItemHelper.createArmor("&7&lButy Przekletej Duszy", Material.CHAINMAIL_BOOTS, 20, 5), 1));
-        this.przekletadusza.add(new Items("5", 10.0, ItemHelper.createSword("&7&lMiecz Przekletej Duszy", Material.STONE_SWORD, 15, 8,false), 1));
+        this.przekletadusza.add(new Items("5", 9.0, ItemHelper.createSword("&7&lMiecz Przekletej Duszy", Material.STONE_SWORD, 15, 8,false), 1));
         this.przekletadusza.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&7&lZwykly Naszyjnik Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&7&lZwykly Diadem Przekletej Duszy").toItemStack(),1 ));
         this.przekletadusza.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&7&lZwykly Pierscien Przekletej Duszy").toItemStack(),1 ));

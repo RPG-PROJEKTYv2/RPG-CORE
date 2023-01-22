@@ -16,16 +16,16 @@ public class PrzekletyRycerzManager {
     private final Set<Items> przekletyrycerz = Sets.newConcurrentHashSet();
 
     public PrzekletyRycerzManager() {
-        this.przekletyrycerz.add(new Items("1", 8.0, ItemHelper.createArmor("&1&lHelm Przekletego Rycerza", Material.IRON_HELMET, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("2", 8.0, ItemHelper.createArmor("&1&lZbroja Przekletego Rycerza", Material.IRON_CHESTPLATE, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("3", 8.0, ItemHelper.createArmor("&1&lSpodnie Przekletego Rycerza", Material.IRON_LEGGINGS, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("4", 8.0, ItemHelper.createArmor("&1&lButy Przekletego Rycerza", Material.IRON_BOOTS, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("5", 6.0, ItemHelper.createSword("&1&lMiecz Przekletego Rycerza", Material.IRON_SWORD, 32, 22,false), 1));
-        this.przekletyrycerz.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&1&lNaszyjnik Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&1&lDiadem Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&1&lPierscien Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&1&lTarcza Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("10", 2.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&1&lKolczyki Przekletego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("1", 10.0, ItemHelper.createArmor("&1&lHelm Przekletego Rycerza", Material.IRON_HELMET, 30, 1), 1));
+        this.przekletyrycerz.add(new Items("2", 10.0, ItemHelper.createArmor("&1&lZbroja Przekletego Rycerza", Material.IRON_CHESTPLATE, 30, 1), 1));
+        this.przekletyrycerz.add(new Items("3", 10.0, ItemHelper.createArmor("&1&lSpodnie Przekletego Rycerza", Material.IRON_LEGGINGS, 30, 1), 1));
+        this.przekletyrycerz.add(new Items("4", 10.0, ItemHelper.createArmor("&1&lButy Przekletego Rycerza", Material.IRON_BOOTS, 30, 1), 1));
+        this.przekletyrycerz.add(new Items("5", 9.0, ItemHelper.createSword("&1&lMiecz Przekletego Rycerza", Material.IRON_SWORD, 32, 22,false), 1));
+        this.przekletyrycerz.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&1&lNaszyjnik Przekletego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&1&lDiadem Przekletego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&1&lPierscien Przekletego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("9", 7.0, new ItemBuilder(Material.ITEM_FRAME).setName("&1&lTarcza Przekletego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("10", 7.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&1&lKolczyki Przekletego Rycerza").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

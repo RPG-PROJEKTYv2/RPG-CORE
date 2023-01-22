@@ -17,7 +17,6 @@ public class ClearCommand extends CommandAPI {
         this.setRestrictedForPlayer(true);
     }
 
-
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
@@ -36,12 +35,10 @@ public class ClearCommand extends CommandAPI {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku &6" + args[0] + "&c!"));
                 return;
             }
-
             if (target.getInventory().getContents().length == 0) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cGracz &6" + target.getName() + " &cnie ma nic w ekwipunku!"));
                 return;
             }
-
             target.getInventory().clear();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczyszczono ekwipunek gracza &6" + target.getName() + "&c!"));
         }
