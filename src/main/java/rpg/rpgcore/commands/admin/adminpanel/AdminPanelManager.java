@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -171,19 +172,36 @@ public class AdminPanelManager {
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
-
-
     public void openItemShopGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lItemShop &f- ADMINISTRACJA"));
-        for (int i = 0; i < 54; i++) {
-            if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack());
-            } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
-            }
-        }
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lItemShop &f- ADMINISTRACJA"));
 
-        gui.setItem(53, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(0, ItemShop.getByName("Vip_3d").getItems().get(0));
+        gui.setItem(1, ItemShop.getByName("Vip_7d").getItems().get(0));
+        gui.setItem(2, ItemShop.getByName("Vip_14d").getItems().get(0));
+
+        gui.setItem(7, ItemShop.getByName("PELERYNKA").getItems().get(0));
+        gui.setItem(8, ItemShop.getByName("PELERYNKA+").getItems().get(0));
+
+        gui.setItem(9, ItemShop.getByName("Elita_3d").getItems().get(0));
+        gui.setItem(10, ItemShop.getByName("Elita_7d").getItems().get(0));
+        gui.setItem(11, ItemShop.getByName("Elita_14d").getItems().get(0));
+        gui.setItem(12, ItemShop.getByName("Elita_30d").getItems().get(0));
+
+        gui.setItem(14, GlobalItem.getItem("I52",1 ));
+        gui.setItem(15, GlobalItem.getItem("I53",1 ));
+        gui.setItem(16, GlobalItem.getItem("I54",1 ));
+        gui.setItem(17, GlobalItem.getItem("I55",1 ));
+
+        gui.setItem(18, ItemShop.getByName("HS_5").getItems().get(0));
+        gui.setItem(19, ItemShop.getByName("HS_10").getItems().get(0));
+        gui.setItem(20, ItemShop.getByName("HS_15").getItems().get(0));
+        gui.setItem(21, ItemShop.getByName("HS_30").getItems().get(0));
+        gui.setItem(22, ItemShop.getByName("HS_55").getItems().get(0));
+        gui.setItem(23, ItemShop.getByName("HS_130").getItems().get(0));
+        gui.setItem(24, ItemShop.getByName("HS_280").getItems().get(0));
+        gui.setItem(25, ItemShop.getByName("HS_585").getItems().get(0));
+
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);
     }
 

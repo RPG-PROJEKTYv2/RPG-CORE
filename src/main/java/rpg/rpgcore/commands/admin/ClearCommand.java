@@ -26,6 +26,7 @@ public class ClearCommand extends CommandAPI {
                 return;
             }
             player.getInventory().clear();
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
             return;
         }
         if (args.length == 1) {

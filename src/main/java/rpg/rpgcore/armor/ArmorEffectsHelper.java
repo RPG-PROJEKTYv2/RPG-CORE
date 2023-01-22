@@ -52,7 +52,7 @@ public class ArmorEffectsHelper {
             player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999999, k - 1));
             player.setMaxHealth((bonuses.getBonusesUser().getDodatkowehp() * 2) + (k1 * 2));
-            if (player.getWorld().getName().equals("spawnOFFICIAL")) {
+            if (player.getWorld().getName().equals("world")) {
                 player.setHealth(player.getMaxHealth());
             }
         }
@@ -124,7 +124,7 @@ public class ArmorEffectsHelper {
         }
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.JUMP);
-            if (!player.getWorld().getName().equals("spawnOFFICIAL")) {
+            if (!player.getWorld().getName().equals("world")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, k));
             }
         }

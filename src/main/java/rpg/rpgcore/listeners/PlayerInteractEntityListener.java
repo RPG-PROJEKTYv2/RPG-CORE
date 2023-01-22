@@ -196,7 +196,7 @@ public class PlayerInteractEntityListener implements Listener {
 
             // GORNIK
             if (entityName.equalsIgnoreCase("Gornik")) {
-                if (playerRightClicked.getLocation().getWorld().getName().equals("spawnOFFICIAL")) {
+                if (playerRightClicked.getLocation().getWorld().getName().equals("world")) {
                     rpgcore.getGornikNPC().onClick(player);
                     return;
                 }

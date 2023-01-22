@@ -55,7 +55,7 @@ public enum GlobalItem {
     I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Przekletych Wojownikow").setLore(Arrays.asList(" ", "&7Klucz ten otwiera wrota na arene &4&lWOJOWNIKOW&7!")).hideFlag().toItemStack().clone()),
     I_KLUCZ_PIEKIELNA_KRYJOWKA("I_KLUCZ_PIEKIELNA_KRYJOWKA", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Piekielnej Kryjowki").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPIEKIELNEJ KRYJOWKI&7!")).hideFlag().toItemStack().clone()),
 
-    I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSzkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
+    I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki

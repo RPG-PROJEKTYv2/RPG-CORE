@@ -18,16 +18,16 @@ public class PlayerFishListener implements Listener {
     private final RPGCORE rpgcore;
 
     private final List<Chunk> allowedChunksList = Arrays.asList(
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-5, -22),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-5, -23),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-6, -22),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-6, -23),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-7, -22),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-7, -23),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-8, -22),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-8, -23),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-9, -22),
-            Bukkit.getWorld("spawnOFFICIAL").getChunkAt(-9, -23)
+            Bukkit.getWorld("world").getChunkAt(-5, -22),
+            Bukkit.getWorld("world").getChunkAt(-5, -23),
+            Bukkit.getWorld("world").getChunkAt(-6, -22),
+            Bukkit.getWorld("world").getChunkAt(-6, -23),
+            Bukkit.getWorld("world").getChunkAt(-7, -22),
+            Bukkit.getWorld("world").getChunkAt(-7, -23),
+            Bukkit.getWorld("world").getChunkAt(-8, -22),
+            Bukkit.getWorld("world").getChunkAt(-8, -23),
+            Bukkit.getWorld("world").getChunkAt(-9, -22),
+            Bukkit.getWorld("world").getChunkAt(-9, -23)
     );
 
     public PlayerFishListener(final RPGCORE rpgcore) {
