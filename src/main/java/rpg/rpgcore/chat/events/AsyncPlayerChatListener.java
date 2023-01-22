@@ -15,6 +15,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
@@ -46,7 +47,7 @@ public class AsyncPlayerChatListener implements Listener {
             return;
         }
 
-        if (!rpgcore.getChatManager().isChatEnabled() && (!user.getRankUser().isStaff() && !user.isAdminCodeLogin())) {
+        if (!rpgcore.getChatManager().isChatEnabled() && !(user.getRankUser().isStaff() && user.isAdminCodeLogin())) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie &cwylaczony&7!"));
             return;
         }
@@ -86,9 +87,21 @@ public class AsyncPlayerChatListener implements Listener {
             }
             return;
         }
-        if (Utils.removeColor(message).isEmpty()) {
+        if (message.isEmpty()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac pustej wiadomosci!"));
             return;
+        }
+        if (message.length() > 2) {
+            if (Utils.removeColor(message).isEmpty()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac wiadomosci z samymi kolorami!"));
+                return;
+            }
+            if (message.startsWith("www") || message.startsWith("http") || message.startsWith("https")) {
+                if (!(user.getRankUser().isStaff() && user.isAdminCodeLogin())) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac wiadomosci z linkiem!"));
+                    return;
+                }
+            }
         }
         formatuj(player, message);
         if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
@@ -125,7 +138,7 @@ public class AsyncPlayerChatListener implements Listener {
         final TextComponent lvl = (user.getLvl() == 130 ? new TextComponent(Utils.format("&8[&bLvl. &4&lMAX&8] ")) : new TextComponent(Utils.format("&8[&bLvl. &f" + user.getLvl() + "&8] ")));
         lvl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
                 new TextComponent(Utils.format("&7Poziom: &6" + user.getLvl() +
-                        "\n&7Postep do nastepnego poziomu: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(user.getExp(), rpgcore.getLvlManager().getExpForLvl(user.getLvl()))) + "%"))}));
+                        "\n&7Postep do nastepnego poziomu: &6" + DoubleUtils.round((user.getExp() * rpgcore.getLvlManager().getExpForLvl(user.getLvl())) / 100, 2)  + "%"))}));
         main.addExtra(lvl);
 
         TextComponent rank;
@@ -149,18 +162,18 @@ public class AsyncPlayerChatListener implements Listener {
         final String message = event.getMessage();
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
-        if (!user.getRankUser().isStaff()) {
+        if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
             for (final String command : Arrays.asList("/pl", "/plugins", "bukkit:ban", "logout", "bukkit:banip", "/?", "/ver", "/version", "/bukkit", "/bukkit:ver", "/bukkit:version", "/icanhasbukkit", "/bukkit:help", "bukkit:?", "/me", "/bukkit:me", "/minecraft:me", "/about", "//calc", "//calculate", "mv", "/mv", "/multiverse-core:mv", "multiverse-core:mv")) {
                 if (message.toLowerCase().contains(command)) {
                     event.setCancelled(true);
-                    player.sendMessage(Utils.format("&cPodana komenda nie została odnaleziona!"));
+                    player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
                     return;
                 }
             }
         }
         if (topic == null) {
             event.setCancelled(true);
-            player.sendMessage(Utils.format("&cPodana komenda nie została odnaleziona!"));
+            player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
         }
     }
 }

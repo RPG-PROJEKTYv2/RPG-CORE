@@ -27,7 +27,13 @@ public class PlayerInteractEntityListener implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getCustomName()).equals("TELEPORTER")) {
+        if (rpgcore.getDisabledManager().getDisabled().isDisabledNpc(Utils.removeColor(e.getRightClicked().getName())) && !(rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff() && rpgcore.getUserManager().find(uuid).isAdminCodeLogin())) {
+            e.setCancelled(true);
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen npc zostal tymczasowo wylaczony przez administratora!"));
+            return;
+        }
+
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
             return;
@@ -56,7 +62,7 @@ public class PlayerInteractEntityListener implements Listener {
 
         // MAGAZYNIER
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
-            if (Utils.removeColor(e.getRightClicked().getCustomName()).equals("Magazynier")) {
+            if (Utils.removeColor(e.getRightClicked().getName()).equals("Magazynier")) {
                 e.setCancelled(true);
                 rpgcore.getMagazynierNPC().openMagazynierMainGUI(player);
                 return;

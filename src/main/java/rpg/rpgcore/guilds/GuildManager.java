@@ -88,12 +88,20 @@ public class GuildManager {
             player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
             return;
         }
+        if (rpgcore.getUserManager().find(guild.getOwner()) == null) {
+            player.sendMessage(Utils.format("&cCos poszlo nie tak :<!"));
+            return;
+        }
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));
         player.sendMessage(Utils.format("&6Opis: &7" + guild.getDescription()));
         player.sendMessage(Utils.format("&6Zalozyciel: &7" + rpgcore.getUserManager().find(guild.getOwner()).getName()));
         if (guild.getCoOwner().isEmpty()) {
             player.sendMessage(Utils.format("&6Zastepca: &7Brak Zastepcy"));
         } else {
+            if (rpgcore.getUserManager().find(UUID.fromString(guild.getCoOwner())) == null) {
+                player.sendMessage(Utils.format("&cCos poszlo nie tak :<!"));
+                return;
+            }
             player.sendMessage(Utils.format("&6Zastepca: &7" + rpgcore.getUserManager().find(UUID.fromString(guild.getCoOwner())).getName()));
         }
         if (guild.isPvp()) {
@@ -111,9 +119,9 @@ public class GuildManager {
         player.sendMessage(Utils.format("&6Czlonkowie: "));
         for (UUID uuid : guild.getMembers()) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
-                player.sendMessage(Utils.format("&8- &a" + rpgcore.getUserManager().find(uuid).getName()));
+                player.sendMessage(Utils.format("&8- &a" + Bukkit.getPlayer(uuid).getName()));
             } else {
-                player.sendMessage(Utils.format("&8- &c" + rpgcore.getUserManager().find(uuid).getName()));
+                player.sendMessage(Utils.format("&8- &c" + Bukkit.getOfflinePlayer(uuid).getName()));
             }
         }
         player.sendMessage(Utils.format("&8&m-_-_-_-_-_-_-_-_-&8{&6" + tag + "&8}&8&m-_-_-_-_-_-_-_-_-"));

@@ -15,6 +15,7 @@ import rpg.rpgcore.dodatki.DodatkiUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
+import rpg.rpgcore.managers.disabled.Disabled;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.DuszologObject;
 import rpg.rpgcore.npc.gornik.GornikObject;
@@ -207,6 +208,12 @@ public class MongoManager {
             this.setFirstSpawn();
         }
 
+        if (pool.getOther().find(new Document("_id", "disabled")).first() == null) {
+            final Disabled disabled = new Disabled();
+            this.addDataDisabled(disabled);
+            rpgcore.getDisabledManager().set(disabled);
+        }
+
         for (Document obj : pool.getGracze().find()) {
             UUID uuid = UUID.fromString(obj.get("_id").toString());
             System.out.println(uuid);
@@ -348,7 +355,9 @@ public class MongoManager {
             }*/
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
-            addOtherData(new ServerUser("dodatkowyExp"));
+            final ServerUser user = new ServerUser("dodatkowyExp");
+            addOtherData(user);
+            rpgcore.getServerManager().add(user);
         }
     }
 
@@ -673,7 +682,7 @@ public class MongoManager {
 
     public Map<String, ServerUser> loadAllServer() {
         Map<String, ServerUser> server = new ConcurrentHashMap<>();
-        for (Document document : this.pool.getOther().find()) {
+        for (Document document : this.pool.getOther().find(new Document("_id", "dodatkowyExp"))) {
             ServerUser serverUser = new ServerUser(document);
             server.put(serverUser.getName(), serverUser);
         }
@@ -1399,6 +1408,32 @@ public class MongoManager {
         for (final HandlarzUser handlarzUser : rpgcore.getHandlarzNPC().getHandlarzUsers()) {
             this.saveDataHandlarz(handlarzUser.getUuid(), handlarzUser);
         }
+    }
+
+    // DISABLED
+    public Disabled loadAllDisabled() {
+        final Document document = this.pool.getOther().find(new Document("_id", "disabled")).first();
+        if (document == null) {
+            final Disabled disabled = new Disabled();
+            this.addDataDisabled(disabled);
+            return disabled;
+        }
+        return new Disabled(document);
+    }
+
+    public void addDataDisabled(final Disabled disabled) {
+        if (this.pool.getOther().find(new Document("_id", "disabled")).first() != null) {
+            this.pool.getOther().deleteOne(new Document("_id", "disabled"));
+        }
+        this.pool.getOther().insertOne(disabled.toDocument());
+    }
+
+    public void saveDataDisabled(final Disabled disabled) {
+        this.pool.getOther().findOneAndReplace(new Document("_id", "disabled"), disabled.toDocument());
+    }
+
+    public void saveAllDisabled() {
+        this.saveDataDisabled(rpgcore.getDisabledManager().getDisabled());
     }
 
 

@@ -1,11 +1,13 @@
 package rpg.rpgcore.npc.handlarz.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
 
 public class HandlarzInventoryCloseListener implements Listener {
@@ -26,9 +28,11 @@ public class HandlarzInventoryCloseListener implements Listener {
                 e.getPlayer().getInventory().addItem(item);
             }
 
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> RPGCORE.getDiscordBot().sendChannelMessage("handlarz-logs", EmbedUtil.createHandlarzCancelLog((Player) e.getPlayer(), rpgcore.getHandlarzNPC().getUserItemMap(e.getPlayer().getUniqueId()))));
             e.getPlayer().sendMessage(Utils.format("&6&lHandlarz &8>> &cAnulowales sprzedawanie &6" +
                     rpgcore.getHandlarzNPC().getUserItemMap(e.getPlayer().getUniqueId()).entries().stream().mapToInt(entry -> entry.getKey().getAmount()).sum() + " &cprzedmiotow i zostaly one dodane do twojego ekwipunku."));
             rpgcore.getHandlarzNPC().removeUserItemMap(e.getPlayer().getUniqueId());
+
         }
     }
 }

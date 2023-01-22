@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.npc.handlarz.enums.HandlarzSellItems;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
@@ -41,9 +42,18 @@ public class HandlarzInventoryClickListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
-            if (slot == 10) rpgcore.getHandlarzNPC().openHandlarzWartosciowe(player);
-            if (slot == 13) rpgcore.getHandlarzNPC().openHandlarzKupnoSprzedaz(player);
-            if (slot == 16) rpgcore.getHandlarzNPC().openHandlarzItemShop(player);
+            if (slot == 10) {
+                rpgcore.getHandlarzNPC().openHandlarzWartosciowe(player);
+                return;
+            }
+            if (slot == 13) {
+                rpgcore.getHandlarzNPC().openHandlarzKupnoSprzedaz(player);
+                return;
+            }
+            if (slot == 16) {
+                rpgcore.getHandlarzNPC().openHandlarzItemShop(player);
+                return;
+            }
             return;
         }
 
@@ -62,9 +72,15 @@ public class HandlarzInventoryClickListener implements Listener {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
 
-            if (slot == 15) rpgcore.getHandlarzNPC().openHandlarzSprzedaz(player);
+            if (slot == 15) {
+                rpgcore.getHandlarzNPC().openHandlarzSprzedaz(player);
+                return;
+            }
 
-            if (slot == 22) rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+            if (slot == 22) {
+                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+                return;
+            }
 
             return;
         }
@@ -78,7 +94,10 @@ public class HandlarzInventoryClickListener implements Listener {
                 return;
             }
 
-            if (slot == 49) rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+            if (slot == 49) {
+                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+                return;
+            }
 
             final User user = rpgcore.getUserManager().find(uuid);
 
@@ -171,12 +190,18 @@ public class HandlarzInventoryClickListener implements Listener {
 
                 player.sendMessage(Utils.format("&6&lHandlarz &8>> &aPomyslnie sprzedales/-as &6" + rpgcore.getHandlarzNPC().getUserItemMap(uuid).entries().stream().mapToInt(stream -> stream.getKey().getAmount()).sum() + " &aprzedmiotow za &6" + Utils.spaceNumber(price) + "&2$&a!"));
 
+                final User user = rpgcore.getUserManager().find(uuid);
+
+                final double kasa = user.getKasa();
+
+                user.setKasa(user.getKasa() + price);
+
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> RPGCORE.getDiscordBot().sendChannelMessage("handlarz-logs", EmbedUtil.createHandlarzcSellLog(player, rpgcore.getHandlarzNPC().getUserItemMap(uuid), kasa, user.getKasa())));
+
                 rpgcore.getHandlarzNPC().removeUserItemMap(uuid);
                 player.closeInventory();
 
-                final User user = rpgcore.getUserManager().find(uuid);
 
-                user.setKasa(user.getKasa() + price);
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                 return;

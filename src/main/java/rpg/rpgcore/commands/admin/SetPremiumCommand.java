@@ -50,6 +50,21 @@ public class SetPremiumCommand extends CommandAPI {
             user.getRankPlayerUser().setTime(0L);
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZmieniono rangę gracza &6" + args[0] + " &ana &6Player&7!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+
+
+            if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
+                final Player player = Bukkit.getPlayer(args[0]);
+                rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME.trim(), 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a!", 5, 20, 5));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    NameTagUtil.setPlayerNameTag(player, "updatePrefix");
+                    TabManager.removePlayer(player);
+                    TabManager.addPlayer(player);
+                    for (Player restOfServer : Bukkit.getOnlinePlayers()) {
+                        TabManager.update(restOfServer.getUniqueId());
+                    }
+                });
+            }
+
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
                     "**Gracz:** `" + args[0] + "`**uzyskal nowa range**\n" +
                             "**Ranga**: " + args[1].toUpperCase() + "\n" +

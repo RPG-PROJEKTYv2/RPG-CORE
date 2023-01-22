@@ -2,7 +2,6 @@ package rpg.rpgcore.api;
 
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
@@ -53,12 +52,21 @@ public abstract class CommandAPI extends Command {
             user.getRankUser().setRank(RankType.DEV);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
         }
-
         if (!this.checkPermissions(sender)) {
             return true;
         }
         if (!(sender instanceof Player) && this.isRestrictedForPlayer()) {
+            sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa komenda jest dostepna tylko dla graczy!"));
             return true;
+        }
+        if (RPGCORE.getInstance().getDisabledManager().getDisabled().isDisabledCommand(s)) {
+            if (sender instanceof Player && !(RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId()).getRankUser().isHighStaff() && RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId()).isAdminCodeLogin())) {
+                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa komenda zostala wylaczona przez administratora!"));
+                return true;
+            } else if (!(sender instanceof Player)) {
+                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa komenda zostala wylaczona przez administratora!"));
+                return true;
+            }
         }
         if (sender instanceof Player) {
             final Player player = (Player) sender;
@@ -132,7 +140,7 @@ public abstract class CommandAPI extends Command {
         if (userProfile.getRankUser().getRankType().getPriority() >= this.getRankLevel().getPriority()) {
             return true;
         }
-        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
+        commandSender.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
         return false;
     }
 

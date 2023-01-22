@@ -111,6 +111,7 @@ import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
+import rpg.rpgcore.managers.disabled.DisabledManager;
 import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
@@ -336,6 +337,7 @@ public final class RPGCORE extends JavaPlugin {
     private SerwerWhiteListManager serwerWhiteListManager;
     private ArtefaktyZaLvlManager artefaktyZaLvlManager;
     private ShowcaseItemManager showcaseItemManager;
+    private DisabledManager disabledManager;
 
 
 
@@ -452,6 +454,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllHandlarz();
         this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
         this.mongo.saveArtefaktyZaLvl(this.artefaktyZaLvlManager.getArtefaktyZaLvl());
+        this.mongo.saveAllDisabled();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -542,6 +545,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new ShowcaseItemCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetNameCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HsCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new DisableCommand(this));
     }
 
     private void initEvents() {
@@ -791,6 +795,7 @@ public final class RPGCORE extends JavaPlugin {
         this.serwerWhiteListManager = new SerwerWhiteListManager(this);
         this.artefaktyZaLvlManager = new ArtefaktyZaLvlManager(this);
         this.showcaseItemManager = new ShowcaseItemManager();
+        this.disabledManager = new DisabledManager(this);
     }
 
     private void initNPCS() {
@@ -1233,5 +1238,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public ShowcaseItemManager getShowcaseItemManager() {
         return showcaseItemManager;
+    }
+
+    public DisabledManager getDisabledManager() {
+        return disabledManager;
     }
 }

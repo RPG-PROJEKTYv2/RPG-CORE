@@ -141,6 +141,7 @@ public class Utils {
         }
         int index = toRemove.indexOf(znakToLook);
         while (index >= 0) {
+            if (index + 1 >= toRemove.length()) break;
             String znak = String.valueOf(toRemove.charAt(index));
             String kolor = String.valueOf(toRemove.charAt(index + 1));
 

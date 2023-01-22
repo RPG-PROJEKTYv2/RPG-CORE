@@ -68,50 +68,58 @@ public class ArmorEffectListener implements Listener {
                 e.setCurrentItem(ItemHelper.checkEnchants(e.getCurrentItem(), player));
                 if (type.contains("_HELMET")) {
                     if (player.getInventory().getHelmet() == null) {
-                        User user = this.rpgcore.getUserManager().find(player.getUniqueId());
-                        int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
-                        if (user.getLvl() < level) {
-                            e.setCancelled(true);
-                            player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
-                            return;
+                        if (player.getInventory().getItem(e.getSlot()) != null) {
+                            User user = this.rpgcore.getUserManager().find(player.getUniqueId());
+                            int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
+                            if (user.getLvl() < level) {
+                                e.setCancelled(true);
+                                player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
+                                return;
+                            }
+                            ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
-                        ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                     }
                 }
                 if (type.contains("_CHESTPLATE")) {
                     if (player.getInventory().getChestplate() == null) {
-                        User user = this.rpgcore.getUserManager().find(player.getUniqueId());
-                        int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
-                        if (user.getLvl() < level) {
-                            e.setCancelled(true);
-                            player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
-                            return;
+                        if (player.getInventory().getItem(e.getSlot()) != null) {
+                            User user = this.rpgcore.getUserManager().find(player.getUniqueId());
+                            int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
+                            if (user.getLvl() < level) {
+                                e.setCancelled(true);
+                                player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
+                                return;
+                            }
+                            ArmorEffectsHelper.addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
-                        ArmorEffectsHelper.addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                     }
                 }
                 if (type.contains("_LEGGINGS")) {
                     if (player.getInventory().getLeggings() == null) {
-                        User user = this.rpgcore.getUserManager().find(player.getUniqueId());
-                        int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
-                        if (user.getLvl() < level) {
-                            e.setCancelled(true);
-                            player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
-                            return;
+                        if (player.getInventory().getItem(e.getSlot()) != null) {
+                            User user = this.rpgcore.getUserManager().find(player.getUniqueId());
+                            int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
+                            if (user.getLvl() < level) {
+                                e.setCancelled(true);
+                                player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
+                                return;
+                            }
+                            ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
-                        ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                     }
                 }
                 if (type.contains("_BOOTS")) {
                     if (player.getInventory().getBoots() == null) {
-                        User user = this.rpgcore.getUserManager().find(player.getUniqueId());
-                        int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
-                        if (user.getLvl() < level) {
-                            e.setCancelled(true);
-                            player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
-                            return;
+                        if (player.getInventory().getItem(e.getSlot()) != null) {
+                            User user = this.rpgcore.getUserManager().find(player.getUniqueId());
+                            int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
+                            if (user.getLvl() < level) {
+                                e.setCancelled(true);
+                                player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
+                                return;
+                            }
+                            ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
-                        ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                     }
                 }
             }

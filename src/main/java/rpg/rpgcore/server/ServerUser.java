@@ -13,7 +13,7 @@ public class ServerUser {
 
     public ServerUser(Document document) {
         this.name = document.getString("_id");
-        this.server = new Server(document.getInteger("dodatkoowyExp"), document.getLong("czas"), document.getBoolean("aktywny"));
+        this.server = new Server(document.getInteger("dodatkowyExp"), document.getLong("czas"), document.getBoolean("aktywny"));
     }
 
     public String getName() {
@@ -25,6 +25,6 @@ public class ServerUser {
     }
 
     public Document toDocument() {
-        return new Document("_id", this.name).append("dodatkoowyExp", this.getServer().getDodatkowyExp()).append("czas", this.getServer().getCzas()).append("aktywny", this.getServer().isAktywny());
+        return new Document("_id", this.name).append("dodatkowyExp", this.getServer().getDodatkowyExp()).append("czas", this.getServer().getCzas()).append("aktywny", this.getServer().isAktywny());
     }
 }
