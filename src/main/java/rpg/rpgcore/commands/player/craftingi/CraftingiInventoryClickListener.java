@@ -505,7 +505,7 @@ public class CraftingiInventoryClickListener implements Listener {
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I13", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I14", 1), 32)
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I15", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I18", 1), 32)
                         && user.getKasa() >= 7_500_000) {
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_CZASTKA_MAGII", 1).clone()).setAmount(1).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_CZASTkA_MAGII", 1).clone()).setAmount(1).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I12", 1).clone()).setAmount(32).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I13", 1).clone()).setAmount(32).toItemStack());
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I14", 1).clone()).setAmount(32).toItemStack());
