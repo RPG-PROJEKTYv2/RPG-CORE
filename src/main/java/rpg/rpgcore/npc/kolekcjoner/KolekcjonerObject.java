@@ -20,7 +20,7 @@ public class KolekcjonerObject {
                 document.getList("missionProgress", Boolean.class),
                 document.getInteger("szczescie"),
                 document.getDouble("silnyNaLudzi"),
-                document.getInteger("dodatkowe"));
+                document.getDouble("defNaLudzi"));
     }
 
     public UUID getID() {
@@ -37,6 +37,6 @@ public class KolekcjonerObject {
                 .append("missionProgress", this.getKolekcjonerUser().getMissionProgress())
                 .append("szczescie", this.getKolekcjonerUser().getSzczescie())
                 .append("silnyNaLudzi", this.getKolekcjonerUser().getSilnyNaLudzi())
-                .append("dodatkowe", this.getKolekcjonerUser().getDodatkowe());
+                .append("defNaLudzi", this.getKolekcjonerUser().getDefNaLudzi());
     }
 }

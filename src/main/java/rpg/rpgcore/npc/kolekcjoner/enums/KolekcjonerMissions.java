@@ -24,15 +24,15 @@ public enum KolekcjonerMissions {
 
     private final int number;
     private final ItemStack[] reqItems;
-    private final int szczescie, dodatkowe;
-    private final double silnyNaLudzi;
+    private final int szczescie;
+    private final double silnyNaLudzi, defNaLudzi;
 
-    KolekcjonerMissions(final int number, final ItemStack[] reqItems, final int szczescie, final double silnyNaLudzi, final int dodatkowe) {
+    KolekcjonerMissions(final int number, final ItemStack[] reqItems, final int szczescie, final double silnyNaLudzi, final double defNaLudzi) {
         this.number = number;
         this.reqItems = reqItems;
         this.szczescie = szczescie;
         this.silnyNaLudzi = silnyNaLudzi;
-        this.dodatkowe = dodatkowe;
+        this.defNaLudzi = defNaLudzi;
     }
 
     public int getNumber() {
@@ -51,8 +51,8 @@ public enum KolekcjonerMissions {
         return DoubleUtils.round(this.silnyNaLudzi, 2);
     }
 
-    public int getDodatkowe() {
-        return this.dodatkowe;
+    public double getDefNaLudzi() {
+        return DoubleUtils.round(this.defNaLudzi, 2);
     }
 
     public static KolekcjonerMissions getByNumber(final int number) {

@@ -11,15 +11,15 @@ import java.util.List;
 public class KolekcjonerUser {
     private int mission;
     private List<Boolean> missionProgress;
-    private int szczescie, dodatkowe;
-    private double silnyNaLudzi;
+    private int szczescie;
+    private double silnyNaLudzi, defNaLudzi;
 
-    public KolekcjonerUser(int mission, List<Boolean> missionProgress, int szczescie, double silnyNaLudzi, int dodatkowe) {
+    public KolekcjonerUser(int mission, List<Boolean> missionProgress, int szczescie, double silnyNaLudzi, double defNaLudzi) {
         this.mission = mission;
         this.missionProgress = missionProgress;
         this.szczescie = szczescie;
         this.silnyNaLudzi = silnyNaLudzi;
-        this.dodatkowe = dodatkowe;
+        this.defNaLudzi = defNaLudzi;
     }
 
     public void resetMissionProgress() {

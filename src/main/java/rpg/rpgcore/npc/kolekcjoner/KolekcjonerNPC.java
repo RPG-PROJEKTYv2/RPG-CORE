@@ -62,7 +62,7 @@ public class KolekcjonerNPC {
                 "&7Misja: &c" + user.getMission(),
                 "&7Szczescie: &c" + user.getSzczescie(),
                 "&7Silny przeciwko Ludziom: &c" + user.getSilnyNaLudzi(),
-                "&7Dodatkowe Obrazenia: &c" + user.getDodatkowe())).toItemStack().clone();
+                "&7Defensywa Przeciwko Ludziom: &c" + user.getDefNaLudzi())).toItemStack().clone();
     }
 
 

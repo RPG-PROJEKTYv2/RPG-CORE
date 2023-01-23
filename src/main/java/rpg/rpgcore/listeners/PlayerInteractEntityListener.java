@@ -69,19 +69,10 @@ public class PlayerInteractEntityListener implements Listener {
             }
         }
 
-        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
-            e.setCancelled(true);
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // KUPIEC
-            if (entityName.equalsIgnoreCase("Kupiec")) {
-                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
-                return;
-            }
-        }
         if (e.getRightClicked().getType().equals(EntityType.ENDERMAN)) {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // KUPIEC
+            // METINOLOG
             if (entityName.equalsIgnoreCase("Metinolog")) {
                 rpgcore.getMetinologNPC().openMetinologGUI(player);
                 return;
@@ -225,6 +216,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getWyslannikNPC().openGUI(player);
                 return;
             }
+            // HANDLARZ
+            if (entityName.equalsIgnoreCase("Handlarz")) {
+                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+                return;
+            }
             //  ...ZAGINIONY WLADCA
             if (entityName.equalsIgnoreCase("Zaginiony Wladca")) {
                 if (rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.STARTED) {
@@ -236,7 +232,7 @@ public class PlayerInteractEntityListener implements Listener {
 
             // TRADE
             if (player.isSneaking()) {
-                if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Kupiec") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
+                if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Handlarz") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
                         entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
                         entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
                         entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||

@@ -113,9 +113,9 @@ public class KolekcjonerInventoryClick implements Listener {
                 user.resetMissionProgress();
                 user.setSzczescie(user.getSzczescie() + mission.getSzczescie());
                 user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
-                user.setDodatkowe(user.getDodatkowe() + mission.getDodatkowe());
+                user.setDefNaLudzi(user.getDefNaLudzi() + mission.getDefNaLudzi());
                 final BonusesUser bonusesUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-                bonusesUser.setDodatkoweobrazenia(bonusesUser.getDodatkoweobrazenia() + mission.getDodatkowe());
+                bonusesUser.setDefnaludzi(bonusesUser.getDefnaludzi() + mission.getDefNaLudzi());
                 bonusesUser.setSilnynaludzi(bonusesUser.getSilnynaludzi() + mission.getSilnyNaLudzi());
                 bonusesUser.setSzczescie(bonusesUser.getSzczescie() + mission.getSzczescie());
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
