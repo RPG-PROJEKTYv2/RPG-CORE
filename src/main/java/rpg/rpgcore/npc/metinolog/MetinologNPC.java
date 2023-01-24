@@ -78,7 +78,7 @@ public class MetinologNPC {
                     Arrays.asList("&7Zniszcz &c" + mission[1] + " &7Kamieni Metin na mapie &c" + mission[0],
                             " ",
                             "&b&lNagroda",
-                            "&7Srednia Odpornosc: &c" + mission[2],
+                            "&7Dodatkowe Obrazenia: &c" + mission[2],
                             "&7Przeszycie Bloku Ciosu: &c" + mission[3],
                             " ",
                             "&7Postep: &6" + ms.getPostepMisjiKill() + "&7/&6" + mission[1])).hideFlag().toItemStack().clone();
@@ -96,7 +96,7 @@ public class MetinologNPC {
                             " ",
                             "&b&lNagroda",
                             "&7Dodatkowe Obrazenia: &c" + mission[4],
-                            "&7Odpornosc Przeciwko Ludziom: &c" + mission[5],
+                            "&7Srednia Odpornosc: &c" + mission[5],
                             " ",
                             "&7Postep: &6" + ms.getPostepMisjiGive() + "&7/&6" + mission[1])).hideFlag().toItemStack().clone();
         } else {
@@ -107,11 +107,9 @@ public class MetinologNPC {
 
     public ItemStack getStatystyki(final MetinologUser ms) {
         return new ItemBuilder(Material.PAPER).setName("&6&lStatystyki").setLore(Arrays.asList(
-                "&7Dodatkowe Obrazenia: &c" + ms.getValue1(),
-                "&7Srednia Odpornosc: &c" + ms.getValue2(),
-                " ",
-                "&7Przeszycie Bloku Ciosu: &c" + ms.getValue3(),
-                "&7Odpornosc Przeciwko Ludziom: &c" + ms.getValue4())).hideFlag().toItemStack().clone();
+                "&7Dodatkowe Obrazenia: &c" + ms.getPrzeszycie(),
+                "&7Srednia Odpornosc: &c" + ms.getSrOdpo(),
+                "&7Przeszycie Bloku Ciosu: &c" + ms.getDodatkowedmg())).hideFlag().toItemStack().clone();
     }
 
     public void add(MetinologObject metinologObject) {

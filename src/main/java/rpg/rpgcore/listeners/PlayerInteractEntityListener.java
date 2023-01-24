@@ -1,11 +1,13 @@
 package rpg.rpgcore.listeners;
 
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
@@ -26,6 +28,11 @@ public class PlayerInteractEntityListener implements Listener {
 
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
+
+        if (e.getRightClicked().getType() == EntityType.ITEM_FRAME) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (rpgcore.getDisabledManager().getDisabled().isDisabledNpc(Utils.removeColor(e.getRightClicked().getName())) && !(rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff() && rpgcore.getUserManager().find(uuid).isAdminCodeLogin())) {
             e.setCancelled(true);
@@ -261,6 +268,12 @@ public class PlayerInteractEntityListener implements Listener {
 
             }
         }
+    }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInteract(final PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof ItemFrame && !rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().isHighStaff()) {
+            e.setCancelled(true);
+        }
     }
 }

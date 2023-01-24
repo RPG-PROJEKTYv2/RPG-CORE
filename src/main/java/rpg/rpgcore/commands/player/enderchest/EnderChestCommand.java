@@ -1,7 +1,10 @@
-package rpg.rpgcore.commands.player;
+package rpg.rpgcore.commands.player.enderchest;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -22,10 +25,32 @@ public class EnderChestCommand extends CommandAPI {
         final Player player = (Player) sender;
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
         if (user.isAdminCodeLogin() && user.getRankUser().isStaff()) {
+            if (args.length == 1 && user.getRankUser().isHighStaff()) {
+                final Player target = Bukkit.getPlayer(args[0]);
+
+                if (target == null) {
+                    final User targetUser = RPGCORE.getInstance().getUserManager().find(args[0]);
+                    if (targetUser == null) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku &6" + args[0] + "&c!"));
+                        return;
+                    }
+                    final Inventory ec = Bukkit.createInventory(null, InventoryType.ENDER_CHEST, Utils.format("&5&lEnderChest &7&lgracza &5&l" + targetUser.getName()));
+                    ec.setContents(Utils.itemStackArrayFromBase64(targetUser.getInventoriesUser().getEnderchest()));
+                    player.openInventory(ec);
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&aOtworzono enderchest gracza &6" + targetUser.getName() + "&a!"));
+                    return;
+                }
+
+                player.openInventory(target.getEnderChest());
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aOtworzono enderchest gracza &6" + target.getName() + "&a!"));
+                return;
+            }
+
             if (args.length != 0) {
                 player.sendMessage(Utils.poprawneUzycie("enderchest"));
                 return;
             }
+
             player.openInventory(player.getEnderChest());
             return;
         }

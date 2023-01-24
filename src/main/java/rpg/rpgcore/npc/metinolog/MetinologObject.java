@@ -10,12 +10,12 @@ public class MetinologObject {
 
     public MetinologObject(final UUID uuid) {
         this.uuid = uuid;
-        this.metinologObject = new MetinologUser(0,0, 0, 0,0,0,0, 0);
+        this.metinologObject = new MetinologUser(0,0, 0, 0,0,0,0);
     }
 
     public MetinologObject(Document document) {
         this.uuid = UUID.fromString((String) document.get("_id"));
-        this.metinologObject = new MetinologUser(document.getInteger("postepKill"), document.getInteger("postepMisjiKill"), document.getInteger("postepGive"), document.getInteger("postepMisjiGive"), document.getDouble("value1"), document.getDouble("value2"), document.getDouble("value3"), document.getDouble("value4"));
+        this.metinologObject = new MetinologUser(document.getInteger("postepKill"), document.getInteger("postepMisjiKill"), document.getInteger("postepGive"), document.getInteger("postepMisjiGive"), document.getDouble("przeszywka"), document.getDouble("srOdpo"), document.getInteger("dodatkowedmg"));
     }
 
     public UUID getID() {
@@ -27,6 +27,13 @@ public class MetinologObject {
     }
 
     public Document toDocument() {
-        return new Document("_id", this.uuid.toString()).append("postepKill", this.getMetinologUser().getPostepKill()).append("postepMisjiKill", this.getMetinologUser().getPostepMisjiKill()).append("postepGive", this.getMetinologUser().getPostepGive()).append("postepMisjiGive", this.getMetinologUser().getPostepMisjiGive()).append("value1", this.getMetinologUser().getValue1()).append("value2", this.getMetinologUser().getValue2()).append("value3", this.getMetinologUser().getValue3()).append("value4", this.getMetinologUser().getValue4());
+        return new Document("_id", this.uuid.toString())
+                .append("postepKill", this.getMetinologUser().getPostepKill())
+                .append("postepMisjiKill", this.getMetinologUser().getPostepMisjiKill())
+                .append("postepGive", this.getMetinologUser().getPostepGive())
+                .append("postepMisjiGive", this.getMetinologUser().getPostepMisjiGive())
+                .append("przeszywka", this.getMetinologUser().getPrzeszycie())
+                .append("srOdpo", this.getMetinologUser().getSrOdpo())
+                .append("dodatkowedmg", this.getMetinologUser().getDodatkowedmg());
     }
 }

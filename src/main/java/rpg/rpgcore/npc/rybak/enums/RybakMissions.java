@@ -51,7 +51,7 @@ public enum RybakMissions {
             "&aSrednia Odpornosc: &f1%",
             "&aSzansa Na Cios Krytyczny: &f1%",
             "&aMorskie Szczescie: &f2",
-            "&aTrue DMG: &f1",
+            "&aSzansa Na Blok Ciosu: &f1%",
             "",
             "&8(Musisz trzymac wedke w rece&8)")).toItemStack(), 1, 1, 1, 2, 1),
     M8(8, new ItemBuilder(Material.PAPER).setLore(Arrays.asList(
@@ -91,7 +91,7 @@ public enum RybakMissions {
             "&aSrednia Odpornosc: &f1%",
             "&aSzansa Na Cios Krytyczny: &f1%",
             "&aMorskie Szczescie: &f2",
-            "&aTrue DMG: &f1")).toItemStack(), 1500, 1, 1, 2, 1),
+            "&aSzansa Na Blok Ciosu: &f1%")).toItemStack(), 1500, 1, 1, 2, 1),
     M14(14, new ItemBuilder(Material.PAPER).setLore(Arrays.asList(
             "&7Sprzedaj &6640 &7Sledzi",
             " ",
@@ -135,7 +135,7 @@ public enum RybakMissions {
             "&aSrednia Odpornosc: &f1%",
             "&aSzansa Na Cios Krytyczny: &f1%",
             "&aMorskie Szczescie: &f2",
-            "&aTrue DMG: &f1")).toItemStack(), 3, 1, 1, 2, 1),
+            "&aSzansa Na Blok Ciosu: &f1%")).toItemStack(), 3, 1, 1, 2, 1),
     M21(21, new ItemBuilder(Material.PAPER).setLore(Arrays.asList(
             "&7Osiagnij &615 &7poziom wedki",
             " ",
@@ -181,28 +181,28 @@ public enum RybakMissions {
             "&aSrednia Odpornosc: &f3%",
             "&aSzansa Na Cios Krytyczny: &f2%",
             "&aMorskie Szczescie: &f2",
-            "&aTrue DMG: &f2")).toItemStack(), 1, 3, 2, 2, 2);
+            "&aSzansa Na Blok Ciosu: &f2%")).toItemStack(), 1, 3, 2, 2, 2);
     /*
     MAX
     30% - DEF
     30 - SZCZESCIE
     20% - KRYT
-    5 - TRUE DMG
+    X% - Szansa Na Blok Ciosu
      */
 
 
-    private final int mission, reqAmount, trueDmg;
-    private final double srDef, kryt, morskieSzczescie;
+    private final int mission, reqAmount;
+    private final double srDef, kryt, morskieSzczescie, blok;
     private final ItemStack missionItem;
 
-    RybakMissions(final int mission, final ItemStack missionItem, final int reqAmount, final double srDef, final double kryt, final double morskieSzczescie, final int trueDmg) {
+    RybakMissions(final int mission, final ItemStack missionItem, final int reqAmount, final double srDef, final double kryt, final double morskieSzczescie, final double blok) {
         this.mission = mission;
         this.missionItem = missionItem;
         this.reqAmount = reqAmount;
         this.srDef = srDef;
         this.kryt = kryt;
         this.morskieSzczescie = morskieSzczescie;
-        this.trueDmg = trueDmg;
+        this.blok = blok;
     }
 
     public int getMission() {
@@ -229,8 +229,8 @@ public enum RybakMissions {
         return DoubleUtils.round(morskieSzczescie, 2);
     }
 
-    public int getTrueDmg() {
-        return trueDmg;
+    public double getBlok() {
+        return DoubleUtils.round(blok, 2);
     }
 
     public static RybakMissions getMission(int mission) {

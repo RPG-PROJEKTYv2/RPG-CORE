@@ -101,6 +101,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Dodatkowe Hp: " + hp + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
+            return;
         }
 
         if (eventItem.getType() == Material.STORAGE_MINECART) {
@@ -134,6 +135,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
+            return;
         }
 
         if (eventItem.getType() == Material.HOPPER_MINECART) {
@@ -167,6 +169,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Zmniejszona Szybkosc: " + mspeed + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
+            return;
         }
 
         if (eventItem.getType() == Material.EXPLOSIVE_MINECART) {
@@ -200,6 +203,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "- Zwiekszona Szybkosc: " + speed + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
+            return;
         }
 
         if (eventItem.getType() == Material.WATCH) {

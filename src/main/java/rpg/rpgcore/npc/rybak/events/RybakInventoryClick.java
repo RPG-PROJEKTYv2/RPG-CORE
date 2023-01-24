@@ -77,13 +77,13 @@ public class RybakInventoryClick implements Listener {
                 user.setProgress(0);
                 user.setMission(user.getMission() + 1);
                 user.setKryt(user.getKryt() + mission.getKryt());
-                user.setTrueDmg(user.getTrueDmg() + mission.getTrueDmg());
+                user.setBlok(user.getBlok() + mission.getBlok());
                 user.setSrDef(user.getSrDef() + mission.getSrDef());
                 user.setMorskieSzczescie(user.getMorskieSzczescie() + mission.getMorskieSzczescie());
 
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + mission.getSrDef());
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + mission.getKryt());
-                bonuses.getBonusesUser().setTruedamage(bonuses.getBonusesUser().getTruedamage() + mission.getTrueDmg());
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + mission.getBlok());
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataRybak(uuid, rybakObject);

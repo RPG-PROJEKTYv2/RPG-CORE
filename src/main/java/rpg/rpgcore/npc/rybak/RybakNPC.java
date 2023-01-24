@@ -80,9 +80,9 @@ public class RybakNPC {
                 "&7Postep Aktualnej Misji: &f" + user.getProgress(),
                 "",
                 "&f&lBONUSY",
-                "&7Srednia Odpornosc: &f" + user.getSrDef(),
-                "&7Szansa Na Cios Krytyczny: &f" + user.getKryt(),
-                "&7True Dmg: &f" + user.getTrueDmg(),
+                "&7Srednia Odpornosc: &f" + user.getSrDef() + "%",
+                "&7Szansa Na Cios Krytyczny: &f" + user.getKryt() + "%",
+                "&7Szansa Na Blok Ciosu: &f" + user.getBlok() + "%",
                 "&7Morskie Szczescie: &f" + user.getMorskieSzczescie()
         )).toItemStack().clone());
         gui.setItem(15, new ItemBuilder(Material.EMERALD).setName("&6&lSklep").toItemStack());

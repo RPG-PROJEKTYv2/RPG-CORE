@@ -45,8 +45,8 @@ public class MetinologInventoryClick implements Listener {
                 final String[] mission = RPGCORE.getInstance().getMetinologNPC().getGiveMissions().get(ms.getPostepGive() + 1).split(";");
                 if (ms.getPostepMisjiGive() >= Integer.parseInt(mission[1])) {
                     ms.setPostepMisjiGive(0);
-                    ms.setValue1(ms.getValue1() + Double.parseDouble(mission[4]));
-                    ms.setValue2(ms.getValue2() + Double.parseDouble(mission[5]));
+                    ms.setDodatkowedmg(ms.getDodatkowedmg() + Integer.parseInt(mission[4]));
+                    ms.setSrOdpo(ms.getSrOdpo() + Double.parseDouble(mission[5]));
                     ms.setPostepGive(ms.getPostepGive() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
                     bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + Integer.parseInt(mission[4]));
@@ -78,8 +78,8 @@ public class MetinologInventoryClick implements Listener {
 
                 if (ms.getPostepMisjiKill() >= Integer.parseInt(mission[1])) {
                     ms.setPostepMisjiKill(0);
-                    ms.setValue3(ms.getValue3() + Double.parseDouble(mission[2]));
-                    ms.setValue4(ms.getValue4() + Double.parseDouble(mission[3]));
+                    ms.setDodatkowedmg(ms.getDodatkowedmg() + Integer.parseInt(mission[2]));
+                    ms.setPrzeszycie(ms.getPrzeszycie() + Double.parseDouble(mission[3]));
                     ms.setPostepKill(ms.getPostepKill() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(Double.parseDouble(mission[2]), 2));

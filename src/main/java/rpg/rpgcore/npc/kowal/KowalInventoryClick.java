@@ -141,8 +141,14 @@ public class KowalInventoryClick implements Listener {
             }
         }
 
+        if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Oczyszczanie Przedmiotu")) {
+            e.setCancelled(true);
+            return;
+        }
+
         if (title.equals("Oczyszczanie Przedmiotu")) {
             e.setCancelled(true);
+
             if (slot == 4) {
                 final User user = rpgcore.getUserManager().find(uuid);
                 if (!player.getInventory().containsAtLeast(GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1) || user.getKasa() < 250_000) {

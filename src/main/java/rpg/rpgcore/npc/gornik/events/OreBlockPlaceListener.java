@@ -24,9 +24,9 @@ public class OreBlockPlaceListener implements Listener {
     public void onBlockPlace(final BlockPlaceEvent e) {
         if (e.isCancelled()) return;
 
-        if (!e.getBlock().getWorld().getName().equalsIgnoreCase("kopalnia")) return;
+        if (!e.getBlock().getWorld().getName().equals("Gornik")) return;
 
-        if (!e.getBlock().getType().toString().contains("ORE")) return;
+        if (!e.getBlock().getType().toString().contains("_ORE")) return;
         final Block block = e.getBlockPlaced();
         final int id = rpgcore.getOreManager().getHighestId();
         final int hp = Objects.requireNonNull(GornikOres.getOre(block.getType())).getMaxHp();

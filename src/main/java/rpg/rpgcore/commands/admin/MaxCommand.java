@@ -104,10 +104,9 @@ public class MaxCommand extends CommandAPI {
                 return;
             case "metinolog":
                 final MetinologObject metinologObject = rpgcore.getMetinologNPC().find(userUUID);
-                metinologObject.getMetinologUser().setValue1(350); //DODATKOWE DMG
-                metinologObject.getMetinologUser().setValue2(20); //OODPORNOSC NA LUDZI
-                metinologObject.getMetinologUser().setValue3(20); //SR ODPO
-                metinologObject.getMetinologUser().setValue4(7.5); //BLOK CIOSU
+                metinologObject.getMetinologUser().setPrzeszycie(350); //DODATKOWE DMG
+                metinologObject.getMetinologUser().setSrOdpo(20); //OODPORNOSC NA LUDZI
+                metinologObject.getMetinologUser().setDodatkowedmg(20); //SR ODPO
 
                 bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + 350);
                 bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + 20);

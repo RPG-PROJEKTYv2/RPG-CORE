@@ -17,6 +17,7 @@ import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
 import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
+import rpg.rpgcore.bossy.BossyEntityDamageByEntityListener;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
 import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
@@ -63,6 +64,8 @@ import rpg.rpgcore.commands.player.bossy.BossyInventoryClick;
 import rpg.rpgcore.commands.player.craftingi.CraftingiCommand;
 import rpg.rpgcore.commands.player.craftingi.CraftingiInventoryClickListener;
 import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
+import rpg.rpgcore.commands.player.enderchest.EnderChestCommand;
+import rpg.rpgcore.commands.player.enderchest.EnderChestInventoryCloseListener;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.commands.player.misje.MisjeCommand;
 import rpg.rpgcore.commands.player.misje.MisjeInventoryClickListener;
@@ -751,6 +754,12 @@ public final class RPGCORE extends JavaPlugin {
 
         // SHOWCASE ITEM
         this.getServer().getPluginManager().registerEvents(new ShowcaseItemInventoryClickListener(), this);
+
+        // ENDERCHEST
+        this.getServer().getPluginManager().registerEvents(new EnderChestInventoryCloseListener(), this);
+
+        // BOSSY
+        this.getServer().getPluginManager().registerEvents(new BossyEntityDamageByEntityListener(), this);
 
     }
 

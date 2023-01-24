@@ -164,7 +164,7 @@ public class KowalNPC {
 
         player.sendMessage("prot: " + Utils.getTagInt(toGive, "prot"));
         player.sendMessage("thorns: " + Utils.getTagInt(toGive, "thorns"));
-        player.getInventory().addItem(toGive.clone());
+        player.getInventory().addItem(ItemHelper.checkEnchants(toGive.clone(), player));
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
 
@@ -188,8 +188,7 @@ public class KowalNPC {
 
         player.sendMessage("dmg: " + Utils.getTagInt(toGive, "dmg"));
         player.sendMessage("moby: " + Utils.getTagInt(toGive, "moby"));
-        ItemHelper.checkEnchants(toGive, player);
-        player.getInventory().addItem(toGive.clone());
+        player.getInventory().addItem(ItemHelper.checkEnchants(toGive.clone(), player));
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
 

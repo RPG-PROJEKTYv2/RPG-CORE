@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +66,7 @@ public class PrzyrodnikInventoryClick implements Listener {
                 return;
             }
 
-            if (e.getClick().equals(ClickType.SHIFT_LEFT) || e.getClick().equals(ClickType.SHIFT_RIGHT)) {
+            /*if (e.getClick().equals(ClickType.SHIFT_LEFT) || e.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 int amount = 0;
                 final ItemStack reqItem = mission.getItemStack().clone();
                 if (player.getInventory().containsAtLeast(reqItem, mission.getReqAmount() - user.getProgress())) {
@@ -92,7 +91,7 @@ public class PrzyrodnikInventoryClick implements Listener {
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataPrzyrodnik(uuid, RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid)));
                 RPGCORE.getInstance().getPrzyrodnikNPC().openMainGUI(player);
                 return;
-            }
+            }*/
 
             player.getInventory().removeItem(mission.getItemStack());
             if (ChanceHelper.getChance(mission.getAcceptPercent())) {

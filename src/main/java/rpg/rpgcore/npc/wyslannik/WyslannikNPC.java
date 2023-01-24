@@ -13,6 +13,7 @@ import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionOpen;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -58,10 +59,12 @@ public class WyslannikNPC {
             )).toItemStack();
         } else {
             return new ItemBuilder(Material.IRON_SWORD).setName("&c&lMisja " + user.getKillMobsMission()).setLore(Arrays.asList(
-                    "&7Zabij &6" + (Math.max(mission.getReqAmount() - user.getKillMobsMissionProgress(), 0)),
+                    "&7Zabij &6" + mission.getReqAmount(),
                     "&8- " + mission.getMobName(),
                     "&f&lNAGRODA",
-                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName(),
+                    "",
+                    "&7Postep misji: &6" + user.getKillMobsMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getKillMobsMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
@@ -74,10 +77,12 @@ public class WyslannikNPC {
             )).toItemStack();
         } else {
             return new ItemBuilder(Material.DIAMOND_SWORD).setName("&c&lMisja " + user.getKillBossMission()).setLore(Arrays.asList(
-                    "&7Zabij &6" + (Math.max(mission.getReqAmount() - user.getKillBossMissionProgress(), 0)),
+                    "&7Zabij &6" + mission.getReqAmount(),
                     "&8- " + mission.getMobName(),
                     "&f&lNAGRODA",
-                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName(),
+                    "",
+                    "&7Postep misji: &6" + user.getKillBossMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getKillBossMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
@@ -90,10 +95,12 @@ public class WyslannikNPC {
             )).toItemStack();
         } else {
             return new ItemBuilder(Material.CHEST).setName("&c&lMisja " + user.getOpenChestMission()).setLore(Arrays.asList(
-                    "&7Otworz &6" + (Math.max(mission.getReqAmount() - user.getOpenChestMissionProgress(), 0)),
+                    "&7Otworz &6" + mission.getReqAmount(),
                     "&7- " + mission.getChestName(),
                     "&f&lNAGRODA",
-                    "&8- " + mission.getReward().getItemMeta().getDisplayName()
+                    "&8- " + mission.getReward().getItemMeta().getDisplayName(),
+                    "",
+                    "&7Postep misji: &6" + user.getOpenChestMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getOpenChestMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
