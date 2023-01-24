@@ -27,7 +27,7 @@ public class OreCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
-            player.sendMessage(Utils.poprawneUzycie("/ore <list/add/remove> [id]"));
+            player.sendMessage(Utils.poprawneUzycie("/ore <list/remove> [id]"));
             return;
         }
 
