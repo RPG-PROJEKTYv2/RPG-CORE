@@ -12,8 +12,8 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
-import rpg.rpgcore.utils.globalitems.npc.GornikItems;
-import rpg.rpgcore.utils.globalitems.npc.RybakItems;
+import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
+import rpg.rpgcore.utils.globalitems.npc.*;
 
 import java.util.Arrays;
 
@@ -35,6 +35,7 @@ public class AdminPanelManager {
         gui.setItem(13, new ItemBuilder(Material.SNOW_BALL).setName("&fUlepszacze").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.GOLD_INGOT).setName("&6Itemshop").addGlowing().toItemStack().clone());
         gui.setItem(15, new ItemBuilder(Material.NETHER_STAR).setName("&ePrzedmioty Specjalne").addGlowing().toItemStack().clone());
+        gui.setItem(16, new ItemBuilder(Material.BEDROCK).setName("&cNpcty - &fitemy").addGlowing().toItemStack().clone());
 
         gui.setItem(28, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Itemy Gornika").addGlowing().toItemStack().clone());
         gui.setItem(29, new ItemBuilder(Material.FISHING_ROD).setName("&6Itemy Rybaka").addGlowing().toItemStack().clone());
@@ -48,6 +49,56 @@ public class AdminPanelManager {
                 "&8* &f/level <gracz> setlvl/setexp/setprocent <wartosc>",
                 "&8* &f/rozdaj <all/jeden>"
         )).addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openNpctyGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lNpcty &f- ADMINISTRACJA"));
+        for (int i = 0; i < 27; i++) {
+            if (i % 2 == 0) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName(" ").toItemStack());
+            }
+        }
+        gui.setItem(12, new ItemBuilder(Material.MILK_BUCKET).setName("&fPrzyrodnik").addGlowing().toItemStack().clone());
+        gui.setItem(13, new ItemBuilder(Material.MILK_BUCKET).setName("&fMetinolog").addGlowing().toItemStack().clone());
+        gui.setItem(14, new ItemBuilder(Material.MILK_BUCKET).setName("&fLowca").addGlowing().toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.BUCKET).setName("&fLesnik").addGlowing().toItemStack().clone());
+
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+
+        player.openInventory(gui);
+    }
+    public void openPrzyrodnikGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&c&lPrzyrodnik &f- ADMINISTRACJA"));
+        for (final PrzyrodnikItems przyrodnikItems : PrzyrodnikItems.values()) {
+            gui.setItem(gui.firstEmpty(), przyrodnikItems.getItemStack());
+        }
+        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openMetinologGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&c&lMetinolog &f- ADMINISTRACJA"));
+        for (final MetinologItems metinologItems : MetinologItems.values()) {
+            gui.setItem(gui.firstEmpty(), metinologItems.getItemStack());
+        }
+        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openLowcaGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&c&lLowca &f- ADMINISTRACJA"));
+        for (final LowcaItems lowcaItems : LowcaItems.values()) {
+            gui.setItem(gui.firstEmpty(), lowcaItems.getItem());
+        }
+        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openLesnikGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&c&lLesnik &f- ADMINISTRACJA"));
+        for (final LesnikItems lesnikItems : LesnikItems.values()) {
+            gui.setItem(gui.firstEmpty(), lesnikItems.getItem());
+        }
+        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGui(final Player player) {
@@ -145,19 +196,19 @@ public class AdminPanelManager {
     public void openUlepszaczeGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&f&lUlepszacze &f- ADMINISTRACJA"));
 
-        gui.setItem(0, GlobalItem.getItem("I_SZATANAJEMNIKA", 1));
-        gui.setItem(1, GlobalItem.getItem("I_OKOGOBLINA", 1));
-        gui.setItem(2, GlobalItem.getItem("I_SKORAGORYLA", 1));
-        gui.setItem(3, GlobalItem.getItem("I_ZLAMANAKOSC", 1));
-        gui.setItem(4, GlobalItem.getItem("I_LZAOCEANU", 1));
-        gui.setItem(5, GlobalItem.getItem("I_MROZNYPAZUR", 1));
-        gui.setItem(6, GlobalItem.getItem("I_OGNISTYPYL", 1));
-        gui.setItem(7, GlobalItem.getItem("I_TRUJACAROSLINA", 1));
-        gui.setItem(8, GlobalItem.getItem("I_JADPTASZNIKA", 1));
-        gui.setItem(9, GlobalItem.getItem("I_MROCZNYMATERIAL", 1));
-        gui.setItem(10, GlobalItem.getItem("I_SZAFIROWESERCE", 1));
-        gui.setItem(11, GlobalItem.getItem("I_KRYSZTAL", 1));
-        gui.setItem(12, GlobalItem.getItem("I_NIEBIANSKIMATERIAL", 1));
+        gui.setItem(0, Ulepszacze.getItem("I_SZATANAJEMNIKA", 1));
+        gui.setItem(1, Ulepszacze.getItem("I_OKOGOBLINA", 1));
+        gui.setItem(2, Ulepszacze.getItem("I_SKORAGORYLA", 1));
+        gui.setItem(3, Ulepszacze.getItem("I_ZLAMANAKOSC", 1));
+        gui.setItem(4, Ulepszacze.getItem("I_LZAOCEANU", 1));
+        gui.setItem(5, Ulepszacze.getItem("I_MROZNYPAZUR", 1));
+        gui.setItem(6, Ulepszacze.getItem("I_OGNISTYPYL", 1));
+        gui.setItem(7, Ulepszacze.getItem("I_TRUJACAROSLINA", 1));
+        gui.setItem(8, Ulepszacze.getItem("I_JADPTASZNIKA", 1));
+        gui.setItem(9, Ulepszacze.getItem("I_MROCZNYMATERIAL", 1));
+        gui.setItem(10, Ulepszacze.getItem("I_SZAFIROWESERCE", 1));
+        gui.setItem(11, Ulepszacze.getItem("I_KRYSZTAL", 1));
+        gui.setItem(12, Ulepszacze.getItem("I_NIEBIANSKIMATERIAL", 1));
 
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);

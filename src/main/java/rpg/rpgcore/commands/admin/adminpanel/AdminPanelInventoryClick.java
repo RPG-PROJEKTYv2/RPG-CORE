@@ -58,6 +58,10 @@ public class AdminPanelInventoryClick implements Listener {
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
                 return;
             }
+            if (slot == 16) {
+                rpgcore.getAdminPanelManager().openNpctyGUI(player);
+                return;
+            }
 
             if (slot == 28) {
                 rpgcore.getAdminPanelManager().openGornikItemsGUI(player);
@@ -116,6 +120,41 @@ public class AdminPanelInventoryClick implements Listener {
             if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
+            }
+        }
+        if (title.equals("Npcty - ADMINISTRACJA")) {
+            e.setCancelled(true);
+            if (slot == 12) {
+                rpgcore.getAdminPanelManager().openPrzyrodnikGUI(player);
+                return;
+            }
+            if (slot == 13) {
+                rpgcore.getAdminPanelManager().openMetinologGUI(player);
+                return;
+            }
+            if (slot == 14) {
+                rpgcore.getAdminPanelManager().openLowcaGUI(player);
+                return;
+            }
+            if (slot == 22) {
+                rpgcore.getAdminPanelManager().openLesnikGUI(player);
+                return;
+            }
+            if (slot == 26) {
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
+            }
+        }
+        if (title.equals("Przyrodnik - ADMINISTRACJA") || title.equals("Metinolog - ADMINISTRACJA") || title.equals("Lowca - ADMINISTRACJA")) {
+            if (slot == 17) {
+                rpgcore.getAdminPanelManager().openNpctyGUI(player);
+                return;
+            }
+        }
+        if (title.equals("Lesnik - ADMINISTRACJA")) {
+            if (slot == 8) {
+                rpgcore.getAdminPanelManager().openNpctyGUI(player);
                 return;
             }
         }

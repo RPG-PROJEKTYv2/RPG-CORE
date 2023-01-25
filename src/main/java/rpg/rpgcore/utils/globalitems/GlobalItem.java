@@ -37,23 +37,6 @@ public enum GlobalItem {
     I16("I16", new ItemBuilder(Material.STONE).setName("&7Kamien").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I17("I17", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-    // ULEPSZACZE
-    I_SZATANAJEMNIKA("I_SZATANAJEMNIKA", new ItemBuilder(Material.RABBIT_HIDE).setName("&6Szata Najemnika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_OKOGOBLINA("I_OKOGOBLINA", new ItemBuilder(Material.EYE_OF_ENDER).setName("&aOko Goblina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_SKORAGORYLA("I_SKORAGORYLA", new ItemBuilder(Material.INK_SACK, 1 , (short)15).setName("&fSkora Goryla").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_ZLAMANAKOSC("I_ZLAMANAKOSC", new ItemBuilder(Material.BONE).setName("&7Zlamana Kosc").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_LZAOCEANU("I_LZAOCEANU", new ItemBuilder(Material.GHAST_TEAR).setName("&bLza Oceanu").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_MROZNYPAZUR("I_MROZNYPAZUR", new ItemBuilder(Material.FEATHER).setName("&bMrozny Pazur").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_OGNISTYPYL("I_OGNISTYPYL", new ItemBuilder(Material.BLAZE_POWDER).setName("&cOgnisty Pyl").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_TRUJACAROSLINA("I_TRUJACAROSLINA", new ItemBuilder(Material.RED_ROSE, 1, (short)2).setName("&5Trujaca Roslina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_JADPTASZNIKA("I_JADPTASZNIKA", new ItemBuilder(Material.SPIDER_EYE).setName("&6Jad Ptasznika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_MROCZNYMATERIAL("I_MROCZNYMATERIAL", new ItemBuilder(Material.NETHER_BRICK).setName("&1Mroczny Material").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_SZAFIROWESERCE("I_SZAFIROWESERCE", new ItemBuilder(Material.INK_SACK, 1, (short)4).setName("&bSzafirowe Serce").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_KRYSZTAL("I_KRYSZTAL", new ItemBuilder(Material.EMERALD).setName("&aOdlamek Krysztalu").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_NIEBIANSKIMATERIAL("I_NIEBIANSKIMATERIAL", new ItemBuilder(Material.INK_SACK, 1, (short)12).setName("&3Niebianki Material").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-
-    I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Przekletych Wojownikow").setLore(Arrays.asList(" ", "&7Klucz ten otwiera wrota na arene &4&lWOJOWNIKOW&7!")).hideFlag().toItemStack().clone()),
-    I_KLUCZ_PIEKIELNA_KRYJOWKA("I_KLUCZ_PIEKIELNA_KRYJOWKA", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Piekielnej Kryjowki").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPIEKIELNEJ KRYJOWKI&7!")).hideFlag().toItemStack().clone()),
 
     I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
