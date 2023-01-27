@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class BossyEntityDamageByEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(final EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) return;
+        if (!(e.getDamager() instanceof Player)) return;
         if (e.getEntity().getCustomName() != null && e.getEntity().getCustomName().contains("BOSS")) {
-            if (ChanceHelper.getChance(20)) {
-                final List<Player> targets = e.getEntity().getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
-                if (targets.size() > 0) {
+            if (ChanceHelper.getChance(40)) {
+                final List<Player> targets = e.getEntity().getNearbyEntities(6, 6, 6).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
+                if (targets.size() > 1) {
                     final Creature entity = (Creature) e.getEntity();
                     entity.setTarget(targets.get(ChanceHelper.getRandInt(0, targets.size() - 1)));
                 }

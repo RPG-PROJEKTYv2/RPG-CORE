@@ -8,7 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.utils.Utils;
@@ -29,10 +28,6 @@ public class PlayerInteractEntityListener implements Listener {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
 
-        if (e.getRightClicked().getType() == EntityType.ITEM_FRAME) {
-            e.setCancelled(true);
-            return;
-        }
 
         if (rpgcore.getDisabledManager().getDisabled().isDisabledNpc(Utils.removeColor(e.getRightClicked().getName())) && !(rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff() && rpgcore.getUserManager().find(uuid).isAdminCodeLogin())) {
             e.setCancelled(true);
@@ -250,18 +245,24 @@ public class PlayerInteractEntityListener implements Listener {
                 }
                 final UUID entityUUID = playerRightClicked.getUniqueId();
 
-                if (rpgcore.getTradeManager().isInAcceptList(uuid)) {
-                    final Inventory tradeGUi = rpgcore.getTradeManager().createTradeGUI(entityUUID, uuid);
-                    player.openInventory(tradeGUi);
-                    playerRightClicked.openInventory(tradeGUi);
-                    rpgcore.getTradeManager().removeFromAcceptList(uuid);
+                if (rpgcore.getTradeManager().isInTradeRequestMap(uuid)) {
+                    // create trade gui
+                    rpgcore.getTradeManager().removeTradeRequest(entityUUID, uuid);
+                    rpgcore.getTradeManager().createTrade(entityUUID, uuid, playerRightClicked, player);
                     return;
                 }
 
-                if (!(rpgcore.getTradeManager().isInTradeMapAsKey(uuid) && rpgcore.getTradeManager().isInTradeMapAsValue(entityUUID))) {
-                    rpgcore.getTradeManager().putInTradeMap(uuid, entityUUID);
-                    rpgcore.getTradeManager().addToAcceptList(entityUUID);
-                    rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> rpgcore.getTradeManager().canceltrade(uuid, entityUUID), 600L);
+                if (!rpgcore.getTradeManager().getTradeRequestMap().containsKey(uuid)) {
+                    rpgcore.getTradeManager().sendTradeRequest(uuid, entityUUID);
+                    rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> {
+                        if (rpgcore.getTradeManager().isInTradeRequestMap(uuid) || rpgcore.getTradeManager().isInTradeRequestMap(entityUUID)) {
+                            rpgcore.getTradeManager().removeTradeRequest(uuid, entityUUID);
+                            if (playerRightClicked != null && playerRightClicked.isOnline() && player != null && player.isOnline()) {
+                                playerRightClicked.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane od gracza &6" + player.getName() + " &7wygasla!"));
+                                player.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane do gracza &6" + playerRightClicked.getName() + " &7wygasla!"));
+                            }
+                        }
+                    }, 200L);
                     player.sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Wyslano prosbe o wymiane do &6" + entityName));
                     playerRightClicked.sendMessage(Utils.format(Utils.TRADEPREFIX + "&7Otrzymales prosbe o wymiane od gracza &6" + player.getName()));
                 }

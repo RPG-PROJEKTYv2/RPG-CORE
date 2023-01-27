@@ -154,7 +154,7 @@ public class AdminCodeCommand extends CommandAPI {
 
         if (user.getAdminCode().equals(args[0])) {
             user.setAdminCodeLogin(true);
-            final TextComponent finalMessage = new TextComponent(Utils.format(Utils.SERVERNAME + "&aPommyslnie zalogowano AdminCode: &6"));
+            final TextComponent finalMessage = new TextComponent(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalogowano AdminCode: &6"));
             final TextComponent message = new TextComponent(Utils.format("&6&k" + args[0] + "&a!"));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(args[0])}));
             finalMessage.addExtra(message);

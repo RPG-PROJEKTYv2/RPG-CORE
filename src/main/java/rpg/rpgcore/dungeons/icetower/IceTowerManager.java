@@ -181,6 +181,8 @@ public class IceTowerManager {
         rpgcore.getIceTowerManager().setHp(1000);
         despawnKamien();
         rpgcore.getIceTowerManager().setMaxTime(99999);
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
         Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             if (Bukkit.getWorld("50-60map").getPlayers() != null) {
                 for (Player player : Bukkit.getWorld("50-60map").getPlayers()) {

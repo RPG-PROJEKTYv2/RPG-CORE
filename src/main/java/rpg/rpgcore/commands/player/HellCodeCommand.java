@@ -224,7 +224,7 @@ public class HellCodeCommand extends CommandAPI {
 
         if (user.getHellCode().equals(args[0])) {
             user.setHellCodeLogin(true);
-            final TextComponent finalMessage = new TextComponent(Utils.format(Utils.SERVERNAME + "&aPommyslnie zalogowano HellCode: &6"));
+            final TextComponent finalMessage = new TextComponent(Utils.format(Utils.SERVERNAME + "&aPomyslnie zalogowano HellCode: &6"));
             final TextComponent message = new TextComponent(Utils.format("&6&k" + args[0] + "&a!"));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(args[0])}));
             finalMessage.addExtra(message);

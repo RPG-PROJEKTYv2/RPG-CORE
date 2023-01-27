@@ -18,11 +18,11 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
-public class KowalInventoryClick implements Listener {
+public class KowalInventoryClickListener implements Listener {
 
     private final RPGCORE rpgcore;
 
-    public KowalInventoryClick(RPGCORE rpgcore) {
+    public KowalInventoryClickListener(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
@@ -141,7 +141,7 @@ public class KowalInventoryClick implements Listener {
             }
         }
 
-        if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Oczyszczanie Przedmiotu")) {
+        if (inventory.getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Oczyszczanie Przedmiotu")) {
             e.setCancelled(true);
             return;
         }

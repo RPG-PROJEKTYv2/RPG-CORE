@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import rpg.rpgcore.RPGCORE;
 
 public class BlockBreakListener implements Listener {
@@ -48,26 +47,6 @@ public class BlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onExplosion(final BlockExplodeEvent e) {
         e.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onHangingBreak(final HangingBreakByEntityEvent e) {
-        if (!(e.getRemover() instanceof Player)) return;
-
-        final Player player = (Player) e.getRemover();
-
-        if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
-            e.setCancelled(true);
-            return;
-        } else {
-            if (!rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
-                e.setCancelled(true);
-                return;
-            }
-        }
-        if (player.getGameMode() != GameMode.CREATIVE) {
-            e.setCancelled(true);
-        }
     }
 
 }

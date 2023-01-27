@@ -196,7 +196,7 @@ import rpg.rpgcore.msg.MessageCommand;
 import rpg.rpgcore.msg.ReplyCommand;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
-import rpg.rpgcore.npc.kowal.KowalInventoryClick;
+import rpg.rpgcore.npc.kowal.KowalInventoryClickListener;
 import rpg.rpgcore.npc.kowal.KowalNPC;
 import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClick;
@@ -218,9 +218,9 @@ import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
 import rpg.rpgcore.OLDtarg.*;
 import rpg.rpgcore.tasks.*;
-import rpg.rpgcore.trade.TRADEInventoryClick;
-import rpg.rpgcore.trade.TRADEInventoryClose;
 import rpg.rpgcore.trade.TradeManager;
+import rpg.rpgcore.trade.events.TradeInventoryClickListener;
+import rpg.rpgcore.trade.events.TradeInventoryCloseListener;
 import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
@@ -253,7 +253,6 @@ public final class RPGCORE extends JavaPlugin {
     private PomocManager pomocManager;
     private MuteManager muteManager;
     private MSGManager msgManager;
-    private TradeManager tradeManager;
     private DuszologNPC duszologNPC;
     private TargManager targManager;
     private TeleporterNPC teleporterNPC;
@@ -342,6 +341,7 @@ public final class RPGCORE extends JavaPlugin {
     private ArtefaktyZaLvlManager artefaktyZaLvlManager;
     private ShowcaseItemManager showcaseItemManager;
     private DisabledManager disabledManager;
+    private TradeManager tradeManager;
 
 
 
@@ -579,8 +579,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new OsInventoryClickListener(this), this);
 
         // TRADE
-        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new TRADEInventoryClose(this), this);
+        this.getServer().getPluginManager().registerEvents(new TradeInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new TradeInventoryCloseListener(this), this);
 
         // TARG
         this.getServer().getPluginManager().registerEvents(new NewTargInventoryClick(this), this);
@@ -678,7 +678,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new HandlarzInventoryCloseListener(this), this);
 
         // ...KOWAL
-        this.getServer().getPluginManager().registerEvents(new KowalInventoryClick(this), this);
+        this.getServer().getPluginManager().registerEvents(new KowalInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KowalInventoryCloseListener(), this);
 
         // ...KOLEKCJONER
@@ -784,7 +784,7 @@ public final class RPGCORE extends JavaPlugin {
         this.pomocManager = new PomocManager();
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
-        this.tradeManager = new TradeManager(this);
+        this.tradeManager = new TradeManager();
         this.targManager = new TargManager(this);
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);

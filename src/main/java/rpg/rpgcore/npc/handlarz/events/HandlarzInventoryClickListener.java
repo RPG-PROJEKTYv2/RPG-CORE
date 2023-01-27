@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.handlarz.events;
 
+import com.google.common.collect.Multimap;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -195,8 +196,8 @@ public class HandlarzInventoryClickListener implements Listener {
                 final double kasa = user.getKasa();
 
                 user.setKasa(user.getKasa() + price);
-
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> RPGCORE.getDiscordBot().sendChannelMessage("handlarz-logs", EmbedUtil.createHandlarzcSellLog(player, rpgcore.getHandlarzNPC().getUserItemMap(uuid), kasa, user.getKasa())));
+                final Multimap<ItemStack, Double> itemMap = rpgcore.getHandlarzNPC().getUserItemMap(uuid);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> RPGCORE.getDiscordBot().sendChannelMessage("handlarz-logs", EmbedUtil.createHandlarzcSellLog(player, itemMap, kasa, user.getKasa())));
 
                 rpgcore.getHandlarzNPC().removeUserItemMap(uuid);
                 player.closeInventory();
