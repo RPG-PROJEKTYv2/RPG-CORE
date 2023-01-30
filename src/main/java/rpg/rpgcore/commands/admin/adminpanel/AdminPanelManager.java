@@ -11,6 +11,8 @@ import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
+import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
+import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
 import rpg.rpgcore.utils.globalitems.npc.*;
@@ -104,8 +106,15 @@ public class AdminPanelManager {
     public void openPrzedmiotySpecjalneGui(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lPrzedmioty S &f- ADMINISTRACJA"));
 
-        gui.setItem(0, GlobalItem.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(1, GlobalItem.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+        gui.setItem(0, Bossy.getItem("I1", 1));
+        gui.setItem(1, Bossy.getItem("I2", 1));
+        gui.setItem(2, Bossy.getItem("I3", 1));
+        gui.setItem(3, Bossy.getItem("I4", 1));
+        gui.setItem(4, Bossy.getItem("I5", 1));
+
+        gui.setItem(9, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
+        gui.setItem(10, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+
 
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
 
@@ -207,7 +216,7 @@ public class AdminPanelManager {
         gui.setItem(8, Ulepszacze.getItem("I_JADPTASZNIKA", 1));
         gui.setItem(9, Ulepszacze.getItem("I_MROCZNYMATERIAL", 1));
         gui.setItem(10, Ulepszacze.getItem("I_SZAFIROWESERCE", 1));
-        gui.setItem(11, Ulepszacze.getItem("I_KRYSZTAL", 1));
+        gui.setItem(11, Ulepszacze.getItem("I_ZAKLETYLOD", 1));
         gui.setItem(12, Ulepszacze.getItem("I_NIEBIANSKIMATERIAL", 1));
 
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());

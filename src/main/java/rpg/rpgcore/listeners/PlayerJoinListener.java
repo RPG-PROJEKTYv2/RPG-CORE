@@ -139,7 +139,7 @@ public class PlayerJoinListener implements Listener {
         if (!player.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aWitamy Cie, na serwerze typu &6metin2 &aw minecraft. Pod &6/pomoc &aznajdziesz najwazniejsze informacje i przydatne komendy."));
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziecie giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZachecamy tez do dolaczenia na nasz server discord &6dc.hellrpg.pl &ana ktorym znajdziesz giveaway'e, informacje o eventach, nadchodzacych aktualizacjach oraz kanaly pomocy."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZyczymy milej gry i udanej rywalizacji! &cZespol Hellrpg.pl"));
             }, 20L);
 

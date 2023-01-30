@@ -148,12 +148,14 @@ public class AdminPanelInventoryClick implements Listener {
         }
         if (title.equals("Przyrodnik - ADMINISTRACJA") || title.equals("Metinolog - ADMINISTRACJA") || title.equals("Lowca - ADMINISTRACJA")) {
             if (slot == 17) {
+                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openNpctyGUI(player);
                 return;
             }
         }
         if (title.equals("Lesnik - ADMINISTRACJA")) {
             if (slot == 8) {
+                e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openNpctyGUI(player);
                 return;
             }

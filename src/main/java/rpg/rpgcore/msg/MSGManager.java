@@ -25,8 +25,8 @@ public class MSGManager {
 
     public void sendMessages(final Player sender, final Player target, String message) {
 
-        final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&e" + sender.getName() + " &8-> &6" + target.getName() + "&8]:&e"));
-        final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&6" + sender.getName() + " &8-> &e" + target.getName() + "&8]:&e"));
+        final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&e" + sender.getName() + " &8-> &6" + target.getName() + "&8]:"));
+        final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&6" + sender.getName() + " &8-> &e" + target.getName() + "&8]:"));
 
         senderPrefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.format("&7Kliknij, aby odpowiedziec " + target.getName())).create()));
         senderPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + target.getName() + " "));
@@ -52,18 +52,18 @@ public class MSGManager {
                 senderPrefixComponent.addExtra(item);
                 targetPrefixComponent.addExtra(item);
             } else {
-                senderPrefixComponent.addExtra(Utils.format("&3" + msg.get(0)));
+                senderPrefixComponent.addExtra(Utils.format("&e" + msg.get(0)));
                 senderPrefixComponent.addExtra(item);
-                targetPrefixComponent.addExtra(Utils.format("&3" + msg.get(0)));
+                targetPrefixComponent.addExtra(Utils.format("&e" + msg.get(0)));
                 targetPrefixComponent.addExtra(item);
-                senderPrefixComponent.addExtra(Utils.format("&3" + msg.stream().skip(1).map(arg -> arg + " &3").collect((Collector) Collectors.joining()).toString()));
-                targetPrefixComponent.addExtra(Utils.format("&3" + msg.stream().skip(1).map(arg -> arg + " &3").collect((Collector) Collectors.joining()).toString()));
+                senderPrefixComponent.addExtra(Utils.format("&e" + msg.stream().skip(1).map(arg -> arg + " &e").collect((Collector) Collectors.joining()).toString()));
+                targetPrefixComponent.addExtra(Utils.format("&e" + msg.stream().skip(1).map(arg -> arg + " &e").collect((Collector) Collectors.joining()).toString()));
             }
         } else {
-            final TextComponent senderMessage = new TextComponent(Utils.format("&3" + message));
+            final TextComponent senderMessage = new TextComponent(Utils.format("&e" + message));
             senderPrefixComponent.addExtra(senderMessage);
 
-            final TextComponent targetMessage = new TextComponent(Utils.format("&3" + message));
+            final TextComponent targetMessage = new TextComponent(Utils.format("&e" + message));
             targetPrefixComponent.addExtra(targetMessage);
         }
 
