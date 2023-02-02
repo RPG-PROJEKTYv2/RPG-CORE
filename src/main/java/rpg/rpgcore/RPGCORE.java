@@ -566,7 +566,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);

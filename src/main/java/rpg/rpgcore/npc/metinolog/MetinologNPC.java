@@ -39,7 +39,7 @@ public class MetinologNPC {
         killMissions.put(11, "90-100;150;3;3;0;0");
         killMissions.put(12, "100-110;170;3;4;0;0");
         killMissions.put(13, "110-120;190;5;4;0;0");
-        killMissions.put(14, "120-130;210;5;4;0;0"); //21.5 - DMG
+        killMissions.put(14, "120-130;210;5;4;0;0");
 
         giveMissions.put(1, "1-10;10;0;0;3;2");
         giveMissions.put(2, "10-20;20;0;0;5;2");

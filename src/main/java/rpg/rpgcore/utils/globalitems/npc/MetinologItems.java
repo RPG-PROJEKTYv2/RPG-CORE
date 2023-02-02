@@ -13,14 +13,14 @@ public enum MetinologItems {
     I4("I30-40", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 30-40").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
     I5("I40-50", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 40-50").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
     I6("I50-60", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 50-60").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    ILODOWEJ_WIEZY("ILodowej_Wiezy", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin Lodowej Wiezy").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I7("I60-70", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 60-70").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I8("I70-80", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 70-80").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I9("I80-90", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 80-90").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I10("I90-100", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 90-100").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I11("I100-110", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 100-110").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I12("I110-120", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 110-120").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
-    I13("I120-130", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 120-130").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone());
+    I7("ILodowej_Wiezy", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin Lodowej Wiezy").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I8("I60-70", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 60-70").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I9("I70-80", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 70-80").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I10("I80-90", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 80-90").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I11("I90-100", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 90-100").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I12("I100-110", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 100-110").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I13("I110-120", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 110-120").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone()),
+    I14("I120-130", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&4Odlamek Kamienia Metin 120-130").setLore(Arrays.asList("&7&oChyba metinolog tego potrzebuje")).addGlowing().toItemStack().clone());
 
     private final String name;
     private final ItemStack itemStack;

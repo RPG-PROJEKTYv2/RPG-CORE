@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ChatPanelCommand extends CommandAPI {
     public ChatPanelCommand() {
         super("chatpanel");
-        this.setAliases(Arrays.asList("panel", "chatp"));
+        this.setAliases(Arrays.asList("panel", "chatp", "panelgracza", "graczpanel"));
         this.setRankLevel(RankType.GRACZ);
         this.setRestrictedForPlayer(true);
     }
@@ -23,9 +23,10 @@ public class ChatPanelCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length > 0) {
-            player.sendMessage(Utils.poprawneUzycie("/chatpanel"));
+            player.sendMessage(Utils.poprawneUzycie("chatpanel"));
+        } else {
+            RPGCORE.getInstance().getChatManager().openChatPanel(player);
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto panel powiadomien chatu!"));
         }
-        RPGCORE.getInstance().getChatManager().openChatPanel(player);
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto panel powiadomien chatu!"));
     }
 }

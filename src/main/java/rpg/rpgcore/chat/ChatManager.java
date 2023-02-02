@@ -159,44 +159,46 @@ public class ChatManager {
 
     public void openChatPanel(Player player) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
-        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lChat Panel"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lChat Panel"));
+        for (int i = 0; i < 27; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 9).setName(" ").toItemStack());
+        }
 
         if (user.isItemDropEnabled()) {
-            gui.setItem(0, new ItemBuilder(Material.STICK).setName("&a&lWiadomosci o dropie").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+            gui.setItem(10, new ItemBuilder(Material.INK_SACK, 1, (short)14).setName("&cWiadomosc o dropie z mobow").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(0, new ItemBuilder(Material.STICK).setName("&c&lWiadomosci o dropie").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
-        }
-        if (user.isPingsEnabled()) {
-            gui.setItem(1, new ItemBuilder(Material.ANVIL).setName("&a&lWiadomosci o zaczepkach").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
-        } else {
-            gui.setItem(1, new ItemBuilder(Material.ANVIL).setName("&c&lWiadomosci o zaczepkach").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
-        }
-        if (user.isNiesDropEnabled()) {
-            gui.setItem(2, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&a&lWiadomosci o Niesamowitych Przedmiotach").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
-        } else {
-            gui.setItem(2, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&c&lWiadomosci o Niesamowitych Przedmiotach").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+            gui.setItem(10, new ItemBuilder(Material.INK_SACK, 1, (short)14).setName("&cWiadomosc o dropie z mobow").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isChestDropEnabled()) {
-            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&a&lWiadomosci o dropie ze skrzynek").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+            gui.setItem(11, new ItemBuilder(Material.CHEST).setName("&cWiadomosc o dropek ze skrzynek").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(3, new ItemBuilder(Material.TRAPPED_CHEST).setName("&c&lWiadomosci o dropie ze skrzynek").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+            gui.setItem(11, new ItemBuilder(Material.TRAPPED_CHEST).setName("&cWiadomosc o dropie ze skrzynek").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+        }
+        if (user.isNiesDropEnabled()) {
+            gui.setItem(12, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&cWiadomosc o &bNiesamowitych Przedmiotach").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(12, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&cWiadomosc o &bNiesamowitych Przedmiotach").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+        }
+        if (user.isPingsEnabled()) {
+            gui.setItem(13, new ItemBuilder(Material.ANVIL).setName("&cWiadomosc o &ezaczepkach").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(13, new ItemBuilder(Material.ANVIL).setName("&cWiadomosc o &ezaczepkach").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isMsgEnabled()) {
-            gui.setItem(4, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&a&lPrywatne wiadomosci od graczy").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+            gui.setItem(14, new ItemBuilder(Material.BOOK).setName("&cPrywatne wiadomosci").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(4, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lPrywatne wiadomosci od graczy").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+            gui.setItem(14, new ItemBuilder(Material.BOOK).setName("&cPrywatne wiadomosci").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isJoinMessageEnabled()) {
-            gui.setItem(5, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&a&lWiadomosc Dolaczenia Na Serwer").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+            gui.setItem(15, new ItemBuilder(Material.PAPER).setName("&cWiadomosc dolaczenia na serwer").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(5, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lWiadomosc Dolaczenia Na Serwer").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+            gui.setItem(15, new ItemBuilder(Material.PAPER).setName("&cWiadomosc dolaczenia na serwer").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isQuitMessageEnabled()) {
-            gui.setItem(6, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&a&lWiadomosc Wyjscia Z Serwera").setLore(Arrays.asList("&a&lWlaczono!")).addGlowing().toItemStack().clone());
+            gui.setItem(16, new ItemBuilder(Material.PAPER).setName("&cWiadomosc wyjscia z serwera").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(6, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lWiadomosc Wyjscia Z Serwera").setLore(Arrays.asList("&c&lWylaczono!")).toItemStack().clone());
+            gui.setItem(16, new ItemBuilder(Material.PAPER).setName("&cWiadomosc wyjscia z serwera").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
-        gui.setItem(8, new ItemBuilder(Material.BARRIER).setName("&c&lCos tu kiedys jeszcze bedzie").addGlowing().toItemStack().clone());
 
 
         player.openInventory(gui);

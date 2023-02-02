@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -27,6 +28,7 @@ public class PlayerInteractEntityListener implements Listener {
 
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
+        final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
 
         if (rpgcore.getDisabledManager().getDisabled().isDisabledNpc(Utils.removeColor(e.getRightClicked().getName())) && !(rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff() && rpgcore.getUserManager().find(uuid).isAdminCodeLogin())) {
@@ -203,7 +205,12 @@ public class PlayerInteractEntityListener implements Listener {
 
             // LESNIK
             if (entityName.equalsIgnoreCase("Lesnik")) {
-                rpgcore.getLesnikNPC().openLesnikGUI(player);
+                if (user.getLvl() > 29) {
+                    rpgcore.getLesnikNPC().openLesnikGUI(player);
+                    return;
+                } else {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWroc jak osiagniesz 30 poziom!"));
+                }
                 return;
             }
 

@@ -8,10 +8,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.niesy.*;
 
 public class PlayerItemPickUpListener implements Listener {
+    private final RPGCORE rpgcore;
+
+    public PlayerItemPickUpListener(RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onItemPickUp(final PlayerPickupItemEvent e) {
         if (e.getItem().getItemStack().getType().equals(Material.DIAMOND_BLOCK) && e.getItem().getItemStack().getItemMeta().hasDisplayName()) {
@@ -19,6 +26,8 @@ public class PlayerItemPickUpListener implements Listener {
             e.setCancelled(true);
             final String itemName = Utils.removeColor(e.getItem().getItemStack().getItemMeta().getDisplayName());
             final String expowisko = itemName.substring(itemName.lastIndexOf(" ") + 1).trim();
+            final OsUser osUser = rpgcore.getOsManager().find(e.getPlayer().getUniqueId());
+            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
             Bukkit.broadcastMessage(Utils.format("&6&lDROP " + expowisko + " &8>> &fGracz &b" + e.getPlayer().getName() + " &fznalazl &b&lNiesamowity Przedmiot"));
 
             int amount = e.getItem().getItemStack().getAmount();

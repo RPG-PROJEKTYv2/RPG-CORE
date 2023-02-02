@@ -11,19 +11,16 @@ import java.util.Objects;
 
 public enum LesnikMissions {
 
-    M1(1, 40, 90, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 0.5, 2),
-    M2(2, 60, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 1, 3),
-    M3(3, 80, 80, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 0.5, 3),
-    M4(4, 100, 75, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 1, 3),
-    M5(5, 120, 70, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 0.5, 2),
-    M6(6, 140, 65, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 2, 1, 2),
-    M7(7, 160, 60, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 0.5, 3),
+    M1(1, 40, 90, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 5),
+    M2(2, 60, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 5),
+    M3(3, 80, 80, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 4),
+    M4(4, 100, 75, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 4),
+    M5(5, 120, 70, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 3),
+    M6(6, 140, 65, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 5, 1, 3),
+    M7(7, 160, 60, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 5, 1, 3),
     M8(8, 180, 55, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 3),
-    M9(9, 200, 50, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 5, 0.5, 3),
-    M10(10, 250, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 5, 1, 3),
-    M11(10, 500, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 0.5, 3),
-    M12(10, 1000, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 5),
-    M13(10, 1600, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 5),
+    M9(9, 200, 50, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 5),
+    M10(10, 250, 40, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 5),
     M99(99, 9999, 0, new ItemBuilder(Material.BARRIER).setName("&c&lBrak misji").setLore(Arrays.asList("", "&7Wykonales/as juz wszystkie misje u Tego NPC!", "&8Kiedys moze jeszcze tu cos bedzie...")).toItemStack(), 0, 0, 0);
 
 
