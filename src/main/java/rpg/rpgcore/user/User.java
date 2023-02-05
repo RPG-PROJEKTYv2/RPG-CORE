@@ -21,7 +21,6 @@ public class User {
     private String punishmentHistory;
     private final RankUser rankUser;
     private final RankPlayerUser rankPlayerUser;
-    private long rankChestCooldown;
     private int lvl;
     private double exp;
     private double kasa;
@@ -40,6 +39,7 @@ public class User {
     private long pierscienDoswiadczeniaTime;
     private double krytyk;
     private long kitCooldown;
+    private boolean tworca;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -49,7 +49,6 @@ public class User {
         this.punishmentHistory = "";
         this.rankUser = new RankUser(RankType.GRACZ);
         this.rankPlayerUser = new RankPlayerUser(RankTypePlayer.GRACZ, 0L);
-        this.rankChestCooldown = 0L;
         this.lvl = 1;
         this.exp = 0;
         this.kasa = 100;
@@ -64,6 +63,7 @@ public class User {
         this.pierscienDoswiadczeniaTime = 0L;
         this.krytyk = 0.0;
         this.kitCooldown = 0;
+        this.tworca = false;
     }
 
     public User(final Document document) {
@@ -73,8 +73,7 @@ public class User {
         this.muteInfo = document.getString("muteInfo");
         this.punishmentHistory = document.getString("punishmentHistory");
         this.rankUser = new RankUser(RankType.valueOf(document.getString("rankName")));
-        this.rankPlayerUser = new RankPlayerUser(RankTypePlayer.valueOf(document.getString("rankPlayerName")), document.getLong("rankPlayerTime"));
-        this.rankChestCooldown = document.getLong("rankChestCooldown");
+        this.rankPlayerUser = new RankPlayerUser(RankTypePlayer.valueOf(document.getString("rankPlayerName").toUpperCase()), document.getLong("rankPlayerTime"));
         this.lvl = document.getInteger("lvl");
         this.exp = document.getDouble("exp");
         this.kasa = document.getDouble("kasa");
@@ -89,6 +88,7 @@ public class User {
         this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
         this.krytyk = document.getDouble("krytyk");
         this.kitCooldown = document.getLong("kitCooldown");
+        this.tworca = document.getBoolean("tworca");
     }
 
     public boolean isBanned() {
@@ -108,7 +108,6 @@ public class User {
                 .append("rankName", this.rankUser.getRankType().getName())
                 .append("rankPlayerName", this.rankPlayerUser.getRankType().getName())
                 .append("rankPlayerTime", this.rankPlayerUser.getTime())
-                .append("rankChestCooldown", this.rankChestCooldown)
                 .append("lvl", this.lvl)
                 .append("exp", this.exp)
                 .append("kasa", this.kasa)
@@ -124,7 +123,8 @@ public class User {
                 .append("pierscienDoswiadczenia", this.pierscienDoswiadczenia)
                 .append("pierscienDoswiadczeniaTime", this.pierscienDoswiadczeniaTime)
                 .append("krytyk", this.krytyk)
-                .append("kitCooldown", this.kitCooldown);
+                .append("kitCooldown", this.kitCooldown)
+                .append("tworca", this.tworca);
     }
 
 

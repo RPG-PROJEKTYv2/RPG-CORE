@@ -40,7 +40,6 @@ public class ItemShopInteractListener implements Listener {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
 
             if (user.getRankPlayerUser().getRankType().getPriority() > RankTypePlayer.getByName(Utils.getTagString(eventItem, "rank")).getPriority()) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTwoja ."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cUzyj tego voucher, kiedy czas twojej rangi dobiegnie konca."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cCzas swojej rangi mozesz sprawdzic pod /ranktime."));
                 return;

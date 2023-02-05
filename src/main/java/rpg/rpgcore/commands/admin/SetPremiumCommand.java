@@ -48,13 +48,21 @@ public class SetPremiumCommand extends CommandAPI {
         if (args[1].equalsIgnoreCase("Player")) {
             user.getRankPlayerUser().setRank(RankTypePlayer.GRACZ);
             user.getRankPlayerUser().setTime(0L);
+            if (user.isTworca()) {
+                user.setTworca(false);
+                rpgcore.getServer().broadcastMessage(" ");
+                rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
+                rpgcore.getServer().broadcastMessage(Utils.format("  &cGracz &6" + user.getName() + " &cstracil wlasnie range &9&lTworca&c!"));
+                rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
+                rpgcore.getServer().broadcastMessage(" ");
+            }
+
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZmieniono rangę gracza &6" + args[0] + " &ana &6Player&7!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
 
 
             if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
                 final Player player = Bukkit.getPlayer(args[0]);
-                rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME.trim(), 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a!", 5, 20, 5));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                     TabManager.removePlayer(player);
@@ -72,15 +80,19 @@ public class SetPremiumCommand extends CommandAPI {
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
             return;
         }
-        user.getRankPlayerUser().setRank(RankTypePlayer.valueOf(args[1].toUpperCase(Locale.ROOT)));
-        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.TWORCA) {
-            user.getRankPlayerUser().setTime(-1);
-            sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZmieniono rangę gracza &6" + args[0] + " &ana &9&lTworca&7!"));
+
+        if (args[1].equalsIgnoreCase("tworca")) {
+            if (user.getRankPlayerUser().getRankType().getPriority() < RankTypePlayer.TWORCA.getPriority()) {
+                user.getRankPlayerUser().setRank(RankTypePlayer.TWORCA);
+                user.getRankPlayerUser().setTime(-1);
+            }
+            user.setTworca(true);
+            sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aNadano rangę &9&lTworca &adla gracza &6" + args[0] + "&a!"));
 
             rpgcore.getServer().broadcastMessage(" ");
-            rpgcore.getServer().broadcastMessage(Utils.format("               &4&&lHELL&8&lRPG            "));
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7Gracz &c" + user.getName() + " &aotrzymmal range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a!"));
-            rpgcore.getServer().broadcastMessage(Utils.format("               &4&&lHELL&8&lRPG            "));
+            rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &aGracz &6" + user.getName() + " &aotrzymmal range &6" + user.getRankPlayerUser().getRankType().getPrefix().trim() + "&a!"));
+            rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
             rpgcore.getServer().broadcastMessage(" ");
 
             if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
@@ -106,6 +118,9 @@ public class SetPremiumCommand extends CommandAPI {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
             return;
         }
+
+
+        user.getRankPlayerUser().setRank(RankTypePlayer.valueOf(args[1].toUpperCase(Locale.ROOT)));
         if (args[2].equals("-1")) {
             user.getRankPlayerUser().setTime(-1);
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyślnie ustawiono rangę gracza &6" + args[0] + " &a na &6" + args[1] + " &a na okres &6LifeTime&a!"));

@@ -1,8 +1,8 @@
 package rpg.rpgcore.ranks.types;
 
 public enum RankTypePlayer {
-    TWORCA("Tworca", "&9&lTworca &7",  4),
     ELITA("ELITA", "&5&lELITA &7",  3),
+    TWORCA("TWORCA", "&9&lTworca &7",  2),
     VIP("VIP", "&e&lVip &7", 1),
     BUDOWNICZY("BUDOWNICZY", "&d&lBud &7", 1),
     GRACZ("GRACZ", "&7", 0);

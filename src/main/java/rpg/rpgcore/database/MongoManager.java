@@ -484,6 +484,10 @@ public class MongoManager {
                         user.getRankPlayerUser().setRank(RankTypePlayer.GRACZ);
                         user.getRankPlayerUser().setTime(0L);
                         rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&8&l[&4&l!&8&l]", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&cTwoja ranga wlasnie wygasla!", 5, 20, 5));
+                        if (user.isTworca()) {
+                            user.getRankPlayerUser().setRank(RankTypePlayer.TWORCA);
+                            user.getRankPlayerUser().setTime(-1L);
+                        }
                     }
                 }
             }
@@ -936,10 +940,10 @@ public class MongoManager {
     public Map<UUID, User> loadAllUsers() {
         Map<UUID, User> users = new HashMap<>();
         for (Document document : this.pool.getGracze().find()) {
-            document.remove("kitCooldown");
-            document.append("kitCooldown", 0L);
+            document.append("tworca", false);
+            document.remove("rankChestCooldown");
             this.pool.getGracze().findOneAndReplace(new Document("_id", document.getString("_id")), document);
-            User user = new User(document);
+            final User user = new User(document);
             users.put(user.getId(), user);
         }
         return users;
