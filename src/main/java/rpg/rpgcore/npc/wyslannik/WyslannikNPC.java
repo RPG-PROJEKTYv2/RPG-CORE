@@ -64,7 +64,7 @@ public class WyslannikNPC {
                     "&f&lNAGRODA",
                     "&8- " + mission.getReward().getItemMeta().getDisplayName(),
                     "",
-                    "&7Postep misji: &6" + user.getKillMobsMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getKillMobsMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
+                    "&7Postep misji: &6" + user.getKillMobsMissionProgress() + "&7/&6" + mission.getReqAmount() + " &7(&6" + (DoubleUtils.round((double) user.getKillMobsMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
@@ -82,7 +82,7 @@ public class WyslannikNPC {
                     "&f&lNAGRODA",
                     "&8- " + mission.getReward().getItemMeta().getDisplayName(),
                     "",
-                    "&7Postep misji: &6" + user.getKillBossMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getKillBossMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
+                    "&7Postep misji: &6" + user.getKillBossMissionProgress() + "&7/&6" + mission.getReqAmount() + " &7(&6" + (DoubleUtils.round((double) user.getKillBossMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
@@ -100,7 +100,7 @@ public class WyslannikNPC {
                     "&f&lNAGRODA",
                     "&8- " + mission.getReward().getItemMeta().getDisplayName(),
                     "",
-                    "&7Postep misji: &6" + user.getOpenChestMissionProgress() + "&7/&6" + mission.getReqAmount() + "&7(" + (DoubleUtils.round((double) user.getOpenChestMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
+                    "&7Postep misji: &6" + user.getOpenChestMissionProgress() + "&7/&6" + mission.getReqAmount() + " &7(&6" + (DoubleUtils.round((double) user.getOpenChestMissionProgress() / (double) mission.getReqAmount() * 100.0, 2) + "%&7)")
             )).hideFlag().toItemStack().clone();
         }
     }
