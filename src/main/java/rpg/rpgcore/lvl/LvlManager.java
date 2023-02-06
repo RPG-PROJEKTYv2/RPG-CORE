@@ -49,6 +49,7 @@ public class LvlManager {
         double mnozik = 1;
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
         if (rank == RankTypePlayer.VIP) mnozik = 1.25;
+        if (rank == RankTypePlayer.TWORCA) mnozik = 1.35;
         if (rank == RankTypePlayer.ELITA) mnozik = 1.5;
         if (Maps.isMob(mob)) {
             return DoubleUtils.round(Maps.getByName(mob).getKasa() * mnozik, 2);
@@ -80,6 +81,7 @@ public class LvlManager {
         }
         final User user = rpgcore.getUserManager().find(uuid);
         if (user.getRankPlayerUser().getRankType() == RankTypePlayer.VIP) dodatkowyExp += 25;
+        if (user.getRankPlayerUser().getRankType() == RankTypePlayer.TWORCA) dodatkowyExp += 35;
         if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) dodatkowyExp += 50;
         dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 

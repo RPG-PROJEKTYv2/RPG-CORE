@@ -52,6 +52,7 @@ public class MobDropHelper {
         int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
         if (rank == RankTypePlayer.VIP) szczescie += 25;
+        if (rank == RankTypePlayer.TWORCA) szczescie += 35;
         if (rank == RankTypePlayer.ELITA) szczescie += 50;
         final double niesDropChance50lvl = getDropChance(szczescie, 0.02);
         final double niesDropChance50plus = getDropChance(szczescie, 0.01);
