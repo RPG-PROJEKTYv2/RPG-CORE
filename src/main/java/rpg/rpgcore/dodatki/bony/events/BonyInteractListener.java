@@ -1,6 +1,8 @@
 package rpg.rpgcore.dodatki.bony.events;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -175,7 +177,7 @@ public class BonyInteractListener implements Listener {
                 user.getBony().setHp10(Utils.serializeItem(eventItem));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +10!"));
-                player.setMaxHealth(player.getMaxHealth() + 10*2);
+                player.setMaxHealth(player.getMaxHealth() + 10 * 2);
                 break;
             case "Bon Dodatkowego Zdrowia +20":
                 if (!user.getBony().getHp20().isEmpty()) {
@@ -185,7 +187,7 @@ public class BonyInteractListener implements Listener {
                 user.getBony().setHp20(Utils.serializeItem(eventItem));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +20!"));
-                player.setMaxHealth(player.getMaxHealth() + 20*2);
+                player.setMaxHealth(player.getMaxHealth() + 20 * 2);
                 break;
             case "Bon Dodatkowego Zdrowia +35":
                 if (!user.getBony().getHp35().isEmpty()) {
@@ -195,7 +197,7 @@ public class BonyInteractListener implements Listener {
                 user.getBony().setHp35(Utils.serializeItem(eventItem));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 35);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +35!"));
-                player.setMaxHealth(player.getMaxHealth() + 35*2);
+                player.setMaxHealth(player.getMaxHealth() + 35 * 2);
                 break;
             case "Bon Zwiekszonej Predkosci Ruchu +25":
                 if (!user.getBony().getPredkosc25().isEmpty()) {
@@ -222,9 +224,12 @@ public class BonyInteractListener implements Listener {
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
             rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("player-bony-logs", EmbedUtil.create(
                     "**Gracz **`" + player.getName() + "`** zalozyl bona!**",
-                    "**Bon: **" + Utils.removeColor(eventItem.getItemMeta().getDisplayName()), Color.getHSBColor(114, 90, 47)));
+                    "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                            "**Bon: **" + Utils.removeColor(eventItem.getItemMeta().getDisplayName()), Color.getHSBColor(114, 90, 47)));
         });
     }
 }

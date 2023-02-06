@@ -1,5 +1,7 @@
 package rpg.rpgcore.inventory;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class InvseeInventoryCloseListener implements Listener {
     private final RPGCORE rpgcore;
+
     public InvseeInventoryCloseListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
@@ -55,12 +58,12 @@ public class InvseeInventoryCloseListener implements Listener {
 
                 StringBuilder sb = new StringBuilder();
                 for (ItemStack item : differenceRemoved) {
-                    sb.append("- ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name()+ "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
+                    sb.append("- ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name() + "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
                 }
 
                 StringBuilder sb2 = new StringBuilder();
                 for (ItemStack item : differenceAdded) {
-                    sb2.append("+ ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name()+ "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
+                    sb2.append("+ ").append("x " + item.getAmount()).append(" ").append("Type: `" + item.getType().name() + "`\nName: " + Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name()) + "\nLore: " + (item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n")).append("\n");
                 }
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
@@ -68,8 +71,11 @@ public class InvseeInventoryCloseListener implements Listener {
                 if (differenceRemoved.isEmpty() && differenceRemoved.isEmpty()) {
                     return;
                 }
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("invsee-logs", EmbedUtil.create("**Modyfikowano Ekwipunek**",
                         "**Gracz:** `" + e.getPlayer().getName() + "` **modyfikowal ekwipunek innego gracza!**\n" +
+                                "**Ping Gracza: **" + ((CraftPlayer) e.getPlayer()).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                                 "**Modyfikowany Gracz: **`" + playerName + "`\n" +
                                 "**Dodane przedmioty:**\n" + (sb2.toString().isEmpty() ? "+ Brak" : sb2.toString()) + "\n\n" +
                                 "**Wyjete przedmioty:**\n" + (sb.toString().isEmpty() ? "- Brak" : sb.toString())

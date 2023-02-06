@@ -1,10 +1,11 @@
 package rpg.rpgcore.utils;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
@@ -146,10 +147,13 @@ public class ItemHelper {
             if (type.contains("_HELMET") || type.contains("_CHESTPLATE") || type.contains("_LEGGINGS") || type.contains("_BOOTS")) {
                 int prot = Utils.getTagInt(itemStack, "prot");
                 int thorns = Utils.getTagInt(itemStack, "thorns");
+                double[] tps = MinecraftServer.getServer().recentTps;
                 if (prot > 250) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Duża Obrona ! (" + Utils.getTagInt(itemStack, "prot") + ")**",
-                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                            "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                    "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                    "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
                                     "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
                     prot = 250;
@@ -157,7 +161,9 @@ public class ItemHelper {
                 if (thorns > 50) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Dużo THORNS ! (" + Utils.getTagInt(itemStack, "thorns") + ")**",
-                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                            "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                    "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                    "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
                                     "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
                     thorns = 50;
@@ -167,10 +173,13 @@ public class ItemHelper {
             if (type.contains("_SWORD")) {
                 int dmg = Utils.getTagInt(itemStack, "dmg");
                 int moby = Utils.getTagInt(itemStack, "moby");
+                double[] tps = MinecraftServer.getServer().recentTps;
                 if (dmg > 2500) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Duża DMG ! (" + Utils.getTagInt(itemStack, "dmg") + ")**",
-                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                            "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                    "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                    "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
                                     "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
                     dmg = 2500;
@@ -178,7 +187,9 @@ public class ItemHelper {
                 if (moby > 2500) {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getDiscordBot().sendChannelMessage("enchants-log", EmbedUtil.create(
                             "**Za Dużo DMG MOBY ! (" + Utils.getTagInt(itemStack, "moby") + ")**",
-                            "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
+                            "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                    "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                    "**Gracz: **" + player.getName() + " (" + player.getUniqueId() + ")" + "\n" +
                                     "**Item: **" + itemStack.getItemMeta(), Color.RED
                     )));
                     moby = 2500;

@@ -3,8 +3,10 @@ package rpg.rpgcore.commands.admin;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
@@ -79,8 +81,11 @@ public class AdminCodeCommand extends CommandAPI {
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
 
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("admincode-logs", EmbedUtil.create("**AdminCode Create**",
                     "**Gracz:** `" + player.getName() + "` **stworzyl swoj AdminCode!**\n"
+                            + "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n"
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Ranga:** " + user.getRankUser().getRankType().getName() + "\n"
                             + "**AdminCode: **||" + args[2] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
@@ -137,8 +142,12 @@ public class AdminCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("admincode-logs", EmbedUtil.create("**AdminCode Change**",
                     "**Gracz:** `" + player.getName() + "` **zmienil swoj AdminCode!**\n"
+                            + "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n"
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Ranga:** " + user.getRankUser().getRankType().getName() + "\n"
                             + "**Stary AdminCode: **||" + args[1] + "||\n"
                             + "**Nowy AdminCode: **||" + args[2] + "||\n"
@@ -159,8 +168,11 @@ public class AdminCodeCommand extends CommandAPI {
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(args[0])}));
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("admincode-logs", EmbedUtil.create("**AdminCode LogIn**",
                     "**Gracz:** `" + player.getName() + "` **zalogowal sie swoim hellcode!**\n"
+                            + "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n"
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Kod: **||" + args[0] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.GREEN));

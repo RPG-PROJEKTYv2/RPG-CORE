@@ -1,6 +1,8 @@
 package rpg.rpgcore.dodatki.akcesoriaD.events;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -56,7 +58,8 @@ public class AkcesoriaDodatInteractListener implements Listener {
         }
 
         if (!eventItem.getItemMeta().getDisplayName().contains("Szarfa") && !eventItem.getItemMeta().getDisplayName().contains("Pas") &&
-                !eventItem.getItemMeta().getDisplayName().contains("Medalion")  && !eventItem.getItemMeta().getDisplayName().contains("Energia")) return;
+                !eventItem.getItemMeta().getDisplayName().contains("Medalion") && !eventItem.getItemMeta().getDisplayName().contains("Energia"))
+            return;
 
         if (eventItem.getAmount() > 1) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
@@ -90,10 +93,13 @@ public class AkcesoriaDodatInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium dodatkowe!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Silny Na Ludzi: " + ludzie + "\n" +
                                 "- Silny Na Potwory: " + moby + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
@@ -122,10 +128,13 @@ public class AkcesoriaDodatInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium dodatkowe!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Odpornosc Na Ludzi: " + defLudzie + "\n" +
                                 "- Odpornosc Na Potwory: " + defMoby + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
@@ -154,10 +163,13 @@ public class AkcesoriaDodatInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium dodatkowe!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
                                 "- Zlote Serca: " + zloteSerca + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
@@ -192,10 +204,13 @@ public class AkcesoriaDodatInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium dodatkowe!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Zmniejszone Obrazenia: " + mDmg + "\n" +
                                 "- Zwiekszona Defensywa: " + def + "\n" +
                                 "- Blok Ciosu: " + blok + "\n" +

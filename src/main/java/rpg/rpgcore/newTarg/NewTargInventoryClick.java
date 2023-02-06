@@ -1,7 +1,9 @@
 package rpg.rpgcore.newTarg;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -71,27 +73,27 @@ public class NewTargInventoryClick implements Listener {
 
             // ZMIANA POMIEDZY KATEGORIAMI
             if (clickedSlot == 0) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 1, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 1, sort, 1);
                 return;
             }
             if (clickedSlot == 9) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 2, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 2, sort, 1);
                 return;
             }
             if (clickedSlot == 18) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 3, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 3, sort, 1);
                 return;
             }
             if (clickedSlot == 27) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 4, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 4, sort, 1);
                 return;
             }
             if (clickedSlot == 36) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 5, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 5, sort, 1);
                 return;
             }
             if (clickedSlot == 45) {
-                rpgcore.getNewTargManager().openNewTargInventory(player, 6, sort,1);
+                rpgcore.getNewTargManager().openNewTargInventory(player, 6, sort, 1);
                 return;
             }
 
@@ -192,13 +194,13 @@ public class NewTargInventoryClick implements Listener {
 
                 final ItemMeta meta = item.getItemMeta();
                 final List<String> lore = meta.getLore();
-                final int loreSize = lore.size() -1;
+                final int loreSize = lore.size() - 1;
 
                 lore.remove(loreSize);
-                lore.remove(loreSize-1);
-                lore.remove(loreSize-2);
-                lore.remove(loreSize-3);
-                lore.remove(loreSize-4);
+                lore.remove(loreSize - 1);
+                lore.remove(loreSize - 2);
+                lore.remove(loreSize - 3);
+                lore.remove(loreSize - 4);
                 meta.setLore(Utils.format(lore));
                 item.setItemMeta(meta);
 
@@ -208,8 +210,11 @@ public class NewTargInventoryClick implements Listener {
                     p.updateInventory();
                 }
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wystawiles przedmiot za &6&o" + cena + " &2$"));
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - Wystaw**",
-                        "**Gracz: **`" + player.getName() + "` **pomyslnie wystawil przedmiot na swoj targ.**\n" +
+                        "**Gracz **`" + player.getName() + "` **pomyslnie wystawil przedmiot na swoj targ.**\n" +
+                                "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                                 "**Nazwa Przedmiotu: **" + Utils.removeColor(item.getItemMeta().getDisplayName()) + "\n" +
                                 "**Ilosc Przedmiotu: **" + item.getAmount() + "\n" +
                                 "**Cena Przedmiotu: **" + cena + "\n" +
@@ -227,13 +232,15 @@ public class NewTargInventoryClick implements Listener {
             clickedInventory.setItem(4, new ItemStack(Material.AIR));
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAnulowales wystawianie przedmiotu"));
-            RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - Wystaw**",
+            double[] tps = MinecraftServer.getServer().recentTps;
+            RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - Wystaw (Anulowano)**",
                     "**Gracz: **`" + player.getName() + "` **anulowal wystawianie przedmiotu.**\n" +
+                            "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Nazwa Przedmiotu: **" + Utils.removeColor(clickedInventory.getItem(4).getItemMeta().getDisplayName()) + "\n" +
                             "**Ilosc Przedmiotu: **" + clickedInventory.getItem(4).getAmount() + "\n" +
                             "**Typ Przedmiotu: **`" + clickedInventory.getItem(4).getType().toString() + "`\n" +
                             "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedInventory.getItem(4).getItemMeta().getLore()) + "\n", Color.RED));
-
         }
 
 
@@ -274,7 +281,6 @@ public class NewTargInventoryClick implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma wystawionych zadnych przedmiotow"));
                 return;
             }
-
 
 
             final double kasaGracza = rpgcore.getUserManager().find(playerUUID).getKasa();
@@ -345,8 +351,8 @@ public class NewTargInventoryClick implements Listener {
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
         rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-           rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID));
-           rpgcore.getMongoManager().saveDataUser(targetUUID, rpgcore.getUserManager().find(targetUUID));
+            rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID));
+            rpgcore.getMongoManager().saveDataUser(targetUUID, rpgcore.getUserManager().find(targetUUID));
         });
         rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
 
@@ -361,11 +367,24 @@ public class NewTargInventoryClick implements Listener {
         if (clickedItem.getItemMeta().getDisplayName() == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
             Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-            return;
+        } else {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
         }
 
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-        Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+        final String itemName = clickedItem.getItemMeta().getDisplayName() == null ? clickedItem.getType().toString() : clickedItem.getItemMeta().getDisplayName();
+
+        double[] tps = MinecraftServer.getServer().recentTps;
+        RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - SELL**",
+                "**Gracz: **`" + player.getName() + "` **sprzedał przedmiot dla gracza**`" + targetName + "`\n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                        "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                        "**Typ Sprzedazy: ** Targ gracza `" + player.getName() + "`\n" +
+                        "**Nazwa Przedmiotu: **" + itemName + "\n" +
+                        "**Ilosc Przedmiotu: **" + clickedItem.getAmount() + "\n" +
+                        "**Cena Przedmiotu: **\n" + Utils.spaceNumber(itemCena) + "\n" +
+                        "**Typ Przedmiotu: **`" + clickedItem.getType().toString() + "`\n" +
+                        "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedItem.getItemMeta().getLore()) + "\n", Color.RED));
     }
 
     private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
@@ -388,15 +407,28 @@ public class NewTargInventoryClick implements Listener {
         if (clickedItem.getItemMeta().getDisplayName() == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
             Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-            return;
+        } else {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
         }
 
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-        Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+        final String itemName = clickedItem.getItemMeta().getDisplayName() == null ? clickedItem.getType().toString() : clickedItem.getItemMeta().getDisplayName();
+
+        double[] tps = MinecraftServer.getServer().recentTps;
+        RPGCORE.getDiscordBot().sendChannelMessage("targ-log", EmbedUtil.create("**Targ - SELL**",
+                "**Gracz: **`" + player.getName() + "` **sprzedał przedmiot dla gracza**`" + targetName + "`\n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                        "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                        "**Typ Sprzedazy: ** Targ gracza `" + player.getName() + "`\n" +
+                        "**Nazwa Przedmiotu: **" + itemName + "\n" +
+                        "**Ilosc Przedmiotu: **" + clickedItem.getAmount() + "\n" +
+                        "**Cena Przedmiotu: **\n" + Utils.spaceNumber(itemCena) + "\n" +
+                        "**Typ Przedmiotu: **`" + clickedItem.getType().toString() + "`\n" +
+                        "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedItem.getItemMeta().getLore()) + "\n", Color.RED));
     }
-    
+
     private int getItemCategory(final ItemStack is) {
-        
+
         if (String.valueOf(is.getType()).contains("HELMET") || String.valueOf(is.getType()).contains("CHESTPLATE")
                 || String.valueOf(is.getType()).contains("LEGGINGS") || String.valueOf(is.getType()).contains("BOOTS")) {
             return 2;

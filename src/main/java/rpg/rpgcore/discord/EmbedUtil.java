@@ -2,6 +2,8 @@ package rpg.rpgcore.discord;
 
 import com.google.common.collect.Multimap;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.trade.objects.Trade;
@@ -21,6 +23,7 @@ public class EmbedUtil {
     }
 
     public static EmbedBuilder createHandlarzcSellLog(final Player player, final Multimap<ItemStack, Double> itemMap, final double moneyBefore, final double moneyAfter) {
+        double[] tps = MinecraftServer.getServer().recentTps;
 
         final StringBuilder sb = new StringBuilder();
         sb.append("\n**Lista przedmiotow:**\n");
@@ -43,12 +46,17 @@ public class EmbedUtil {
         return new EmbedBuilder()
                 .setColor(Color.decode("#3ff538"))
                 .setTitle("**Gracz " + player.getName() + " sprzedal " + itemMap.entries().stream().mapToInt(entry -> entry.getKey().getAmount()).sum() + " przedmiotow**", null)
-                .setDescription("Łączna wartość sprzedanych przedmiotów: " + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" + sb)
+                .setDescription(
+                        "**Łączna wartość sprzedanych przedmiotów: **" + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" +
+                                "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
+                                + sb)
                 .setTimestamp(Instant.now())
                 .setFooter("© 2022 HELLRPG.PL");
     }
 
     public static EmbedBuilder createHandlarzCancelLog(final Player player, final Multimap<ItemStack, Double> itemMap) {
+        double[] tps = MinecraftServer.getServer().recentTps;
 
         final StringBuilder sb = new StringBuilder();
         sb.append("\n**Lista przedmiotow:**\n");
@@ -68,15 +76,22 @@ public class EmbedUtil {
         return new EmbedBuilder()
                 .setColor(Color.decode("#b30202"))
                 .setTitle("**Gracz " + player.getName() + " anulował sprzedaz " + itemMap.entries().stream().mapToInt(entry -> entry.getKey().getAmount()).sum() + " przedmiotow**", null)
-                .setDescription("Łączna wartość przedmiotów: " + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" + sb)
+                .setDescription("**Łączna wartość przedmiotów: **" + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" +
+                                "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                        sb)
                 .setTimestamp(Instant.now())
                 .setFooter("© 2022 HELLRPG.PL");
     }
 
     public static EmbedBuilder createTradeLogs(final Trade trade) {
+        double[] tps = MinecraftServer.getServer().recentTps;
         final Color color = trade.isCanceled() ? Color.decode("#fc2c28") : Color.decode("#8efa41");
         final StringBuilder sb = new StringBuilder();
         sb.append("**Wymiana pomiedzy:** `").append(trade.getPlayer1().getName()).append(" i ").append(trade.getPlayer2().getName()).append("`\n");
+        sb.append("**Ping Gracza** `").append(trade.getPlayer1().getName()).append("`**:**").append(((CraftPlayer) trade.getPlayer1()).getHandle().ping).append(" ms\n");
+        sb.append("**Ping Gracza** `").append(trade.getPlayer2().getName()).append("`**:**").append(((CraftPlayer) trade.getPlayer2()).getHandle().ping).append(" ms\n");
+        sb.append("**Ping Serwerowy: ** 1m - ").append(tps[0]).append("tps, 5m - ").append(tps[1]).append("tps, 15m - ").append(tps[2]).append("tps\n");
         sb.append("**Status: **").append(trade.isCanceled() ? "Anulowana" : "Zakonczona").append("\n");
         sb.append("**Przedmioty gracza:** `").append(trade.getPlayer1().getName()).append("`\n");
         for (final ItemStack is : trade.getItems(trade.getUuid1())) {

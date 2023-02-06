@@ -3,8 +3,10 @@ package rpg.rpgcore.commands.player;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
@@ -116,8 +118,11 @@ public class HellCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode Create**",
                     "**Gracz:** `" + player.getName() + "` **stworzyl swoj hellcode!**\n"
+            + (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "")
+                    + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Nowy Kod: **||" + args[2] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.red));
@@ -174,8 +179,11 @@ public class HellCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode Change**",
                     "**Gracz:** `" + player.getName() + "` **zmienil swoj hellcode!**\n"
+                            + (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "")
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Kod Przed Zmiana: **||" + args[1] + "||\n"
                             + "**Kod Po Zmianie: **||" + args[2] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
@@ -204,8 +212,11 @@ public class HellCodeCommand extends CommandAPI {
             user.setHellCodeLogin(false);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wylaczyles hellcode!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode OFF**",
                     "**Gracz:** `" + player.getName() + "` **wylaczyl swoj hellcode!**\n"
+                            + (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "")
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Kod Przed wylaczeniem: **||" + args[1] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.red));
@@ -230,8 +241,11 @@ public class HellCodeCommand extends CommandAPI {
             finalMessage.addExtra(message);
             player.spigot().sendMessage(finalMessage);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zyczymy milej i udanej rozgrywki. &cZespol Hellrpg.pl"));
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("hellcode-logs", EmbedUtil.create("**HellCode LogIn**",
                     "**Gracz:** `" + player.getName() + "` **zalogowal sie swoim hellcode!**\n"
+                            + (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "")
+                            + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                             + "**Kod: **||" + args[0] + "||\n"
                             + "**Adress IP:** ||" + player.getAddress().getAddress() + "||\n"
                             + "**Data:** " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()), Color.GREEN));

@@ -1,10 +1,12 @@
 package rpg.rpgcore.api;
 
 import lombok.SneakyThrows;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.discord.EmbedUtil;
@@ -117,10 +119,13 @@ public abstract class CommandAPI extends Command {
                         !s.contains("mag") && !s.contains("msg") && !s.contains("r") && !s.contains("akcesoria") &&
                         !s.contains("mag") && !s.contains("bony") && !s.contains("targ") && !s.contains("kosz") &&
                         !s.contains("spawn")) {
+                    double[] tps = MinecraftServer.getServer().recentTps;
                     RPGCORE.getDiscordBot().sendChannelMessage("admin-commands-logs", EmbedUtil.create(
                             "**" + s.toUpperCase() + "**",
                             "**Administrator: **" + sender.getName() + "\n"
                                     + "**Ranga: **" + userProfile.getRankUser().getRankType().getName() + "\n"
+                                    + "**Ping Gracza: **" + ((CraftPlayer) sender).getHandle().ping + " ms\n"
+                                    + "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
                                     + "**Komenda: **" + s + "\n"
                                     + "**Argumenty: **" + String.join(" ", strings) + "\n"
                                     + "**Data: **" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(System.currentTimeMillis()), Color.BLUE));

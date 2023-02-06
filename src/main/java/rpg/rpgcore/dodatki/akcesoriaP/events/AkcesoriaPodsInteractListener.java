@@ -1,6 +1,8 @@
 package rpg.rpgcore.dodatki.akcesoriaP.events;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -87,15 +89,18 @@ public class AkcesoriaPodsInteractListener implements Listener {
             bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + def);
             bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + blok);
             bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + hp);
-            player.setMaxHealth(player.getMaxHealth() + hp*2);
+            player.setMaxHealth(player.getMaxHealth() + hp * 2);
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Srednia Defensywa: " + def + "\n" +
                                 "- Blok Ciosu: " + blok + "\n" +
                                 "- Dodatkowe Hp: " + hp + "\n" +
@@ -126,10 +131,13 @@ public class AkcesoriaPodsInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Dodatkowe Obrazenia: " + ddmg + "\n" +
                                 "- Szansa Na Cios Krytyczny: " + kryt + "\n" +
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
@@ -160,10 +168,13 @@ public class AkcesoriaPodsInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Silny Na Ludzi: " + ludzie + "\n" +
                                 "- Def Na Ludzi: " + odpo + "\n" +
                                 "- Zmniejszona Szybkosc: " + mspeed + "\n" +
@@ -194,10 +205,13 @@ public class AkcesoriaPodsInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Przeszycie Bloku: " + przeszycie + "\n" +
                                 "- Wzm Szansa na Kryta: " + wkryt + "\n" +
                                 "- Zwiekszona Szybkosc: " + speed + "\n" +
@@ -209,7 +223,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.WATCH) {
             e.setCancelled(true);
 
-            if (eventItem.hasItemMeta() && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Zardzewialy Pierscien")) return;
+            if (eventItem.hasItemMeta() && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Zardzewialy Pierscien"))
+                return;
 
             if (!user.getAkcesoriaPodstawowe().getDiadem().isEmpty()) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony diadem!"));
@@ -230,10 +245,13 @@ public class AkcesoriaPodsInteractListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 rpgcore.getMongoManager().saveDataDodatki(uuid, user);
+                double[] tps = MinecraftServer.getServer().recentTps;
                 RPGCORE.getDiscordBot().sendChannelMessage("player-akcesoria-logs", EmbedUtil.create(
                         "**Gracz **`" + player.getName() + "`** zalozyl nowe akcesorium!**",
-                        "**Typ: **`" + eventItem.getType() + "`\n"
-                                + "**Statystyki:** \n" +
+                        "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                                "**Typ: **`" + eventItem.getType() + "`\n" +
+                                "**Statystyki:** \n" +
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
                                 "- Silny na potwory: " + potwory + "\n" +
                                 "- Dodatkowy exp: " + exp + "\n" +

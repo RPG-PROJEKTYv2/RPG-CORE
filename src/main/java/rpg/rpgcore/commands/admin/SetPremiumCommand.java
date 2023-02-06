@@ -1,7 +1,9 @@
 package rpg.rpgcore.commands.admin;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
@@ -19,12 +21,14 @@ import java.util.Locale;
 
 public class SetPremiumCommand extends CommandAPI {
     private final RPGCORE rpgcore;
+
     public SetPremiumCommand(final RPGCORE rpgcore) {
         super("setpremium");
         this.setRankLevel(RankType.HA);
-        this.setAliases(Arrays.asList("spremium","setp", "setpremium", "premium", "tworca"));
+        this.setAliases(Arrays.asList("spremium", "setp", "setpremium", "premium", "tworca"));
         this.rpgcore = rpgcore;
     }
+
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
         if (args.length < 4) {
@@ -41,7 +45,6 @@ public class SetPremiumCommand extends CommandAPI {
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
             return;
         }
-
 
 
         final User user = rpgcore.getUserManager().find(args[0]);
@@ -72,9 +75,11 @@ public class SetPremiumCommand extends CommandAPI {
                     }
                 });
             }
-
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
                     "**Gracz:** `" + args[0] + "`**uzyskal nowa range**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Ranga**: " + args[1].toUpperCase() + "\n" +
                             "**Czas**: LifeTime\n" +
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
@@ -107,9 +112,11 @@ public class SetPremiumCommand extends CommandAPI {
                     }
                 });
             }
-
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
                     "**Gracz:** `" + user.getName() + "`**uzyskal nowa range**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Ranga**: " + user.getRankPlayerUser().getRankType().getName() + "\n" +
                             "**Czas**: LifeTime\n" +
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
@@ -146,11 +153,14 @@ public class SetPremiumCommand extends CommandAPI {
                     });
                 }
             }
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
                     "**Gracz:** `" + args[0] + "`**uzyskal nowa range**\n" +
-                    "**Ranga**: " + args[1].toUpperCase() + "\n" +
-                    "**Czas**: LifeTime\n" +
-                    "**Nadane Przez**: " + sender.getName(), Color.GREEN));
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
+                            "**Ranga**: " + args[1].toUpperCase() + "\n" +
+                            "**Czas**: LifeTime\n" +
+                            "**Nadane Przez**: " + sender.getName(), Color.GREEN));
         } else {
             user.getRankPlayerUser().setTime(System.currentTimeMillis() + Utils.durationFromString(args[2], false));
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyślnie ustawiono rangę gracza &6" + args[0] + " &a na &6" + args[1] + " &a na okres &6" + args[2] + "&a!"));
@@ -176,8 +186,11 @@ public class SetPremiumCommand extends CommandAPI {
                     });
                 }
             }
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("itemshop-logs", EmbedUtil.create("**Zmiana Rangi**",
                     "**Gracz:** `" + args[0] + "`**uzyskal nowa range**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Ranga**: " + args[1].toUpperCase() + "\n" +
                             "**Czas**: " + Utils.durationToString(user.getRankPlayerUser().getTime(), false) + "\n" +
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));

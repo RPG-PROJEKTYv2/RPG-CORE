@@ -1,7 +1,9 @@
 package rpg.rpgcore.commands.admin;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
@@ -17,12 +19,14 @@ import java.util.Arrays;
 
 public class SetAdminRankCommand extends CommandAPI {
     private final RPGCORE rpgcore;
+
     public SetAdminRankCommand(final RPGCORE rpgcore) {
         super("setadminrank");
         this.setRankLevel(RankType.HA);
         this.setAliases(Arrays.asList("admin", "setadmin", "setrank"));
         this.rpgcore = rpgcore;
     }
+
     @Override
     public void executeCommand(CommandSender sender, String[] args) {
         if (args.length < 3) {
@@ -71,17 +75,20 @@ public class SetAdminRankCommand extends CommandAPI {
         if (rankTypeAfter.getName().equalsIgnoreCase("gracz")) {
             if (args[2].equals("true")) {
                 rpgcore.getServer().broadcastMessage(" ");
-                rpgcore.getServer().broadcastMessage(Utils.format("&cGracz &6" + user.getName()  + " &czostal usuniety z administracji serwera przez &6" + sender.getName() + "&c!"));
+                rpgcore.getServer().broadcastMessage(Utils.format("&cGracz &6" + user.getName() + " &czostal usuniety z administracji serwera przez &6" + sender.getName() + "&c!"));
                 rpgcore.getServer().broadcastMessage(Utils.format("&8Press 'F' to pay respect."));
                 rpgcore.getServer().broadcastMessage(" ");
 
             }
             if (Bukkit.getPlayer(user.getId()) != null && Bukkit.getPlayer(user.getId()).isOnline()) {
-                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&4&lDegrad", 5, 20 ,5), rpgcore.getNmsManager().makeSubTitle("&cZostales usuniety z administracji serwera przez &6" + sender.getName() + "&c!", 5, 20, 5));
+                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&4&lDegrad", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&cZostales usuniety z administracji serwera przez &6" + sender.getName() + "&c!", 5, 20, 5));
             }
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("adminrank-logs", EmbedUtil.create("**DEGRAD**",
                     "**Gracz:** `" + args[0] + "`** zostal wyrzucony z administracji**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Nadane Przez:** " + sender.getName(), Color.RED));
             return;
         }
@@ -89,32 +96,38 @@ public class SetAdminRankCommand extends CommandAPI {
         if (rankTypeBefore.getPriority() > rankTypeAfter.getPriority()) {
             if (args[2].equals("true")) {
                 rpgcore.getServer().broadcastMessage(" ");
-                rpgcore.getServer().broadcastMessage(Utils.format("&cGracz &6" + user.getName()  + " &czostal zdegradowany do rangi &6" + rankTypeAfter.getName() + " &cprzez &6" + sender.getName() + "&c!"));
+                rpgcore.getServer().broadcastMessage(Utils.format("&cGracz &6" + user.getName() + " &czostal zdegradowany do rangi &6" + rankTypeAfter.getName() + " &cprzez &6" + sender.getName() + "&c!"));
                 rpgcore.getServer().broadcastMessage(Utils.format("&8Press 'F' to pay respect."));
                 rpgcore.getServer().broadcastMessage(" ");
 
             }
             if (Bukkit.getPlayer(user.getId()) != null && Bukkit.getPlayer(user.getId()).isOnline()) {
-                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&4&lDegrad", 5, 20 ,5), rpgcore.getNmsManager().makeSubTitle("&cZostales zdegradowany do rangi &6" + rankTypeAfter.getName() + " &cprzez &6" + sender.getName() + "&c!", 5, 20, 5));
+                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&4&lDegrad", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&cZostales zdegradowany do rangi &6" + rankTypeAfter.getName() + " &cprzez &6" + sender.getName() + "&c!", 5, 20, 5));
             }
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("adminrank-logs", EmbedUtil.create("**DEGRAD**",
                     "**Gracz:** `" + args[0] + "`** zostal zdegradowany**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Ranga Przed Degradem:** " + rankTypeBefore.getName() + "\n" +
                             "**Ranga Po Degradzie:** " + rankTypeAfter.getName() + "\n" +
                             "**Nadane Przez**: " + sender.getName(), Color.RED));
         } else {
             if (args[2].equals("true")) {
                 rpgcore.getServer().broadcastMessage(" ");
-                rpgcore.getServer().broadcastMessage(Utils.format("&aGracz &6" + user.getName()  + " &azostal awansowany do rangi &6" + rankTypeAfter.getName() + " &aprzez &6" + sender.getName() + "&a!"));
+                rpgcore.getServer().broadcastMessage(Utils.format("&aGracz &6" + user.getName() + " &azostal awansowany do rangi &6" + rankTypeAfter.getName() + " &aprzez &6" + sender.getName() + "&a!"));
                 rpgcore.getServer().broadcastMessage(Utils.format("&6Gratulujemy i liczymy na dalsza wspolprace! &cZespol Hellrpg.pl"));
                 rpgcore.getServer().broadcastMessage(" ");
 
             }
             if (Bukkit.getPlayer(user.getId()) != null && Bukkit.getPlayer(user.getId()).isOnline()) {
-                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&a&lAwans", 5, 20 ,5), rpgcore.getNmsManager().makeSubTitle("&aZostales awansowany do rangi &6" + rankTypeAfter.getName() + " &aprzez &6" + sender.getName() + "&a! &6Gratulacje!", 5, 20, 5));
+                rpgcore.getNmsManager().sendTitleAndSubTitle(Bukkit.getPlayer(user.getId()), rpgcore.getNmsManager().makeTitle("&a&lAwans", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aZostales awansowany do rangi &6" + rankTypeAfter.getName() + " &aprzez &6" + sender.getName() + "&a! &6Gratulacje!", 5, 20, 5));
             }
+            double[] tps = MinecraftServer.getServer().recentTps;
             RPGCORE.getDiscordBot().sendChannelMessage("adminrank-logs", EmbedUtil.create("**AWANS**",
                     "**Gracz:** `" + args[0] + "` **zostal awansowany**\n" +
+                            (Bukkit.getPlayer(args[0]) != null ? "**Ping Gracza: **" + ((CraftPlayer) Bukkit.getPlayer(args[0])).getHandle().ping + " ms\n" : "") +
+                            "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
                             "**Ranga Przed Awansem:** " + rankTypeBefore.getName() + "\n" +
                             "**Ranga Po Awansie:** " + rankTypeAfter.getName() + "\n" +
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
