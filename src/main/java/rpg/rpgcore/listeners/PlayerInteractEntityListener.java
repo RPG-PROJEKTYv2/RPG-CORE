@@ -122,15 +122,6 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
-        if (e.getRightClicked().getType().equals(EntityType.SHEEP)) {
-            e.setCancelled(true);
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // ITEMSHOP
-            if (entityName.equals("ItemShop")) {
-                rpgcore.getItemShopNPC().openItemShop(player);
-                return;
-            }
-        }
         if (e.getRightClicked().getType().equals(EntityType.ENDERMITE)) {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());

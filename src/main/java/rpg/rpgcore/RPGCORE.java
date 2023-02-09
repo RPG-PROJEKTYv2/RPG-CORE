@@ -128,9 +128,7 @@ import rpg.rpgcore.npc.gornik.events.GornikInventoryCloseListener;
 import rpg.rpgcore.npc.gornik.events.OreBlockPlaceListener;
 import rpg.rpgcore.npc.gornik.ore.OreCommand;
 import rpg.rpgcore.npc.gornik.ore.OreManager;
-import rpg.rpgcore.npc.itemshop.ItemShopNPC;
-import rpg.rpgcore.npc.itemshop.events.ItemShopInteractListener;
-import rpg.rpgcore.npc.itemshop.events.ItemShopInventoryClickListener;
+import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
 import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryCloseListener;
@@ -333,7 +331,6 @@ public final class RPGCORE extends JavaPlugin {
     private WyslannikNPC wyslannikNPC;
     private IceTowerManager iceTowerManager;
     // private TestNPC testNPC; // TU JEST TEST NPC
-    private ItemShopNPC itemShopNPC;
     private KociolkiManager kociolkiManager;
     private TopkiManager topkiManager;
     private CraftingiManager craftingiManager;
@@ -550,6 +547,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SetNameCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HsCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DisableCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new ChangeLeashRangeCommand());
     }
 
     private void initEvents() {
@@ -673,9 +671,10 @@ public final class RPGCORE extends JavaPlugin {
         // ...TELEPORTER
         this.getServer().getPluginManager().registerEvents(new TeleporterInventoryClick(this), this);
 
-        // ...KUPIEC
+        // ...HANDLARZ
         this.getServer().getPluginManager().registerEvents(new HandlarzInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new HandlarzInventoryCloseListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new HandlarzInteractListener(), this);
 
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClickListener(this), this);
@@ -715,10 +714,6 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...WYSLANNIK
         this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
-
-        // ...ITEMSHOP
-        this.getServer().getPluginManager().registerEvents(new ItemShopInventoryClickListener(), this);
-        this.getServer().getPluginManager().registerEvents(new ItemShopInteractListener(), this);
 
 
         // DUNGEONS
@@ -827,9 +822,6 @@ public final class RPGCORE extends JavaPlugin {
         this.lesnikNPC = new LesnikNPC(this);
         this.wyslannikNPC = new WyslannikNPC(this);
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
-        this.itemShopNPC = new ItemShopNPC();
-
-
         this.getMetinologNPC().loadMissions();
     }
     private void initChests() {
@@ -1225,10 +1217,6 @@ public final class RPGCORE extends JavaPlugin {
     /*public TestNPC getTestNPC() {
         return testNPC;
     }*/ // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
-
-    public ItemShopNPC getItemShopNPC() {
-        return itemShopNPC;
-    }
 
     public KociolkiManager getKociolkiManager() {
         return kociolkiManager;

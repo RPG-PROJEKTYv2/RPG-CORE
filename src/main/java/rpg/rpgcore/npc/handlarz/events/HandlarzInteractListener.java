@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.itemshop.events;
+package rpg.rpgcore.npc.handlarz.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,7 +20,7 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
-public class ItemShopInteractListener implements Listener {
+public class HandlarzInteractListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInteract(final PlayerInteractEvent e) {
 
@@ -74,7 +74,7 @@ public class ItemShopInteractListener implements Listener {
                 RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user);
             });
         }
-        if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przeklety Smoczy Zwoj")) {
+        if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
             final int range = Utils.getTagInt(eventItem, "range");
 
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
