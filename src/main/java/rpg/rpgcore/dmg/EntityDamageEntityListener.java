@@ -187,7 +187,6 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
                 if (rpgcore.getCooldownManager().hasPvpCooldown(attacker.getUniqueId())) {
-                    attacker.sendMessage("cd");
                     e.setDamage(0);
                     e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     return;

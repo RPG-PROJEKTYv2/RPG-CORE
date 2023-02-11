@@ -73,8 +73,11 @@ public class HandlarzInteractListener implements Listener {
                 RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
                 RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user);
             });
+            return;
         }
         if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
+            if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldown(uuid)) return;
+
             final int range = Utils.getTagInt(eventItem, "range");
 
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
@@ -83,6 +86,7 @@ public class HandlarzInteractListener implements Listener {
                     creature.setTarget(player);
                 }
             }
+            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldown(uuid);
         }
     }
 }
