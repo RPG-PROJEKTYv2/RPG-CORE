@@ -34,7 +34,7 @@ public class PlayerInventoryTask implements Runnable {
                         player.getOpenInventory().getTopInventory().setItem(3, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&cKosz").setLore(Arrays.asList("&8Kliknij, aby otworzyc kosz")).toItemStack());
                     }
                     if (player.getOpenInventory().getTopInventory().getItem(4) == null) {
-                        player.getOpenInventory().getTopInventory().setItem(4, new ItemBuilder(Material.WORKBENCH).setName("&6Craftingi").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu craftingow")).toItemStack());
+                        player.getOpenInventory().getTopInventory().setItem(4, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lStatus Wyszkolenia").setLore(Arrays.asList("&8Kliknij, aby otworzyc sciezke rozwoju postaci")).toItemStack());
                     }
                     player.updateInventory();
                 }

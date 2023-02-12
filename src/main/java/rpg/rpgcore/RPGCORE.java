@@ -222,6 +222,7 @@ import rpg.rpgcore.trade.events.TradeInventoryCloseListener;
 import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.wyszkolenie.WyszkolenieManager;
 import rpg.rpgcore.zmianki.ZmiankiManager;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryClickListener;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
@@ -339,6 +340,7 @@ public final class RPGCORE extends JavaPlugin {
     private ShowcaseItemManager showcaseItemManager;
     private DisabledManager disabledManager;
     private TradeManager tradeManager;
+    private WyszkolenieManager wyszkolenieManager;
 
 
 
@@ -456,6 +458,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
         this.mongo.saveArtefaktyZaLvl(this.artefaktyZaLvlManager.getArtefaktyZaLvl());
         this.mongo.saveAllDisabled();
+        this.mongo.saveAllWyszkolenie();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
@@ -804,6 +807,7 @@ public final class RPGCORE extends JavaPlugin {
         this.artefaktyZaLvlManager = new ArtefaktyZaLvlManager(this);
         this.showcaseItemManager = new ShowcaseItemManager();
         this.disabledManager = new DisabledManager(this);
+        this.wyszkolenieManager = new WyszkolenieManager(this);
     }
 
     private void initNPCS() {
@@ -1243,5 +1247,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public DisabledManager getDisabledManager() {
         return disabledManager;
+    }
+
+    public WyszkolenieManager getWyszkolenieManager() {
+        return wyszkolenieManager;
     }
 }

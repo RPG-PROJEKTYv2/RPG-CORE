@@ -49,7 +49,7 @@ public class PlayerOpenInventoryListener implements Listener {
                         return;
                     }
                     if (slot == 4) {
-                        RPGCORE.getInstance().getCraftingiManager().openCraftingiGUI(player);
+                        RPGCORE.getInstance().getWyszkolenieManager().openWyszkolenieGUI(player);
                         return;
                     }
                     return;
@@ -119,7 +119,7 @@ public class PlayerOpenInventoryListener implements Listener {
                     new ItemBuilder(Material.CHEST).setName("&6Magazyny").setLore(Arrays.asList("&8Kliknij, aby otworzyc liste magazynow")).toItemStack(),
                     new ItemBuilder(Material.ITEM_FRAME).setName("&6Akcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack(),
                     new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&cKosz").setLore(Arrays.asList("&8Kliknij, aby otworzyc kosz")).toItemStack(),
-                    new ItemBuilder(Material.WORKBENCH).setName("&6Craftingi").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu craftingow")).toItemStack());
+                    new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lStatus Wyszkolenia").setLore(Arrays.asList("&8Kliknij, aby otworzyc sciezke rozwoju postaci")).toItemStack());
         }
     }
 

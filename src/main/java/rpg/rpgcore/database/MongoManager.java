@@ -39,6 +39,7 @@ import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -345,6 +346,11 @@ public class MongoManager {
                 this.addDataHandlarz(user);
                 rpgcore.getHandlarzNPC().add(user);
             }
+            if (pool.getWyszkolenie().find(new Document("_id", uuid.toString())).first() == null) {
+                final WyszkolenieUser user = new WyszkolenieUser(uuid);
+                this.addDataWyszkolenie(user);
+                rpgcore.getWyszkolenieManager().add(user);
+            }
             // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
             // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
             // TEZ BARDZO WAZEN I NIE ZAPOMNIEC O TYM.
@@ -450,6 +456,10 @@ public class MongoManager {
         this.addDataHandlarz(handlarzUser);
         rpgcore.getHandlarzNPC().add(handlarzUser);
 
+        final WyszkolenieUser wyszkolenieUser = new WyszkolenieUser(uuid);
+        this.addDataWyszkolenie(wyszkolenieUser);
+        rpgcore.getWyszkolenieManager().add(wyszkolenieUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -528,6 +538,7 @@ public class MongoManager {
             this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
             this.saveDataTarg(uuid, user.getName());
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
+            this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1438,6 +1449,34 @@ public class MongoManager {
 
     public void saveAllDisabled() {
         this.saveDataDisabled(rpgcore.getDisabledManager().getDisabled());
+    }
+
+    // WYSZKOLENIE
+
+    public Map<UUID, WyszkolenieUser> loadAllWyszkolenie() {
+        Map<UUID, WyszkolenieUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getWyszkolenie().find()) {
+            final WyszkolenieUser wyszkolenieUser = new WyszkolenieUser(document);
+            userMap.put(wyszkolenieUser.getUuid(), wyszkolenieUser);
+        }
+        return userMap;
+    }
+
+    public void addDataWyszkolenie(final WyszkolenieUser wyszkolenieUser) {
+        if (this.pool.getWyszkolenie().find(new Document("_id", wyszkolenieUser.getUuid().toString())).first() != null) {
+            this.pool.getWyszkolenie().deleteOne(new Document("_id", wyszkolenieUser.getUuid().toString()));
+        }
+        this.pool.getWyszkolenie().insertOne(wyszkolenieUser.toDocument());
+    }
+
+    public void saveDataWyszkolenie(final UUID uuid, final WyszkolenieUser wyszkolenieUser) {
+        this.pool.getWyszkolenie().findOneAndReplace(new Document("_id", uuid.toString()), wyszkolenieUser.toDocument());
+    }
+
+    public void saveAllWyszkolenie() {
+        for (final WyszkolenieUser wyszkolenieUser : rpgcore.getWyszkolenieManager().getWyszkolenieUsers()) {
+            this.saveDataWyszkolenie(wyszkolenieUser.getUuid(), wyszkolenieUser);
+        }
     }
 
 
