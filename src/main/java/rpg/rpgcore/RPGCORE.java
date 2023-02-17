@@ -205,8 +205,6 @@ import rpg.rpgcore.npc.rybak.RybakNPC;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.commands.admin.vanish.VanishManager;
-import rpg.rpgcore.npc.trener.TrenerInventoryClick;
-import rpg.rpgcore.npc.trener.TrenerNPC;
 import rpg.rpgcore.pomoc.POMOCInventoryClick;
 import rpg.rpgcore.pomoc.PomocCommand;
 import rpg.rpgcore.pomoc.PomocManager;
@@ -223,6 +221,7 @@ import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.wyszkolenie.WyszkolenieManager;
+import rpg.rpgcore.wyszkolenie.events.WyszkolenieInventoryClickListener;
 import rpg.rpgcore.zmianki.ZmiankiManager;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryClickListener;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
@@ -264,7 +263,6 @@ public final class RPGCORE extends JavaPlugin {
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
-    private TrenerNPC trenerNPC;
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
@@ -450,7 +448,6 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMagazyny();
         this.mongo.saveAllLowca();
         this.mongo.saveAllLesnik();
-        this.mongo.saveAllTrener();
         this.mongo.saveAllOreLocations();
         this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
@@ -644,6 +641,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // KLASY
 
+        // WYSZKOLENIE
+        this.getServer().getPluginManager().registerEvents(new WyszkolenieInventoryClickListener(this), this);
+
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(), this);
 
@@ -685,9 +685,6 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...KOLEKCJONER
         this.getServer().getPluginManager().registerEvents(new KolekcjonerInventoryClick(this), this);
-
-        // ...TRENER
-        this.getServer().getPluginManager().registerEvents(new TrenerInventoryClick(this), this);
 
         // ...METINOLOG
         this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
@@ -817,7 +814,6 @@ public final class RPGCORE extends JavaPlugin {
         this.kolekcjonerNPC = new KolekcjonerNPC(this);
         this.handlarzNPC = new HandlarzNPC(this);
         this.kowalNPC = new KowalNPC(this);
-        this.trenerNPC = new TrenerNPC(this);
         this.metinologNPC = new MetinologNPC(this);
         this.medykNPC = new MedykNPC(this);
         this.gornikNPC = new GornikNPC(this);
@@ -1034,11 +1030,6 @@ public final class RPGCORE extends JavaPlugin {
     public KowalNPC getKowalNPC() {
         return kowalNPC;
     }
-
-    public TrenerNPC getTrenerNPC() {
-        return trenerNPC;
-    }
-
     public MetinyManager getMetinyManager() {
         return metinyManager;
     }

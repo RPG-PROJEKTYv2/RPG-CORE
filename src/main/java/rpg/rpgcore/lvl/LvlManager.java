@@ -140,9 +140,9 @@ public class LvlManager {
         int nextLvlGracza = aktualnyLvlGracza + 1;
 
         if (nextLvlGracza == 2) {
-            rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().setPoints(2);
+            rpgcore.getWyszkolenieManager().find(killerUUID).setPunkty(2);
         } else {
-            rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().setPoints(rpgcore.getTrenerNPC().find(killerUUID).getTrenerUser().getPoints() + 1);
+            rpgcore.getWyszkolenieManager().find(killerUUID).addPoint();
         }
         user.setLvl(nextLvlGracza);
         user.setExp(0);
@@ -158,6 +158,7 @@ public class LvlManager {
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getNmsManager().sendTitleAndSubTitle(killer, title, subtitle);
             rpgcore.getMongoManager().saveDataUser(killerUUID, user);
+            rpgcore.getMongoManager().saveDataWyszkolenie(killerUUID, rpgcore.getWyszkolenieManager().find(killerUUID));
         });
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);

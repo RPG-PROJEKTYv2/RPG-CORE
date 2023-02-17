@@ -26,7 +26,6 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_rybak;
     private final MongoCollection<Document> hellrpg_kolekcjoner;
     private final MongoCollection<Document> hellrpg_magazynier;
-    private final MongoCollection<Document> hellrpg_trener;
     private final MongoCollection<Document> hellrpg_metinolog;
     private final MongoCollection<Document> hellrpg_other;
     private final MongoCollection<Document> hellrpg_klasy;
@@ -89,9 +88,6 @@ public class MongoConnectionPoolManager {
         }
         if (!collections.contains("hellrpg_magazynier")) {
             database.createCollection("hellrpg_magazynier");
-        }
-        if (!collections.contains("hellrpg_trener")) {
-            database.createCollection("hellrpg_trener");
         }
         if (!collections.contains("hellrpg_metinolog")) {
             database.createCollection("hellrpg_metinolog");
@@ -168,7 +164,6 @@ public class MongoConnectionPoolManager {
         this.hellrpg_rybak = database.getCollection("hellrpg_rybak");
         this.hellrpg_kolekcjoner = database.getCollection("hellrpg_kolekcjoner");
         this.hellrpg_magazynier = database.getCollection("hellrpg_magazynier");
-        this.hellrpg_trener = database.getCollection("hellrpg_trener");
         this.hellrpg_metinolog = database.getCollection("hellrpg_metinolog");
         this.hellrpg_other = database.getCollection("hellrpg_other");
         this.hellrpg_klasy = database.getCollection("hellrpg_klasy");
@@ -230,9 +225,6 @@ public class MongoConnectionPoolManager {
     }
     public MongoCollection<Document> getMagazynier() {
         return this.hellrpg_magazynier;
-    }
-    public MongoCollection<Document> getTrener() {
-        return this.hellrpg_trener;
     }
     public MongoCollection<Document> getMetinolog() {
         return this.hellrpg_metinolog;

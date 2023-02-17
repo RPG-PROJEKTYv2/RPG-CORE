@@ -9,7 +9,7 @@ import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
-import rpg.rpgcore.npc.trener.TrenerObject;
+
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
@@ -45,32 +45,6 @@ public class MaxCommand extends CommandAPI {
         final Bonuses bonuses = rpgcore.getBonusesManager().find(userUUID);
 
         switch (args[1]) {
-            case "trener":
-                final TrenerObject trenerObject = rpgcore.getTrenerNPC().find(userUUID);
-                trenerObject.getTrenerUser().setSredniDmg(20);
-                trenerObject.getTrenerUser().setSredniDef(20);
-                trenerObject.getTrenerUser().setDodatkoweHp(10);
-                trenerObject.getTrenerUser().setBlokCiosu(10);
-                trenerObject.getTrenerUser().setSzczescie(20);
-                trenerObject.getTrenerUser().setSilnyNaLudzi(20);
-                trenerObject.getTrenerUser().setDefNaLudzi(20);
-                trenerObject.getTrenerUser().setKryt(10);
-
-                bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + 20);
-                bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + 20);
-                bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 10);
-                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + 10);
-                bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() + 20);
-                bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + 20);
-                bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + 20);
-                bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + 10);
-
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&aZrobione &6Trener!"));
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                    rpgcore.getMongoManager().saveDataTrener(userUUID, trenerObject);
-                    rpgcore.getMongoManager().saveDataBonuses(userUUID, bonuses);
-                });
-                return;
             case "gornik":
                 final GornikObject gornikObject = rpgcore.getGornikNPC().find(userUUID);
                 gornikObject.getGornikUser().setSredniaOdpornosc(30);

@@ -163,11 +163,6 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKowalNPC().openKowalMainGui(player);
                 return;
             }
-            // TRENER
-            if (entityName.equalsIgnoreCase("Trener")) {
-                rpgcore.getTrenerNPC().openTrenerGUI(player);
-                return;
-            }
             // KLASY
 
             // MEDYK

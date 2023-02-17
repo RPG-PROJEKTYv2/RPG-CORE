@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 
 import java.util.UUID;
 
@@ -45,12 +46,42 @@ public class WyszkolenieUser {
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataWyszkolenie(this.uuid, this));
     }
 
+    public void reset(final Bonuses bonuses) {
+        this.punkty = totalPoints;
+
+        bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - this.srDmg);
+        bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - this.srDef);
+        bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - this.kryt);
+        bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() - this.szczescie);
+        bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - this.blok);
+        bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - this.hp);
+
+        this.srDmg = 0;
+        this.srDef = 0;
+        this.kryt = 0;
+        this.szczescie = 0;
+        this.blok = 0;
+        this.hp = 0;
+        this.giveCooldown();
+        this.save();
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataBonuses(this.uuid, bonuses));
+    }
+
     public void giveCooldown() {
         this.resetCooldown = System.currentTimeMillis() + 3_600_000;
     }
 
     public boolean hasCooldown() {
         return this.resetCooldown >= System.currentTimeMillis();
+    }
+
+    public void addPoint() {
+        this.punkty++;
+        this.totalPoints++;
+    }
+
+    public boolean isMaxed() {
+        return this.srDmg == 10 && this.srDef == 10 && this.kryt == 10 && this.szczescie == 10 && this.blok == 5 && this.hp == 5;
     }
 
     public Document toDocument() {
