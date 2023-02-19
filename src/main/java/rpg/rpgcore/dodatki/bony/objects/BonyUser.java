@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class BonyUser {
     private final UUID uuid;
-    private String dmg5, dmg10, dmg15, def5, def10, def15, kryt5, kryt10, kryt15, wzmkryt10, blok20, przeszywka20, predkosc25, predkosc50, hp10, hp20, hp35;
+    private String dmg5, dmg10, dmg15, def5, def10, def15, kryt5, kryt10, kryt15, wzmkryt10, blok20, przeszywka20, predkosc25, predkosc50, hp10, hp20, hp35, dmgMetiny;
 
     public BonyUser(final UUID uuid) {
         this.uuid = uuid;
@@ -31,6 +31,7 @@ public class BonyUser {
         this.hp10 = "";
         this.hp20 = "";
         this.hp35 = "";
+        this.dmgMetiny = "";
     }
 
     public BonyUser(final Document document) {
@@ -52,6 +53,7 @@ public class BonyUser {
         this.hp10 = document.getString("hp10");
         this.hp20 = document.getString("hp20");
         this.hp35 = document.getString("hp35");
+        this.dmgMetiny = document.getString("dmgMetiny");
     }
 
     public Document toDocument() {
@@ -72,6 +74,7 @@ public class BonyUser {
                 .append("predkosc50", this.predkosc50)
                 .append("hp10", this.hp10)
                 .append("hp20", this.hp20)
-                .append("hp35", this.hp35);
+                .append("hp35", this.hp35)
+                .append("dmgMetiny", this.dmgMetiny);
     }
 }

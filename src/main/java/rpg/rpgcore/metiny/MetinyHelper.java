@@ -7,12 +7,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
-import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
-import rpg.rpgcore.utils.LocationHelper;
-import rpg.rpgcore.utils.MobDropHelper;
-import rpg.rpgcore.utils.Utils;
 
 import java.util.Map;
 
@@ -22,14 +19,25 @@ public class MetinyHelper {
         if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
             return;
         }
-        Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
+        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
         if (metiny.getMetins().getHealth() == 0 || metiny.getMetins().getHealth() < 0) {
-            String world = metiny.getMetins().getWorld();
-            Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
-            Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
-            Entity e = Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL);
+            final String world = metiny.getMetins().getWorld();
+            final Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
+            final Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
+
+            final Entity e = Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL);
             e.setCustomName(String.valueOf(id));
             e.setCustomNameVisible(false);
+
+            if (!metiny.getMetins().getWorld().equals("zamekNieskonczonosci")) {
+                final ArmorStand as = (ArmorStand) Bukkit.getServer().getWorld(world).spawnEntity(location.add(0, 0.2, 0), EntityType.ARMOR_STAND);
+                as.setVisible(false);
+                as.setCustomNameVisible(true);
+                as.setCustomName(Utils.format(metiny.getMetins().getName()));
+                as.setGravity(false);
+                RPGCORE.getInstance().getMetinyManager().addAs(id, as);
+            }
+
             metiny.getMetins().setHealth(metiny.getMetins().getMaxhealth());
         }
     }
@@ -45,6 +53,7 @@ public class MetinyHelper {
                 if (e.getCustomName() != null) {
                     if (e.getCustomName().equals(String.valueOf(id))) {
                         e.remove();
+                        RPGCORE.getInstance().getMetinyManager().removeAs(id);
                     }
                 }
             }
@@ -56,11 +65,19 @@ public class MetinyHelper {
         if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
             return;
         }
-        Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
-        String world = metiny.getMetins().getWorld();
-        Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
-        Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
+        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
+        final String world = metiny.getMetins().getWorld();
+        final Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
+        final Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
         Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL).setCustomName(String.valueOf(id));
+        if (!metiny.getMetins().getWorld().equals("zamekNieskonczonosci")) {
+            final ArmorStand as = (ArmorStand) Bukkit.getServer().getWorld(world).spawnEntity(location.add(0, 0.2, 0), EntityType.ARMOR_STAND);
+            as.setVisible(false);
+            as.setCustomNameVisible(true);
+            as.setCustomName(Utils.format(metiny.getMetins().getName()));
+            as.setGravity(false);
+            RPGCORE.getInstance().getMetinyManager().addAs(id, as);
+        }
         metiny.getMetins().setHealth(metiny.getMetins().getMaxhealth());
     }
 
@@ -74,6 +91,11 @@ public class MetinyHelper {
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                    for (Entity e2 : e.getNearbyEntities(1, 1, 1)) {
+                        if (e2.getType().equals(EntityType.ARMOR_STAND)) {
+                            e2.remove();
+                        }
+                    }
                     e.remove();
                 }
             }
@@ -103,38 +125,9 @@ public class MetinyHelper {
                 }
             }
         }
-        Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
-        if (player.getItemInHand() != null) {
-            if (String.valueOf(player.getItemInHand().getType()).contains("_SWORD")) {
-                if (player.getItemInHand().getItemMeta().getLore() != null) {
-                    int sharp = Utils.getSharpnessLevel(player.getItemInHand());
-                    if (sharp < 10 && sharp > 1) {
-                        damage = 1;
-                    }
-                    if (sharp < 40 && sharp > 9) {
-                        damage = 2;
-                    }
-                    if (sharp < 150 && sharp > 39) {
-                        damage = 3;
-                    }
-                    if (sharp < 400 && sharp > 149) {
-                        damage = 4;
-                    }
-                    if (sharp < 850 && sharp > 399) {
-                        damage = 5;
-                    }
-                    if (sharp < 1500 && sharp > 849) {
-                        damage = 6;
-                    }
-                    if (sharp < 2500 && sharp > 1499) {
-                        damage = 7;
-                    }
-                    if (sharp > 2499) {
-                        damage = 9;
-                    }
-                }
-            }
-        }
+        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
+        if (player.getItemInHand() == null || !String.valueOf(player.getItemInHand().getType()).contains("_SWORD") || player.getItemInHand().getItemMeta().getLore() == null) return;
+        damage += RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDmgMetiny();
         if (damage >= metiny.getMetins().getHealth()) {
 
             if (player.getWorld().getName().equals("zamekNieskonczonosci")) {
@@ -144,7 +137,7 @@ public class MetinyHelper {
                 entity.remove();
                 player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
-                RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&b&lMetin: &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
+                RPGCORE.getInstance().getNmsManager().sendActionBar(player, metiny.getMetins().getName() + ": &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
                 if (RPGCORE.getInstance().getZamekNieskonczonosciManager().destroyed == 2) { //ZMIENIC NA 4
                     RPGCORE.getInstance().getZamekNieskonczonosciManager().spawnMiniBoses();
                     return;
@@ -157,14 +150,16 @@ public class MetinyHelper {
                 RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
             }
             entity.remove();
+            RPGCORE.getInstance().getMetinyManager().getAs(id).remove();
+            RPGCORE.getInstance().getMetinyManager().removeAs(id);
             metiny.getMetins().setHealth(0);
             player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
             player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
-            RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&b&lMetin: &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
+            RPGCORE.getInstance().getNmsManager().sendActionBar(player, metiny.getMetins().getName() + ": &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
             return;
         }
         metiny.getMetins().setHealth(metiny.getMetins().getHealth() - damage);
-        RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&b&lMetin: &f&l" + metiny.getMetins().getHealth() + "&8&l/&f&l" + metiny.getMetins().getMaxhealth());
+        RPGCORE.getInstance().getNmsManager().sendActionBar(player, metiny.getMetins().getName() + ": &f&l" + metiny.getMetins().getHealth() + "&8&l/&f&l" + metiny.getMetins().getMaxhealth());
     }
 
     public static void getDropMetin(int id, Player player, Entity entity) {
@@ -301,7 +296,9 @@ public class MetinyHelper {
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 " + mobsToSpawn + " " + worldName + "," + (int) entity.getLocation().getX() + "," + (int) entity.getLocation().getY() + "," + (int) entity.getLocation().getZ());
+        for (int i = 0; i < mobsToSpawn; i++) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 1" +  " " + worldName + "," + DoubleUtils.round(entity.getLocation().getX() + ChanceHelper.getRandDouble(-0.2, 0.2), 2) + "," + DoubleUtils.round(entity.getLocation().getY() + 0.5, 2) + "," + DoubleUtils.round(entity.getLocation().getZ() + ChanceHelper.getRandDouble(-0.2, 0.2), 2));
+        }
         double mnozik = 1;
         final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();
         if (rank == RankTypePlayer.VIP) mnozik = 1.25;

@@ -139,6 +139,21 @@ public class BonyInventoryClickListener implements Listener {
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - 50);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonej Predkosci Ruchu +50!"));
                 break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +2":
+                user.getBony().setDmgMetiny("");
+                bonuses.getBonusesUser().setDmgMetiny(0);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +2!"));
+                break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
+                user.getBony().setDmgMetiny("");
+                bonuses.getBonusesUser().setDmgMetiny(0);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +3!"));
+                break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
+                user.getBony().setDmgMetiny("");
+                bonuses.getBonusesUser().setDmgMetiny(0);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +5!"));
+                break;
             default:
                 return;
         }

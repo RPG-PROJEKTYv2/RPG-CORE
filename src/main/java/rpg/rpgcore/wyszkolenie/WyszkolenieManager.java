@@ -71,7 +71,7 @@ public class WyszkolenieManager {
     }
 
     public void openDrzewkoWyszkoleniaGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&3&lDrzewko Wyszkolenia " + player.getName()));
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&e&lDrzewko Rozwoju " + player.getName()));
         final DrzewkoWyszkoleniaUser user = this.find(player.getUniqueId()).getDrzewkoWyszkoleniaUser();
         final ItemStack fill = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack();
 
@@ -81,118 +81,118 @@ public class WyszkolenieManager {
 
         gui.setItem(40, new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName(user.getD1().getName()).setLore(
                 (user.getD1().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getD1().getUpgradeLvl() + "&7/&e" + user.getD1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getD1().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getD1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednie Obrazenia: &e" + user.getD1().getSrDmg() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getD1().getUpgradeLvl() + "&7/&e" + user.getD1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getD1().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getD1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednie Obrazenia: &e" + user.getD1().getSrDmg() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getD1().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getD1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getD1().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getD1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(31, new ItemBuilder(Material.INK_SACK, 1, (short) 11).setName(user.getD2().getName()).setLore(
                 (user.getD2().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getD2().getUpgradeLvl() + "&7/&e" + user.getD2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getD2().getPerLvl(), "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getD2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szczescie: &e" + user.getD2().getSzczescie())
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getD2().getUpgradeLvl() + "&7/&e" + user.getD2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getD2().getPerLvl(), "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getD2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szczescie: &e" + user.getD2().getSzczescie())
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getD2().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getD2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getD2().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getD2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         // LEWO
 
         gui.setItem(30, new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName(user.getDl1().getName()).setLore(
                 (user.getDl1().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl1().getUpgradeLvl() + "&7/&e" + user.getDl1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl1().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szansa Na Cios Krytyczny: &e" + user.getDl1().getKrytyk() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl1().getUpgradeLvl() + "&7/&e" + user.getDl1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl1().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szansa Na Cios Krytyczny: &e" + user.getDl1().getKrytyk() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl1().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl1().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(29, new ItemBuilder(Material.INK_SACK, 1, (short) 12).setName(user.getDl2().getName()).setLore(
                 (user.getDl2().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl2().getUpgradeLvl() + "&7/&e" + user.getDl2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl2().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednia Defensywa: &e" + user.getDl2().getSrDef() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl2().getUpgradeLvl() + "&7/&e" + user.getDl2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl2().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednia Defensywa: &e" + user.getDl2().getSrDef() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl2().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl2().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(20, new ItemBuilder(Material.NETHER_BRICK_ITEM).setName(user.getDl3().getName()).setLore(
                 (user.getDl3().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl3().getUpgradeLvl() + "&7/&e" + user.getDl3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl3().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Silny Na Ludzi: &e" + user.getDl3().getSilnyNaLudzi() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl3().getUpgradeLvl() + "&7/&e" + user.getDl3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl3().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Silny Na Ludzi: &e" + user.getDl3().getSilnyNaLudzi() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl3().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl3().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(19, new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName(user.getDl4().getName()).setLore(
                 (user.getDl4().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl4().getUpgradeLvl() + "&7/&e" + user.getDl4().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl4().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl4().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Blok Ciosu: &e" + user.getDl4().getBlok() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl4().getUpgradeLvl() + "&7/&e" + user.getDl4().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl4().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl4().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Blok Ciosu: &e" + user.getDl4().getBlok() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl4().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl4().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl4().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl4().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(18, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 2).setName(user.getDl5().getName()).setLore(
                 (user.getDl5().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl5().getUpgradeLvl() + "&7/&e" + user.getDl5().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl5().getPerLvl() + " HP", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl5().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe HP: &e" + user.getDl5().getHp() + " HP")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl5().getUpgradeLvl() + "&7/&e" + user.getDl5().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl5().getPerLvl() + " HP", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl5().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe HP: &e" + user.getDl5().getHp() + " HP")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl5().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl5().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl5().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl5().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         gui.setItem(10, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName(user.getDl6().getName()).setLore(
                 (user.getDl6().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl6().getUpgradeLvl() + "&7/&e" + user.getDl6().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl6().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDl6().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednie Obrazenia: &e" + user.getDl6().getSrDmg() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDl6().getUpgradeLvl() + "&7/&e" + user.getDl6().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDl6().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDl6().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednie Obrazenia: &e" + user.getDl6().getSrDmg() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl6().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDl6().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDl6().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDl6().getReqItem()).getItemStack().getItemMeta().getDisplayName())
         )).toItemStack().clone());
 
         // GORA
         gui.setItem(22, new ItemBuilder(Material.BLAZE_POWDER).setName(user.getDg1().getName()).setLore(
                 (user.getDg1().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg1().getUpgradeLvl() + "&7/&e" + user.getDg1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg1().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDg1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Defensywa Przeciwko Potworom: &e" + user.getDg1().getOdpornoscNaMoby() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg1().getUpgradeLvl() + "&7/&e" + user.getDg1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg1().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDg1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Defensywa Przeciwko Potworom: &e" + user.getDg1().getOdpornoscNaMoby() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg1().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDg1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg1().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDg1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.INK_SACK, 1, (short) 8).setName(user.getDg2().getName()).setLore(
                 (user.getDg2().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg2().getUpgradeLvl() + "&7/&e" + user.getDg2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg2().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDg2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Przeszycie Bloku Ciosu: &e" + user.getDg2().getPrzeszywka() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg2().getUpgradeLvl() + "&7/&e" + user.getDg2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg2().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDg2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Przeszycie Bloku Ciosu: &e" + user.getDg2().getPrzeszywka() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg2().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDg2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg2().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDg2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(4, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 1).setName(user.getDg3().getName()).setLore(
                 (user.getDg3().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg3().getUpgradeLvl() + "&7/&e" + user.getDg3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg3().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDg3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Blok Ciosu: &e" + user.getDg3().getBlok() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDg3().getUpgradeLvl() + "&7/&e" + user.getDg3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDg3().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDg3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Blok Ciosu: &e" + user.getDg3().getBlok() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg3().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDg3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDg3().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDg3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
 
         // PRAWO
         gui.setItem(32, new ItemBuilder(Material.INK_SACK, 1, (short) 9).setName(user.getDp1().getName()).setLore(
                 (user.getDp1().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp1().getUpgradeLvl() + "&7/&e" + user.getDp1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp1().getPerLvl() + " HP", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe HP: &e" + user.getDp1().getHp() + " HP")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp1().getUpgradeLvl() + "&7/&e" + user.getDp1().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp1().getPerLvl() + " HP", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp1().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe HP: &e" + user.getDp1().getHp() + " HP")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp1().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp1().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp1().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(33, new ItemBuilder(Material.INK_SACK, 1, (short) 10).setName(user.getDp2().getName()).setLore(
                 (user.getDp2().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp2().getUpgradeLvl() + "&7/&e" + user.getDp2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp2().getPerLvl() + " DMG", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe Obrazenia: &e" + user.getDp2().getDodatkowyDmg() + " DMG")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp2().getUpgradeLvl() + "&7/&e" + user.getDp2().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp2().getPerLvl() + " DMG", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp2().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Dodatkowe Obrazenia: &e" + user.getDp2().getDodatkowyDmg() + " DMG")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp2().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp2().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp2().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(24, new ItemBuilder(Material.BLAZE_ROD).setName(user.getDp3().getName()).setLore(
                 (user.getDp3().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp3().getUpgradeLvl() + "&7/&e" + user.getDp3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp3().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Silny Na Potwory: &e" + user.getDp3().getSilnyNaMoby() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp3().getUpgradeLvl() + "&7/&e" + user.getDp3().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp3().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp3().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Silny Na Potwory: &e" + user.getDp3().getSilnyNaMoby() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp3().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp3().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp3().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(25, new ItemBuilder(Material.NETHER_STALK).setName(user.getDp4().getName()).setLore(
                 (user.getDp4().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp4().getUpgradeLvl() + "&7/&e" + user.getDp4().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp4().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp4().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Defensywa Przeciwko Ludziom: &e" + user.getDp4().getOdpornoscNaGraczy() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp4().getUpgradeLvl() + "&7/&e" + user.getDp4().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp4().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp4().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Defensywa Przeciwko Ludziom: &e" + user.getDp4().getOdpornoscNaGraczy() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp4().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp4().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp4().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp4().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(26, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 4).setName(user.getDp5().getName()).setLore(
                 (user.getDp5().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp5().getUpgradeLvl() + "&7/&e" + user.getDp5().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp5().getPerLvl(), "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp5().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szczescie: &e" + user.getDp5().getSzczescie())
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp5().getUpgradeLvl() + "&7/&e" + user.getDp5().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp5().getPerLvl(), "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp5().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Szczescie: &e" + user.getDp5().getSzczescie())
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp5().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp5().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp5().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp5().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
         gui.setItem(16, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 3).setName(user.getDp6().getName()).setLore(
                 (user.getDp6().isUnlocked() ?
-                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp6().getUpgradeLvl() + "&7/&e" + user.getDp6().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp6().getPerLvl() + "%", "&7Koszt: &e1x " + WyszkolenieItems.getByName(user.getDp6().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednia Defensywa: &e" + user.getDp6().getSrDef() + "%")
+                        Arrays.asList("&a&lODBLOKOWANE", "&7Postep: &e" + user.getDp6().getUpgradeLvl() + "&7/&e" + user.getDp6().getMaxUpgradeLvl(), "&7Ulepszenie co poziom: &e" + user.getDp6().getPerLvl() + "%", "&7Koszt: &e1x  " + WyszkolenieItems.getByName(user.getDp6().getReqItem()).getItemStack().getItemMeta().getDisplayName(), " ", "&f&lBONUS", "  &7Srednia Defensywa: &e" + user.getDp6().getSrDef() + "%")
                         :
-                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp6().getReqLvl(), "&7Koszt Odblokowania: &e1x" + WyszkolenieItems.getByName(user.getDp6().getReqItem()).getItemStack().getItemMeta().getDisplayName())
+                        Arrays.asList("&c&lZABLOKOWANE", "&7Wymagany Poziom: &e" + user.getDp6().getReqLvl(), "&7Koszt Odblokowania: &e1x " + WyszkolenieItems.getByName(user.getDp6().getReqItem()).getItemStack().getItemMeta().getDisplayName())
                 )).toItemStack().clone());
 
         player.openInventory(gui);

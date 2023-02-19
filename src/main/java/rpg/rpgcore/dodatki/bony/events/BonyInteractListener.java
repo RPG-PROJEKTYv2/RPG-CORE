@@ -217,6 +217,33 @@ public class BonyInteractListener implements Listener {
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + 50);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonej Predkosci Ruchu +50!"));
                 break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +2":
+                if (!user.getBony().getDmgMetiny().isEmpty()) {
+                    player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
+                    return;
+                }
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                bonuses.getBonusesUser().setDmgMetiny(2);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +2!"));
+                break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
+                if (!user.getBony().getDmgMetiny().isEmpty()) {
+                    player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
+                    return;
+                }
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                bonuses.getBonusesUser().setDmgMetiny(3);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +3!"));
+                break;
+            case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
+                if (!user.getBony().getDmgMetiny().isEmpty()) {
+                    player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
+                    return;
+                }
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                bonuses.getBonusesUser().setDmgMetiny(5);
+                player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +5!"));
+                break;
             default:
                 return;
         }

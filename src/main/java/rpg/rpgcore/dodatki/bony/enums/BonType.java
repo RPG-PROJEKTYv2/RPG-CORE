@@ -28,7 +28,10 @@ public enum BonType {
     HP_35("Bon Dodatkowego Zdrowia +35", new ItemBuilder(Material.SIGN).setName("&aBon Dodatkowego Zdrowia +35").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
 
     SPEED_25("Bon Zwiekszonej Predkosci Ruchu +25", new ItemBuilder(Material.SIGN).setName("&fBon Zwiekszonej Predkosci Ruchu +25").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
-    SPEED_50("Bon Zwiekszonej Predkosci Ruchu +50", new ItemBuilder(Material.SIGN).setName("&fBon Zwiekszonej Predkosci Ruchu +50").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone());
+    SPEED_50("Bon Zwiekszonej Predkosci Ruchu +50", new ItemBuilder(Material.SIGN).setName("&fBon Zwiekszonej Predkosci Ruchu +50").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    DMG_METINY_2("Bon Zwiekszonych Obrazen W Kamienie Metin +2", new ItemBuilder(Material.SIGN).setName("&dBon Zwiekszonych Obrazen W Kamienie Metin +2").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    DMG_METINY_3("Bon Zwiekszonych Obrazen W Kamienie Metin +3", new ItemBuilder(Material.SIGN).setName("&dBon Zwiekszonych Obrazen W Kamienie Metin +3").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone()),
+    DMG_METINY_5("Bon Zwiekszonych Obrazen W Kamienie Metin +5", new ItemBuilder(Material.SIGN).setName("&dBon Zwiekszonych Obrazen W Kamienie Metin +5").setLore(Arrays.asList(" ", "&4&lBONUS")).hideFlag().toItemStack().clone());
 
 
     private final String name;

@@ -27,7 +27,7 @@ public class GetBonyCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("getbony"));
             return;
         }
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lAdministracyjne Bony"));
+        final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&c&lAdministracyjne Bony"));
         for (final BonType bonType : BonType.values()) {
             gui.setItem(gui.firstEmpty(), bonType.getBon());
         }

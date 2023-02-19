@@ -28,7 +28,7 @@ public class DodatkiUser {
         this.uuid = UUID.fromString(document.getString("_id"));
         this.akcesoriaPodstawowe = new AkcesoriaPodstUser(document.get("akcesoriaPodstawowe", Document.class));
         this.akcesoriaDodatkowe = new AkcesoriaDodatUser(document.get("akcesoriaDodatkowe", Document.class));
-        this.bony = new BonyUser(document.get("bony", Document.class));
+        this.bony = new BonyUser(document.get("bony", Document.class).append("dmgMetiny", ""));
     }
 
     public Document toDocument() {

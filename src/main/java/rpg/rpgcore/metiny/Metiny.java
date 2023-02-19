@@ -8,12 +8,12 @@ public class Metiny {
 
     public Metiny(int id) {
         this.id = id;
-        this.metins = new MetinsObject("", "", 0, 0, 0, 0);
+        this.metins = new MetinsObject("", "", "", 0, 0, 0, 0);
     }
 
     public Metiny(Document document) {
         this.id = document.getInteger("_id");
-        this.metins = new MetinsObject(document.getString("world"), document.getString("coordinates"), document.getInteger("maxhealth"), document.getInteger("health"), document.getInteger("resp"), document.getInteger("moby"));
+        this.metins = new MetinsObject(document.getString("name"), document.getString("world"), document.getString("coordinates"), document.getInteger("maxhealth"), document.getInteger("health"), document.getInteger("resp"), document.getInteger("moby"));
     }
 
     public int getId() {
@@ -25,7 +25,13 @@ public class Metiny {
     }
 
     public Document toDocument() {
-        Document document = new Document("_id", this.id).append("world", this.getMetins().getWorld()).append("coordinates", this.getMetins().getCoordinates()).append("maxhealth", this.getMetins().getMaxhealth()).append("health", this.getMetins().getHealth()).append("resp", this.getMetins().getResp()).append("moby", this.getMetins().getMoby());
-        return document;
+        return new Document("_id", this.id)
+                .append("name", "")
+                .append("world", this.getMetins().getWorld())
+                .append("coordinates", this.getMetins().getCoordinates())
+                .append("maxhealth", this.getMetins().getMaxhealth())
+                .append("health", this.getMetins().getHealth())
+                .append("resp", this.getMetins().getResp())
+                .append("moby", this.getMetins().getMoby());
     }
 }

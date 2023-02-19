@@ -1,17 +1,30 @@
 package rpg.rpgcore.metiny;
 
 import com.google.common.collect.ImmutableSet;
+import org.bukkit.entity.ArmorStand;
 import rpg.rpgcore.RPGCORE;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MetinyManager {
     private final Map<Integer, Metiny> metiny1;
-    private final RPGCORE rpgcore;
+    private final Map<Integer, ArmorStand> asMap = new HashMap<>();
 
     public MetinyManager(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.metiny1 = rpgcore.getMongoManager().loadMetins();
+    }
+
+    public void addAs(int id, ArmorStand armorStand) {
+        this.asMap.put(id, armorStand);
+    }
+
+    public ArmorStand getAs(int id) {
+        return this.asMap.get(id);
+    }
+
+    public void removeAs(int id) {
+        this.asMap.remove(id);
     }
 
     public void add(Metiny metiny) {

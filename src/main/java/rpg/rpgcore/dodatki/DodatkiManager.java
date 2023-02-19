@@ -190,6 +190,12 @@ public class DodatkiManager {
             gui.setItem(14, Utils.deserializeItem(user.getPredkosc50()));
         }
 
+        if (user.getDmgMetiny().isEmpty()) {
+            gui.setItem(23, this.createNoAkcesoria("Bonu Zwiekszonych Obrazen W Kamienie Metin +2/3/5"));
+        } else {
+            gui.setItem(23, Utils.deserializeItem(user.getDmgMetiny()));
+        }
+
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
         player.openInventory(gui);
