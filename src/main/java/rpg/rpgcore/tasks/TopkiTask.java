@@ -14,6 +14,7 @@ public class TopkiTask implements Runnable {
     @Override
     public void run() {
         this.rpgcore.getTopkiManager().updateTopki();
+        this.rpgcore.getGuildManager().updateTopki();
         Bukkit.getServer().broadcastMessage(Utils.format("&3&lTopki zostaly odswiezone!"));
     }
 }

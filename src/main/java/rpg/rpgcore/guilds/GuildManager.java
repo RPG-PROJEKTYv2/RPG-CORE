@@ -31,10 +31,17 @@ public class GuildManager {
     public GuildManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.guildMap = rpgcore.getMongoManager().loadAllGuilds();
+        this.updateTopki();
     }
 
     // INVITES
     private final Map<UUID, Map<String, Integer>> guildInvites = new HashMap<>();
+
+    // STATSY GILDII
+    private Map<String, List<String>> topKill = new HashMap<>();
+    private Map<String, List<String>> topDeath = new HashMap<>();
+    private Map<String, List<String>> topExp = new HashMap<>();
+    private Map<String, List<String>> topTime = new HashMap<>();
 
     // ITEMY DO GUI
     private final List<String> lore = new ArrayList<>();
@@ -490,25 +497,119 @@ public class GuildManager {
         player.openInventory(gui);
     }
 
-    private ItemStack getKillsItem(final String tag) {
-        final Multimap<UUID, Integer> killsMap = ArrayListMultimap.create();
-        final Guild guild = this.find(tag).getGuild();
-        for (UUID uuid : guild.getMembers()) {
-            killsMap.put(uuid, guild.getKills().get(uuid));
-        }
-        Stream<Map.Entry<UUID, Integer>> sorted = killsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+    public void updateTopki() {
+        this.initTopKill();
+        this.initTopDeath();
+        this.initTopExp();
+        this.initTopTime();
+    }
 
-        final List<String> topka = new ArrayList<>();
-        sorted.limit(10).forEach(entry -> {
-            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
-            topka.add(player.getName() + " &8(&7" + entry.getValue() + " zabojstw&8)");
-        });
-
-        if (topka.size() < 10) {
-            for (int i = topka.size(); i < 10; i++) {
-                topka.add("Brak");
+    public void initTopKill() {
+        final Map<String, List<String>> topKill = new HashMap<>();
+        for (GuildObject guildObject : this.guildMap.values()) {
+            final Multimap<UUID, Integer> killsMap = ArrayListMultimap.create();
+            final Guild guild = guildObject.getGuild();
+            for (UUID uuid : guild.getMembers()) {
+                killsMap.put(uuid, guild.getKills().get(uuid));
             }
+            Stream<Map.Entry<UUID, Integer>> sorted = killsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+
+            final List<String> topka = new ArrayList<>();
+            sorted.limit(10).forEach(entry -> {
+                final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+                topka.add(player.getName() + " &8(&7" + entry.getValue() + " zabojstw&8)");
+            });
+
+            if (topka.size() < 10) {
+                for (int i = topka.size(); i < 10; i++) {
+                    topka.add("Brak");
+                }
+            }
+            topKill.put(guildObject.getTag(), topka);
         }
+        this.topKill = topKill;
+    }
+
+    public void initTopDeath() {
+        final Map<String, List<String>> topDeath = new HashMap<>();
+        for (final GuildObject guildObject : this.guildMap.values()) {
+            final Multimap<UUID, Integer> deathsMap = ArrayListMultimap.create();
+            final Guild guild = guildObject.getGuild();
+            for (UUID uuid : guild.getMembers()) {
+                deathsMap.put(uuid, guild.getDeaths().get(uuid));
+            }
+            Stream<Map.Entry<UUID, Integer>> sorted = deathsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+
+            final List<String> topka = new ArrayList<>(10);
+            sorted.limit(10).forEach(entry -> {
+                final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+                topka.add(player.getName() + " &8(&7" + entry.getValue() + " smierci&8)");
+            });
+
+            if (topka.size() < 10) {
+                for (int i = topka.size(); i < 10; i++) {
+                    topka.add("Brak");
+                }
+            }
+            topDeath.put(guildObject.getTag(), topka);
+        }
+        this.topDeath = topDeath;
+    }
+
+    public void initTopExp() {
+        final Map<String, List<String>> topExp = new HashMap<>();
+        for (final GuildObject guildObject : this.guildMap.values()) {
+            final Multimap<UUID, Double> expMap = ArrayListMultimap.create();
+            final Guild guild = guildObject.getGuild();
+            for (UUID uuid : guild.getMembers()) {
+                expMap.put(uuid, guild.getExpEarned().get(uuid));
+            }
+            Stream<Map.Entry<UUID, Double>> sorted = expMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+
+            final List<String> topka = new ArrayList<>(10);
+            sorted.limit(10).forEach(entry -> {
+                final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+                topka.add(player.getName() + " &8(&7" + DoubleUtils.round(entry.getValue(), 2) + " exp&8)");
+            });
+
+            if (topka.size() < 10) {
+                for (int i = topka.size(); i < 10; i++) {
+                    topka.add("Brak");
+                }
+            }
+            topExp.put(guildObject.getTag(), topka);
+        }
+        this.topExp = topExp;
+    }
+
+    public void initTopTime() {
+        final Map<String, List<String>> topTime = new HashMap<>();
+        for (final GuildObject guildObject : this.guildMap.values()) {
+            final Multimap<UUID, Long> timeMap = ArrayListMultimap.create();
+            final Guild guild = guildObject.getGuild();
+            for (UUID uuid : guild.getMembers()) {
+                timeMap.put(uuid, rpgcore.getOsManager().find(uuid).getCzasProgress());
+            }
+            Stream<Map.Entry<UUID, Long>> sorted = timeMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+            final List<String> topka = new ArrayList<>(10);
+            sorted.limit(10).forEach(entry -> {
+                final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+                topka.add(player.getName() + " &8(&7" + Utils.durationToString(entry.getValue(), true) + "&8)");
+            });
+
+            if (topka.size() < 10) {
+                for (int i = topka.size(); i < 10; i++) {
+                    topka.add("Brak");
+                }
+            }
+            topTime.put(guildObject.getTag(), topka);
+        }
+        this.topTime = topTime;
+    }
+
+    private ItemStack getKillsItem(final String tag) {
+        final Guild guild = this.find(tag).getGuild();
+        final List<String> topka = topKill.get(tag);
 
         return new ItemBuilder(Material.DIAMOND_SWORD).setName("&6&lZabojstwa").setLore(Arrays.asList(
                 "&7Zabojstwa: &6" + guild.getKills().values().stream().mapToInt(Integer::intValue).sum(),
@@ -527,24 +628,8 @@ public class GuildManager {
     }
 
     private ItemStack getDeathsItem(final String tag) {
-        final Multimap<UUID, Integer> deathsMap = ArrayListMultimap.create();
         final Guild guild = this.find(tag).getGuild();
-        for (UUID uuid : guild.getMembers()) {
-            deathsMap.put(uuid, guild.getDeaths().get(uuid));
-        }
-        Stream<Map.Entry<UUID, Integer>> sorted = deathsMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-
-        final List<String> topka = new ArrayList<>(10);
-        sorted.limit(10).forEach(entry -> {
-            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
-            topka.add(player.getName() + " &8(&7" + entry.getValue() + " smierci&8)");
-        });
-
-        if (topka.size() < 10) {
-            for (int i = topka.size(); i < 10; i++) {
-                topka.add("Brak");
-            }
-        }
+        final List<String> topka = topDeath.get(tag);
 
         return new ItemBuilder(Material.SKULL_ITEM).setName("&6&lSmierci").setLore(Arrays.asList(
                 "&7Smierci: &6" + guild.getDeaths().values().stream().mapToInt(Integer::intValue).sum(),
@@ -563,24 +648,8 @@ public class GuildManager {
     }
 
     private ItemStack getExpEarnedItem(final String tag) {
-        final Multimap<UUID, Double> expMap = ArrayListMultimap.create();
         final Guild guild = this.find(tag).getGuild();
-        for (UUID uuid : guild.getMembers()) {
-            expMap.put(uuid, guild.getExpEarned().get(uuid));
-        }
-        Stream<Map.Entry<UUID, Double>> sorted = expMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-
-        final List<String> topka = new ArrayList<>(10);
-        sorted.limit(10).forEach(entry -> {
-            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
-            topka.add(player.getName() + " &8(&7" + DoubleUtils.round(entry.getValue(), 2) + " exp&8)");
-        });
-
-        if (topka.size() < 10) {
-            for (int i = topka.size(); i < 10; i++) {
-                topka.add("Brak");
-            }
-        }
+        final List<String> topka = topExp.get(tag);
 
         return new ItemBuilder(Material.EXP_BOTTLE).setName("&6&lExp").setLore(Arrays.asList(
                 "&7Exp: &6" + DoubleUtils.round(guild.getExpEarned().values().stream().mapToDouble(Double::doubleValue).sum(), 2),
@@ -604,18 +673,7 @@ public class GuildManager {
         for (UUID uuid : guild.getMembers()) {
             timeMap.put(uuid, rpgcore.getOsManager().find(uuid).getCzasProgress());
         }
-        Stream<Map.Entry<UUID, Long>> sorted = timeMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        final List<String> topka = new ArrayList<>(10);
-        sorted.limit(10).forEach(entry -> {
-            final OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
-            topka.add(player.getName() + " &8(&7" + Utils.durationToString(entry.getValue(), true) + "&8)");
-        });
-
-        if (topka.size() < 10) {
-            for (int i = topka.size(); i < 10; i++) {
-                topka.add("Brak");
-            }
-        }
+        final List<String> topka = topTime.get(tag);
 
         return new ItemBuilder(Material.WATCH).setName("&6&lCzas Spedzony").setLore(Arrays.asList(
                 "&7Czas Spedzony: &6" + Utils.durationToString(timeMap.entries().stream().mapToLong(Map.Entry::getValue).sum(), true),

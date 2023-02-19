@@ -27,10 +27,7 @@ public class TopkiManager {
 
     public TopkiManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.initTopkaCzasu();
-        this.initTopkaLvl();
-        this.initTopkaKrytyka();
-        this.initTopkaGildii();
+        this.updateTopki();
     }
 
     public void updateTopki() {

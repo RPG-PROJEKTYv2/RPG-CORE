@@ -49,7 +49,7 @@ public class PacketManager {
     }
 
     public static Object getInfo(final Object packet, final TabProfile profile, final String displayName) {
-        return PLAYER_INFO_DATA_CONSTRUCTOR_INVOKER.invoke(packet, profile, 9999, WORLD_SETTINGS_GAMEMODE_ENUM_CONSTANT, toJson(displayName));
+        return PLAYER_INFO_DATA_CONSTRUCTOR_INVOKER.invoke(packet, profile, 1, WORLD_SETTINGS_GAMEMODE_ENUM_CONSTANT, toJson(displayName));
     }
 
     public static Object toJson(final String string) {
