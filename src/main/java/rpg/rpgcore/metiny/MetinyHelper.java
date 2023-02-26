@@ -91,12 +91,12 @@ public class MetinyHelper {
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
-                    for (Entity e2 : e.getNearbyEntities(1, 1, 1)) {
-                        if (e2.getType().equals(EntityType.ARMOR_STAND)) {
-                            e2.remove();
-                        }
+                    if (e.getCustomName() != null && RPGCORE.getInstance().getMetinyManager().isMetin(Integer.parseInt(e.getCustomName()))) {
+                        final int id = Integer.parseInt(e.getCustomName());
+                        RPGCORE.getInstance().getMetinyManager().getAs(id).remove();
+                        RPGCORE.getInstance().getMetinyManager().removeAs(id);
+                        e.remove();
                     }
-                    e.remove();
                 }
             }
         }

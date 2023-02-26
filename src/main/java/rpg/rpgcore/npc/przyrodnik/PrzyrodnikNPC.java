@@ -50,7 +50,6 @@ public class PrzyrodnikNPC {
     public ItemStack getOddajItemyItem(final PrzyrodnikUser user) {
         Missions missions = Missions.getByNumber(user.getMission());
         if (user.getMission() == 13) return Missions.M_ERROR.getItemStack();
-        System.out.println((user.getProgress() / (double) missions.getReqAmount()) * 100D);
         return new ItemBuilder(missions.getItemStack().clone()).setName(missions.getItemStack().getItemMeta().getDisplayName() + " &7x" + missions.getReqAmount()).setLore(Arrays.asList(
                 "&f&lNagroda",
                 "&7Srednie Obrazenia: &c" + missions.getDmg() + "%",
