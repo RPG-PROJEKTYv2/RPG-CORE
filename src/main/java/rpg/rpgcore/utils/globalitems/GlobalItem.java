@@ -70,6 +70,13 @@ public enum GlobalItem {
     // MIKSTURA MEDYKA
     I56("I56", new ItemBuilder(Material.POTION).setName("&5Metna Mikstura Medyka").setLore(Arrays.asList("&8Mikstura ta jest niezdatna do picia.")).addFlag(ItemFlag.HIDE_POTION_EFFECTS).toItemStack().clone()),
     I57("I57", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4Fragment Serca").setLore(Arrays.asList("&8Chyba Medyk tego potrzebuje...")).toItemStack().clone()),
+    // ZNISZCZONE RUBINOWE SERCE (MEDRZEC ITEM)
+    ZNISZCZONE_RUBINOWE_SERCE("ZNISZCZONE_RUBINOWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&cZniszczone Rubinowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
+    RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
+            "&8Wykute przez Medrca wedlug pradawnej receptury",
+            "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
+            "i otrzymasz &c0.5❤"
+    )).addGlowing().toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 

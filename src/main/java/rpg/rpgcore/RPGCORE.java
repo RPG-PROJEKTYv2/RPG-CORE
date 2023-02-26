@@ -139,10 +139,9 @@ import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.magazynier.MagazynyCommand;
-import rpg.rpgcore.npc.medyk.events.MedykInteractListener;
-import rpg.rpgcore.npc.medyk.events.MedykInventoryClickListener;
-import rpg.rpgcore.npc.medyk.events.MedykInventoryCloseListener;
-import rpg.rpgcore.npc.medyk.MedykNPC;
+import rpg.rpgcore.npc.medrzec.MedrzecNPC;
+import rpg.rpgcore.npc.medrzec.events.MedrzecInteractListener;
+import rpg.rpgcore.npc.medrzec.events.MedrzecInventoryClickListener;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
@@ -266,7 +265,6 @@ public final class RPGCORE extends JavaPlugin {
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
-    private MedykNPC medykNPC;
     private GornikNPC gornikNPC;
     private PrzyrodnikNPC przyrodnikNPC;
     private ListaNPCManager listaNPCManager;
@@ -339,6 +337,7 @@ public final class RPGCORE extends JavaPlugin {
     private DisabledManager disabledManager;
     private TradeManager tradeManager;
     private WyszkolenieManager wyszkolenieManager;
+    private MedrzecNPC medrzecNPC;
 
 
 
@@ -434,7 +433,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllDuszolog();
         this.mongo.saveAllGuilds();
         this.mongo.saveAllGornik();
-        this.mongo.saveAllMedyk();
+        this.mongo.saveAllMedrzec();
         this.mongo.saveAllKolekcjoner();
         this.mongo.saveAllMetinolog();
         this.mongo.saveAllOs();
@@ -689,11 +688,6 @@ public final class RPGCORE extends JavaPlugin {
         // ...METINOLOG
         this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
 
-        // ...MEDYK
-        this.getServer().getPluginManager().registerEvents(new MedykInventoryClickListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new MedykInventoryCloseListener(), this);
-        this.getServer().getPluginManager().registerEvents(new MedykInteractListener(), this);
-
         // ...GORNIK
         this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new GornikBlockBreakListener(this), this);
@@ -714,6 +708,10 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...WYSLANNIK
         this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
+
+        // ...MEDRZEC
+        this.getServer().getPluginManager().registerEvents(new MedrzecInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new MedrzecInteractListener(this), this);
 
 
         // DUNGEONS
@@ -815,12 +813,12 @@ public final class RPGCORE extends JavaPlugin {
         this.handlarzNPC = new HandlarzNPC(this);
         this.kowalNPC = new KowalNPC(this);
         this.metinologNPC = new MetinologNPC(this);
-        this.medykNPC = new MedykNPC(this);
         this.gornikNPC = new GornikNPC(this);
         this.przyrodnikNPC = new PrzyrodnikNPC(this);
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
         this.wyslannikNPC = new WyslannikNPC(this);
+        this.medrzecNPC = new MedrzecNPC(this);
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
         this.getMetinologNPC().loadMissions();
     }
@@ -1042,10 +1040,6 @@ public final class RPGCORE extends JavaPlugin {
         return serverManager;
     }
 
-    public MedykNPC getMedykNPC() {
-        return medykNPC;
-    }
-
     public NiebiosaManager getNiebiosaManager() {
         return niebiosaManager;
     }
@@ -1242,5 +1236,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public WyszkolenieManager getWyszkolenieManager() {
         return wyszkolenieManager;
+    }
+    public MedrzecNPC getMedrzecNPC() {
+        return medrzecNPC;
     }
 }

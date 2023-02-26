@@ -25,7 +25,7 @@ import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
-import rpg.rpgcore.npc.medyk.objects.MedykObject;
+import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
@@ -91,7 +91,7 @@ public class MongoManager {
             //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
             this.addDataDuszolog(rpgcore.getDuszologNPC().find(uuid));
             this.addDataKolekcjner(rpgcore.getKolekcjonerNPC().find(uuid));
-            this.addDataMedyk(rpgcore.getMedykNPC().find(uuid));
+            this.addDataMedrzec(rpgcore.getMedrzecNPC().find(uuid));
             this.addDataMetinolog(rpgcore.getMetinologNPC().find(uuid));
             this.addDataPrzyrodnik(rpgcore.getPrzyrodnikNPC().find(uuid));
             this.addDataRybak(rpgcore.getRybakNPC().find(uuid));
@@ -143,8 +143,8 @@ public class MongoManager {
         if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
             pool.getKlasy().deleteOne(new Document("_id", uuid.toString()));
         }
-        if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getMedyk().deleteOne(new Document("_id", uuid.toString()));
+        if (pool.getMedrzec().find(new Document("_id", uuid.toString())).first() != null) {
+            pool.getMedrzec().deleteOne(new Document("_id", uuid.toString()));
         }
         if (pool.getGornik().find(new Document("_id", uuid.toString())).first() != null) {
             pool.getGornik().deleteOne(new Document("_id", uuid.toString()));
@@ -269,10 +269,10 @@ public class MongoManager {
                 this.addKlasyData(user);
                 rpgcore.getklasyHelper().add(user);
             }*/
-            if (pool.getMedyk().find(new Document("_id", uuid.toString())).first() == null) {
-                final MedykObject user = new MedykObject(uuid);
-                this.addDataMedyk(user);
-                rpgcore.getMedykNPC().add(user);
+            if (pool.getMedrzec().find(new Document("_id", uuid.toString())).first() == null) {
+                final MedrzecUser user = new MedrzecUser(uuid);
+                this.addDataMedrzec(user);
+                rpgcore.getMedrzecNPC().add(user);
             }
             if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
                 final GornikObject user = new GornikObject(uuid);
@@ -389,9 +389,9 @@ public class MongoManager {
         this.addDataKolekcjner(kolekcjonerObject);
         rpgcore.getKolekcjonerNPC().add(kolekcjonerObject);
 
-        final MedykObject medykObject = new MedykObject(uuid);
-        this.addDataMedyk(medykObject);
-        rpgcore.getMedykNPC().add(medykObject);
+        final MedrzecUser medrzecUser = new MedrzecUser(uuid);
+        this.addDataMedrzec(medrzecUser);
+        rpgcore.getMedrzecNPC().add(medrzecUser);
 
         final MetinologObject metinologObject = new MetinologObject(uuid);
         this.addDataMetinolog(metinologObject);
@@ -505,7 +505,7 @@ public class MongoManager {
             //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
             this.saveDataDuszolog(uuid, rpgcore.getDuszologNPC().find(uuid));
             this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
-            this.saveDataMedyk(uuid, rpgcore.getMedykNPC().find(uuid));
+            this.saveDataMedrzec(uuid, rpgcore.getMedrzecNPC().find(uuid));
             this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
@@ -714,29 +714,29 @@ public class MongoManager {
 
 
     // MEDYK
-    public Map<UUID, MedykObject> loadAllMedyk() {
-        Map<UUID, MedykObject> medyk = new ConcurrentHashMap<>();
-        for (Document document : this.pool.getMedyk().find()) {
-            MedykObject medykObject = new MedykObject(document);
-            medyk.put(medykObject.getID(), medykObject);
+    public Map<UUID, MedrzecUser> loadAllMedrzec() {
+        Map<UUID, MedrzecUser> medrzec = new ConcurrentHashMap<>();
+        for (Document document : this.pool.getMedrzec().find()) {
+            MedrzecUser medrzecUser = new MedrzecUser(document);
+            medrzec.put(medrzecUser.getUuid(), medrzecUser);
         }
-        return medyk;
+        return medrzec;
     }
 
-    public void addDataMedyk(final MedykObject medyk) {
-        if (this.pool.getMedyk().find(new Document("_id", medyk.getID().toString())).first() != null) {
-            this.pool.getMedyk().deleteOne(new Document("_id", medyk.getID().toString()));
+    public void addDataMedrzec(final MedrzecUser medrzecUser) {
+        if (this.pool.getMedrzec().find(new Document("_id", medrzecUser.getUuid().toString())).first() != null) {
+            this.pool.getMedrzec().deleteOne(new Document("_id", medrzecUser.getUuid().toString()));
         }
-        this.pool.getMedyk().insertOne(medyk.toDocument());
+        this.pool.getMedrzec().insertOne(medrzecUser.toDocument());
     }
 
-    public void saveDataMedyk(final UUID id, final MedykObject medyk) {
-        this.pool.getMedyk().findOneAndReplace(new Document("_id", id.toString()), medyk.toDocument());
+    public void saveDataMedrzec(final UUID id, final MedrzecUser medrzecUser) {
+        this.pool.getMedrzec().findOneAndReplace(new Document("_id", id.toString()), medrzecUser.toDocument());
     }
 
-    public void saveAllMedyk() {
-        for (MedykObject medykObject : rpgcore.getMedykNPC().getMedykObject()) {
-            this.saveDataMedyk(medykObject.getID(), medykObject);
+    public void saveAllMedrzec() {
+        for (MedrzecUser medrzecUser : rpgcore.getMedrzecNPC().getMedrzecUsers()) {
+            this.saveDataMedrzec(medrzecUser.getUuid(), medrzecUser);
         }
     }
 

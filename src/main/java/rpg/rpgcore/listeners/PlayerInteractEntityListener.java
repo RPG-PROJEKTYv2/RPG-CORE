@@ -165,16 +165,6 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // KLASY
 
-            // MEDYK
-            if (entityName.equalsIgnoreCase("Medyk")) {
-                if (rpgcore.getMedykNPC().find(uuid).getMedykUser().getBonus() == 50) {
-                    player.sendMessage(Utils.format("&c&lMedyk &8>> &7Dalem Ci juz wszystko co moglem. Czego wiecej odemnie chcesz?"));
-                    return;
-                }
-                rpgcore.getMedykNPC().openMedykGUI(player);
-                return;
-            }
-
             // GORNIK
             if (entityName.equalsIgnoreCase("Gornik")) {
                 if (playerRightClicked.getLocation().getWorld().getName().equals("world")) {
@@ -216,6 +206,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getHandlarzNPC().openHandlarzGUI(player);
                 return;
             }
+            // MEDRZEC
+            if (entityName.equalsIgnoreCase("Medrzec")) {
+                rpgcore.getMedrzecNPC().openMedrzecGUI(player);
+                return;
+            }
             //  ...ZAGINIONY WLADCA
             if (entityName.equalsIgnoreCase("Zaginiony Wladca")) {
                 if (rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.STARTED) {
@@ -230,7 +225,7 @@ public class PlayerInteractEntityListener implements Listener {
                 if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Handlarz") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
                         entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
                         entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
-                        entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
+                        entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medrzec") || entityName.equalsIgnoreCase("Gornik") ||
                         entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
                         entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
                     e.setCancelled(true);

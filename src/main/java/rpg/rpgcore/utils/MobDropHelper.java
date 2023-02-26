@@ -45,10 +45,6 @@ public class MobDropHelper {
         final UUID uuid = player.getUniqueId();
         final String entityName = Utils.removeColor(entity.getName());
 
-        if (rpgcore.getMedykNPC().find(uuid).getMedykUser().getBonus() < 50) {
-            rpgcore.getMedykNPC().find(uuid).getMedykUser().setProgress(rpgcore.getMedykNPC().find(uuid).getMedykUser().getProgress() + 1);
-        }
-
         int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
         if (rank == RankTypePlayer.VIP) szczescie += 25;
@@ -79,6 +75,10 @@ public class MobDropHelper {
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 2.5), true, true, entity);
         // FRAGMENT STALI
         addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.035), true, true, entity);
+
+        if (rpgcore.getMedrzecNPC().find(uuid).getBonus() < 40) {
+            addDropPlayer(player, GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), getDropChance(szczescie, 0.01), true, true, entity);
+        }
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());

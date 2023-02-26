@@ -29,7 +29,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_metinolog;
     private final MongoCollection<Document> hellrpg_other;
     private final MongoCollection<Document> hellrpg_klasy;
-    private final MongoCollection<Document> hellrpg_medyk;
+    private final MongoCollection<Document> hellrpg_medrzec;
     private final MongoCollection<Document> hellrpg_gornik;
     private final MongoCollection<Document> hellrpg_duszolog;
     private final MongoCollection<Document> hellrpg_przyrodnik;
@@ -98,8 +98,8 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_klasy")) {
             database.createCollection("hellrpg_klasy");
         }
-        if (!collections.contains("hellrpg_medyk")) {
-            database.createCollection("hellrpg_medyk");
+        if (!collections.contains("hellrpg_medrzec")) {
+            database.createCollection("hellrpg_medrzec");
         }
         if (!collections.contains("hellrpg_gornik")) {
             database.createCollection("hellrpg_gornik");
@@ -167,7 +167,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_metinolog = database.getCollection("hellrpg_metinolog");
         this.hellrpg_other = database.getCollection("hellrpg_other");
         this.hellrpg_klasy = database.getCollection("hellrpg_klasy");
-        this.hellrpg_medyk = database.getCollection("hellrpg_medyk");
+        this.hellrpg_medrzec = database.getCollection("hellrpg_medrzec");
         this.hellrpg_gornik = database.getCollection("hellrpg_gornik");
         this.hellrpg_duszolog = database.getCollection("hellrpg_duszolog");
         this.hellrpg_przyrodnik = database.getCollection("hellrpg_przyrodnik");
@@ -235,8 +235,8 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getKlasy() {
         return this.hellrpg_klasy;
     }
-    public MongoCollection<Document> getMedyk() {
-        return this.hellrpg_medyk;
+    public MongoCollection<Document> getMedrzec() {
+        return this.hellrpg_medrzec;
     }
     public MongoCollection<Document> getGornik() {
         return this.hellrpg_gornik;
