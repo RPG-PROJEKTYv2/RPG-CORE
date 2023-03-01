@@ -75,7 +75,7 @@ public enum Map1_10 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(5, 9), ChanceHelper.getRandInt(9, 20),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(5, 9), ChanceHelper.getRandInt(4, 9),
                             ChanceHelper.getRandInt(1, 3), ChanceHelper.getRandInt(1, 10), "&8&lZaginiona Tarcza"));
                     return;
                 }

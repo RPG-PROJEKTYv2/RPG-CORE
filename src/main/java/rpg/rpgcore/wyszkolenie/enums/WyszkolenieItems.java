@@ -35,7 +35,9 @@ public enum WyszkolenieItems {
     public String getName() {
         return this.name;
     }
-
+    public ItemStack getItem() {
+        return itemStack.clone();
+    }
     public ItemStack getItemStack() {
         return this.itemStack;
     }

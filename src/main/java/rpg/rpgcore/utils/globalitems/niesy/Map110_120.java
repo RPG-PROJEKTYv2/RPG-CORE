@@ -82,7 +82,7 @@ public enum Map110_120 {
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(35, 68),
-                            ChanceHelper.getRandInt(35, 75), ChanceHelper.getRandInt(30, 45), ChanceHelper.getRandInt(110, 120), "&3&lSzkarlatna Tarcza"));
+                            ChanceHelper.getRandInt(37, 60), ChanceHelper.getRandInt(30, 45), ChanceHelper.getRandInt(110, 120), "&3&lSzkarlatna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {

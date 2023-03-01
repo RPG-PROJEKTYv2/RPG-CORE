@@ -289,7 +289,7 @@ public class ChatInventoryClickListener implements Listener {
             e.setCancelled(true);
             final ChatUser user = rpgcore.getChatManager().find(uuid);
 
-            if (slot == 9) {
+            if (slot == 10) {
                 if (user.isItemDropEnabled()) {
                     user.setItemDropEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
@@ -299,7 +299,7 @@ public class ChatInventoryClickListener implements Listener {
                 rpgcore.getChatManager().openChatPanel(player);
                 return;
             }
-            if (slot == 10) {
+            if (slot == 13) {
                 if (user.isPingsEnabled()) {
                     user.setPingsEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
@@ -309,7 +309,7 @@ public class ChatInventoryClickListener implements Listener {
                 rpgcore.getChatManager().openChatPanel(player);
                 return;
             }
-            if (slot == 11) {
+            if (slot == 12) {
                 if (user.isNiesDropEnabled()) {
                     user.setNiesDropEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
@@ -319,7 +319,7 @@ public class ChatInventoryClickListener implements Listener {
                 rpgcore.getChatManager().openChatPanel(player);
                 return;
             }
-            if (slot == 12) {
+            if (slot == 11) {
                 if (user.isChestDropEnabled()) {
                     user.setChestDropEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
@@ -329,7 +329,7 @@ public class ChatInventoryClickListener implements Listener {
                 user.setChestDropEnabled(true);
                 rpgcore.getChatManager().openChatPanel(player);
             }
-            if (slot == 13) {
+            if (slot == 14) {
                 if (user.isMsgEnabled()) {
                     user.setMsgEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
@@ -339,17 +339,16 @@ public class ChatInventoryClickListener implements Listener {
                 user.setMsgEnabled(true);
                 rpgcore.getChatManager().openChatPanel(player);
             }
-            if (slot == 14) {
+            if (slot == 15) {
                 if (user.isJoinMessageEnabled()) {
                     user.setJoinMessageEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);
                     return;
                 }
-
                 user.setJoinMessageEnabled(true);
                 rpgcore.getChatManager().openChatPanel(player);
             }
-            if (slot == 15) {
+            if (slot == 16) {
                 if (user.isQuitMessageEnabled()) {
                     user.setQuitMessageEnabled(false);
                     rpgcore.getChatManager().openChatPanel(player);

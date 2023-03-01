@@ -710,14 +710,14 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // Expowisko 12
-                // Skrzynia Hadesa
+                // Skrzynia Krysztalowego Wladcy
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I23").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I23", 1));
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        Items item = rpgcore.getHadesManager().getDrawnItems(player);
+                        Items item = rpgcore.getKrysztalowyWladcaManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -729,14 +729,14 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // Expowisko 13
-                // Skrzynia Archaniola
+                // Skrzynia Starozytnego Smoczego Cesarza
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I25").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I25", 1));
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        Items item = rpgcore.getArchaniolManager().getDrawnItems(player);
+                        Items item = rpgcore.getStarozytnySmoczyCesarzManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }

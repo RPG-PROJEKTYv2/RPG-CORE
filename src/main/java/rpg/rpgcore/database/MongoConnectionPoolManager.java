@@ -280,7 +280,6 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getArtefaktyZaLvL() {
         return this.hellrpg_artefaktyZaLvL;
     }
-
     public MongoCollection<Document> getHandlarz() {
         return hellrpg_handlarz;
     }

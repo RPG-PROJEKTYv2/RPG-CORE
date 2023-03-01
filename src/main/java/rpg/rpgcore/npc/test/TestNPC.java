@@ -12,6 +12,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TestNPC {
+
+    // WAZNE
+    // SCHEMAT NPC GLOWNE PLIKI / RPGCORE / MONGOMANAGER.CLASS / MONGO CONNECTION POOL
+
+
     //private final Map<UUID, TestUser> userMap;
 
 

@@ -77,7 +77,7 @@ public enum Map40_50 {
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(17, 25),
-                            ChanceHelper.getRandInt(25, 42), ChanceHelper.getRandInt(7, 10), ChanceHelper.getRandInt(40, 50), "&b&lPradawna Tarcza"));
+                            ChanceHelper.getRandInt(15, 24), ChanceHelper.getRandInt(7, 10), ChanceHelper.getRandInt(40, 50), "&b&lPradawna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {

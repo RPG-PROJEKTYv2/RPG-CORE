@@ -55,6 +55,7 @@ public class PrzyrodnikNPC {
                 "&7Srednie Obrazenia: &c" + missions.getDmg() + "%",
                 "&7Srednia Odpornosc: &c" + missions.getDef() + "%",
                 "",
+                "&7Szansa na przyjecie: &e" + missions.getAcceptPercent() + "%",
                 "&7Postep: &6" + user.getProgress() + "&7/&6" + missions.getReqAmount() + "&8(&6" + DoubleUtils.round((user.getProgress() / (double) missions.getReqAmount() * 100.0), 2) + "%&8)")
         ).toItemStack().clone();
     }
@@ -63,7 +64,7 @@ public class PrzyrodnikNPC {
         Missions missions = Missions.getByNumber(user.getMission());
         ItemStack item = missions.getItemStack().clone();
         ItemMeta meta = item.getItemMeta();
-        meta.setLore(Utils.format(Arrays.asList("&7Wypada z: &6" + missions.getMobName(), "&7Szansa: &6" + missions.getDropChance() + "%")));
+        meta.setLore(Utils.format(Arrays.asList("&7Wypada z: &6" + missions.getMobName(), "&7Szansa na drop: &6" + missions.getDropChance() + "%")));
         item.setItemMeta(meta);
         return item;
     }

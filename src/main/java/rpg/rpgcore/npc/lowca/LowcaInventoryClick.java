@@ -38,7 +38,7 @@ public class LowcaInventoryClick implements Listener {
             final LowcaObject object = rpgcore.getLowcaNPC().find(uuid);
             final LowcaUser user = object.getLowcaUser();
 
-            if (item.getType().equals(Material.BARRIER) || item.getType().equals(Material.BOOK_AND_QUILL) || Utils.checkIfLoreContainsString(item.getItemMeta().getLore(), "Wykonane")) {
+            if (item.getType().equals(Material.STAINED_GLASS_PANE) || item.getType().equals(Material.BARRIER) || item.getType().equals(Material.BOOK_AND_QUILL) || Utils.checkIfLoreContainsString(item.getItemMeta().getLore(), "Wykonane")) {
                 return;
             }
 

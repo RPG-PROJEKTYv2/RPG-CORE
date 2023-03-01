@@ -76,7 +76,7 @@ public enum Map20_30 {
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(12, 17),
-                            ChanceHelper.getRandInt(20, 32), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(20, 30), "&6&lTropikalna Tarcza"));
+                            ChanceHelper.getRandInt(7, 14), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(20, 30), "&6&lTropikalna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {

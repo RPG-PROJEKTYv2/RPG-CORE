@@ -30,8 +30,8 @@ import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
 import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
 import rpg.rpgcore.chests.Expowisko11.MitycznyKrakenManager;
-import rpg.rpgcore.chests.Expowisko12.HadesManager;
-import rpg.rpgcore.chests.Expowisko13.ArchaniolManager;
+import rpg.rpgcore.chests.Expowisko12.KrysztalowyWladcaManager;
+import rpg.rpgcore.chests.Expowisko13.StarozytnySmoczyCesarzManager;
 import rpg.rpgcore.chests.Expowisko2.GoblinManager;
 import rpg.rpgcore.chests.Expowisko2.WodzGoblinowManager;
 import rpg.rpgcore.chests.Expowisko3.GorylManager;
@@ -317,9 +317,9 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 11
     private MitycznyKrakenManager mitycznyKrakenManager;
     // Expowisko 12
-    private HadesManager hadesManager;
+    private KrysztalowyWladcaManager krysztalowyWladcaManager;
     // Expowisko 13
-    private ArchaniolManager archaniolManager;
+    private StarozytnySmoczyCesarzManager starozytnySmoczyCesarzManager;
 
     // cos innego...
     private OreManager oreManager;
@@ -713,7 +713,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MedrzecInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new MedrzecInteractListener(this), this);
 
-
         // DUNGEONS
 
         // ...ICE TOWER
@@ -863,9 +862,9 @@ public final class RPGCORE extends JavaPlugin {
         // EXPOWISKO 11
         this.mitycznyKrakenManager = new MitycznyKrakenManager();
         // EXPOWISKO 12
-        this.hadesManager = new HadesManager();
+        this.krysztalowyWladcaManager = new KrysztalowyWladcaManager();
         // EXPOWISKO 13
-        this.archaniolManager = new ArchaniolManager();
+        this.starozytnySmoczyCesarzManager = new StarozytnySmoczyCesarzManager();
     }
 
     private void initDungeons() {
@@ -1126,12 +1125,12 @@ public final class RPGCORE extends JavaPlugin {
         return mitycznyKrakenManager;
     }
     // exp12
-    public HadesManager getHadesManager() {
-        return hadesManager;
+    public KrysztalowyWladcaManager getKrysztalowyWladcaManager() {
+        return krysztalowyWladcaManager;
     }
     // exp13
-    public ArchaniolManager getArchaniolManager() {
-        return archaniolManager;
+    public StarozytnySmoczyCesarzManager getStarozytnySmoczyCesarzManager() {
+        return starozytnySmoczyCesarzManager;
     }
 
 

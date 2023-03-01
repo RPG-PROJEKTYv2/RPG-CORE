@@ -16,6 +16,7 @@ import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
 import rpg.rpgcore.utils.globalitems.npc.*;
+import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
 import java.util.Arrays;
 
@@ -104,16 +105,19 @@ public class AdminPanelManager {
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGui(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lPrzedmioty S &f- ADMINISTRACJA"));
+        final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&e&lPrzedmioty S &f- ADMINISTRACJA"));
+        for (final WyszkolenieItems wyszkolenieItems : WyszkolenieItems.values()) {
+            gui.setItem(gui.firstEmpty(), wyszkolenieItems.getItem());
+        }
 
-        gui.setItem(0, Bossy.getItem("I1", 1));
-        gui.setItem(1, Bossy.getItem("I2", 1));
-        gui.setItem(2, Bossy.getItem("I3", 1));
-        gui.setItem(3, Bossy.getItem("I4", 1));
-        gui.setItem(4, Bossy.getItem("I5", 1));
+        gui.setItem(18, Bossy.getItem("I1", 1));
+        gui.setItem(19, Bossy.getItem("I2", 1));
+        gui.setItem(20, Bossy.getItem("I3", 1));
+        gui.setItem(21, Bossy.getItem("I4", 1));
+        gui.setItem(22, Bossy.getItem("I5", 1));
 
-        gui.setItem(9, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(10, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+        gui.setItem(28, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
+        gui.setItem(29, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
 
 
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());

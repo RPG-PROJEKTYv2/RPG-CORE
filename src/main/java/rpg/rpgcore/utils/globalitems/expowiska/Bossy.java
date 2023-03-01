@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public enum Bossy {
     // ITEM DO RESPU BOSSA 60-70
-    I1("I1", new ItemBuilder(Material.FIREBALL).setName("&c&lZaczarowana Kula").setLore(Arrays.asList(" ","&7Dzieki tej kuli przywolasz &c&lPiekielna Dusze&7!")).hideFlag().toItemStack().clone()),
+    I1("I1", new ItemBuilder(Material.FIREBALL).setName("&cZaczarowana Kula").setLore(Arrays.asList(" ","&7Dzieki tej kuli przywolasz &c&lPiekielna Dusze&7!")).hideFlag().toItemStack().clone()),
    // ITEM DO RESPU BOSSA 70-80
     I2("I2", new ItemBuilder(Material.MAGMA_CREAM).setName("&cPrzeklete Serce").setLore(Arrays.asList(" ","&7Serce to pozwoli ci ozywic krag &3&lCzarnoksieznika&7...")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 80-90
@@ -19,7 +19,7 @@ public enum Bossy {
     // ITEM DO RESPU BOSSA 110-120
     I4("I4", new ItemBuilder(Material.DIAMOND).setName("&bFragment Krysztalu").setLore(Arrays.asList(" ","&7Fragment krysztalu pozwoli ci naladowac jego moc!")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 120-130
-    I5("I5", new ItemBuilder(Material.CARROT_STICK).setName("&bHarfa").setLore(Arrays.asList(" ","&bHarfa &7ta pozwoli ci wylosowac zadania aby przywolac bossa...")).hideFlag().toItemStack().clone());
+    I5("I5", new ItemBuilder(Material.BOOK_AND_QUILL).setName("&5Smoczy Papirus").setLore(Arrays.asList(" ","&5Papirus &7ten pozwoli ci wylosowac zadania aby przywolac smoka...")).hideFlag().toItemStack().clone());
     private final ItemStack itemStack;
     private final String name;
 
