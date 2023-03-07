@@ -15,6 +15,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
+import rpg.rpgcore.utils.globalitems.expowiska.Przepustki;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,11 +60,9 @@ public class HandlarzNPC {
             }
         }
 
-        gui.setItem(11, new ItemBuilder(Material.SIGN).setName("&cTu przepustak 80-90").toItemStack());
-        gui.setItem(12, new ItemBuilder(Material.SIGN).setName("&cTu przepustak 90-100").toItemStack());
-        gui.setItem(13, new ItemBuilder(Material.SIGN).setName("&cTu przepustak 100-110").toItemStack());
-        gui.setItem(14, new ItemBuilder(Material.SIGN).setName("&cTu przepustak 110-120").toItemStack());
-        gui.setItem(15, new ItemBuilder(Material.SIGN).setName("&cTu przepustak 120-130").toItemStack());
+        gui.setItem(12, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &bSwiatyni").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I1.getCena())).toItemStack());
+        gui.setItem(13, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &fKrysztalowej Sali").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I2.getCena())).toItemStack());
+        gui.setItem(14, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &fNieba").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I3.getCena())).toItemStack());
 
         gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 

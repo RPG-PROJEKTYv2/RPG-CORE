@@ -24,14 +24,21 @@ public class KowalManager {
         this.kowal.add(new Items("6", 8.0, GlobalItem.getItem("I10", 3), 3));
         // oczyszczenie
         this.kowal.add(new Items("7", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
-        this.kowal.add(new Items("7", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),2));
-        this.kowal.add(new Items("7", 2.5, GlobalItem.getItem("I_OCZYSZCZENIE", 3), 3));
+        this.kowal.add(new Items("8", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),2));
+        this.kowal.add(new Items("9", 2.5, GlobalItem.getItem("I_OCZYSZCZENIE", 3), 3));
+        // skrzynki
+        this.kowal.add(new Items("10", 1.0, GlobalItem.getItem("I1", 1),1));
+        this.kowal.add(new Items("11", 0.05, GlobalItem.getItem("I6", 1),1));
     }
 
     public Items getDrawnItems(final Player player) {
         for (Items item : this.kowal) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (item.getRewardItem().getAmount() > 1) {
+                    player.sendMessage(Utils.format("&2+ &fx" + item.getRewardItem().getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
+                } else {
+                    player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                }
                 return item;
             }
         }

@@ -741,6 +741,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInteractListener(this), this);
 
+        // book and quill blocked
+        this.getServer().getPluginManager().registerEvents(new BookInteractListener(this), this);
+
         // PLAYER INVENTORY
         this.getServer().getPluginManager().registerEvents(new PlayerOpenInventoryListener(), this);
 

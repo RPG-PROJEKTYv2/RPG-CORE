@@ -195,7 +195,7 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
         if (title.equals("Przedmioty S - ADMINISTRACJA")) {
-            if (slot == 26) {
+            if (slot == 35) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }

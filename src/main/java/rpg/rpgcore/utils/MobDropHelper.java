@@ -70,9 +70,9 @@ public class MobDropHelper {
         // TAJEMNICZA SKRZYNIA
         addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
-        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2.0), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 1.5), true, true, entity);
         // LESNIK NPC
-        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 2.5), true, true, entity);
+        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1.5), true, true, entity);
         // FRAGMENT STALI
         addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.035), true, true, entity);
 

@@ -11,10 +11,7 @@ import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
-import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
-import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
-import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
-import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
+import rpg.rpgcore.utils.globalitems.expowiska.*;
 import rpg.rpgcore.utils.globalitems.npc.*;
 import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
@@ -116,11 +113,16 @@ public class AdminPanelManager {
         gui.setItem(21, Bossy.getItem("I4", 1));
         gui.setItem(22, Bossy.getItem("I5", 1));
 
+        gui.setItem(23, Przepustki.getItem("I1", 1));
+        gui.setItem(24, Przepustki.getItem("I2", 1));
+        gui.setItem(25, Przepustki.getItem("I3", 1));
+        gui.setItem(26, Przepustki.getItem("I4", 1));
+
         gui.setItem(28, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
         gui.setItem(29, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
 
 
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
 
         player.openInventory(gui);
     }

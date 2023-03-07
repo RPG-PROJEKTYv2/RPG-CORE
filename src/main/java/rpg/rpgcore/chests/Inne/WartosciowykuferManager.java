@@ -25,11 +25,9 @@ public class WartosciowykuferManager {
         this.wartosciowykufer.add(new Items("7", 8.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
         // ksiega magii
         this.wartosciowykufer.add(new Items("10", 6.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
-        // zmianki miecz
+        // zmianki miecz i set
         this.wartosciowykufer.add(new Items("13", 7.0, GlobalItem.getItem("I50",1),1));
         this.wartosciowykufer.add(new Items("14", 7.0, GlobalItem.getItem("I51",1),1));
-        // zmiaki set
-        // SOON...
         // wywar z kory
         this.wartosciowykufer.add(new Items("15", 6.0, LesnikItems.getByItem("POTION", 1), 1));
         // hellcase
@@ -40,7 +38,7 @@ public class WartosciowykuferManager {
     public Items getDrawnItems(final Player player) {
         for (Items item : this.wartosciowykufer ) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                player.sendMessage(Utils.format("&2+ &fx" + item.getRewardItem().getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }
