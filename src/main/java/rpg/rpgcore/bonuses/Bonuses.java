@@ -67,6 +67,5 @@ public class Bonuses {
                 .append("wampiryzm", this.bonusesUser.getWampiryzm())
                 .append("wzmocnienieKryta", this.bonusesUser.getWzmocnienieKryta())
                 .append("dmgMetiny", this.bonusesUser.getDmgMetiny());
-
     }
 }

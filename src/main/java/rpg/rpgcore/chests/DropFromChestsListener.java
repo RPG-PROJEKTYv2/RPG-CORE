@@ -30,9 +30,10 @@ public class DropFromChestsListener implements Listener {
     public void onRightClick(final PlayerInteractEvent e) {
         final Player player = e.getPlayer();
 
-        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.PHYSICAL) {
             return;
         }
+
 
         if (player.getItemInHand().getType().equals(Material.CHEST) || player.getItemInHand().getType().equals(Material.ENDER_CHEST)) {
 

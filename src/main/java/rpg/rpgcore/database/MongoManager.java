@@ -12,6 +12,9 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.commands.admin.serverwhitelist.objects.SerwerWhiteList;
 import rpg.rpgcore.dodatki.DodatkiUser;
+import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
+import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
+import rpg.rpgcore.dodatki.bony.objects.BonyUser;
 import rpg.rpgcore.guilds.GuildObject;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
@@ -37,6 +40,7 @@ import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.user.WWWUser;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
@@ -340,6 +344,11 @@ public class MongoManager {
                 this.addDataWyszkolenie(user);
                 rpgcore.getWyszkolenieManager().add(user);
             }
+            if (pool.getJSON().find(new Document("_id", uuid.toString())).first() == null) {
+                final WWWUser user = new WWWUser(uuid);
+                this.addDataWWWUser(user);
+                rpgcore.getUserManager().addWWWUser(user);
+            }
             // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
             // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
             // TEZ BARDZO WAZEN I NIE ZAPOMNIEC O TYM.
@@ -445,6 +454,10 @@ public class MongoManager {
         this.addDataWyszkolenie(wyszkolenieUser);
         rpgcore.getWyszkolenieManager().add(wyszkolenieUser);
 
+        final WWWUser wwwUser = new WWWUser(uuid);
+        this.addDataWWWUser(wwwUser);
+        rpgcore.getUserManager().addWWWUser(wwwUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -473,6 +486,7 @@ public class MongoManager {
             user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(armor));
             user.getInventoriesUser().setEnderchest(Utils.itemStackArrayToBase64(enderchest));
 
+
             if (!user.getRankPlayerUser().getRankType().equals(RankTypePlayer.GRACZ)) {
                 if (user.getRankPlayerUser().getTime() != -1) {
                     if (user.getRankPlayerUser().getTime() <= System.currentTimeMillis()) {
@@ -498,8 +512,57 @@ public class MongoManager {
                 });
             }
 
+            final WWWUser wwwUser = rpgcore.getUserManager().findWWWUser(uuid);
+            wwwUser.setArmorJSON(Utils.itemStackArrayToJSON(armor));
+            wwwUser.setInventoryJSON(Utils.itemStackArrayToJSON(inventory));
+            wwwUser.setEnderchestJSON(Utils.itemStackArrayToJSON(enderchest));
+
+            final DodatkiUser dodatkiUser = rpgcore.getDodatkiManager().find(uuid);
+            final BonyUser bonyUser = dodatkiUser.getBony();
+            final AkcesoriaPodstUser akcesoriaPodstUser = dodatkiUser.getAkcesoriaPodstawowe();
+            final AkcesoriaDodatUser akcesoriaDodatUser = dodatkiUser.getAkcesoriaDodatkowe();
+
+            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+                    bonyUser.getDmg5(),
+                    bonyUser.getDmg10(),
+                    bonyUser.getDmg15(),
+                    bonyUser.getDef5(),
+                    bonyUser.getDef10(),
+                    bonyUser.getDef15(),
+                    bonyUser.getKryt5(),
+                    bonyUser.getKryt10(),
+                    bonyUser.getKryt15(),
+                    bonyUser.getWzmkryt10(),
+                    bonyUser.getBlok20(),
+                    bonyUser.getPrzeszywka20(),
+                    bonyUser.getPredkosc25(),
+                    bonyUser.getPredkosc50(),
+                    bonyUser.getHp10(),
+                    bonyUser.getHp20(),
+                    bonyUser.getHp35(),
+                    bonyUser.getDmgMetiny()
+            )));
+
+            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+                    akcesoriaPodstUser.getTarcza(),
+                    akcesoriaPodstUser.getNaszyjnik(),
+                    akcesoriaPodstUser.getKolczyki(),
+                    akcesoriaPodstUser.getPierscien(),
+                    akcesoriaPodstUser.getDiadem()
+            )));
+
+            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+                    akcesoriaDodatUser.getSzarfa(),
+                    akcesoriaDodatUser.getPas(),
+                    akcesoriaDodatUser.getMedalion(),
+                    akcesoriaDodatUser.getEnergia()
+            )));
+
+            wwwUser.setUserPetyJSON(Utils.itemStackArrayToJSON(rpgcore.getPetyManager().findUserPets(uuid).getPety()));
+            wwwUser.setActivePet(Utils.itemStackToJSON(rpgcore.getPetyManager().findActivePet(uuid).getPet().getItem()));
+
             this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
-            this.saveDataDodatki(uuid, rpgcore.getDodatkiManager().find(uuid));
+            this.saveDataDodatki(uuid, dodatkiUser);
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
             this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
             //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
@@ -523,6 +586,7 @@ public class MongoManager {
             this.saveDataTarg(uuid, user.getName());
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
             this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
+            this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1431,6 +1495,34 @@ public class MongoManager {
     public void saveAllWyszkolenie() {
         for (final WyszkolenieUser wyszkolenieUser : rpgcore.getWyszkolenieManager().getWyszkolenieUsers()) {
             this.saveDataWyszkolenie(wyszkolenieUser.getUuid(), wyszkolenieUser);
+        }
+    }
+
+    // WWW USER
+
+    public Map<UUID, WWWUser> loadAllWWWUsers() {
+        Map<UUID, WWWUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getJSON().find()) {
+            final WWWUser wwwUser = new WWWUser(document);
+            userMap.put(wwwUser.getUuid(), wwwUser);
+        }
+        return userMap;
+    }
+
+    public void addDataWWWUser(final WWWUser wwwUser) {
+        if (this.pool.getJSON().find(new Document("_id", wwwUser.getUuid().toString())).first() != null) {
+            this.pool.getJSON().deleteOne(new Document("_id", wwwUser.getUuid().toString()));
+        }
+        this.pool.getJSON().insertOne(wwwUser.toDocument());
+    }
+
+    public void saveDataWWWUser(final UUID uuid, final WWWUser wwwUser) {
+        this.pool.getJSON().findOneAndReplace(new Document("_id", uuid.toString()), wwwUser.toDocument());
+    }
+
+    public void saveAllWWWUsers() {
+        for (final WWWUser wwwUser : rpgcore.getUserManager().getWWWUsers()) {
+            this.saveDataWWWUser(wwwUser.getUuid(), wwwUser);
         }
     }
 

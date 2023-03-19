@@ -2,17 +2,25 @@ package rpg.rpgcore.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
@@ -267,7 +275,7 @@ public class Utils {
     public static ItemStack deserializeItem(String encodedObject) {
         try {
             ByteArrayOutputStream io = new ByteArrayOutputStream();
-            byte[] serializedObject = io.toByteArray();
+            byte[] serializedObject;
             serializedObject = Base64.getDecoder().decode(encodedObject);
             ByteArrayInputStream in = new ByteArrayInputStream(serializedObject);
             BukkitObjectInputStream is = new BukkitObjectInputStream(in);
@@ -276,6 +284,113 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String itemStackArrayToJSON(final ItemStack[] items) {
+        final JSONObject itemsJ = new JSONObject();
+        int i = 1;
+        for (ItemStack item : items) {
+            itemsJ.put("Item-" + i, itemStackToJSON(item));
+            i++;
+        }
+        return itemsJ.toString();
+    }
+
+    public static String itemStackArrayToJSON(final List<ItemStack> items) {
+        final JSONObject itemsJ = new JSONObject();
+        int i = 1;
+        for (ItemStack item : items) {
+            itemsJ.put("Item-" + i, itemStackToJSON(item));
+            i++;
+        }
+        return itemsJ.toString();
+    }
+
+    public static String itemStackToJSON(final ItemStack item) {
+        final JSONObject itemJ = new JSONObject();
+        if (item == null) {
+            itemJ.put("type", "null");
+            return itemJ.toString();
+        }
+        final String itemType = item.getType().toString();
+        itemJ.put("type", itemType);
+        itemJ.put("amount", item.getAmount());
+        itemJ.put("durability", item.getDurability());
+        final JSONObject itemMetaJ = new JSONObject();
+        final ItemMeta itemMeta = item.getItemMeta();
+        if (item.hasItemMeta()) {
+            if (itemMeta.hasDisplayName()) {
+                itemMetaJ.put("displayName", itemMeta.getDisplayName());
+            }
+            if (itemMeta.hasLore()) {
+                final JSONArray loreJ = new JSONArray();
+                itemMeta.getLore().forEach(loreJ::put);
+                itemMetaJ.put("lore", loreJ);
+            }
+            if (!itemMeta.getItemFlags().isEmpty()) {
+                final JSONArray itemFlagsJ = new JSONArray();
+                itemMeta.getItemFlags().forEach(itemFlag -> itemFlagsJ.put(itemFlag.name()));
+                itemMetaJ.put("itemFlags", itemFlagsJ);
+            }
+            if (itemMeta instanceof SkullMeta) {
+                final SkullMeta skullMeta = (SkullMeta) itemMeta;
+                if (skullMeta.hasOwner()) {
+                    GameProfile profile = null;
+                    Field profileField = null;
+
+                    try {
+                        profileField = skullMeta.getClass().getDeclaredField("profile"); // Get the profile field from the SkullMeta object using reflection
+                        profileField.setAccessible(true); // Make the field accessible
+                        profile = (GameProfile) profileField.get(skullMeta); // Get the GameProfile object from the profile field
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (profile != null) {
+                        Property texturesProperty = profile.getProperties().get("textures").iterator().next(); // Get the textures property from the GameProfile object
+
+                        if (texturesProperty != null) {
+                            String texture = texturesProperty.getValue(); // Get the texture field from the textures property
+                            String signature = texturesProperty.getSignature(); // Get the signature field from the textures property
+
+                            itemMetaJ.put("skullTexture", texture);
+                            itemMetaJ.put("skullSignature", signature);
+                        }
+                    }
+                }
+            }
+
+            final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+            if (nmsStack.hasTag()) {
+                final NBTTagCompound tag = nmsStack.getTag();
+                final JSONObject tagJ = new JSONObject();
+                for (String key : tag.c()) {
+                    final NBTBase value = tag.get(key);
+                    tagJ.put(key, value);
+                }
+                itemMetaJ.put("tags", tagJ);
+            }
+        } else {
+            itemMetaJ.put("meta", "null");
+        }
+        itemJ.put("meta", itemMetaJ);
+
+
+        return itemJ.toString();
+    }
+
+    public static ItemStack[] deserializeStringsToItemStackArray(final String... args) {
+        final ItemStack[] items = new ItemStack[args.length];
+        int i = 0;
+        for (String s : args) {
+            if (s.isEmpty()) {
+                items[i] = new ItemStack(Material.AIR);
+            } else {
+                items[i] = deserializeItem(s);
+            }
+            i++;
+        }
+        return items;
     }
 
     public static void youAreMuted(final Player player, final String adminNick, final String reason, final String expiry) {

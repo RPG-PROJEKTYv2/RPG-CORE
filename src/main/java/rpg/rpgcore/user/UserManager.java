@@ -8,9 +8,11 @@ import java.util.UUID;
 
 public class UserManager {
     private final Map<UUID, User> usersUUIDMap;
+    private final Map<UUID, WWWUser> wwwUserMap;
 
     public UserManager(final RPGCORE rpgcore) {
         this.usersUUIDMap = rpgcore.getMongoManager().loadAllUsers();
+        this.wwwUserMap = rpgcore.getMongoManager().loadAllWWWUsers();
     }
 
     public boolean isUser(final UUID uniqueId) {
@@ -47,6 +49,18 @@ public class UserManager {
 
     public void remove(final User user) {
         usersUUIDMap.remove(user.getId());
+    }
+
+    public void addWWWUser(final WWWUser user) {
+        wwwUserMap.put(user.getUuid(), user);
+    }
+
+    public WWWUser findWWWUser(final UUID uuid) {
+        return wwwUserMap.get(uuid);
+    }
+
+    public ImmutableSet<WWWUser> getWWWUsers() {
+        return ImmutableSet.copyOf(wwwUserMap.values());
     }
 
     public ImmutableSet<User> getUserObjects() {

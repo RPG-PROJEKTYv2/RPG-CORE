@@ -136,5 +136,10 @@
             <version>4.9.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220924</version>
+        </dependency>
     </dependencies>
 </project>

@@ -21,13 +21,10 @@ public class BookInteractListener implements Listener {
     public void onInteract(final PlayerInteractEvent e) {
         final ItemStack eventItem = e.getItem();
 
-        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            return;
-        }
+        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
 
-        if (eventItem == null) {
-            return;
-        }
+        if (eventItem == null) return;
+
         if (eventItem.getType() == Material.BOOK_AND_QUILL && eventItem.getItemMeta().hasDisplayName()) {
             e.setCancelled(true);
             e.getPlayer().closeInventory();

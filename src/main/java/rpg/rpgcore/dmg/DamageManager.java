@@ -11,7 +11,11 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
+import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
+import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
+import rpg.rpgcore.dodatki.bony.objects.BonyUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
@@ -73,6 +77,8 @@ public class DamageManager {
         double wzmKryt = 0;
         double wzmKrytDmg = 150;
 
+        double drugiMnoznik = 100;
+
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
             dmg += Utils.getTagInt(weapon, "dmg");
@@ -113,6 +119,36 @@ public class DamageManager {
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
         wzmKrytDmg += bonuses.getWzmocnienieKryta();
 
+
+        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
+            if (!bao.getBonus1().equals("Silny Na Potwory")) {
+                drugiMnoznik += bao.getValue1();
+                mnoznik -= bao.getValue1();
+            }
+        }
+
+        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
+        if (!bony.getDmg5().isEmpty()) {
+            mnoznik -= 5;
+            drugiMnoznik += 5;
+        }
+        if (!bony.getDmg10().isEmpty()) {
+            mnoznik -= 10;
+            drugiMnoznik += 10;
+        }
+        if (!bony.getDmg15().isEmpty()) {
+            mnoznik -= 15;
+            drugiMnoznik += 15;
+        }
+
+        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
+        double dmgEnergia = 100;
+        if (!akcesoriaDodat.getEnergia().isEmpty()) {
+            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+            mnoznik += dmgEnergia;
+        }
+
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
@@ -120,13 +156,13 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
 
-        dmg = dmg * (mnoznik / 100);
+        dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
         krytyk /= 4;
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + ( 1.5 * (wzmKrytDmg / 100)));
+            dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + ( 1.5 * (wzmKrytDmg / 100)));
+                dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
             }
         }
 
@@ -150,6 +186,8 @@ public class DamageManager {
         double krytyk = 0;
         double wzmKryt = 0;
         double wzmKrytDmg = 150;
+
+        double drugiMnoznik = 100;
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
@@ -179,13 +217,42 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
-        dmg = dmg * (mnoznik / 100);
+        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
+            if (!bao.getBonus1().equals("Silny Na Ludzi")) {
+                drugiMnoznik += bao.getValue1();
+                mnoznik -= bao.getValue1();
+            }
+        }
+
+        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
+        if (!bony.getDmg5().isEmpty()) {
+            mnoznik -= 5;
+            drugiMnoznik += 5;
+        }
+        if (!bony.getDmg10().isEmpty()) {
+            mnoznik -= 10;
+            drugiMnoznik += 10;
+        }
+        if (!bony.getDmg15().isEmpty()) {
+            mnoznik -= 15;
+            drugiMnoznik += 15;
+        }
+
+        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
+        double dmgEnergia = 100;
+        if (!akcesoriaDodat.getEnergia().isEmpty()) {
+            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+            mnoznik += dmgEnergia;
+        }
+
+        dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
         krytyk /= 4;
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + ( 1.5 * (wzmKrytDmg / 100)));
+            dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + ( 1.5 * (wzmKrytDmg / 100)));
+                dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
             }
         }
 
@@ -205,6 +272,8 @@ public class DamageManager {
         double def = 10;
         double mnoznik = 100;
 
+        double drugiMnoznik = 100;
+
         mnoznik += bonuses.getSredniadefensywa();
         mnoznik += bonuses.getDefnaludzi();
         mnoznik -= bonuses.getMinusdefnaludzi();
@@ -215,6 +284,39 @@ public class DamageManager {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
             mnoznik += rpgcore.getGuildManager().getGuildDefNaLudzi(tag);
             mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
+        }
+
+        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
+            drugiMnoznik += bao.getValue2();
+            mnoznik -= bao.getValue2();
+        }
+
+        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
+        if (!bony.getDef5().isEmpty()) {
+            mnoznik -= 5;
+            drugiMnoznik += 5;
+        }
+        if (!bony.getDef10().isEmpty()) {
+            mnoznik -= 10;
+            drugiMnoznik += 10;
+        }
+        if (!bony.getDef15().isEmpty()) {
+            mnoznik -= 15;
+            drugiMnoznik += 15;
+        }
+
+        final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
+        if (!akcesoriaPodst.getTarcza().isEmpty()) {
+            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+            mnoznik -= defTarcza;
+            drugiMnoznik += defTarcza;
+        }
+        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
+        double energia = 100;
+        if (!akcesoriaDodat.getEnergia().isEmpty()) {
+            energia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "def");
+            mnoznik -= energia;
         }
 
         if (player.getInventory().getHelmet() != null) {
@@ -230,7 +332,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = def * (mnoznik / 100);
+        def = def * (mnoznik / 100) * (drugiMnoznik / 100) * (energia / 100);
 
         return DoubleUtils.round(def / (def + 100), 3);
     }
@@ -249,11 +351,11 @@ public class DamageManager {
 
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
     }
+
     public double calculatePrzebicie(final Player attacker) {
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
         double przebicie = bonuses.getPrzebiciePancerza();
-
 
 
         return DoubleUtils.round(przebicie, 2);
@@ -279,7 +381,6 @@ public class DamageManager {
     public double calculatePlayerThornsDmg(final Player victim, final Entity attacker) {
         if (attacker instanceof Creature || attacker instanceof Monster) {
             final UUID uuid = victim.getUniqueId();
-            final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
             double thornsDmg = 0;
             double mnoznik = 100;
 
@@ -313,6 +414,7 @@ public class DamageManager {
 
             return DoubleUtils.round(mnoznik, 2);
         }
+        //TODO Do dokonczenia
         if (attacker instanceof Player) {
             final UUID uuid = victim.getUniqueId();
             final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
@@ -355,6 +457,7 @@ public class DamageManager {
         double protMnoznik;
         final double mnoznikBaza = 0.1;
         final double mobDamage = EntityDamage.getByName(Utils.removeColor(entity.getName()));
+        double drugiMnoznik = 100;
 
         mnoznikProcenty += bonuses.getSredniadefensywa();
         mnoznikProcenty += bonuses.getDefnamoby();
@@ -365,6 +468,35 @@ public class DamageManager {
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
             mnoznikProcenty += rpgcore.getGuildManager().getGuildSredniDef(tag);
+        }
+
+        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
+            if (!bao.getBonus2().equals("Srednia defensywa przeciwko ludziom")) {
+                drugiMnoznik += bao.getValue2();
+                mnoznikProcenty -= bao.getValue2();
+            }
+        }
+
+        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
+        if (!bony.getDef5().isEmpty()) {
+            mnoznikProcenty -= 5;
+            drugiMnoznik += 5;
+        }
+        if (!bony.getDef10().isEmpty()) {
+            mnoznikProcenty -= 10;
+            drugiMnoznik += 10;
+        }
+        if (!bony.getDef15().isEmpty()) {
+            mnoznikProcenty -= 15;
+            drugiMnoznik += 15;
+        }
+
+        final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
+        if (!akcesoriaPodst.getTarcza().isEmpty()) {
+            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+            mnoznikProcenty -= defTarcza;
+            drugiMnoznik += defTarcza;
         }
 
         if (victim.getInventory().getHelmet() != null) {
@@ -382,9 +514,9 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / (((1 + (mnoznikProcenty /100)) * (protMnoznik + mnoznikBaza)));
+        double finalDmg = mobDamage / ((mnoznikProcenty / 100) * (protMnoznik + mnoznikBaza) * (drugiMnoznik / 100));
 
-        finalDmg = finalDmg / (1+ (mnoznikProcenty / 100));
+        finalDmg = finalDmg / (mnoznikProcenty / 100);
 
         return DoubleUtils.round(finalDmg / 2, 3);
     }
