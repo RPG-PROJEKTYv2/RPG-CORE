@@ -371,7 +371,7 @@ public class Utils {
                 itemMetaJ.put("tags", tagJ);
             }
         } else {
-            itemMetaJ.put("meta", "null");
+            itemMetaJ.put("meta", new JSONObject().put("displayName", item.getType().name()));
         }
         itemJ.put("meta", itemMetaJ);
 
