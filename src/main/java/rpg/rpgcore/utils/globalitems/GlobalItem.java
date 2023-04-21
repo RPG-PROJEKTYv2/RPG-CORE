@@ -5,7 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import rpg.rpgcore.managers.miecze.SwordType;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
@@ -77,6 +79,8 @@ public enum GlobalItem {
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
             "i otrzymasz &c0.5❤"
     )).addGlowing().toItemStack().clone()),
+    // SAKWA?
+    SAKWA("SAKWA", new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&8✦&eSakiewka&8✦").toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 
@@ -127,6 +131,29 @@ public enum GlobalItem {
         itemMeta.setDisplayName(itemMeta.getDisplayName().replace("value", String.valueOf(value)));
         itemStack.setItemMeta(itemMeta);
         return new ItemBuilder(itemStack.clone()).addTagInt("value", value).toItemStack();
+    }
+
+    public static ItemStack getPercentSword(final SwordType swordType, final int percent) {
+        ItemBuilder is;
+        if (swordType == SwordType.KS) {
+            is = new ItemBuilder(ItemHelper.createSword("&cKS", Material.IRON_SWORD, 35, 15, false));
+            is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&9Silny Na Ludzi: &e+" + percent + "%",
+                    "&9Silny Na Potwory: &e-" + (percent * 2) + "%",
+                    "&cWymagany Poziom: &665"
+            )).addTagInt("ludzie", percent).addTagString("type", "ks").addTagInt("lvl", 65);
+            return is.toItemStack().clone();
+        } else {
+            is = new ItemBuilder(ItemHelper.createSword("&cTYRA", Material.IRON_SWORD, 35, 15, false));
+            is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&9Silny Na Potwory: &e+" + percent + "%",
+                    "&9Silny Na Ludzi: &e-" + (percent * 2) + "%",
+                    "&cWymagany Poziom: &665"
+            )).addTagInt("moby", percent).addTagString("type", "tyra").addTagInt("lvl", 65);
+            return is.toItemStack().clone();
+        }
     }
 
     public String getName() {

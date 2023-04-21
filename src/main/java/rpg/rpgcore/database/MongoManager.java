@@ -561,6 +561,14 @@ public class MongoManager {
             wwwUser.setUserPetyJSON(Utils.itemStackArrayToJSON(rpgcore.getPetyManager().findUserPets(uuid).getPety()));
             wwwUser.setActivePet(Utils.itemStackToJSON(rpgcore.getPetyManager().findActivePet(uuid).getPet().getItem()));
 
+            final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(uuid);
+            wwwUser.setMagazyn1JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn1())));
+            wwwUser.setMagazyn2JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn2())));
+            wwwUser.setMagazyn3JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn3())));
+            wwwUser.setMagazyn4JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn4())));
+            wwwUser.setMagazyn5JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn5())));
+
+
             this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
             this.saveDataDodatki(uuid, dodatkiUser);
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
@@ -573,7 +581,7 @@ public class MongoManager {
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
-            this.saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid));
+            this.saveDataMagazynier(uuid, magazynierUser);
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));

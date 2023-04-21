@@ -2,13 +2,11 @@ package rpg.rpgcore.discord;
 
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import rpg.rpgcore.utils.Utils;
 
 import javax.security.auth.login.LoginException;
-import java.awt.*;
 import java.util.List;
 
 public class DiscordBot {
@@ -17,6 +15,7 @@ public class DiscordBot {
     public DiscordBot(final String token) throws LoginException {
         this.jda = JDABuilder.createDefault(token).setActivity(Activity.watching("Serwer HellRPG.PL")).setStatus(OnlineStatus.ONLINE).enableIntents(GatewayIntent.GUILD_MEMBERS, new GatewayIntent[0]).build();
         System.out.println("[HellRPGCore] Pomyslnie zalogowanoo jako: " + jda.getSelfUser().getName());
+        this.jda.addEventListener(new KickMessageListener());
     }
 
     public void sendChannelMessage(final String channelName, final EmbedBuilder embed) {

@@ -18,6 +18,7 @@ public class WWWUser {
     private String bonyJSON;
     private String userPetyJSON;
     private String activePet;
+    private String magazyn1JSON, magazyn2JSON, magazyn3JSON, magazyn4JSON, magazyn5JSON;
 
     public WWWUser(final UUID uuid) {
         this.uuid = uuid;
@@ -29,6 +30,11 @@ public class WWWUser {
         this.bonyJSON = "";
         this.userPetyJSON = "";
         this.activePet = "";
+        this.magazyn1JSON = "";
+        this.magazyn2JSON = "";
+        this.magazyn3JSON = "";
+        this.magazyn4JSON = "";
+        this.magazyn5JSON = "";
     }
 
     public WWWUser(final Document document) {
@@ -41,6 +47,11 @@ public class WWWUser {
         this.bonyJSON = document.getString("bonyJSON");
         this.userPetyJSON = document.getString("userPetyJSON");
         this.activePet = document.getString("activePet");
+        this.magazyn1JSON = document.get("magazyny", Document.class).getString("magazyn1JSON");
+        this.magazyn2JSON = document.get("magazyny", Document.class).getString("magazyn2JSON");
+        this.magazyn3JSON = document.get("magazyny", Document.class).getString("magazyn3JSON");
+        this.magazyn4JSON = document.get("magazyny", Document.class).getString("magazyn4JSON");
+        this.magazyn5JSON = document.get("magazyny", Document.class).getString("magazyn5JSON");
     }
 
     public Document toDocument() {
@@ -52,6 +63,13 @@ public class WWWUser {
                 .append("akcesoriaDodatkoweJSON", this.akcesoriaDodatkoweJSON)
                 .append("bonyJSON", this.bonyJSON)
                 .append("userPetyJSON", this.userPetyJSON)
-                .append("activePet", this.activePet);
+                .append("activePet", this.activePet)
+                .append("magazyny", new Document("_id", "magazyny")
+                        .append("magazyn1JSON", this.magazyn1JSON)
+                        .append("magazyn2JSON", this.magazyn2JSON)
+                        .append("magazyn3JSON", this.magazyn3JSON)
+                        .append("magazyn4JSON", this.magazyn4JSON)
+                        .append("magazyn5JSON", this.magazyn5JSON)
+                );
     }
 }

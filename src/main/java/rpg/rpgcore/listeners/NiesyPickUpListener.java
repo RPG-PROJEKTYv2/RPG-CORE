@@ -12,10 +12,10 @@ import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.niesy.*;
 
-public class PlayerItemPickUpListener implements Listener {
+public class NiesyPickUpListener implements Listener {
     private final RPGCORE rpgcore;
 
-    public PlayerItemPickUpListener(RPGCORE rpgcore) {
+    public NiesyPickUpListener(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 

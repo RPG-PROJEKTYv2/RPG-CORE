@@ -115,6 +115,7 @@ import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
 import rpg.rpgcore.managers.disabled.DisabledManager;
+import rpg.rpgcore.managers.miecze.MieczePickupListener;
 import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
@@ -563,7 +564,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerItemPickUpListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new NiesyPickUpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
@@ -755,6 +756,9 @@ public final class RPGCORE extends JavaPlugin {
 
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyEntityDamageByEntityListener(), this);
+
+        // MIECZE
+        this.getServer().getPluginManager().registerEvents(new MieczePickupListener(this), this);
 
     }
 

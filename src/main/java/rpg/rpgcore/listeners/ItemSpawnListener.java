@@ -5,6 +5,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.user.User;
 
 public class ItemSpawnListener implements Listener {
 
@@ -18,5 +20,10 @@ public class ItemSpawnListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onItemDrop(final PlayerDropItemEvent e) {
         e.setCancelled(true);
+        final User user = RPGCORE.getInstance().getUserManager().find(e.getPlayer().getUniqueId());
+        if (user == null) return;
+        if (user.getRankUser().isHighStaff()) {
+            e.setCancelled(false);
+        }
     }
 }
