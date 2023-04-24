@@ -11,9 +11,13 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.utils.Utils;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -69,6 +73,13 @@ public class MSGManager {
 
         sender.spigot().sendMessage(senderPrefixComponent);
         target.spigot().sendMessage(targetPrefixComponent);
+
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+            RPGCORE.getDiscordBot().sendChannelMessage("msg-logs", EmbedUtil.create("**Prywatna Wiadomość**",
+                    "**Od:** " + sender.getName() + "\n" +
+                    "**Do:** " + target.getName() + "\n" +
+                            "**Wiadomość:** " + Utils.removeColor(message), Color.decode("#fab216")));
+        });
     }
 
 

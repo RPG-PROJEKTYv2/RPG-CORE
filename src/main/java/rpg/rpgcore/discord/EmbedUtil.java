@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.trade.objects.Trade;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;
@@ -49,8 +50,8 @@ public class EmbedUtil {
                 .setDescription(
                         "**Łączna wartość sprzedanych przedmiotów: **" + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" +
                                 "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
-                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n"
-                                + sb)
+                                "**Ping Serwerowy: ** 1m - " + DoubleUtils.round(tps[0], 2) + "tps, 5m - " + DoubleUtils.round(tps[1], 2) +
+                                "tps, 15m - " + DoubleUtils.round(tps[2], 2) + "tps\n" + sb)
                 .setTimestamp(Instant.now())
                 .setFooter("© 2022 HELLRPG.PL");
     }
@@ -78,8 +79,8 @@ public class EmbedUtil {
                 .setTitle("**Gracz " + player.getName() + " anulował sprzedaz " + itemMap.entries().stream().mapToInt(entry -> entry.getKey().getAmount()).sum() + " przedmiotow**", null)
                 .setDescription("**Łączna wartość przedmiotów: **" + itemMap.values().stream().mapToDouble(Double::doubleValue).sum() + "\n" +
                                 "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
-                                "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
-                        sb)
+                                "**Ping Serwerowy: ** 1m - " + DoubleUtils.round(tps[0], 2) + "tps, 5m - " + DoubleUtils.round(tps[1], 2) +
+                                "tps, 15m - " + DoubleUtils.round(tps[2], 2) + "tps\n" + sb)
                 .setTimestamp(Instant.now())
                 .setFooter("© 2022 HELLRPG.PL");
     }
@@ -91,7 +92,8 @@ public class EmbedUtil {
         sb.append("**Wymiana pomiedzy:** `").append(trade.getPlayer1().getName()).append(" i ").append(trade.getPlayer2().getName()).append("`\n");
         sb.append("**Ping Gracza** `").append(trade.getPlayer1().getName()).append("`**:**").append(((CraftPlayer) trade.getPlayer1()).getHandle().ping).append(" ms\n");
         sb.append("**Ping Gracza** `").append(trade.getPlayer2().getName()).append("`**:**").append(((CraftPlayer) trade.getPlayer2()).getHandle().ping).append(" ms\n");
-        sb.append("**Ping Serwerowy: ** 1m - ").append(tps[0]).append("tps, 5m - ").append(tps[1]).append("tps, 15m - ").append(tps[2]).append("tps\n");
+        sb.append("**Ping Serwerowy: ** 1m - ").append(DoubleUtils.round(tps[0], 2)).append("tps, 5m - ").append(DoubleUtils.round(tps[1], 2))
+                .append("tps, 15m - ").append(DoubleUtils.round(tps[2], 2)).append("tps\n");
         sb.append("**Status: **").append(trade.isCanceled() ? "Anulowana" : "Zakonczona").append("\n");
         sb.append("**Przedmioty gracza:** `").append(trade.getPlayer1().getName()).append("`\n");
         for (final ItemStack is : trade.getItems(trade.getUuid1())) {
@@ -120,6 +122,33 @@ public class EmbedUtil {
                 .setColor(color)
                 .setTitle("**Wymiana**", null)
                 .setDescription(sb)
+                .setTimestamp(Instant.now())
+                .setFooter("© 2022 HELLRPG.PL");
+    }
+
+    public static EmbedBuilder createKoszLogs(final Player player, final ItemStack[] itemList) {
+        double[] tps = MinecraftServer.getServer().recentTps;
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append("\n**Lista przedmiotow:**\n");
+
+        for (final ItemStack itemStack : itemList) {
+            sb.append("**").append(Utils.removeColor(itemStack.getItemMeta().getDisplayName())).append("**\n");
+            if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+                sb.append("Opis:\n");
+                for (final String lore : itemStack.getItemMeta().getLore()) {
+                    sb.append("- ").append(Utils.removeColor(lore)).append("\n");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return new EmbedBuilder()
+                .setColor(Color.decode("#b30202"))
+                .setTitle("**Gracz " + player.getName() + " wyrzucił do kosza " + itemList.length + " przedmiotow**", null)
+                .setDescription("**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
+                        "**Ping Serwerowy: ** 1m - " + DoubleUtils.round(tps[0], 2) + "tps, 5m - " + DoubleUtils.round(tps[1], 2) + "tps, 15m - " + DoubleUtils.round(tps[2], 2) + "tps\n" +
+                        sb)
                 .setTimestamp(Instant.now())
                 .setFooter("© 2022 HELLRPG.PL");
     }
