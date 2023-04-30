@@ -22,15 +22,11 @@ public class PiekielnaDuszaListener60_70 implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInteract(final PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
-        if (e.getItem() == null) {
-            System.out.println(1);
-            return;
-        }
+        if (e.getItem() == null) return;
+
         if (e.getItem().getType() != Material.FIREBALL || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName()
-                || !Utils.removeColor(e.getItem().getItemMeta().getDisplayName()).equals("Zaczarowana Kula")) {
-            System.out.println(2);
-            return;
-        }
+                || !Utils.removeColor(e.getItem().getItemMeta().getDisplayName()).equals("Zaczarowana Kula")) return;
+
         final Player player = e.getPlayer();
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
 
@@ -53,7 +49,7 @@ public class PiekielnaDuszaListener60_70 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 1 " + cordsToString);
-        player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &aPomyslnie przywolano &c&lPiekielna Dusze!"));
+        player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &aPomyslnie przywolano &c&lPiekielna Dusze!"));
         bossyManager.incrementBoss60_70count();
     }
 

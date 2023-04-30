@@ -287,6 +287,7 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Przeklety Czarnoksieznik")) {
             Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
+            rpgcore.getBossyManager().reset70_80();
             addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
                 addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);

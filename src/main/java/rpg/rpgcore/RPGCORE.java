@@ -21,6 +21,7 @@ import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
 import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
+import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
 import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
@@ -471,6 +472,7 @@ public final class RPGCORE extends JavaPlugin {
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
         IceTowerManager.resetIceTower(ResetType.BYPASS);
+        this.bossyManager.reset70_80();
     }
 
     private void initGlobalCommands() {
@@ -902,6 +904,7 @@ public final class RPGCORE extends JavaPlugin {
     private void initBosses() {
         this.bossyManager = new BossyManager();
         this.getServer().getPluginManager().registerEvents(new PiekielnaDuszaListener60_70(), this);
+        this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
     }
 
     private void fixBuckets() {
