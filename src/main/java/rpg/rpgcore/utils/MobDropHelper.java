@@ -259,6 +259,7 @@ public class MobDropHelper {
         // BOSS
         if (entityName.equals("[BOSS] Piekielna Dusza")) {
             Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lPiekielna Dusza &fzostal zabity przez: &e" + player.getName()));
+            rpgcore.getBossyManager().decrementBoss60_70count();
             addDropPlayer(player, Skrzynki.getItem("I13", 1), 100, true, true, entity);
             if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 7) {
                 addDropPlayer(player, LowcaItems.getItem("60-70", 1), getDropChance(szczescie, 15), true, true, entity);

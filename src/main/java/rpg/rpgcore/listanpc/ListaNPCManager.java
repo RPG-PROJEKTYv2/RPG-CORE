@@ -31,7 +31,6 @@ public class ListaNPCManager {
         for (String s : rpgcore.getConfig().getConfigurationSection("ListaNPC").getKeys(false)) {
             final ConfigurationSection section = rpgcore.getConfig().getConfigurationSection("ListaNPC").getConfigurationSection(s);
             final Material material = Material.getMaterial(section.getConfigurationSection("Item").getString("Material").toUpperCase(Locale.ROOT));
-            System.out.println(material);
             final ItemStack guiItem = (section.getConfigurationSection("Item").getInt("Short") == 0 ? new ItemStack(material, 1) : new ItemStack(material, 1, (short) section.getConfigurationSection("Item").getInt("Short")));
 
             toLoad.put(i, new NpcObject(s, new Location(

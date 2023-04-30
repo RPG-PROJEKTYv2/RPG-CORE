@@ -3,6 +3,7 @@ package rpg.rpgcore;
 import net.minecraft.server.v1_8_R3.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
@@ -17,7 +18,9 @@ import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
 import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
-import rpg.rpgcore.bossy.BossyEntityDamageByEntityListener;
+import rpg.rpgcore.bossy.BossyManager;
+import rpg.rpgcore.bossy.BossyTargetChangeListener;
+import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
 import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
@@ -107,8 +110,10 @@ import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
 import rpg.rpgcore.guilds.events.GuildsInventoryClick;
 import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
+import rpg.rpgcore.inventory.InvseeInventoryClickListener;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InventoryCommand;
+import rpg.rpgcore.inventory.InvseeManager;
 import rpg.rpgcore.kociolki.KociolkiManager;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
@@ -228,6 +233,8 @@ import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class RPGCORE extends JavaPlugin {
 
@@ -339,6 +346,8 @@ public final class RPGCORE extends JavaPlugin {
     private TradeManager tradeManager;
     private WyszkolenieManager wyszkolenieManager;
     private MedrzecNPC medrzecNPC;
+    private InvseeManager invseeManager;
+    private BossyManager bossyManager;
 
 
 
@@ -367,6 +376,7 @@ public final class RPGCORE extends JavaPlugin {
         this.initGlobalCommands();
         this.initEvents();
         this.initDungeons();
+        this.initBosses();
         //this.initPacketListeners();
 
 
@@ -400,6 +410,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // SKRZYNIE
         this.initChests();
+
 
         this.fixBuckets();
 
@@ -725,6 +736,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // INVSEE
         this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new InvseeInventoryClickListener(), this);
         //this.getServer().getPluginManager().registerEvents(new KeyClickListener(), this);
 
         // PETY
@@ -755,7 +767,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EnderChestInventoryCloseListener(), this);
 
         // BOSSY
-        this.getServer().getPluginManager().registerEvents(new BossyEntityDamageByEntityListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BossyTargetChangeListener(), this);
 
         // MIECZE
         this.getServer().getPluginManager().registerEvents(new MieczePickupListener(this), this);
@@ -809,6 +821,7 @@ public final class RPGCORE extends JavaPlugin {
         this.showcaseItemManager = new ShowcaseItemManager();
         this.disabledManager = new DisabledManager(this);
         this.wyszkolenieManager = new WyszkolenieManager(this);
+        this.invseeManager = new InvseeManager();
     }
 
     private void initNPCS() {
@@ -886,9 +899,14 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ZamekNieskonczonosciInventoryClick(), this);
     }
 
+    private void initBosses() {
+        this.bossyManager = new BossyManager();
+        this.getServer().getPluginManager().registerEvents(new PiekielnaDuszaListener60_70(), this);
+    }
+
     private void fixBuckets() {
         try {
-            Field f = Item.class.getDeclaredField("maxStackSize");
+            final Field f = Item.class.getDeclaredField("maxStackSize");
             f.setAccessible(true);
             f.setInt(Item.REGISTRY.a(326), 16);
             f.setInt(Item.REGISTRY.a(327), 16);
@@ -899,15 +917,19 @@ public final class RPGCORE extends JavaPlugin {
 
 
     private void autoMessage() {
-
         if (getConfig().getBoolean("auto_message")) {
-            int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
-            int time = getConfig().getInt("auto_message_time");
+            final List<String> messages = new ArrayList<>();
+            final int sciezki = getConfig().getConfigurationSection("auto_messages").getKeys(false).size();
+            final ConfigurationSection sec = getConfig().getConfigurationSection("auto_messages");
+            for (int i = 1; i <= sciezki; i++) {
+                messages.add(sec.getString("auto_message_" + i));
+            }
+            final int time = getConfig().getInt("auto_message_time");
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                if (i > sciezki) {
-                    i = 1;
+                if (i > sciezki - 1) {
+                    i = 0;
                 }
-                Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(getConfig().getConfigurationSection("auto_messages").getString("auto_message_" + i)));
+                Bukkit.broadcastMessage(Utils.SERVERNAME + Utils.format(messages.get(i)));
                 i++;
             }, 1L, time);
         } else {
@@ -1117,7 +1139,7 @@ public final class RPGCORE extends JavaPlugin {
         return mrocznaDuszaManager;
     }
     public PrzekletyCzarnoksieznikManager getPrzekletyCzarnoksieznikManager() {
-        return  przekletyCzarnoksieznikManager;
+        return przekletyCzarnoksieznikManager;
     }
     // exp9
     public MitycznyPajakManager getMitycznyPajakManager() {
@@ -1139,111 +1161,91 @@ public final class RPGCORE extends JavaPlugin {
     public StarozytnySmoczyCesarzManager getStarozytnySmoczyCesarzManager() {
         return starozytnySmoczyCesarzManager;
     }
-
-
-
     public GornikNPC getGornikNPC() {
         return gornikNPC;
     }
-
     public PrzyrodnikNPC getPrzyrodnikNPC() {
         return przyrodnikNPC;
     }
-
     public ListaNPCManager getListaNPCManager() {
         return listaNPCManager;
     }
-
     public BaoManager getBaoManager() {
         return baoManager;
     }
-
     public UserManager getUserManager() {
         return userManager;
     }
-
     public BonusesManager getBonusesManager() {
         return bonusesManager;
     }
     public PartyManager getPartyManager() {
         return partyManager;
     }
-
     public LowcaNPC getLowcaNPC() {
         return lowcaNPC;
     }
-
     public LesnikNPC getLesnikNPC() {
         return lesnikNPC;
     }
-
     public PetyManager getPetyManager() {
         return petyManager;
     }
-
     public ZwierzakiManager getZwierzakiManager() {
         return zwierzakiManager;
     }
-
     public OreManager getOreManager() {
         return oreManager;
     }
-
     public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
         return zamekNieskonczonosciManager;
     }
-
     public DungeonsManager getDungeonsManager() {
         return dungeonsManager;
     }
-
     public ZmiankiManager getZmiankiManager() {
         return zmiankiManager;
     }
-
     public WyslannikNPC getWyslannikNPC() {
         return wyslannikNPC;
     }
-
     public IceTowerManager getIceTowerManager() {
         return iceTowerManager;
     }
-
     /*public TestNPC getTestNPC() {
         return testNPC;
     }*/ // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
-
     public KociolkiManager getKociolkiManager() {
         return kociolkiManager;
     }
-
     public TopkiManager getTopkiManager() {
         return topkiManager;
     }
-
     public CraftingiManager getCraftingiManager() {
         return craftingiManager;
     }
     public SerwerWhiteListManager getSerwerWhiteListManager() {
         return serwerWhiteListManager;
     }
-
     public ArtefaktyZaLvlManager getArtefaktyZaLvlManager() {
         return artefaktyZaLvlManager;
     }
-
     public ShowcaseItemManager getShowcaseItemManager() {
         return showcaseItemManager;
     }
-
     public DisabledManager getDisabledManager() {
         return disabledManager;
     }
-
     public WyszkolenieManager getWyszkolenieManager() {
         return wyszkolenieManager;
     }
     public MedrzecNPC getMedrzecNPC() {
         return medrzecNPC;
+    }
+    public InvseeManager getInvseeManager() {
+        return invseeManager;
+    }
+    public BossyManager getBossyManager() {
+        return bossyManager;
     }
 }

@@ -1,15 +1,16 @@
 package rpg.rpgcore.inventory;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
@@ -43,27 +44,44 @@ public class InventoryCommand extends CommandAPI {
         final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&cEkwipunek gracza &6" + target));
         if (Bukkit.getPlayer(target) != null && Bukkit.getPlayer(target).isOnline()) {
             final Player p = Bukkit.getPlayer(target);
-            player.openInventory(p.getInventory());
-            return;
-            /*gui.setContents(p.getInventory().getContents());
-            gui.setItem(36, p.getInventory().getHelmet());
-            gui.setItem(37, p.getInventory().getChestplate());
-            gui.setItem(38, p.getInventory().getLeggings());
-            gui.setItem(39, p.getInventory().getBoots());
+            final ItemStack[] contents = p.getInventory().getContents();
+            final ItemStack[] armor = p.getInventory().getArmorContents();
+            gui.setContents(contents);
+            gui.setItem(36, armor[0]);
+            gui.setItem(37, armor[1]);
+            gui.setItem(38, armor[2]);
+            gui.setItem(39, armor[3]);
+            for (int i = 40 ; i < 45 ; i++) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+            }
+            RPGCORE.getInstance().getInvseeManager().addInventory(p.getUniqueId(), contents);
+            RPGCORE.getInstance().getInvseeManager().addArmor(p.getUniqueId(), armor);
             player.openInventory(gui);
-            return;*/
+            return;
         }
         final User user = RPGCORE.getInstance().getUserManager().find(target);
+        ItemStack[] contents;
         try {
-            gui.setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
+            contents = Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory());
+            gui.setContents(contents);
             final ItemStack[] armor = Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor());
             gui.setItem(36, armor[0]);
             gui.setItem(37, armor[1]);
             gui.setItem(38, armor[2]);
             gui.setItem(39, armor[3]);
+            for (int i = 40 ; i < 45 ; i++) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        RPGCORE.getInstance().getInvseeManager().addInventory(user.getId(), contents);
+        RPGCORE.getInstance().getInvseeManager().addArmor(user.getId(), new ItemStack[] {
+                gui.getItem(36),
+                gui.getItem(37),
+                gui.getItem(38),
+                gui.getItem(39)
+        });
         player.openInventory(gui);
     }
 }

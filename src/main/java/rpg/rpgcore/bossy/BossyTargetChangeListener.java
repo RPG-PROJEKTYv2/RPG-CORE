@@ -11,7 +11,7 @@ import rpg.rpgcore.utils.ChanceHelper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BossyEntityDamageByEntityListener implements Listener {
+public class BossyTargetChangeListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(final EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
