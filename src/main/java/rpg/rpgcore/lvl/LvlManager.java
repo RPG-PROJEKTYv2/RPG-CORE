@@ -12,6 +12,7 @@ import rpg.rpgcore.lvl.enums.Levels;
 import rpg.rpgcore.lvl.enums.mobs.Dungeons;
 import rpg.rpgcore.lvl.enums.mobs.Events;
 import rpg.rpgcore.lvl.enums.mobs.Maps;
+import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -162,6 +163,11 @@ public class LvlManager {
         });
         for (Player p : rpgcore.getServer().getOnlinePlayers()) {
             this.updateLvlBelowName(p, killer.getName(), nextLvlGracza);
+        }
+        final PustelnikUser pustelnikUser = rpgcore.getPustelnikNPC().find(killerUUID);
+        if (pustelnikUser.getMissionId() == 4) {
+            pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
+            rpgcore.getPustelnikNPC().save(pustelnikUser);
         }
         rpgcore.getArtefaktyZaLvlManager().checkArteZaLvl(killer, nextLvlGracza);
     }

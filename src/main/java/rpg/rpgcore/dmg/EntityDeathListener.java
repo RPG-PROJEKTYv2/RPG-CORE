@@ -17,6 +17,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.dungeons.icetower.IceTowerManager;
 import rpg.rpgcore.dungeons.icetower.ResetType;
+import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
@@ -69,6 +71,16 @@ public class EntityDeathListener implements Listener {
         if (RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().getSelectedMission() == 11) {
             RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId()).getMissions().getProgress() + 1);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(killer.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId())));
+        }
+
+        final User victimUser = rpgcore.getUserManager().find(victim.getUniqueId());
+        final User killerUser = rpgcore.getUserManager().find(killer.getUniqueId());
+        final PustelnikUser pustelnikUser = rpgcore.getPustelnikNPC().find(killer.getUniqueId());
+        if (pustelnikUser.getMissionId() == 3) {
+            if (victimUser.getLvl() >= killerUser.getLvl()) {
+                pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
+                rpgcore.getPustelnikNPC().save(pustelnikUser);
+            }
         }
 
         if (rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()).equals("Brak Klanu") || rpgcore.getGuildManager().getGuildTag(victim.getUniqueId()).equals("Brak Klanu")) {

@@ -121,8 +121,8 @@ public class HandlarzNPC {
         gui.setItem(40, addPrice(GlobalItem.getItem("I55", 1), 75));
 
         // TU RESZTA
-        /*gui.setItem(33, null);
-        gui.setItem(34, null);
+        gui.setItem(33, addPrice(ItemShop.IS21.getItems().get(0), 100));
+        /*gui.setItem(34, null);
         gui.setItem(42, null);
         gui.setItem(43, null);*/
 

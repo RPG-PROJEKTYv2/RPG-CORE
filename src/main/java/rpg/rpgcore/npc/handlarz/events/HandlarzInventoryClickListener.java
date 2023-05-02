@@ -184,6 +184,9 @@ public class HandlarzInventoryClickListener implements Listener {
                     return;
                 case 40:
                     player.getInventory().addItem(GlobalItem.getItem("I55", 1));
+                case 33:
+                    player.getInventory().addItem(ItemShop.IS21.getItems().get(0));
+                    return;
             }
             return;
         }

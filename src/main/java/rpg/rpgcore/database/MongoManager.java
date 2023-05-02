@@ -31,6 +31,7 @@ import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
+import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
@@ -357,6 +358,11 @@ public class MongoManager {
                 this.addDataTest(user);
                 rpgcore.getTestNPC().add(user);
             }*/
+            if (pool.getPustelnik().find(new Document("_id", uuid.toString())).first() == null) {
+                final PustelnikUser user = new PustelnikUser(uuid);
+                this.addDataPustelnik(user);
+                rpgcore.getPustelnikNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -457,6 +463,10 @@ public class MongoManager {
         final WWWUser wwwUser = new WWWUser(uuid);
         this.addDataWWWUser(wwwUser);
         rpgcore.getUserManager().addWWWUser(wwwUser);
+
+        final PustelnikUser pustelnikUser = new PustelnikUser(uuid);
+        this.addDataPustelnik(pustelnikUser);
+        rpgcore.getPustelnikNPC().add(pustelnikUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -595,6 +605,7 @@ public class MongoManager {
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
             this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
             this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
+            this.saveDataPustelnik(uuid, rpgcore.getPustelnikNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1531,6 +1542,34 @@ public class MongoManager {
     public void saveAllWWWUsers() {
         for (final WWWUser wwwUser : rpgcore.getUserManager().getWWWUsers()) {
             this.saveDataWWWUser(wwwUser.getUuid(), wwwUser);
+        }
+    }
+
+    // PUSTELNIK
+
+    public Map<UUID, PustelnikUser> loadAllPustelnik() {
+        Map<UUID, PustelnikUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getPustelnik().find()) {
+            final PustelnikUser pustelnikUser = new PustelnikUser(document);
+            userMap.put(pustelnikUser.getUuid(), pustelnikUser);
+        }
+        return userMap;
+    }
+
+    public void addDataPustelnik(final PustelnikUser pustelnikUser) {
+        if (this.pool.getPustelnik().find(new Document("_id", pustelnikUser.getUuid().toString())).first() != null) {
+            this.pool.getPustelnik().deleteOne(new Document("_id", pustelnikUser.getUuid().toString()));
+        }
+        this.pool.getPustelnik().insertOne(pustelnikUser.toDocument());
+    }
+
+    public void saveDataPustelnik(final UUID uuid, final PustelnikUser pustelnikUser) {
+        this.pool.getPustelnik().findOneAndReplace(new Document("_id", uuid.toString()), pustelnikUser.toDocument());
+    }
+
+    public void saveAllPustelnik() {
+        for (final PustelnikUser pustelnikUser : rpgcore.getPustelnikNPC().getPustelnikUsers()) {
+            this.saveDataPustelnik(pustelnikUser.getUuid(), pustelnikUser);
         }
     }
 

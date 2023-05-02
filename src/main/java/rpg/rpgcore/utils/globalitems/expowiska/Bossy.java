@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.Arrays;
 
@@ -16,6 +15,7 @@ public enum Bossy {
     I2("I2", new ItemBuilder(Material.MAGMA_CREAM).setName("&cPrzeklete Serce").setLore(Arrays.asList(" ","&7Serce to pozwoli ci ozywic krag &3&lCzarnoksieznika&7...")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 80-90
     I3("I3", new ItemBuilder(Material.BOOK).setName("&6Zwoj Swiatlosci").setLore(Arrays.asList(" ","&7Chyba &6Pustelnik &7tego potrzebuje!")).hideFlag().toItemStack().clone()),
+    I3_1("I3_1", new ItemBuilder(Material.SPIDER_EYE).setName("&e&lPrzywolanie").setLore(Arrays.asList(" ", "&7Dzieki temu przedmiotowi przywolasz &e&lMitycznego Pajaka&7!")).addGlowing().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 110-120
     I4("I4", new ItemBuilder(Material.DIAMOND).setName("&bFragment Krysztalu").setLore(Arrays.asList(" ","&7Fragment krysztalu pozwoli ci naladowac jego moc!")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 120-130

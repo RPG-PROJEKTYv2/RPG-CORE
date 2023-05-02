@@ -22,6 +22,15 @@ public class BossyManager {
     @Getter
     private int boss60_70count = 0;
 
+    public void incrementBoss60_70count() {
+        boss60_70count++;
+    }
+
+    public void decrementBoss60_70count() {
+        if (boss60_70count <= 0) return;
+        boss60_70count--;
+    }
+
     // 70-80
     @Getter
     @Setter
@@ -55,19 +64,6 @@ public class BossyManager {
     ).toItemStack().clone();
 
 
-
-    // 60-70
-    public void incrementBoss60_70count() {
-        boss60_70count++;
-    }
-
-    public void decrementBoss60_70count() {
-        if (boss60_70count <= 0) return;
-        boss60_70count--;
-    }
-
-
-    // 70-80
     public boolean isLocationPlace70_80(final Location location) {
         return placeLocations70_80.contains(location);
     }
@@ -231,4 +227,7 @@ public class BossyManager {
         taskMap70_80.clear();
         setStage70_80(Stage70_80.NOT_SPAWNED);
     }
+
+
+    // 80-90
 }

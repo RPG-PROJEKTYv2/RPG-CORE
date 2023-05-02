@@ -211,6 +211,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getMedrzecNPC().openMedrzecGUI(player);
                 return;
             }
+            // MEDRZEC
+            if (entityName.equalsIgnoreCase("Pustelnik")) {
+                rpgcore.getPustelnikNPC().click(player);
+                return;
+            }
             //  ...ZAGINIONY WLADCA
             if (entityName.equalsIgnoreCase("Zaginiony Wladca")) {
                 if (rpgcore.getZamekNieskonczonosciManager().status == DungeonStatus.STARTED) {

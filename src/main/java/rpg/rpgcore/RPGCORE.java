@@ -20,6 +20,7 @@ import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
+import rpg.rpgcore.bossy.events.MitycznyPajakListener80_90;
 import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
 import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
@@ -152,6 +153,8 @@ import rpg.rpgcore.npc.medrzec.events.MedrzecInventoryClickListener;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
+import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
+import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
@@ -349,6 +352,7 @@ public final class RPGCORE extends JavaPlugin {
     private MedrzecNPC medrzecNPC;
     private InvseeManager invseeManager;
     private BossyManager bossyManager;
+    private PustelnikNPC pustelnikNPC;
 
 
 
@@ -727,6 +731,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MedrzecInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new MedrzecInteractListener(this), this);
 
+        // ...PUSTELNIK
+        this.getServer().getPluginManager().registerEvents(new PustelnikInventoryClickListener(this), this);
+
         // DUNGEONS
 
         // ...ICE TOWER
@@ -842,6 +849,7 @@ public final class RPGCORE extends JavaPlugin {
         this.medrzecNPC = new MedrzecNPC(this);
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
         this.getMetinologNPC().loadMissions();
+        this.pustelnikNPC = new PustelnikNPC(this);
     }
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
@@ -905,6 +913,7 @@ public final class RPGCORE extends JavaPlugin {
         this.bossyManager = new BossyManager();
         this.getServer().getPluginManager().registerEvents(new PiekielnaDuszaListener60_70(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
     }
 
     private void fixBuckets() {
@@ -1250,5 +1259,8 @@ public final class RPGCORE extends JavaPlugin {
     }
     public BossyManager getBossyManager() {
         return bossyManager;
+    }
+    public PustelnikNPC getPustelnikNPC() {
+        return pustelnikNPC;
     }
 }

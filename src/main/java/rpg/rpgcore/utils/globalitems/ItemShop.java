@@ -87,7 +87,10 @@ public enum ItemShop {
             "&8Tajemnicza skora, zdarta z pradawnego smoka",
             "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
             "&8jej dzialania zostana zwrocone przeciwko tobie"
-    )).addTagInt("range", 25).addGlowing().toItemStack().clone()));
+    )).addTagInt("range", 25).addGlowing().toItemStack().clone())),
+    IS21("DAR_KLEOPATRY", Arrays.asList(new ItemBuilder(Material.INK_SACK, 1, (short) 11).setName("&e&lDar Kleopatry").setLore(Arrays.asList(
+            "&fPrzedmiot ten pozwoli Ci zresetowac misje u &e&lPustelnika"
+    )).addGlowing().toItemStack().clone()));
 
 
     private final String name;

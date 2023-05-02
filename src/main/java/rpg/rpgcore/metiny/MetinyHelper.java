@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
@@ -245,6 +246,11 @@ public class MetinyHelper {
             }
             if (metinolog.getMetinologUser().getPostepKill() == 9) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
+            }
+            final PustelnikUser pustelnikUser = RPGCORE.getInstance().getPustelnikNPC().find(player.getUniqueId());
+            if (pustelnikUser.getMissionId() == 5) {
+                pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
+                RPGCORE.getInstance().getPustelnikNPC().save(pustelnikUser);
             }
         }
         if (id >= 91 && id <= 100) {

@@ -31,17 +31,17 @@ public class PiekielnaDuszaListener60_70 implements Listener {
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
 
         if (!player.getWorld().getName().equals("60-70map")) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz tego uzyc w tej lokacji!"));
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cNie mozesz tego uzyc w tej lokacji!"));
             return;
         }
 
         if (user.getLvl() < 60) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPosiadasz zbyt niski poziom, zeby wykonacz ta czynnosc!"));
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cPosiadasz zbyt niski poziom, zeby wykonacz ta czynnosc!"));
             return;
         }
 
         if (bossyManager.getBoss60_70count() == 2) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cW tym momencie nie mozesz przywolac wiecej &c&lPiekielnych Dusz! &7(Limit: 2)"));
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &c&lPiekielnych Dusz! &7(Limit: 2)"));
             return;
         }
 
