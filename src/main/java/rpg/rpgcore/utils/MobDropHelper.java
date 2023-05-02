@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.dungeons.icetower.IceTowerManager;
 import rpg.rpgcore.npc.przyrodnik.Missions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
@@ -382,6 +383,11 @@ public class MobDropHelper {
             case "Podziemna Lowczyni Lvl. 98":
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_MROCZNYMATERIAL", 1), getDropChance(szczescie, 1.35), true, true, entity);
+                if (ChanceHelper.getChance(getDropChance(szczescie, 0.0015))) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,366.5,80,235.5");
+                    Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &dpojawil sie w swojej komnacie!"));
+                    Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &dZostal przywolany przez &5" + player.getName() + "&d!"));
+                }
                 if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 9) {
                     addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("90-100")).getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
                 }
@@ -410,6 +416,11 @@ public class MobDropHelper {
             case "Podwodny Straznik Lvl. 109":
                 addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_SZAFIROWESERCE", 1), getDropChance(szczescie, 2.0), true, true, entity);
+                final BossyUser bossyUser = RPGCORE.getInstance().getBossyManager().getBossyUser();
+                bossyUser.incrementMobsCount100_110();
+                if (bossyUser.getMobsCount100_110() == 10_000) {
+                    rpgcore.getBossyManager().spawn100_110Boss();
+                }
                 if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 10) {
                     addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("100-110")).getItemStack(), getDropChance(szczescie, 0.10), true, true, entity);
                 }

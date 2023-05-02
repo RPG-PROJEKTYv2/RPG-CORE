@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.enums.Stage70_80;
+import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
@@ -18,6 +19,16 @@ import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
 import java.util.*;
 
 public class BossyManager {
+    @Getter
+    private BossyUser bossyUser;
+    public BossyManager() {
+        bossyUser = RPGCORE.getInstance().getMongoManager().loadAllBossy();
+    }
+
+    public void set(final BossyUser user) {
+        this.bossyUser = user;
+    }
+
     // 60-70
     @Getter
     private int boss60_70count = 0;
@@ -229,5 +240,11 @@ public class BossyManager {
     }
 
 
-    // 80-90
+    // 100-110
+    public void spawn100_110Boss() {
+        Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &3przyplywa z glebin i czeka na swoja ofiare!"));
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 100-110-BOSS 1 100-110map,73.5,79,199.5");
+        this.bossyUser.resetMobsCount100_110();
+        this.bossyUser.save();
+    }
 }

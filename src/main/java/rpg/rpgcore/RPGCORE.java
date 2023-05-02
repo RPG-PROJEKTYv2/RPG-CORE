@@ -472,6 +472,8 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveArtefaktyZaLvl(this.artefaktyZaLvlManager.getArtefaktyZaLvl());
         this.mongo.saveAllDisabled();
         this.mongo.saveAllWyszkolenie();
+        this.mongo.saveAllPustelnik();
+        this.mongo.saveDataBossy();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();

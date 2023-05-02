@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.commands.admin.serverwhitelist.objects.SerwerWhiteList;
 import rpg.rpgcore.dodatki.DodatkiUser;
@@ -212,6 +213,12 @@ public class MongoManager {
             final Disabled disabled = new Disabled();
             this.addDataDisabled(disabled);
             rpgcore.getDisabledManager().set(disabled);
+        }
+
+        if (pool.getOther().find(new Document("_id", "bossy")).first() == null) {
+            final BossyUser bossy = new BossyUser();
+            this.addDataBossy(bossy);
+            rpgcore.getBossyManager().set(bossy);
         }
 
         for (Document obj : pool.getGracze().find()) {
@@ -1573,7 +1580,27 @@ public class MongoManager {
         }
     }
 
+    // BOSSY
+    public BossyUser loadAllBossy() {
+        final Document document = this.pool.getOther().find(new Document("_id", "bossy")).first();
+        if (document == null) {
+            final BossyUser bossyUser = new BossyUser();
+            this.addDataBossy(bossyUser);
+            return bossyUser;
+        }
+        return new BossyUser(document);
+    }
 
+    public void addDataBossy(final BossyUser bossyUser) {
+        if (this.pool.getOther().find(new Document("_id", "bossy")).first() != null) {
+            this.pool.getOther().deleteOne(new Document("_id", "bossy"));
+        }
+        this.pool.getOther().insertOne(bossyUser.toDocument());
+    }
+
+    public void saveDataBossy() {
+        this.pool.getOther().findOneAndReplace(new Document("_id", "bossy"), rpgcore.getBossyManager().getBossyUser().toDocument());
+    }
 
     public void onDisable() {
         pool.closePool();

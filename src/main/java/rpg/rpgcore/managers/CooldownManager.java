@@ -23,6 +23,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> egzekutorCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> pelerynkaCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> odlamkiCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -181,5 +182,13 @@ public class CooldownManager {
 
     public boolean hasPelerynkaCooldown(final UUID uuid) {
         return this.pelerynkaCooldown.asMap().containsKey(uuid);
+    }
+
+    public void givePlayerOdlamkiCooldown(final UUID uuid) {
+        this.pvpCooldown.put(uuid, System.currentTimeMillis() + 300L);
+    }
+
+    public boolean hasOdlamkiCooldown(final UUID uuid) {
+        return this.pvpCooldown.asMap().containsKey(uuid);
     }
 }
