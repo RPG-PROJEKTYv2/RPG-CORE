@@ -477,6 +477,8 @@ public class MobDropHelper {
             case "Straznik Nieba Lvl. 126":
             case "Straznik Nieba Lvl. 129":
                 addDropPlayer(player, NiesyItems.N13.getItemStack(), niesDropChance50plus, true, false, entity);
+                addDropPlayer(player, Bossy.I5.getItemStack(), getDropChance(szczescie, 0.01), true, false, entity);
+                addDropPlayer(player, Bossy.I5_1.getItemStack(), getDropChance(szczescie, 0.0012), true, false, entity);
                 if (rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission() == 12) {
                     addDropPlayer(player, Objects.requireNonNull(PrzyrodnikItems.getByName("120-130")).getItemStack(), getDropChance(szczescie, 0.04), true, true, entity);
                 }

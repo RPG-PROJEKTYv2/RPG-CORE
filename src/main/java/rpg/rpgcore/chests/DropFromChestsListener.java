@@ -47,16 +47,23 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
-                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
-                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
                         final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        player.getInventory().addItem(is);
+                        // TODO ZAMIENIC MIEJSACMI W POZOSTALYCH SKRZYNKACH I DODAC PONIZSZA LINJJKE
+                        if (player.getInventory().addItem(is).size() > 0) {
+                            player.getInventory().addItem(GlobalItem.getItem("I1", 1));
+                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
+                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
+                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
+                            return;
+                        }
+                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
+                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }

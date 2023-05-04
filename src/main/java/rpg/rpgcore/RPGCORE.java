@@ -23,6 +23,7 @@ import rpg.rpgcore.bossy.BossyTargetChangeListener;
 import rpg.rpgcore.bossy.events.MitycznyPajakListener80_90;
 import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
 import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
+import rpg.rpgcore.bossy.events.SmoczyCesarzListener;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
 import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
@@ -151,6 +152,8 @@ import rpg.rpgcore.npc.medrzec.MedrzecNPC;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInteractListener;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInventoryClickListener;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
+import rpg.rpgcore.npc.mistrz_yang.MistrzYangNPC;
+import rpg.rpgcore.npc.mistrz_yang.events.MistrzYangInventoryClickListener;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
@@ -353,6 +356,7 @@ public final class RPGCORE extends JavaPlugin {
     private InvseeManager invseeManager;
     private BossyManager bossyManager;
     private PustelnikNPC pustelnikNPC;
+    private MistrzYangNPC mistrzYangNPC;
 
 
 
@@ -474,11 +478,14 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllWyszkolenie();
         this.mongo.saveAllPustelnik();
         this.mongo.saveDataBossy();
+        this.mongo.saveAllMistrzYang();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
         IceTowerManager.resetIceTower(ResetType.BYPASS);
         this.bossyManager.reset70_80();
+        this.bossyManager.despawnKlejnot(null, 1);
+        this.bossyManager.despawnKlejnot(null, 2);
     }
 
     private void initGlobalCommands() {
@@ -736,6 +743,9 @@ public final class RPGCORE extends JavaPlugin {
         // ...PUSTELNIK
         this.getServer().getPluginManager().registerEvents(new PustelnikInventoryClickListener(this), this);
 
+        // ...MISTRZ YANG
+        this.getServer().getPluginManager().registerEvents(new MistrzYangInventoryClickListener(), this);
+
         // DUNGEONS
 
         // ...ICE TOWER
@@ -852,6 +862,7 @@ public final class RPGCORE extends JavaPlugin {
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
         this.getMetinologNPC().loadMissions();
         this.pustelnikNPC = new PustelnikNPC(this);
+        this.mistrzYangNPC = new MistrzYangNPC(this);
     }
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
@@ -916,6 +927,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PiekielnaDuszaListener60_70(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
+        this.getServer().getPluginManager().registerEvents(new SmoczyCesarzListener(), this);
     }
 
     private void fixBuckets() {
@@ -1264,5 +1276,8 @@ public final class RPGCORE extends JavaPlugin {
     }
     public PustelnikNPC getPustelnikNPC() {
         return pustelnikNPC;
+    }
+    public MistrzYangNPC getMistrzYangNPC() {
+        return mistrzYangNPC;
     }
 }

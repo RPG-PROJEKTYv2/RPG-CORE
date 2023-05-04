@@ -211,9 +211,14 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getMedrzecNPC().openMedrzecGUI(player);
                 return;
             }
-            // MEDRZEC
+            // PUSTELNIK
             if (entityName.equalsIgnoreCase("Pustelnik")) {
                 rpgcore.getPustelnikNPC().click(player);
+                return;
+            }
+            // MISTRZ YANG
+            if (entityName.equalsIgnoreCase("Mistrz Yang")) {
+                rpgcore.getMistrzYangNPC().click(player);
                 return;
             }
             //  ...ZAGINIONY WLADCA

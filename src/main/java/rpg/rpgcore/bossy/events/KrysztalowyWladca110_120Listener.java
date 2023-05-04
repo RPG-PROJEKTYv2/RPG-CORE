@@ -33,9 +33,7 @@ public class KrysztalowyWladca110_120Listener implements Listener {
 
         final Player player = e.getPlayer();
         final Location loc = e.getClickedBlock().getLocation();
-        e.setCancelled(true);
-        e.setUseItemInHand(Event.Result.DENY);
-        if (player.getItemInHand().getType().equals(Material.MAGMA_CREAM)) {
+        if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.MAGMA_CREAM)) {
             final User user = rpgcore.getUserManager().find(player.getUniqueId());
             if (user.getRankUser().isHighStaff()) {
                 if (this.bossyUser.isRdzen110_120Location(e.getClickedBlock().getLocation())) {
@@ -51,7 +49,7 @@ public class KrysztalowyWladca110_120Listener implements Listener {
             return;
         }
 
-        if (player.getItemInHand().getType().equals(Material.FIREBALL)) {
+        if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.FIREBALL)) {
             final User user = rpgcore.getUserManager().find(player.getUniqueId());
             if (user.getRankUser().isHighStaff()) {
                 if (!this.bossyUser.isRdzen110_120Location(e.getClickedBlock().getLocation())) {
@@ -70,6 +68,8 @@ public class KrysztalowyWladca110_120Listener implements Listener {
         if (!this.bossyUser.isRdzen110_120Location(loc)) return;
         if (!player.getInventory().containsAtLeast(Bossy.I4.getItemStack(), 1)) return;
         if (rpgcore.getCooldownManager().hasOdlamkiCooldown(player.getUniqueId())) return;
+        e.setCancelled(true);
+        e.setUseItemInHand(Event.Result.DENY);
         player.getInventory().removeItem(new ItemBuilder(Bossy.I4.getItemStack().clone()).setAmount(1).toItemStack());
         this.bossyUser.incrementOdlamki110_120();
         player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &bPomyslnie zaladowano Fragment Krysztalu! &3(" + this.bossyUser.getOdlamki110_120() + "/250)"));

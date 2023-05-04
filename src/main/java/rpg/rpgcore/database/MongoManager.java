@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.commands.admin.serverwhitelist.objects.SerwerWhiteList;
@@ -370,6 +371,11 @@ public class MongoManager {
                 this.addDataPustelnik(user);
                 rpgcore.getPustelnikNPC().add(user);
             }
+            if (pool.getMistrzYang().find(new Document("_id", uuid.toString())).first() == null) {
+                final MistrzYangUser user = new MistrzYangUser(uuid);
+                this.addMistrzYang(user);
+                rpgcore.getMistrzYangNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -474,6 +480,10 @@ public class MongoManager {
         final PustelnikUser pustelnikUser = new PustelnikUser(uuid);
         this.addDataPustelnik(pustelnikUser);
         rpgcore.getPustelnikNPC().add(pustelnikUser);
+
+        final MistrzYangUser mistrzYangUser = new MistrzYangUser(uuid);
+        this.addMistrzYang(mistrzYangUser);
+        rpgcore.getMistrzYangNPC().add(mistrzYangUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -613,6 +623,7 @@ public class MongoManager {
             this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
             this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
             this.saveDataPustelnik(uuid, rpgcore.getPustelnikNPC().find(uuid));
+            this.saveDataMistrzYang(uuid, rpgcore.getMistrzYangNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1601,6 +1612,35 @@ public class MongoManager {
     public void saveDataBossy() {
         this.pool.getOther().findOneAndReplace(new Document("_id", "bossy"), rpgcore.getBossyManager().getBossyUser().toDocument());
     }
+
+    // BOSSY 120-130
+    public Map<UUID, MistrzYangUser> loadAllMistrzYang() {
+        Map<UUID, MistrzYangUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getMistrzYang().find()) {
+            final MistrzYangUser mistrzYangUser = new MistrzYangUser(document);
+            userMap.put(mistrzYangUser.getUuid(), mistrzYangUser);
+        }
+        return userMap;
+    }
+
+    public void addMistrzYang(final MistrzYangUser mistrzYangUser) {
+        if (this.pool.getMistrzYang().find(new Document("_id", mistrzYangUser.getUuid().toString())).first() != null) {
+            this.pool.getMistrzYang().deleteOne(new Document("_id", mistrzYangUser.getUuid().toString()));
+        }
+        this.pool.getMistrzYang().insertOne(mistrzYangUser.toDocument());
+    }
+
+    public void saveDataMistrzYang(final UUID uuid, final MistrzYangUser mistrzYangUser) {
+        this.pool.getMistrzYang().findOneAndReplace(new Document("_id", uuid.toString()), mistrzYangUser.toDocument());
+    }
+
+    public void saveAllMistrzYang() {
+        for (final MistrzYangUser mistrzYangUser : rpgcore.getMistrzYangNPC().getMistrzYangUsers()) {
+            this.saveDataMistrzYang(mistrzYangUser.getUuid(), mistrzYangUser);
+        }
+    }
+
+
 
     public void onDisable() {
         pool.closePool();

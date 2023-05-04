@@ -46,7 +46,6 @@ public class PustelnikNPC {
 
         if (!player.getInventory().containsAtLeast(Bossy.I3.getItemStack(), 1)) {
             player.sendMessage(Utils.format("&e&lPustelnik &8>> &fPrzynies mi moj &6Zwoj &f... wtedy pogadamy"));
-            player.getInventory().addItem(Bossy.I3.getItemStack().clone());
             return;
         }
 

@@ -24,6 +24,8 @@ public class CooldownManager {
     private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> pelerynkaCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> odlamkiCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> klejnoty120_130Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -185,10 +187,26 @@ public class CooldownManager {
     }
 
     public void givePlayerOdlamkiCooldown(final UUID uuid) {
-        this.pvpCooldown.put(uuid, System.currentTimeMillis() + 300L);
+        this.odlamkiCooldown.put(uuid, System.currentTimeMillis() + 300L);
     }
 
     public boolean hasOdlamkiCooldown(final UUID uuid) {
-        return this.pvpCooldown.asMap().containsKey(uuid);
+        return this.odlamkiCooldown.asMap().containsKey(uuid);
+    }
+
+    public void givePlayerKlejnoty120_130Cooldown(final UUID uuid) {
+        this.klejnoty120_130Cooldown.put(uuid, System.currentTimeMillis() + 3000L);
+    }
+
+    public boolean hasKlejnoty120_130Cooldown(final UUID uuid) {
+        return this.klejnoty120_130Cooldown.asMap().containsKey(uuid);
+    }
+
+    public void givePlayerSerce70_80Cooldown(final UUID uuid) {
+        this.serce70_80Cooldown.put(uuid, System.currentTimeMillis() + 3000L);
+    }
+
+    public boolean hasSerce70_80Cooldown(final UUID uuid) {
+        return this.serce70_80Cooldown.asMap().containsKey(uuid);
     }
 }

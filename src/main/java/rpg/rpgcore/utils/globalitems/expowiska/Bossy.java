@@ -19,7 +19,9 @@ public enum Bossy {
     // ITEM DO RESPU BOSSA 110-120
     I4("I4", new ItemBuilder(Material.DIAMOND).setName("&bFragment Krysztalu").setLore(Arrays.asList(" ","&7Fragment krysztalu pozwoli ci naladowac jego moc!")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 120-130
-    I5("I5", new ItemBuilder(Material.BOOK_AND_QUILL).setName("&5Smoczy Papirus").setLore(Arrays.asList(" ","&5Papirus &7ten pozwoli ci wylosowac zadania aby przywolac smoka...")).hideFlag().toItemStack().clone());
+    I5("I5", new ItemBuilder(Material.BOOK_AND_QUILL).setName("&5Smoczy Papirus").setLore(Arrays.asList(" ","&5Papirus &7ten pozwoli ci wylosowac zadanie aby przywolac smoka...")).hideFlag().toItemStack().clone()),
+    I5_1("I5_1", new ItemBuilder(Material.DOUBLE_PLANT).setName("&aSmoczy Klejnot").setLore(Arrays.asList(" ","&7Potrzebny do przywolania smoka...")).hideFlag().toItemStack().clone()),
+    I5_2("I5_2", new ItemBuilder(Material.HOPPER).setName("&6Rog Naszych Przodkow").setLore(Arrays.asList("&7W polaczeniu z &aKlejnotami &7umozliwia przywolanie smoka")).hideFlag().toItemStack().clone());
     private final ItemStack itemStack;
     private final String name;
 

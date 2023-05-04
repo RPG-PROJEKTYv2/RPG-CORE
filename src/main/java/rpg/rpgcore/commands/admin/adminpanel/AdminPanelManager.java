@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -110,16 +109,19 @@ public class AdminPanelManager {
         gui.setItem(18, Bossy.getItem("I1", 1));
         gui.setItem(19, Bossy.getItem("I2", 1));
         gui.setItem(20, Bossy.getItem("I3", 1));
-        gui.setItem(21, Bossy.getItem("I4", 1));
-        gui.setItem(22, Bossy.getItem("I5", 1));
+        gui.setItem(21, Bossy.getItem("I3_1", 1));
+        gui.setItem(22, Bossy.getItem("I4", 1));
+        gui.setItem(23, Bossy.getItem("I5", 1));
+        gui.setItem(24, Bossy.getItem("I5_1", 1));
+        gui.setItem(25, Bossy.getItem("I5_2", 1));
 
-        gui.setItem(23, Przepustki.getItem("I1", 1));
-        gui.setItem(24, Przepustki.getItem("I2", 1));
-        gui.setItem(25, Przepustki.getItem("I3", 1));
-        gui.setItem(26, Przepustki.getItem("I4", 1));
+        gui.setItem(26, Przepustki.getItem("I1", 1));
+        gui.setItem(27, Przepustki.getItem("I2", 1));
+        gui.setItem(28, Przepustki.getItem("I3", 1));
+        gui.setItem(29, Przepustki.getItem("I4", 1));
 
-        gui.setItem(28, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(29, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+        gui.setItem(30, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
+        gui.setItem(31, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
 
 
         gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
@@ -245,6 +247,7 @@ public class AdminPanelManager {
         gui.setItem(1, ItemShop.getByName("Vip_7d").getItems().get(0));
         gui.setItem(2, ItemShop.getByName("Vip_14d").getItems().get(0));
 
+        gui.setItem(6, ItemShop.getByName("DAR_KLEOPATRY").getItems().get(0));
         gui.setItem(7, ItemShop.getByName("PELERYNKA").getItems().get(0));
         gui.setItem(8, ItemShop.getByName("PELERYNKA+").getItems().get(0));
 

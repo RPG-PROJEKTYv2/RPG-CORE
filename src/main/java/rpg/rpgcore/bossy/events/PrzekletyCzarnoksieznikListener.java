@@ -46,6 +46,11 @@ public class PrzekletyCzarnoksieznikListener implements Listener {
 
         final Player player = e.getPlayer();
 
+        if (RPGCORE.getInstance().getCooldownManager().hasSerce70_80Cooldown(player.getUniqueId())) {
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cMusisz jeszcze chwile odczekac..."));
+            return;
+        }
+
         final ItemStack item = e.getItem();
         if (item == null || item.getType() != Material.MAGMA_CREAM || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Przeklete Serce")) return;
         if (!bossyManager.canBeSpawned70_80()) {
@@ -62,6 +67,7 @@ public class PrzekletyCzarnoksieznikListener implements Listener {
         final ArmorStand as = bossyManager.spawnArmorStandOnPlace70_80(blockLoc);
         bossyManager.addLocation70_80(player.getUniqueId(), as);
         bossyManager.incrementStage70_80();
+        RPGCORE.getInstance().getCooldownManager().givePlayerSerce70_80Cooldown(player.getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -69,16 +75,23 @@ public class PrzekletyCzarnoksieznikListener implements Listener {
         if (!(e.getRightClicked() instanceof ArmorStand)) return;
         final ArmorStand as = (ArmorStand) e.getRightClicked();
         if (!as.getWorld().getName().equals("70-80map")) return;
-        e.setCancelled(true);
 
         if (!bossyManager.isArmorStand70_80(as.getEntityId())) return;
+        e.setCancelled(true);
         final Player player = e.getPlayer();
         if (bossyManager.getStage70_80() == Stage70_80.SPAWNING || bossyManager.getStage70_80() == Stage70_80.SPAWNED) return;
+        if (RPGCORE.getInstance().getCooldownManager().hasSerce70_80Cooldown(player.getUniqueId())) {
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cMusisz jeszcze chwile odczekac..."));
+            return;
+        }
         final UUID uuidFromLoc = bossyManager.getLocation70_80Map().get(as);
         if (uuidFromLoc == null || !uuidFromLoc.equals(player.getUniqueId())) {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cTo serce nie nalezy do Ciebie!"));
             return;
         }
-        if (uuidFromLoc.equals(player.getUniqueId())) bossyManager.returnSingle70_80(player, as);
+        if (uuidFromLoc.equals(player.getUniqueId())) {
+            bossyManager.returnSingle70_80(player, as);
+            RPGCORE.getInstance().getCooldownManager().givePlayerSerce70_80Cooldown(player.getUniqueId());
+        }
     }
 }

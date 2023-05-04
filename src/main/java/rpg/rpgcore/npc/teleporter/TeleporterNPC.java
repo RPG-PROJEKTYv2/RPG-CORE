@@ -347,6 +347,6 @@ public class TeleporterNPC {
     }
 
     public void teleportExp13(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("120-130map"), 1, 86, -14, -0.0F, 8.9F));
+        player.teleport(new Location(Bukkit.getWorld("120-130map"), 0.5, 82, -5.5, -0.0F, 8.9F));
     }
 }

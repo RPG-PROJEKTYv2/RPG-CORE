@@ -2,10 +2,7 @@ package rpg.rpgcore.bossy;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -178,13 +175,13 @@ public class BossyManager {
         as.setCustomName(item.getItemMeta().getDisplayName());
         as.setCustomNameVisible(true);
         armorStands70_80Map.put(location, as);
-        final int i = RPGCORE.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(RPGCORE.getInstance(), () -> {
+        final int i = RPGCORE.getInstance().getServer().getScheduler().scheduleAsyncRepeatingTask(RPGCORE.getInstance(), () -> {
             final Location loc = as.getLocation().clone();
             loc.setYaw(loc.getYaw() + 10);
             double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0)*8) / 20;
             loc.add(0, delta, 0);
             as.teleport(loc);
-        }, 0L, 2L);
+        }, 0L, 1L);
         taskMap70_80.put(as, i);
         return as;
     }
@@ -246,5 +243,248 @@ public class BossyManager {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 100-110-BOSS 1 100-110map,73.5,79,199.5");
         this.bossyUser.resetMobsCount100_110();
         this.bossyUser.save();
+    }
+
+    // 120-130
+    private final World w = Bukkit.getWorld("120-130map");
+    private final List<Location> klejnot120_130_1Locations = Arrays.asList(
+            new Location(w, 61, 83, 21),
+            new Location(w, 61, 83, 22),
+            new Location(w, 61, 83, 23),
+
+            new Location(w, 61, 84, 20),
+            new Location(w, 61, 84, 21),
+            new Location(w, 61, 84, 22),
+            new Location(w, 61, 84, 23),
+            new Location(w, 61, 84, 24),
+
+            new Location(w, 61, 85, 19),
+            new Location(w, 61, 85, 20),
+            new Location(w, 61, 85, 21),
+            new Location(w, 61, 85, 22),
+            new Location(w, 61, 85, 23),
+            new Location(w, 61, 85, 24),
+            new Location(w, 61, 85, 25),
+
+            new Location(w, 61, 86, 20),
+            new Location(w, 61, 86, 21),
+            new Location(w, 61, 86, 22),
+            new Location(w, 61, 86, 23),
+            new Location(w, 61, 86, 24),
+
+            new Location(w, 61, 87, 21),
+            new Location(w, 61, 87, 22),
+            new Location(w, 61, 87, 23)
+    );
+    private final List<Location> klejnot120_130_2Locations = Arrays.asList(
+            new Location(w, -63, 83, 21),
+            new Location(w, -63, 83, 20),
+            new Location(w, -63, 83, 19),
+
+            new Location(w, -63, 84, 22),
+            new Location(w, -63, 84, 21),
+            new Location(w, -63, 84, 20),
+            new Location(w, -63, 84, 19),
+            new Location(w, -63, 84, 18),
+
+            new Location(w, -63, 85, 23),
+            new Location(w, -63, 85, 22),
+            new Location(w, -63, 85, 21),
+            new Location(w, -63, 85, 20),
+            new Location(w, -63, 85, 19),
+            new Location(w, -63, 85, 18),
+            new Location(w, -63, 85, 17),
+
+            new Location(w, -63, 86, 22),
+            new Location(w, -63, 86, 21),
+            new Location(w, -63, 86, 20),
+            new Location(w, -63, 86, 19),
+            new Location(w, -63, 86, 18),
+
+            new Location(w, -63, 87, 21),
+            new Location(w, -63, 87, 20),
+            new Location(w, -63, 87, 19)
+    );
+
+    public boolean isKlejnot120_130_1(Location location) {
+        return klejnot120_130_1Locations.contains(location);
+    }
+
+    public boolean isKlejnot120_130_2(Location location) {
+        return klejnot120_130_2Locations.contains(location);
+    }
+
+
+
+    private final List<Location> klejnot120_130_1BlocksE = Arrays.asList(
+            new Location(w, 62, 83, 22),
+
+            new Location(w, 62, 84, 22),
+
+            new Location(w, 62, 85, 20),
+            new Location(w, 62, 85, 21),
+            new Location(w, 62, 85, 23),
+            new Location(w, 62, 85, 24),
+
+            new Location(w, 62, 86, 22),
+
+            new Location(w, 62, 87, 22)
+    );
+    private final List<Location> klejnot120_130_1BlocksG = Arrays.asList(
+            new Location(w, 62, 84, 21),
+            new Location(w, 62, 84, 23),
+
+            new Location(w, 62, 85, 22),
+
+            new Location(w, 62, 86, 21),
+            new Location(w, 62, 86, 23)
+    );
+
+    private final List<Location> klejnot120_130_2BlocksE = Arrays.asList(
+            new Location(w, -64, 83, 20),
+
+            new Location(w, -64, 84, 20),
+
+            new Location(w, -64, 85, 18),
+            new Location(w, -64, 85, 19),
+            new Location(w, -64, 85, 21),
+            new Location(w, -64, 85, 22),
+
+            new Location(w, -64, 86, 20),
+
+            new Location(w, -64, 87, 20)
+    );
+    private final List<Location> klejnot120_130_2BlocksG = Arrays.asList(
+            new Location(w, -64, 84, 19),
+            new Location(w, -64, 84, 21),
+
+            new Location(w, -64, 85, 20),
+
+            new Location(w, -64, 86, 19),
+            new Location(w, -64, 86, 21)
+    );
+    private final List<Location> bossGateLocations120_130 = Arrays.asList(
+            new Location(w, -2, 86, -15),
+            new Location(w, -1, 86, -15),
+            new Location(w, 0, 86, -15),
+            new Location(w, 1, 86, -15),
+            new Location(w, 2, 86, -15),
+
+            new Location(w, -1, 87, -15),
+            new Location(w, 0, 87, -15),
+            new Location(w, 1, 87, -15),
+
+            new Location(w, -1, 88, -15),
+            new Location(w, 0, 88, -15),
+            new Location(w, 1, 88, -15),
+
+            new Location(w, -2, 89, -15),
+            new Location(w, -1, 89, -15),
+            new Location(w, 0, 89, -15),
+            new Location(w, 1, 89, -15),
+            new Location(w, 2, 89, -15)
+
+    );
+    @Getter
+    private int klejnot120_130Count = 0;
+    @Getter
+    private final boolean[] klejnoty120_130 = new boolean[]{false, false};
+    @Getter
+    @Setter
+    private  boolean gate120_130open = false;
+
+    private void incrementKlejnot120_130Count() {
+        klejnot120_130Count++;
+    }
+
+    private void decrementKlejnot120_130Count() {
+        klejnot120_130Count--;
+    }
+
+
+    private void setKlejnot120_130_Active(final int index, final boolean value) {
+        klejnoty120_130[index] = value;
+    }
+
+    public boolean isKlejnoty120_130Spawned() {
+        return klejnoty120_130[0] && klejnoty120_130[1];
+    }
+
+    public void spawnKlejnot(final Player player, final int type) {
+        switch (type) {
+            case 1:
+                for (final Location loc : klejnot120_130_1BlocksE) {
+                    loc.getBlock().setType(Material.EMERALD_BLOCK);
+                }
+                for (final Location loc : klejnot120_130_1BlocksG) {
+                    loc.getBlock().setType(Material.GLOWSTONE);
+                }
+                this.setKlejnot120_130_Active(0, true);
+                break;
+            case 2:
+                for (final Location loc : klejnot120_130_2BlocksE) {
+                    loc.getBlock().setType(Material.EMERALD_BLOCK);
+                }
+                for (final Location loc : klejnot120_130_2BlocksG) {
+                    loc.getBlock().setType(Material.GLOWSTONE);
+                }
+                this.setKlejnot120_130_Active(1, true);
+                break;
+            default:
+                return;
+        }
+
+        this.incrementKlejnot120_130Count();
+        player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &aPomyslnie umiesciles/-as &a&lSmoczy Klejnot&a! &e(" + this.getKlejnot120_130Count() + "/2)"));
+        if (this.getKlejnot120_130Count() == 1) {
+            Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lSmoczy Klejnot &5zostal osadzony! &5&lSmoczy Cesarz &5budzi sie ze snu! &6(" + this.getKlejnot120_130Count() + "/2)"));
+        } else if (this.getKlejnot120_130Count() == 2) {
+            Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lSmoczy Klejnot &5zostal osadzony! &5&lSmoczy Cesarz &5wzbil sie w powietrze! &6(" + this.getKlejnot120_130Count() + "/2)"));
+        }
+    }
+
+    public void despawnKlejnot(final Player player, final int type) {
+        switch (type) {
+            case 1:
+                for (final Location loc : klejnot120_130_1BlocksE) {
+                    loc.getBlock().setType(Material.AIR);
+                }
+                for (final Location loc : klejnot120_130_1BlocksG) {
+                    loc.getBlock().setType(Material.AIR);
+                }
+                this.setKlejnot120_130_Active(0, false);
+                break;
+            case 2:
+                for (final Location loc : klejnot120_130_2BlocksE) {
+                    loc.getBlock().setType(Material.AIR);
+                }
+                for (final Location loc : klejnot120_130_2BlocksG) {
+                    loc.getBlock().setType(Material.AIR);
+                }
+                this.setKlejnot120_130_Active(1, false);
+                break;
+            default:
+                return;
+        }
+        this.decrementKlejnot120_130Count();
+        if (player == null) return;
+        player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cPomyslnie wyjales/-elas &a&lSmoczy Klejnot&c! &e(" + this.getKlejnot120_130Count() + "/2)"));
+    }
+
+    public void open120_130BossGate(final Player player) {
+        this.despawnKlejnot(null, 1);
+        this.despawnKlejnot(null, 2);
+        Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5Gracz &d" + player.getName() + " &5otworzyl brame do Smoczego Cesarza!"));
+        for (final Location loc : bossGateLocations120_130) {
+            loc.getBlock().setType(Material.AIR);
+        }
+        this.setGate120_130open(true);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            for (final Location loc : bossGateLocations120_130) {
+                loc.getBlock().setType(Material.IRON_FENCE);
+            }
+            this.setGate120_130open(false);
+            Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5Brama do Smoczego Cesarza zostala zamknieta!"));
+        }, 20 * 7);
     }
 }
