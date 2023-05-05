@@ -49,18 +49,15 @@ public class TajemniczaManager {
         // wywar
         this.tajemnicza.add(new Items("21", 3.5, LesnikItems.getByItem("POTION", 1), 1));
         // kufer
-        this.tajemnicza.add(new Items("22", 1.0, GlobalItem.getItem("I1", 2), 2));
+        this.tajemnicza.add(new Items("22", 1.0, GlobalItem.getItem("I1", 1), 2));
     }
 
 
     public Items getDrawnItems(final Player player) {
         for (Items item : this.tajemnicza) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                if (item.getRewardItem().getAmount() > 1) {
-                    player.sendMessage(Utils.format("&2+ &fx" + item.getRewardItem().getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
-                } else {
-                    player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                }
+                item.getRewardItem().setAmount(item.getAmount());
+                player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }

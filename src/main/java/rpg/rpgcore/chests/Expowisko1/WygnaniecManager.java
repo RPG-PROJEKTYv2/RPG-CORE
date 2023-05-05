@@ -16,7 +16,7 @@ public class WygnaniecManager {
     private final Set<Items> wygnaniec = Sets.newConcurrentHashSet();
 
     public WygnaniecManager() {
-        this.wygnaniec.add(new Items("1", 10.0, ItemHelper.createArmor("&8&lHelm Wygnanca", Material.LEATHER_HELMET, 4, 0), 1));
+        this.wygnaniec.add(new Items("1", 10.0, ItemHelper.createArmor("&8&lHelm Wygnanca", Material.LEATHER_HELMET, 4, 1), 1));
         this.wygnaniec.add(new Items("2", 10.0, ItemHelper.createArmor("&8&lZbroja Wygnanca", Material.LEATHER_CHESTPLATE, 5, 1), 1));
         this.wygnaniec.add(new Items("3", 10.0, ItemHelper.createArmor("&8&lSpodnie Wygnanca", Material.LEATHER_LEGGINGS, 4, 1), 1));
         this.wygnaniec.add(new Items("4", 10.0, ItemHelper.createArmor("&8&lButy Wygnanca", Material.LEATHER_BOOTS, 3, 1), 1));

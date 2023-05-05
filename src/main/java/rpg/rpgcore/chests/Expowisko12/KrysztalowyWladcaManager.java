@@ -15,10 +15,10 @@ public class KrysztalowyWladcaManager {
     private final Set<Items> krysztalowyboss = Sets.newConcurrentHashSet();
 
     public KrysztalowyWladcaManager() {
-        this.krysztalowyboss.add(new Items("1", 8.0, ItemHelper.createArmor("&b&lHelm Krysztalowego Wladcy", Material.IRON_HELMET, 30, 1), 1));
-        this.krysztalowyboss.add(new Items("2", 8.0, ItemHelper.createArmor("&b&lZbroja Krysztalowego Wladcy", Material.IRON_CHESTPLATE, 30, 1), 1));
-        this.krysztalowyboss.add(new Items("3", 8.0, ItemHelper.createArmor("&b&lSpodnie Krysztalowego Wladcy", Material.IRON_LEGGINGS, 30, 1), 1));
-        this.krysztalowyboss.add(new Items("4", 8.0, ItemHelper.createArmor("&b&lButy Krysztalowego Wladcy", Material.IRON_BOOTS, 30, 1), 1));
+        this.krysztalowyboss.add(new Items("1", 8.0, ItemHelper.createArmor("&b&lHelm Krysztalowego Wladcy", Material.IRON_HELMET, 85, 18), 1));
+        this.krysztalowyboss.add(new Items("2", 8.0, ItemHelper.createArmor("&b&lZbroja Krysztalowego Wladcy", Material.IRON_CHESTPLATE, 85, 18), 1));
+        this.krysztalowyboss.add(new Items("3", 8.0, ItemHelper.createArmor("&b&lSpodnie Krysztalowego Wladcy", Material.IRON_LEGGINGS, 85, 17), 1));
+        this.krysztalowyboss.add(new Items("4", 8.0, ItemHelper.createArmor("&b&lButy Krysztalowego Wladcy", Material.IRON_BOOTS, 82, 18), 1));
         this.krysztalowyboss.add(new Items("5", 6.0, ItemHelper.createSword("&b&lMiecz Krysztalowego Wladcy", Material.IRON_SWORD, 60, 50,false), 1));
         this.krysztalowyboss.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lNaszyjnik Krysztalowego Wladcy").toItemStack(),1 ));
         this.krysztalowyboss.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&b&lDiadem Krysztalowego Wladcy").toItemStack(),1 ));

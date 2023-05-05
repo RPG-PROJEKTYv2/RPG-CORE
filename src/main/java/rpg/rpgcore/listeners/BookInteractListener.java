@@ -25,7 +25,8 @@ public class BookInteractListener implements Listener {
 
         if (eventItem == null) return;
 
-        if (eventItem.getType() == Material.BOOK_AND_QUILL && eventItem.getItemMeta().hasDisplayName()) {
+        if (eventItem.getType() == Material.WRITTEN_BOOK && eventItem.getType() == Material.BOOK_AND_QUILL) {
+            e.getPlayer().sendMessage("tttttt WRITABLE BOOK [NIE DZIALA]");
             e.setCancelled(true);
             e.getPlayer().closeInventory();
         }

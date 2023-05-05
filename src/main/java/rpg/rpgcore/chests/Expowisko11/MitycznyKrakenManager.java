@@ -16,10 +16,10 @@ public class MitycznyKrakenManager {
     private final Set<Items> mitycznykraken = Sets.newConcurrentHashSet();
 
     public MitycznyKrakenManager() {
-        this.mitycznykraken.add(new Items("1", 8.0, ItemHelper.createArmor("&b&lHelm Mitycznego Krakena", Material.IRON_HELMET, 30, 1), 1));
-        this.mitycznykraken.add(new Items("2", 8.0, ItemHelper.createArmor("&b&lZbroja Mitycznego Krakena", Material.IRON_CHESTPLATE, 30, 1), 1));
-        this.mitycznykraken.add(new Items("3", 8.0, ItemHelper.createArmor("&b&lSpodnie Mitycznego Krakena", Material.IRON_LEGGINGS, 30, 1), 1));
-        this.mitycznykraken.add(new Items("4", 8.0, ItemHelper.createArmor("&b&lButy Mitycznego Krakena", Material.IRON_BOOTS, 30, 1), 1));
+        this.mitycznykraken.add(new Items("1", 8.0, ItemHelper.createArmor("&b&lHelm Mitycznego Krakena", Material.IRON_HELMET, 75, 17), 1));
+        this.mitycznykraken.add(new Items("2", 8.0, ItemHelper.createArmor("&b&lZbroja Mitycznego Krakena", Material.IRON_CHESTPLATE, 78, 18), 1));
+        this.mitycznykraken.add(new Items("3", 8.0, ItemHelper.createArmor("&b&lSpodnie Mitycznego Krakena", Material.IRON_LEGGINGS, 78, 17), 1));
+        this.mitycznykraken.add(new Items("4", 8.0, ItemHelper.createArmor("&b&lButy Mitycznego Krakena", Material.IRON_BOOTS, 72, 17), 1));
         this.mitycznykraken.add(new Items("5", 6.0, ItemHelper.createSword("&b&lMiecz Mitycznego Krakena", Material.IRON_SWORD, 50, 40,false), 1));
         this.mitycznykraken.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lNaszyjnik Mitycznego Krakena").toItemStack(),1 ));
         this.mitycznykraken.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&b&lDiadem Mitycznego Krakena").toItemStack(),1 ));

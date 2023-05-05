@@ -16,18 +16,28 @@ public class ClearCommand extends CommandAPI {
         this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }
-
+    // METODY EQ
+    // if (player.getInventory().firstEmpty() == -1) { ===== masz full eq
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
-            if (player.getInventory().getContents().length == 0) {
+            if (player.getInventory().firstEmpty() != -1 ) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz nic w ekwipunku!"));
                 return;
             }
-            player.getInventory().clear();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
+            player.getInventory().clear();
             return;
+
+            /*
+            if (player.getInventory().firstEmpty() == -1) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz nic w ekwipunku!"));
+                return;
+            }
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
+            player.getInventory().clear();
+            return;*/
         }
         if (args.length == 1) {
             final Player target = Bukkit.getPlayer(args[0]);

@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
@@ -33,13 +34,14 @@ public class LesnikInventoryClick implements Listener {
         final UUID uuid = player.getUniqueId();
         final String title = Utils.removeColor(e.getClickedInventory().getTitle());
         final int slot = e.getSlot();
+        final ItemStack item = e.getCurrentItem();
 
-       /* if (e.getClickedInventory().getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Lesnik")
+       if (e.getClickedInventory().getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Lesnik")
                 && item != null && item.equals(LesnikItems.POTION.getItem())) {
             player.getInventory().removeItem(item);
             player.getOpenInventory().getTopInventory().setItem(22, LesnikItems.POTION.getItem());
             return;
-        }*/
+        }
 
         if (title.equalsIgnoreCase("Lesnik")) {
             e.setCancelled(true);

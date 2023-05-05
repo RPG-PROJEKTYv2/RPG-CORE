@@ -68,33 +68,39 @@ public class HandlarzInventoryClickListener implements Listener {
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Gratulacje zakupiles " + e.getCurrentItem().getItemMeta().getDisplayName() + " &7x1."));
                     user.setKasa(user.getKasa() - Przepustki.I1.getCena());
                     player.getInventory().addItem(Przepustki.getItem("I1", 1));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+                    return;
                 } else {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie masz wystarczajacej kwoty na zakup tego przedmiotu."));
+                    return;
                 }
-                return;
             }
             if (slot == 13) {
                 if (user.getKasa() >= Przepustki.I2.getCena()) {
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Gratulacje zakupiles " + e.getCurrentItem().getItemMeta().getDisplayName() + " &7x1."));
                     user.setKasa(user.getKasa() - Przepustki.I2.getCena());
                     player.getInventory().addItem(Przepustki.getItem("I2", 1));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+                    return;
                 } else {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie masz wystarczajacej kwoty na zakup tego przedmiotu."));
+                    return;
                 }
-                return;
             }
             if (slot == 14) {
                 if (user.getKasa() >= Przepustki.I3.getCena()) {
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Gratulacje zakupiles " + e.getCurrentItem().getItemMeta().getDisplayName() + " &7x1."));
                     user.setKasa(user.getKasa() - Przepustki.I3.getCena());
                     player.getInventory().addItem(Przepustki.getItem("I3", 1));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+                    return;
                 } else {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie masz wystarczajacej kwoty na zakup tego przedmiotu."));
+                    return;
                 }
-                return;
             }
 
             if (slot == 22) rpgcore.getHandlarzNPC().openHandlarzGUI(player);

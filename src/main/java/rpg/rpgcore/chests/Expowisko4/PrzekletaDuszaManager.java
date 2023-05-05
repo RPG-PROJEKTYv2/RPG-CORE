@@ -16,8 +16,8 @@ public class PrzekletaDuszaManager {
     private final Set<Items> przekletadusza = Sets.newConcurrentHashSet();
 
     public PrzekletaDuszaManager() {
-        this.przekletadusza.add(new Items("1", 10.0, ItemHelper.createArmor("&7&lHelm Przekletej Duszy", Material.CHAINMAIL_HELMET, 32, 9), 1));
-        this.przekletadusza.add(new Items("2", 10.0, ItemHelper.createArmor("&7&lZbroja Przekletej Duszy", Material.CHAINMAIL_CHESTPLATE, 29, 8), 1));
+        this.przekletadusza.add(new Items("1", 10.0, ItemHelper.createArmor("&7&lHelm Przekletej Duszy", Material.CHAINMAIL_HELMET, 32, 12), 1));
+        this.przekletadusza.add(new Items("2", 10.0, ItemHelper.createArmor("&7&lZbroja Przekletej Duszy", Material.CHAINMAIL_CHESTPLATE, 20, 5), 1));
         this.przekletadusza.add(new Items("3", 10.0, ItemHelper.createArmor("&7&lSpodnie Przekletej Duszy", Material.CHAINMAIL_LEGGINGS, 20, 5), 1));
         this.przekletadusza.add(new Items("4", 10.0, ItemHelper.createArmor("&7&lButy Przekletej Duszy", Material.CHAINMAIL_BOOTS, 20, 5), 1));
         this.przekletadusza.add(new Items("5", 9.0, ItemHelper.createSword("&7&lMiecz Przekletej Duszy", Material.STONE_SWORD, 15, 8,false), 1));

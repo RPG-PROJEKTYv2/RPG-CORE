@@ -16,10 +16,10 @@ public class MitycznyPajakManager {
     private final Set<Items> mitycznypajak = Sets.newConcurrentHashSet();
 
     public MitycznyPajakManager() {
-        this.mitycznypajak.add(new Items("1", 8.0, ItemHelper.createArmor("&e&lHelm Mitycznego Pajaka", Material.IRON_HELMET, 30, 1), 1));
-        this.mitycznypajak.add(new Items("2", 8.0, ItemHelper.createArmor("&e&lZbroja Mitycznego Pajaka", Material.IRON_CHESTPLATE, 30, 1), 1));
-        this.mitycznypajak.add(new Items("3", 8.0, ItemHelper.createArmor("&e&lSpodnie Mitycznego Pajaka", Material.IRON_LEGGINGS, 30, 1), 1));
-        this.mitycznypajak.add(new Items("4", 8.0, ItemHelper.createArmor("&e&lButy Mitycznego Pajaka", Material.IRON_BOOTS, 30, 1), 1));
+        this.mitycznypajak.add(new Items("1", 8.0, ItemHelper.createArmor("&e&lHelm Mitycznego Pajaka", Material.IRON_HELMET, 65, 22), 1));
+        this.mitycznypajak.add(new Items("2", 8.0, ItemHelper.createArmor("&e&lZbroja Mitycznego Pajaka", Material.IRON_CHESTPLATE, 68, 15), 1));
+        this.mitycznypajak.add(new Items("3", 8.0, ItemHelper.createArmor("&e&lSpodnie Mitycznego Pajaka", Material.IRON_LEGGINGS, 66, 15), 1));
+        this.mitycznypajak.add(new Items("4", 8.0, ItemHelper.createArmor("&e&lButy Mitycznego Pajaka", Material.IRON_BOOTS, 60, 14), 1));
         this.mitycznypajak.add(new Items("5", 6.0, ItemHelper.createSword("&e&lMiecz Mitycznego Pajaka", Material.IRON_SWORD, 40, 30,false), 1));
         this.mitycznypajak.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&e&lNaszyjnik Mitycznego Pajaka").toItemStack(),1 ));
         this.mitycznypajak.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&e&lDiadem Mitycznego Pajaka").toItemStack(),1 ));

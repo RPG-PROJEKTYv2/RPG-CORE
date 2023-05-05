@@ -16,10 +16,10 @@ public class PrzekletyRycerzManager {
     private final Set<Items> przekletyrycerz = Sets.newConcurrentHashSet();
 
     public PrzekletyRycerzManager() {
-        this.przekletyrycerz.add(new Items("1", 10.0, ItemHelper.createArmor("&1&lHelm Przekletego Rycerza", Material.IRON_HELMET, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("2", 10.0, ItemHelper.createArmor("&1&lZbroja Przekletego Rycerza", Material.IRON_CHESTPLATE, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("3", 10.0, ItemHelper.createArmor("&1&lSpodnie Przekletego Rycerza", Material.IRON_LEGGINGS, 30, 1), 1));
-        this.przekletyrycerz.add(new Items("4", 10.0, ItemHelper.createArmor("&1&lButy Przekletego Rycerza", Material.IRON_BOOTS, 30, 1), 1));
+        this.przekletyrycerz.add(new Items("1", 10.0, ItemHelper.createArmor("&1&lHelm Przekletego Rycerza", Material.IRON_HELMET, 55, 12), 1));
+        this.przekletyrycerz.add(new Items("2", 10.0, ItemHelper.createArmor("&1&lZbroja Przekletego Rycerza", Material.IRON_CHESTPLATE, 57, 14), 1));
+        this.przekletyrycerz.add(new Items("3", 10.0, ItemHelper.createArmor("&1&lSpodnie Przekletego Rycerza", Material.IRON_LEGGINGS, 60, 20), 1));
+        this.przekletyrycerz.add(new Items("4", 10.0, ItemHelper.createArmor("&1&lButy Przekletego Rycerza", Material.IRON_BOOTS, 55, 13), 1));
         this.przekletyrycerz.add(new Items("5", 9.0, ItemHelper.createSword("&1&lMiecz Przekletego Rycerza", Material.IRON_SWORD, 32, 22,false), 1));
         this.przekletyrycerz.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&1&lNaszyjnik Przekletego Rycerza").toItemStack(),1 ));
         this.przekletyrycerz.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&1&lDiadem Przekletego Rycerza").toItemStack(),1 ));

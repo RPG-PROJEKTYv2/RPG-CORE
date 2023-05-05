@@ -13,7 +13,7 @@ public class RemoveNearbyEntitiesCommand extends CommandAPI {
 
     public RemoveNearbyEntitiesCommand() {
         super("removenearbyentities");
-        this.setRankLevel(RankType.DEV);
+        this.setRankLevel(RankType.HA);
         this.setRestrictedForPlayer(true);
     }
 

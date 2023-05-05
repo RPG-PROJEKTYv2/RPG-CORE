@@ -40,7 +40,7 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
     private final ItemBuilder expowisko12 = new ItemBuilder(Material.SNOW_BALL);
-    private final ItemBuilder expowisko13 = new ItemBuilder(Material.QUARTZ_BLOCK);
+    private final ItemBuilder expowisko13 = new ItemBuilder(Material.HAY_BLOCK);
 
 
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
@@ -224,7 +224,7 @@ public class TeleporterNPC {
         }
         // expowisko 13
         if (user.getLvl() > 119) {
-            expowisko13.setName("&f&lNiebo");
+            expowisko13.setName("&5&lSmoczy Adept");
             this.loreEXPOWISKA("&aON", "&f120");
             expowisko13.addGlowing();
             expowisko13.setLore(lore);
@@ -265,26 +265,26 @@ public class TeleporterNPC {
     public void teleportExp1(final Player player) {
         switch (new Random().nextInt(3)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), 70, 73, 69, -53F, -1F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), -68.492, 72, -296.465, 125.7F, 0.1F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), 85, 73, 234, 176F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), 61.024, 72, -83.305, 59.3F, -1.4F));
                 return;
             case 2:
-                player.teleport(new Location(Bukkit.getWorld("1-10map"), 167, 75, 118, 32F, 1F));
+                player.teleport(new Location(Bukkit.getWorld("1-10map"), -4.201, 72, -168.145, -149.7F, 0.5F));
         }
     }
 
     public void teleportExp2(final Player player) {
         switch (new Random().nextInt(3)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("10-20map"), 149.5, 77, 180.5, 180F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), -25.678, 75, -226.866, -177.6F, 0.1F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("10-20map"), 150.5, 71, 52.5, 110F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), 93.504, 76, -263.091, 43.4F, -0.0F));
                 return;
             case 2:
-                player.teleport(new Location(Bukkit.getWorld("10-20map"), 97.5, 71, 109.5, -180F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("10-20map"), 12.739, 74, -276.367, -40.8F, -0.2F));
         }
     }
 

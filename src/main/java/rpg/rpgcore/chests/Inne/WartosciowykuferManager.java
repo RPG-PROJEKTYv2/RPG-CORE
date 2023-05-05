@@ -17,28 +17,29 @@ public class WartosciowykuferManager {
 
 
     public WartosciowykuferManager() {
-        // metale
-        this.wartosciowykufer.add(new Items("1", 8.0, GlobalItem.getItem("I_METAL", 1), 1));
-        // zwoje
+        // metale, zwoje, oczyszczenia
+        this.wartosciowykufer.add(new Items("1", 2.0, GlobalItem.getItem("I_METAL", 1), 1));
         this.wartosciowykufer.add(new Items("4", 6.0, GlobalItem.getItem("I10", 1), 1));
-        // bao
-        this.wartosciowykufer.add(new Items("7", 8.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
-        // ksiega magii
-        this.wartosciowykufer.add(new Items("10", 6.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
+        this.wartosciowykufer.add(new Items("7", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
+        // bao, ksiega magii
+        this.wartosciowykufer.add(new Items("7", 3.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
+        this.wartosciowykufer.add(new Items("10", 1.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
         // zmianki miecz i set
-        this.wartosciowykufer.add(new Items("13", 7.0, GlobalItem.getItem("I50",1),1));
-        this.wartosciowykufer.add(new Items("14", 7.0, GlobalItem.getItem("I51",1),1));
+        this.wartosciowykufer.add(new Items("13", 2.5, GlobalItem.getItem("I50",1),1));
+        this.wartosciowykufer.add(new Items("14", 2.5, GlobalItem.getItem("I51",1),1));
         // wywar z kory
         this.wartosciowykufer.add(new Items("15", 6.0, LesnikItems.getByItem("POTION", 1), 1));
-        // hellcase
-        this.wartosciowykufer.add(new Items("16", 2.0, GlobalItem.getItem("I6",1), 1));
+        // hellcase i dwa kufry
+        this.wartosciowykufer.add(new Items("16", 1.5, GlobalItem.getItem("I6",1), 1));
+        this.wartosciowykufer.add(new Items("1", 4.0, GlobalItem.getItem("I1", 1), 2));
     }
 
 
     public Items getDrawnItems(final Player player) {
         for (Items item : this.wartosciowykufer ) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &fx" + item.getRewardItem().getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
+                item.getRewardItem().setAmount(item.getAmount());
+                player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }

@@ -15,10 +15,10 @@ public class MrocznaDuszaManager {
     private final Set<Items> mrocznadusza = Sets.newConcurrentHashSet();
 
     public MrocznaDuszaManager() {
-        this.mrocznadusza.add(new Items("1", 8.0, ItemHelper.createArmor("&7Helm Mrocznej Duszy", Material.GOLD_HELMET, 7, 0), 1));
-        this.mrocznadusza.add(new Items("2", 8.0, ItemHelper.createArmor("&7Zbroja Mrocznej Duszy", Material.IRON_CHESTPLATE, 7, 0), 1));
-        this.mrocznadusza.add(new Items("3", 8.0, ItemHelper.createArmor("&7Spodnie Mrocznej Duszy", Material.IRON_LEGGINGS, 7, 0), 1));
-        this.mrocznadusza.add(new Items("4", 8.0, ItemHelper.createArmor("&7Buty Mrocznej Duszy", Material.GOLD_BOOTS, 7, 0), 1));
+        this.mrocznadusza.add(new Items("1", 8.0, ItemHelper.createArmor("&7Helm Mrocznej Duszy", Material.GOLD_HELMET, 35, 6), 1));
+        this.mrocznadusza.add(new Items("2", 8.0, ItemHelper.createArmor("&7Zbroja Mrocznej Duszy", Material.IRON_CHESTPLATE, 35, 7), 1));
+        this.mrocznadusza.add(new Items("3", 8.0, ItemHelper.createArmor("&7Spodnie Mrocznej Duszy", Material.IRON_LEGGINGS, 35, 7), 1));
+        this.mrocznadusza.add(new Items("4", 8.0, ItemHelper.createArmor("&7Buty Mrocznej Duszy", Material.GOLD_BOOTS, 35, 6), 1));
         this.mrocznadusza.add(new Items("5", 6.0, ItemHelper.createSword("&7Miecz Mrocznej Duszy", Material.GOLD_SWORD, 32, 18,false), 1));
     }
 
