@@ -638,11 +638,11 @@ public class MongoManager {
         }
     }
 
-    public Map<Integer, Metiny> loadMetins() {
-        Map<Integer, Metiny> metiny = new ConcurrentHashMap<>();
+    public Map<Location, Metiny> loadMetins() {
+        Map<Location, Metiny> metiny = new ConcurrentHashMap<>();
         for (Document document : pool.getMetiny().find()) {
-            Metiny metiny1 = new Metiny(document);
-            metiny.put(metiny1.getId(), metiny1);
+            final Metiny metiny1 = new Metiny(document);
+            metiny.put(metiny1.getLocation(), metiny1);
         }
         return metiny;
     }

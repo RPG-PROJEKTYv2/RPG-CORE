@@ -134,7 +134,8 @@ public class ProfileCommand extends CommandAPI {
                 "&7Szansa Na Oslepienie: &f" + user.getOslepienie() + "%",
                 "&7Dodatkowy EXP: &f" + user.getDodatkowyExp() + "%",
                 "&7Szansa Na Przebicie Pancerza: &f" + user.getPrzebiciePancerza() + "%",
-                "&7Wampiryzm: &f" + user.getWampiryzm() + "%"
+                "&7Wampiryzm: &f" + user.getWampiryzm() + "%",
+                "&7Dodatkowe Obrazenia W Kamienie Metin: &f" + user.getDmgMetiny()
         )).addGlowing().toItemStack().clone());
 
         gui.setItem(34, new ItemBuilder(Material.GOLDEN_APPLE).setName("&cStatystyki Zdrowia").setLore(Arrays.asList(

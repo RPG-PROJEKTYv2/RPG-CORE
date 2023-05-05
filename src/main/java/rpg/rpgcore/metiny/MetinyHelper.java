@@ -22,23 +22,11 @@ public class MetinyHelper {
         }
         final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
         if (metiny.getMetins().getHealth() == 0 || metiny.getMetins().getHealth() < 0) {
-            final String world = metiny.getMetins().getWorld();
-            final Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
-            final Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
+            final Location location = metiny.getLocation();
 
-            final Entity e = Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL);
-            e.setCustomName(String.valueOf(id));
-            e.setCustomNameVisible(false);
-
-            if (!metiny.getMetins().getWorld().equals("zamekNieskonczonosci")) {
-                final ArmorStand as = (ArmorStand) Bukkit.getServer().getWorld(world).spawnEntity(location.add(0, 0.2, 0), EntityType.ARMOR_STAND);
-                as.setVisible(false);
-                as.setCustomNameVisible(true);
-                as.setCustomName(Utils.format(metiny.getMetins().getName()));
-                as.setGravity(false);
-                RPGCORE.getInstance().getMetinyManager().addAs(id, as);
-            }
-
+            final Entity e = location.getWorld().spawnEntity(location, EntityType.ENDER_CRYSTAL);
+            e.setCustomName(Utils.format(metiny.getMetins().getName()));
+            e.setCustomNameVisible(true);
             metiny.getMetins().setHealth(metiny.getMetins().getMaxhealth());
         }
     }
@@ -51,11 +39,8 @@ public class MetinyHelper {
         if (metiny.getMetins().getHealth() > 0) {
             String world = metiny.getMetins().getWorld();
             for (Entity e : Bukkit.getServer().getWorld(world).getEntities()) {
-                if (e.getCustomName() != null) {
-                    if (e.getCustomName().equals(String.valueOf(id))) {
-                        e.remove();
-                        RPGCORE.getInstance().getMetinyManager().removeAs(id);
-                    }
+                if (e.getLocation().equals(metiny.getLocation())) {
+                    e.remove();
                 }
             }
             metiny.getMetins().setHealth(0);
@@ -67,18 +52,10 @@ public class MetinyHelper {
             return;
         }
         final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
-        final String world = metiny.getMetins().getWorld();
-        final Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
-        final Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
-        Bukkit.getServer().getWorld(world).spawnEntity(location, EntityType.ENDER_CRYSTAL).setCustomName(String.valueOf(id));
-        if (!metiny.getMetins().getWorld().equals("zamekNieskonczonosci")) {
-            final ArmorStand as = (ArmorStand) Bukkit.getServer().getWorld(world).spawnEntity(location.add(0, 0.2, 0), EntityType.ARMOR_STAND);
-            as.setVisible(false);
-            as.setCustomNameVisible(true);
-            as.setCustomName(Utils.format(metiny.getMetins().getName()));
-            as.setGravity(false);
-            RPGCORE.getInstance().getMetinyManager().addAs(id, as);
-        }
+        final Location location = metiny.getLocation();
+        final Entity e = location.getWorld().spawnEntity(location, EntityType.ENDER_CRYSTAL);
+        e.setCustomName(Utils.format(metiny.getMetins().getName()));
+        e.setCustomNameVisible(true);
         metiny.getMetins().setHealth(metiny.getMetins().getMaxhealth());
     }
 
@@ -92,10 +69,7 @@ public class MetinyHelper {
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
-                    if (e.getCustomName() != null && RPGCORE.getInstance().getMetinyManager().isMetin(Integer.parseInt(e.getCustomName()))) {
-                        final int id = Integer.parseInt(e.getCustomName());
-                        RPGCORE.getInstance().getMetinyManager().getAs(id).remove();
-                        RPGCORE.getInstance().getMetinyManager().removeAs(id);
+                    if (RPGCORE.getInstance().getMetinyManager().isMetin(e.getLocation())) {
                         e.remove();
                     }
                 }
@@ -109,10 +83,14 @@ public class MetinyHelper {
         }
     }
 
-    public static void attackMetin(int id, int damage, Entity entity, Player player) {
-        if (!RPGCORE.getInstance().getMetinyManager().isMetin(id)) {
+    public static void attackMetin(final Location loc, final Entity entity, final Player player) {
+        if (!RPGCORE.getInstance().getMetinyManager().isMetin(loc)) {
+            System.out.println(2);
             return;
         }
+        int damage = 1;
+        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(loc);
+        final int id = metiny.getId();
         if (player.getWorld().getName().equals("zamekNieskonczonosci") && RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.get(id) == null) {
             player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fHAHAHAHAH... nic nie zdzialasz!"));
             player.damage(player.getMaxHealth() / 10);
@@ -126,7 +104,6 @@ public class MetinyHelper {
                 }
             }
         }
-        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
         if (player.getItemInHand() == null || !String.valueOf(player.getItemInHand().getType()).contains("_SWORD") || player.getItemInHand().getItemMeta().getLore() == null) return;
         damage += RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDmgMetiny();
         if (damage >= metiny.getMetins().getHealth()) {
@@ -151,8 +128,6 @@ public class MetinyHelper {
                 RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
             }
             entity.remove();
-            RPGCORE.getInstance().getMetinyManager().getAs(id).remove();
-            RPGCORE.getInstance().getMetinyManager().removeAs(id);
             metiny.getMetins().setHealth(0);
             player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
             player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);

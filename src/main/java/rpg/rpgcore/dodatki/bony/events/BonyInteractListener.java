@@ -66,7 +66,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Srednich Obrazen 5%!"));
                     return;
                 }
-                user.getBony().setDmg5(Utils.serializeItem(eventItem));
+                user.getBony().setDmg5(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Srednich Obrazen 5%!"));
                 break;
@@ -75,7 +75,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Srednich Obrazen 10%!"));
                     return;
                 }
-                user.getBony().setDmg10(Utils.serializeItem(eventItem));
+                user.getBony().setDmg10(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Srednich Obrazen 10%!"));
                 break;
@@ -84,7 +84,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Srednich Obrazen 15%!"));
                     return;
                 }
-                user.getBony().setDmg15(Utils.serializeItem(eventItem));
+                user.getBony().setDmg15(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Srednich Obrazen 15%!"));
                 break;
@@ -93,7 +93,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Sredniej Defensywy 5%!"));
                     return;
                 }
-                user.getBony().setDef5(Utils.serializeItem(eventItem));
+                user.getBony().setDef5(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Sredniej Defensywy 5%!"));
                 break;
@@ -102,7 +102,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Sredniej Defensywy 10%!"));
                     return;
                 }
-                user.getBony().setDef10(Utils.serializeItem(eventItem));
+                user.getBony().setDef10(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Sredniej Defensywy 10%!"));
                 break;
@@ -111,7 +111,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Sredniej Defensywy 15%!"));
                     return;
                 }
-                user.getBony().setDef15(Utils.serializeItem(eventItem));
+                user.getBony().setDef15(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Sredniej Defensywy 15%!"));
                 break;
@@ -120,7 +120,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Cios Krytyczny 5%!"));
                     return;
                 }
-                user.getBony().setKryt5(Utils.serializeItem(eventItem));
+                user.getBony().setKryt5(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Cios Krytyczny 5%!"));
                 break;
@@ -129,7 +129,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Cios Krytyczny 10%!"));
                     return;
                 }
-                user.getBony().setKryt10(Utils.serializeItem(eventItem));
+                user.getBony().setKryt10(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Cios Krytyczny 10%!"));
                 break;
@@ -138,7 +138,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Cios Krytyczny 15%!"));
                     return;
                 }
-                user.getBony().setKryt15(Utils.serializeItem(eventItem));
+                user.getBony().setKryt15(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Cios Krytyczny 15%!"));
                 break;
@@ -147,7 +147,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Wzmocnienie Ciosu Krytycznego 10%!"));
                     return;
                 }
-                user.getBony().setWzmkryt10(Utils.serializeItem(eventItem));
+                user.getBony().setWzmkryt10(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Wzmocnienie Ciosu Krytycznego 10%!"));
                 break;
@@ -156,7 +156,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Blok Ciosu 20%!"));
                     return;
                 }
-                user.getBony().setBlok20(Utils.serializeItem(eventItem));
+                user.getBony().setBlok20(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Blok Ciosu 20%!"));
                 break;
@@ -165,7 +165,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Szansy Na Przeszycie Bloku Ciosu 20%!"));
                     return;
                 }
-                user.getBony().setPrzeszywka20(Utils.serializeItem(eventItem));
+                user.getBony().setPrzeszywka20(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Szansy Na Przeszycie Bloku Ciosu 20%!"));
                 break;
@@ -174,7 +174,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Dodatkowego Zdrowia +10!"));
                     return;
                 }
-                user.getBony().setHp10(Utils.serializeItem(eventItem));
+                user.getBony().setHp10(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +10!"));
                 player.setMaxHealth(player.getMaxHealth() + 10 * 2);
@@ -184,7 +184,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Dodatkowego Zdrowia +20!"));
                     return;
                 }
-                user.getBony().setHp20(Utils.serializeItem(eventItem));
+                user.getBony().setHp20(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +20!"));
                 player.setMaxHealth(player.getMaxHealth() + 20 * 2);
@@ -194,7 +194,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Dodatkowego Zdrowia +35!"));
                     return;
                 }
-                user.getBony().setHp35(Utils.serializeItem(eventItem));
+                user.getBony().setHp35(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 35);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Dodatkowego Zdrowia +35!"));
                 player.setMaxHealth(player.getMaxHealth() + 35 * 2);
@@ -204,7 +204,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonej Predkosci Ruchu +25!"));
                     return;
                 }
-                user.getBony().setPredkosc25(Utils.serializeItem(eventItem));
+                user.getBony().setPredkosc25(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + 25);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonej Predkosci Ruchu +25!"));
                 break;
@@ -213,7 +213,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonej Predkosci Ruchu +50!"));
                     return;
                 }
-                user.getBony().setPredkosc50(Utils.serializeItem(eventItem));
+                user.getBony().setPredkosc50(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + 50);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonej Predkosci Ruchu +50!"));
                 break;
@@ -222,7 +222,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
                     return;
                 }
-                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDmgMetiny(2);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +2!"));
                 break;
@@ -231,7 +231,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
                     return;
                 }
-                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDmgMetiny(3);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +3!"));
                 break;
@@ -240,7 +240,7 @@ public class BonyInteractListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony Bon Zwiekszonych Obrazen W Kamienie Metin!"));
                     return;
                 }
-                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem));
+                user.getBony().setDmgMetiny(Utils.serializeItem(eventItem.clone()));
                 bonuses.getBonusesUser().setDmgMetiny(5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +5!"));
                 break;

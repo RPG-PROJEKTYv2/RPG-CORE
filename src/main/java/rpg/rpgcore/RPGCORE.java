@@ -5,8 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
@@ -438,7 +438,7 @@ public final class RPGCORE extends JavaPlugin {
                         e.remove();
                     }
                 }
-                if (e instanceof EnderCrystal) {
+                if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
                     e.remove();
                 }
             }
@@ -551,7 +551,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new AdminChatCommand());
         CommandAPI.getCommand().register("HellRPGCore", new DodatkiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoriaCommand());
-        CommandAPI.getCommand().register("HellRPGCore", new GetBonyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MaxCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ProfileCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MagazynyCommand());

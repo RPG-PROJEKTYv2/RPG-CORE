@@ -1,6 +1,7 @@
 package rpg.rpgcore.dmg;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -42,11 +43,18 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
                 if (e.getEntity().getCustomName() == null) {
+                    System.out.println(1);
                     return;
                 }
 
                 if (!rpgcore.getCooldownManager().hasMetinyCooldown(attacker.getUniqueId())) {
-                    MetinyHelper.attackMetin(Integer.parseInt(e.getEntity().getCustomName()), 1, e.getEntity(), attacker);
+                    final Location loc = e.getEntity().getLocation();
+                    MetinyHelper.attackMetin(
+                            new Location(loc.getWorld(),
+                                    DoubleUtils.round(loc.getX(), 2),
+                                    DoubleUtils.round(loc.getY(), 2),
+                                    DoubleUtils.round(loc.getZ(), 2)),
+                            e.getEntity(), attacker);
                     rpgcore.getCooldownManager().givePlayerMetinyCooldown(attacker.getUniqueId());
                     return;
                 }

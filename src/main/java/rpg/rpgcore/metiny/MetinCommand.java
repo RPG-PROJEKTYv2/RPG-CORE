@@ -1,7 +1,5 @@
 package rpg.rpgcore.metiny;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,7 +7,6 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.DoubleUtils;
-import rpg.rpgcore.utils.LocationHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
@@ -53,24 +50,22 @@ public class MetinCommand extends CommandAPI {
                     for (int i = 5; i < args.length; ++i) {
                         name.append(args[i]).append(" ");
                     }
-                    if (!this.rpgcore.getMetinyManager().isMetin(id)) {
-                        final Metiny newMetiny = new Metiny(id);
-                        this.rpgcore.getMetinyManager().add(newMetiny);
-                        this.rpgcore.getMongoManager().addDataMetins(newMetiny);
-                    }
-                    Metiny metiny = this.rpgcore.getMetinyManager().find(id);
+                    final Metiny metiny = new Metiny(id);
                     metiny.getMetins().setName(name.toString().trim());
-                    metiny.getMetins().setCoordinates(LocationHelper.locToString(player.getLocation()));
+                    metiny.getMetins().setX(DoubleUtils.round(player.getLocation().getX(), 2));
+                    metiny.getMetins().setY(DoubleUtils.round(player.getLocation().getY(), 2));
+                    metiny.getMetins().setZ(DoubleUtils.round(player.getLocation().getZ(), 2));
                     metiny.getMetins().setWorld(String.valueOf(player.getWorld().getName()));
                     metiny.getMetins().setMaxhealth(health);
                     metiny.getMetins().setHealth(0);
                     metiny.getMetins().setResp(resp);
                     metiny.getMetins().setMoby(moby);
-                    this.rpgcore.getMongoManager().saveDataMetins(id, metiny);
+                    this.rpgcore.getMetinyManager().add(metiny);
+                    this.rpgcore.getMongoManager().addDataMetins(metiny);
                     sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie stowrzyles lokacje metina ID:&6 " + args[1] + "\n"
                             + Utils.SERVERNAME + "&aNazwa metina:&6 " + metiny.getMetins().getName() + "\n"
                             + Utils.SERVERNAME + "&aSwiat metina:&6 " + metiny.getMetins().getWorld() + "\n"
-                            + Utils.SERVERNAME + "&aKordy metina:&6 " + metiny.getMetins().getCoordinates() + "\n"
+                            + Utils.SERVERNAME + "&aKordy metina: &6" + metiny.getMetins().getX() + "&a, &6" + metiny.getMetins().getY() + "&a, &6" + metiny.getMetins().getZ() + "&a, &6" + "\n"
                             + Utils.SERVERNAME + "&aHP metina:&6 " + metiny.getMetins().getMaxhealth() + "\n"
                             + Utils.SERVERNAME + "&aIlosc potworow:&6 " + metiny.getMetins().getMoby() + "\n"));
                     MetinyHelper.spawnMetin(id);
@@ -116,11 +111,8 @@ public class MetinCommand extends CommandAPI {
                     final Player player = (Player) sender;
                     int id = Integer.parseInt(args[1]);
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
-                        Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
-                        String world = metiny.getMetins().getWorld();
-                        Location loc = LocationHelper.locFromString(metiny.getMetins().getCoordinates());
-                        Location location = new Location(Bukkit.getServer().getWorld(world), loc.getX(), loc.getY(), loc.getZ());
-                        player.teleport(location);
+                        final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
+                        player.teleport(metiny.getLocation());
                         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales pomyslnie przeteleportowany na lokacje metina ID:&6 " + id + "&a."));
                         return;
                     }
@@ -132,9 +124,7 @@ public class MetinCommand extends CommandAPI {
                     if (this.rpgcore.getMetinyManager().isMetin(id)) {
                         this.rpgcore.getMongoManager().removeDataMetins(id);
                         final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(id);
-                        RPGCORE.getInstance().getMetinyManager().getAs(id).remove();
-                        RPGCORE.getInstance().getMetinyManager().removeAs(id);
-                        this.rpgcore.getServer().getWorld(metiny.getMetins().getWorld()).getEntities().stream().filter((entity) -> (entity.getCustomName() != null && entity.getCustomName().equals(String.valueOf(id)))).forEachOrdered(Entity::remove);
+                        this.rpgcore.getServer().getWorld(metiny.getMetins().getWorld()).getEntities().stream().filter((entity) -> (entity.getLocation().equals(metiny.getLocation()))).forEachOrdered(Entity::remove);
                         this.rpgcore.getMetinyManager().remove(metiny);
                         this.rpgcore.getMongoManager().saveAllMetins();
                         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aMetin o podanym ID zostal usuniety!"));
@@ -156,12 +146,11 @@ public class MetinCommand extends CommandAPI {
                 sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aLista metin:"));
                 for (final Metiny metin : this.rpgcore.getMetinyManager().getMetins()) {
                     sender.sendMessage(Utils.format("&8- &6" + metin.getId()));
-                    final Location location = LocationHelper.locFromString(metin.getMetins().getCoordinates());
                     sender.sendMessage(Utils.format("  &8- &6Nazwa&8: " + metin.getMetins().getName()));
                     sender.sendMessage(Utils.format("  &8- &6Swiat&8: &e" + metin.getMetins().getWorld()));
-                    sender.sendMessage(Utils.format("  &8- &6X&8: &e" + DoubleUtils.round(location.getX(), 2)));
-                    sender.sendMessage(Utils.format("  &8- &6Y&8: &e" + DoubleUtils.round(location.getY(), 2)));
-                    sender.sendMessage(Utils.format("  &8- &6Z&8: &e" + DoubleUtils.round(location.getZ(), 2)));
+                    sender.sendMessage(Utils.format("  &8- &6X&8: &e" + metin.getMetins().getX()));
+                    sender.sendMessage(Utils.format("  &8- &6Y&8: &e" + metin.getMetins().getY()));
+                    sender.sendMessage(Utils.format("  &8- &6Z&8: &e" + metin.getMetins().getZ()));
                 }
                 return;
             }

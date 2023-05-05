@@ -1,42 +1,46 @@
 package rpg.rpgcore.metiny;
 
 import com.google.common.collect.ImmutableSet;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MetinyManager {
-    private final Map<Integer, Metiny> metiny1;
-    private final Map<Integer, ArmorStand> asMap = new HashMap<>();
+    private final Map<Location, Metiny> metiny1;
 
     public MetinyManager(final RPGCORE rpgcore) {
         this.metiny1 = rpgcore.getMongoManager().loadMetins();
     }
 
-    public void addAs(int id, ArmorStand armorStand) {
-        this.asMap.put(id, armorStand);
-    }
-
-    public ArmorStand getAs(int id) {
-        return this.asMap.get(id);
-    }
-
-    public void removeAs(int id) {
-        this.asMap.remove(id);
-    }
-
     public void add(Metiny metiny) {
-        this.metiny1.put(metiny.getId(), metiny);
+        this.metiny1.put(metiny.getLocation(), metiny);
     }
 
-    public Metiny find(int id) {
-        return this.metiny1.get(id);
+    public Metiny find(final Location location) {
+        return this.metiny1.get(location);
     }
 
-    public boolean isMetin(int id) {
-        return this.metiny1.containsKey(id);
+    public Metiny find(final int id) {
+        for (Metiny metiny : this.metiny1.values()) {
+            if (metiny.getId() == id) {
+                return metiny;
+            }
+        }
+        return null;
+    }
+
+    public boolean isMetin(final Location location) {
+        return this.metiny1.containsKey(location);
+    }
+
+    public boolean isMetin(final int id) {
+        for (Metiny metiny : this.metiny1.values()) {
+            if (metiny.getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ImmutableSet<Metiny> getMetins() {
@@ -44,7 +48,7 @@ public class MetinyManager {
     }
 
     public void remove(Metiny metiny) {
-        this.metiny1.remove(metiny.getId(), metiny);
+        this.metiny1.remove(metiny.getLocation(), metiny);
     }
 
 }
