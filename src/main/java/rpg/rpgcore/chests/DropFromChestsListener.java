@@ -41,6 +41,15 @@ public class DropFromChestsListener implements Listener {
 
             if (playerItem.getItemMeta().hasDisplayName()) {
                 e.setCancelled(true);
+
+                if (player.getInventory().firstEmpty() == -1) {
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
+                            rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
+                            rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
+                    return;
+                }
+
+
                 final OsUser osUser = rpgcore.getOsManager().find(player.getUniqueId());
                 // ================================ SKRZYNKI INNE ================================
                 // WARTOSCIOWY KUFER
@@ -53,14 +62,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        // TODO ZAMIENIC MIEJSACMI W POZOSTALYCH SKRZYNKACH I DODAC PONIZSZA LINJJKE
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(GlobalItem.getItem("I1", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -81,14 +82,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(GlobalItem.getItem("I2", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -106,13 +99,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(GlobalItem.getItem("I5", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -135,13 +121,6 @@ public class DropFromChestsListener implements Listener {
                         }*/
 
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(GlobalItem.getItem("I6", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -164,13 +143,6 @@ public class DropFromChestsListener implements Listener {
                             Bukkit.broadcastMessage(" ");
                         }
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(GlobalItem.getItem("I4", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -262,13 +234,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I1", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -289,13 +254,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I2", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -350,13 +308,6 @@ public class DropFromChestsListener implements Listener {
 
 
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I3", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -377,13 +328,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I4", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -405,13 +349,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I6", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -463,13 +400,6 @@ public class DropFromChestsListener implements Listener {
                         }
 
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I5", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -491,13 +421,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I8", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -547,13 +470,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I7", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -575,13 +491,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I10", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -632,13 +541,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I9", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -660,13 +562,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I12", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -688,13 +583,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I14", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -712,13 +600,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I13", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -740,13 +621,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I16", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -764,13 +638,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I15", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -789,13 +656,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I17", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -814,13 +674,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I19", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -839,13 +692,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I21", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -864,13 +710,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I23", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
@@ -889,13 +728,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (player.getInventory().addItem(is).size() > 0) {
-                            player.getInventory().addItem(Skrzynki.getItem("I25 ", 1));
-                            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player,
-                                    rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME, 5, 10, 5),
-                                    rpgcore.getNmsManager().makeSubTitle(Utils.format("&c&lBrak miejsca w ekwipunku!"), 5, 10, 5)));
-                            return;
-                        }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                     }
                 }

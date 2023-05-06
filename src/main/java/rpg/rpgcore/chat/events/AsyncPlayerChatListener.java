@@ -19,12 +19,16 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AsyncPlayerChatListener implements Listener {
     private final RPGCORE rpgcore;
+    private final List<String> swearingWords = Arrays.asList("chuj", "huj", "kurwa", "pierdole", "spierdalaj", "wypierdalaj", "dziwka", "szmata", "suka", "suko", "pierdol",
+            "jebac", "idioto", "idiota", "idiotko", "debil", "debilu", "kretyn", "kretynie");
     public AsyncPlayerChatListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
@@ -34,7 +38,7 @@ public class AsyncPlayerChatListener implements Listener {
     public void onChat(final AsyncPlayerChatEvent e) {
         final Player player = e.getPlayer();
         final UUID uuid = player.getUniqueId();
-        final String message = e.getMessage();
+        String message = e.getMessage();
         final User user = rpgcore.getUserManager().find(uuid);
         e.setCancelled(true);
         if (!user.isHellCodeLogin() && !user.getHellCode().equals("off")) {
@@ -87,6 +91,8 @@ public class AsyncPlayerChatListener implements Listener {
             }
             return;
         }
+
+
         if (message.isEmpty()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wyslac pustej wiadomosci!"));
             return;
@@ -103,6 +109,7 @@ public class AsyncPlayerChatListener implements Listener {
                 }
             }
         }
+        message = this.removeSwearing(message);
         formatuj(player, message);
         if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             return;
@@ -175,5 +182,20 @@ public class AsyncPlayerChatListener implements Listener {
             event.setCancelled(true);
             player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
         }
+    }
+
+    private String removeSwearing(final String text) {
+        final String[] words = text.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (swearingWords.contains(word.toLowerCase())) {
+                StringBuilder censoredWord = new StringBuilder();
+                for (int i = 0; i < word.length(); i++) {
+                    censoredWord.append("*");
+                }
+                sb.append(censoredWord).append(" ");
+            }
+        }
+        return sb.toString().trim();
     }
 }
