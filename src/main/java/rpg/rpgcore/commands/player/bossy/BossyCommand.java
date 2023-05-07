@@ -42,7 +42,7 @@ public class BossyCommand extends CommandAPI {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte) 15).setName(" ").toItemStack());
         }
         // czasowe
-        gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&9&lKrol Wygnancow").setLore(Arrays.asList(
+        gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList(
                 " ",
                 "&7Lokalizacja XYZ: &6&l-158 | 72 | -371",
                 "&7Lokalizacja XYZ: &6&l95 | 72 | -233",

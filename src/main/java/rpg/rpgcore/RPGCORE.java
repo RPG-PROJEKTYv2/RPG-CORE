@@ -32,8 +32,8 @@ import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
-import rpg.rpgcore.chests.Expowisko1.NajemnikManager;
-import rpg.rpgcore.chests.Expowisko1.WygnaniecManager;
+import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
+import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
 import rpg.rpgcore.chests.Expowisko11.MitycznyKrakenManager;
 import rpg.rpgcore.chests.Expowisko12.KrysztalowyWladcaManager;
@@ -303,8 +303,8 @@ public final class RPGCORE extends JavaPlugin {
     private WartosciowykuferManager wartosciowykuferManager;
     // ================================ SKRZYNKI EXPOWISKO ================================
     // EXPOWISKO 1
-    private NajemnikManager najemnikManager;
-    private WygnaniecManager wygnaniecManager;
+    private RozbojnikManager najemnikManager;
+    private DowodcaRozbojnikow wygnaniecManager;
     // EXPOWISKO 2
     private GoblinManager goblinManager;
     private WodzGoblinowManager wodzGoblinowManager;
@@ -875,8 +875,8 @@ public final class RPGCORE extends JavaPlugin {
         this.zwierzakiManager = new ZwierzakiManager();
         // ================================ SKRZYNKI EXPOWISKO ================================
         // EXPOWISKO 1
-        this.najemnikManager = new NajemnikManager();
-        this.wygnaniecManager = new WygnaniecManager();
+        this.najemnikManager = new RozbojnikManager();
+        this.wygnaniecManager = new DowodcaRozbojnikow();
         // EXPOWISKO 2
         this.wodzGoblinowManager = new WodzGoblinowManager();
         this.goblinManager = new GoblinManager();
@@ -1114,10 +1114,10 @@ public final class RPGCORE extends JavaPlugin {
     }
     // ================================ SKRZYNKI EXPOWISKA ===============================
     // exp1
-    public NajemnikManager getNajemnikManager() {
+    public RozbojnikManager getNajemnikManager() {
         return najemnikManager;
     }
-    public WygnaniecManager getWygnaniecManager() {
+    public DowodcaRozbojnikow getWygnaniecManager() {
         return wygnaniecManager;
     }
     // exp2

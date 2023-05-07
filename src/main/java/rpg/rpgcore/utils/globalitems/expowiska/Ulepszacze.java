@@ -9,7 +9,7 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Arrays;
 
 public enum Ulepszacze {
-    I_SZATANAJEMNIKA("I_SZATANAJEMNIKA", new ItemBuilder(Material.RABBIT_HIDE).setName("&6Szata Najemnika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
+    I_SZATAROZBOJNIKA("I_SZATAROZBOJNIKA", new ItemBuilder(Material.RABBIT_HIDE).setName("&8Szata Rozbojnika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_OKOGOBLINA("I_OKOGOBLINA", new ItemBuilder(Material.EYE_OF_ENDER).setName("&aOko Goblina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_SKORAGORYLA("I_SKORAGORYLA", new ItemBuilder(Material.INK_SACK, 1 , (short)15).setName("&fSkora Goryla").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_ZLAMANAKOSC("I_ZLAMANAKOSC", new ItemBuilder(Material.BONE).setName("&7Zlamana Kosc").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),

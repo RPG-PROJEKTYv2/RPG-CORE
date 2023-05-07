@@ -11,8 +11,8 @@ import java.util.Arrays;
 public enum Skrzynki {
 
     // Expowisko 1
-    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &9&lWygnanca").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&8Skrzynia Najemnika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &c&lDowodcy Rozbojnikow").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.CHEST).setName("&6Skrzynia Rozbojnika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 2
     I3("I3", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &a&lWodza Goblinow").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I4("I4", new ItemBuilder(Material.CHEST).setName("&fSkrzynia Goblina").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),

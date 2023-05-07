@@ -21,37 +21,12 @@ public class ClearCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (args.length == 0) {
-            if (player.getInventory().firstEmpty() != -1 ) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz nic w ekwipunku!"));
-                return;
-            }
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
-            player.getInventory().clear();
+
+        if (args.length > 0) {
+            player.sendMessage(Utils.poprawneUzycie("clear"));
             return;
-
-            /*
-            if (player.getInventory().firstEmpty() == -1) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz nic w ekwipunku!"));
-                return;
-            }
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
-            player.getInventory().clear();
-            return;*/
         }
-        if (args.length == 1) {
-            final Player target = Bukkit.getPlayer(args[0]);
-
-            if (target == null) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku &6" + args[0] + "&c!"));
-                return;
-            }
-            if (target.getInventory().getContents().length == 0) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cGracz &6" + target.getName() + " &cnie ma nic w ekwipunku!"));
-                return;
-            }
-            target.getInventory().clear();
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczyszczono ekwipunek gracza &6" + target.getName() + "&c!"));
-        }
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyczysciles swoj ekwipunek!"));
+        player.getInventory().clear();
     }
 }

@@ -53,7 +53,7 @@ public class TeleporterNPC {
             gui.setItem(i, fillInventory.toItemStack());
         }
 
-        expowisko1.setName("&9&lPrzelecz Najemnikow");
+        expowisko1.setName("&9&lPrzelecz Rozbojnikow");
         this.loreEXPOWISKA("&cOFF", "&f1");
         expowisko1.addGlowing();
         expowisko1.setLore(lore);

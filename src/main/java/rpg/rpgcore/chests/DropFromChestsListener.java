@@ -188,7 +188,7 @@ public class DropFromChestsListener implements Listener {
                 // ================================ SKRZYNKI EXPOWISKA ================================
 
                 // Expowisko 1
-                //  SKRZYNIA WYGNANCA
+                //  SKRZYNIA DOWODCY ROZBOJNIKOW
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I1", 1));
@@ -204,30 +204,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(5, 5, 5, 10, "&8&lZwykly Naszyjnik Wygnanca");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(5, 5, 5, 10, "&c&lZwykly Naszyjnik Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(8, 6, 6, 10, "&8&lUlepszony Naszyjnik Wygnanca");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(8, 6, 6, 10, "&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(3, 5, 2, 10, "&8&lZwykly Diadem Wygnanca");
+                                    is = AkcesoriaPodsHelper.createDiadem(3, 5, 2, 10, "&c&lZwykly Diadem Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(6, 8, 2, 10, "&8&lUlepszony Diadem Wygnanca");
+                                    is = AkcesoriaPodsHelper.createDiadem(6, 8, 2, 10, "&c&lUlepszony Diadem Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(3, 5, 17, 10, "&8&lZwykly Pierscien Wygnanca");
+                                    is = AkcesoriaPodsHelper.createPierscien(3, 5, 17, 10, "&c&lZwykly Pierscien Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(7, 9, 30, 10, "&8&lUlepszony Pierscien Wygnanca");
+                                    is = AkcesoriaPodsHelper.createPierscien(7, 9, 30, 10, "&c&lUlepszony Pierscien Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(7, 15, 2, 10, "&8&lZwykla Tarcza Wygnanca");
+                                    is = AkcesoriaPodsHelper.createTarcza(7, 15, 2, 10, "&c&lZwykla Tarcza Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(10, 20, 5, 10, "&8&lUlepszona Tarcza Wygnanca");
+                                    is = AkcesoriaPodsHelper.createTarcza(10, 20, 5, 10, "&c&lUlepszona Tarcza Dowodcy Rozbojnikow");
                                 }
                                 break;
                             default:
@@ -238,7 +238,7 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // SKRZYNIA NAJEMNIKA
+                // SKRZYNIA ROZBOJNIKA
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I2", 1));

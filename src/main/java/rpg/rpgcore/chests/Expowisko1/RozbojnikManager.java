@@ -10,16 +10,16 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class NajemnikManager {
+public class RozbojnikManager {
 
     private final Set<Items> najemnik = Sets.newConcurrentHashSet();
 
-    public NajemnikManager() {
-        this.najemnik.add(new Items("1", 12.0 , ItemHelper.createArmor("&8Helm Najemnika", Material.LEATHER_HELMET, 3, 0), 1));
-        this.najemnik.add(new Items("2", 12.0 , ItemHelper.createArmor("&8Zbroja Najemnika", Material.LEATHER_CHESTPLATE, 3, 1), 1));
-        this.najemnik.add(new Items("3", 12.0 , ItemHelper.createArmor("&8Spodnie Najemnika", Material.LEATHER_LEGGINGS, 3, 0), 1));
-        this.najemnik.add(new Items("4", 12.0 , ItemHelper.createArmor("&8Buty Najemnika", Material.LEATHER_BOOTS, 2, 0), 1));
-        this.najemnik.add(new Items("5", 10.0, ItemHelper.createSword("&8Tepy Miecz Najemnika", Material.WOOD_SWORD, 1, 1,false), 1));
+    public RozbojnikManager() {
+        this.najemnik.add(new Items("1", 12.0 , ItemHelper.createArmor("&6Helm Rozbojnika", Material.LEATHER_HELMET, 3, 0), 1));
+        this.najemnik.add(new Items("2", 12.0 , ItemHelper.createArmor("&6Zbroja Rozbojnika", Material.LEATHER_CHESTPLATE, 3, 1), 1));
+        this.najemnik.add(new Items("3", 12.0 , ItemHelper.createArmor("&6Spodnie Rozbojnika", Material.LEATHER_LEGGINGS, 3, 0), 1));
+        this.najemnik.add(new Items("4", 12.0 , ItemHelper.createArmor("&6Buty Rozbojnika", Material.LEATHER_BOOTS, 2, 0), 1));
+        this.najemnik.add(new Items("5", 10.0, ItemHelper.createSword("&6Tepy Miecz Rozbojnika", Material.WOOD_SWORD, 1, 1,false), 1));
     }
 
 
