@@ -7,6 +7,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -66,7 +67,7 @@ public class WyplacCommand extends CommandAPI {
                 user.setKasa(playerKasa - wyplac);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
 
-                player.getInventory().addItem(new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(wyplac)) + " &2$").addGlowing().toItemStack().clone());
+                player.getInventory().addItem(new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(DoubleUtils.round(wyplac, 2)) + " &2$").addGlowing().toItemStack().clone());
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.spaceNumber(Utils.kasaFormat.format(wyplac)) + " &2$"));
             } catch (NumberFormatException e) {
                 player.sendMessage(Utils.poprawneUzycie("wyplac <ilosc>"));

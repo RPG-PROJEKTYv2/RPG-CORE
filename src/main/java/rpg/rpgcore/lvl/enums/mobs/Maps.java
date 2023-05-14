@@ -4,10 +4,10 @@ import rpg.rpgcore.utils.DoubleUtils;
 
 public enum Maps {
 
-    MAP_1_10_1("Najemnik Lvl. 3", 3.8, 1.5, 1, 10),
-    MAP_1_10_2("Najemnik Lvl. 5", 5, 2, 1, 10),
-    MAP_1_10_3("Najemnik Lvl. 7", 6.3, 3.5, 1, 10),
-    MAP_1_10_BOSS("[BOSS] Krol Wygnancow", 8, 5.5, 1, 10),
+    MAP_1_10_1("Rozbojnik Lvl. 3", 3.8, 1.5, 1, 10),
+    MAP_1_10_2("Rozbojnik Lvl. 5", 5, 2, 1, 10),
+    MAP_1_10_3("Rozbojnik Lvl. 7", 6.3, 3.5, 1, 10),
+    MAP_1_10_BOSS("[BOSS] Dowodca Rozbojnikow", 8, 5.5, 1, 10),
     MAP_10_20_1("Goblin Lvl. 14", 13.8, 8.5, 10, 20),
     MAP_10_20_2("Goblin Lvl. 16", 18.4, 10, 10, 20),
     MAP_10_20_3("Goblin Lvl. 19", 22.9, 11.5, 10, 20),

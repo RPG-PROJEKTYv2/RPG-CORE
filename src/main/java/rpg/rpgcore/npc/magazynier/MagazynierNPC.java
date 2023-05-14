@@ -104,13 +104,19 @@ public class MagazynierNPC {
             case 4: if (missionsU.isMission4done()) done = true;
             case 5: if (missionsU.isMission5done()) done = true;
         }
+        String progress = String.valueOf(missionsU.getProgress());
+        String reqAmount = String.valueOf(missions.getReqAmount());
+        if (magazynierUser.getMissions().getSelectedMission() == 9) {
+            progress = Utils.durationToString((long) magazynierUser.getMissions().getProgress(), true);
+            reqAmount = Utils.durationToString((long) missions.getReqAmount(), true);
+        }
         if (done) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&a&lWykonano!"
             )).toItemStack().clone();
         if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(missions.getMissionItem(), "mission")) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&7Postep: &6" + missionsU.getProgress() + "&7/&6" + missions.getReqAmount()
+                    "&7Postep: &6" + progress + "&7/&6" + reqAmount
             )).toItemStack().clone();
 
         return missions.getMissionItem().clone();

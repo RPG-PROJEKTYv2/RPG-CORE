@@ -50,6 +50,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_JSON;
     private final MongoCollection<Document> hellrpg_pustelnik;
     private final MongoCollection<Document> hellrpg_mistrzYang;
+    private final MongoCollection<Document> hellrpg_czarownica;
 
 
     public MongoConnectionPoolManager() {
@@ -161,6 +162,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_mistrzYang")) {
             database.createCollection("hellrpg_mistrzYang");
         }
+        if (!collections.contains("hellrpg_czarownica")) {
+            database.createCollection("hellrpg_czarownica");
+        }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
             database.createCollection("hellrpg_przykladowyNPC");
@@ -199,6 +203,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_JSON = database.getCollection("hellrpg_JSON");
         this.hellrpg_pustelnik = database.getCollection("hellrpg_pustelnik");
         this.hellrpg_mistrzYang = database.getCollection("hellrpg_mistrzYang");
+        this.hellrpg_czarownica = database.getCollection("hellrpg_czarownica");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -309,6 +314,9 @@ public class MongoConnectionPoolManager {
     }
     public MongoCollection<Document> getMistrzYang() {
         return hellrpg_mistrzYang;
+    }
+    public MongoCollection<Document> getCzarownica() {
+        return hellrpg_czarownica;
     }
 
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI

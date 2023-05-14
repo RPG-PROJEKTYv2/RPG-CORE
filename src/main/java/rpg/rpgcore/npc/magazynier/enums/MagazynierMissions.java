@@ -65,7 +65,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b20 punktow"
-    )).addTagInt("mission", 9).toItemStack(), 10_800, 20, null),
+    )).addTagInt("mission", 9).toItemStack(), 10_800_000, 20, null),
     M10(10, new ItemBuilder(Material.BOOK).setName("&c&lPrawdziwy Demon").setLore(Arrays.asList(
             "&7Ukoncz &e3 &7lodowe wieze",
             "",

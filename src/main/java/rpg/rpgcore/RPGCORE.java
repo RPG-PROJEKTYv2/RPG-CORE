@@ -128,6 +128,8 @@ import rpg.rpgcore.msg.IgnoreCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.newTarg.*;
+import rpg.rpgcore.npc.czarownica.CzarownicaNPC;
+import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
@@ -357,6 +359,7 @@ public final class RPGCORE extends JavaPlugin {
     private BossyManager bossyManager;
     private PustelnikNPC pustelnikNPC;
     private MistrzYangNPC mistrzYangNPC;
+    private CzarownicaNPC czarownicaNPC;
 
 
 
@@ -745,6 +748,9 @@ public final class RPGCORE extends JavaPlugin {
         // ...MISTRZ YANG
         this.getServer().getPluginManager().registerEvents(new MistrzYangInventoryClickListener(), this);
 
+        // ...CZAROWNICA
+        this.getServer().getPluginManager().registerEvents(new CzarownicaInventoryClickListener(this), this);
+
         // DUNGEONS
 
         // ...ICE TOWER
@@ -862,6 +868,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getMetinologNPC().loadMissions();
         this.pustelnikNPC = new PustelnikNPC(this);
         this.mistrzYangNPC = new MistrzYangNPC(this);
+        this.czarownicaNPC = new CzarownicaNPC(this);
     }
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
@@ -1278,5 +1285,8 @@ public final class RPGCORE extends JavaPlugin {
     }
     public MistrzYangNPC getMistrzYangNPC() {
         return mistrzYangNPC;
+    }
+    public CzarownicaNPC getCzarownicaNPC() {
+        return czarownicaNPC;
     }
 }

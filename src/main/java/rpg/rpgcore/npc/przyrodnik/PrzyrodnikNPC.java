@@ -37,7 +37,7 @@ public class PrzyrodnikNPC {
             gui.setItem(13, Missions.M_ERROR.getItemStack());
         } else {
             gui.setItem(13, this.getOddajItemyItem(user));
-            gui.setItem(16, this.getCurrentItemToDrop(user));
+            gui.setItem(16, this.getCurrentItemToDrop(user, player.getUniqueId()));
         }
 
         player.openInventory(gui);
@@ -60,11 +60,18 @@ public class PrzyrodnikNPC {
         ).toItemStack().clone();
     }
 
-    public ItemStack getCurrentItemToDrop(final PrzyrodnikUser user) {
+    public ItemStack getCurrentItemToDrop(final PrzyrodnikUser user, final UUID uuid) {
         Missions missions = Missions.getByNumber(user.getMission());
+        double chance = missions.getDropChance();
+        final double szczescie = RPGCORE.getInstance().getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         ItemStack item = missions.getItemStack().clone();
         ItemMeta meta = item.getItemMeta();
-        meta.setLore(Utils.format(Arrays.asList("&7Wypada z: &6" + missions.getMobName(), "&7Szansa na drop: &6" + missions.getDropChance() + "%")));
+        meta.setLore(Utils.format(
+                Arrays.asList(
+                        "&7Wypada z: &6" + missions.getMobName(),
+                        "&7Szansa na drop: &6" + DoubleUtils.round(chance + ((chance * szczescie) / 1000.0), 2) + "%"
+                )
+        ));
         item.setItemMeta(meta);
         return item;
     }

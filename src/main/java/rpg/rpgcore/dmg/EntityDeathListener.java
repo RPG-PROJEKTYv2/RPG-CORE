@@ -20,6 +20,7 @@ import rpg.rpgcore.dungeons.icetower.ResetType;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -48,18 +49,23 @@ public class EntityDeathListener implements Listener {
         ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
-        if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
+        if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
             return;
         }
 
         final EntityDamageByEntityEvent e2 = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(e.getEntity(),
-                rpgcore.getNmsManager().makeTitle("&4&lZGINALES!", 5, 20, 5),
-                rpgcore.getNmsManager().makeSubTitle("&7Zostales zabity przez &c" + e2.getDamager().getName() + " &8(&c" +
-                        String.format("%.2f", ((LivingEntity) e2.getDamager()).getHealth()) + "♥&8)", 5, 20, 5)));
-        if (e2.getDamager() == null && !(e2.getDamager() instanceof Player)) {
+        if (e2.getDamager() == null) return;
+        if (!(e2.getDamager() instanceof Player)) {
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(e.getEntity(),
+                    rpgcore.getNmsManager().makeTitle("&4&lZGINALES!", 5, 20, 5),
+                    rpgcore.getNmsManager().makeSubTitle("&7Zostales zabity przez &c" + e2.getDamager().getName(), 5, 20, 5)));
             return;
+        } else {
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(e.getEntity(),
+                    rpgcore.getNmsManager().makeTitle("&4&lZGINALES!", 5, 20, 5),
+                    rpgcore.getNmsManager().makeSubTitle("&7Zostales zabity przez &c" + e2.getDamager().getName() + " &8(&c" +
+                            DoubleUtils.round(((LivingEntity) e2.getDamager()).getHealth(), 0) + "♥&8)", 5, 20, 5)));
         }
 
         final Player victim = e.getEntity();

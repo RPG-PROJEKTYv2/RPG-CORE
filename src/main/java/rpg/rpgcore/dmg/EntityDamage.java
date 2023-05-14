@@ -1,15 +1,15 @@
 package rpg.rpgcore.dmg;
 
 public enum EntityDamage {
-    MAP_1_10_1("Najemnik Lvl. 3", 2),
-    MAP_1_10_2("Najemnik Lvl. 5", 2.3),
-    MAP_1_10_3("Najemnik Lvl. 7", 2.6),
-    MAP_1_10_BOSS("[BOSS] Krol Wygnancow", 2.99),
+    MAP_1_10_1("Rozbojnik Lvl. 3", 1.7),
+    MAP_1_10_2("Rozbojnik Lvl. 5", 2),
+    MAP_1_10_3("Rozbojnik Lvl. 7", 2.3),
+    MAP_1_10_BOSS("[BOSS] Dowodca Rozbojnikow", 2.99),
 
-    MAP_10_20_1("Goblin Lvl. 14", 4.15),
-    MAP_10_20_2("Goblin Lvl. 16", 4.6),
-    MAP_10_20_3("Goblin Lvl. 19", 5),
-    MAP_10_20_BOSS("[BOSS] Wodz Goblinow", 5.98),
+    MAP_10_20_1("Goblin Lvl. 14", 3.4),
+    MAP_10_20_2("Goblin Lvl. 16", 4),
+    MAP_10_20_3("Goblin Lvl. 19", 5.6),
+    MAP_10_20_BOSS("[BOSS] Wodz Goblinow", 6),
 
     MAP_20_30_1("Goryl Lvl. 21", 6),
     MAP_20_30_2("Goryl Lvl. 25", 6.8),

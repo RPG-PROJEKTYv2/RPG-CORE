@@ -28,8 +28,7 @@ public class PetCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("pety"));
             return;
         }
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aTa komenda jest aktualnie nie dostepna dla graczy."));
-        //rpgcore.getPetyManager().openPetyGUI(player, 1);
-        //player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto GUI z twoimi zwierzakami!"));
+        rpgcore.getPetyManager().openPetyGUI(player, 1);
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto GUI z twoimi zwierzakami!"));
     }
 }

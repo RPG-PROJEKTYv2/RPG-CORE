@@ -21,7 +21,6 @@ import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
 
 public class MobDropHelper {
@@ -56,7 +55,7 @@ public class MobDropHelper {
         if (rank == RankTypePlayer.ELITA) szczescie += 50;
         final double niesDropChance50lvl = getDropChance(szczescie, 0.02);
         final double niesDropChance50plus = getDropChance(szczescie, 0.01);
-        final double chestDropChance50lvl = getDropChance(szczescie, 2.5);
+        final double chestDropChance50lvl = getDropChance(szczescie, 2.7);
         final double chestDropChance50plus = getDropChance(szczescie, 1.25);
         final double sakwaDropChance = getDropChance(szczescie, 0.03);
 

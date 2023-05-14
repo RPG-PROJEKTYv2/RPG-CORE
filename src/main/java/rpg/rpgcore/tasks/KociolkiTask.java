@@ -7,6 +7,7 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.dungeons.icetower.IceTowerManager;
 import rpg.rpgcore.dungeons.icetower.ResetType;
 import rpg.rpgcore.kociolki.KociolkiUser;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
@@ -73,6 +74,10 @@ public class KociolkiTask implements Runnable {
                 });
             }
             rpgcore.getOsManager().find(player.getUniqueId()).setCzasProgress(rpgcore.getOsManager().find(player.getUniqueId()).getCzasProgress() + 1_000L);
+            final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+            if (magazynierUser.getMissions().getSelectedMission() == 9) {
+                magazynierUser.getMissions().setProgress(magazynierUser.getMissions().getProgress() + 1_000);
+            }
             // DT ANTYAFK
             if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() != -1) {
                 if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() > 0) {

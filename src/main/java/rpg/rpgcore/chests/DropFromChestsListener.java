@@ -66,6 +66,7 @@ public class DropFromChestsListener implements Listener {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -83,6 +84,7 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -100,6 +102,7 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -122,6 +125,7 @@ public class DropFromChestsListener implements Listener {
 
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -144,6 +148,7 @@ public class DropFromChestsListener implements Listener {
                         }
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -235,6 +240,7 @@ public class DropFromChestsListener implements Listener {
                         }
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -255,6 +261,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -309,6 +316,7 @@ public class DropFromChestsListener implements Listener {
 
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -329,6 +337,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -350,6 +359,7 @@ public class DropFromChestsListener implements Listener {
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -401,6 +411,7 @@ public class DropFromChestsListener implements Listener {
 
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -422,6 +433,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -471,6 +483,7 @@ public class DropFromChestsListener implements Listener {
                         }
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -492,6 +505,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -542,6 +556,7 @@ public class DropFromChestsListener implements Listener {
                         }
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -563,6 +578,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -584,6 +600,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -601,6 +618,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -622,6 +640,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -639,6 +658,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -657,6 +677,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -675,6 +696,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -693,6 +715,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -711,6 +734,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                         return;
                     }
                 }
@@ -729,6 +753,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        player.getInventory().addItem(is);
                     }
                 }
             }

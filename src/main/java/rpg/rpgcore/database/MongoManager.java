@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.chat.ChatUser;
@@ -373,8 +374,13 @@ public class MongoManager {
             }
             if (pool.getMistrzYang().find(new Document("_id", uuid.toString())).first() == null) {
                 final MistrzYangUser user = new MistrzYangUser(uuid);
-                this.addMistrzYang(user);
+                this.addDataMistrzYang(user);
                 rpgcore.getMistrzYangNPC().add(user);
+            }
+            if (pool.getCzarownica().find(new Document("_id", uuid.toString())).first() == null) {
+                final CzarownicaUser user = new CzarownicaUser(uuid);
+                this.addDataCzarownica(user);
+                rpgcore.getCzarownicaNPC().add(user);
             }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
@@ -482,8 +488,12 @@ public class MongoManager {
         rpgcore.getPustelnikNPC().add(pustelnikUser);
 
         final MistrzYangUser mistrzYangUser = new MistrzYangUser(uuid);
-        this.addMistrzYang(mistrzYangUser);
+        this.addDataMistrzYang(mistrzYangUser);
         rpgcore.getMistrzYangNPC().add(mistrzYangUser);
+
+        final CzarownicaUser czarownicaUser = new CzarownicaUser(uuid);
+        this.addDataCzarownica(czarownicaUser);
+        rpgcore.getCzarownicaNPC().add(czarownicaUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -624,6 +634,7 @@ public class MongoManager {
             this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
             this.saveDataPustelnik(uuid, rpgcore.getPustelnikNPC().find(uuid));
             this.saveDataMistrzYang(uuid, rpgcore.getMistrzYangNPC().find(uuid));
+            this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1623,7 +1634,7 @@ public class MongoManager {
         return userMap;
     }
 
-    public void addMistrzYang(final MistrzYangUser mistrzYangUser) {
+    public void addDataMistrzYang(final MistrzYangUser mistrzYangUser) {
         if (this.pool.getMistrzYang().find(new Document("_id", mistrzYangUser.getUuid().toString())).first() != null) {
             this.pool.getMistrzYang().deleteOne(new Document("_id", mistrzYangUser.getUuid().toString()));
         }
@@ -1637,6 +1648,32 @@ public class MongoManager {
     public void saveAllMistrzYang() {
         for (final MistrzYangUser mistrzYangUser : rpgcore.getMistrzYangNPC().getMistrzYangUsers()) {
             this.saveDataMistrzYang(mistrzYangUser.getUuid(), mistrzYangUser);
+        }
+    }
+
+    public Map<UUID, CzarownicaUser> loadAllCzarownica() {
+        Map<UUID, CzarownicaUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getCzarownica().find()) {
+            final CzarownicaUser czarownicaUser = new CzarownicaUser(document);
+            userMap.put(czarownicaUser.getUuid(), czarownicaUser);
+        }
+        return userMap;
+    }
+
+    public void addDataCzarownica(final CzarownicaUser czarownicaUser) {
+        if (this.pool.getCzarownica().find(new Document("_id", czarownicaUser.getUuid().toString())).first() != null) {
+            this.pool.getCzarownica().deleteOne(new Document("_id", czarownicaUser.getUuid().toString()));
+        }
+        this.pool.getCzarownica().insertOne(czarownicaUser.toDocument());
+    }
+
+    public void saveDataCzarownica(final UUID uuid, final CzarownicaUser czarownicaUser) {
+        this.pool.getCzarownica().findOneAndReplace(new Document("_id", uuid.toString()), czarownicaUser.toDocument());
+    }
+
+    public void saveAllCzarownica() {
+        for (final CzarownicaUser czarownicaUser : rpgcore.getCzarownicaNPC().getCzarownicaUsers()) {
+            this.saveDataCzarownica(czarownicaUser.getUuid(), czarownicaUser);
         }
     }
 

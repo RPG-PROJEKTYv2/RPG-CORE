@@ -239,6 +239,7 @@ public class Utils {
     }
 
     public static ItemStack[] itemStackArrayFromBase64(final String data) throws IOException {
+        if (data.isEmpty()) return new ItemStack[0];
         try {
             final ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             final BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
@@ -273,6 +274,7 @@ public class Utils {
     }
 
     public static ItemStack deserializeItem(String encodedObject) {
+        if (encodedObject.isEmpty()) return new ItemStack(Material.AIR);
         try {
             ByteArrayOutputStream io = new ByteArrayOutputStream();
             byte[] serializedObject;

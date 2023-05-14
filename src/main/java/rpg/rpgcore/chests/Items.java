@@ -25,7 +25,7 @@ public class Items {
     }
 
     public ItemStack getRewardItem() {
-        return this.rewardItem;
+        return this.rewardItem.clone();
     }
 
     public int getAmount() {

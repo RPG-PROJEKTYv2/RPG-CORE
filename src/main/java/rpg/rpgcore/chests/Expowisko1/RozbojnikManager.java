@@ -15,11 +15,11 @@ public class RozbojnikManager {
     private final Set<Items> najemnik = Sets.newConcurrentHashSet();
 
     public RozbojnikManager() {
-        this.najemnik.add(new Items("1", 12.0 , ItemHelper.createArmor("&6Helm Rozbojnika", Material.LEATHER_HELMET, 3, 0), 1));
-        this.najemnik.add(new Items("2", 12.0 , ItemHelper.createArmor("&6Zbroja Rozbojnika", Material.LEATHER_CHESTPLATE, 3, 1), 1));
-        this.najemnik.add(new Items("3", 12.0 , ItemHelper.createArmor("&6Spodnie Rozbojnika", Material.LEATHER_LEGGINGS, 3, 0), 1));
-        this.najemnik.add(new Items("4", 12.0 , ItemHelper.createArmor("&6Buty Rozbojnika", Material.LEATHER_BOOTS, 2, 0), 1));
-        this.najemnik.add(new Items("5", 10.0, ItemHelper.createSword("&6Tepy Miecz Rozbojnika", Material.WOOD_SWORD, 1, 1,false), 1));
+        this.najemnik.add(new Items("1", 20.0 , ItemHelper.createArmor("&6Helm Rozbojnika", Material.LEATHER_HELMET, 3, 0), 1));
+        this.najemnik.add(new Items("2", 20.0 , ItemHelper.createArmor("&6Zbroja Rozbojnika", Material.LEATHER_CHESTPLATE, 3, 1), 1));
+        this.najemnik.add(new Items("3", 20.0 , ItemHelper.createArmor("&6Spodnie Rozbojnika", Material.LEATHER_LEGGINGS, 3, 0), 1));
+        this.najemnik.add(new Items("4", 20.0 , ItemHelper.createArmor("&6Buty Rozbojnika", Material.LEATHER_BOOTS, 2, 0), 1));
+        this.najemnik.add(new Items("5", 20.0, ItemHelper.createSword("&6Tepy Miecz Rozbojnika", Material.WOOD_SWORD, 1, 1,false), 1));
     }
 
 

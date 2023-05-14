@@ -131,6 +131,16 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
+        if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // ITEMSHOP
+            if (entityName.equals("Czarownica")) {
+                rpgcore.getCzarownicaNPC().click(player);
+                return;
+            }
+        }
+
 
 
         // NPCTY

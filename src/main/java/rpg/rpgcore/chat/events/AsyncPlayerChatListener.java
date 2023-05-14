@@ -20,10 +20,6 @@ import rpg.rpgcore.utils.Utils;
 
 import java.text.ParseException;
 import java.util.*;
-import java.util.function.Function;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AsyncPlayerChatListener implements Listener {
     private final RPGCORE rpgcore;
@@ -170,7 +166,42 @@ public class AsyncPlayerChatListener implements Listener {
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
         if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
-            for (final String command : Arrays.asList("/pl", "/plugins", "bukkit:ban", "logout", "bukkit:banip", "/?", "/ver", "/version", "/bukkit", "/bukkit:ver", "/bukkit:version", "/icanhasbukkit", "/bukkit:help", "bukkit:?", "/me", "/bukkit:me", "/minecraft:me", "/about", "//calc", "//calculate", "mv", "/mv", "/multiverse-core:mv", "multiverse-core:mv")) {
+            final List<String> blockedCommands = Arrays.asList(
+                    "/pl",
+                    "/plugins",
+                    "bukkit:ban",
+                    "logout",
+                    "bukkit:banip",
+                    "/?",
+                    "/ver",
+                    "/version",
+                    "/bukkit",
+                    "/bukkit:ver",
+                    "/bukkit:version",
+                    "/icanhasbukkit",
+                    "/help",
+                    "/bukkit:help",
+                    "bukkit:?",
+                    "/me",
+                    "/bukkit:me",
+                    "/minecraft:me",
+                    "/about",
+                    "//calc",
+                    "//calculate",
+                    "mv",
+                    "/mv",
+                    "/multiverse-core:mv",
+                    "multiverse-core:mv",
+                    "fawe",
+                    "/fawe",
+                    "/worldedit:",
+                    "/worldedit:?",
+                    "/worldedit",
+                    "/worldedit:help",
+                    "/worldedit:/help",
+                    "/worldedit"
+            );
+            for (final String command : blockedCommands) {
                 if (message.toLowerCase().contains(command)) {
                     event.setCancelled(true);
                     player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
@@ -194,6 +225,8 @@ public class AsyncPlayerChatListener implements Listener {
                     censoredWord.append("*");
                 }
                 sb.append(censoredWord).append(" ");
+            } else {
+                sb.append(word).append(" ");
             }
         }
         return sb.toString().trim();

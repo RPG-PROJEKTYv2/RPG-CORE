@@ -185,7 +185,7 @@ public class DamageManager {
         double mnoznik = 100;
         double krytyk = 0;
         double wzmKryt = 0;
-        double wzmKrytDmg = 150;
+        double wzmKrytDmg = 0;
 
         double drugiMnoznik = 100;
 
