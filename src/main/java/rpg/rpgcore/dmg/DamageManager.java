@@ -514,10 +514,9 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / ((mnoznikProcenty / 100) * (protMnoznik + mnoznikBaza) * (drugiMnoznik / 100));
+        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) /  (drugiMnoznik / 100);
 
-        finalDmg = finalDmg / (mnoznikProcenty / 100);
 
-        return DoubleUtils.round(finalDmg / 2, 3);
+        return DoubleUtils.round(finalDmg * 2, 3);
     }
 }
