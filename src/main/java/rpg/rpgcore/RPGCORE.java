@@ -79,6 +79,9 @@ import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
 import rpg.rpgcore.commands.player.rangi.RangiInventoryClick;
+import rpg.rpgcore.commands.player.rozpiska.RozpiskaCommand;
+import rpg.rpgcore.commands.player.rozpiska.RozpiskaInventoryClick;
+import rpg.rpgcore.commands.player.rozpiska.RozpiskaManager;
 import rpg.rpgcore.commands.player.showcase.ShowcaseItemCommand;
 import rpg.rpgcore.commands.player.showcase.ShowcaseItemInventoryClickListener;
 import rpg.rpgcore.commands.player.showcase.ShowcaseItemManager;
@@ -258,6 +261,7 @@ public final class RPGCORE extends JavaPlugin {
     private NMSManager nmsManager;
     private GodManager godManager;
     private AdminPanelManager adminPanelManager;
+    private RozpiskaManager rozpiskaManager;
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
@@ -281,6 +285,7 @@ public final class RPGCORE extends JavaPlugin {
     private KolekcjonerNPC kolekcjonerNPC;
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
+    private RozpiskaCommand rozpiskaCommand;
     private ServerManager serverManager;
     private GornikNPC gornikNPC;
     private PrzyrodnikNPC przyrodnikNPC;
@@ -526,6 +531,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ChatCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BossyCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new RozpiskaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new OnlineCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PingCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RangiCommand());
@@ -675,6 +681,9 @@ public final class RPGCORE extends JavaPlugin {
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyInventoryClick(), this);
 
+        // ROZPISKA
+        this.getServer().getPluginManager().registerEvents(new RozpiskaInventoryClick(this), this);
+
         // LISTANPC
         this.getServer().getPluginManager().registerEvents(new ListaNPCInventoryClick(), this);
 
@@ -813,6 +822,7 @@ public final class RPGCORE extends JavaPlugin {
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager(this);
         this.adminPanelManager = new AdminPanelManager();
+        this.rozpiskaManager = new RozpiskaManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
@@ -1029,6 +1039,9 @@ public final class RPGCORE extends JavaPlugin {
     public PomocManager getPomocManager() {
         return pomocManager;
     }
+    public RozpiskaManager getRozpiskaManager() {
+        return rozpiskaManager;
+    }
 
     public MuteManager getMuteManager() {
         return muteManager;
@@ -1124,7 +1137,7 @@ public final class RPGCORE extends JavaPlugin {
     public RozbojnikManager getNajemnikManager() {
         return najemnikManager;
     }
-    public DowodcaRozbojnikow getWygnaniecManager() {
+    public DowodcaRozbojnikow getDowodcaRozbojnikow() {
         return wygnaniecManager;
     }
     // exp2

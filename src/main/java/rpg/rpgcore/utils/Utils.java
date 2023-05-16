@@ -69,6 +69,29 @@ public class Utils {
         lore.replaceAll(Utils::format);
         return lore;
     }
+    public static ItemStack powrot() {
+        return new ItemBuilder(Material.SKULL_ITEM, 1, (short)3).setSkullOwnerByURL(
+                "25a86f8d-7901-4ff9-b742-40f8fef19db0",
+                "skin1c0c662d",
+                "ewogICJ0aW1lc3RhbXAiIDogMTY4NDA4NzkxNzg3NSwKICAicHJvZmlsZUlkIiA6ICI0OW" +
+                        "IzODUyNDdhMWY0NTM3YjBmN2MwZTFmMTVjMTc2NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJi" +
+                        "Y2QyMDMzYzYzZWM0YmY4IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidG" +
+                        "V4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4d" +
+                        "HVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzIwY2ZiNGYzN2NjZWZkMDU4OWM1NTc4YjU0" +
+                        "MWU3YWY5MjNlM2U2NDIwYWRhNmJlNDQzZGZhZGNiMDViYWUxOTQiLAogICAgICAibWV0YWR" +
+                        "hdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==",
+                "abFP3xIqv1suUFfHx0FRPkTaT9fP4c+F2kUAASAtariuJiL6n3tPF6AtI67lntin9NWz" +
+                        "WBjMLZPLS4mS06dJRuGepzBMm9aC+XXGzssmiWKfnOmJ+MCdqnwFbfQSvW/ObELFpSwJsK" +
+                        "IzsRAQNp/ZIoE/PcOeTpQ6thwCBIAYVRW6eaPe7IP69E7fw8e/B7H7X98C9TVyRCPY/aEP" +
+                        "SX1eLSxqFW6+IyAgt/PZ4MAkutBQXOHs19H0Wgr32UMgGiAjLNmu+S/hrAYI1pHwI87kQ6V" +
+                        "7K/p62a5qckZW+832pcHHNUVsibIE1kAYKcSdBljS9Kd1wrgMUOm3nZFM3EK4CYP3P/+7o" +
+                        "75izbmpR2DQO7+kKXtHyyixdFDquSwN/jjpPIRyN/Akya8iULSxXUGH23J9V+3RkQMfdCM" +
+                        "YnC53gT7J82ySbGjUWme6z+ByooNOc27viYpeSkNP8U1EuH26QiLlm0GXnEzfHaTbHfV+W" +
+                        "4vquxZlZs4aBK4A45YZGKg7Kh+GcYfx7ItB6VjlggNhYAvRjR0Xlo3TGbRxgN2YBvSUGo2" +
+                        "O6li3WrbbKSXhTox35rp524h7COOgXYhHyO7s9b4e443ec683vYyavJSyo0xADo+Co4s4x" +
+                        "mGsAiT8UQ65FacLPCnLEnJS0KJl7GWfANAH60R3+vfadQxfgL4CpTI="
+        ).setName("&cPowrot").toItemStack().clone();
+    }
     public static String permisje(final String perm) {
         return format(SERVERNAME + "&6Nie masz wystarczajacych permisji &8(&6" + perm + "&8)");
     }

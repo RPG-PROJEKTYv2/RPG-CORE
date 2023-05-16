@@ -12,7 +12,6 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 

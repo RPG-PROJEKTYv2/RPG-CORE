@@ -10,12 +10,8 @@ import rpg.rpgcore.utils.Utils;
 
 public class BossyInventoryClick implements Listener {
 
-
-    public BossyInventoryClick() {
-    }
-
     @EventHandler(priority = EventPriority.LOWEST)
-    public void duszologInventoryClick(final InventoryClickEvent e) {
+    public void bossycmdInventoryClick(final InventoryClickEvent e) {
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;

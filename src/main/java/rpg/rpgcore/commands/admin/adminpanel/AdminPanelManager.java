@@ -46,7 +46,8 @@ public class AdminPanelManager {
 
         gui.setItem(44, new ItemBuilder(Material.FIREBALL).setName("&b&lKomendy Administracyjne").setLore(Arrays.asList("",
                 "&8* &f/level <gracz> setlvl/setexp/setprocent <wartosc>",
-                "&8* &f/rozdaj <all/jeden>"
+                "&8* &f/rozdaj <all/jeden>",
+                "&8* &f/pserver <podserver>"
         )).addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }

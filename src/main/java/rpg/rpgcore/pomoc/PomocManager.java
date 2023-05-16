@@ -57,6 +57,7 @@ public class PomocManager {
         gui.setItem(25, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/sprawdzefekty <gracz>").addGlowing().toItemStack().clone());
         gui.setItem(26, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e[item] &f- interakcja gui z chatem").addGlowing().toItemStack().clone());
         gui.setItem(27, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/ranktime").addGlowing().toItemStack().clone());
+        gui.setItem(28, new ItemBuilder(Material.DEAD_BUSH, 1).setName("&e/rozpiska").addGlowing().toItemStack().clone());
 
 
         gui.setItem(35, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
