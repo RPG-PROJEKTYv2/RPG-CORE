@@ -113,13 +113,13 @@ public class LvlManager {
         double aktualnyExpGracza = user.getExp();
         final double expNaNextLvlGracza = this.getExpForLvl(nextLvlGracza);
 
-
-        aktualnyExpGracza += expDoDodania;
+        final boolean check = checkPlayer(mob, user.getLvl());
+        if (check) aktualnyExpGracza += expDoDodania;
 
         final double expDoDodaniaL = expDoDodania;
         final double aktualnyExpGraczaL = aktualnyExpGracza;
 
-        if (!checkPlayer(mob, user.getLvl())) {
+        if (!check) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+0.0 exp &8(&e" + DoubleUtils.round((aktualnyExpGraczaL / expNaNextLvlGracza) * 100, 2) + "%&8) &8| &2+ " + Utils.spaceNumber(String.format("%.2f", kasa)) + "$ &8&8[&6EXP&8]"));
             return;
         }

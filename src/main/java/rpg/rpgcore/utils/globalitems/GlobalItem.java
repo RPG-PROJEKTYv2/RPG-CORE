@@ -2,7 +2,6 @@ package rpg.rpgcore.utils.globalitems;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.managers.miecze.SwordType;
@@ -70,15 +69,20 @@ public enum GlobalItem {
             "&8twojego bonusu doswiadczenia o &650%"
     )).addTagDouble("exp", 50).addTagString("time", "1h").addGlowing().toItemStack().clone()),
 
-    // MIKSTURA MEDYKA
-    I56("I56", new ItemBuilder(Material.POTION).setName("&5Metna Mikstura Medyka").setLore(Arrays.asList("&8Mikstura ta jest niezdatna do picia.")).addFlag(ItemFlag.HIDE_POTION_EFFECTS).toItemStack().clone()),
-    I57("I57", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4Fragment Serca").setLore(Arrays.asList("&8Chyba Medyk tego potrzebuje...")).toItemStack().clone()),
     // ZNISZCZONE RUBINOWE SERCE (MEDRZEC ITEM)
     ZNISZCZONE_RUBINOWE_SERCE("ZNISZCZONE_RUBINOWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&cZniszczone Rubinowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
+    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&bZniszczone Szafirowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
     RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
             "i otrzymasz &c0.5❤"
+    )).addGlowing().toItemStack().clone()),
+    SZAFIROWE_SERCE("SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&b&lSzafirowe Serce").setLore(Arrays.asList(
+            "&8Wykute przez Medrca wedlug pradawnej receptury",
+            "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
+            "i otrzymasz &c0.5❤.",
+            "",
+            "&Mozna uzyc dopiero po uzyskaniu &c10❤ &8od Medrca"
     )).addGlowing().toItemStack().clone()),
     // SAKWA?
     SAKWA("SAKWA", new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&8✦&eSakiewka&8✦").toItemStack().clone()),
@@ -131,7 +135,7 @@ public enum GlobalItem {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(itemMeta.getDisplayName().replace("value", String.valueOf(value)));
         itemStack.setItemMeta(itemMeta);
-        return new ItemBuilder(itemStack.clone()).addTagInt("value", value).toItemStack();
+        return new ItemBuilder(itemStack.clone()).addTagInt("value", value).toItemStack().clone();
     }
 
     public static ItemStack getPercentSword(final SwordType swordType, final int percent) {

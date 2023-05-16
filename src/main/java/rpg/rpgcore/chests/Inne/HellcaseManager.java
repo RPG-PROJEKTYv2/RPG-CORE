@@ -23,10 +23,10 @@ public class HellcaseManager {
         this.hellcase.add(new Items("4", 12.0 , ItemHelper.createArmor("&c&lPiekielne Buty", Material.IRON_BOOTS, 33, 7), 1));
         this.hellcase.add(new Items("5", 8.0, ItemHelper.createSword("&4&lPiekielny Miecz", Material.IRON_SWORD, 40, 10, true), 1));
         // WALUTA
-        this.hellcase.add(new Items("6", 4.0, GlobalItem.getHells(5),1));
-        this.hellcase.add(new Items("7", 3.0, GlobalItem.getHells(10),1));
-        this.hellcase.add(new Items("8", 1.0, GlobalItem.getHells(20),1));
-        this.hellcase.add(new Items("9", 0.1, GlobalItem.getHells(30),1));
+        this.hellcase.add(new Items("6", 10.0, GlobalItem.getHells(5),1));
+        this.hellcase.add(new Items("7", 8.5, GlobalItem.getHells(10),1));
+        this.hellcase.add(new Items("8", 6.0, GlobalItem.getHells(20),1));
+        this.hellcase.add(new Items("9", 4.5, GlobalItem.getHells(30),1));
         // SKRZYNKA
         this.hellcase.add(new Items("10", 5.0, GlobalItem.getItem("I6",1), 2));
 

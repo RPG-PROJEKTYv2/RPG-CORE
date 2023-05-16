@@ -10,7 +10,7 @@ import rpg.rpgcore.utils.globalitems.ItemShop;
 
 public enum OsMoby {
     M1(1, 0, 300, AkcesoriaPodsHelper.createTarcza(8, 3, 2, 9, "&dTarcza Pogromcy Potworow").clone()),
-    M2(2, 1, 1_000, GlobalItem.getItem("I5", 64).clone()),
+    M2(2, 1, 1_000, GlobalItem.getItem("I5", 16).clone()),
     M3(3, 2, 3_000, ItemHelper.createSword("&dMiecz Pogromcy Potworow", Material.GOLD_SWORD, 22, 5, false).clone()),
     M4(4, 3, 10_000, GlobalItem.getItem("I6", 3).clone()),
     M5(5, 4, 25_000, GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()),

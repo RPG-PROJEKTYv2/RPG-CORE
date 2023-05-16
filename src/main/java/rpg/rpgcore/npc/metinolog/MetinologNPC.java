@@ -107,9 +107,9 @@ public class MetinologNPC {
 
     public ItemStack getStatystyki(final MetinologUser ms) {
         return new ItemBuilder(Material.PAPER).setName("&6&lStatystyki").setLore(Arrays.asList(
-                "&7Dodatkowe Obrazenia: &c" + ms.getPrzeszycie(),
+                "&7Dodatkowe Obrazenia: &c" + ms.getDodatkowedmg(),
                 "&7Srednia Odpornosc: &c" + ms.getSrOdpo(),
-                "&7Przeszycie Bloku Ciosu: &c" + ms.getDodatkowedmg())).hideFlag().toItemStack().clone();
+                "&7Przeszycie Bloku Ciosu: &c" + ms.getPrzeszycie())).hideFlag().toItemStack().clone();
     }
 
     public void add(MetinologObject metinologObject) {

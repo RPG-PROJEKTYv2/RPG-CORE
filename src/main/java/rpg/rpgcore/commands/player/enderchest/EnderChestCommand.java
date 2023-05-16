@@ -55,7 +55,7 @@ public class EnderChestCommand extends CommandAPI {
             return;
         }
         if (user.getRankPlayerUser().getRankType().getPriority() < RankTypePlayer.VIP.getPriority()) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ta komenda jest przeznaczona dla graczy z ranga &6&lS&e&lvip&7 lub wyzsza!"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Ta komenda jest przeznaczona dla graczy z ranga &e&lVip&7 lub wyzsza!"));
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&5Enderchesty &7mozesz znalezc na spawnie."));
             return;
         }

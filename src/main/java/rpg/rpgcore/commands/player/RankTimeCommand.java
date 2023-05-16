@@ -27,7 +27,7 @@ public class RankTimeCommand extends CommandAPI {
 
         if (user.getRankPlayerUser().getRankType() == RankTypePlayer.GRACZ) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz rangi!"));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Mozesz ja zakupic na naszej stronie www.hellrpg.pl"));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Mozesz ja zakupic na naszej stronie &6&nwww.hellrpg.pl"));
             return;
         }
 

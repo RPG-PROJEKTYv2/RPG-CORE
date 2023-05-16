@@ -5,7 +5,7 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public enum WyslannikMissionOpen {
 
-    M1(1, "&8Skrzynia Najemnika",12, GlobalItem.getItem("I4", 1)),
+    M1(1, "&6Skrzynia Rozbojnika",12, GlobalItem.getItem("I4", 1)),
     M2(2, "&2Skrzynia Goblina",20, GlobalItem.getItem("I4", 1)),
     M3(3, "&7Skrzynia Goryla",25, GlobalItem.getItem("I4", 1)),
     M4(4, "&8Skrzynia Zjawy",32, GlobalItem.getItem("I4", 2)),

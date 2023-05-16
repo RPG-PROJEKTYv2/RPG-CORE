@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
@@ -294,5 +295,16 @@ public class MetinyHelper {
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(player.getUniqueId(), RPGCORE.getInstance().getUserManager().find(player.getUniqueId())));
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
         player.sendMessage(Utils.format("&2+ &a" + DoubleUtils.round((kasaToAdd * mnozik), 2) + "&2$"));
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.00002))) {
+            MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_5.getBon().clone(), 100, true, true, entity);
+            Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lZAGINIONYCH &bprzedmiotow!"));
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.00005))) {
+            MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_3.getBon().clone(), 100, true, true, entity);
+            Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.0001))) {
+            MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_2.getBon().clone(), 100, true, true, entity);
+            Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
+        }
     }
 }

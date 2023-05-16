@@ -7,7 +7,7 @@ import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public enum WyslannikMissionKillBoss {
-    M1(1, "&8[&4&lBOSS&8] &9&lKrol Wygnancow", 2, ItemHelper.createSword("&dSlaby Miecz Wyslannika", Material.WOOD_SWORD, 3, 2, false)),
+    M1(1, "&8[&4&lBOSS&8] &c&lDowodca Rozbojnikow", 2, ItemHelper.createSword("&dSlaby Miecz Wyslannika", Material.WOOD_SWORD, 2, 2, false)),
     M2(2, "&8[&4&lBOSS&8] &a&lWodz Goblinow", 2, GlobalItem.getItem("I4", 1)),
     M3(3, "&8[&4&lBOSS&8] &f&lKrol Goryli", 1, ItemHelper.createSword("&cOstry Miecz", Material.STONE_SWORD, 9, 4, false)),
     M4(4, "&8[&4&lBOSS&8] &7&lPrzekleta Dusza", 1, GlobalItem.getItem("I4", 2)),

@@ -128,10 +128,10 @@ public class MagazynierNPC {
         gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&bOdblokowanie magazynu").setLore(Arrays.asList(
                 "&8Oblokownuje kolejny magazyn",
                 "&7Cena: &b1 000 punktow"
-        )).addTagInt("price", 0).addGlowing().toItemStack()); //1_000
+        )).addTagInt("price", 1_000).addGlowing().toItemStack());
         gui.setItem(1, new ItemBuilder(Material.COMMAND).setName("&cOdblokowanie komendy /magazyny").setLore(Arrays.asList(
                 "&7Cena: &b15 000 punktow"
-        )).addTagInt("price", 0).addGlowing().toItemStack()); //15_000
+        )).addTagInt("price", 15_000).addGlowing().toItemStack());
         player.openInventory(gui);
     }
 

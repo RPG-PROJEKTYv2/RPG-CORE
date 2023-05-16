@@ -77,10 +77,13 @@ public class MobDropHelper {
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1.5), true, true, entity);
         // FRAGMENT STALI
-        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.035), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.015), true, true, entity);
 
-        if (rpgcore.getMedrzecNPC().find(uuid).getBonus() < 40) {
-            addDropPlayer(player, GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), getDropChance(szczescie, 0.01), true, true, entity);
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+        if (medrzecBonus < 20) {
+            addDropPlayer(player, GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), getDropChance(szczescie, 0.05), true, true, entity);
+        } else if (medrzecBonus < 40) {
+            addDropPlayer(player, GlobalItem.getItem("ZNISZCZONE_SZAFIROWE_SERCE", 1), getDropChance(szczescie, 0.015), true, true, entity);
         }
 
 
@@ -524,7 +527,7 @@ public class MobDropHelper {
         rpgcore.getLvlManager().updateExp(player, entityName);
     }
 
-    private static double getDropChance(int szczescie, double chance) {
+    public static double getDropChance(int szczescie, double chance) {
         return DoubleUtils.round(chance + ((chance * szczescie) / 1000.0), 2);
     }
 }

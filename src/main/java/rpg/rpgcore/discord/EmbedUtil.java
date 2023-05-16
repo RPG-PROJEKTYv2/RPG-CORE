@@ -3,6 +3,7 @@ package rpg.rpgcore.discord;
 import com.google.common.collect.Multimap;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -132,11 +133,12 @@ public class EmbedUtil {
         final StringBuilder sb = new StringBuilder();
         sb.append("\n**Lista przedmiotow:**\n");
 
-        for (final ItemStack itemStack : itemList) {
-            sb.append("**").append(Utils.removeColor(itemStack.getItemMeta().getDisplayName())).append("**\n");
-            if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+        for (final ItemStack item : itemList) {
+            if (item == null || item.getType() == Material.AIR || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) continue;
+            sb.append("**").append(Utils.removeColor(item.getItemMeta().getDisplayName())).append("**\n");
+            if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
                 sb.append("Opis:\n");
-                for (final String lore : itemStack.getItemMeta().getLore()) {
+                for (final String lore : item.getItemMeta().getLore()) {
                     sb.append("- ").append(Utils.removeColor(lore)).append("\n");
                 }
             }

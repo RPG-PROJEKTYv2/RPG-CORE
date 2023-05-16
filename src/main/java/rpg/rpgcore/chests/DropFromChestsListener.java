@@ -56,16 +56,16 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
+                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
+                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+                        }
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
-                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -74,6 +74,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -83,7 +84,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -92,6 +92,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -101,7 +102,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -110,6 +110,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I6", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -124,7 +125,6 @@ public class DropFromChestsListener implements Listener {
                         }*/
 
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -133,6 +133,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I4", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -147,7 +148,6 @@ public class DropFromChestsListener implements Listener {
                             Bukkit.broadcastMessage(" ");
                         }
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -156,6 +156,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -164,7 +165,6 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         player.getInventory().addItem(item);
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
                 }
@@ -172,6 +172,7 @@ public class DropFromChestsListener implements Listener {
               if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -184,7 +185,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         player.getInventory().addItem(item);
                         player.sendMessage(Utils.format("&8[&2+&8] &61x " + item.getItemMeta().getDisplayName()));
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         return;
                     }
                 }
@@ -197,6 +197,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I1", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -239,7 +240,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -248,6 +248,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I2", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -260,7 +261,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -271,6 +271,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I3", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -315,7 +316,6 @@ public class DropFromChestsListener implements Listener {
 
 
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -324,6 +324,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I4", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -336,7 +337,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -346,6 +346,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I6", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -358,7 +359,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -367,6 +367,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I5", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -410,7 +411,6 @@ public class DropFromChestsListener implements Listener {
                         }
 
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -420,6 +420,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I8").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I8", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -432,7 +433,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -441,6 +441,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I7").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I7", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -482,7 +483,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -492,6 +492,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I10").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I10", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -504,7 +505,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -513,6 +513,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I9").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I9", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -555,7 +556,6 @@ public class DropFromChestsListener implements Listener {
                                 break;
                         }
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -565,6 +565,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I12").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I12", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -577,7 +578,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -587,6 +587,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I14").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I14", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -599,7 +600,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -608,6 +608,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I13").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I13", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -617,7 +618,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -627,6 +627,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I16").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I16", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -639,7 +640,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -648,6 +648,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I15").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I15", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -657,7 +658,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -667,6 +667,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I17").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I17", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -676,7 +677,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -686,6 +686,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I19").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I19", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -695,7 +696,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -705,6 +705,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I21").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I21", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -714,7 +715,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -724,6 +724,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I23").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I23", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -733,7 +734,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                         return;
                     }
@@ -743,6 +743,7 @@ public class DropFromChestsListener implements Listener {
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I25").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I25", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
@@ -752,7 +753,6 @@ public class DropFromChestsListener implements Listener {
                         }
                         ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         player.getInventory().addItem(is);
                     }
                 }

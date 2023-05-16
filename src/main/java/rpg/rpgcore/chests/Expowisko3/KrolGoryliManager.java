@@ -15,19 +15,19 @@ public class KrolGoryliManager {
     private final Set<Items> krolgoryli = Sets.newConcurrentHashSet();
 
     public KrolGoryliManager() {
-        this.krolgoryli.add(new Items("1", 10.0, ItemHelper.createArmor("&f&lHelm Krola Goryli", Material.GOLD_HELMET, 17, 4), 1));
-        this.krolgoryli.add(new Items("2", 10.0, ItemHelper.createArmor("&f&lZbroja Krola Goryli", Material.GOLD_CHESTPLATE, 20, 5), 1));
-        this.krolgoryli.add(new Items("3", 10.0, ItemHelper.createArmor("&f&lSpodnie Krola Goryli", Material.GOLD_LEGGINGS, 13, 3), 1));
-        this.krolgoryli.add(new Items("4", 10.0, ItemHelper.createArmor("&f&lButy Krola Goryli", Material.GOLD_BOOTS, 13, 3), 1));
+        this.krolgoryli.add(new Items("1", 12.0, ItemHelper.createArmor("&f&lHelm Krola Goryli", Material.GOLD_HELMET, 17, 4), 1));
+        this.krolgoryli.add(new Items("2", 12.0, ItemHelper.createArmor("&f&lZbroja Krola Goryli", Material.GOLD_CHESTPLATE, 20, 5), 1));
+        this.krolgoryli.add(new Items("3", 12.0, ItemHelper.createArmor("&f&lSpodnie Krola Goryli", Material.GOLD_LEGGINGS, 13, 3), 1));
+        this.krolgoryli.add(new Items("4", 12.0, ItemHelper.createArmor("&f&lButy Krola Goryli", Material.GOLD_BOOTS, 13, 3), 1));
         this.krolgoryli.add(new Items("5", 9.0, ItemHelper.createSword("&f&lMiecz Krola Goryli", Material.GOLD_SWORD, 10, 4,false), 1));
-        this.krolgoryli.add(new Items("6", 7.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lZwykly Naszyjnik Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("7", 7.0, new ItemBuilder(Material.WATCH).setName("&f&lZwykly Diadem Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("8", 7.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lZwykly Pierscien Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("9", 7.0, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lZwykla Tarcza Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("10", 0.5, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lUlepszony Naszyjnik Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("11", 0.5, new ItemBuilder(Material.WATCH).setName("&f&lUlepszony Diadem Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("12", 0.5, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lUlepszony Pierscien Krola Goryli").toItemStack(),1 ));
-        this.krolgoryli.add(new Items("13", 0.5, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lUlepszona Tarcza Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("6", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lZwykly Naszyjnik Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&f&lZwykly Diadem Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lZwykly Pierscien Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lZwykla Tarcza Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("10", 1.5, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lUlepszony Naszyjnik Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("11", 1.5, new ItemBuilder(Material.WATCH).setName("&f&lUlepszony Diadem Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("12", 1.5, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lUlepszony Pierscien Krola Goryli").toItemStack(),1 ));
+        this.krolgoryli.add(new Items("13", 1.5, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lUlepszona Tarcza Krola Goryli").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -16,16 +16,16 @@ public class MitycznyKrakenManager {
     private final Set<Items> mitycznykraken = Sets.newConcurrentHashSet();
 
     public MitycznyKrakenManager() {
-        this.mitycznykraken.add(new Items("1", 8.0, ItemHelper.createArmor("&b&lHelm Mitycznego Krakena", Material.IRON_HELMET, 75, 17), 1));
-        this.mitycznykraken.add(new Items("2", 8.0, ItemHelper.createArmor("&b&lZbroja Mitycznego Krakena", Material.IRON_CHESTPLATE, 78, 18), 1));
-        this.mitycznykraken.add(new Items("3", 8.0, ItemHelper.createArmor("&b&lSpodnie Mitycznego Krakena", Material.IRON_LEGGINGS, 78, 17), 1));
-        this.mitycznykraken.add(new Items("4", 8.0, ItemHelper.createArmor("&b&lButy Mitycznego Krakena", Material.IRON_BOOTS, 72, 17), 1));
-        this.mitycznykraken.add(new Items("5", 6.0, ItemHelper.createSword("&b&lMiecz Mitycznego Krakena", Material.IRON_SWORD, 50, 40,false), 1));
-        this.mitycznykraken.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lNaszyjnik Mitycznego Krakena").toItemStack(),1 ));
-        this.mitycznykraken.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&b&lDiadem Mitycznego Krakena").toItemStack(),1 ));
-        this.mitycznykraken.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lPierscien Mitycznego Krakena").toItemStack(),1 ));
-        this.mitycznykraken.add(new Items("9", 2.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lTarcza Mitycznego Krakena").toItemStack(),1 ));
-        this.mitycznykraken.add(new Items("10", 2.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lKolczyki Mitycznego Krakena").toItemStack(),1 ));
+        this.mitycznykraken.add(new Items("1", 10.0, ItemHelper.createArmor("&b&lHelm Mitycznego Krakena", Material.IRON_HELMET, 75, 17), 1));
+        this.mitycznykraken.add(new Items("2", 10.0, ItemHelper.createArmor("&b&lZbroja Mitycznego Krakena", Material.IRON_CHESTPLATE, 78, 18), 1));
+        this.mitycznykraken.add(new Items("3", 10.0, ItemHelper.createArmor("&b&lSpodnie Mitycznego Krakena", Material.IRON_LEGGINGS, 78, 17), 1));
+        this.mitycznykraken.add(new Items("4", 10.0, ItemHelper.createArmor("&b&lButy Mitycznego Krakena", Material.IRON_BOOTS, 72, 17), 1));
+        this.mitycznykraken.add(new Items("5", 8.0, ItemHelper.createSword("&b&lMiecz Mitycznego Krakena", Material.IRON_SWORD, 50, 40,false), 1));
+        this.mitycznykraken.add(new Items("6", 3.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lNaszyjnik Mitycznego Krakena").toItemStack(),1 ));
+        this.mitycznykraken.add(new Items("7", 3.0, new ItemBuilder(Material.WATCH).setName("&b&lDiadem Mitycznego Krakena").toItemStack(),1 ));
+        this.mitycznykraken.add(new Items("8", 3.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lPierscien Mitycznego Krakena").toItemStack(),1 ));
+        this.mitycznykraken.add(new Items("9", 3.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lTarcza Mitycznego Krakena").toItemStack(),1 ));
+        this.mitycznykraken.add(new Items("10", 3.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lKolczyki Mitycznego Krakena").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

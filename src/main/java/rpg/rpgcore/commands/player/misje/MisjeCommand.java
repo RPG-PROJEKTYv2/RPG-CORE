@@ -121,7 +121,11 @@ public class MisjeCommand extends CommandAPI {
         gui.setItem(12, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
 
         gui.setItem(21, new ItemBuilder(Material.HOPPER).setName("&c&lLesnik").toItemStack());
-        gui.setItem(30, rpgcore.getLesnikNPC().getCurrentMissionItem(rpgcore.getLesnikNPC().find(targetUUID).getUser()));
+        if (user.getLvl() >= 30) {
+            gui.setItem(30, rpgcore.getLesnikNPC().getCurrentMissionItem(rpgcore.getLesnikNPC().find(targetUUID).getUser()));
+        } else {
+            gui.setItem(30, new ItemBuilder(Material.BARRIER).setName("&6&lOsiagnij 30 poziom, zeby odblokowac").toItemStack());
+        }
 
         // PIATY RZAD
         gui.setItem(4, new ItemBuilder(Material.HOPPER).setName("&c&lDuszolog").toItemStack());

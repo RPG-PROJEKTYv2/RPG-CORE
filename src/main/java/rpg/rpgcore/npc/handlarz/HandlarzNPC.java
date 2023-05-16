@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class HandlarzNPC {
+public class  HandlarzNPC {
     private final Map<UUID, HandlarzUser> userMap;
 
     private final Map<UUID, Multimap<ItemStack, Double>> userItemMap = new HashMap<>();
@@ -105,14 +105,14 @@ public class HandlarzNPC {
         gui.setItem(12, addPrice(ItemShop.IS11.getItems().get(0), 150));
 
         // PELERYNKI
-        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0), 650));
-        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0), 1300));
+        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0), 750));
+        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0), 1350));
 
         // ELITA
-        gui.setItem(19, addPrice(ItemShop.IS12.getItems().get(0), 150));
-        gui.setItem(20, addPrice(ItemShop.IS13.getItems().get(0), 195));
+        gui.setItem(19, addPrice(ItemShop.IS12.getItems().get(0), 80));
+        gui.setItem(20, addPrice(ItemShop.IS13.getItems().get(0), 150));
         gui.setItem(21, addPrice(ItemShop.IS14.getItems().get(0), 280));
-        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0), 400));
+        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0), 500));
 
         // PDKI
         gui.setItem(37, addPrice(GlobalItem.getItem("I52", 1), 25));

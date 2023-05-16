@@ -32,16 +32,27 @@ public class MedrzecNPC {
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, fill);
         }
-
-        gui.setItem(1, new ItemBuilder(Material.WORKBENCH).setName("&6Wytworz Rubinowe Serce").setLore(Arrays.asList(
-                "&7Koszt:",
-                "  &8- &e4x &cZniszczone Rubinowe Serce",
-                "  &8- &61 000 000&2$"
-        )).toItemStack());
-        gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lInformacje").setLore(Arrays.asList(
-                "&7Aktualny bonus: &e" + DoubleUtils.round(medrzecUser.getBonus() / 2.0, 2) + "❤",
-                "&7Szansa na znalezienie Serca: &e0.01%"
-        )).toItemStack().clone());
+        if (medrzecUser.getBonus() < 20) {
+            gui.setItem(1, new ItemBuilder(Material.WORKBENCH).setName("&6Wytworz Rubinowe Serce").setLore(Arrays.asList(
+                    "&7Koszt:",
+                    "  &8- &e4x &cZniszczone Rubinowe Serce",
+                    "  &8- &61 000 000&2$"
+            )).toItemStack());
+            gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lInformacje").setLore(Arrays.asList(
+                    "&7Aktualny bonus: &e" + DoubleUtils.round(medrzecUser.getBonus() / 2.0, 2) + "❤",
+                    "&7Szansa na znalezienie Serca: &e" + DoubleUtils.round(0.05 + ((0.05 * RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0), 2) + "%"
+            )).toItemStack().clone());
+        } else {
+            gui.setItem(1, new ItemBuilder(Material.WORKBENCH).setName("&6Wytworz Szafirowe Serce").setLore(Arrays.asList(
+                    "&7Koszt:",
+                    "  &8- &e4x &bZniszczone Szafirowe Serce",
+                    "  &8- &62 500 000&2$"
+            )).toItemStack());
+            gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lInformacje").setLore(Arrays.asList(
+                    "&7Aktualny bonus: &e" + DoubleUtils.round(medrzecUser.getBonus() / 2.0, 2) + "❤",
+                    "&7Szansa na znalezienie Serca: &e" + DoubleUtils.round(0.015 + ((0.015 * RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0), 2) + "%"
+            )).toItemStack().clone());
+        }
 
         player.openInventory(gui);
     }

@@ -2,11 +2,14 @@ package rpg.rpgcore.chat;
 
 import com.google.common.collect.ImmutableSet;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -226,16 +229,23 @@ public class ChatManager {
         }
     }
 
-    public String getEnchantemntLvlForEQ(final Player player) {
-        return " &8[&3&lP: &b" + Utils.getProtectionLevel(player.getInventory().getHelmet()) +
-                "&b/" + Utils.getProtectionLevel(player.getInventory().getChestplate()) +
-                "&b/" + Utils.getProtectionLevel(player.getInventory().getLeggings()) +
-                "&b/" + Utils.getProtectionLevel(player.getInventory().getBoots()) +
-                " &3&lT: &b " + Utils.getThornsLevel(player.getInventory().getHelmet()) +
-                "&b/" + Utils.getThornsLevel(player.getInventory().getChestplate()) +
-                "&b/" + Utils.getThornsLevel(player.getInventory().getLeggings()) +
-                "&b/" + Utils.getThornsLevel(player.getInventory().getBoots()) +
-                "&8]&7";
+    public TextComponent getPlayerArmor(final Player player) {
+        final TextComponent helm = new TextComponent(Utils.format("&8[&bHelm&8]"));
+        helm.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getInventory().getHelmet()).save(new NBTTagCompound()).toString()).create()));
+        final TextComponent zbroja = new TextComponent(Utils.format("&8[&cZbroja&8]"));
+        zbroja.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getInventory().getChestplate()).save(new NBTTagCompound()).toString()).create()));
+        final TextComponent spodnie = new TextComponent(Utils.format("&8[&aSpodnie&8]"));
+        spodnie.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getInventory().getLeggings()).save(new NBTTagCompound()).toString()).create()));
+        final TextComponent buty = new TextComponent(Utils.format("&8[&6Buty&8]"));
+        buty.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getInventory().getBoots()).save(new NBTTagCompound()).toString()).create()));
+        helm.addExtra(" ");
+        helm.addExtra(zbroja);
+        helm.addExtra(" ");
+        helm.addExtra(spodnie);
+        helm.addExtra(" ");
+        helm.addExtra(buty);
+        System.out.println(helm.toPlainText());
+        return helm;
     }
 
     public RankType getRankReqForChat() {

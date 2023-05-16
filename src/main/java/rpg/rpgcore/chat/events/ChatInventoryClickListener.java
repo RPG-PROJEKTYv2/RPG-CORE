@@ -74,7 +74,7 @@ public class ChatInventoryClickListener implements Listener {
 
                     String itemName = player.getItemInHand().getType().name();
 
-                    if (player.getItemInHand().getItemMeta().getDisplayName() != null) {
+                    if (player.getItemInHand().getItemMeta().hasDisplayName()) {
                         itemName = player.getItemInHand().getItemMeta().getDisplayName();
                     }
 
@@ -117,22 +117,26 @@ public class ChatInventoryClickListener implements Listener {
                         player.closeInventory();
                         return;
                     }
+
+                    final TextComponent zbroja = rpgcore.getChatManager().getPlayerArmor(player);
+                    finalMessage = new StringBuilder();
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
+                        formatPrzed.addExtra(zbroja);
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
+                            formatPrzed.addExtra(Utils.format("&f" + Utils.removeColor(msg.get(0))));
+                            formatPrzed.addExtra(zbroja);
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" ").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(rpgcore.getChatManager().getEnchantemntLvlForEQ(player)));
+                            formatPrzed.addExtra(msg.get(0));
                             for (int i = 1; i < msg.size(); i++) {
-                                finalMessage = new StringBuilder(Utils.format(finalMessage + " " + color + msg.get(i)));
+                                finalMessage.append(" ").append(color).append(msg.get(i));
                             }
                         }
                     }
-                    formatPrzed.addExtra(finalMessage.toString());
+                    formatPrzed.addExtra(Utils.format(finalMessage.toString()));
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }

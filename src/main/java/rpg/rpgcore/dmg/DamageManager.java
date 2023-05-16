@@ -379,16 +379,12 @@ public class DamageManager {
     }
 
     public double calculatePlayerThornsDmg(final Player victim, final Entity attacker) {
-        if (attacker instanceof Creature || attacker instanceof Monster) {
-            final UUID uuid = victim.getUniqueId();
+        if (attacker instanceof Creature) {
             double thornsDmg = 0;
-            double mnoznik = 100;
+            double mnoznik = 0.1;
 
             thornsDmg += calculatePlayerThorns(victim);
 
-            if (thornsDmg < 15) {
-                mnoznik = 0.1;
-            }
             if (thornsDmg > 15) {
                 mnoznik = 0.13;
             }
@@ -418,11 +414,11 @@ public class DamageManager {
         if (attacker instanceof Player) {
             final UUID uuid = victim.getUniqueId();
             final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-            double thornsDmg = 0;
+            double thornsDmg = this.calculatePlayerThorns(victim);
             double mnoznik = 100;
 
             mnoznik += bonuses.getSrednieobrazenia();
-            mnoznik += bonuses.getSilnynapotwory();
+            mnoznik += bonuses.getSilnynaludzi();
             mnoznik -= bonuses.getMinussrednieobrazenia();
             mnoznik -= bonuses.getMinusobrazenianamoby();
             thornsDmg += bonuses.getDodatkoweobrazenia();
@@ -433,18 +429,7 @@ public class DamageManager {
                 mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
             }
 
-            if (victim.getInventory().getHelmet() != null) {
-                thornsDmg += Utils.getTagInt(victim.getInventory().getHelmet(), "thorns");
-            }
-            if (victim.getInventory().getChestplate() != null) {
-                thornsDmg += Utils.getTagInt(victim.getInventory().getChestplate(), "thorns");
-            }
-            if (victim.getInventory().getLeggings() != null) {
-                thornsDmg += Utils.getTagInt(victim.getInventory().getLeggings(), "thorns");
-            }
-            if (victim.getInventory().getBoots() != null) {
-                thornsDmg += Utils.getTagInt(victim.getInventory().getBoots(), "thorns");
-            }
+
         }
         return 0;
     }
@@ -514,7 +499,7 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) /  (drugiMnoznik / 100);
+        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) /  (drugiMnoznik * 0.9 / 100);
 
 
         return DoubleUtils.round(finalDmg * 2, 3);

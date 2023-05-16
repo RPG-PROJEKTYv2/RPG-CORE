@@ -56,7 +56,7 @@ public class PrzyrodnikNPC {
                 "&7Srednia Odpornosc: &c" + missions.getDef() + "%",
                 "",
                 "&7Szansa na przyjecie: &e" + missions.getAcceptPercent() + "%",
-                "&7Postep: &6" + user.getProgress() + "&7/&6" + missions.getReqAmount() + "&8(&6" + DoubleUtils.round((user.getProgress() / (double) missions.getReqAmount() * 100.0), 2) + "%&8)")
+                "&7Postep: &6" + user.getProgress() + "&7/&6" + missions.getReqAmount() + " &8(&6" + DoubleUtils.round((user.getProgress() / (double) missions.getReqAmount() * 100.0), 2) + "%&8)")
         ).toItemStack().clone();
     }
 

@@ -15,11 +15,11 @@ public class MroznyWilkManager {
     private final Set<Items> mroznywilk = Sets.newConcurrentHashSet();
 
     public MroznyWilkManager() {
-        this.mroznywilk.add(new Items("1", 8.0, ItemHelper.createArmor("&fHelm Mroznego Wilka", Material.GOLD_HELMET, 28, 5), 1));
-        this.mroznywilk.add(new Items("2", 8.0, ItemHelper.createArmor("&fZbroja Mroznego Wilka", Material.IRON_CHESTPLATE, 32, 6), 1));
-        this.mroznywilk.add(new Items("3", 8.0, ItemHelper.createArmor("&fSpodnie Mroznego Wilka", Material.IRON_LEGGINGS, 30, 6), 1));
-        this.mroznywilk.add(new Items("4", 8.0, ItemHelper.createArmor("&fButy Mroznego Wilka", Material.GOLD_BOOTS, 28, 4), 1));
-        this.mroznywilk.add(new Items("5", 6.0, ItemHelper.createSword("&fWilczy Kiel", Material.GOLD_SWORD, 20, 14,false), 1));
+        this.mroznywilk.add(new Items("1", 18.0, ItemHelper.createArmor("&fHelm Mroznego Wilka", Material.GOLD_HELMET, 28, 5), 1));
+        this.mroznywilk.add(new Items("2", 18.0, ItemHelper.createArmor("&fZbroja Mroznego Wilka", Material.IRON_CHESTPLATE, 32, 6), 1));
+        this.mroznywilk.add(new Items("3", 18.0, ItemHelper.createArmor("&fSpodnie Mroznego Wilka", Material.IRON_LEGGINGS, 30, 6), 1));
+        this.mroznywilk.add(new Items("4", 18.0, ItemHelper.createArmor("&fButy Mroznego Wilka", Material.GOLD_BOOTS, 28, 4), 1));
+        this.mroznywilk.add(new Items("5", 16.0, ItemHelper.createSword("&fWilczy Kiel", Material.GOLD_SWORD, 20, 14,false), 1));
     }
 
     public Items getDrawnItems(final Player player) {

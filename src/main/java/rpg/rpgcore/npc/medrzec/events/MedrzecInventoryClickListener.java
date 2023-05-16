@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -41,14 +42,27 @@ public class MedrzecInventoryClickListener implements Listener {
 
             if (slot == 1) {
                 final User user = rpgcore.getUserManager().find(uuid);
-                if (!player.getInventory().containsAtLeast(GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), 4) || user.getKasa() < 1_000_000) {
-                    player.sendMessage(Utils.format("&4&lMedrzec &8>> &cCzy ty probujesz mnie oszukac?!"));
-                    player.closeInventory();
-                    return;
+                final MedrzecUser medrzecUser = rpgcore.getMedrzecNPC().find(uuid);
+                if (medrzecUser.getBonus() == 40) return;
+                if (medrzecUser.getBonus() < 20) {
+                    if (!player.getInventory().containsAtLeast(GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), 4) || user.getKasa() < 1_000_000) {
+                        player.sendMessage(Utils.format("&4&lMedrzec &8>> &cCzy ty probujesz mnie oszukac?!"));
+                        player.closeInventory();
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.ZNISZCZONE_RUBINOWE_SERCE.getItemStack().clone()).setAmount(4).toItemStack().clone());
+                    user.setKasa(user.getKasa() - 1_000_000);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
+                } else {
+                    if (!player.getInventory().containsAtLeast(GlobalItem.getItem("ZNISZCZONE_SZAFIROWE_SERCE", 1), 4) || user.getKasa() < 2_500_000) {
+                        player.sendMessage(Utils.format("&4&lMedrzec &8>> &cCzy ty probujesz mnie oszukac?!"));
+                        player.closeInventory();
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack().clone()).setAmount(4).toItemStack().clone());
+                    user.setKasa(user.getKasa() - 2_500_000);
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                 }
-                player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1).clone()).setAmount(4).toItemStack().clone());
-                user.setKasa(user.getKasa() - 1_000_000);
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
             }
         }
     }
