@@ -1133,7 +1133,7 @@ public class MongoManager {
     public Map<UUID, ChatUser> loadAllChatUsers() {
         Map<UUID, ChatUser> chat = new HashMap<>();
         for (Document document : this.pool.getChatUsers().find()) {
-            document.append("joinMessageEnabled", true).append("quitMessageEnabled", true);
+            document.append("dmgHologramsVisable", true);
             ChatUser chatUser = new ChatUser(document);
             chat.put(chatUser.getUuid(), chatUser);
         }

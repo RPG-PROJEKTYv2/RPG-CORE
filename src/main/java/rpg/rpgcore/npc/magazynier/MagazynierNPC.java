@@ -30,7 +30,16 @@ public class MagazynierNPC {
         gui.setItem(1, new ItemBuilder(Material.EMERALD).setName("&2&lSklep").setLore(Arrays.asList("&8Kupisz tu mozliwosc odblokowania", "&8nowych magazynow i wiele innych", "&8przydatnych rzeczy")).toItemStack());
         gui.setItem(2, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisje").toItemStack());
         gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
-        gui.setItem(4, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&4&lInformacje").setLore(Arrays.asList("&7Wykonuj &cmisje &7i zdobywaj", "&bpunkty&7, a pozniej wymieniaj", "&7je w &2Sklepie &7na &dnagrody", "&7Ale pamietaj:", "&4&lMISJE RESETUJA SIE CO 24H!")).toItemStack());
+        gui.setItem(4, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&4&lInformacje").setLore(Arrays.asList(
+                "&7Wykonuj &cmisje &7i zdobywaj",
+                "&bpunkty&7, a pozniej wymieniaj",
+                "&7je w &2Sklepie &7na &dnagrody",
+                " ",
+                "&7Ilosc posiadanych punktow: &b" + this.find(player.getUniqueId()).getPoints() + " pkt",
+                " ",
+                "&7Ale pamietaj:",
+                "&4&lMISJE RESETUJA SIE CO 24H!",
+                "&4&lMUSISZ KLIKNAC W MISJE, ZEBY JA WYBRAC!")).toItemStack());
 
         player.openInventory(gui);
     }

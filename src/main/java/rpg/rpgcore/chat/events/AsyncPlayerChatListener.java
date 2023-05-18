@@ -23,8 +23,6 @@ import java.util.*;
 
 public class AsyncPlayerChatListener implements Listener {
     private final RPGCORE rpgcore;
-    private final List<String> swearingWords = Arrays.asList("chuj", "huj", "kurwa", "pierdole", "spierdalaj", "wypierdalaj", "dziwka", "szmata", "suka", "suko", "pierdol",
-            "jebac", "idioto", "idiota", "idiotko", "debil", "debilu", "kretyn", "kretynie");
     public AsyncPlayerChatListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
@@ -44,6 +42,11 @@ public class AsyncPlayerChatListener implements Listener {
 
         if (rpgcore.getCooldownManager().hasChatCooldown(uuid)) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nastepna wiadomosc mozesz wyslac za &c" + Utils.durationToString(rpgcore.getCooldownManager().getPlayerChatCooldown(uuid), false)));
+            return;
+        }
+
+        if (rpgcore.getUserManager().find(uuid).getLvl() < 10) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Potrzebujesz przynajmniej &c10 poziom &7zeby pisac na chacie!"));
             return;
         }
 
@@ -105,7 +108,6 @@ public class AsyncPlayerChatListener implements Listener {
                 }
             }
         }
-        message = this.removeSwearing(message);
         formatuj(player, message);
         if (user.getRankUser().isStaff() && user.isAdminCodeLogin()) {
             return;
@@ -166,42 +168,18 @@ public class AsyncPlayerChatListener implements Listener {
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
         if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
-            final List<String> blockedCommands = Arrays.asList(
-                    "/pl",
-                    "/plugins",
-                    "bukkit:ban",
-                    "logout",
-                    "bukkit:banip",
-                    "/?",
-                    "/ver",
-                    "/version",
-                    "/bukkit",
-                    "/bukkit:ver",
-                    "/bukkit:version",
-                    "/icanhasbukkit",
-                    "/help",
-                    "/bukkit:help",
-                    "bukkit:?",
-                    "/me",
-                    "/bukkit:me",
-                    "/minecraft:me",
-                    "/about",
-                    "//calc",
-                    "//calculate",
-                    "mv",
-                    "/mv",
-                    "/multiverse-core:mv",
-                    "multiverse-core:mv",
-                    "fawe",
-                    "/fawe",
-                    "/worldedit:",
-                    "/worldedit:?",
-                    "/worldedit",
-                    "/worldedit:help",
-                    "/worldedit:/help",
-                    "/worldedit"
+            final List<String> ownCommandsPlayer = Arrays.asList(
+                    "administracja",
+                    "admin",
+                    "adm"
             );
-            for (final String command : blockedCommands) {
+            final List<String> ownCommandsAdmin = Arrays.asList(
+                    "adminpanel",
+                    "paneladmin"
+            );
+
+            ownCommandsPlayer.addAll(ownCommandsAdmin);
+            for (final String command : ownCommandsPlayer) {
                 if (message.toLowerCase().contains(command)) {
                     event.setCancelled(true);
                     player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
@@ -213,22 +191,5 @@ public class AsyncPlayerChatListener implements Listener {
             event.setCancelled(true);
             player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
         }
-    }
-
-    private String removeSwearing(final String text) {
-        final String[] words = text.split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (String word : words) {
-            if (swearingWords.contains(word.toLowerCase())) {
-                StringBuilder censoredWord = new StringBuilder();
-                for (int i = 0; i < word.length(); i++) {
-                    censoredWord.append("*");
-                }
-                sb.append(censoredWord).append(" ");
-            } else {
-                sb.append(word).append(" ");
-            }
-        }
-        return sb.toString().trim();
     }
 }

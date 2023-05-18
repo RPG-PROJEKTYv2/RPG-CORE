@@ -88,7 +88,7 @@ public class LesnikInventoryClick implements Listener {
                     lesnikObject.getUser().setDefNaLudzi(lesnikObject.getUser().getDefNaLudzi() + mission.getDefNaLudzi());
 
                     bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + mission.getPrzeszywka());
-                    bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + mission.getWzmKryta());
+                    bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getWzmocnienieKryta() + mission.getWzmKryta());
                     bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + mission.getDefNaLudzi());
 
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {

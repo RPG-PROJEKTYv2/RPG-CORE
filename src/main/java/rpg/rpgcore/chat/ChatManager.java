@@ -12,6 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
@@ -104,6 +105,7 @@ public class ChatManager {
         itemLore.add(Utils.format("&7Pokaz swoj item na chacie"));
         itemMeta.setLore(itemLore);
         itemLore.clear();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         item.setItemMeta(itemMeta);
         eqGUI.addItem(item);
 
@@ -157,6 +159,10 @@ public class ChatManager {
         item.setItemMeta(itemMeta);
         eqGUI.addItem(item);
 
+        eqGUI.addItem(new ItemBuilder(Material.IRON_SWORD).setName("&6&lPokaz Krytyk").setLore(Arrays.asList(
+                "&7Pokaz swoj cios krytyczny na chacie"
+        )).hideFlag().toItemStack());
+
         return eqGUI;
     }
 
@@ -201,6 +207,12 @@ public class ChatManager {
             gui.setItem(16, new ItemBuilder(Material.PAPER).setName("&cWiadomosc wyjscia z serwera").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
         } else {
             gui.setItem(16, new ItemBuilder(Material.PAPER).setName("&cWiadomosc wyjscia z serwera").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+        }
+
+        if (user.isDmgHologramsVisable()) {
+            gui.setItem(22, new ItemBuilder(Material.ARMOR_STAND).setName("&cPokazywanie zadawanych obrazen").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWSZYSCY")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(22, new ItemBuilder(Material.ARMOR_STAND).setName("&cPokazywanie zadawanych obrazen").setLore(Arrays.asList(" ", "&8* &9Status: &c&lGRACZ")).toItemStack().clone());
         }
 
 

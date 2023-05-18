@@ -3,7 +3,6 @@ package rpg.rpgcore.discord;
 import com.google.common.collect.Multimap;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +10,7 @@ import rpg.rpgcore.trade.objects.Trade;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.List;
 import java.awt.*;
 import java.time.Instant;
 
@@ -127,14 +127,13 @@ public class EmbedUtil {
                 .setFooter("© 2022 HELLRPG.PL");
     }
 
-    public static EmbedBuilder createKoszLogs(final Player player, final ItemStack[] itemList) {
+    public static EmbedBuilder createKoszLogs(final Player player, final List<ItemStack> itemList) {
         double[] tps = MinecraftServer.getServer().recentTps;
 
         final StringBuilder sb = new StringBuilder();
         sb.append("\n**Lista przedmiotow:**\n");
 
         for (final ItemStack item : itemList) {
-            if (item == null || item.getType() == Material.AIR || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) continue;
             sb.append("**").append(Utils.removeColor(item.getItemMeta().getDisplayName())).append("**\n");
             if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
                 sb.append("Opis:\n");
@@ -147,7 +146,7 @@ public class EmbedUtil {
 
         return new EmbedBuilder()
                 .setColor(Color.decode("#b30202"))
-                .setTitle("**Gracz " + player.getName() + " wyrzucił do kosza " + itemList.length + " przedmiotow**", null)
+                .setTitle("**Gracz " + player.getName() + " wyrzucił do kosza " + itemList.size() + " przedmiotow**", null)
                 .setDescription("**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
                         "**Ping Serwerowy: ** 1m - " + DoubleUtils.round(tps[0], 2) + "tps, 5m - " + DoubleUtils.round(tps[1], 2) + "tps, 15m - " + DoubleUtils.round(tps[2], 2) + "tps\n" +
                         sb)

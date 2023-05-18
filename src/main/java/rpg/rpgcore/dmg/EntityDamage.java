@@ -16,10 +16,10 @@ public enum EntityDamage {
     MAP_20_30_3("Goryl Lvl. 28", 5.3),
     MAP_20_30_BOSS("[BOSS] Krol Goryli", 6.5),
 
-    MAP_30_40_1("Zjawa Lvl. 32", 7.8),
-    MAP_30_40_2("Zjawa Lvl. 36", 9.7),
-    MAP_30_40_3("Zjawa Lvl. 39", 10.7),
-    MAP_30_40_BOSS("[BOSS] Przekleta Dusza", 15),
+    MAP_30_40_1("Zjawa Lvl. 32", 6.3),
+    MAP_30_40_2("Zjawa Lvl. 36", 6.8),
+    MAP_30_40_3("Zjawa Lvl. 39", 8.0),
+    MAP_30_40_BOSS("[BOSS] Przekleta Dusza", 9.5),
 
     MAP_40_50_1("Straznik Swiatyni Lvl. 43", 13),
     MAP_40_50_2("Straznik Swiatyni Lvl. 46", 16.5),

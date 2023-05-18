@@ -52,7 +52,18 @@ public class DamageManager {
         final PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(stand);
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
 
-        rpgcore.getServer().getScheduler().scheduleSyncDelayedTask(rpgcore, () -> this.destroySendHologram(stand, p), 20L);
+        rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, p), 20L);
+        if (rpgcore.getChatManager().find(p.getUniqueId()).isDmgHologramsVisable()) {
+            for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)){
+                if (e instanceof Player){
+                    Player player = (Player) e;
+                    if (player != p){
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                        rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, player), 20L);
+                    }
+                }
+            }
+        }
     }
 
     public void destroySendHologram(final EntityArmorStand stand, final Player p) {

@@ -6,12 +6,76 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 public enum HandlarzSellItems {
+    // 1-10 MOB
+    I1("Helm Rozbojnika", Material.LEATHER_HELMET, 10.0),
+    I2("Zbroja Rozbojnika", Material.LEATHER_CHESTPLATE,10.0),
+    I3("Spodnie Rozbojnika", Material.LEATHER_LEGGINGS,  10.0),
+    I4("Buty Rozbojnika", Material.LEATHER_BOOTS, 10.0),
+    I5("Tepy Miecz Rozbojnika", Material.WOOD_SWORD, 12.0),
+    // 1-10 BOSS
+    I6("Helm Dowodcy Rozbojnikow", Material.LEATHER_HELMET, 12.0),
+    I7("Zbroja Dowodcy Rozbojnikow", Material.LEATHER_CHESTPLATE, 12.0),
+    I8("Spodnie Dowodcy Rozbojnikow", Material.LEATHER_LEGGINGS, 12.0),
+    I9("Buty Dowodcy Rozbojnikow", Material.LEATHER_BOOTS, 12.0),
+    I10("Miecz Dowodcy Rozbojnikow", Material.WOOD_SWORD, 15.0),
+    // 1-10 BOSS AKCE ZWYKŁE
+    I11("Zwykly Naszyjnik Dowodcy Rozbojnikow", Material.WOOD_SWORD, 25.0),
+    I12("Zwykly Diadem Dowodcy Rozbojnikow", Material.WOOD_SWORD, 20.0),
+    I13("Zwykly Pierscien Dowodcy Rozbojnikow", Material.WOOD_SWORD, 20.0),
+    I14("Zwykla Tarcza Dowodcy Rozbojnikow", Material.WOOD_SWORD, 25.0),
+    // 1-10 BOSS AKCE ULEPSZONE
+    I15("Ulepszony Naszyjnik Dowodcy Rozbojnikow", Material.STORAGE_MINECART, 35.0),
+    I16("Ulepszony Diadem Dowodcy Rozbojnikow", Material.WATCH, 30.0),
+    I17("Ulepszony Pierscien Dowodcy Rozbojnikow", Material.EXPLOSIVE_MINECART, 30.0),
+    I18("Ulepszona Tarcza Dowodcy Rozbojnikow", Material.ITEM_FRAME, 35.0),
+    
+    // 10-20 MOB
+    I19("Helm Goblina", Material.LEATHER_HELMET, 15.0),
+    I20("Zbroja Goblina", Material.LEATHER_CHESTPLATE,17.0),
+    I21("Spodnie Goblina", Material.LEATHER_LEGGINGS,  16.0),
+    I22("Buty Goblina", Material.LEATHER_BOOTS, 14.0),
+    I23("Miecz Goblina", Material.WOOD_SWORD, 18.0),
+    // 10-20 BOSS
+    I24("Helm Wodza Goblinow", Material.LEATHER_HELMET, 20.0),
+    I25("Zbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 22.0),
+    I26("Spodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 21.0),
+    I27("Buty Wodza Goblinow", Material.LEATHER_BOOTS, 19.0),
+    I28("Miecz Wodza Goblinow", Material.WOOD_SWORD, 23.0),
+    // 10-20 BOSS AKCE ZWYKŁE
+    I29("Zwykly Naszyjnik Wodza Goblinow", Material.STORAGE_MINECART, 35.0),
+    I30("Zwykly Diadem Wodza Goblinow", Material.WATCH, 30.0),
+    I31("Zwykly Pierscien Wodza Goblinow", Material.EXPLOSIVE_MINECART, 30.0),
+    I32("Zwykla Tarcza Wodza Goblinow", Material.ITEM_FRAME, 35.0),
+    // 10-20 BOSS AKCE ULEPSZONE
+    I33("Ulepszony Naszyjnik Wodza Goblinow", Material.STORAGE_MINECART, 50.0),
+    I34("Ulepszony Diadem Wodza Goblinow", Material.WATCH, 45.0),
+    I35("Ulepszony Pierscien Wodza Goblinow", Material.EXPLOSIVE_MINECART, 45.0),
+    I36("Ulepszona Tarcza Wodza Goblinow", Material.ITEM_FRAME, 50.0),
 
-    I1("Helm Najemnika", Material.LEATHER_HELMET, 10.0),
-    I2("Zbroja Najemnika", Material.LEATHER_CHESTPLATE,10.0),
-    I3("Spodnie Najemnika", Material.LEATHER_LEGGINGS,  10.0),
-    I4("Buty Najemnika", Material.LEATHER_BOOTS, 10.0),
-    I5("Tepy Miecz Najemnika", Material.WOOD_SWORD, 12.0),
+    // 20-30 MOB
+    I37("Helm Goryla", Material.LEATHER_HELMET, 17.0),
+    I38("Zbroja Goryla", Material.CHAINMAIL_CHESTPLATE,19.0),
+    I39("Spodnie Goryla", Material.LEATHER_LEGGINGS,  18.0),
+    I40("Buty Goryla", Material.LEATHER_BOOTS, 16.0),
+    I41("Miecz Goryla", Material.IRON_SWORD, 20.0),
+    // 20-30 BOSS
+    I42("Helm Krola Goryli", Material.GOLD_HELMET, 22.0),
+    I43("Zbroja Krola Goryli", Material.GOLD_CHESTPLATE, 24.0),
+    I44("Spodnie Krola Goryli", Material.GOLD_LEGGINGS, 23.0),
+    I45("Buty Krola Goryli", Material.GOLD_BOOTS, 21.0),
+    I46("Miecz Krola Goryli", Material.GOLD_SWORD, 25.0),
+    // 20-30 BOSS AKCE ZWYKŁE
+    I47("Zwykly Naszyjnik Krola Goryli", Material.STORAGE_MINECART, 45.0),
+    I48("Zwykly Diadem Krola Goryli", Material.WATCH, 40.0),
+    I49("Zwykly Pierscien Krola Goryli", Material.EXPLOSIVE_MINECART, 40.0),
+    I50("Zwykla Tarcza Krola Goryli", Material.ITEM_FRAME, 45.0),
+    // 20-30 BOSS AKCE ULEPSZONE
+    I51("Ulepszony Naszyjnik Krola Goryli", Material.STORAGE_MINECART, 65.0),
+    I52("Ulepszony Diadem Krola Goryli", Material.WATCH, 60.0),
+    I53("Ulepszony Pierscien Krola Goryli", Material.EXPLOSIVE_MINECART, 60.0),
+    I54("Ulepszona Tarcza Krola Goryli", Material.ITEM_FRAME, 65.0),
+
+    // 30-40 MOB
     I_ERROR("ERROR", Material.AIR, 0);
     private final String name;
     private final Material material;

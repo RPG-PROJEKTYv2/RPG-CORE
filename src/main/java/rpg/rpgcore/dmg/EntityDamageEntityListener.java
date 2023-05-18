@@ -187,15 +187,15 @@ public class EntityDamageEntityListener implements Listener {
                 }
             }
 
+            if (rpgcore.getCooldownManager().hasPvpCooldown(attacker.getUniqueId())) {
+                e.setDamage(0);
+                e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                return;
+            }
+
             if (e.getEntity() instanceof Player) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
                     e.setCancelled(true);
-                    return;
-                }
-
-                if (rpgcore.getCooldownManager().hasPvpCooldown(attacker.getUniqueId())) {
-                    e.setDamage(0);
-                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     return;
                 }
 
@@ -299,6 +299,7 @@ public class EntityDamageEntityListener implements Listener {
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
+                e.setDamage(EntityDamageEvent.DamageModifier.HARD_HAT, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
                 /*attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));

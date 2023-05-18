@@ -142,6 +142,7 @@ public class LvlManager {
 
         if (nextLvlGracza == 2) {
             rpgcore.getWyszkolenieManager().find(killerUUID).setPunkty(2);
+            rpgcore.getWyszkolenieManager().find(killerUUID).setTotalPoints(2);
         } else {
             rpgcore.getWyszkolenieManager().find(killerUUID).addPoint();
         }

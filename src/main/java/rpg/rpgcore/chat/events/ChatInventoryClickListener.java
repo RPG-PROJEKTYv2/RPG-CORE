@@ -17,6 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -281,6 +283,28 @@ public class ChatInventoryClickListener implements Listener {
                         p.spigot().sendMessage(formatPrzed);
                     }
                     break;
+                case 6:
+                    final User mainUser = rpgcore.getUserManager().find(uuid);
+                    finalMessage = new StringBuilder();
+                    if (msg.isEmpty()) finalMessage.append(Utils.format(" &8[&4Krytyk: &c" + DoubleUtils.round(mainUser.getKrytyk(), 2) + " dmg&8]"));
+                    else {
+                        if (!isHighStaff) {
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&4Krytyk: &c" + DoubleUtils.round(mainUser.getKrytyk(), 2) + " dmg&8]"));
+                            for (int i = 1; i < msg.size(); i++) {
+                                finalMessage.append("&f").append(msg.get(i));
+                            }
+                        } else {
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&4Krytyk: &c" + DoubleUtils.round(mainUser.getKrytyk(), 2) + " dmg&8]"));
+                            for (int i = 1; i < msg.size(); i++) {
+                                finalMessage.append(color).append(msg.get(i));
+                            }
+                        }
+                    }
+                    formatPrzed.addExtra(finalMessage.toString());
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
+                    break;
             }
             if (message.contains("@")) {
                 rpgcore.getChatManager().pingPlayer(player, message);
@@ -292,133 +316,84 @@ public class ChatInventoryClickListener implements Listener {
         if (title.equals("Chat Panel")) {
             e.setCancelled(true);
             final ChatUser user = rpgcore.getChatManager().find(uuid);
+            switch (slot) {
+                case 10:
+                    if (user.isItemDropEnabled()) {
+                        user.setItemDropEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
+                    user.setItemDropEnabled(true);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
+                case 13:
+                    if (user.isPingsEnabled()) {
+                        user.setPingsEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
+                    user.setPingsEnabled(true);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
+                case 12:
+                    if (user.isNiesDropEnabled()) {
+                        user.setNiesDropEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
+                    user.setNiesDropEnabled(true);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
+                case 11:
+                    if (user.isChestDropEnabled()) {
+                        user.setChestDropEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
 
-            if (slot == 10) {
-                if (user.isItemDropEnabled()) {
-                    user.setItemDropEnabled(false);
+                    user.setChestDropEnabled(true);
                     rpgcore.getChatManager().openChatPanel(player);
                     return;
-                }
-                user.setItemDropEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-                return;
-            }
-            if (slot == 13) {
-                if (user.isPingsEnabled()) {
-                    user.setPingsEnabled(false);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
-                }
-                user.setPingsEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-                return;
-            }
-            if (slot == 12) {
-                if (user.isNiesDropEnabled()) {
-                    user.setNiesDropEnabled(false);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
-                }
-                user.setNiesDropEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-                return;
-            }
-            if (slot == 11) {
-                if (user.isChestDropEnabled()) {
-                    user.setChestDropEnabled(false);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
-                }
+                case 14:
+                    if (user.isMsgEnabled()) {
+                        user.setMsgEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
 
-                user.setChestDropEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-            }
-            if (slot == 14) {
-                if (user.isMsgEnabled()) {
-                    user.setMsgEnabled(false);
+                    user.setMsgEnabled(true);
                     rpgcore.getChatManager().openChatPanel(player);
                     return;
-                }
+                case 15:
+                    if (user.isJoinMessageEnabled()) {
+                        user.setJoinMessageEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
+                    user.setJoinMessageEnabled(true);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
+                case 16:
+                    if (user.isQuitMessageEnabled()) {
+                        user.setQuitMessageEnabled(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
 
-                user.setMsgEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-            }
-            if (slot == 15) {
-                if (user.isJoinMessageEnabled()) {
-                    user.setJoinMessageEnabled(false);
+                    user.setQuitMessageEnabled(true);
                     rpgcore.getChatManager().openChatPanel(player);
                     return;
-                }
-                user.setJoinMessageEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
-            }
-            if (slot == 16) {
-                if (user.isQuitMessageEnabled()) {
-                    user.setQuitMessageEnabled(false);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
-                }
+                case 22:
+                    if (user.isDmgHologramsVisable()) {
+                        user.setDmgHologramsVisable(false);
+                        rpgcore.getChatManager().openChatPanel(player);
+                        return;
+                    }
 
-                user.setQuitMessageEnabled(true);
-                rpgcore.getChatManager().openChatPanel(player);
+                    user.setDmgHologramsVisable(true);
+                    rpgcore.getChatManager().openChatPanel(player);
+                    return;
             }
         }
     }
-    /*
-    if (rpgcore.getUserManager().find(uuid).getLvl() < 74) {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c75 &7poziom, zeby pokazac bao na chacie"));
-                        player.closeInventory();
-                        break;
-                    }
-
-                    if (rpgcore.getBaoManager().isNotRolled(uuid)) {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz jeszcze zrobionego bao!"));
-                        player.closeInventory();
-                        break;
-                    }
-                    final BaoUser user = rpgcore.getBaoManager().find(uuid).getBaoUser();
-                    final TextComponent beforeMessageBao = new TextComponent(formatPrzed);
-                    final TextComponent stolMagii = new TextComponent("§8[§bStol Magii§8]");
-                    final TextComponent text = new TextComponent("§7Stol Magii gracza §c" + player.getName() + "§7:\n§6" + user.getBonus1() + ": §c" + user.getValue1() + "% §8\n§6" + user.getBonus2() + ": §c" + user.getValue2() + "% §8\n§6" + user.getBonus3() + ": §c" + user.getValue3() + "% §8\n");
-                    TextComponent text2;
-                    TextComponent text3;
-
-
-                    if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + " DMG §8\n");
-                    } else {
-                        text2 = new TextComponent("§6" + user.getBonus4() + ": §c" + user.getValue4() + "% §8\n");
-                    }
-                    if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + " HP");
-                    } else {
-                        text3 = new TextComponent("§6" + user.getBonus5() + ": §c" + user.getValue5() + "%");
-                    }
-                    text.addExtra(text2);
-                    text.addExtra(text3);
-                    stolMagii.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{text}));
-
-
-                    if (msg.isEmpty()) {
-                        beforeMessageBao.addExtra(stolMagii);
-                    } else {
-                        if (!isHighStaff) {
-                            beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
-                        } else {
-                            beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(0)));
-                        }
-                        beforeMessageBao.addExtra(stolMagii);
-                        for (int i = 1; i < msg.size(); i++) {
-                            if (!isHighStaff) {
-                                beforeMessageBao.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
-                            } else {
-                                beforeMessageBao.addExtra(Utils.format(" " + color + msg.get(i)));
-                            }
-                        }
-                    }
-
-
-                    Bukkit.getServer().spigot().broadcast(beforeMessageBao);
-                    break;
-     */
 }

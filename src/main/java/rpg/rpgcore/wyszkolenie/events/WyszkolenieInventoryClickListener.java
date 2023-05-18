@@ -46,7 +46,7 @@ public class WyszkolenieInventoryClickListener implements Listener {
 
             final WyszkolenieUser user = this.rpgcore.getWyszkolenieManager().find(uuid);
 
-            if (user.getPunkty() == 0 && !(slot == 40 || slot == 53)) return;
+            if (user.getPunkty() <= 0 && !(slot == 40 || slot == 53)) return;
 
             final Bonuses bonuses = this.rpgcore.getBonusesManager().find(uuid);
 

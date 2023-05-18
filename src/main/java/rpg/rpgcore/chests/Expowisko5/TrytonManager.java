@@ -25,10 +25,10 @@ public class TrytonManager {
         this.tryton.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&5&lZwykly Diadem Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lZwykly Pierscien Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lZwykla Tarcza Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("10", 1.5, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lUlepszona Naszyjnik Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("11", 1.5, new ItemBuilder(Material.WATCH).setName("&5&lUlepszona Diadem Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("12", 1.5, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lUlepszona Pierscien Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("13", 1.5, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lUlepszona Tarcza Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("10", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lUlepszona Naszyjnik Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("11", 0.75, new ItemBuilder(Material.WATCH).setName("&5&lUlepszona Diadem Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("12", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lUlepszona Pierscien Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("13", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lUlepszona Tarcza Trytona").toItemStack(),1 ));
     }
 
     public Items getDrawnItems(final Player player) {

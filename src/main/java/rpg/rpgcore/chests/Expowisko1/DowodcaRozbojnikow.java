@@ -25,10 +25,10 @@ public class DowodcaRozbojnikow {
         this.wygnaniec.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lZwykly Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
         this.wygnaniec.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lZwykly Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
         this.wygnaniec.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lZwykla Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("10", 1.5, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("11", 1.5, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("12", 1.5, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("13", 1.5, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("10", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("11", 0.75, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("12", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("13", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
     }
 
 

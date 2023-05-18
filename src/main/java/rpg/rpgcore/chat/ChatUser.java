@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class ChatUser {
     private UUID uuid;
-    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled;
+    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable;
     private List<UUID> ignoredPlayers;
 
     public ChatUser(UUID uuid) {
@@ -25,6 +25,7 @@ public class ChatUser {
         this.ignoredPlayers = new ArrayList<>();
         this.joinMessageEnabled = true;
         this.quitMessageEnabled = true;
+        this.dmgHologramsVisable = true;
     }
 
     public ChatUser(Document document) {
@@ -37,6 +38,7 @@ public class ChatUser {
         this.ignoredPlayers = document.getList("ignoredPlayers", UUID.class);
         this.joinMessageEnabled = document.getBoolean("joinMessageEnabled");
         this.quitMessageEnabled = document.getBoolean("quitMessageEnabled");
+        this.dmgHologramsVisable = document.getBoolean("dmgHologramsVisable");
     }
 
     public Document toDocument() {
@@ -48,6 +50,7 @@ public class ChatUser {
                 .append("msgEnabled", msgEnabled)
                 .append("ignoredPlayers", ignoredPlayers)
                 .append("joinMessageEnabled", joinMessageEnabled)
-                .append("quitMessageEnabled", quitMessageEnabled);
+                .append("quitMessageEnabled", quitMessageEnabled)
+                .append("dmgHologramsVisable", dmgHologramsVisable);
     }
 }
