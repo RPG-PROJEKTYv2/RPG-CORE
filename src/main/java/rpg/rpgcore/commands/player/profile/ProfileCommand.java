@@ -21,7 +21,7 @@ import java.util.UUID;
 public class ProfileCommand extends CommandAPI {
     public ProfileCommand() {
         super("profile");
-        this.setAliases(Arrays.asList("profil", "konto", "staty", "stats", "statystyki"));
+        this.setAliases(Arrays.asList("profil", "staty", "stats", "statystyki"));
         this.setRestrictedForPlayer(true);
         this.setRankLevel(RankType.GRACZ);
     }

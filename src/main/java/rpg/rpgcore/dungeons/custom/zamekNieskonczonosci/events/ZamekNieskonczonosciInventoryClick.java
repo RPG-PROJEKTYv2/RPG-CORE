@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci.events;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,11 +10,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.ZamekNieskonczonosciManager;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
-
-import java.util.UUID;
 
 public class ZamekNieskonczonosciInventoryClick implements Listener {
 

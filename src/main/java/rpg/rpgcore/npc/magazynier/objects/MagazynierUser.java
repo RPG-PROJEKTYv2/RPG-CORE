@@ -53,6 +53,16 @@ public class MagazynierUser {
         this.resetTime = document.getLong("resetTime");
     }
 
+    public int getUnlocked() {
+        int unlocked = 0;
+        if (this.unlocked1) unlocked++;
+        if (this.unlocked2) unlocked++;
+        if (this.unlocked3) unlocked++;
+        if (this.unlocked4) unlocked++;
+        if (this.unlocked5) unlocked++;
+        return unlocked;
+    }
+
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())
                 .append("points", this.points)

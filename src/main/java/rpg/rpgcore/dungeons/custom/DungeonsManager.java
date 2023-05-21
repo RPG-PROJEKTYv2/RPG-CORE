@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons;
+package rpg.rpgcore.dungeons.custom;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

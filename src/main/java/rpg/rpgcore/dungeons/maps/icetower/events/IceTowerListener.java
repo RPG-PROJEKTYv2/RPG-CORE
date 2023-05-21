@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.icetower.events;
+package rpg.rpgcore.dungeons.maps.icetower.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.utils.Utils;
 
 public class IceTowerListener implements Listener {

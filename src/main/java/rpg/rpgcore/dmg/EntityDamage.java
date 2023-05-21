@@ -40,6 +40,9 @@ public enum EntityDamage {
     MAP_60_70_3("Zywiolak Ognia Lvl. 68", 250),
     MAP_60_70_BOSS("[BOSS] Piekielna Dusza", 400),
 
+    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 330),
+    PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 650),
+
     MAP_70_80_1("Mroczna Dusza Lvl. 71", 750),
     MAP_70_80_2("Mroczna DuszaLvl. 75", 950),
     MAP_70_80_3("Mroczna Dusza Lvl. 78", 1050),

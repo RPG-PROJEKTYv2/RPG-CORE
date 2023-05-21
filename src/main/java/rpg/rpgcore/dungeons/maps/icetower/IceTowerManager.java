@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.icetower;
+package rpg.rpgcore.dungeons.maps.icetower;
 
 import lombok.Getter;
 import lombok.Setter;

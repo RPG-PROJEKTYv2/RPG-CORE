@@ -3,7 +3,8 @@ package rpg.rpgcore.lvl.enums.mobs;
 import rpg.rpgcore.utils.DoubleUtils;
 
 public enum Dungeons {
-    NAZWA_DUNGEONA("NAZWA_MOOBA", 0, 0, 1, 1),
+    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 30471, 200, 60, 70),
+    PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 35861, 5_000, 60, 70),
     ERROR("Error", 0, 0, 1, 1);
 
     private final String name;

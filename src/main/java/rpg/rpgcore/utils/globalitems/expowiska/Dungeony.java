@@ -5,14 +5,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.Arrays;
 
 public enum Dungeony {
 
     I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Przekletych Wojownikow").setLore(Arrays.asList(" ", "&7Klucz ten otwiera wrota na arene &4&lWOJOWNIKOW&7!")).hideFlag().toItemStack().clone()),
-    I_KLUCZ_PIEKIELNA_KRYJOWKA("I_KLUCZ_PIEKIELNA_KRYJOWKA", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Piekielnej Kryjowki").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPIEKIELNEJ KRYJOWKI&7!")).hideFlag().toItemStack().clone());
+    I_KLUCZ_PIEKIELNY_PRZEDSIONEK("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz do Piekielnego Przedsionka").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPiekielnego Przedsionka&7!")).hideFlag().toItemStack().clone()),
+    I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA("I_PRZEDSIONEK_BOSS", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Piekielnego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
 
 
     private final ItemStack itemStack;
@@ -44,7 +44,7 @@ public enum Dungeony {
     public static ItemStack getItem(String string, int amount) {
         ItemStack itemStack = Dungeony.getByName(string).getItemStack();
         itemStack.setAmount(amount);
-        return itemStack;
+        return itemStack.clone();
     }
 
 

@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.icetower.ResetType;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 

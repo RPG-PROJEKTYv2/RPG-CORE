@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci.events;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events;
 
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.enums.ZamekNieskonczonosciLocations;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.enums.ZamekNieskonczonosciLocations;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 

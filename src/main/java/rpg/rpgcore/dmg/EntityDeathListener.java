@@ -1,5 +1,6 @@
 package rpg.rpgcore.dmg;
 
+import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -15,14 +16,16 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.icetower.ResetType;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
+
+import java.util.Objects;
 
 public class EntityDeathListener implements Listener {
 
@@ -42,6 +45,14 @@ public class EntityDeathListener implements Listener {
         if (e.getEntity().getWorld().getName().equals("demontower")) {
             if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {
                 IceTowerManager.resetIceTower(ResetType.BYPASS);
+            }
+        }
+
+        if (e.getEntity().getWorld().getName().equals("Dungeon60-70")) {
+            if (e.getEntity().getWorld().getPlayers().isEmpty()) {
+                final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) rpgcore.getPrzedsionekManager().getDungeonHologram().getLines().get(3)).getText())).replace("Przechodzi: ", "");
+                Bukkit.getServer().broadcastMessage(Utils.format("&4&lPiekielny Przedsionek &8>> &cGrupa gracza &4" + playerName + " &cpolegla podczas przechodzenia dungeonu!"));
+                rpgcore.getPrzedsionekManager().resetDungeon();
             }
         }
 

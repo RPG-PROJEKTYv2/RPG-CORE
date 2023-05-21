@@ -2,7 +2,9 @@ package rpg.rpgcore.dungeons;
 
 public enum DungeonStatus {
     ENDED(""),
-    RESETTING(""),
+    RESETTING("Resetowanie..."),
+    OPENED_GATE("&eBrama Otwarta"),
+    CLOSED_GATE("&cBrama Zamknięta"),
     STARTED(""),
     ETAP_0("0"),
     ETAP_1("1"),
@@ -11,6 +13,7 @@ public enum DungeonStatus {
     ETAP_1_BOSS("1"),
     ETAP_2("2"),
     ETAP_3("3"),
+    BOSS("BOSS"),
     ONGOING(""),
     FINISHED("");
 

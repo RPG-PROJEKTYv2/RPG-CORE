@@ -161,31 +161,33 @@ public class AsyncPlayerChatListener implements Listener {
         }
     }
 
+    final List<String> ownCommandsPlayer = Arrays.asList(
+            "administracja",
+            "admin",
+            "adm",
+            "hellcode",
+            "hc"
+    );
+    final List<String> ownCommandsAdmin = Arrays.asList(
+            "adminpanel",
+            "paneladmin",
+            "admincode",
+            "ac"
+    );
+
     @EventHandler
     public void onExecutingCommand(final PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
         final String message = event.getMessage();
+        final String command = message.split(" ")[0].replace("/", "");
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
         if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
-            final List<String> ownCommandsPlayer = Arrays.asList(
-                    "administracja",
-                    "admin",
-                    "adm"
-            );
-            final List<String> ownCommandsAdmin = Arrays.asList(
-                    "adminpanel",
-                    "paneladmin"
-            );
-
-            ownCommandsPlayer.addAll(ownCommandsAdmin);
-            for (final String command : ownCommandsPlayer) {
-                if (message.toLowerCase().contains(command)) {
-                    event.setCancelled(true);
-                    player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
-                    return;
-                }
-            }
+//            if (!ownCommandsPlayer.contains(command.toLowerCase()) && !ownCommandsAdmin.contains(command.toLowerCase())) {
+//                event.setCancelled(true);
+//                player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
+//                return;
+//            }
         }
         if (topic == null) {
             event.setCancelled(true);

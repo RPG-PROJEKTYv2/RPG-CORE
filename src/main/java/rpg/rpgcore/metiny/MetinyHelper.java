@@ -68,6 +68,9 @@ public class MetinyHelper {
             if (w.getName().equals("demontower") && w.getPlayers().size() != 0) {
                 continue;
             }
+            if (w.getName().equals("Dungeon60-70") && w.getPlayers().size() != 0) {
+                continue;
+            }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
                     if (RPGCORE.getInstance().getMetinyManager().isMetin(e.getLocation())) {
@@ -107,6 +110,15 @@ public class MetinyHelper {
         }
         if (player.getItemInHand() == null || !String.valueOf(player.getItemInHand().getType()).contains("_SWORD") || player.getItemInHand().getItemMeta().getLore() == null) return;
         damage += RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDmgMetiny();
+        if (loc.getWorld().getName().equals("Dungeon60-70")) {
+            if (ChanceHelper.getChance(MobDropHelper.getDropChance(player.getUniqueId(), 10))) {
+                for (int i = 0; i < 3; i++) {
+                    final double addX = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    final double addZ = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    RPGCORE.getMythicMobs().getMobManager().spawnMob("PIEKIELNY-PRZEDSIONEK-MOB", loc.clone().add(addX, 0, addZ));
+                }
+            }
+        }
         if (damage >= metiny.getMetins().getHealth()) {
 
             if (player.getWorld().getName().equals("zamekNieskonczonosci")) {
@@ -275,6 +287,10 @@ public class MetinyHelper {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
+        if (id >= 30_000 && id <= 30_011) {
+            kasaToAdd = 1_500;
+            RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
+        }
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
@@ -296,13 +312,13 @@ public class MetinyHelper {
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
         player.sendMessage(Utils.format("&2+ &a" + DoubleUtils.round((kasaToAdd * mnozik), 2) + "&2$"));
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
-        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.00002))) {
+        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.002))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_5.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lZAGINIONYCH &bprzedmiotow!"));
-        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.00005))) {
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.005))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_3.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
-        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.0001))) {
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.01))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_2.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
         }

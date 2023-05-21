@@ -3,6 +3,7 @@ version: '${project.version}'
 main: rpg.rpgcore.RPGCORE
 softdepend:
   - MythicMobs
+  - HolographicDisplays
 authors: [ MiresPL, ZwariowanyOrzel ]
 description: RPG-CORE
     

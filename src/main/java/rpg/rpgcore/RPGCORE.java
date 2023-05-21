@@ -1,5 +1,7 @@
 package rpg.rpgcore;
 
+import io.lumine.xikage.mythicmobs.MythicMobs;
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import net.minecraft.server.v1_8_R3.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -8,12 +10,14 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.OLDtarg.SprawdzCommand;
+import rpg.rpgcore.OLDtarg.TargManager;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
 import rpg.rpgcore.artefakty.events.ArtefaktyInteractListener;
 import rpg.rpgcore.artefakty.events.ArtefaktyInventoryClickListener;
-import rpg.rpgcore.bao.*;
+import rpg.rpgcore.bao.BaoManager;
 import rpg.rpgcore.bao.events.BAOEntityInteract;
 import rpg.rpgcore.bao.events.BAOInventoryClick;
 import rpg.rpgcore.bao.events.BAOPlayerInteract;
@@ -24,16 +28,18 @@ import rpg.rpgcore.bossy.events.MitycznyPajakListener80_90;
 import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
 import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
 import rpg.rpgcore.bossy.events.SmoczyCesarzListener;
+import rpg.rpgcore.chat.ChatCommand;
+import rpg.rpgcore.chat.ChatManager;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
-import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
+import rpg.rpgcore.chat.events.EQInventoryClose;
 import rpg.rpgcore.chat.mute.MuteCommand;
 import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
-import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
 import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
+import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
 import rpg.rpgcore.chests.Expowisko11.MitycznyKrakenManager;
 import rpg.rpgcore.chests.Expowisko12.KrysztalowyWladcaManager;
@@ -53,15 +59,26 @@ import rpg.rpgcore.chests.Expowisko8.MrocznaDuszaManager;
 import rpg.rpgcore.chests.Expowisko8.PrzekletyCzarnoksieznikManager;
 import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
 import rpg.rpgcore.chests.Inne.*;
-import rpg.rpgcore.commands.admin.EnchantCustomCommand;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelManager;
+import rpg.rpgcore.commands.admin.ban.BanCommand;
+import rpg.rpgcore.commands.admin.ban.BanManager;
+import rpg.rpgcore.commands.admin.ban.TempBanCommand;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.commands.admin.god.GodCommand;
+import rpg.rpgcore.commands.admin.god.GodManager;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListCommand;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListManager;
+import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
+import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
+import rpg.rpgcore.commands.admin.teleport.TeleportManager;
+import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaCommand;
+import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaManager;
+import rpg.rpgcore.commands.admin.vanish.VanishCommand;
+import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.administracja.AdministracjaCommand;
 import rpg.rpgcore.commands.player.administracja.AdministracjaInventoryClick;
@@ -73,6 +90,8 @@ import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
 import rpg.rpgcore.commands.player.enderchest.EnderChestCommand;
 import rpg.rpgcore.commands.player.enderchest.EnderChestInventoryCloseListener;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
+import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
+import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
 import rpg.rpgcore.commands.player.misje.MisjeCommand;
 import rpg.rpgcore.commands.player.misje.MisjeInventoryClickListener;
 import rpg.rpgcore.commands.player.profile.ProfileCommand;
@@ -88,8 +107,11 @@ import rpg.rpgcore.commands.player.showcase.ShowcaseItemManager;
 import rpg.rpgcore.commands.player.topki.TopkiCommand;
 import rpg.rpgcore.commands.player.topki.TopkiInventoryClickListener;
 import rpg.rpgcore.commands.player.topki.TopkiManager;
+import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.discord.DiscordBot;
+import rpg.rpgcore.dmg.DamageManager;
 import rpg.rpgcore.dmg.EntityCombustListener;
+import rpg.rpgcore.dmg.EntityDamageEntityListener;
 import rpg.rpgcore.dmg.EntityDeathListener;
 import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
@@ -99,40 +121,60 @@ import rpg.rpgcore.dodatki.akcesoriaP.events.AkcesoriaPodsInventoryClick;
 import rpg.rpgcore.dodatki.bony.events.BonyInteractListener;
 import rpg.rpgcore.dodatki.bony.events.BonyInventoryClickListener;
 import rpg.rpgcore.dodatki.events.DodatkiInventoryClick;
-import rpg.rpgcore.dungeons.DungeonsInventoryClick;
-import rpg.rpgcore.dungeons.DungeonsManager;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.icetower.ResetType;
-import rpg.rpgcore.dungeons.icetower.events.IceTowerListener;
-import rpg.rpgcore.dungeons.niebiosa.NiebiosaManager;
-import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPlayerInteract;
-import rpg.rpgcore.dungeons.niebiosa.events.NiebiosaPortalEntry;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.ZamekNieskonczonosciManager;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
+import rpg.rpgcore.dungeons.custom.DungeonsInventoryClick;
+import rpg.rpgcore.dungeons.custom.DungeonsManager;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.ZamekNieskonczonosciManager;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.ResetType;
+import rpg.rpgcore.dungeons.maps.icetower.events.IceTowerListener;
+import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.PrzedsionekManager;
+import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekInteractListener;
+import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekPortalEntryListener;
+import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.tasks.PiekielnyPrzedsionekTask;
+import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.HsCommand;
+import rpg.rpgcore.economy.KasaCommand;
+import rpg.rpgcore.economy.WyplacCommand;
 import rpg.rpgcore.entities.EntityTypes;
+import rpg.rpgcore.guilds.GuildCommand;
+import rpg.rpgcore.guilds.GuildManager;
 import rpg.rpgcore.guilds.events.GuildEntityDeath;
 import rpg.rpgcore.guilds.events.GuildsInventoryClick;
 import rpg.rpgcore.guilds.events.GuildsPlayerDamage;
+import rpg.rpgcore.history.HISTORYInventoryClick;
+import rpg.rpgcore.history.HistoryCommand;
+import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.inventory.InvseeInventoryClickListener;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
-import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.inventory.InvseeManager;
 import rpg.rpgcore.kociolki.KociolkiManager;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
+import rpg.rpgcore.listeners.*;
+import rpg.rpgcore.lvl.LvlCommand;
+import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
+import rpg.rpgcore.managers.BackupManager;
+import rpg.rpgcore.managers.CooldownManager;
+import rpg.rpgcore.managers.NMSManager;
 import rpg.rpgcore.managers.disabled.DisabledManager;
 import rpg.rpgcore.managers.miecze.MieczePickupListener;
+import rpg.rpgcore.metiny.MetinCommand;
+import rpg.rpgcore.metiny.MetinyManager;
 import rpg.rpgcore.msg.IgnoreCommand;
+import rpg.rpgcore.msg.MSGManager;
+import rpg.rpgcore.msg.MessageCommand;
+import rpg.rpgcore.msg.ReplyCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.newTarg.*;
 import rpg.rpgcore.npc.czarownica.CzarownicaNPC;
 import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
+import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
@@ -142,10 +184,15 @@ import rpg.rpgcore.npc.gornik.events.GornikInventoryCloseListener;
 import rpg.rpgcore.npc.gornik.events.OreBlockPlaceListener;
 import rpg.rpgcore.npc.gornik.ore.OreCommand;
 import rpg.rpgcore.npc.gornik.ore.OreManager;
+import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
-import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryCloseListener;
+import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
+import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
+import rpg.rpgcore.npc.kowal.KowalInventoryClickListener;
+import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
+import rpg.rpgcore.npc.kowal.KowalNPC;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
 import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
@@ -153,19 +200,25 @@ import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.magazynier.MagazynyCommand;
+import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClick;
+import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClose;
 import rpg.rpgcore.npc.medrzec.MedrzecNPC;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInteractListener;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInventoryClickListener;
 import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
+import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.mistrz_yang.MistrzYangNPC;
 import rpg.rpgcore.npc.mistrz_yang.events.MistrzYangInventoryClickListener;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
 import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
+import rpg.rpgcore.npc.rybak.RybakNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
+import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
+import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.osiagniecia.OsManager;
@@ -178,58 +231,14 @@ import rpg.rpgcore.pets.listeners.PetInteractListener;
 import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
 import rpg.rpgcore.playerInventory.PlayerOpenInventoryListener;
 import rpg.rpgcore.playerInventory.tasks.PlayerInventoryTask;
-import rpg.rpgcore.server.ServerManager;
-import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
-import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
-import rpg.rpgcore.commands.admin.teleport.TeleportManager;
-import rpg.rpgcore.commands.admin.ban.BanCommand;
-import rpg.rpgcore.commands.admin.ban.BanManager;
-import rpg.rpgcore.commands.admin.ban.TempBanCommand;
-import rpg.rpgcore.commands.admin.god.GodCommand;
-import rpg.rpgcore.commands.admin.vanish.VanishCommand;
-import rpg.rpgcore.chat.*;
-import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
-import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
-import rpg.rpgcore.database.MongoManager;
-import rpg.rpgcore.dmg.DamageManager;
-import rpg.rpgcore.dmg.EntityDamageEntityListener;
-import rpg.rpgcore.economy.EconomyPlayerInteract;
-import rpg.rpgcore.economy.KasaCommand;
-import rpg.rpgcore.economy.WyplacCommand;
-import rpg.rpgcore.guilds.*;
-import rpg.rpgcore.history.HISTORYInventoryClick;
-import rpg.rpgcore.history.HistoryCommand;
-import rpg.rpgcore.listeners.*;
-import rpg.rpgcore.lvl.LvlCommand;
-import rpg.rpgcore.lvl.LvlManager;
-import rpg.rpgcore.managers.*;
-import rpg.rpgcore.commands.admin.god.GodManager;
-import rpg.rpgcore.metiny.MetinCommand;
-import rpg.rpgcore.metiny.MetinyManager;
-import rpg.rpgcore.msg.MSGManager;
-import rpg.rpgcore.msg.MessageCommand;
-import rpg.rpgcore.msg.ReplyCommand;
-import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
-import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
-import rpg.rpgcore.npc.kowal.KowalInventoryClickListener;
-import rpg.rpgcore.npc.kowal.KowalNPC;
-import rpg.rpgcore.npc.handlarz.HandlarzNPC;
-import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClick;
-import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClose;
-import rpg.rpgcore.npc.duszolog.DuszologNPC;
-import rpg.rpgcore.npc.metinolog.MetinologNPC;
-import rpg.rpgcore.npc.rybak.RybakNPC;
-import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
-import rpg.rpgcore.npc.teleporter.TeleporterNPC;
-import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.pomoc.POMOCInventoryClick;
 import rpg.rpgcore.pomoc.PomocCommand;
 import rpg.rpgcore.pomoc.PomocManager;
+import rpg.rpgcore.server.ServerManager;
 import rpg.rpgcore.spawn.SpawnCommand;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.tab.UpdateTabTask;
-import rpg.rpgcore.OLDtarg.*;
 import rpg.rpgcore.tasks.*;
 import rpg.rpgcore.trade.TradeManager;
 import rpg.rpgcore.trade.events.TradeInventoryClickListener;
@@ -249,9 +258,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class RPGCORE extends JavaPlugin {
-
     private static RPGCORE instance;
     private static DiscordBot discordBot;
+    private static HolographicDisplaysAPI holographicDisplaysAPI;
+    private static MythicMobs mythicMobs;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -296,10 +306,6 @@ public final class RPGCORE extends JavaPlugin {
     private LesnikNPC lesnikNPC;
     private PetyManager petyManager;
     private ZamekNieskonczonosciManager zamekNieskonczonosciManager;
-
-
-
-    private NiebiosaManager niebiosaManager;
     private BonusesManager bonusesManager;
     // ================================ SKRZYNKI INNE ================================
     private HellcaseManager hellcaseManager;
@@ -365,7 +371,8 @@ public final class RPGCORE extends JavaPlugin {
     private PustelnikNPC pustelnikNPC;
     private MistrzYangNPC mistrzYangNPC;
     private CzarownicaNPC czarownicaNPC;
-
+    private PrzedsionekManager przedsionekManager;
+    private UstawieniaKontaManager ustawieniaKontaManager;
 
 
     private int i = 1;
@@ -378,8 +385,25 @@ public final class RPGCORE extends JavaPlugin {
         return discordBot;
     }
 
+    public static HolographicDisplaysAPI getHolographicDisplaysAPI() {
+        return holographicDisplaysAPI;
+    }
+
+    public static MythicMobs getMythicMobs() {
+        return mythicMobs;
+    }
+
     public void onEnable() {
+        if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+            getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
+            getLogger().severe("*** This plugin will be disabled. ***");
+            this.setEnabled(false);
+            return;
+        }
+
         instance = this;
+        holographicDisplaysAPI = HolographicDisplaysAPI.get(Bukkit.getServer().getPluginManager().getPlugin("HolographicDisplays"));
+        mythicMobs = MythicMobs.inst();
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
@@ -392,38 +416,16 @@ public final class RPGCORE extends JavaPlugin {
 
         this.initGlobalCommands();
         this.initEvents();
-        this.initDungeons();
+        this.initOwnDungeons();
+        this.initCustomDungeons();
         this.initBosses();
+        this.initTasks();
         //this.initPacketListeners();
-
-
-
         // BACKUP
         //this.mongo.tempUpdate();
 
         // TASKS
 
-        // ...TAB
-        new UpdateTabTask(this);
-
-        // ...SAVE GUILDS
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
-        // ...METINY
-        new MetinyTask(this);
-        // ...ACTIONBAR
-        new ActionBarTask(this);
-        // ...PETY
-        new ReloadPetsTask(this);
-        // ...KOPALNIA
-        new KopalniaTask(this);
-        // ...BOSS BAR
-        new BossBarTask(this);
-        // ... KOCIOLKI I ARTEFAKTY
-        new KociolkiTask(this);
-        // ... TOPKI
-        new TopkiTask(this);
-        // ... PLAYER CRAFTIN ITEMS
-        new PlayerInventoryTask(this);
 
         // SKRZYNIE
         this.initChests();
@@ -440,8 +442,8 @@ public final class RPGCORE extends JavaPlugin {
         for (final World w : Bukkit.getWorlds()) {
             for (final Entity e : w.getEntities()) {
                 if (e instanceof ArmorStand) {
-                    if (e.getName().contains("Duszek") || e.getName().contains("Zlota Rybka") ||e.getName().contains("Pancernik") ||e.getName().contains("Foka") ||
-                            e.getName().contains("Nietoperz") ||e.getName().contains("Bobr") ||e.getName().contains("Ognisty Smok") ||e.getName().contains("Demon") ||
+                    if (e.getName().contains("Duszek") || e.getName().contains("Zlota Rybka") || e.getName().contains("Pancernik") || e.getName().contains("Foka") ||
+                            e.getName().contains("Nietoperz") || e.getName().contains("Bobr") || e.getName().contains("Ognisty Smok") || e.getName().contains("Demon") ||
                             e.getName().contains("Wampir")) {
                         e.remove();
                     }
@@ -582,6 +584,8 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new HsCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DisableCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ChangeLeashRangeCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ResetDungeonCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new UstawieniaKontaCommand(this));
     }
 
     private void initEvents() {
@@ -765,9 +769,6 @@ public final class RPGCORE extends JavaPlugin {
         // ...ICE TOWER
         this.getServer().getPluginManager().registerEvents(new IceTowerListener(), this);
 
-        // ...NIEBIOSA
-        this.getServer().getPluginManager().registerEvents(new NiebiosaPlayerInteract(this), this);
-        this.getServer().getPluginManager().registerEvents(new NiebiosaPortalEntry(), this);
 
         // INVSEE
         this.getServer().getPluginManager().registerEvents(new InvseeInventoryCloseListener(this), this);
@@ -840,7 +841,6 @@ public final class RPGCORE extends JavaPlugin {
         this.backup = new BackupManager(this);
         this.metinyManager = new MetinyManager(this);
         this.serverManager = new ServerManager(this);
-        this.niebiosaManager = new NiebiosaManager(this);
         this.listaNPCManager = new ListaNPCManager(this);
         this.baoManager = new BaoManager(this);
         this.bonusesManager = new BonusesManager(this);
@@ -858,6 +858,7 @@ public final class RPGCORE extends JavaPlugin {
         this.disabledManager = new DisabledManager(this);
         this.wyszkolenieManager = new WyszkolenieManager(this);
         this.invseeManager = new InvseeManager();
+        this.ustawieniaKontaManager = new UstawieniaKontaManager(this);
     }
 
     private void initNPCS() {
@@ -880,6 +881,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mistrzYangNPC = new MistrzYangNPC(this);
         this.czarownicaNPC = new CzarownicaNPC(this);
     }
+
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
         // ================================ SKRZYNKI INNE ================================
@@ -926,9 +928,17 @@ public final class RPGCORE extends JavaPlugin {
         this.starozytnySmoczyCesarzManager = new StarozytnySmoczyCesarzManager();
     }
 
-    private void initDungeons() {
+    public void initOwnDungeons() {
         // DEMON TOWER
         this.iceTowerManager = new IceTowerManager();
+
+        // PIEKIELNY PRZEDSIONEK
+        this.przedsionekManager = new PrzedsionekManager(this);
+        this.getServer().getPluginManager().registerEvents(new PiekielnyPrzedsionekInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PiekielnyPrzedsionekPortalEntryListener(this), this);
+    }
+
+    private void initCustomDungeons() {
         // ZAMEK NIESKONCZONOSCI
         this.dungeonsManager = new DungeonsManager();
         this.zamekNieskonczonosciManager = new ZamekNieskonczonosciManager(this);
@@ -944,6 +954,32 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
         this.getServer().getPluginManager().registerEvents(new SmoczyCesarzListener(), this);
+    }
+
+    private void initTasks() {
+        // ...TAB
+        new UpdateTabTask(this);
+
+        // ...SAVE GUILDS
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, this::saveGuilds, 100L, 12000L);
+        // ...METINY
+        new MetinyTask(this);
+        // ...ACTIONBAR
+        new ActionBarTask(this);
+        // ...PETY
+        new ReloadPetsTask(this);
+        // ...KOPALNIA
+        new KopalniaTask(this);
+        // ...BOSS BAR
+        new BossBarTask(this);
+        // ... KOCIOLKI I ARTEFAKTY
+        new KociolkiTask(this);
+        // ... TOPKI
+        new TopkiTask(this);
+        // ... PLAYER CRAFTIN ITEMS
+        new PlayerInventoryTask(this);
+        // ... PIEKIELNY PRZEDSIONEK
+        new PiekielnyPrzedsionekTask(this);
     }
 
     private void fixBuckets() {
@@ -1032,6 +1068,7 @@ public final class RPGCORE extends JavaPlugin {
     public OsManager getOsManager() {
         return osManager;
     }
+
     public DodatkiManager getDodatkiManager() {
         return dodatkiManager;
     }
@@ -1039,6 +1076,7 @@ public final class RPGCORE extends JavaPlugin {
     public PomocManager getPomocManager() {
         return pomocManager;
     }
+
     public RozpiskaManager getRozpiskaManager() {
         return rozpiskaManager;
     }
@@ -1078,6 +1116,7 @@ public final class RPGCORE extends JavaPlugin {
     public MagazynierNPC getMagazynierNPC() {
         return magazynierNPC;
     }
+
     public KolekcjonerNPC getKolekcjonerNPC() {
         return kolekcjonerNPC;
     }
@@ -1101,6 +1140,7 @@ public final class RPGCORE extends JavaPlugin {
     public KowalNPC getKowalNPC() {
         return kowalNPC;
     }
+
     public MetinyManager getMetinyManager() {
         return metinyManager;
     }
@@ -1113,193 +1153,253 @@ public final class RPGCORE extends JavaPlugin {
         return serverManager;
     }
 
-    public NiebiosaManager getNiebiosaManager() {
-        return niebiosaManager;
-    }
     // ================================ SKRZYNKI INNE ================================
     public HellcaseManager gethellcaseManager() {
         return hellcaseManager;
     }
+
     public KowalManager getKowalManager() {
         return kowalManager;
     }
+
     public SurowceManager getSurowceManager() {
         return surowceManager;
     }
+
     public TajemniczaManager getTajemniczaManager() {
         return tajemniczaManager;
     }
+
     public WartosciowykuferManager getWartosciowykuferManager() {
         return wartosciowykuferManager;
     }
+
     // ================================ SKRZYNKI EXPOWISKA ===============================
     // exp1
     public RozbojnikManager getNajemnikManager() {
         return najemnikManager;
     }
+
     public DowodcaRozbojnikow getDowodcaRozbojnikow() {
         return wygnaniecManager;
     }
+
     // exp2
     public GoblinManager getGoblinManager() {
         return goblinManager;
     }
+
     public WodzGoblinowManager getWodzGoblinowManager() {
         return wodzGoblinowManager;
     }
+
     // exp3
     public GorylManager getGorylManager() {
         return gorylManager;
     }
+
     public KrolGoryliManager getKrolGoryliManager() {
         return krolGoryliManager;
     }
+
     // exp4
     public ZjawaManager getZjawaManager() {
         return zjawaManager;
     }
+
     public PrzekletaDuszaManager getPrzekletaDuszaManager() {
         return przekletaDuszaManager;
     }
+
     // exp5
     public StraznikSwiatyniManager getStraznikSwiatyniManager() {
         return straznikSwiatyniManager;
     }
+
     public TrytonManager getTrytonManager() {
         return trytonManager;
     }
+
     // exp6
     public MroznyWilkManager getMroznyWilkManager() {
         return mroznyWilkManager;
     }
+
     // exp7
     public PrzekletyRycerzManager getPrzekletyRycerzManager() {
-        return  przekletyRycerzManager;
+        return przekletyRycerzManager;
     }
+
     public ZywiolakOgniaManager getZywiolakOgniaManager() {
         return zywiolakOgniaManager;
     }
+
     // exp8
     public MrocznaDuszaManager getMrocznaDuszaManager() {
         return mrocznaDuszaManager;
     }
+
     public PrzekletyCzarnoksieznikManager getPrzekletyCzarnoksieznikManager() {
         return przekletyCzarnoksieznikManager;
     }
+
     // exp9
     public MitycznyPajakManager getMitycznyPajakManager() {
         return mitycznyPajakManager;
     }
+
     // exp10
     public PodziemnyRozpruwaczManager getPodziemnyRozpruwaczManager() {
-        return  podziemnyRozpruwaczManager;
+        return podziemnyRozpruwaczManager;
     }
+
     // exp11
     public MitycznyKrakenManager getMitycznyKrakenManager() {
         return mitycznyKrakenManager;
     }
+
     // exp12
     public KrysztalowyWladcaManager getKrysztalowyWladcaManager() {
         return krysztalowyWladcaManager;
     }
+
     // exp13
     public StarozytnySmoczyCesarzManager getStarozytnySmoczyCesarzManager() {
         return starozytnySmoczyCesarzManager;
     }
+
     public GornikNPC getGornikNPC() {
         return gornikNPC;
     }
+
     public PrzyrodnikNPC getPrzyrodnikNPC() {
         return przyrodnikNPC;
     }
+
     public ListaNPCManager getListaNPCManager() {
         return listaNPCManager;
     }
+
     public BaoManager getBaoManager() {
         return baoManager;
     }
+
     public UserManager getUserManager() {
         return userManager;
     }
+
     public BonusesManager getBonusesManager() {
         return bonusesManager;
     }
+
     public PartyManager getPartyManager() {
         return partyManager;
     }
+
     public LowcaNPC getLowcaNPC() {
         return lowcaNPC;
     }
+
     public LesnikNPC getLesnikNPC() {
         return lesnikNPC;
     }
+
     public PetyManager getPetyManager() {
         return petyManager;
     }
+
     public ZwierzakiManager getZwierzakiManager() {
         return zwierzakiManager;
     }
+
     public OreManager getOreManager() {
         return oreManager;
     }
+
     public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
         return zamekNieskonczonosciManager;
     }
+
     public DungeonsManager getDungeonsManager() {
         return dungeonsManager;
     }
+
     public ZmiankiManager getZmiankiManager() {
         return zmiankiManager;
     }
+
     public WyslannikNPC getWyslannikNPC() {
         return wyslannikNPC;
     }
+
     public IceTowerManager getIceTowerManager() {
         return iceTowerManager;
     }
+
     /*public TestNPC getTestNPC() {
         return testNPC;
     }*/ // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
     public KociolkiManager getKociolkiManager() {
         return kociolkiManager;
     }
+
     public TopkiManager getTopkiManager() {
         return topkiManager;
     }
+
     public CraftingiManager getCraftingiManager() {
         return craftingiManager;
     }
+
     public SerwerWhiteListManager getSerwerWhiteListManager() {
         return serwerWhiteListManager;
     }
+
     public ArtefaktyZaLvlManager getArtefaktyZaLvlManager() {
         return artefaktyZaLvlManager;
     }
+
     public ShowcaseItemManager getShowcaseItemManager() {
         return showcaseItemManager;
     }
+
     public DisabledManager getDisabledManager() {
         return disabledManager;
     }
+
     public WyszkolenieManager getWyszkolenieManager() {
         return wyszkolenieManager;
     }
+
     public MedrzecNPC getMedrzecNPC() {
         return medrzecNPC;
     }
+
     public InvseeManager getInvseeManager() {
         return invseeManager;
     }
+
     public BossyManager getBossyManager() {
         return bossyManager;
     }
+
     public PustelnikNPC getPustelnikNPC() {
         return pustelnikNPC;
     }
+
     public MistrzYangNPC getMistrzYangNPC() {
         return mistrzYangNPC;
     }
+
     public CzarownicaNPC getCzarownicaNPC() {
         return czarownicaNPC;
+    }
+
+    public PrzedsionekManager getPrzedsionekManager() {
+        return przedsionekManager;
+    }
+
+    public UstawieniaKontaManager getUstawieniaKontaManager() {
+        return ustawieniaKontaManager;
     }
 }

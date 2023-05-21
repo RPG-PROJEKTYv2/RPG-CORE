@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci.tasks;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.tasks;
 
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;

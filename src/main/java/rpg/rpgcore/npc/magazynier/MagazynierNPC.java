@@ -131,13 +131,31 @@ public class MagazynierNPC {
         return missions.getMissionItem().clone();
     }
 
+    private int getPrice(final Player player) {
+        switch (this.find(player.getUniqueId()).getUnlocked()) {
+            case 0: return 150;
+            case 1: return 250;
+            case 2: return 500;
+            case 3: return 750;
+            case 4: return 1_500;
+            default: return 999_999;
+        }
+    }
+
     public void openMagazynierSklepGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&b&lMagazynier &8- &2Sklep"));
-
-        gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&bOdblokowanie magazynu").setLore(Arrays.asList(
-                "&8Oblokownuje kolejny magazyn",
-                "&7Cena: &b1 000 punktow"
-        )).addTagInt("price", 1_000).addGlowing().toItemStack());
+        final int price = this.getPrice(player);
+        if (this.find(player.getUniqueId()).getUnlocked() == 5) {
+            gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&bOdblokowanie magazynu").setLore(Arrays.asList(
+                    "&8Oblokownuje kolejny magazyn",
+                    "&a&lOdblokowano wszystkie magazyny!"
+            )).addTagInt("price", price).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&bOdblokowanie magazynu").setLore(Arrays.asList(
+                    "&8Oblokownuje kolejny magazyn",
+                    "&7Cena: &b" + Utils.spaceNumber(price) + "punktow"
+            )).addTagInt("price", price).addGlowing().toItemStack().clone());
+        }
         gui.setItem(1, new ItemBuilder(Material.COMMAND).setName("&cOdblokowanie komendy /magazyny").setLore(Arrays.asList(
                 "&7Cena: &b15 000 punktow"
         )).addTagInt("price", 15_000).addGlowing().toItemStack());

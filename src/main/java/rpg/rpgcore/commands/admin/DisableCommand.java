@@ -54,10 +54,6 @@ public class DisableCommand extends CommandAPI {
             return;
         }
 
-        if (args.length > 3) {
-            sender.sendMessage(Utils.poprawneUzycie("disable <npc/dungeon/command> <add/remove/list> <commandName/npcName/dungeonNameWith_>"));
-            return;
-        }
 
         if (args[0].equalsIgnoreCase("command")) {
             final String command = args[2];
@@ -102,7 +98,11 @@ public class DisableCommand extends CommandAPI {
             }
         }
         if (args[0].equalsIgnoreCase("npc")) {
-            final String npc = Utils.removeColor(args[2].replace("_", " "));
+            final StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            final String npc = sb.toString().trim();
 
             if (args[1].equalsIgnoreCase("add")) {
 
@@ -130,7 +130,11 @@ public class DisableCommand extends CommandAPI {
             }
         }
         if (args[0].equalsIgnoreCase("dungeon")) {
-            final String dungeon = Utils.removeColor(args[2].replace("_", " "));
+            final StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            final String dungeon = sb.toString().trim();
 
             if (args[1].equalsIgnoreCase("add")) {
 

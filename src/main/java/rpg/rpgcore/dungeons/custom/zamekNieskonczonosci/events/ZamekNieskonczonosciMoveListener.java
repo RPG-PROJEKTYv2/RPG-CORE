@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci.events;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

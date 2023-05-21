@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci;
 
 
 import io.lumine.xikage.mythicmobs.MythicMobs;
@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
-import rpg.rpgcore.dungeons.zamekNieskonczonosci.tasks.SideBarTask;
+import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.tasks.SideBarTask;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.KsiazeMroku.KsiazeMroku;
 import rpg.rpgcore.metiny.MetinyHelper;

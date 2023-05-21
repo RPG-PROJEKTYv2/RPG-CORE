@@ -1,8 +1,8 @@
 package rpg.rpgcore.tasks;
 
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.icetower.ResetType;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.Utils;
 

@@ -452,7 +452,7 @@ public class DamageManager {
         int prot = 0;
         double protMnoznik;
         final double mnoznikBaza = 0.1;
-        final double mobDamage = EntityDamage.getByName(Utils.removeColor(entity.getName()));
+        final double mobDamage = EntityDamage.getByName(Utils.removeColor(entity.getName()).trim());
         double drugiMnoznik = 100;
 
         mnoznikProcenty += bonuses.getSredniadefensywa();

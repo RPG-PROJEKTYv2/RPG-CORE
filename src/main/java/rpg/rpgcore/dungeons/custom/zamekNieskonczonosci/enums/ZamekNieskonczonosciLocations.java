@@ -1,4 +1,4 @@
-package rpg.rpgcore.dungeons.zamekNieskonczonosci.enums;
+package rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.enums;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

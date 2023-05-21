@@ -6,13 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
-import rpg.rpgcore.dungeons.icetower.IceTowerManager;
+import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.npc.przyrodnik.Missions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
+import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
@@ -88,10 +89,23 @@ public class MobDropHelper {
 
 
         final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
+        System.out.println(entityName);
         switch (entityName) {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
             // BOSS
             case "[BOSS] Dowodca Rozbojnikow":
+                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
+                addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
+                rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10-2 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
+                // LOWCA
+                if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
+                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 15), true, true, entity);
+                }
+                if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 1) {
+                    rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
+                }
+                break;
+            case "[BOSS] Dowodca Rozbojnikow ":
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
@@ -335,7 +349,7 @@ public class MobDropHelper {
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_JADPTASZNIKA", 1), getDropChance(szczescie, 1.4), true, true, entity);
                 addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true,true, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 if (przyrodnikMission.getNumber() == 8) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("80-90"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }
@@ -366,7 +380,7 @@ public class MobDropHelper {
             case "Podziemna Lowczyni Lvl. 98":
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_MROCZNYMATERIAL", 1), getDropChance(szczescie, 1.35), true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true,true, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 if (ChanceHelper.getChance(getDropChance(szczescie, 0.0015))) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,366.5,80,235.5");
                     Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &dpojawil sie w swojej komnacie!"));
@@ -398,7 +412,7 @@ public class MobDropHelper {
             case "Podwodny Straznik Lvl. 109":
                 addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_SZAFIROWESERCE", 1), getDropChance(szczescie, 2.0), true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true,true, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 final BossyUser bossyUser = RPGCORE.getInstance().getBossyManager().getBossyUser();
                 bossyUser.incrementMobsCount100_110();
                 if (bossyUser.getMobsCount100_110() == 10_000) {
@@ -431,7 +445,7 @@ public class MobDropHelper {
             case "Mrozny Stroz Lvl. 118":
                 addDropPlayer(player, NiesyItems.N12.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_ZAKLETYLOD", 1), getDropChance(szczescie, 1.5), true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true,true, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 if (przyrodnikMission.getNumber() == 11) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("110-120"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }
@@ -461,7 +475,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Bossy.I5.getItemStack(), getDropChance(szczescie, 0.01), true, false, entity);
                 addDropPlayer(player, Bossy.I5_1.getItemStack(), getDropChance(szczescie, 0.0012), true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("I_NIEBIANSKIMATERIAL", 1), getDropChance(szczescie, 0.5), true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true,true, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 if (przyrodnikMission.getNumber() == 12) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("120-130"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }
@@ -515,6 +529,14 @@ public class MobDropHelper {
                 if (!player.getWorld().getName().equals("demontower")) return;
                 IceTowerManager.teleportKowal();
                 break;
+            // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            case "Ognisty Duch Lvl. 69":
+                rpgcore.getPrzedsionekManager().incrementCounter();
+                break;
+            case "[BOSS] Piekielny Wladca":
+                addDropPlayer(player, Dungeony.getItem("I_PRZEDSIONEK_BOSS", 1), 100, true, true, entity);
+                rpgcore.getPrzedsionekManager().incrementCounter();
+
         }
 
         final double kasa = rpgcore.getLvlManager().getKasa(entityName, uuid);
@@ -529,5 +551,9 @@ public class MobDropHelper {
 
     public static double getDropChance(int szczescie, double chance) {
         return DoubleUtils.round(chance + ((chance * szczescie) / 1000.0), 2);
+    }
+
+    public static double getDropChance(final UUID uuid, double chance) {
+        return DoubleUtils.round(chance + ((chance * RPGCORE.getInstance().getBonusesManager().find(uuid).getBonusesUser().getSzczescie()) / 1000.0), 2);
     }
 }

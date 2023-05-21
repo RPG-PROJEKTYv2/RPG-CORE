@@ -122,7 +122,7 @@ public class AdminPanelManager {
         gui.setItem(29, Przepustki.getItem("I4", 1));
 
         gui.setItem(30, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(31, Dungeony.getItem("I_KLUCZ_PIEKIELNA_KRYJOWKA", 1));
+        gui.setItem(31, Dungeony.getItem("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", 1));
         gui.setItem(32, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa &5Magiczna Receptura &f&kaa").setLore(Arrays.asList(
                 "&7Receptura ta umozliwi Ci wytwarzanie",
                 "&5&lKsiega Magii"
