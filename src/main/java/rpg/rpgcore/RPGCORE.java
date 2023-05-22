@@ -77,6 +77,7 @@ import rpg.rpgcore.commands.admin.teleport.TeleportHereCommand;
 import rpg.rpgcore.commands.admin.teleport.TeleportManager;
 import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaCommand;
 import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaManager;
+import rpg.rpgcore.commands.admin.ustawieniakonta.events.UstawieniaKontaInventoryClickListener;
 import rpg.rpgcore.commands.admin.vanish.VanishCommand;
 import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.commands.player.*;
@@ -205,7 +206,7 @@ import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClose;
 import rpg.rpgcore.npc.medrzec.MedrzecNPC;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInteractListener;
 import rpg.rpgcore.npc.medrzec.events.MedrzecInventoryClickListener;
-import rpg.rpgcore.npc.metinolog.MetinologInventoryClick;
+import rpg.rpgcore.npc.metinolog.events.MetinologInventoryClick;
 import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.mistrz_yang.MistrzYangNPC;
 import rpg.rpgcore.npc.mistrz_yang.events.MistrzYangInventoryClickListener;
@@ -808,6 +809,9 @@ public final class RPGCORE extends JavaPlugin {
         // MIECZE
         this.getServer().getPluginManager().registerEvents(new MieczePickupListener(this), this);
 
+        // USTAWIENIA KONTA
+        this.getServer().getPluginManager().registerEvents(new UstawieniaKontaInventoryClickListener(this), this);
+
     }
 
     private void initDatabase() {
@@ -876,7 +880,6 @@ public final class RPGCORE extends JavaPlugin {
         this.wyslannikNPC = new WyslannikNPC(this);
         this.medrzecNPC = new MedrzecNPC(this);
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
-        this.getMetinologNPC().loadMissions();
         this.pustelnikNPC = new PustelnikNPC(this);
         this.mistrzYangNPC = new MistrzYangNPC(this);
         this.czarownicaNPC = new CzarownicaNPC(this);

@@ -27,22 +27,22 @@ public class PiekielnyPrzedsionekTask implements Runnable{
             }
             switch (rpgcore.getPrzedsionekManager().getDungeonStatus()) {
                 case ETAP_1:
-                    if (rpgcore.getPrzedsionekManager().getCounter() == 96) {
+                    if (rpgcore.getPrzedsionekManager().getCounter() >= 96) {
                         rpgcore.getPrzedsionekManager().startPhase2();
                     }
                     break;
                 case ETAP_2:
-                    if (rpgcore.getPrzedsionekManager().getCounter() == 12) {
+                    if (rpgcore.getPrzedsionekManager().getCounter() >= 12) {
                         rpgcore.getPrzedsionekManager().startPhase3();
                     }
                     break;
                 case ETAP_3:
-                    if (rpgcore.getPrzedsionekManager().getCounter() == 144) {
+                    if (rpgcore.getPrzedsionekManager().getCounter() >= 144) {
                         rpgcore.getPrzedsionekManager().startPhase4();
                     }
                     break;
                 case BOSS:
-                    if (rpgcore.getPrzedsionekManager().getCounter() == 1) {
+                    if (rpgcore.getPrzedsionekManager().getCounter() >= 1) {
                         rpgcore.getPrzedsionekManager().endDungeon();
                     }
                     break;

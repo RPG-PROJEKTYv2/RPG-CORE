@@ -6,8 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
+import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
-import rpg.rpgcore.npc.przyrodnik.Missions;
+import rpg.rpgcore.npc.przyrodnik.PrzyrodnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -88,7 +89,7 @@ public class MobDropHelper {
         }
 
 
-        final Missions przyrodnikMission = Missions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
+        final PrzyrodnikMissions przyrodnikMission = PrzyrodnikMissions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
         System.out.println(entityName);
         switch (entityName) {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
@@ -531,7 +532,9 @@ public class MobDropHelper {
                 break;
             // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
             case "Ognisty Duch Lvl. 69":
-                rpgcore.getPrzedsionekManager().incrementCounter();
+                if (rpgcore.getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_1 || rpgcore.getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_3) {
+                    rpgcore.getPrzedsionekManager().incrementCounter();
+                }
                 break;
             case "[BOSS] Piekielny Wladca":
                 addDropPlayer(player, Dungeony.getItem("I_PRZEDSIONEK_BOSS", 1), 100, true, true, entity);

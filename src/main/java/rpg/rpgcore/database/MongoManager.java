@@ -32,7 +32,7 @@ import rpg.rpgcore.npc.lesnik.LesnikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
-import rpg.rpgcore.npc.metinolog.MetinologObject;
+import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;

@@ -16,7 +16,7 @@ import rpg.rpgcore.npc.lowca.LowcaMissions;
 import rpg.rpgcore.npc.lowca.LowcaUser;
 import rpg.rpgcore.npc.magazynier.enums.MagazynierMissions;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
-import rpg.rpgcore.npc.metinolog.MetinologUser;
+import rpg.rpgcore.npc.metinolog.objects.MetinologUser;
 import rpg.rpgcore.npc.rybak.enums.RybakMissions;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;

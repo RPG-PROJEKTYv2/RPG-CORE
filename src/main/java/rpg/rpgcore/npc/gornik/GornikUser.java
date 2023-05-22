@@ -53,4 +53,39 @@ public class GornikUser {
         this.d9_1 = d9_1;
         this.d9_2 = d9_2;
     }
+
+    public int getDrzewkoUnnlocked() {
+        int count = 0;
+        if (d1) count++;
+        if (d2) count++;
+        if (d3_1) count++;
+        if (d3_2) count++;
+        if (d3_3) count++;
+        if (d4_1) count++;
+        if (d4_2) count++;
+        if (d4_3) count++;
+        if (d4_4) count++;
+        if (d4_5) count++;
+        if (d4_6) count++;
+        if (d4_7) count++;
+        if (d5_1) count++;
+        if (d5_2) count++;
+        if (d5_3) count++;
+        if (d5_4) count++;
+        if (d5_5) count++;
+        if (d6_1) count++;
+        if (d6_2) count++;
+        if (d6_3) count++;
+        if (d6_4) count++;
+        if (d6_5) count++;
+        if (d7_1) count++;
+        if (d7_2) count++;
+        if (d7_3) count++;
+        if (d7_4) count++;
+        if (d8_1) count++;
+        if (d8_2) count++;
+        if (d9_1) count++;
+        if (d9_2) count++;
+        return count;
+    }
 }

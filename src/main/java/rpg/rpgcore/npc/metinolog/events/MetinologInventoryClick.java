@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.metinolog;
+package rpg.rpgcore.npc.metinolog.events;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +10,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.npc.metinolog.enums.MetinologMissionGive;
+import rpg.rpgcore.npc.metinolog.enums.MetinologMissionKill;
+import rpg.rpgcore.npc.metinolog.objects.MetinologUser;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.utils.Utils;
@@ -42,15 +45,16 @@ public class MetinologInventoryClick implements Listener {
             final MetinologUser ms = RPGCORE.getInstance().getMetinologNPC().find(player.getUniqueId()).getMetinologUser();
 
             if (item.getType().equals(Material.PRISMARINE_SHARD)) {
-                final String[] mission = RPGCORE.getInstance().getMetinologNPC().getGiveMissions().get(ms.getPostepGive() + 1).split(";");
-                if (ms.getPostepMisjiGive() >= Integer.parseInt(mission[1])) {
+                final MetinologMissionGive mission = MetinologMissionGive.getMission(ms.getPostepGive());
+                assert mission != null;
+                if (ms.getPostepMisjiGive() >= mission.getReqAmount()) {
                     ms.setPostepMisjiGive(0);
-                    ms.setDodatkowedmg(ms.getDodatkowedmg() + Integer.parseInt(mission[4]));
-                    ms.setSrOdpo(ms.getSrOdpo() + Double.parseDouble(mission[5]));
+                    ms.setDodatkowedmg(ms.getDodatkowedmg() + mission.getDodatkoweDmg());
+                    ms.setSrOdpo(ms.getSrOdpo() + mission.getSrOdpo());
                     ms.setPostepGive(ms.getPostepGive() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
-                    bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + Integer.parseInt(mission[4]));
-                    bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + DoubleUtils.round(Double.parseDouble(mission[5]), 2));
+                    bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + mission.getDodatkoweDmg());
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(mission.getSrOdpo(), 2));
 
 
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
@@ -62,11 +66,11 @@ public class MetinologInventoryClick implements Listener {
                     return;
                 }
 
-                if (!player.getInventory().containsAtLeast(MetinologItems.getItem("I" + mission[0], 1), 1)) {
+                if (!player.getInventory().containsAtLeast(MetinologItems.getItem("I" + mission.getMapa(), 1), 1)) {
                     return;
                 }
 
-                player.getInventory().removeItem(MetinologItems.getItem("I" + mission[0], 1));
+                player.getInventory().removeItem(MetinologItems.getItem("I" + mission.getMapa(), 1));
                 ms.setPostepMisjiGive(ms.getPostepMisjiGive() + 1);
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid)));
                 RPGCORE.getInstance().getMetinologNPC().openMetinologGUI(player);
@@ -74,16 +78,16 @@ public class MetinologInventoryClick implements Listener {
             }
 
             if (item.getType().equals(Material.DIAMOND_SWORD)) {
-                final String[] mission = RPGCORE.getInstance().getMetinologNPC().getKillMissions().get(ms.getPostepKill() + 1).split(";");
-
-                if (ms.getPostepMisjiKill() >= Integer.parseInt(mission[1])) {
+                final MetinologMissionKill mission = MetinologMissionKill.getMission(ms.getPostepKill());
+                assert mission != null;
+                if (ms.getPostepMisjiKill() >= mission.getReqAmount()) {
                     ms.setPostepMisjiKill(0);
-                    ms.setDodatkowedmg(ms.getDodatkowedmg() + Integer.parseInt(mission[2]));
-                    ms.setPrzeszycie(ms.getPrzeszycie() + Double.parseDouble(mission[3]));
+                    ms.setSrOdpo(ms.getSrOdpo() + mission.getSrOdpo());
+                    ms.setPrzeszycie(ms.getPrzeszycie() + mission.getPrzeszycie());
                     ms.setPostepKill(ms.getPostepKill() + 1);
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
-                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(Double.parseDouble(mission[2]), 2));
-                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + DoubleUtils.round(Double.parseDouble(mission[3]), 2));
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(mission.getSrOdpo(), 2));
+                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + DoubleUtils.round(mission.getPrzeszycie(), 2));
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
@@ -92,7 +96,6 @@ public class MetinologInventoryClick implements Listener {
                     player.closeInventory();
                 }
             }
-
         }
     }
 }

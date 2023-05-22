@@ -11,7 +11,7 @@ import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
-import rpg.rpgcore.npc.metinolog.MetinologObject;
+import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 
 import java.util.Map;
 

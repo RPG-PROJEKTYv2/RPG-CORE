@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.metinolog;
+package rpg.rpgcore.npc.metinolog.objects;
 
 import lombok.Getter;
 import lombok.Setter;

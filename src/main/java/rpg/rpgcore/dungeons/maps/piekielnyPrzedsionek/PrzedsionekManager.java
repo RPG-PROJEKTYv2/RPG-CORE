@@ -101,10 +101,7 @@ public class PrzedsionekManager {
         this.closeGate();
         this.setOccupied(false);
         this.setCanJoin(false);
-        for (Entity e : dungeonWorld.getEntities()) {
-            if (e instanceof Player) e.teleport(rpgcore.getSpawnManager().getSpawn());
-            e.remove();
-        }
+        this.clearEntities();
         dungeonStatus = DungeonStatus.ENDED;
         this.resetHologram();
         this.resetCounter();
@@ -202,9 +199,17 @@ public class PrzedsionekManager {
         }
     }
 
+    private void clearEntities() {
+        for (final Entity e : dungeonWorld.getEntities()) {
+            if (e instanceof Player) continue;
+            e.remove();
+        }
+    }
+
     private void updatePhase(final int phase) {
         this.resetCounter();
         this.backPlayer();
+        this.clearEntities();
         String prefix = "&c";
         switch (phase) {
             case 1:

@@ -5,7 +5,7 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 
-public enum Missions {
+public enum PrzyrodnikMissions {
 
     M0(0,10, 95, 2,2,"&6Rozbojnik",2.8, PrzyrodnikItems.getItem("1-10")),
     M1(1,15, 90, 3,3,"&2Goblin",2.3, PrzyrodnikItems.getItem("10-20")),
@@ -27,7 +27,7 @@ public enum Missions {
     private final String mobName;
     private final ItemStack reqitem;
 
-    Missions(final int number, final int reqAmount, final double acceptPercent, final double dmg, final double def, final String mobName, final double dropChance, final ItemStack reqitem){
+    PrzyrodnikMissions(final int number, final int reqAmount, final double acceptPercent, final double dmg, final double def, final String mobName, final double dropChance, final ItemStack reqitem){
         this.number = number;
         this.reqAmount = reqAmount;
         this.acceptPercent = acceptPercent;
@@ -38,8 +38,8 @@ public enum Missions {
         this.reqitem = reqitem;
     }
 
-    public static Missions getByNumber(int number) {
-        for (Missions rank : values()) {
+    public static PrzyrodnikMissions getByNumber(int number) {
+        for (PrzyrodnikMissions rank : values()) {
             if (rank.getNumber() == number) {
                 return rank;
             }

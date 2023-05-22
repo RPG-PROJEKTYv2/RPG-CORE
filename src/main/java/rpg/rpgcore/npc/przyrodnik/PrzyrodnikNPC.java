@@ -34,7 +34,7 @@ public class PrzyrodnikNPC {
 
         gui.setItem(10, this.getStatystykiItem(user));
         if (user.getMission() == 13) {
-            gui.setItem(13, Missions.M_ERROR.getItemStack());
+            gui.setItem(13, PrzyrodnikMissions.M_ERROR.getItemStack());
         } else {
             gui.setItem(13, this.getOddajItemyItem(user));
             gui.setItem(16, this.getCurrentItemToDrop(user, player.getUniqueId()));
@@ -48,27 +48,27 @@ public class PrzyrodnikNPC {
     }
 
     public ItemStack getOddajItemyItem(final PrzyrodnikUser user) {
-        Missions missions = Missions.getByNumber(user.getMission());
-        if (user.getMission() == 13) return Missions.M_ERROR.getItemStack();
-        return new ItemBuilder(missions.getItemStack().clone()).setName(missions.getItemStack().getItemMeta().getDisplayName() + " &7x" + missions.getReqAmount()).setLore(Arrays.asList(
+        PrzyrodnikMissions przyrodnikMissions = PrzyrodnikMissions.getByNumber(user.getMission());
+        if (user.getMission() == 13) return PrzyrodnikMissions.M_ERROR.getItemStack();
+        return new ItemBuilder(przyrodnikMissions.getItemStack().clone()).setName(przyrodnikMissions.getItemStack().getItemMeta().getDisplayName() + " &7x" + przyrodnikMissions.getReqAmount()).setLore(Arrays.asList(
                 "&f&lNagroda",
-                "&7Srednie Obrazenia: &c" + missions.getDmg() + "%",
-                "&7Srednia Odpornosc: &c" + missions.getDef() + "%",
+                "&7Srednie Obrazenia: &c" + przyrodnikMissions.getDmg() + "%",
+                "&7Srednia Odpornosc: &c" + przyrodnikMissions.getDef() + "%",
                 "",
-                "&7Szansa na przyjecie: &e" + missions.getAcceptPercent() + "%",
-                "&7Postep: &6" + user.getProgress() + "&7/&6" + missions.getReqAmount() + " &8(&6" + DoubleUtils.round((user.getProgress() / (double) missions.getReqAmount() * 100.0), 2) + "%&8)")
+                "&7Szansa na przyjecie: &e" + przyrodnikMissions.getAcceptPercent() + "%",
+                "&7Postep: &6" + user.getProgress() + "&7/&6" + przyrodnikMissions.getReqAmount() + " &8(&6" + DoubleUtils.round((user.getProgress() / (double) przyrodnikMissions.getReqAmount() * 100.0), 2) + "%&8)")
         ).toItemStack().clone();
     }
 
     public ItemStack getCurrentItemToDrop(final PrzyrodnikUser user, final UUID uuid) {
-        Missions missions = Missions.getByNumber(user.getMission());
-        double chance = missions.getDropChance();
+        PrzyrodnikMissions przyrodnikMissions = PrzyrodnikMissions.getByNumber(user.getMission());
+        double chance = przyrodnikMissions.getDropChance();
         final double szczescie = RPGCORE.getInstance().getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
-        ItemStack item = missions.getItemStack().clone();
+        ItemStack item = przyrodnikMissions.getItemStack().clone();
         ItemMeta meta = item.getItemMeta();
         meta.setLore(Utils.format(
                 Arrays.asList(
-                        "&7Wypada z: &6" + missions.getMobName(),
+                        "&7Wypada z: &6" + przyrodnikMissions.getMobName(),
                         "&7Szansa na drop: &6" + DoubleUtils.round(chance + ((chance * szczescie) / 1000.0), 2) + "%"
                 )
         ));

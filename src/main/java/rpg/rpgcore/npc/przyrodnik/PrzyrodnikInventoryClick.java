@@ -43,7 +43,7 @@ public class PrzyrodnikInventoryClick implements Listener {
             }
 
             final PrzyrodnikUser user = RPGCORE.getInstance().getPrzyrodnikNPC().find(uuid).getUser();
-            final Missions mission = Missions.getByNumber(user.getMission());
+            final PrzyrodnikMissions mission = PrzyrodnikMissions.getByNumber(user.getMission());
 
             if (user.getProgress() >= mission.getReqAmount()) {
                 user.setMission(user.getMission() + 1);

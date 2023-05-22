@@ -7,7 +7,7 @@ import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.GornikObject;
 import rpg.rpgcore.npc.lowca.LowcaObject;
-import rpg.rpgcore.npc.metinolog.MetinologObject;
+import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
 
 import rpg.rpgcore.ranks.types.RankType;
