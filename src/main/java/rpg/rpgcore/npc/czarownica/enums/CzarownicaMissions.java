@@ -128,6 +128,13 @@ public enum CzarownicaMissions {
         final List<String> lore = new ArrayList<>();
         int progress;
         final LinkedHashMap<ItemStack, Integer> req = this.getReqProgressMap(user);
+
+        for (ItemStack item : req.keySet()) {
+            if (user.getProgressMap().containsKey(item)) continue;
+            user.getProgressMap().put(item, 0);
+        }
+
+
         switch (user.getMission()) {
             case 1:
             case 2:

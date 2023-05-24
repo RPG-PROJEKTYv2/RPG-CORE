@@ -15,7 +15,7 @@ public class UstawieniaKontaCommand extends CommandAPI {
 
     public UstawieniaKontaCommand(final RPGCORE rpgcore) {
         super("ustawieniakonta");
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.DEV);
         this.setAliases(Arrays.asList("konto", "ustawienia"));
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
@@ -23,6 +23,7 @@ public class UstawieniaKontaCommand extends CommandAPI {
 
     public void executeCommand(CommandSender sender, String[] args) {
         final Player player = (Player) sender;
+        rpgcore.getUstawieniaKontaManager().log(player, args);
         if (args.length < 1) {
             player.sendMessage(Utils.poprawneUzycie("ustawieniakonta <gracz>"));
             return;

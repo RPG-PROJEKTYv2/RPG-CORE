@@ -183,11 +183,11 @@ public class LvlManager {
         sender.sendMessage(Utils.format("&7Poziom doswiadczenia: &c" + aktualnyLvlGracza));
         if (aktualnyLvlGracza < Utils.MAXLVL) {
             final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
-            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + Utils.spaceNumber(String.format("%.2f", aktualnyExpGracza)) + "&7exp / &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl)) + "&7exp (&c" + Utils.procentFormat.format((aktualnyExpGracza / expNaNextLvl) * 100) + "%&7)"));
-            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &c" + Utils.spaceNumber(String.format("%.2f", expNaNextLvl - aktualnyExpGracza)) + " &7exp"));
+            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + Utils.spaceNumber(DoubleUtils.round(aktualnyExpGracza, 2)) + " &7exp / &c" + Utils.spaceNumber(DoubleUtils.round(expNaNextLvl, 2)) + " &7exp (&c" + DoubleUtils.round((aktualnyExpGracza / expNaNextLvl) * 100, 2) + "%&7)"));
+            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &c" + Utils.spaceNumber(DoubleUtils.round(expNaNextLvl - aktualnyExpGracza, 2)) + " &7exp"));
         } else {
-            sender.sendMessage(Utils.format("&7Doswiadczenie: &c" + aktualnyExpGracza + " &7exp / &4&lMAX LVL (&4&lMAX LVL&7)"));
-            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &4&lMAX LVL"));
+            sender.sendMessage(Utils.format("&7Doswiadczenie: &4&lMAX &7exp / &4&lMAX &7exp (&4&lMAX&7)"));
+            sender.sendMessage(Utils.format("&7Exp potrzebny do nastepnego poziomu: &4&lMAX"));
         }
         if (user.getRankPlayerUser().getRankType() == RankTypePlayer.GRACZ) {
             sender.sendMessage(Utils.format("&7Ranga: &7Gracz"));
@@ -195,53 +195,6 @@ public class LvlManager {
             sender.sendMessage(Utils.format("&7Ranga: " + user.getRankPlayerUser().getRankType().getPrefix()));
         }
         sender.sendMessage(Utils.format("&8------------  &f( &b&lStatystyki &f) &8------------ "));
-    }
-
-    public void setPlayerLvl(final String adminName, final UUID uuid, int nowyLvl) {
-        final User user = rpgcore.getUserManager().find(uuid);
-        if (nowyLvl > Utils.MAXLVL) {
-            nowyLvl = Utils.MAXLVL;
-        }
-        user.setLvl(nowyLvl);
-        user.setExp(0);
-        final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = user.getName();
-        if (playerToKick != null) {
-            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana lvla"));
-        }
-        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana lvla"));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
-    }
-
-    public void setPlayerExp(final String adminName, final UUID uuid, double nowyExp) {
-        final User user = rpgcore.getUserManager().find(uuid);
-        if (nowyExp > rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) {
-            nowyExp = rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1);
-        }
-        user.setExp(nowyExp);
-        final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = user.getName();
-        if (playerToKick != null) {
-            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana ilosci expa"));
-        }
-        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana ilosci expa"));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
-    }
-
-    public void setPlayerProcent(final String adminName, final UUID uuid, final double procent) {
-        final User user = rpgcore.getUserManager().find(uuid);
-        final int aktualnyLvlGracza = user.getLvl();
-        final double expNaNextLvl = rpgcore.getLvlManager().getExpForLvl(aktualnyLvlGracza + 1);
-        final double nowyExpGracza = (procent * expNaNextLvl) / 100;
-
-        user.setExp(nowyExpGracza);
-        final Player playerToKick = Bukkit.getPlayer(uuid);
-        final String playerToKickName = user.getName();
-        if (playerToKick != null) {
-            playerToKick.kickPlayer(Utils.kickMessage(adminName, "Zmiana postepu do nastepego lvla"));
-        }
-        rpgcore.getServer().broadcastMessage(Utils.kick(playerToKickName, adminName, "Zmiana postepu do nastepnego lvla"));
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
     }
 
     public void updateLvlBelowName(final Player p, final String name1, final int lvl) {

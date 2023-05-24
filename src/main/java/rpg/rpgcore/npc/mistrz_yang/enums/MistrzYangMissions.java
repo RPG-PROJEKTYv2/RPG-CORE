@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum MistrzYangMissions {
-    M0(0, null, 0),
     M1(1, new ItemBuilder(Material.BOOK).setName("&cChinski Zabojca").setLore(Arrays.asList(
             "&7Zabij &c%amount% &7potworow z mapy"
     )).toItemStack(), 33),

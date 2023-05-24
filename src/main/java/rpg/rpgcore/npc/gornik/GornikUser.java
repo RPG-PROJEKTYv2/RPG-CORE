@@ -54,7 +54,7 @@ public class GornikUser {
         this.d9_2 = d9_2;
     }
 
-    public int getDrzewkoUnnlocked() {
+    public int getDrzewkoUnlocked() {
         int count = 0;
         if (d1) count++;
         if (d2) count++;
