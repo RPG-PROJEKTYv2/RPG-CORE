@@ -152,7 +152,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
                     Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
                     if (finalThornsDamage < ((LivingEntity) e.getEntity()).getHealth()) {
-                        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getDamager(), e.getFinalDamage(), (LivingEntity) e.getEntity()));
+                        rpgcore.getNmsManager().sendMobInfo((Player) e.getDamager(), (LivingEntity) e.getEntity());
                     }
                     return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
@@ -166,7 +166,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
                     Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
                     if (finalDmg < ((LivingEntity) e.getEntity()).getHealth()) {
-                        Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket((Player) e.getDamager(), e.getFinalDamage(), (LivingEntity) e.getEntity()));
+                        rpgcore.getNmsManager().sendMobInfo((Player) e.getDamager(), (LivingEntity) e.getEntity());
                     }
                     return;
                 }
@@ -287,6 +287,7 @@ public class EntityDamageEntityListener implements Listener {
                 e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
+                rpgcore.getNmsManager().sendMobInfo(attacker, victim);
                 rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
 
             } else {
@@ -316,7 +317,7 @@ public class EntityDamageEntityListener implements Listener {
                 rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
             }
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamageActionBarPacket(attacker, e.getFinalDamage(), (LivingEntity) e.getEntity()));
+                rpgcore.getNmsManager().sendMobInfo(attacker, (LivingEntity) e.getEntity());
             }
         } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
             // Victim jest Graczem

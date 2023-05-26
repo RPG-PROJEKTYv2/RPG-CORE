@@ -4,7 +4,11 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.BossBarUtil;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 public class NMSManager {
@@ -28,5 +32,26 @@ public class NMSManager {
     public void sendTitleAndSubTitle(final Player player, final PacketPlayOutTitle title, final PacketPlayOutTitle subtitle) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subtitle);
+    }
+
+    public void sendMobInfo(final Player player, final LivingEntity entity) {
+        if (BossBarUtil.hasBar(player.getUniqueId())) {
+            BossBarUtil.updateBar(player, Utils.format(
+                    entity.getCustomName() +
+                            "&7: &c" +
+                            DoubleUtils.round(entity.getHealth(), 2) +
+                            "&7/&c" +
+                            DoubleUtils.round(entity.getMaxHealth(), 0)
+                    ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+        } else {
+            BossBarUtil.setBar(player, Utils.format(
+                    entity.getCustomName() +
+                            "&7: &c" +
+                            DoubleUtils.round(entity.getHealth(), 2) +
+                            "&7/&c" +
+                            DoubleUtils.round(entity.getMaxHealth(), 0)
+            ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+        }
+        RPGCORE.getInstance().getCooldownManager().giveBossBarCooldown(player.getUniqueId());
     }
 }

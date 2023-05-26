@@ -21,10 +21,10 @@ public enum EntityDamage {
     MAP_30_40_3("Zjawa Lvl. 39", 8.0),
     MAP_30_40_BOSS("[BOSS] Przekleta Dusza", 9.5),
 
-    MAP_40_50_1("Straznik Swiatyni Lvl. 43", 13),
-    MAP_40_50_2("Straznik Swiatyni Lvl. 46", 16.5),
-    MAP_40_50_3("Straznik Swiatyni Lvl. 47", 18.5),
-    MAP_40_50_BOSS("[BOSS] Tryton", 26),
+    MAP_40_50_1("Straznik Swiatyni Lvl. 43", 9),
+    MAP_40_50_2("Straznik Swiatyni Lvl. 46", 9.6),
+    MAP_40_50_3("Straznik Swiatyni Lvl. 47", 10.5),
+    MAP_40_50_BOSS("[BOSS] Tryton", 12),
 
     MAP_50_60_1("Mrozny Wilk Lvl. 52", 35),
     MAP_50_60_2("Mrozny Wilk Lvl. 54", 43),

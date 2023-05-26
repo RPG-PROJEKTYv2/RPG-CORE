@@ -1,6 +1,5 @@
 package rpg.rpgcore.npc.kolekcjoner;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
 import rpg.rpgcore.utils.Utils;
 
@@ -109,27 +107,7 @@ public class KolekcjonerInventoryClick implements Listener {
             user.setMissionProgress(given);
             rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
             if (rpgcore.getKolekcjonerNPC().hasGivenBackAll(user)) {
-                user.setMission(user.getMission() + 1);
-                user.resetMissionProgress();
-                user.setSzczescie(user.getSzczescie() + mission.getSzczescie());
-                user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
-                user.setDefNaLudzi(user.getDefNaLudzi() + mission.getDefNaLudzi());
-                final BonusesUser bonusesUser = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-                bonusesUser.setDefnaludzi(bonusesUser.getDefnaludzi() + mission.getDefNaLudzi());
-                bonusesUser.setSilnynaludzi(bonusesUser.getSilnynaludzi() + mission.getSilnyNaLudzi());
-                bonusesUser.setSzczescie(bonusesUser.getSzczescie() + mission.getSzczescie());
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                    rpgcore.getMongoManager().saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
-                    rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
-                });
-                if (user.getMission() == 14) {
-                    Bukkit.broadcastMessage(" ");
-                    Bukkit.broadcastMessage(Utils.format("&6&lKolekcjoner &8>> &7Gracz &6" + player.getName() + " &7ukonczyl moja &c&lKampanie &7!"));
-                    Bukkit.broadcastMessage(" ");
-                } else {
-                    Bukkit.broadcastMessage(Utils.format("&6&lKolekcjoner &8>> &7Gracz &6" + player.getName() + " &7ukonczyl moja &6" + (user.getMission() - 1) + " &7misje!"));
-                }
-                rpgcore.getKolekcjonerNPC().openKolekcjonerGUI(player);
+                rpgcore.getKolekcjonerNPC().incrementMission(player);
             }
         }
     }

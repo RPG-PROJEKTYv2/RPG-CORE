@@ -26,6 +26,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> odlamkiCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> klejnoty120_130Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> bossBarCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -208,5 +209,13 @@ public class CooldownManager {
 
     public boolean hasSerce70_80Cooldown(final UUID uuid) {
         return this.serce70_80Cooldown.asMap().containsKey(uuid);
+    }
+
+    public void giveBossBarCooldown(final UUID uuid) {
+        this.bossBarCooldown.put(uuid, System.currentTimeMillis() + 1000L);
+    }
+
+    public boolean hasBossBarCooldown(final UUID uuid) {
+        return this.bossBarCooldown.asMap().containsKey(uuid);
     }
 }

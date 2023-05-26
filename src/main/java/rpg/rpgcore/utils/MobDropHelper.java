@@ -90,7 +90,6 @@ public class MobDropHelper {
 
 
         final PrzyrodnikMissions przyrodnikMission = PrzyrodnikMissions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
-        System.out.println(entityName);
         switch (entityName) {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
             // BOSS

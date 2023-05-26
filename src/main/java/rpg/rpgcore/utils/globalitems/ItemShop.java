@@ -42,6 +42,14 @@ public enum ItemShop {
             "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Vip").addTagString("time", "14d").toItemStack().clone())),
+    IS22("Vip_30d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &e&lVip").setLore(Arrays.asList(
+            "&8Waznosc: &e30 dni",
+            "",
+            "&8Kliknij, aby aktywowac ten voucher i otrzymac jego zawartosc",
+            "",
+            "&6Rangi &8i &4&lHell&6&lS'y &8mozesz zakupic na naszej stronie",
+            "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
+    )).addGlowing().addTagString("rank", "Vip").addTagString("time", "30d").toItemStack().clone())),
     IS12("ELITA_3d", Arrays.asList(new ItemBuilder(Material.BOOK).setName("&7&lVoucher na range &5&lELITA").setLore(Arrays.asList(
             "&8Waznosc: &e3 dni",
             "",

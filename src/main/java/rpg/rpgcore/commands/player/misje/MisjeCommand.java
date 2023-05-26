@@ -165,7 +165,7 @@ public class MisjeCommand extends CommandAPI {
             final RybakUser rybakUser = rpgcore.getRybakNPC().find(targetUUID).getRybakUser();
             final RybakMissions rybakMissions = RybakMissions.getMission(rybakUser.getMission());
             assert rybakMissions != null;
-            gui.setItem(34, new ItemBuilder(rybakMissions.getMissionItem().clone()).setName("&c&lMisja #" + (rybakUser.getMission() + 1)).setLoreCrafting(rybakMissions.getMissionItem().getItemMeta().getLore(),
+            gui.setItem(34, new ItemBuilder(rybakMissions.getMissionItem().clone()).setName("&c&lMisja #" + rybakUser.getMission()).setLoreCrafting(rybakMissions.getMissionItem().getItemMeta().getLore(),
                     Arrays.asList(" ", "&7Postep: &6" + rybakUser.getProgress() + "&7/&6" + rybakMissions.getReqAmount())).toItemStack().clone());
         }
 

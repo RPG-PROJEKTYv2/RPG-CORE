@@ -248,32 +248,33 @@ public class AdminPanelManager {
     public void openItemShopGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lItemShop &f- ADMINISTRACJA"));
 
-        gui.setItem(0, ItemShop.getByName("Vip_3d").getItems().get(0));
-        gui.setItem(1, ItemShop.getByName("Vip_7d").getItems().get(0));
-        gui.setItem(2, ItemShop.getByName("Vip_14d").getItems().get(0));
+        gui.setItem(0, ItemShop.IS9.getItems().get(0).clone());
+        gui.setItem(1, ItemShop.IS10.getItems().get(0).clone());
+        gui.setItem(2, ItemShop.IS11.getItems().get(0).clone());
+        gui.setItem(3, ItemShop.IS22.getItems().get(0).clone());
 
-        gui.setItem(6, ItemShop.getByName("DAR_KLEOPATRY").getItems().get(0));
-        gui.setItem(7, ItemShop.getByName("PELERYNKA").getItems().get(0));
-        gui.setItem(8, ItemShop.getByName("PELERYNKA+").getItems().get(0));
+        gui.setItem(6, ItemShop.IS21.getItems().get(0).clone());
+        gui.setItem(7, ItemShop.IS19.getItems().get(0).clone());
+        gui.setItem(8, ItemShop.IS20.getItems().get(0).clone());
 
-        gui.setItem(9, ItemShop.getByName("Elita_3d").getItems().get(0));
-        gui.setItem(10, ItemShop.getByName("Elita_7d").getItems().get(0));
-        gui.setItem(11, ItemShop.getByName("Elita_14d").getItems().get(0));
-        gui.setItem(12, ItemShop.getByName("Elita_30d").getItems().get(0));
+        gui.setItem(9, ItemShop.IS12.getItems().get(0).clone());
+        gui.setItem(10, ItemShop.IS13.getItems().get(0).clone());
+        gui.setItem(11, ItemShop.IS14.getItems().get(0).clone());
+        gui.setItem(12, ItemShop.IS15.getItems().get(0).clone());
 
-        gui.setItem(14, GlobalItem.getItem("I52",1 ));
-        gui.setItem(15, GlobalItem.getItem("I53",1 ));
-        gui.setItem(16, GlobalItem.getItem("I54",1 ));
-        gui.setItem(17, GlobalItem.getItem("I55",1 ));
+        gui.setItem(14, GlobalItem.I52.getItemStack().clone());
+        gui.setItem(15, GlobalItem.I53.getItemStack().clone());
+        gui.setItem(16, GlobalItem.I54.getItemStack().clone());
+        gui.setItem(17, GlobalItem.I55.getItemStack().clone());
 
-        gui.setItem(18, ItemShop.getByName("HS_5").getItems().get(0));
-        gui.setItem(19, ItemShop.getByName("HS_10").getItems().get(0));
-        gui.setItem(20, ItemShop.getByName("HS_15").getItems().get(0));
-        gui.setItem(21, ItemShop.getByName("HS_30").getItems().get(0));
-        gui.setItem(22, ItemShop.getByName("HS_55").getItems().get(0));
-        gui.setItem(23, ItemShop.getByName("HS_130").getItems().get(0));
-        gui.setItem(24, ItemShop.getByName("HS_280").getItems().get(0));
-        gui.setItem(25, ItemShop.getByName("HS_585").getItems().get(0));
+        gui.setItem(18, ItemShop.IS1.getItems().get(0).clone());
+        gui.setItem(19, ItemShop.IS2.getItems().get(0).clone());
+        gui.setItem(20, ItemShop.IS3.getItems().get(0).clone());
+        gui.setItem(21, ItemShop.IS4.getItems().get(0).clone());
+        gui.setItem(22, ItemShop.IS5.getItems().get(0).clone());
+        gui.setItem(23, ItemShop.IS6.getItems().get(0).clone());
+        gui.setItem(24, ItemShop.IS7.getItems().get(0).clone());
+        gui.setItem(25, ItemShop.IS8.getItems().get(0).clone());
 
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);

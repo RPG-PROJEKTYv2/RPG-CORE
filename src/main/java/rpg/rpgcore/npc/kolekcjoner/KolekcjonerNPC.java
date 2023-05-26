@@ -8,6 +8,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -26,6 +28,12 @@ public class KolekcjonerNPC {
     public final void openKolekcjonerGUI(Player player) {
         final UUID uuid = player.getUniqueId();
         final KolekcjonerUser user = this.find(uuid).getKolekcjonerUser();
+
+        if (this.hasGivenBackAll(user)) {
+            this.incrementMission(player);
+            return;
+        }
+
         final KolekcjonerMissions mission = KolekcjonerMissions.getByNumber(user.getMission());
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lKolekcjoner"));
 
@@ -63,6 +71,35 @@ public class KolekcjonerNPC {
                 "&7Szczescie: &c" + user.getSzczescie(),
                 "&7Silny przeciwko Ludziom: &c" + user.getSilnyNaLudzi(),
                 "&7Defensywa Przeciwko Ludziom: &c" + user.getDefNaLudzi())).toItemStack().clone();
+    }
+
+    public void incrementMission(final Player player) {
+        final KolekcjonerObject object  = this.find(player.getUniqueId());
+        final KolekcjonerUser user = object.getKolekcjonerUser();
+        final KolekcjonerMissions mission = KolekcjonerMissions.getByNumber(user.getMission());
+        final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
+        final BonusesUser bonusesUser = bonuses.getBonusesUser();
+
+        user.setMission(user.getMission() + 1);
+        user.resetMissionProgress();
+        user.setSzczescie(user.getSzczescie() + mission.getSzczescie());
+        user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
+        user.setDefNaLudzi(user.getDefNaLudzi() + mission.getDefNaLudzi());
+        bonusesUser.setDefnaludzi(bonusesUser.getDefnaludzi() + mission.getDefNaLudzi());
+        bonusesUser.setSilnynaludzi(bonusesUser.getSilnynaludzi() + mission.getSilnyNaLudzi());
+        bonusesUser.setSzczescie(bonusesUser.getSzczescie() + mission.getSzczescie());
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+            RPGCORE.getInstance().getMongoManager().saveDataKolekcjoner(player.getUniqueId(), object);
+            RPGCORE.getInstance().getMongoManager().saveDataBonuses(player.getUniqueId(), bonuses);
+        });
+        if (user.getMission() == 14) {
+            Bukkit.broadcastMessage(" ");
+            Bukkit.broadcastMessage(Utils.format("&6&lKolekcjoner &8>> &7Gracz &6" + player.getName() + " &7ukonczyl moja &c&lKampanie &7!"));
+            Bukkit.broadcastMessage(" ");
+        } else {
+            Bukkit.broadcastMessage(Utils.format("&6&lKolekcjoner &8>> &7Gracz &6" + player.getName() + " &7ukonczyl moja &6" + (user.getMission() - 1) + " &7misje!"));
+        }
+        this.openKolekcjonerGUI(player);
     }
 
 

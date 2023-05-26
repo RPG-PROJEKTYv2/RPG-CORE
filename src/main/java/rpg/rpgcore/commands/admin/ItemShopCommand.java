@@ -95,7 +95,7 @@ public class ItemShopCommand extends CommandAPI {
         Bukkit.getServer().broadcastMessage(" ");
         Bukkit.getServer().broadcastMessage(Utils.format("               &6&lItem&2&lShop            "));
         Bukkit.getServer().broadcastMessage(Utils.format("  &aGracz &6" + player.getName() + " &azakupil pakiet &6" + pakietName + " &a!"));
-        Bukkit.getServer().broadcastMessage(Utils.format("  &6Dziekujemy za wspacie servera. &cZespol Hellrpg.pl ❤"));
+        Bukkit.getServer().broadcastMessage(Utils.format("  &6Dziekujemy za wspacie serwera. &cZespol Hellrpg.pl ❤"));
         Bukkit.getServer().broadcastMessage(Utils.format("  &6Rangi &7oraz &4&lHell&6&lS'y &7mozesz zakupic"));
         Bukkit.getServer().broadcastMessage(Utils.format("  &7na naszej stronie &3www.hellrpg.pl &7lub discordzie &3dc.hellrpg.pl"));
         Bukkit.getServer().broadcastMessage(Utils.format("               &6&lItem&2&lShop            "));

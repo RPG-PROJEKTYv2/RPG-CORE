@@ -100,28 +100,29 @@ public class  HandlarzNPC {
         }
 
         // VIP
-        gui.setItem(10, addPrice(ItemShop.IS9.getItems().get(0), 50));
-        gui.setItem(11, addPrice(ItemShop.IS10.getItems().get(0), 100));
-        gui.setItem(12, addPrice(ItemShop.IS11.getItems().get(0), 150));
+        gui.setItem(10, addPrice(ItemShop.IS9.getItems().get(0).clone(), 50));
+        gui.setItem(11, addPrice(ItemShop.IS10.getItems().get(0).clone(), 100));
+        gui.setItem(12, addPrice(ItemShop.IS11.getItems().get(0).clone(), 150));
+        gui.setItem(13, addPrice(ItemShop.IS22.getItems().get(0).clone(), 280));
 
         // PELERYNKI
-        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0), 750));
-        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0), 1350));
+        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0).clone(), 750));
+        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0).clone(), 1350));
 
         // ELITA
-        gui.setItem(19, addPrice(ItemShop.IS12.getItems().get(0), 80));
-        gui.setItem(20, addPrice(ItemShop.IS13.getItems().get(0), 150));
-        gui.setItem(21, addPrice(ItemShop.IS14.getItems().get(0), 280));
-        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0), 500));
+        gui.setItem(19, addPrice(ItemShop.IS12.getItems().get(0).clone(), 80));
+        gui.setItem(20, addPrice(ItemShop.IS13.getItems().get(0).clone(), 150));
+        gui.setItem(21, addPrice(ItemShop.IS14.getItems().get(0).clone(), 280));
+        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0).clone(), 480));
 
         // PDKI
-        gui.setItem(37, addPrice(GlobalItem.getItem("I52", 1), 25));
-        gui.setItem(38, addPrice(GlobalItem.getItem("I53", 1), 35));
-        gui.setItem(39, addPrice(GlobalItem.getItem("I54", 1), 50));
-        gui.setItem(40, addPrice(GlobalItem.getItem("I55", 1), 75));
+        gui.setItem(37, addPrice(GlobalItem.getItem("I52", 1), 25).clone());
+        gui.setItem(38, addPrice(GlobalItem.getItem("I53", 1), 35).clone());
+        gui.setItem(39, addPrice(GlobalItem.getItem("I54", 1), 50).clone());
+        gui.setItem(40, addPrice(GlobalItem.getItem("I55", 1), 75).clone());
 
         // TU RESZTA
-        gui.setItem(33, addPrice(ItemShop.IS21.getItems().get(0), 100));
+        gui.setItem(33, addPrice(ItemShop.IS21.getItems().get(0).clone(), 100));
         /*gui.setItem(34, null);
         gui.setItem(42, null);
         gui.setItem(43, null);*/

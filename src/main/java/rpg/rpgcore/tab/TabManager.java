@@ -263,13 +263,6 @@ public class TabManager {
             }
         }
 
-        for (String s : listGiven) {
-            if (s.contains("GM")) {
-                if (!list.contains(s)) {
-                    list.add(s);
-                }
-            }
-        }
 
         for (String s : listGiven) {
             if (s.contains("Mod")) {

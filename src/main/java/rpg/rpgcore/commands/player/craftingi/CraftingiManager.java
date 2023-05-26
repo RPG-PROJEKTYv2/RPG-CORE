@@ -181,7 +181,7 @@ public class CraftingiManager {
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Silny przeciwko ludziom: &c3% - 18%",
                 "&7Odpornosc na Ludzi: &c2% - 15%",
-                "&7Zmniejszona Szybkosc Ruchu: -&c10 - 30",
+                "&7Zmniejszona Szybkosc Ruchu: &c-10 - 30",
                 "",
                 "&cWymagany poziom: &630 - 60",
                 "",

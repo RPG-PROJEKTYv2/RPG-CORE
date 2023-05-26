@@ -51,6 +51,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_pustelnik;
     private final MongoCollection<Document> hellrpg_mistrzYang;
     private final MongoCollection<Document> hellrpg_czarownica;
+    private final MongoCollection<Document> hellrpg_authUsers;
 
 
     public MongoConnectionPoolManager() {
@@ -204,6 +205,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_pustelnik = database.getCollection("hellrpg_pustelnik");
         this.hellrpg_mistrzYang = database.getCollection("hellrpg_mistrzYang");
         this.hellrpg_czarownica = database.getCollection("hellrpg_czarownica");
+        this.hellrpg_authUsers = database.getCollection("hellrpg_authUsers");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -317,6 +319,9 @@ public class MongoConnectionPoolManager {
     }
     public MongoCollection<Document> getCzarownica() {
         return hellrpg_czarownica;
+    }
+    public MongoCollection<Document> getAuthUsers() {
+        return hellrpg_authUsers;
     }
 
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI

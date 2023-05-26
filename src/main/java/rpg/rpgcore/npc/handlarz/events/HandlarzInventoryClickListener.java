@@ -153,45 +153,48 @@ public class HandlarzInventoryClickListener implements Listener {
             player.sendMessage(Utils.format("&6&lItem&2&lShop &8>> &aPomyslnie zakupiles/-as " + item.getItemMeta().getDisplayName()));
             switch (slot) {
                 case 10:
-                    player.getInventory().addItem(ItemShop.IS9.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS9.getItems().get(0).clone());
                     return;
                 case 11:
-                    player.getInventory().addItem(ItemShop.IS10.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS10.getItems().get(0).clone());
                     return;
                 case 12:
-                    player.getInventory().addItem(ItemShop.IS11.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS11.getItems().get(0).clone());
+                    return;
+                    case 13:
+                    player.getInventory().addItem(ItemShop.IS22.getItems().get(0).clone());
                     return;
                 case 15:
-                    player.getInventory().addItem(ItemShop.IS19.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS19.getItems().get(0).clone());
                     return;
                 case 16:
-                    player.getInventory().addItem(ItemShop.IS20.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS20.getItems().get(0).clone());
                     return;
                 case 19:
-                    player.getInventory().addItem(ItemShop.IS12.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS12.getItems().get(0).clone());
                     return;
                 case 20:
-                    player.getInventory().addItem(ItemShop.IS13.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS13.getItems().get(0).clone());
                     return;
                 case 21:
-                    player.getInventory().addItem(ItemShop.IS14.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS14.getItems().get(0).clone());
                     return;
                 case 22:
-                    player.getInventory().addItem(ItemShop.IS15.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS15.getItems().get(0).clone());
                     return;
                 case 37:
-                    player.getInventory().addItem(GlobalItem.getItem("I52", 1));
+                    player.getInventory().addItem(GlobalItem.getItem("I52", 1).clone());
                     return;
                 case 38:
-                    player.getInventory().addItem(GlobalItem.getItem("I53", 1));
+                    player.getInventory().addItem(GlobalItem.getItem("I53", 1).clone());
                     return;
                 case 39:
-                    player.getInventory().addItem(GlobalItem.getItem("I54", 1));
+                    player.getInventory().addItem(GlobalItem.getItem("I54", 1).clone());
                     return;
                 case 40:
-                    player.getInventory().addItem(GlobalItem.getItem("I55", 1));
+                    player.getInventory().addItem(GlobalItem.getItem("I55", 1).clone());
                 case 33:
-                    player.getInventory().addItem(ItemShop.IS21.getItems().get(0));
+                    player.getInventory().addItem(ItemShop.IS21.getItems().get(0).clone());
                     return;
             }
             return;

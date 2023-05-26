@@ -390,6 +390,15 @@ public class MongoManager {
         }
     }
 
+    public void changeAuthUserRank(final UUID uuid, final String rankName) {
+        final Document user = this.pool.getAuthUsers().find(new Document("_id", uuid.toString())).first();
+        assert user != null;
+        user.remove("rankType");
+        user.append("rankType", rankName);
+        this.pool.getAuthUsers().findOneAndReplace(new Document("_id", uuid.toString()), user);
+    }
+
+
     public void createPlayer(final Player player, final UUID uuid, final String nick) {
 
         final User user = new User(uuid, nick);

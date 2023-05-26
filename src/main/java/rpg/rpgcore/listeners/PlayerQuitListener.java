@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.tab.TabManager;
+import rpg.rpgcore.utils.BossBarUtil;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
@@ -31,6 +32,10 @@ public class PlayerQuitListener implements Listener {
         final String name = player.getName();
 
         e.setQuitMessage(null);
+
+        if (BossBarUtil.hasBar(uuid)) {
+            BossBarUtil.removeBar(player);
+        }
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid));
 
