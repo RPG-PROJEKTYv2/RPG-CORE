@@ -81,6 +81,7 @@ public class MobDropHelper {
         // FRAGMENT STALI
         addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.015), true, true, entity);
 
+        // MEDRZEC
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
         if (medrzecBonus < 20) {
             addDropPlayer(player, GlobalItem.getItem("ZNISZCZONE_RUBINOWE_SERCE", 1), getDropChance(szczescie, 0.05), true, true, entity);

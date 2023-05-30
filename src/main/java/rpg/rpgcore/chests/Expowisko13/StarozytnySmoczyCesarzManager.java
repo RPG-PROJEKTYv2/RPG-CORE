@@ -15,11 +15,11 @@ public class StarozytnySmoczyCesarzManager {
     private final Set<Items> starozytnycesarz = Sets.newConcurrentHashSet();
 
     public StarozytnySmoczyCesarzManager() {
-        this.starozytnycesarz.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Archaniola", Material.IRON_HELMET, 95, 20), 1));
-        this.starozytnycesarz.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Archaniola", Material.IRON_CHESTPLATE, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Archaniola", Material.IRON_LEGGINGS, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Archaniola", Material.IRON_BOOTS, 95, 20), 1));
-        this.starozytnycesarz.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Archaniola", Material.IRON_SWORD, 80, 50, false), 1));
+        this.starozytnycesarz.add(new Items("1", 8.0, ItemHelper.createArmor("&f&lHelm Archaniola", Material.DIAMOND_HELMET, 95, 20), 1));
+        this.starozytnycesarz.add(new Items("2", 8.0, ItemHelper.createArmor("&f&lZbroja Archaniola", Material.DIAMOND_CHESTPLATE, 99, 20), 1));
+        this.starozytnycesarz.add(new Items("3", 8.0, ItemHelper.createArmor("&f&lSpodnie Archaniola", Material.DIAMOND_LEGGINGS, 99, 20), 1));
+        this.starozytnycesarz.add(new Items("4", 8.0, ItemHelper.createArmor("&f&lButy Archaniola", Material.DIAMOND_BOOTS, 95, 20), 1));
+        this.starozytnycesarz.add(new Items("5", 6.0, ItemHelper.createSword("&f&lMiecz Archaniola", Material.DIAMOND_SWORD, 80, 50, false), 1));
         this.starozytnycesarz.add(new Items("6", 2.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lNaszyjnik Archaniola").toItemStack(), 1));
         this.starozytnycesarz.add(new Items("7", 2.0, new ItemBuilder(Material.WATCH).setName("&f&lDiadem Archaniola").toItemStack(), 1));
         this.starozytnycesarz.add(new Items("8", 2.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lPierscien Archaniola").toItemStack(), 1));

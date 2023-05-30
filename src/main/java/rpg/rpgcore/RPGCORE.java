@@ -38,6 +38,8 @@ import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
+import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
+import rpg.rpgcore.chests.Dungeony.IceTower.MroznyWladcaManager;
 import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
 import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
@@ -349,6 +351,10 @@ public final class RPGCORE extends JavaPlugin {
     private KrysztalowyWladcaManager krysztalowyWladcaManager;
     // Expowisko 13
     private StarozytnySmoczyCesarzManager starozytnySmoczyCesarzManager;
+    // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ================================
+    // ice tower
+    private MroznyWladcaManager mroznyWladcaManager;
+    private LodowySlugaManager lodowySlugaManager;
 
     // cos innego...
     private OreManager oreManager;
@@ -929,6 +935,11 @@ public final class RPGCORE extends JavaPlugin {
         this.krysztalowyWladcaManager = new KrysztalowyWladcaManager();
         // EXPOWISKO 13
         this.starozytnySmoczyCesarzManager = new StarozytnySmoczyCesarzManager();
+        // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ================================
+        // ice tower
+        this.mroznyWladcaManager = new MroznyWladcaManager();
+        this.lodowySlugaManager = new LodowySlugaManager();
+
     }
 
     public void initOwnDungeons() {
@@ -1269,6 +1280,15 @@ public final class RPGCORE extends JavaPlugin {
     // exp13
     public StarozytnySmoczyCesarzManager getStarozytnySmoczyCesarzManager() {
         return starozytnySmoczyCesarzManager;
+    }
+
+    // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ===============================
+    // ice tower
+    public MroznyWladcaManager getMroznyWladcaManager() {
+        return mroznyWladcaManager;
+    }
+    public LodowySlugaManager getLodowySlugaManager() {
+        return lodowySlugaManager;
     }
 
     public GornikNPC getGornikNPC() {

@@ -181,7 +181,7 @@ public class TeleporterNPC {
 
         // expowisko 10
         if (user.getLvl() > 89) {
-            expowisko10.setName("&9&lGrota Wygnancow");
+            expowisko10.setName("&5&lSekretne Korytarze");
             this.loreEXPOWISKA("&aON", "&f90");
             expowisko10.addGlowing();
             expowisko10.setLore(lore);
@@ -224,7 +224,7 @@ public class TeleporterNPC {
         }
         // expowisko 13
         if (user.getLvl() > 119) {
-            expowisko13.setName("&5&lSmoczy Adept");
+            expowisko13.setName("&6&lTajemnicza Siedziba Kultu");
             this.loreEXPOWISKA("&aON", "&f120");
             expowisko13.addGlowing();
             expowisko13.setLore(lore);

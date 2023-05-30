@@ -757,6 +757,76 @@ public class DropFromChestsListener implements Listener {
                         player.getInventory().addItem(is);
                     }
                 }
+                // TODO DUNGEONY & MAPY SPECJALNE DROP
+                // TODO S
+                // TODO S
+                // TODO S
+                // TODO DUNGEONY & MAPY SPECJALNE DROP
+
+                // Ice Tower
+                // Skrzynia Lodowego Slugi
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I_LODOWY_CHEST").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I_LODOWY_CHEST", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        Items item = rpgcore.getLodowySlugaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Skrzynia Mroznego Wladcy
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I11").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Skrzynki.getItem("I11", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        final Items item = rpgcore.getDowodcaRozbojnikow().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(75, 15, 15, 45, "&b&lZwykly Naszyjnik Mroznego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(100, 20, 16, 50, "&b&lUlepszony Naszyjnik Mroznego Wladcy");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(14, 17, 4, 45, "&b&lZwykly Diadem Mroznego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(19, 26, 5, 50, "&b&lUlepszony Diadem Mroznego Wladcy");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(11, 13, 40, 45, "&b&lZwykly Pierscien Mroznego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(20, 20, 60, 50, "&b&lUlepszony Pierscien Mroznego Wladcy");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(26, 23, 10, 45, "&b&lZwykla Tarcza Mroznego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(30, 28, 10, 50, "&b&lUlepszona Tarcza Mroznego Wladcy");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
             }
         }
     }

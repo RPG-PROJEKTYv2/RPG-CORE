@@ -20,7 +20,7 @@ public class GorylManager {
         this.goryl.add(new Items("2", 18.0, ItemHelper.createArmor("&6Zbroja Goryla", Material.CHAINMAIL_CHESTPLATE, 11, 2), 1));
         this.goryl.add(new Items("3", 18.0, ItemHelper.createArmor("&6Spodnie Goryla", Material.LEATHER_LEGGINGS, 11, 2), 1));
         this.goryl.add(new Items("4", 18.0, ItemHelper.createArmor("&6Buty Goryla", Material.LEATHER_BOOTS, 11, 2), 1));
-        this.goryl.add(new Items("5", 16.0, ItemHelper.createSword("&6Miecz Goryla", Material.IRON_SWORD, 5, 3,false), 1));
+        this.goryl.add(new Items("5", 16.0, ItemHelper.createSword("&6Miecz Goryla", Material.STONE_SWORD, 5, 3,false), 1));
     }
 
     public Items getDrawnItems(final Player player) {
