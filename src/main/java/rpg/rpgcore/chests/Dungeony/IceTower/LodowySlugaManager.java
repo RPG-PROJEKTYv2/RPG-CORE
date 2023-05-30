@@ -21,7 +21,6 @@ public class LodowySlugaManager {
         this.lodowysluga.add(new Items("3", 18.0 , ItemHelper.createArmor("&bSpodnie Lodowego Slugi", Material.IRON_LEGGINGS, 30, 6), 1));
         this.lodowysluga.add(new Items("4", 18.0 , ItemHelper.createArmor("&bButy Lodowego Slugi", Material.IRON_BOOTS, 30, 6), 1));
         this.lodowysluga.add(new Items("5", 16.0, ItemHelper.createSword("&bMiecz Lodowego Slugi", Material.IRON_SWORD, 20, 18,false), 1));
-        this.lodowysluga.add(new Items("6", 0.035, GlobalItem.getItem("I2", 1), 1));
     }
 
 

@@ -487,6 +487,7 @@ public class MobDropHelper {
                 break;
             // ----------------------------------------- ICE TOWER -----------------------------------------
             case "Lodowy Sluga Lvl. 57":
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 if (!player.getWorld().getName().equals("demontower")) return;
                 RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
@@ -498,7 +499,7 @@ public class MobDropHelper {
                 }
                 break;
             case "Lodowy Sluga Lvl. 58":
-                addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
                 if (!player.getWorld().getName().equals("demontower")) return;
                 RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
                 if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
@@ -509,6 +510,7 @@ public class MobDropHelper {
                 }
                 break;
             case "Lodowy Sluga Lvl. 59":
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 if (!player.getWorld().getName().equals("demontower")) return;
                 RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
@@ -520,7 +522,7 @@ public class MobDropHelper {
                 }
                 break;
             case "[BOSS] Mrozny Wladca":
-                addDropPlayer(player, Skrzynki.getItem("I_DEMONTOWER_BOSS", 1), 100, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I11", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 6) {
                     addDropPlayer(player, LowcaItems.getItem("50-60", 1), getDropChance(szczescie, 15), true, true, entity);
                 }
