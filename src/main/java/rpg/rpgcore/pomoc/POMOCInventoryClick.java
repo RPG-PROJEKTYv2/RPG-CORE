@@ -55,6 +55,7 @@ public class POMOCInventoryClick implements Listener {
                 player.sendMessage(Utils.format("&a&lDiscord: &6&ldc.hellrpg.pl"));
                 player.sendMessage(Utils.format("&a&lFacebook: &6&lfb.hellrpg.pl"));
                 player.sendMessage(Utils.format("&a&lStrona &6&lwww.hellrpg.pl"));
+                player.sendMessage(Utils.format("&a&lYouTube &6&lyoutube.com/@hellrpg-minecraft"));
                 player.sendMessage(" ");
             }
             if (clickedSlot == 4) {

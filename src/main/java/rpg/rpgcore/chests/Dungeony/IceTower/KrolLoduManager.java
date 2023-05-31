@@ -40,7 +40,8 @@ public class KrolLoduManager {
     public Items getDrawnItems(final Player player) {
         for (Items item : this.mroznywladca) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                item.getRewardItem().setAmount(item.getAmount());
+                player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }

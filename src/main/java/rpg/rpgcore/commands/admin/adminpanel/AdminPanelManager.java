@@ -22,9 +22,9 @@ public class AdminPanelManager {
         final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&4&lPanel Administracyjny"));
         for (int i = 0; i < 45; i++) {
             if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
             } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName(" ").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
             }
         }
 
@@ -55,9 +55,9 @@ public class AdminPanelManager {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lNpcty &f- ADMINISTRACJA"));
         for (int i = 0; i < 27; i++) {
             if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
             } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName(" ").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
             }
         }
         gui.setItem(12, new ItemBuilder(Material.MILK_BUCKET).setName("&fPrzyrodnik").addGlowing().toItemStack().clone());
@@ -102,35 +102,69 @@ public class AdminPanelManager {
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGui(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&e&lPrzedmioty S &f- ADMINISTRACJA"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&e&lPrzedmioty S &f- ADMINISTRACJA"));
+        for (int i = 0; i < 27; i++) {
+            if (i % 2 == 0) {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
+            } else {
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
+            }
+        }
+        gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&fPodreczniki wyszkolenia").addGlowing().toItemStack().clone());
+        gui.setItem(13, new ItemBuilder(Material.BUCKET).setName("&6Bossy & Klucze").addGlowing().toItemStack().clone());
+        gui.setItem(14, new ItemBuilder(Material.DIAMOND).setName("&cInne").addGlowing().toItemStack().clone());
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openPrzedmiotySpecjalneGuiPodreczniki(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&f&lPodreczniki &f- ADMINISTRACJA"));
         for (final WyszkolenieItems wyszkolenieItems : WyszkolenieItems.values()) {
             gui.setItem(gui.firstEmpty(), wyszkolenieItems.getItem());
         }
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openPrzedmiotySpecjalneGuiBossyKlucze(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lBossy & Klucze &f- ADMINISTRACJA"));
+        gui.setItem(0, Bossy.getItem("I1", 1));
+        gui.setItem(1, Bossy.getItem("I2", 1));
+        gui.setItem(2, Bossy.getItem("I3", 1));
+        gui.setItem(3, Bossy.getItem("I3_1", 1));
+        gui.setItem(4, Bossy.getItem("I4", 1));
+        gui.setItem(5, Bossy.getItem("I5", 1));
+        gui.setItem(6, Bossy.getItem("I5_1", 1));
+        gui.setItem(7, Bossy.getItem("I5_2", 1));
+        gui.setItem(9, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
+        gui.setItem(10, Dungeony.getItem("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", 1));
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openPrzedmiotySpecjalneInne(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lInne &f- ADMINISTRACJA"));
+        gui.setItem(0, Przepustki.getItem("I1", 1));
+        gui.setItem(1, Przepustki.getItem("I2", 1));
+        gui.setItem(2, Przepustki.getItem("I3", 1));
+        gui.setItem(3, Przepustki.getItem("I4", 1));
+        gui.setItem(4, GlobalItem.I50.getItemStack());
+        gui.setItem(5, GlobalItem.I51.getItemStack());
 
-        gui.setItem(18, Bossy.getItem("I1", 1));
-        gui.setItem(19, Bossy.getItem("I2", 1));
-        gui.setItem(20, Bossy.getItem("I3", 1));
-        gui.setItem(21, Bossy.getItem("I3_1", 1));
-        gui.setItem(22, Bossy.getItem("I4", 1));
-        gui.setItem(23, Bossy.getItem("I5", 1));
-        gui.setItem(24, Bossy.getItem("I5_1", 1));
-        gui.setItem(25, Bossy.getItem("I5_2", 1));
-
-        gui.setItem(26, Przepustki.getItem("I1", 1));
-        gui.setItem(27, Przepustki.getItem("I2", 1));
-        gui.setItem(28, Przepustki.getItem("I3", 1));
-        gui.setItem(29, Przepustki.getItem("I4", 1));
-
-        gui.setItem(30, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(31, Dungeony.getItem("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", 1));
-        gui.setItem(32, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa &5Magiczna Receptura &f&kaa").setLore(Arrays.asList(
+        gui.setItem(6, GlobalItem.I_OCZYSZCZENIE.getItemStack());
+        gui.setItem(7, GlobalItem.I10.getItemStack());
+        gui.setItem(8, GlobalItem.I_METAL.getItemStack());
+        gui.setItem(9, GlobalItem.I_FRAGMENT_STALI.getItemStack());
+        gui.setItem(10, GlobalItem.I_CZASTKA_MAGII.getItemStack());
+        gui.setItem(11, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa &5Magiczna Receptura &f&kaa").setLore(Arrays.asList(
                 "&7Receptura ta umozliwi Ci wytwarzanie",
                 "&5&lKsiega Magii"
         )).toItemStack());
+        gui.setItem(12, GlobalItem.I_KAMIENBAO.getItemStack());
+        gui.setItem(13, GlobalItem.I_KSIEGAMAGII.getItemStack());
 
-
-        gui.setItem(35, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
-
+        gui.setItem(18, GlobalItem.ZNISZCZONE_RUBINOWE_SERCE.getItemStack());
+        gui.setItem(19, GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack());
+        gui.setItem(20, GlobalItem.SZAFIROWE_SERCE.getItemStack());
+        gui.setItem(21, GlobalItem.RUBINOWE_SERCE.getItemStack());
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
     public void openRybakItemsGUI(final Player player) {
@@ -147,9 +181,9 @@ public class AdminPanelManager {
 
         for (int i = 0; i < 27; i++) {
             if (i % 2 == 0) {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 4).setName(" ").toItemStack());
             } else {
-                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 6).setName("").toItemStack());
+                gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
             }
         }
 
@@ -170,8 +204,9 @@ public class AdminPanelManager {
         gui.setItem(3, Skrzynki.getItem("I8",1));
         gui.setItem(4, Skrzynki.getItem("I10",1));
         gui.setItem(5, Skrzynki.getItem("I12",1));
-        gui.setItem(6, Skrzynki.getItem("I14",1));
-        gui.setItem(7, Skrzynki.getItem("I16",1));
+        gui.setItem(6, Skrzynki.getItem("I_LODOWY_CHEST",1));
+        gui.setItem(7, Skrzynki.getItem("I14",1));
+        gui.setItem(8, Skrzynki.getItem("I16",1));
 
 
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
@@ -217,21 +252,9 @@ public class AdminPanelManager {
 
     public void openUlepszaczeGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&f&lUlepszacze &f- ADMINISTRACJA"));
-
-        gui.setItem(0, Ulepszacze.getItem("I_SZATANAJEMNIKA", 1));
-        gui.setItem(1, Ulepszacze.getItem("I_OKOGOBLINA", 1));
-        gui.setItem(2, Ulepszacze.getItem("I_SKORAGORYLA", 1));
-        gui.setItem(3, Ulepszacze.getItem("I_ZLAMANAKOSC", 1));
-        gui.setItem(4, Ulepszacze.getItem("I_LZAOCEANU", 1));
-        gui.setItem(5, Ulepszacze.getItem("I_MROZNYPAZUR", 1));
-        gui.setItem(6, Ulepszacze.getItem("I_OGNISTYPYL", 1));
-        gui.setItem(7, Ulepszacze.getItem("I_TRUJACAROSLINA", 1));
-        gui.setItem(8, Ulepszacze.getItem("I_JADPTASZNIKA", 1));
-        gui.setItem(9, Ulepszacze.getItem("I_MROCZNYMATERIAL", 1));
-        gui.setItem(10, Ulepszacze.getItem("I_SZAFIROWESERCE", 1));
-        gui.setItem(11, Ulepszacze.getItem("I_ZAKLETYLOD", 1));
-        gui.setItem(12, Ulepszacze.getItem("I_NIEBIANSKIMATERIAL", 1));
-
+        for (final Ulepszacze ulepszacze : Ulepszacze.values()) {
+            gui.setItem(gui.firstEmpty(), ulepszacze.getItem());
+        }
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);
     }

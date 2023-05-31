@@ -75,14 +75,14 @@ public enum GlobalItem {
     RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
-            "i otrzymasz &c0.5❤"
+            "&8i otrzymasz &c0.5❤"
     )).addGlowing().toItemStack().clone()),
     SZAFIROWE_SERCE("SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&b&lSzafirowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
-            "i otrzymasz &c0.5❤.",
+            "&8i otrzymasz &c0.5❤.",
             "",
-            "&Mozna uzyc dopiero po uzyskaniu &c10❤ &8od Medrca"
+            "&8Mozna uzyc dopiero po uzyskaniu &c10❤ &8od Medrca"
     )).addGlowing().toItemStack().clone()),
     // SAKWA?
     SAKWA("SAKWA", new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&8✦&eSakiewka&8✦").toItemStack().clone()),

@@ -14,7 +14,7 @@ public enum Ulepszacze {
     I_SKORAGORYLA("I_SKORAGORYLA", new ItemBuilder(Material.INK_SACK, 1 , (short)15).setName("&fSkora Goryla").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_ZLAMANAKOSC("I_ZLAMANAKOSC", new ItemBuilder(Material.BONE).setName("&7Zlamana Kosc").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_LZAOCEANU("I_LZAOCEANU", new ItemBuilder(Material.GHAST_TEAR).setName("&bLza Oceanu").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_MROZNYPAZUR("I_MROZNYPAZUR", new ItemBuilder(Material.FEATHER).setName("&bMrozny Pazur").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
+    I_WILCZEFUTRO("I_WILCZEFUTRO", new ItemBuilder(Material.LEATHER).setName("&7Wilcze Futro").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_OGNISTYPYL("I_OGNISTYPYL", new ItemBuilder(Material.BLAZE_POWDER).setName("&cOgnisty Pyl").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_TRUJACAROSLINA("I_TRUJACAROSLINA", new ItemBuilder(Material.RED_ROSE, 1, (short)2).setName("&5Trujaca Roslina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_JADPTASZNIKA("I_JADPTASZNIKA", new ItemBuilder(Material.SPIDER_EYE).setName("&6Jad Ptasznika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
@@ -33,7 +33,7 @@ public enum Ulepszacze {
     public static void getList(Player player) {
         int i = 1;
         for (Ulepszacze rank : values()) {
-            ItemStack itemStack = rank.getItemStack();
+            ItemStack itemStack = rank.getItem();
             player.sendMessage(Utils.format(i + ". " + itemStack.getItemMeta().getDisplayName()));
             i = i + 1;
         }
@@ -49,7 +49,7 @@ public enum Ulepszacze {
     }
 
     public static ItemStack getItem(String string, int amount) {
-        ItemStack itemStack = Ulepszacze.getByName(string).getItemStack();
+        ItemStack itemStack = Ulepszacze.getByName(string).getItem();
         itemStack.setAmount(amount);
         return itemStack;
     }
@@ -58,7 +58,7 @@ public enum Ulepszacze {
         return name;
     }
 
-    public ItemStack getItemStack() {
+    public ItemStack getItem() {
         return itemStack;
     }
 }

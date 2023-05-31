@@ -265,7 +265,7 @@ public class MobDropHelper {
             case "Mrozny Wilk Lvl. 56":
                 addDropPlayer(player, Skrzynki.getItem("I12", 1), chestDropChance50lvl, true, true, entity);
                 addDropPlayer(player, NiesyItems.N6.getItemStack(), niesDropChance50lvl, true, false, entity);
-                addDropPlayer(player, Ulepszacze.getItem("I_MROZNYPAZUR", 1), getDropChance(szczescie, 2.0), true, true, entity);
+                addDropPlayer(player, Ulepszacze.getItem("I_WILCZEFUTRO", 1), getDropChance(szczescie, 2.0), true, true, entity);
                 if (przyrodnikMission.getNumber() == 5) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("50-60"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }

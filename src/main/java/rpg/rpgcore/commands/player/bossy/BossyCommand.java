@@ -52,7 +52,7 @@ public class BossyCommand extends CommandAPI {
         gui.setItem(3, this.makeBOSSY("&7&lPrzekleta Dusza", 211, 78, -14, 15));
         gui.setItem(4, this.makeBOSSY("&e&lTryton", -89, 68, -248, 30));
         // przepustki
-        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&b&lMrozny Wladca").setLore(Arrays.asList(" ", "&7Lokalizacja XYZ: &6&l56 | 34 | 76 &8&l(&f&lICETOWER&8&l)")).addGlowing().toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&b&lKrol Lodu").setLore(Arrays.asList(" ", "&7Lokalizacja XYZ: &6&l-4 | 66 | 122 &8&l(&f&lICETOWER&8&l)")).addGlowing().toItemStack().clone());
         gui.setItem(6, this.makeWBOSSY("&1&lPiekielny Rycerz", 43,79,106));
         gui.setItem(7, this.makeWBOSSY("&5&lPrzeklety  Czarnoksieznik", -0,83,248));
         gui.setItem(8, this.makeWBOSSY("&e&lMityczny Pajak", -40,67,146));

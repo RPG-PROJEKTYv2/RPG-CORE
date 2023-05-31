@@ -194,9 +194,24 @@ public class AdminPanelInventoryClick implements Listener {
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
+        if (title.equals("Podreczniki - ADMINISTRACJA") || title.equals("Bossy & Klucze - ADMINISTRACJA")
+                || title.equals("Inne - ADMINISTRACJA")) {
+            if (slot == 26) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+            }
+        }
         if (title.equals("Przedmioty S - ADMINISTRACJA")) {
-            if (slot == 35) {
-                e.setCancelled(true);
+            e.setCancelled(true);
+            if (slot == 12) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGuiPodreczniki(player);
+            }
+            if (slot == 13) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGuiBossyKlucze(player);
+            }
+            if (slot == 14) {
+                rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneInne(player);
+            }
+            if (slot == 26) {
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
