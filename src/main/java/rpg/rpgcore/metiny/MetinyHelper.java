@@ -291,6 +291,7 @@ public class MetinyHelper {
                 RPGCORE.getInstance().getIceTowerManager().incrementCount();
             }
         }
+        // ---------------------------------------- PIEKIELNY PRZEDSIONEK ----------------------------------------
         if (id >= 30_000 && id <= 30_011) {
             kasaToAdd = 1_500;
             RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
