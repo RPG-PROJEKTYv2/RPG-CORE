@@ -40,6 +40,7 @@ import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
+import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.spawn.SpawnManager;
@@ -393,6 +394,9 @@ public class MongoManager {
     public void changeAuthUserRank(final UUID uuid, final String rankName) {
         final Document user = this.pool.getAuthUsers().find(new Document("_id", uuid.toString())).first();
         assert user != null;
+        final RankTypePlayer rankTypePlayer = RankTypePlayer.valueOf(rankName.toUpperCase());
+        final RankType rankType = RankType.valueOf(user.getString("rankType").toUpperCase());
+        if (rankType.getPriority() > rankTypePlayer.getPriority()) return;
         user.remove("rankType");
         user.append("rankType", rankName);
         this.pool.getAuthUsers().findOneAndReplace(new Document("_id", uuid.toString()), user);
@@ -1056,9 +1060,6 @@ public class MongoManager {
     public Map<UUID, User> loadAllUsers() {
         Map<UUID, User> users = new HashMap<>();
         for (Document document : this.pool.getGracze().find()) {
-            document.append("tworca", false);
-            document.remove("rankChestCooldown");
-            this.pool.getGracze().findOneAndReplace(new Document("_id", document.getString("_id")), document);
             final User user = new User(document);
             users.put(user.getId(), user);
         }
@@ -1142,7 +1143,6 @@ public class MongoManager {
     public Map<UUID, ChatUser> loadAllChatUsers() {
         Map<UUID, ChatUser> chat = new HashMap<>();
         for (Document document : this.pool.getChatUsers().find()) {
-            document.append("dmgHologramsVisable", true);
             ChatUser chatUser = new ChatUser(document);
             chat.put(chatUser.getUuid(), chatUser);
         }

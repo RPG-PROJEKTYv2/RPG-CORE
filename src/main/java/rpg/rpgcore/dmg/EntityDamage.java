@@ -26,14 +26,14 @@ public enum EntityDamage {
     MAP_40_50_3("Straznik Swiatyni Lvl. 47", 10.5),
     MAP_40_50_BOSS("[BOSS] Tryton", 12),
 
-    MAP_50_60_1("Mrozny Wilk Lvl. 52", 35),
-    MAP_50_60_2("Mrozny Wilk Lvl. 54", 43),
-    MAP_50_60_3("Mrozny Wilk Lvl. 56", 48),
+    MAP_50_60_1("Mrozny Wilk Lvl. 52", 13),
+    MAP_50_60_2("Mrozny Wilk Lvl. 54", 15),
+    MAP_50_60_3("Mrozny Wilk Lvl. 56", 16),
 
-    MAP_DT_1("Lodowy Sluga Lvl. 57", 35),
-    MAP_DT_2("Lodowy Sluga Lvl. 58", 43),
-    MAP_DT_3("Lodowy Sluga Lvl. 59", 48),
-    MAP_DT_BOSS("[BOSS] Mrozny Wladca", 75),
+    MAP_DT_1("Lodowy Sluga Lvl. 57", 14),
+    MAP_DT_2("Lodowy Sluga Lvl. 58", 16),
+    MAP_DT_3("Lodowy Sluga Lvl. 59", 18),
+    MAP_DT_BOSS("[BOSS] Krol Lodu", 21),
 
     MAP_60_70_1("Zywiolak Ognia Lvl. 64", 180),
     MAP_60_70_2("Zywiolak Ognia Lvl. 66", 220),

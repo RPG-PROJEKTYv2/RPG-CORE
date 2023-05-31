@@ -105,7 +105,7 @@ public class SetPremiumCommand extends CommandAPI {
 
             if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
                 final Player player = Bukkit.getPlayer(args[0]);
-                rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle(Utils.SERVERNAME.trim(), 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a!", 5, 20, 5));
+                rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle(Utils.CLEANSERVERNAME, 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&aPomyslnie otrzymales/as range &6" + user.getRankPlayerUser().getRankType().getPrefix() + "&a na okres &6LifeTime&a!", 5, 20, 5));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                     TabManager.removePlayer(player);

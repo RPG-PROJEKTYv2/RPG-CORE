@@ -52,11 +52,11 @@ public class LowcaInventoryClick implements Listener {
                 user.setMission(user.getMission() + 1);
                 user.setSzczescie(user.getSzczescie() + mission.getSzczescie());
                 user.setSzybkosc(user.getSzybkosc() + mission.getSzybkosc());
-                user.setTruedmg(user.getTruedmg() + mission.getTruedmg());
+                user.setDodatkoweDmg(user.getDodatkoweDmg() + mission.getDodatkoweDmg());
 
                 bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() + mission.getSzczescie());
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + mission.getSzybkosc());
-                bonuses.getBonusesUser().setTruedamage(bonuses.getBonusesUser().getTruedamage() + mission.getTruedmg());
+                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + mission.getDodatkoweDmg());
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataLowca(object.getId(), object);
                     rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);

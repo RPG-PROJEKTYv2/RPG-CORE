@@ -29,7 +29,22 @@ public class EntityDamageEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
+    public void onDamage(final EntityDamageByEntityEvent e) {
+        e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+        if (!(e.getEntity() instanceof EnderCrystal)) {
+            e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+            e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
+        }
+        if (!(e.getEntity() instanceof Creature || e.getEntity() instanceof EnderCrystal)) {
+            e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, 0);
+            e.setDamage(EntityDamageEvent.DamageModifier.MAGIC, 0);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
+
+        if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) return;
 
         if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
             if (e.getDamager() instanceof Player) {
@@ -65,22 +80,25 @@ public class EntityDamageEntityListener implements Listener {
 
         final String entityName = Utils.removeColor(e.getEntity().getName());
         if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Kupiec") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
-            entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
-            entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
-            entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
-            entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
-            entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
+                entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
+                entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
+                entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
+                entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
+                entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
             e.setCancelled(true);
             return;
         }
 
         if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
             if (e.getDamager() instanceof Player) {
-                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
-                e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                 if (e.getEntity() instanceof Player) {
                     final Player victim = (Player) e.getDamager();
                     final Player attacker = (Player) e.getEntity();
+
+                    if (rpgcore.getGodManager().containsPlayer(victim.getUniqueId())) {
+                        e.setCancelled(true);
+                        return;
+                    }
 
                     if (victim.getInventory().contains(Artefakty.getArtefakt("Egzekutor", victim))) {
                         if (ChanceHelper.getChance(5.0)) {
@@ -114,7 +132,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
 
                     double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim), 2);
-                    double wartoscDefa  = rpgcore.getDamageManager().calculatePlayerDef(victim);
+                    double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
                     if (rpgcore.getKociolkiManager().find(victim.getUniqueId()).isEgzekutor()) {
                         playerDamage *= 1.75;
@@ -139,18 +157,22 @@ public class EntityDamageEntityListener implements Listener {
                         wartoscDefa *= 0.5;
                     }
 
-                    final double redukcja = DoubleUtils.round( wartoscDefa / (wartoscDefa + 40), 2);
+                    final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
 
                     final double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
 
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
+
+//                    victim.sendMessage("Redukcja - " + redukcja);
+//                    victim.sendMessage("Final Damage - " + finalDmg);
+//                    victim.sendMessage("Thorns Damage - " + finalThornsDamage);
 
                     if (finalThornsDamage > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalThornsDamage);
                     } else {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     }
-                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager(), (Player) e.getDamager()));
                     if (finalThornsDamage < ((LivingEntity) e.getEntity()).getHealth()) {
                         rpgcore.getNmsManager().sendMobInfo((Player) e.getDamager(), (LivingEntity) e.getEntity());
                     }
@@ -159,12 +181,17 @@ public class EntityDamageEntityListener implements Listener {
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager(), e.getEntity());
                     final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity()), 2);
                     final double finalDmg = DoubleUtils.round(playerDamage * mnoznik, 2);
+
+//                    e.getDamager().sendMessage("Mnoznik - " + mnoznik);
+//                    e.getDamager().sendMessage("Player Damage - " + playerDamage);
+//                    e.getDamager().sendMessage("Final Damage - " + finalDmg);
+
                     if (mnoznik > 0) {
-                        e.setDamage(finalDmg);
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                     } else {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     }
-                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager().getLocation(), (Player) e.getDamager()));
+                    Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager(), (Player) e.getDamager()));
                     if (finalDmg < ((LivingEntity) e.getEntity()).getHealth()) {
                         rpgcore.getNmsManager().sendMobInfo((Player) e.getDamager(), (LivingEntity) e.getEntity());
                     }
@@ -188,7 +215,6 @@ public class EntityDamageEntityListener implements Listener {
             }
 
             if (rpgcore.getCooldownManager().hasPvpCooldown(attacker.getUniqueId())) {
-                e.setDamage(0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                 return;
             }
@@ -203,10 +229,11 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
-                if (!e.getDamager().getLocation().getWorld().getName().equals("50-60map") && !e.getDamager().getLocation().getWorld().getName().equals("60-70map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("70-80map") && !e.getDamager().getLocation().getWorld().getName().equals("80-90map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("90-100map") && !e.getDamager().getLocation().getWorld().getName().equals("100-110map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("110-120map") && !e.getDamager().getLocation().getWorld().getName().equals("120-130map")) {
+                if (!e.getDamager().getLocation().getWorld().getName().equals("50-60map") && !e.getDamager().getLocation().getWorld().getName().equals("DemonTower") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("60-70map") && !e.getDamager().getLocation().getWorld().getName().equals("70-80map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("80-90map") && !e.getDamager().getLocation().getWorld().getName().equals("90-100map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("100-110map") && !e.getDamager().getLocation().getWorld().getName().equals("110-120map") &&
+                        !e.getDamager().getLocation().getWorld().getName().equals("120-130map")) {
                     e.setCancelled(true);
                     return;
                 }
@@ -250,7 +277,13 @@ public class EntityDamageEntityListener implements Listener {
 
 
                 double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
-                double wartoscDefa  = rpgcore.getDamageManager().calculatePlayerDef(victim);
+                double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
+
+//                attacker.sendMessage("&4&lDMG");
+//                attacker.sendMessage("&a&lDEF");
+//
+//                attacker.sendMessage("Damage To Player (raw)- " + attackerDmg);
+//                victim.sendMessage("Wartosc Defa (raw)- " + wartoscDefa);
 
 
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
@@ -277,16 +310,20 @@ public class EntityDamageEntityListener implements Listener {
                     wartoscDefa *= 0.5;
                 }
 
-                final double redukcja = DoubleUtils.round( wartoscDefa / (wartoscDefa + 40), 2);
+//                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
+//                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
+
+                final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
+
+//                victim.sendMessage("Redukcja - " + redukcja);
 
                 double finalDmg = DoubleUtils.round((1 - redukcja) * attackerDmg, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
-                e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
+//                attacker.sendMessage("Final Dmg - " + finalDmg);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim, attacker));
                 rpgcore.getNmsManager().sendMobInfo(attacker, victim);
                 rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
 
@@ -300,20 +337,19 @@ public class EntityDamageEntityListener implements Listener {
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
-                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
-                /*attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
-                attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
-                attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
-                attacker.sendMessage("Dmg event - " + e.getDamage());
-                attacker.sendMessage("Dmg final - " + e.getFinalDamage());*/
+//                attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
+//                attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
+//                attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
+//                attacker.sendMessage("Dmg event - " + e.getDamage());
+//                attacker.sendMessage("Dmg final - " + e.getFinalDamage());
                 if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
                     if (((Monster) victim).getTarget() != attacker) {
                         ((Monster) victim).setTarget(attacker);
                     }
                 }
 
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim.getLocation(), attacker));
+                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim, attacker));
                 rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
             }
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
@@ -332,7 +368,6 @@ public class EntityDamageEntityListener implements Listener {
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-                e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
             }
         }

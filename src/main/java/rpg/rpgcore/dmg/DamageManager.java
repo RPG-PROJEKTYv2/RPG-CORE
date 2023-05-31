@@ -1,15 +1,14 @@
 package rpg.rpgcore.dmg;
 
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
@@ -21,7 +20,6 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Random;
 import java.util.UUID;
 
 
@@ -33,17 +31,17 @@ public class DamageManager {
         this.rpgcore = rpgcore;
     }
 
-    public void sendDamagePacket(final String prefix, final double dmg, final Location entityLocation, final Player p) {
-        final Random random = new Random();
+    public void sendDamagePacket(final String prefix, final double dmg, final Entity entity, final Player p) {
+        final Vector inverseDirectionVec = entity.getLocation().getDirection().normalize().multiply(-1);
+        final Location entityLocation = entity.getLocation().add(inverseDirectionVec);
+        // TODO Przetestować czy działa (ma sie respic ZA graczem/mobem)
+        final double randomx = ChanceHelper.getRandDouble(-0.2, 0.2);
+        final double randomz = ChanceHelper.getRandDouble(-0.2, 0.2);
 
-        final double randomx = (random.nextInt(11) - 5) / 10.0;
-        final double randomy = (random.nextInt(11) - 5) / 10.0;
-        final double randomz = (random.nextInt(11) - 5) / 10.0;
-        entityLocation.add(randomx, randomy, randomz);
         final WorldServer s = ((CraftWorld) entityLocation.getWorld()).getHandle();
         final EntityArmorStand stand = new EntityArmorStand(s);
 
-        stand.setLocation(entityLocation.getX(), entityLocation.getY(), entityLocation.getZ(), 0, 0);
+        stand.setLocation(entityLocation.getX() + randomx, entityLocation.getY() + 0.1, entityLocation.getZ() + randomz, 0, 0);
         stand.setCustomName(Utils.format(prefix + "- " + Utils.spaceNumber(String.format("%.2f", dmg))));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
@@ -69,12 +67,6 @@ public class DamageManager {
     public void destroySendHologram(final EntityArmorStand stand, final Player p) {
         final PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(stand.getId());
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(destroyPacket);
-
-    }
-
-    public void sendDamageActionBarPacket(final Player player, final double damage, final LivingEntity entity) {
-        final String bar = "&fNazwa: " + entity.getCustomName() + " &fStan Zdrowia: &c" + String.format("%.2f", entity.getHealth()) + "&f/&c" + entity.getMaxHealth() + "&f(&c-" + String.format("%.2f", damage) + "&f)";
-        rpgcore.getNmsManager().sendActionBar(player, bar);
     }
 
     public double calculateAttackerDmgToPlayer(final Player attacker, final Player victim) {
@@ -343,9 +335,9 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = def * (mnoznik / 100) * (drugiMnoznik / 100) * (energia / 100);
+        def = (def * 2) * Math.pow((mnoznik / 100), 2) * 0.5 * (drugiMnoznik / 100) * (energia / 100);
 
-        return DoubleUtils.round(def / (def + 100), 3);
+        return DoubleUtils.round(def, 3);
     }
 
     public double calculateVictimBlok(final Player victim, final Player attacker) {

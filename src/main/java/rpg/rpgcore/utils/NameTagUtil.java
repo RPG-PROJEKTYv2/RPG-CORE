@@ -9,7 +9,6 @@ import rpg.rpgcore.user.User;
 
 public class NameTagUtil {
 
-
     public static void changePlayerName(final Player player, final String prefix, final String action) {
         if (prefix == null || action == null) return;
         final Scoreboard scoreboard = player.getScoreboard();

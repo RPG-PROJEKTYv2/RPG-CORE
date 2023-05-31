@@ -603,10 +603,10 @@ public class UstawieniaKontaManager {
                 "&7  - Wymagana Ilosc: &e" + (lesnikMission == null ? "-1" : lesnikMission.getReqAmount()),
                 "&7  - Defensywa Na Ludzi (Misja): &e+" + (lesnikMission == null ? "0" : lesnikMission.getDefNaLudzi()) + "%",
                 "&7  - Przeszycie Bloku Ciosu (Misja): &e+" + (lesnikMission == null ? "0" : lesnikMission.getPrzeszywka()) + "%",
-                "&7  - Wzmocnienie Ciosu Krytycznego (Misja): &e+" + (lesnikMission == null ? "0" : lesnikMission.getWzmKryta()),
+                "&7  - Szansa Na Wzmocnienie Ciosu Krytycznego (Misja): &e+" + (lesnikMission == null ? "0" : lesnikMission.getWzmKryta()),
                 "&7Defensywa Na Ludzi (User): &e+" + lesnik.getDefNaLudzi() + "%",
                 "&7Przeszycie Bloku Ciosu (User): &e+" + lesnik.getPrzeszycie() + "%",
-                "&7Wzmocnienie Ciosu Krytycznego (User): &e+" + lesnik.getWzmKryta(),
+                "&7Szansa Na Wzmocnienie Ciosu Krytycznego (User): &e+" + lesnik.getWzmKryta(),
                 "&7Cooldown: &e" + Utils.durationToString(lesnik.getCooldown(), false),
                 "&7Postep: &e" + lesnik.getProgress() + "&7/&e" + (lesnikMission == null ? 0 : lesnikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) lesnik.getProgress() / (lesnikMission == null ? 0 : lesnikMission.getReqAmount())) * 100, 2) + "%&7)"
         )).addGlowing().toItemStack().clone());
@@ -624,10 +624,10 @@ public class UstawieniaKontaManager {
                 "&7  - Szansa na Przyjecie: &e" + (lowcaMission == null ? "-1" : lowcaMission.getAcceptPercentage()) + "%",
                 "&7  - Szybkosc (Misja): &e+" + (lowcaMission == null ? "0" : lowcaMission.getSzybkosc()),
                 "&7  - Szczescie (Misja): &e+" + (lowcaMission == null ? "0" : lowcaMission.getSzczescie()),
-                "&7  - True DMG (Misja): &e+" + (lowcaMission == null ? "0" : lowcaMission.getTruedmg()),
+                "&7  - Dodatkowe Obrazenia (Misja): &e+" + (lowcaMission == null ? "0" : lowcaMission.getDodatkoweDmg()),
                 "&7Szybkosc (User): &e+" + lowca.getSzybkosc(),
                 "&7Szczescie (User): &e+" + lowca.getSzczescie(),
-                "&7True DMG (User): &e+" + lowca.getTruedmg(),
+                "&7Dodatkowe Obrazenina (User): &e+" + lowca.getDodatkoweDmg(),
                 "&7Postep: &e" + lowca.getProgress() + "&7/&e" + (lowcaMission == null ? 0 : lowcaMission.getReqAmount()) + " &7(&e" + DoubleUtils.round(((double) lowca.getProgress() / (lowcaMission == null ? 0 : lowcaMission.getReqAmount())) * 100, 2) + "%&7)"
         )).addGlowing().toItemStack().clone());
 
@@ -1269,7 +1269,7 @@ public class UstawieniaKontaManager {
                 "&6Shift + RMB &7- zeby odjac 10",
                 "&6KEYBOARD &7- zeby dodac 0.1"
         )).toItemStack().clone());
-        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Wzmocnienie Kryta").setLore(Arrays.asList(
+        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Szanse Na Wzmocnienie Kryta").setLore(Arrays.asList(
                 "&7Aktualna: &e" + user.getWzmKryta(),
                 "&6LMB &7- zeby dodac 1.",
                 "&6RMB &7- zeby odjac 1.",
@@ -1309,8 +1309,8 @@ public class UstawieniaKontaManager {
                 "&6Shift + LMB &7- zeby dodac 10",
                 "&6Shift + RMB &7- zeby odjac 10"
         )).toItemStack().clone());
-        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw True DMG").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getTruedmg(),
+        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Dodatkowe Obrazenia").setLore(Arrays.asList(
+                "&7Aktualna: &e" + user.getDodatkoweDmg(),
                 "&6LMB &7- zeby dodac 1.",
                 "&6RMB &7- zeby odjac 1.",
                 "&6Shift + LMB &7- zeby dodac 10",

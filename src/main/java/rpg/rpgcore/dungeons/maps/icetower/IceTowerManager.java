@@ -1,348 +1,474 @@
 package rpg.rpgcore.dungeons.maps.icetower;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
-import rpg.rpgcore.utils.BossBarUtil;
+import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.metiny.MetinyHelper;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 @Getter
 @Setter
 public class IceTowerManager {
-    private static final RPGCORE rpgcore = RPGCORE.getInstance();
+    private final RPGCORE rpgcore;
+    @Getter
+    private final Cache<String, Long> damaged = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
 
-    private static final List<Location> kamienLocations = Arrays.asList(
-            new Location(Bukkit.getWorld("50-60map"), -39, 71, 52),
+    public IceTowerManager(final RPGCORE rpgcore) {
+        this.rpgcore = rpgcore;
+        RPGCORE.getHolographicDisplaysAPI().getHolograms().forEach(hologram -> {
+            if (hologram.getPosition().toLocation().equals(new Location(map, -131.5, 98, 213.5))) {
+                this.holo1 = hologram;
+            } else if (hologram.getPosition().toLocation().equals(new Location(map, -123.5, 98, 205.5))) {
+                this.holo2 = hologram;
+            } else if (hologram.getPosition().toLocation().equals(new Location(map, -115.5, 98, 213.5))) {
+                this.holo3 = hologram;
+            } else if (hologram.getPosition().toLocation().equals(new Location(map, -123.5, 98, 221.5))) {
+                this.holo4 = hologram;
+            }
+        });
+        this.resetDungeon();
+    }
 
-            new Location(Bukkit.getWorld("50-60map"), -40, 72, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 72, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 72, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 72, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 72, 51),
+    private Hologram holo1;
+    private Hologram holo2;
+    private Hologram holo3;
+    private Hologram holo4;
 
-            new Location(Bukkit.getWorld("50-60map"), -41, 73, 52),
-            new Location(Bukkit.getWorld("50-60map"), -40, 73, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 73, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 73, 52),
-            new Location(Bukkit.getWorld("50-60map"), -37, 73, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 73, 51),
-            new Location(Bukkit.getWorld("50-60map"), -38, 73, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 73, 50),
-            new Location(Bukkit.getWorld("50-60map"), -39, 73, 51),
-            new Location(Bukkit.getWorld("50-60map"), -39, 73, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 73, 54),
-            new Location(Bukkit.getWorld("50-60map"), -40, 73, 51),
-            new Location(Bukkit.getWorld("50-60map"), -40, 73, 53),
+    @Getter
+    private final World map = Bukkit.getWorld("50-60map");
+    @Getter
+    private final World dungeonWorld = Bukkit.getWorld("DemonTower");
+    @Getter
+    @Setter
+    private DungeonStatus status = DungeonStatus.ENDED;
+    private final List<String> baseHoloDisplay = Arrays.asList(
+            "&b&lIce Tower",
+            "&7Status: &aWolne",
+            "&7Przechodzi: &cNikt",
+            "&7Etap: &aWolne",
+            "&7HP: &a200&7/&a200"
+    );
 
-            new Location(Bukkit.getWorld("50-60map"), -41, 74, 52),
-            new Location(Bukkit.getWorld("50-60map"), -40, 74, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 74, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 74, 52),
-            new Location(Bukkit.getWorld("50-60map"), -37, 74, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 74, 51),
-            new Location(Bukkit.getWorld("50-60map"), -38, 74, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 74, 50),
-            new Location(Bukkit.getWorld("50-60map"), -39, 74, 51),
-            new Location(Bukkit.getWorld("50-60map"), -39, 74, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 74, 54),
-            new Location(Bukkit.getWorld("50-60map"), -40, 74, 51),
-            new Location(Bukkit.getWorld("50-60map"), -40, 74, 53),
 
-            new Location(Bukkit.getWorld("50-60map"), -41, 75, 52),
-            new Location(Bukkit.getWorld("50-60map"), -40, 75, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 75, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 75, 52),
-            new Location(Bukkit.getWorld("50-60map"), -37, 75, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 75, 51),
-            new Location(Bukkit.getWorld("50-60map"), -38, 75, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 75, 50),
-            new Location(Bukkit.getWorld("50-60map"), -39, 75, 51),
-            new Location(Bukkit.getWorld("50-60map"), -39, 75, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 75, 54),
-            new Location(Bukkit.getWorld("50-60map"), -40, 75, 51),
-            new Location(Bukkit.getWorld("50-60map"), -40, 75, 53),
+    @Getter
+    private final List<Location> kamienLocations = Arrays.asList(
+            new Location(Bukkit.getWorld("50-60map"), -124, 97, 213),
 
-            new Location(Bukkit.getWorld("50-60map"), -39, 77, 52),
+            new Location(Bukkit.getWorld("50-60map"), -124, 98, 214),
+            new Location(Bukkit.getWorld("50-60map"), -125, 98, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 98, 213),
+            new Location(Bukkit.getWorld("50-60map"), -123, 98, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 98, 212),
 
-            new Location(Bukkit.getWorld("50-60map"), -40, 76, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 76, 52),
-            new Location(Bukkit.getWorld("50-60map"), -38, 76, 52),
-            new Location(Bukkit.getWorld("50-60map"), -39, 76, 53),
-            new Location(Bukkit.getWorld("50-60map"), -39, 76, 51)
+            new Location(Bukkit.getWorld("50-60map"), -124, 99, 214),
+            new Location(Bukkit.getWorld("50-60map"), -125, 99, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 99, 213),
+            new Location(Bukkit.getWorld("50-60map"), -123, 99, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 99, 212),
+
+            new Location(Bukkit.getWorld("50-60map"), -124, 100, 214),
+            new Location(Bukkit.getWorld("50-60map"), -125, 100, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 100, 213),
+            new Location(Bukkit.getWorld("50-60map"), -123, 100, 213),
+            new Location(Bukkit.getWorld("50-60map"), -124, 100, 212),
+
+            new Location(Bukkit.getWorld("50-60map"), -124, 101, 213)
     );
 
     private int hp = 200;
-    private int mobsAmount = 0;
-    private int time = -1;
-    private int maxTime = -1;
-    private int antyAfk = -1;
+    private int latestHp = 200;
+    private int count = 0;
+    private int time = 0;
+    private int antyAfkTime = 0;
+    private int antyAfkMaxTime = 0;
 
-    public static final List<UUID> damagers = new ArrayList<>();
 
-    public static void resetIceTower(final ResetType resetType) {
-        if (resetType == ResetType.NORMAL) {
-            if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {
-                damagers.clear();
-                if (rpgcore.getIceTowerManager().getHp() < 205) return;
-                if (rpgcore.getIceTowerManager().getMaxTime() == 99999) return;
-                rpgcore.getIceTowerManager().setHp(200);
-                rpgcore.getIceTowerManager().setMobsAmount(0);
-                rpgcore.getIceTowerManager().setTime(-1);
-                rpgcore.getIceTowerManager().setMaxTime(-1);
-                rpgcore.getIceTowerManager().setAntyAfk(-1);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
-                Bukkit.getWorld("demontower").getBlockAt(16, 9, 97).setType(Material.AIR);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB1");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB2");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB3");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-BOSS");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20000");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20001");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20002");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20003");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20004");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20005");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20006");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20007");
-                despawnKamien();
-                spawnKamien();
-                rpgcore.getServer().broadcastMessage(Utils.format("&b&lKamien Lodowej Wiezy zostal zresetowany!"));
+    public void resetDungeon() {
+        this.status = DungeonStatus.RESETTING;
+        this.resetHolograms();
+        this.lowerGate();
+        this.spawnKamien();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
+        this.dungeonWorld.getBlockAt(-5, 65, 80).setType(Material.AIR);
+        for (Entity e : this.dungeonWorld.getEntities()) {
+            if (e instanceof Player) continue;
+            e.remove();
+        }
+        this.dungeonWorld.getEntities().clear();
+        this.hp = 200;
+        this.latestHp = 200;
+        this.count = 0;
+        this.time = 0;
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 0;
+        Bukkit.getServer().broadcastMessage(Utils.format("&b&oKamien Lodowej Wiezy zostal zresetowany!"));
+        this.status = DungeonStatus.ENDED;
+    }
+
+    private void spawnPlayers() {
+        for (final Player player : this.getDungeonWorld().getPlayers()) {
+            player.teleport(rpgcore.getSpawnManager().getSpawn());
+        }
+    }
+
+    public void resetHolograms() {
+        this.holo1.getLines().clear();
+        this.holo2.getLines().clear();
+        this.holo3.getLines().clear();
+        this.holo4.getLines().clear();
+        for (String s : baseHoloDisplay) {
+            this.holo1.getLines().appendText(Utils.format(s));
+            this.holo2.getLines().appendText(Utils.format(s));
+            this.holo3.getLines().appendText(Utils.format(s));
+            this.holo4.getLines().appendText(Utils.format(s));
+        }
+    }
+
+    public void incrementCount() {
+        this.count++;
+    }
+
+    public void spawnKamien() {
+        for (Location location : kamienLocations) {
+            location.getBlock().setType(Material.LAPIS_BLOCK);
+        }
+    }
+
+    public void despawnKamien() {
+        for (Location location : kamienLocations) {
+            location.getBlock().setType(Material.AIR);
+        }
+    }
+
+    public void updatePlayerCount() {
+        final int playerCount = this.dungeonWorld.getPlayers().size();
+        ((TextHologramLine) this.holo1.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
+        ((TextHologramLine) this.holo2.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
+        ((TextHologramLine) this.holo3.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
+        ((TextHologramLine) this.holo4.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
+    }
+
+    private void updateStatus() {
+        String status = "&aWolne";
+        if (this.status != DungeonStatus.ENDED) status = "&cZajete";
+        ((TextHologramLine) this.holo1.getLines().get(1)).setText(Utils.format("&7Status: " + status));
+        ((TextHologramLine) this.holo2.getLines().get(1)).setText(Utils.format("&7Status: " + status));
+        ((TextHologramLine) this.holo3.getLines().get(1)).setText(Utils.format("&7Status: " + status));
+        ((TextHologramLine) this.holo4.getLines().get(1)).setText(Utils.format("&7Status: " + status));
+    }
+
+    private void updateEtap() {
+        if (this.status == DungeonStatus.ENDED) return;
+        ((TextHologramLine) this.holo1.getLines().get(3)).setText(Utils.format("&7Etap: &e" + status.getName()));
+        ((TextHologramLine) this.holo2.getLines().get(3)).setText(Utils.format("&7Etap: &e" + status.getName()));
+        ((TextHologramLine) this.holo3.getLines().get(3)).setText(Utils.format("&7Etap: &e" + status.getName()));
+        ((TextHologramLine) this.holo4.getLines().get(3)).setText(Utils.format("&7Etap: &e" + status.getName()));
+    }
+
+    private void updateHealth() {
+        final String prefix = this.getHealthPrefix();
+        ((TextHologramLine) this.holo1.getLines().get(4)).setText(Utils.format("&7HP: " + prefix + this.hp + "&7/&a200"));
+        ((TextHologramLine) this.holo2.getLines().get(4)).setText(Utils.format("&7HP: " + prefix + this.hp + "&7/&a200"));
+        ((TextHologramLine) this.holo3.getLines().get(4)).setText(Utils.format("&7HP: " + prefix + this.hp + "&7/&a200"));
+        ((TextHologramLine) this.holo4.getLines().get(4)).setText(Utils.format("&7HP: " + prefix + this.hp + "&7/&a200"));
+    }
+
+    public void updateTime() {
+        if (!(this.status == DungeonStatus.ETAP_1 || this.status == DungeonStatus.WAITING || this.status == DungeonStatus.ETAP_2 ||
+                this.status == DungeonStatus.ETAP_3 || this.status == DungeonStatus.ETAP_4 || this.status == DungeonStatus.BOSS)) return;
+        this.time++;
+        this.antyAfkTime++;
+        if (this.antyAfkTime >= this.antyAfkMaxTime) {
+            for (Player player : this.dungeonWorld.getPlayers()) {
+                player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
+                player.sendMessage(Utils.format("&cPrzewidziany czas na te Etap minal!"));
+                player.sendMessage(Utils.format("&cDungeon zostal zresetowany!"));
+                player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
+            }
+            this.spawnPlayers();
+            this.resetDungeon();
+            return;
+        }
+        ((TextHologramLine) this.holo1.getLines().get(4)).setText(Utils.format("&7Czas Trwania: &c" + Utils.durationToString(this.time * 1000L, true)));
+        ((TextHologramLine) this.holo2.getLines().get(4)).setText(Utils.format("&7Czas Trwania: &c" + Utils.durationToString(this.time * 1000L, true)));
+        ((TextHologramLine) this.holo3.getLines().get(4)).setText(Utils.format("&7Czas Trwania: &c" + Utils.durationToString(this.time * 1000L, true)));
+        ((TextHologramLine) this.holo4.getLines().get(4)).setText(Utils.format("&7Czas Trwania: &c" + Utils.durationToString(this.time * 1000L, true)));
+    }
+
+    private String getHealthPrefix() {
+        if (this.hp >= 150) {
+            return "&a";
+        } else if (this.hp >= 100) {
+            return "&e";
+        } else if (this.hp >= 50) {
+            return "&c";
+        } else {
+            return "&4";
+        }
+    }
+
+    public void damageKamien(final Player player) {
+        if (this.status != DungeonStatus.STARTED) this.status = DungeonStatus.STARTED;
+        this.damaged.put("kamien", System.currentTimeMillis() + 5_000L);
+        this.hp--;
+        this.updateHealth();
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(player, "&bKrysztal Lodowej Wiezy &c( " + this.hp + "HP &c)"));
+        if (this.hp == 0) this.startDungeon(player.getName());
+    }
+
+    public void startDungeon(final String playerName) {
+        this.despawnKamien();
+        this.updateStatus();
+        final ArmorStand stand = (ArmorStand) this.map.spawnEntity(new Location(map, -124.5, 98, 213.5), EntityType.ARMOR_STAND);
+        stand.setGravity(false);
+        stand.setVisible(false);
+        stand.setCustomNameVisible(false);
+        Bukkit.getServer().broadcastMessage(Utils.format("&b&lIce Tower &3>> &fKamien zostal zniszczony przez &b" + playerName + "&f!"));
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            stand.getNearbyEntities(3, 10, 3).forEach(entity -> {
+                if (entity instanceof Player) {
+                    entity.teleport(this.spawnLoc);
+                }
+            });
+            stand.remove();
+            if (dungeonWorld.getPlayers().isEmpty()) {
+                this.resetDungeon();
                 return;
             }
+            this.startPhase1();
+        }, 80L);
+    }
+
+    private final Location spawnLoc = new Location(dungeonWorld, -4.5, 66, 29.5);
+    private final Location bossSpawnLoc = new Location(dungeonWorld, -4.5, 67, 122.5);
+    private final List<Location> mobSpawnLocations = Arrays.asList(
+            new Location(dungeonWorld, -14.5, 67, 39.5),
+            new Location(dungeonWorld, 32.5, 67, 80.5),
+            new Location(dungeonWorld, -29.5, 67, 97.5)
+    );
+    public void startPhase1() {
+        this.status = DungeonStatus.ETAP_1;
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 240;
+        this.updateEtap();
+        this.spawnMobs(20, IceTowerMobType.M1);
+        this.sendMessage(1);
+    }
+
+    public void startPrePhase() {
+        this.count = 0;
+        this.status = DungeonStatus.WAITING;
+        this.updateEtap();
+        for (Player player : dungeonWorld.getPlayers()) {
+            player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
+            player.sendMessage(Utils.format("&fUkonczo aktualny etap!"));
+            player.sendMessage(Utils.format("&fNastepny rozpocznie sie sa &c15 &fsekund!"));
+            player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
         }
-        if (resetType == ResetType.BYPASS) {
-            damagers.clear();
-            rpgcore.getIceTowerManager().setHp(200);
-            rpgcore.getIceTowerManager().setMobsAmount(0);
-            rpgcore.getIceTowerManager().setTime(-1);
-            rpgcore.getIceTowerManager().setMaxTime(-1);
-            rpgcore.getIceTowerManager().setAntyAfk(-1);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
-            Bukkit.getWorld("demontower").getBlockAt(16, 9, 97).setType(Material.AIR);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB1");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB2");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB3");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-BOSS");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20000");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20001");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20002");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20003");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20004");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20005");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20006");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin despawn 20007");
-            despawnKamien();
-            spawnKamien();
-            if (Bukkit.getWorld("demontower").getPlayers() != null) {
-                for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                    BossBarUtil.removeBar(player);
-                    player.closeInventory();
-                    player.teleport(rpgcore.getSpawnManager().getSpawn());
-                }
+    }
+
+    public void startPhase2() {
+        this.status = DungeonStatus.ETAP_2;
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 240;
+        this.backPlayers();
+        this.updateEtap();
+        this.spawnMobs(20, IceTowerMobType.M2);
+        this.sendMessage(2);
+    }
+
+    private final List<Integer> metinIds = Arrays.asList(20_000, 20_001, 20_002, 20_003, 20_004, 20_005, 20_006, 20_007);
+
+    public void startPhase3() {
+        this.status = DungeonStatus.ETAP_3;
+        this.antyAfkTime = 0;
+        if (this.dungeonWorld.getPlayers().size() == 1) this.antyAfkMaxTime = 480;
+        else this.antyAfkMaxTime = 240;
+        this.backPlayers();
+        this.updateEtap();
+        this.spawnMetins();
+        this.sendMessage(3);
+    }
+
+    private void spawnMetins() {
+        for (Integer i : this.metinIds) {
+            MetinyHelper.spawnMetinByPass(i);
+        }
+    }
+
+    public void startPhase4() {
+        this.status = DungeonStatus.ETAP_4;
+        this.backPlayers();
+        this.updateEtap();
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 240;
+        this.spawnMobs(25, IceTowerMobType.M3);
+        this.sendMessage(4);
+    }
+
+    public void startPhaseBOSS() {
+        this.status = DungeonStatus.BOSS;
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 120;
+        this.backPlayers();
+        this.updateEtap();
+        this.spawnMobs(1, IceTowerMobType.BOSS);
+        this.sendMessage(5);
+    }
+
+    private void spawnMobs(final int amount, final IceTowerMobType mobType) {
+        if (mobType == IceTowerMobType.BOSS) {
+            RPGCORE.getMythicMobs().getMobManager().spawnMob(mobType.getMobName(), this.bossSpawnLoc);
+            return;
+        }
+        for (int i = 0; i < amount; i++) {
+            final double x = ChanceHelper.getRandDouble(-0.2, 0.2);
+            final double z = ChanceHelper.getRandDouble(-0.2, 0.2);
+            for (final Location loc : this.mobSpawnLocations) {
+                RPGCORE.getMythicMobs().getMobManager().spawnMob(mobType.getMobName(), loc.clone().add(x, 0, z));
             }
-            rpgcore.getServer().broadcastMessage(Utils.format("&b&lKamien Lodowej Wiezy zostal zresetowany!"));
         }
     }
 
-    public static List<Location> getKamienLocations() {
-        return kamienLocations;
+    private void backPlayers() {
+        for (Player p : dungeonWorld.getPlayers()) {
+            p.teleport(this.spawnLoc);
+        }
     }
 
-    public static void despawnKamien() {
-        for (Location loc : kamienLocations) {
+    private void sendMessage(final int phase) {
+        String message = "";
+        switch (phase) {
+            case 1:
+                message = "&b&lEtap 1 &3>> &fPokonaj wszystkie potwory!";
+                break;
+            case 2:
+                message = "&b&lEtap 2 &3>> &fPokonaj wszystkie potwory!";
+                break;
+            case 3:
+                message = "&b&lEtap 3 &3>> &fZniszcz Wszystkie Kamienie Metin!";
+                break;
+            case 4:
+                message = "&b&lEtap 4 &3>> &fPokonaj wszystkie potwory!";
+                break;
+            case 5:
+                message = "&b&lEtap 5 &3>> &fPokonaj &8&l[&4&lBOSS&8&l] &bKrola Lodu!";
+                break;
+        }
+        for (Player player : dungeonWorld.getPlayers()) {
+            player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
+            player.sendMessage(Utils.format(message));
+            player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
+        }
+    }
+
+    private final List<Location> gateLocations = Arrays.asList(
+            // BRAMA 1
+            new Location(dungeonWorld, -4, 65, 76),
+            new Location(dungeonWorld, -5, 65, 76),
+            new Location(dungeonWorld, -6, 65, 76),
+
+            new Location(dungeonWorld, -4, 66, 76),
+            new Location(dungeonWorld, -5, 66, 76),
+            new Location(dungeonWorld, -6, 66, 76),
+
+            new Location(dungeonWorld, -4, 67, 76),
+            new Location(dungeonWorld, -5, 67, 76),
+            new Location(dungeonWorld, -6, 67, 76),
+
+            new Location(dungeonWorld, -5, 68, 76),
+
+            // BRAMA 2
+            new Location(dungeonWorld, -4, 65, 86),
+            new Location(dungeonWorld, -5, 65, 86),
+            new Location(dungeonWorld, -6, 65, 86),
+
+            new Location(dungeonWorld, -4, 66, 86),
+            new Location(dungeonWorld, -5, 66, 86),
+            new Location(dungeonWorld, -6, 66, 86),
+
+            new Location(dungeonWorld, -4, 67, 86),
+            new Location(dungeonWorld, -5, 67, 86),
+            new Location(dungeonWorld, -6, 67, 86),
+
+            new Location(dungeonWorld, -5, 68, 86),
+
+            // BRAMA 3
+            new Location(dungeonWorld, 0, 65, 82),
+            new Location(dungeonWorld, 0, 65, 81),
+            new Location(dungeonWorld, 0, 65, 80),
+
+            new Location(dungeonWorld, 0, 66, 82),
+            new Location(dungeonWorld, 0, 66, 81),
+            new Location(dungeonWorld, 0, 66, 80),
+
+            new Location(dungeonWorld, 0, 67, 82),
+            new Location(dungeonWorld, 0, 67, 81),
+            new Location(dungeonWorld, 0, 67, 80),
+
+            new Location(dungeonWorld, 0, 68, 81),
+
+            // BRAMA 4
+            new Location(dungeonWorld, -10, 65, 82),
+            new Location(dungeonWorld, -10, 65, 81),
+            new Location(dungeonWorld, -10, 65, 80),
+
+            new Location(dungeonWorld, -10, 66, 82),
+            new Location(dungeonWorld, -10, 66, 81),
+            new Location(dungeonWorld, -10, 66, 80),
+
+            new Location(dungeonWorld, -10, 67, 82),
+            new Location(dungeonWorld, -10, 67, 81),
+            new Location(dungeonWorld, -10, 67, 80),
+
+            new Location(dungeonWorld, -10, 68, 81)
+    );
+
+    public void endIceTower() {
+        this.antyAfkTime = 0;
+        this.antyAfkMaxTime = 360;
+        this.status = DungeonStatus.UPGRADING;
+        this.backPlayers();
+        this.liftGate();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
+        this.dungeonWorld.getBlockAt(-5, 65, 80).setType(Material.ANVIL);
+
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore,() -> {
+            this.spawnPlayers();
+            this.resetDungeon();
+        }, 400L);
+    }
+
+    private void liftGate() {
+        for (final Location loc : this.gateLocations) {
             loc.getBlock().setType(Material.AIR);
         }
     }
 
-
-    public static void spawnKamien() {
-        for (Location loc : kamienLocations) {
-            loc.getBlock().setType(Material.LAPIS_BLOCK);
+    private void lowerGate() {
+        for (final Location loc : this.gateLocations) {
+            loc.getBlock().setType(Material.IRON_FENCE);
         }
     }
-
-
-    public static void startIceTower() {
-        rpgcore.getIceTowerManager().setMobsAmount(0);
-        rpgcore.getIceTowerManager().setHp(1000);
-        despawnKamien();
-        rpgcore.getIceTowerManager().setMaxTime(99999);
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            if (Bukkit.getWorld("50-60map").getPlayers() != null) {
-                for (Player player : Bukkit.getWorld("50-60map").getPlayers()) {
-                    if (!damagers.contains(player.getUniqueId())) continue;
-                    BossBarUtil.removeBar(player);
-                    player.teleport(new Location(Bukkit.getWorld("demontower"), 16.5, 10, 42.5, 0, 0));
-                    player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                            + "&fZnadujesz sie na &b1 &fetapie lodowej wiezy..." + "\n"
-                            + "&fNa tym etapie musisz zabic &b1 &ffale &bNazwa Moba!" + "\n"
-                            + "&1>>-------------&bIce Tower&1-------------<<"));
-                }
-            }
-            rpgcore.getIceTowerManager().setTime(5);
-            rpgcore.getIceTowerManager().setMaxTime(5);
-            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB1 15 demontower,-0.5,11,56.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB1 15 demontower,49.5,11,97.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB1 15 demontower,16.5,9,126.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB1 15 demontower,-12.5,11,111.5");
-            }, 100L);
-        }, 200L);
-    }
-
-
-    public static void startIceTowerEtap2() {
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB1");
-        if (Bukkit.getWorld("demontower").getPlayers() != null) {
-            for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                BossBarUtil.removeBar(player);
-                player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                        + "&bFala mobow zostala pomyslnie pokonana!" + "\n"
-                        + "&1>>-------------&bIce Tower&1-------------<<"));
-            }
-        }
-        rpgcore.getIceTowerManager().setTime(125);
-        rpgcore.getIceTowerManager().setMaxTime(125);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB1");
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            rpgcore.getIceTowerManager().setMobsAmount(0);
-            if (Bukkit.getWorld("demontower").getPlayers() != null) {
-                for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                    player.teleport(new Location(Bukkit.getWorld("demontower"), 16.5, 10, 42.5, 0, 0));
-                    player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                            + "&fZnadujesz sie na &b2 &fetapie lodowej wiezy..." + "\n"
-                            + "&fNa tym etapie musisz zabic &b8 &fkamieni metin!" + "\n"
-                            + "&1>>-------------&bIce Tower&1-------------<<"));
-                }
-            }
-            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20000");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20001");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20002");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20003");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20004");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20005");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20006");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "metin spawn 20007");
-            }, 100L);
-        }, 1400L);
-    }
-
-    public static void startIceTowerEtap3() {
-        if (Bukkit.getWorld("demontower").getPlayers() != null) {
-            for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                BossBarUtil.removeBar(player);
-                player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                        + "&bFala mobow zostala pomyslnie pokonana!" + "\n"
-                        + "&1>>-------------&bIce Tower&1-------------<<"));
-            }
-        }
-        rpgcore.getIceTowerManager().setTime(125);
-        rpgcore.getIceTowerManager().setMaxTime(125);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB3");
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            rpgcore.getIceTowerManager().setMobsAmount(0);
-            if (Bukkit.getWorld("demontower").getPlayers() != null) {
-                for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                    player.teleport(new Location(Bukkit.getWorld("demontower"), 16.5, 10, 42.5, 0, 0));
-                    player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                            + "&fZnadujesz sie na &b3 &fetapie lodowej wiezy..." + "\n"
-                            + "&fNa tym etapie musisz zabic &b1 &ffale...!" + "\n"
-                            + "&1>>-------------&bIce Tower&1-------------<<"));
-                }
-            }
-            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB2 20 demontower,-0.5,11,56.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB2 20 demontower,49.5,11,97.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB2 20 demontower,16.5,9,126.5");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-MOB2 20 demontower,-12.5,11,111.5");
-            }, 100L);
-        }, 1400L);
-    }
-
-    public static void startIceTowerEtapBOSS() {
-        if (Bukkit.getWorld("demontower").getPlayers() != null) {
-            for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                BossBarUtil.removeBar(player);
-                player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                        + "&bFala mobow zostala pomyslnie pokonana!" + "\n"
-                        + "&1>>-------------&bIce Tower&1-------------<<"));
-            }
-        }
-        rpgcore.getIceTowerManager().setTime(125);
-        rpgcore.getIceTowerManager().setMaxTime(125);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB2");
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB3");
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            rpgcore.getIceTowerManager().setMobsAmount(0);
-            if (Bukkit.getWorld("demontower").getPlayers() != null) {
-                for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                    player.teleport(new Location(Bukkit.getWorld("demontower"), 16.5, 10, 42.5, 0, 0));
-                    player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                            + "&fZnadujesz sie na &b3 &fetapie lodowej wiezy..." + "\n"
-                            + "&fNa tym etapie musisz zabic &8&l[&4&lBOSS&8&l] &b&lMrozny Wladca!" + "\n"
-                            + "&1>>-------------&bIce Tower&1-------------<<"));
-                }
-            }
-            Bukkit.getServer().getScheduler().runTaskLater(rpgcore, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn DT-BOSS 1 demontower,16.5,10,141.5"), 100L);
-        }, 1400L);
-    }
-
-    public static void actionBar(final int reqMobAmount, final String barText) {
-        for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-            /*if (!BossBarUtil.getPlayers().contains(player.getName())) {
-                BossBarUtil.setBar(player.getPlayer(), Utils.format(barText), reqMobAmount - rpgcore.getIceTowerManager().getMobsAmount());
-            }
-            BossBarUtil.updateBar(player.getPlayer(), Utils.format(barText), reqMobAmount - rpgcore.getIceTowerManager().getMobsAmount());*/
-            rpgcore.getNmsManager().sendActionBar(player, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount());
-        }
-    }
-
-    public static void teleportKowal() {
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB1");
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB2");
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m kill DT-MOB3");
-        rpgcore.getIceTowerManager().setTime(-1);
-        rpgcore.getIceTowerManager().setMaxTime(-1);
-        if (Bukkit.getWorld("demontower").getPlayers() != null) {
-            rpgcore.getIceTowerManager().setAntyAfk(120);
-            for (Player player : Bukkit.getWorld("demontower").getPlayers()) {
-                BossBarUtil.removeBar(player);
-                player.teleport(new Location(Bukkit.getWorld("demontower"), 16.5, 10, 42.5, 0, 0));
-                player.sendMessage(Utils.format("&1>>-------------&bIce Tower&1-------------<<" + "\n"
-                        + "&fPoomyslnie Ukonczyliscie Lodowa Wieze. Gratulacje" + "\n"
-                        + "&fTeraz mozecie ulepszyc swoje przedmioty" + "\n"
-                        + "&1>>-------------&bIce Tower&1-------------<<"));
-                rpgcore.getKowalNPC().resetUpgradeList();
-                final MagazynierUser user = rpgcore.getMagazynierNPC().find(player.getUniqueId());
-                if (user.getMissions().getSelectedMission() == 10) {
-                    user.getMissions().setProgress(user.getMissions().getProgress() + 1);
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));
-                }
-            }
-            Block block = Bukkit.getWorld("demontower").getBlockAt(16, 9, 97);
-            block.setType(Material.ANVIL);
-            block.setData((byte) 1);
-
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
-        }
-    }
-
 }

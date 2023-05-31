@@ -39,7 +39,7 @@ import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
-import rpg.rpgcore.chests.Dungeony.IceTower.MroznyWladcaManager;
+import rpg.rpgcore.chests.Dungeony.IceTower.KrolLoduManager;
 import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
 import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
@@ -131,8 +131,8 @@ import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczono
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
 import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.dungeons.maps.icetower.events.IceTowerListener;
+import rpg.rpgcore.dungeons.maps.icetower.tasks.IceTowerTask;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.PrzedsionekManager;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekInteractListener;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekPortalEntryListener;
@@ -353,7 +353,7 @@ public final class RPGCORE extends JavaPlugin {
     private StarozytnySmoczyCesarzManager starozytnySmoczyCesarzManager;
     // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ================================
     // ice tower
-    private MroznyWladcaManager mroznyWladcaManager;
+    private KrolLoduManager krolLoduManager;
     private LodowySlugaManager lodowySlugaManager;
 
     // cos innego...
@@ -461,7 +461,6 @@ public final class RPGCORE extends JavaPlugin {
             }
         }
         Bukkit.clearRecipes();
-        IceTowerManager.resetIceTower(ResetType.BYPASS);
     }
 
     public void onDisable() {
@@ -496,10 +495,11 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllPustelnik();
         this.mongo.saveDataBossy();
         this.mongo.saveAllMistrzYang();
+        this.mongo.saveAllCzarownica();
         this.mongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
-        IceTowerManager.resetIceTower(ResetType.BYPASS);
+        this.iceTowerManager.resetDungeon();
         this.bossyManager.reset70_80();
         this.bossyManager.despawnKlejnot(null, 1);
         this.bossyManager.despawnKlejnot(null, 2);
@@ -569,7 +569,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new AdminChatCommand());
         CommandAPI.getCommand().register("HellRPGCore", new DodatkiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GiveAkcesoriaCommand());
-        CommandAPI.getCommand().register("HellRPGCore", new MaxCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ProfileCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MagazynyCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SaveStopCommand());
@@ -937,14 +936,14 @@ public final class RPGCORE extends JavaPlugin {
         this.starozytnySmoczyCesarzManager = new StarozytnySmoczyCesarzManager();
         // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ================================
         // ice tower
-        this.mroznyWladcaManager = new MroznyWladcaManager();
+        this.krolLoduManager = new KrolLoduManager();
         this.lodowySlugaManager = new LodowySlugaManager();
 
     }
 
     public void initOwnDungeons() {
         // DEMON TOWER
-        this.iceTowerManager = new IceTowerManager();
+        this.iceTowerManager = new IceTowerManager(this);
 
         // PIEKIELNY PRZEDSIONEK
         this.przedsionekManager = new PrzedsionekManager(this);
@@ -994,6 +993,8 @@ public final class RPGCORE extends JavaPlugin {
         new PlayerInventoryTask(this);
         // ... PIEKIELNY PRZEDSIONEK
         new PiekielnyPrzedsionekTask(this);
+        // ... ICE TOWER
+        new IceTowerTask(this);
     }
 
     private void fixBuckets() {
@@ -1284,8 +1285,8 @@ public final class RPGCORE extends JavaPlugin {
 
     // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ===============================
     // ice tower
-    public MroznyWladcaManager getMroznyWladcaManager() {
-        return mroznyWladcaManager;
+    public KrolLoduManager getKrolLoduManager() {
+        return krolLoduManager;
     }
     public LodowySlugaManager getLodowySlugaManager() {
         return lodowySlugaManager;

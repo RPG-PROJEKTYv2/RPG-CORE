@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
-import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 
@@ -29,11 +27,6 @@ public class SpawnCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
-            if (player.getWorld().getName().equals("demontower")) {
-                if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {
-                    IceTowerManager.resetIceTower(ResetType.BYPASS);
-                }
-            }
             player.teleport(rpgcore.getSpawnManager().getSpawn());
             player.setHealth(player.getMaxHealth());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));

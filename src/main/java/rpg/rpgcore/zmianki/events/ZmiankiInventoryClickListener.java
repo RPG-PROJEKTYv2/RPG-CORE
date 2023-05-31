@@ -12,8 +12,6 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
-import java.util.UUID;
-
 public class ZmiankiInventoryClickListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
@@ -59,7 +57,6 @@ public class ZmiankiInventoryClickListener implements Listener {
 
                         if (clickedInventory.getItem(13).getType().toString().contains("_SWORD")) {
                             if (!e.getCursor().equals(GlobalItem.getItem("I50", 1))) {
-                                player.getInventory().addItem(GlobalItem.getItem("I50", 1));
                                 return;
                             }
                             e.setCursor(null);

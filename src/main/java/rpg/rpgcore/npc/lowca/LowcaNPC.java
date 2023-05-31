@@ -48,7 +48,7 @@ public class LowcaNPC {
         gui.setItem(26, new ItemBuilder(Material.PAPER).setName("&c&lStatystyki").setLore(Arrays.asList(
                 "&7Szczescie: &c" + lowcaUser.getSzczescie() + " &7pkt",
                 "&7Szybkosc: &c" + lowcaUser.getSzybkosc() + " &7pkt",
-                "&7True dmg: &c" + lowcaUser.getTruedmg() + " &7dmg"
+                "&7Dodatkowe Obrazenia: &c" + lowcaUser.getDodatkoweDmg() + " &7dmg"
         )).toItemStack().clone());
 
         player.openInventory(gui);
@@ -65,7 +65,7 @@ public class LowcaNPC {
                     .replace("%itemName%", lowcaMissions.getReqItem().getItemMeta().getDisplayName())
                     .replace("%szczescie%", lowcaMissions.getSzczescie() + "")
                     .replace("%szybkosc%", lowcaMissions.getSzybkosc() + "")
-                    .replace("%trueDMG%", lowcaMissions.getTruedmg() + ""));
+                    .replace("%dodatkoweDmg%", lowcaMissions.getDodatkoweDmg() + ""));
         }
         return newLore;
     }

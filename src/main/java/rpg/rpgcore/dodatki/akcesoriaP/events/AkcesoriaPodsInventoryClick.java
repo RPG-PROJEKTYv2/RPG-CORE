@@ -133,7 +133,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
 
                     user.getAkcesoriaPodstawowe().setPierscien("");
                     bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() - przeszycie);
-                    bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() - wkryt);
+                    bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() - wkryt);
                     bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - speed);
 
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
@@ -147,7 +147,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                                         "**Typ: **`" + item.getType() + "`\n" +
                                         "**Statystyki:** \n" +
                                         "- Przeszycie Bloku: " + przeszycie + "\n" +
-                                        "- Wzm Szansa na Kryta: " + wkryt + "\n" +
+                                        "- Wzm Kryta: " + wkryt + "\n" +
                                         "- Zwiekszona Szybkosc: " + speed + "\n" +
                                         "- Wymagazyny Poziom: " + Utils.getTagInt(item, "lvl"), Color.getHSBColor(114, 90, 47)));
                     });

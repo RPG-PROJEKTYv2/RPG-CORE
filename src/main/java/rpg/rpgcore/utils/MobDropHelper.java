@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.dungeons.DungeonStatus;
-import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -75,7 +74,7 @@ public class MobDropHelper {
         // TAJEMNICZA SKRZYNIA
         addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
-        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 1.5), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2), true, true, entity);
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1.0), true, true, entity);
         // FRAGMENT STALI
@@ -489,48 +488,39 @@ public class MobDropHelper {
             case "Lodowy Sluga Lvl. 57":
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
-                if (!player.getWorld().getName().equals("demontower")) return;
-                RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 50) {
-                    IceTowerManager.actionBar(50, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f50");
-                }
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 50) {
-                    IceTowerManager.startIceTowerEtap2();
+                if (!player.getWorld().getName().equals("DemonTower")) break;
+                if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_1) {
+                    rpgcore.getIceTowerManager().incrementCount();
                 }
                 break;
             case "Lodowy Sluga Lvl. 58":
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
-                if (!player.getWorld().getName().equals("demontower")) return;
-                RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 80) {
-                    IceTowerManager.actionBar(80, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f80");
-                }
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 80) {
-                    IceTowerManager.startIceTowerEtapBOSS();
+                addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                if (!player.getWorld().getName().equals("DemonTower")) break;
+                if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_2) {
+                    rpgcore.getIceTowerManager().incrementCount();
                 }
                 break;
             case "Lodowy Sluga Lvl. 59":
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
-                if (!player.getWorld().getName().equals("demontower")) return;
-                RPGCORE.getInstance().getIceTowerManager().setMobsAmount(RPGCORE.getInstance().getIceTowerManager().getMobsAmount() + 1);
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() < 75) {
-                    IceTowerManager.actionBar(80, "&b&lPostep Lodowej Wiezy: &f" + rpgcore.getIceTowerManager().getMobsAmount() + "&b/&f80");
-                }
-                if (RPGCORE.getInstance().getIceTowerManager().getMobsAmount() == 75) {
-                    IceTowerManager.startIceTowerEtap3();
+                if (!player.getWorld().getName().equals("DemonTower")) break;
+                if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_4) {
+                    rpgcore.getIceTowerManager().incrementCount();
                 }
                 break;
-            case "[BOSS] Mrozny Wladca":
-                addDropPlayer(player, Skrzynki.getItem("I11", 1), 100, true, true, entity);
+            case "[BOSS] Krol Lodu":
+                addDropPlayer(player, Skrzynki.I11.getItemStack().clone(), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 6) {
-                    addDropPlayer(player, LowcaItems.getItem("50-60", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("Lodowej-Wiezy", 1), getDropChance(szczescie, 15), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 6) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
                 }
-                if (!player.getWorld().getName().equals("demontower")) return;
-                IceTowerManager.teleportKowal();
+                if (!player.getWorld().getName().equals("DemonTower")) break;
+                if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.BOSS) {
+                    rpgcore.getIceTowerManager().incrementCount();
+                }
                 break;
             // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
             case "Ognisty Duch Lvl. 69":

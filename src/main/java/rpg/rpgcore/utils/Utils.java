@@ -1,7 +1,5 @@
 package rpg.rpgcore.utils;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -41,6 +39,7 @@ public class Utils {
     public static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
     public static final String NIEGRACZ = format("&cNie jesteś graczem!");
     public static final String SERVERNAME = format("&4&lHELL&8&lRPG&7 &8>> ");
+    public static final String CLEANSERVERNAME = format("&4&lHELL&8&lRPG&7");
     public static final String BANPREFIX = format("&4&lHELL&8&lBAN&7 &8>> ");
     public static final String MUTEPREFIX = format("&4&lHELL&8&lMUTE&7 &8>> ");
     public static final String LVLPREFIX = format("&4&lHELL&6&lLVL&7 &8>> ");
@@ -109,7 +108,7 @@ public class Utils {
     }
 
     public static String kickMessage(final String senderName, final String reason) {
-        return format(SERVERNAME + format("\n" +
+        return format(CLEANSERVERNAME + format("\n" +
                 "&7Zostales wyrzucony z serwera\n" +
                 "&7Przez: &c" + senderName +
                 "\n&7Za: &c" + reason +
@@ -119,13 +118,13 @@ public class Utils {
     }
 
     public static String banMessage(final String senderName, final String reason, final String banExpiry, final String dateOfBan) {
-        return (SERVERNAME + format("\n&7Zostales zablokowany na tym serwerze" +
+        return format(CLEANSERVERNAME + "\n&7Zostales zablokowany na tym serwerze" +
                 "\n&7Za:&c " + reason +
                 "\n&7Wygasa:&c " + banExpiry +
                 "\n&7Nadany:&c " + dateOfBan +
                 "\n&7Przez:&c " + senderName +
                 "\n\n&8&lJezeli uwazasz ze to blad, skontaktuj sie" +
-                "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl"));
+                "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl");
     }
 
     public static String kick(final String namePlayerToBan, final String senderName, final String reason) {
@@ -455,6 +454,11 @@ public class Utils {
 
         return reverseString(numberInString) + afterDot;
     }
+    public static String spaceNumber(int number) {
+        String numberInString = String.valueOf(number);
+        numberInString = reverseString(numberInString).replaceAll("...(?!$)", "$0 ");
+        return reverseString(numberInString);
+    }
 
     public static void sendToHighStaff(final String message) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
@@ -491,66 +495,6 @@ public class Utils {
     private static String reverseString(final String str) {
         final StringBuilder sb = new StringBuilder(str);
         return sb.reverse().toString();
-    }
-
-    public static int getProtectionLevel(final ItemStack is) {
-
-        if (is.getItemMeta().getLore() == null) {
-            return 0;
-        }
-
-        for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("Obrona: ")) {
-                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
-            }
-        }
-
-        return 0;
-    }
-
-    public static int getThornsLevel(final ItemStack is) {
-
-        if (is.getItemMeta().getLore() == null) {
-            return 0;
-        }
-
-        for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("Ciernie: ")) {
-                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
-            }
-        }
-
-        return 0;
-    }
-
-    public static int getSharpnessLevel(final ItemStack is) {
-
-        if (is.getItemMeta().getLore() == null) {
-            return 0;
-        }
-
-        for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("Obrazenia: ")) {
-                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
-            }
-        }
-
-        return 0;
-    }
-
-    public static int getObrazeniaMobyLevel(final ItemStack is) {
-
-        if (is.getItemMeta().getLore() == null) {
-            return 0;
-        }
-
-        for (final String s : is.getItemMeta().getLore()) {
-            if (removeColor(s).contains("Obrazenia na potwory: ")) {
-                return Integer.parseInt(Utils.removeColor(s).substring(Utils.removeColor(s).lastIndexOf(" ") + 1).replace(" ", "").trim());
-            }
-        }
-
-        return 0;
     }
 
     public static long durationFromString(String string, boolean now) {
@@ -624,16 +568,9 @@ public class Utils {
         return stringBuilder.length() > 0 ? stringBuilder.toString().trim() : time + "ms";
     }
 
-    public static double convertIntegersToPercentage(final int n1, final int n2) {
-        return Double.parseDouble(String.valueOf((n1 / n2) * 100));
-    }
-
-    public static double convertLongsToPercentage(final long n1, final long n2) {
-        return Double.parseDouble(String.valueOf((n1 / n2) * 100));
-    }
 
     public static double convertDoublesToPercentage(final double n1, final double n2) {
-        return (n1 / n2) * 100;
+        return DoubleUtils.round((n1 / n2) * 100, 2);
     }
 
     public static Object getPrivateField(String fieldName, Class clazz, Object object) {
@@ -660,23 +597,6 @@ public class Utils {
             }
         }
         return false;
-    }
-
-    public static int getLoreLineIndex(final List<String> lore, final String toCheck) {
-        for (int i = 0; i < lore.size(); i++) {
-            if (removeColor(lore.get(i)).contains(toCheck)) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    public static String getLoreLineNoColor(final ItemStack item, final int line) {
-        try {
-            return removeColor(item.getItemMeta().getLore().get(line));
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return "";
-        }
     }
 
     public static String getLoreLineColored(final ItemStack item, final int line) {
@@ -805,15 +725,6 @@ public class Utils {
         return bonusValue;
     }
 
-    public static void sendPlayerToServer(final Player player, final String serverName) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("Connect");
-        out.writeUTF(serverName);
-        player.sendPluginMessage(RPGCORE.getInstance(), "BungeeCord", out.toByteArray());
-        player.sendMessage(Utils.format(SERVERNAME + "&cSerwer jest aktualnie restartowany..."));
-        player.sendMessage(Utils.format(SERVERNAME + "&cZa wszelkie utrudnienia przepraszamy. &4Administracja Hellrpg.pl"));
-    }
-
     public static String getTagString(final ItemStack is, final String tag){
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return "";
@@ -854,6 +765,7 @@ public class Utils {
             tagCompound = nmsStack.getTag();
         }
         tagCompound.setString(tag, value);
+        nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
@@ -867,6 +779,7 @@ public class Utils {
             tagCompound = nmsStack.getTag();
         }
         tagCompound.setDouble(tag, DoubleUtils.round(value, 2));
+        nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
@@ -880,6 +793,7 @@ public class Utils {
             tagCompound = nmsStack.getTag();
         }
         tagCompound.setInt(tag, value);
+        nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
@@ -893,6 +807,7 @@ public class Utils {
             tagCompound = nmsStack.getTag();
         }
         tagCompound.setBoolean(tag, value);
+        nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 

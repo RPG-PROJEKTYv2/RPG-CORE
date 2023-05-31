@@ -47,7 +47,7 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(final PlayerLoginEvent e) {
         if (!rpgcore.getUserManager().isUser(e.getPlayer().getUniqueId())) {
             if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.SERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_EXISTING_DATABASE&8)")), 1L);
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_EXISTING_DATABASE&8)")), 1L);
                 return;
             }
             final Player player = e.getPlayer();
@@ -68,7 +68,7 @@ public class PlayerJoinListener implements Listener {
             player.setLevel(1);
             player.setExp(0);
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
+            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
         }
     }
 
@@ -80,7 +80,7 @@ public class PlayerJoinListener implements Listener {
         final String playerName = player.getName();
 
         if (!rpgcore.getUserManager().isUser(uuid)) {
-            player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
+            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
             return;
         }
 

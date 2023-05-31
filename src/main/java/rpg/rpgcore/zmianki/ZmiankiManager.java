@@ -59,10 +59,10 @@ public class ZmiankiManager {
                 } else {
                     gui.setItem(41, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Silny Na " + Utils.getTagString(is, "silny-lvl") + " poziomy: &f+" + Utils.getTagDouble(is, "silny-lvl-val") + "%").toItemStack().clone());
                 }
-                if (Utils.getTagDouble(is, "przebicie-pancerza") == 0) {
+                if (Utils.getTagDouble(is, "przeszywka") == 0) {
                     gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
                 } else {
-                    gui.setItem(42, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Przebicie Pancerza: &f+" + Utils.getTagDouble(is, "przebicie-pancerza") + "%").toItemStack().clone());
+                    gui.setItem(42, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(is, "przeszywka") + "%").toItemStack().clone());
                 }
             }
 

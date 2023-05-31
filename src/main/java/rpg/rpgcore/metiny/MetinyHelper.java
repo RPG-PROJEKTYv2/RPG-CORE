@@ -7,6 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
+import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
@@ -65,7 +66,7 @@ public class MetinyHelper {
             if (w.getName().equals("zamekNieskonczonosci") && w.getPlayers().size() != 0) {
                 continue;
             }
-            if (w.getName().equals("demontower") && w.getPlayers().size() != 0) {
+            if (w.getName().equals("DemonTower") && w.getPlayers().size() != 0) {
                 continue;
             }
             if (w.getName().equals("Dungeon60-70") && w.getPlayers().size() != 0) {
@@ -285,6 +286,9 @@ public class MetinyHelper {
             }
             if (metinolog.getMetinologUser().getPostepKill() == 6) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
+            }
+            if (RPGCORE.getInstance().getIceTowerManager().getStatus() == DungeonStatus.ETAP_3) {
+                RPGCORE.getInstance().getIceTowerManager().incrementCount();
             }
         }
         if (id >= 30_000 && id <= 30_011) {

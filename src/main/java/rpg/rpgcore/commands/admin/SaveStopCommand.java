@@ -21,7 +21,7 @@ public class SaveStopCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.kickPlayer(Utils.format(Utils.SERVERNAME + "\n&cAktualnie Trwa Restart Serwera!\n&7Zapraszamy ponownie za chwile"));
+            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cAktualnie Trwa Restart Serwera!\n&7Zapraszamy ponownie za chwile"));
         }
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZapisano graczy i wylogowano"));
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aSerwer zostanie wylaczony za 10 sekundy..."));

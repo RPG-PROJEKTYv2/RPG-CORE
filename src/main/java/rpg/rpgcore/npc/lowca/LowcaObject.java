@@ -15,7 +15,7 @@ public class LowcaObject {
 
     public LowcaObject(Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.lowcaUser = new LowcaUser(document.getInteger("mission"), document.getInteger("progress"), document.getInteger("szczescie"), document.getInteger("szybkosc"), document.getInteger("truedmg"));
+        this.lowcaUser = new LowcaUser(document.getInteger("mission"), document.getInteger("progress"), document.getInteger("szczescie"), document.getInteger("szybkosc"), document.getInteger("dodatkoweDmg"));
     }
 
     public UUID getId() {
@@ -32,7 +32,7 @@ public class LowcaObject {
                 .append("progress", this.lowcaUser.getProgress())
                 .append("szczescie", this.lowcaUser.getSzczescie())
                 .append("szybkosc", this.lowcaUser.getSzybkosc())
-                .append("truedmg", this.lowcaUser.getTruedmg());
+                .append("dodatkoweDmg", this.lowcaUser.getDodatkoweDmg());
     }
 
 }

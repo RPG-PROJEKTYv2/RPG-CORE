@@ -32,7 +32,7 @@ public class LesnikNPC {
 
         gui.setItem(10, new ItemBuilder(Material.PAPER).setName("&c&lStatystyki").setLore(Arrays.asList(
                 "&7Przeszycie Bloku Ciosu: &c" + user.getPrzeszycie() + "&7%",
-                "&7Wzocnienie Ciosu Krytycznego: &c" + user.getWzmKryta() + "&7%",
+                "&7Szansa Na Wzocnienie Ciosu Krytycznego: &c" + user.getWzmKryta() + "&7%",
                 "&7Defensywa Przeciwko Ludziom: &c" + user.getDefNaLudzi() + "&7%"
         )).toItemStack().clone());
 

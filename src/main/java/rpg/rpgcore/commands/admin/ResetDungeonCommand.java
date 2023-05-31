@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ResetDungeonCommand extends CommandAPI {
     private final RPGCORE rpgcore;
+
     public ResetDungeonCommand(final RPGCORE rpgcore) {
         super("resetdungeon");
         this.setRankLevel(RankType.ADMIN);
@@ -18,7 +19,8 @@ public class ResetDungeonCommand extends CommandAPI {
     }
 
     private final List<String> dungeons = Arrays.asList(
-            "Piekielny Przedsionek"
+            "Piekielny Przedsionek",
+            "Ice Tower"
     );
 
     public void executeCommand(CommandSender sender, String[] args) {
@@ -45,9 +47,12 @@ public class ResetDungeonCommand extends CommandAPI {
         }
         switch (dungeon) {
             case "Piekielny Przedsionek":
-                sender.sendMessage(Utils.format(Utils.SERVERNAME + "&7Resetuje dungeon &c" + dungeon + "&7..."));
                 rpgcore.getPrzedsionekManager().resetDungeon();
                 break;
+            case "Ice Tower":
+                rpgcore.getIceTowerManager().resetDungeon();
+                break;
         }
+        sender.sendMessage(Utils.format(Utils.SERVERNAME + "&7Resetuje dungeon &c" + dungeon + "&7..."));
     }
 }

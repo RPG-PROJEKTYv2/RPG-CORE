@@ -143,14 +143,15 @@ public class RybakInventoryClick implements Listener {
             final RybakObject rybakObject = rpgcore.getRybakNPC().find(uuid);
             final User user = rpgcore.getUserManager().find(uuid);
             int amount = 0;
+            int prize;
             ItemStack toRemove;
             switch (slot) {
                 case 0:
-                    if (user.getKasa() < 25000000) {
+                    if (user.getKasa() < 2500000) {
                         player.sendMessage(Utils.format("&6&lRybak &8>> &cCzy ty probujesz mnie oszukac?!"));
                         return;
                     }
-                    user.setKasa(user.getKasa() - 25000000);
+                    user.setKasa(user.getKasa() - 2500000);
                     player.getInventory().addItem(RybakItems.getWedka(player.getName(), 1));
                     player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie zakupiles moja wedke. Niech Ci dobrze sluzy..."));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
@@ -169,9 +170,9 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I1.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 1000));
+                    prize = 150;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     player.getInventory().removeItem(toRemove);
-                    player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie sprzedales &6" + amount + " &a&l" + RybakItems.I1.getItemStack().getItemMeta().getDisplayName() + " &aza &6" + (amount * 1000) + " &amonet!"));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 14) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -190,7 +191,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I2.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 1500));
+                    prize = 250;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 15) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -209,7 +211,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I3.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 1500));
+                    prize = 250;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 16) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -228,7 +231,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I4.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 2000));
+                    prize = 500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 17) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -247,7 +251,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 2000));
+                    prize = 500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 18) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -266,7 +271,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I6.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 2000));
+                    prize = 500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 19) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -285,7 +291,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I7.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 5000));
+                    prize = 500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     break;
                 case 8:
                     if (!player.getInventory().containsAtLeast(RybakItems.I8.getItemStack(), 1)) {
@@ -301,7 +308,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I8.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 5000));
+                    prize = 1000;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     break;
                 case 9:
                     if (!player.getInventory().containsAtLeast(RybakItems.I9.getItemStack(), 1)) {
@@ -317,7 +325,8 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I9.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 12500));
+                    prize = 2500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 22) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
@@ -336,18 +345,17 @@ public class RybakInventoryClick implements Listener {
                         amount = 1;
                     }
                     toRemove = new ItemBuilder(RybakItems.I10.getItemStack().clone()).setAmount(amount).toItemStack();
-                    user.setKasa(user.getKasa() + (amount * 12500));
+                    prize = 2500;
+                    user.setKasa(user.getKasa() + (amount * prize));
                     if (rybakObject.getRybakUser().getMission() == 13 || rybakObject.getRybakUser().getMission() == 23) {
                         rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + amount);
                     }
                     break;
-                case 11:
-                    player.getInventory().addItem(RybakItems.getWedka(player.getName(), 20));
                 default:
                     return;
             }
             player.getInventory().removeItem(toRemove);
-            player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie sprzedales &6" + amount + " &a&l" + toRemove.getItemMeta().getDisplayName() + " &aza &6" + (amount * 1000) + " &amonet!"));
+            player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie sprzedales &6" + amount + " &a&l" + toRemove.getItemMeta().getDisplayName() + " &aza &6" + (amount * prize) + " &amonet!"));
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataUser(uuid, user);

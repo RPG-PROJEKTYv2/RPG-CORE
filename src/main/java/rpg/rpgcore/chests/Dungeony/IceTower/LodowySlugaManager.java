@@ -16,11 +16,16 @@ public class LodowySlugaManager {
     private final Set<Items> lodowysluga = Sets.newConcurrentHashSet();
 
     public LodowySlugaManager() {
-        this.lodowysluga.add(new Items("1", 18.0 , ItemHelper.createArmor("&bHelm Lodowego Slugi", Material.IRON_HELMET, 30, 6), 1));
-        this.lodowysluga.add(new Items("2", 18.0 , ItemHelper.createArmor("&bZbroja Lodowego Slugi", Material.IRON_CHESTPLATE, 33, 6), 1));
-        this.lodowysluga.add(new Items("3", 18.0 , ItemHelper.createArmor("&bSpodnie Lodowego Slugi", Material.IRON_LEGGINGS, 30, 6), 1));
-        this.lodowysluga.add(new Items("4", 18.0 , ItemHelper.createArmor("&bButy Lodowego Slugi", Material.IRON_BOOTS, 30, 6), 1));
-        this.lodowysluga.add(new Items("5", 16.0, ItemHelper.createSword("&bMiecz Lodowego Slugi", Material.IRON_SWORD, 20, 18,false), 1));
+        this.lodowysluga.add(new Items("1", 4.0 , GlobalItem.I_METAL.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("2", 5.0 , GlobalItem.I_METAL.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("3", 6.0 , GlobalItem.I10.getItemStack().clone(), 3));
+        this.lodowysluga.add(new Items("4", 8.0 , GlobalItem.I10.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("5", 10.0 , GlobalItem.I10.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("6", 18.0 , ItemHelper.createArmor("&bHelm Lodowego Slugi", Material.IRON_HELMET, 30, 6), 1));
+        this.lodowysluga.add(new Items("7", 18.0 , ItemHelper.createArmor("&bZbroja Lodowego Slugi", Material.IRON_CHESTPLATE, 33, 6), 1));
+        this.lodowysluga.add(new Items("8", 18.0 , ItemHelper.createArmor("&bSpodnie Lodowego Slugi", Material.IRON_LEGGINGS, 30, 6), 1));
+        this.lodowysluga.add(new Items("9", 18.0 , ItemHelper.createArmor("&bButy Lodowego Slugi", Material.IRON_BOOTS, 30, 6), 1));
+        this.lodowysluga.add(new Items("10", 16.0, ItemHelper.createSword("&bMiecz Lodowego Slugi", Material.IRON_SWORD, 20, 18,false), 1));
     }
 
 

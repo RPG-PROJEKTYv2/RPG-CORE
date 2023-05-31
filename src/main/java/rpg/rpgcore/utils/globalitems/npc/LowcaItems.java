@@ -14,7 +14,7 @@ public enum LowcaItems {
     I3("20-30", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 20-30").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
     I4("30-40", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 30-40").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
     I5("40-50", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 40-50").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
-    I6("50-60", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 50-60").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
+    I6("Lodowej-Wiezy", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa Lodowej Wiezy").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
     I7("60-70", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 60-70").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
     I8("70-80", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 70-80").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),
     I9("80-90", new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&4Trofeum Bossa 80-90").setLore(Arrays.asList("&8Chyba lowca tego potrzebuje...")).hideFlag().toItemStack()),

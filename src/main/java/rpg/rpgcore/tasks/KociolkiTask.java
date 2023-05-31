@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.user.User;
@@ -77,15 +75,6 @@ public class KociolkiTask implements Runnable {
             final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(player.getUniqueId());
             if (magazynierUser.getMissions().getSelectedMission() == 9) {
                 magazynierUser.getMissions().setProgress(magazynierUser.getMissions().getProgress() + 1_000);
-            }
-            // DT ANTYAFK
-            if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() != -1) {
-                if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() > 0) {
-                    RPGCORE.getInstance().getIceTowerManager().setAntyAfk(RPGCORE.getInstance().getIceTowerManager().getAntyAfk() - 1);
-                    if (RPGCORE.getInstance().getIceTowerManager().getAntyAfk() == 0) {
-                        IceTowerManager.resetIceTower(ResetType.BYPASS);
-                    }
-                }
             }
         }
     }

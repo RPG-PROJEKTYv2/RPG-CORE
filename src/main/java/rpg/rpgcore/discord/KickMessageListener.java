@@ -1,9 +1,11 @@
 package rpg.rpgcore.discord;
 
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.Channel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +36,8 @@ public class KickMessageListener extends ListenerAdapter {
         System.out.println(Arrays.toString(args));
         if (args.length != 2) {
             this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
-                Message send = (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create(":no_entry_sign: Błąd!", "Poprawne użycie tej komendy to: !kick <nick> <hellcode>", new Color(255, 0, 33)).build()}).build();
-                ((TextChannel) channel).sendMessage(send).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
+                MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(EmbedUtil.create(":no_entry_sign: Błąd!", "Poprawne użycie tej komendy to: !kick <nick> <hellcode>", new Color(255, 0, 33)).build());
+                ((TextChannel) channel).sendMessage(send.build()).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
             });
             return;
         }
@@ -47,16 +49,16 @@ public class KickMessageListener extends ListenerAdapter {
 
         if (Objects.isNull(serverUser)) {
             this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
-                Message send = (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create(":no_entry_sign: Błąd!", "Nie znaleziono gracza o nicku: " + nick, new Color(255, 0, 33)).build()}).build();
-                ((TextChannel) channel).sendMessage(send).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
+                MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(EmbedUtil.create(":no_entry_sign: Błąd!", "Nie znaleziono gracza o nicku: " + nick, new Color(255, 0, 33)).build());
+                ((TextChannel) channel).sendMessage(send.build()).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
             });
             return;
         }
 
         if (!serverUser.getHellCode().equals(hellcode)) {
             this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
-                Message send = (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create(":no_entry_sign: Błąd!", "Podany hellcode jest nieprawidłowy!", new Color(255, 0, 33)).build()}).build();
-                ((TextChannel) channel).sendMessage(send).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
+                MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(EmbedUtil.create(":no_entry_sign: Błąd!", "Podany hellcode jest nieprawidłowy!", new Color(255, 0, 33)).build());
+                ((TextChannel) channel).sendMessage(send.build()).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
             });
             return;
         }
@@ -65,8 +67,8 @@ public class KickMessageListener extends ListenerAdapter {
 
         if (Objects.isNull(player)) {
             this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
-                Message send = (new MessageBuilder()).setEmbeds(new MessageEmbed[]{EmbedUtil.create(":no_entry_sign: Błąd!", "Gracz nie jest online!", new Color(255, 0, 33)).build()}).build();
-                ((TextChannel) channel).sendMessage(send).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
+                MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(EmbedUtil.create(":no_entry_sign: Błąd!", "Gracz nie jest online!", new Color(255, 0, 33)).build());
+                ((TextChannel) channel).sendMessage(send.build()).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
             });
             return;
         }
@@ -79,12 +81,12 @@ public class KickMessageListener extends ListenerAdapter {
                 "&4tej wiadomosci do administracji serwera!")));
         Bukkit.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + "&7Gracz &6" + player.getName() + "&7 zostal wyrzucony z serwera przez &6HellRPG - BOT&7! &7Powod: &6Kick na prosbe!"));
         this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
-            Message send = (new MessageBuilder()).setEmbeds(new MessageEmbed[]{
+            MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(
                     EmbedUtil.create(":white_check_mark: Sukces!", "Gracz " + nick + " został wyrzucony z serwera!\n\n" +
                     "**UWAGA!** Ten kanał zostanie usunięty za 5 sekund\n" +
                     "Jeśli masz jeszcze jakąś sprawę\n" +
-                    "zachęcamy do otwarcie nowego ticketa", new Color(0, 255, 0)).build()}).build();
-            ((TextChannel) channel).sendMessage(send).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
+                    "zachęcamy do otwarcie nowego ticketa", new Color(0, 255, 0)).build());
+            ((TextChannel) channel).sendMessage(send.build()).complete().delete().queueAfter(5L, TimeUnit.SECONDS);
             channel.delete().completeAfter(6, TimeUnit.SECONDS);
             RPGCORE.getDiscordBot().sendChannelMessage("dc-kick-log", EmbedUtil.create("**DC KICK**",
                     "**Konto:** " + serverUser.getName() + "\n" +

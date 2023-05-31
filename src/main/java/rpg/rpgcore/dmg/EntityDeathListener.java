@@ -1,9 +1,7 @@
 package rpg.rpgcore.dmg;
 
 import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
-import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -16,9 +14,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
-import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
-import rpg.rpgcore.dungeons.maps.icetower.ResetType;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
+import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -42,12 +39,6 @@ public class EntityDeathListener implements Listener {
         e.setKeepLevel(true);
         e.getEntity().closeInventory();
 
-        if (e.getEntity().getWorld().getName().equals("demontower")) {
-            if (Bukkit.getWorld("demontower").getPlayers().size() == 0) {
-                IceTowerManager.resetIceTower(ResetType.BYPASS);
-            }
-        }
-
         if (e.getEntity().getWorld().getName().equals("Dungeon60-70")) {
             if (e.getEntity().getWorld().getPlayers().isEmpty()) {
                 final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) rpgcore.getPrzedsionekManager().getDungeonHologram().getLines().get(3)).getText())).replace("Przechodzi: ", "");
@@ -56,10 +47,13 @@ public class EntityDeathListener implements Listener {
             }
         }
 
-        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
-        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
+//        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
+//        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
+        e.getEntity().setHealth(e.getEntity().getMaxHealth());
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn());
+        }, 1L);
         if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
             return;
         }
@@ -99,6 +93,9 @@ public class EntityDeathListener implements Listener {
                 rpgcore.getPustelnikNPC().save(pustelnikUser);
             }
         }
+        final OsUser killerOs = rpgcore.getOsManager().find(killer.getUniqueId());
+        killerOs.setGraczeProgress(killerOs.getGraczeProgress() + 1);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataOs(killer.getUniqueId(), killerOs));
 
         if (rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()).equals("Brak Klanu") || rpgcore.getGuildManager().getGuildTag(victim.getUniqueId()).equals("Brak Klanu")) {
 
@@ -120,7 +117,7 @@ public class EntityDeathListener implements Listener {
                 rpgcore.getGuildManager().updateGuildExpEarned(rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()), killer.getUniqueId(), 10);
                 rpgcore.getGuildManager().updateGuildExp(rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()), 10);
             }
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME + killerGuild + killer.getName() + " &7zabija " + victimGuild + victim.getName()));
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME  + killerGuild + "&a" +killer.getName() + " &7zabija " + victimGuild + "&c" + victim.getName()));
             return;
         }
 

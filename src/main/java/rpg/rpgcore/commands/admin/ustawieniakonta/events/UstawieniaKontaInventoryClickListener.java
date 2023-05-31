@@ -1156,7 +1156,7 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     break;
                 case 4:
                     lesnik.getUser().setWzmKryta(lesnik.getUser().getWzmKryta() + value);
-                    bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() + value);
+                    bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + value);
                     break;
             }
 
@@ -1192,8 +1192,8 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     bonuses.getBonusesUser().setSzczescie(bonuses.getBonusesUser().getSzczescie() + value);
                     break;
                 case 4:
-                    lowca.getLowcaUser().setTruedmg(lowca.getLowcaUser().getTruedmg() + value);
-                    bonuses.getBonusesUser().setTruedamage(bonuses.getBonusesUser().getTruedamage() + value);
+                    lowca.getLowcaUser().setDodatkoweDmg(lowca.getLowcaUser().getDodatkoweDmg() + value);
+                    bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + value);
                     break;
             }
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {

@@ -231,7 +231,7 @@ public class ChatInventoryClickListener implements Listener {
                             }
                         }
                     }
-                    formatPrzed.addExtra(finalMessage.toString());
+                    formatPrzed.addExtra(Utils.format(finalMessage.toString()));
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }
@@ -255,7 +255,7 @@ public class ChatInventoryClickListener implements Listener {
                         }
                     }
 
-                    formatPrzed.addExtra(finalMessage.toString());
+                    formatPrzed.addExtra(Utils.format(finalMessage.toString()));
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }
@@ -278,7 +278,7 @@ public class ChatInventoryClickListener implements Listener {
                         }
                     }
 
-                    formatPrzed.addExtra(finalMessage.toString());
+                    formatPrzed.addExtra(Utils.format(finalMessage.toString()));
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }
@@ -300,7 +300,7 @@ public class ChatInventoryClickListener implements Listener {
                             }
                         }
                     }
-                    formatPrzed.addExtra(finalMessage.toString());
+                    formatPrzed.addExtra(Utils.format(finalMessage.toString()));
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }
@@ -392,7 +392,6 @@ public class ChatInventoryClickListener implements Listener {
 
                     user.setDmgHologramsVisable(true);
                     rpgcore.getChatManager().openChatPanel(player);
-                    return;
             }
         }
     }

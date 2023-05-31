@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.*;
 
 import java.util.*;
@@ -100,7 +101,7 @@ public class KowalNPC {
         this.upgradeList.add(player.getUniqueId());
         this.clearOstatniUlepszonyItem(player.getUniqueId());
         this.addToAnimationList(player.getUniqueId());
-        player.teleport(new Location(player.getWorld(), 16.5, 9, 95.5, 0, 0));
+        player.teleport(new Location(player.getWorld(), -4.5, 65, 78.5, 0, 0));
 
         if (zwoj != 2) {
             if (!ChanceHelper.getChance(50 + ((50 * rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0))) {
@@ -118,6 +119,10 @@ public class KowalNPC {
                 }
             }
         }
+
+        final OsUser osUser = rpgcore.getOsManager().find(player.getUniqueId());
+        osUser.setUlepszeniaProgress(osUser.getUlepszeniaProgress() + 1);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataOs(osUser.getUuid(), osUser));
 
         final ItemMeta meta = itemToUpgrade.getItemMeta();
 
@@ -162,8 +167,6 @@ public class KowalNPC {
         meta.setLore(lore);
         toGive.setItemMeta(meta);
 
-        player.sendMessage("prot: " + Utils.getTagInt(toGive, "prot"));
-        player.sendMessage("thorns: " + Utils.getTagInt(toGive, "thorns"));
         player.getInventory().addItem(ItemHelper.checkEnchants(toGive.clone(), player));
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
@@ -186,8 +189,6 @@ public class KowalNPC {
         meta.setLore(lore);
         toGive.setItemMeta(meta);
 
-        player.sendMessage("dmg: " + Utils.getTagInt(toGive, "dmg"));
-        player.sendMessage("moby: " + Utils.getTagInt(toGive, "moby"));
         player.getInventory().addItem(ItemHelper.checkEnchants(toGive.clone(), player));
         player.sendMessage(Utils.format("&4&lKowal &8>> &aPomyslnie ulepszylem twoj przedmiot"));
     }
@@ -200,10 +201,10 @@ public class KowalNPC {
         final net.minecraft.server.v1_8_R3.ItemStack hammer = CraftItemStack.asNMSCopy(new ItemStack(Material.IRON_AXE));
 
         if (String.valueOf(is.getType()).contains("SWORD")) {
-            itemArmorStand.setLocation(16.5, 8.601, 98.1839, 183.75226F, 42.600063F);
+            itemArmorStand.setLocation(-4.2, 64.599, 81.09, 183.75226F, 42.600063F);
             itemArmorStand.setRightArmPose(new Vector3f(4.737412F * 55, 0F * 58, 1.58798F * 60)); //2.1F * 55, 3.3F * 58, 1.4F * 60
         } else {
-            itemArmorStand.setLocation(16.15, 9.2, 97.7839, 183.75226F, 42.600063F);
+            itemArmorStand.setLocation(-4.8, 65.25, 80.7, 183.75226F, 42.600063F);
             itemArmorStand.setRightArmPose(new Vector3f(0.0415472105075128F * 56, 0F, 0F));
         }
         itemArmorStand.setArms(true);
@@ -211,7 +212,7 @@ public class KowalNPC {
         itemArmorStand.setInvisible(true);
 
 
-        hammerArmorStand.setLocation(15.7, 9, 97.3, -90F, 0F);
+        hammerArmorStand.setLocation(-5.3, 65.2, 80.1, -90F, 0F);
         hammerArmorStand.setRightArmPose(new Vector3f(-45F, hammerArmorStand.rightArmPose.getY(), hammerArmorStand.rightArmPose.getZ()));
         hammerArmorStand.setArms(true);
         hammerArmorStand.setGravity(false);

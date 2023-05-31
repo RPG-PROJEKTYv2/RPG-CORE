@@ -114,17 +114,17 @@ public class RybakNPC {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&a&lSklep Rybacki"));
         gui.setItem(0, new ItemBuilder(RybakItems.getWedka(player.getName(), 1)).setLoreCrafting(RybakItems.getWedka(player.getName(), 1).getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&2Cena: &625 000 000 &2$")).toItemStack().clone());
-        gui.setItem(1, new ItemBuilder(RybakItems.I1.getItemStack().clone()).setLoreCrafting(RybakItems.I1.getItemStack().getItemMeta().getLore(), setLoreSell(1000)).toItemStack());
-        gui.setItem(2, new ItemBuilder(RybakItems.I2.getItemStack().clone()).setLoreCrafting(RybakItems.I2.getItemStack().getItemMeta().getLore(), setLoreSell(1500)).toItemStack());
-        gui.setItem(3, new ItemBuilder(RybakItems.I3.getItemStack().clone()).setLoreCrafting(RybakItems.I3.getItemStack().getItemMeta().getLore(), setLoreSell(1500)).toItemStack());
-        gui.setItem(4, new ItemBuilder(RybakItems.I4.getItemStack().clone()).setLoreCrafting(RybakItems.I4.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
-        gui.setItem(5, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setLoreCrafting(RybakItems.I5.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
-        gui.setItem(6, new ItemBuilder(RybakItems.I6.getItemStack().clone()).setLoreCrafting(RybakItems.I6.getItemStack().getItemMeta().getLore(), setLoreSell(2000)).toItemStack());
-        gui.setItem(7, new ItemBuilder(RybakItems.I7.getItemStack().clone()).setLoreCrafting(RybakItems.I7.getItemStack().getItemMeta().getLore(), setLoreSell(5000)).toItemStack());
-        gui.setItem(8, new ItemBuilder(RybakItems.I8.getItemStack().clone()).setLoreCrafting(RybakItems.I8.getItemStack().getItemMeta().getLore(), setLoreSell(5000)).toItemStack());
-        gui.setItem(9, new ItemBuilder(RybakItems.I9.getItemStack().clone()).setLoreCrafting(RybakItems.I9.getItemStack().getItemMeta().getLore(), setLoreSell(12500)).toItemStack());
-        gui.setItem(10, new ItemBuilder(RybakItems.I10.getItemStack().clone()).setLoreCrafting(RybakItems.I10.getItemStack().getItemMeta().getLore(), setLoreSell(12500)).toItemStack());
+                "&2Cena: &62 500 000 &2$")).toItemStack().clone());
+        gui.setItem(1, new ItemBuilder(RybakItems.I1.getItemStack().clone()).setLoreCrafting(RybakItems.I1.getItemStack().getItemMeta().getLore(), setLoreSell(150)).toItemStack());
+        gui.setItem(2, new ItemBuilder(RybakItems.I2.getItemStack().clone()).setLoreCrafting(RybakItems.I2.getItemStack().getItemMeta().getLore(), setLoreSell(250)).toItemStack());
+        gui.setItem(3, new ItemBuilder(RybakItems.I3.getItemStack().clone()).setLoreCrafting(RybakItems.I3.getItemStack().getItemMeta().getLore(), setLoreSell(250)).toItemStack());
+        gui.setItem(4, new ItemBuilder(RybakItems.I4.getItemStack().clone()).setLoreCrafting(RybakItems.I4.getItemStack().getItemMeta().getLore(), setLoreSell(500)).toItemStack());
+        gui.setItem(5, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setLoreCrafting(RybakItems.I5.getItemStack().getItemMeta().getLore(), setLoreSell(500)).toItemStack());
+        gui.setItem(6, new ItemBuilder(RybakItems.I6.getItemStack().clone()).setLoreCrafting(RybakItems.I6.getItemStack().getItemMeta().getLore(), setLoreSell(500)).toItemStack());
+        gui.setItem(7, new ItemBuilder(RybakItems.I7.getItemStack().clone()).setLoreCrafting(RybakItems.I7.getItemStack().getItemMeta().getLore(), setLoreSell(1000)).toItemStack());
+        gui.setItem(8, new ItemBuilder(RybakItems.I8.getItemStack().clone()).setLoreCrafting(RybakItems.I8.getItemStack().getItemMeta().getLore(), setLoreSell(1000)).toItemStack());
+        gui.setItem(9, new ItemBuilder(RybakItems.I9.getItemStack().clone()).setLoreCrafting(RybakItems.I9.getItemStack().getItemMeta().getLore(), setLoreSell(2500)).toItemStack());
+        gui.setItem(10, new ItemBuilder(RybakItems.I10.getItemStack().clone()).setLoreCrafting(RybakItems.I10.getItemStack().getItemMeta().getLore(), setLoreSell(2500)).toItemStack());
 
         player.openInventory(gui);
     }

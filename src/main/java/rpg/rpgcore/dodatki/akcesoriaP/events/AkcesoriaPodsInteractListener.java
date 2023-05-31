@@ -199,7 +199,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + przeszycie);
-            bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() + wkryt);
+            bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() + wkryt);
             bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + speed);
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
@@ -213,7 +213,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                                 "**Typ: **`" + eventItem.getType() + "`\n" +
                                 "**Statystyki:** \n" +
                                 "- Przeszycie Bloku: " + przeszycie + "\n" +
-                                "- Wzm Szansa na Kryta: " + wkryt + "\n" +
+                                "- Wzm Kryta: " + wkryt + "\n" +
                                 "- Zwiekszona Szybkosc: " + speed + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
