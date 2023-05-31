@@ -139,6 +139,7 @@ public class LvlManager {
         final User user = rpgcore.getUserManager().find(killerUUID);
         int aktualnyLvlGracza = user.getLvl();
         int nextLvlGracza = aktualnyLvlGracza + 1;
+        final double kasaZaLvl = Levels.getByLevel(nextLvlGracza).getKasa();
 
         if (aktualnyLvlGracza <= 50) {
             if (nextLvlGracza == 2) {
@@ -150,6 +151,8 @@ public class LvlManager {
         }
         user.setLvl(nextLvlGracza);
         user.setExp(0);
+        user.setKasa(user.getKasa() + kasaZaLvl);
+        killer.sendMessage(Utils.format("&2+ &a" + Utils.spaceNumber(kasaZaLvl) + "&2$"));
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
         if (nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) {
