@@ -71,13 +71,13 @@ public enum GlobalItem {
 
     // ZNISZCZONE RUBINOWE SERCE (MEDRZEC ITEM)
     ZNISZCZONE_RUBINOWE_SERCE("ZNISZCZONE_RUBINOWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&cZniszczone Rubinowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
-    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&bZniszczone Szafirowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
+    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("&bZniszczone Szafirowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
     RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
             "&8i otrzymasz &c0.5❤"
     )).addGlowing().toItemStack().clone()),
-    SZAFIROWE_SERCE("SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&b&lSzafirowe Serce").setLore(Arrays.asList(
+    SZAFIROWE_SERCE("SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 6).setName("&b&lSzafirowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
             "&8i otrzymasz &c0.5❤.",

@@ -147,11 +147,11 @@ public class RybakInventoryClick implements Listener {
             ItemStack toRemove;
             switch (slot) {
                 case 0:
-                    if (user.getKasa() < 2500000) {
+                    if (user.getKasa() < 10_000_000) {
                         player.sendMessage(Utils.format("&6&lRybak &8>> &cCzy ty probujesz mnie oszukac?!"));
                         return;
                     }
-                    user.setKasa(user.getKasa() - 2500000);
+                    user.setKasa(user.getKasa() - 10_000_000);
                     player.getInventory().addItem(RybakItems.getWedka(player.getName(), 1));
                     player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie zakupiles moja wedke. Niech Ci dobrze sluzy..."));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));

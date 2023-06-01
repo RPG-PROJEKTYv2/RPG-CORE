@@ -52,6 +52,7 @@ public class MedrzecInventoryClickListener implements Listener {
                     }
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.ZNISZCZONE_RUBINOWE_SERCE.getItemStack().clone()).setAmount(4).toItemStack().clone());
                     user.setKasa(user.getKasa() - 1_000_000);
+                    player.getInventory().addItem(GlobalItem.RUBINOWE_SERCE.getItemStack().clone());
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                 } else {
                     if (!player.getInventory().containsAtLeast(GlobalItem.getItem("ZNISZCZONE_SZAFIROWE_SERCE", 1), 4) || user.getKasa() < 2_500_000) {
@@ -61,6 +62,7 @@ public class MedrzecInventoryClickListener implements Listener {
                     }
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack().clone()).setAmount(4).toItemStack().clone());
                     user.setKasa(user.getKasa() - 2_500_000);
+                    player.getInventory().addItem(GlobalItem.SZAFIROWE_SERCE.getItemStack().clone());
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
                 }
             }

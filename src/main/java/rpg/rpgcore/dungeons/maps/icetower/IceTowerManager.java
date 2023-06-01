@@ -20,6 +20,7 @@ import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +32,8 @@ public class IceTowerManager {
     private final RPGCORE rpgcore;
     @Getter
     private final Cache<String, Long> damaged = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
+    @Getter
+    private final List<Integer> taskIds = new ArrayList<>();
 
     public IceTowerManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -104,12 +107,13 @@ public class IceTowerManager {
 
     public void resetDungeon() {
         this.status = DungeonStatus.RESETTING;
+        for (Integer i : this.taskIds) Bukkit.getScheduler().cancelTask(i);
+        this.taskIds.clear();
         this.resetHolograms();
         this.lowerGate();
         this.spawnKamien();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
-        this.dungeonWorld.getBlockAt(-5, 65, 80).setType(Material.AIR);
         for (Entity e : this.dungeonWorld.getEntities()) {
             if (e instanceof Player) continue;
             e.remove();
@@ -123,6 +127,7 @@ public class IceTowerManager {
         this.antyAfkMaxTime = 0;
         Bukkit.getServer().broadcastMessage(Utils.format("&b&oKamien Lodowej Wiezy zostal zresetowany!"));
         this.status = DungeonStatus.ENDED;
+        rpgcore.getKowalNPC().resetUpgradeList();
     }
 
     private void spawnPlayers() {
@@ -162,10 +167,12 @@ public class IceTowerManager {
 
     public void updatePlayerCount() {
         final int playerCount = this.dungeonWorld.getPlayers().size();
-        ((TextHologramLine) this.holo1.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
-        ((TextHologramLine) this.holo2.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
-        ((TextHologramLine) this.holo3.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
-        ((TextHologramLine) this.holo4.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + " graczy"));
+        String sufix = " graczy";
+        if (playerCount == 1) sufix = " gracz";
+        ((TextHologramLine) this.holo1.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + sufix));
+        ((TextHologramLine) this.holo2.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + sufix));
+        ((TextHologramLine) this.holo3.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + sufix));
+        ((TextHologramLine) this.holo4.getLines().get(2)).setText(Utils.format("&7Przechodzi: &c" + playerCount + sufix));
     }
 
     private void updateStatus() {
@@ -452,12 +459,12 @@ public class IceTowerManager {
         this.liftGate();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
-        this.dungeonWorld.getBlockAt(-5, 65, 80).setType(Material.ANVIL);
 
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore,() -> {
+        int taskId = rpgcore.getServer().getScheduler().runTaskLater(rpgcore,() -> {
             this.spawnPlayers();
             this.resetDungeon();
-        }, 400L);
+        }, 7_200L).getTaskId();
+        this.taskIds.add(taskId);
     }
 
     private void liftGate() {

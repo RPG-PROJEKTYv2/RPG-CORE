@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.enums.WedkaStats;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
+import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
@@ -17,6 +18,8 @@ import java.util.List;
 public class RybakHelper {
 
     public static void getDrop(final Player player) {
+        final OsUser osUser = RPGCORE.getInstance().getOsManager().find(player.getUniqueId());
+        osUser.setRybakProgress(osUser.getRybakProgress() + 1);
         if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 1) {
             RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
@@ -49,11 +52,14 @@ public class RybakHelper {
                 rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + niesItem.getAmount());
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
             }
+            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
             player.getInventory().addItem(niesItem);
             player.sendMessage(Utils.format("&8[&a+&8] &6" + niesItem.getAmount() + "x " + niesItem.getItemMeta().getDisplayName()));
             RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7znalazl &b&lNiesamowity Przedmiot!"));
             return;
         }
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
+
 
         if (ChanceHelper.getChance(podwojnyDrop)) {
             doubleDrop = true;

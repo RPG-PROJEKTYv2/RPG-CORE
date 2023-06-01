@@ -1250,13 +1250,15 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
 
             if (item == null) return;
             final MedrzecUser medrzec = rpgcore.getMedrzecNPC().find(this.getUUIDFromTitle(title));
+            final Bonuses bonuses = rpgcore.getBonusesManager().find(medrzec.getUuid());
             final int value = this.getValueFromClick(e.getClick());
 
             if (slot == 2) {
                 medrzec.setBonus(medrzec.getBonus() + value);
                 if (Bukkit.getPlayer(medrzec.getUuid()) != null) {
-                    Bukkit.getPlayer(medrzec.getUuid()).setMaxHealth(Bukkit.getPlayer(medrzec.getUuid()).getMaxHealth() + value * 2);
+                    Bukkit.getPlayer(medrzec.getUuid()).setMaxHealth(Bukkit.getPlayer(medrzec.getUuid()).getMaxHealth() + value);
                 }
+                bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + value);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMedrzec(medrzec.getUuid(), medrzec));
                 rpgcore.getUstawieniaKontaManager().openMedrzec(player, medrzec.getUuid());
             }

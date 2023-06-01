@@ -16,8 +16,8 @@ public class LodowySlugaManager {
     private final Set<Items> lodowysluga = Sets.newConcurrentHashSet();
 
     public LodowySlugaManager() {
-        this.lodowysluga.add(new Items("1", 4.0 , GlobalItem.I_METAL.getItemStack().clone(), 2));
-        this.lodowysluga.add(new Items("2", 5.0 , GlobalItem.I_METAL.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("1", 1.0 , GlobalItem.I_METAL.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("2", 2.0 , GlobalItem.I_METAL.getItemStack().clone(), 1));
         this.lodowysluga.add(new Items("3", 6.0 , GlobalItem.I10.getItemStack().clone(), 3));
         this.lodowysluga.add(new Items("4", 8.0 , GlobalItem.I10.getItemStack().clone(), 2));
         this.lodowysluga.add(new Items("5", 10.0 , GlobalItem.I10.getItemStack().clone(), 1));

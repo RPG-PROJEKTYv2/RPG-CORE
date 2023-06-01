@@ -114,7 +114,7 @@ public class RybakNPC {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&a&lSklep Rybacki"));
         gui.setItem(0, new ItemBuilder(RybakItems.getWedka(player.getName(), 1)).setLoreCrafting(RybakItems.getWedka(player.getName(), 1).getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&2Cena: &62 500 000 &2$")).toItemStack().clone());
+                "&2Cena: &610 000 000 &2$")).toItemStack().clone());
         gui.setItem(1, new ItemBuilder(RybakItems.I1.getItemStack().clone()).setLoreCrafting(RybakItems.I1.getItemStack().getItemMeta().getLore(), setLoreSell(150)).toItemStack());
         gui.setItem(2, new ItemBuilder(RybakItems.I2.getItemStack().clone()).setLoreCrafting(RybakItems.I2.getItemStack().getItemMeta().getLore(), setLoreSell(250)).toItemStack());
         gui.setItem(3, new ItemBuilder(RybakItems.I3.getItemStack().clone()).setLoreCrafting(RybakItems.I3.getItemStack().getItemMeta().getLore(), setLoreSell(250)).toItemStack());
