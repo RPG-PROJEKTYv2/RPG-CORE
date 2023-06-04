@@ -300,7 +300,7 @@ public class MetinyHelper {
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
         for (int i = 0; i < mobsToSpawn; i++) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB3 1" +  " " + worldName + "," + DoubleUtils.round(entity.getLocation().getX() + ChanceHelper.getRandDouble(-0.2, 0.2), 2) + "," + DoubleUtils.round(entity.getLocation().getY() + 0.5, 2) + "," + DoubleUtils.round(entity.getLocation().getZ() + ChanceHelper.getRandDouble(-0.2, 0.2), 2));
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB1 1" +  " " + worldName + "," + DoubleUtils.round(entity.getLocation().getX() + ChanceHelper.getRandDouble(-0.2, 0.2), 2) + "," + DoubleUtils.round(entity.getLocation().getY() + 0.5, 2) + "," + DoubleUtils.round(entity.getLocation().getZ() + ChanceHelper.getRandDouble(-0.2, 0.2), 2));
         }
         double mnozik = 1;
         final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();

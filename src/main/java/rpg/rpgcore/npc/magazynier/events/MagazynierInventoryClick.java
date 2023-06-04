@@ -63,6 +63,9 @@ public class MagazynierInventoryClick implements Listener {
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));
                 return;
             }
+
+            if (e.getCurrentItem().getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) return;
+
             if (user.getMissions().getSelectedMission() == Utils.getTagInt(item, "mission")) {
                 switch (slot) {
                     case 0:

@@ -13,7 +13,7 @@ public enum WyslannikMissionKillBoss {
     M4(4, "&8[&4&lBOSS&8] &7&lPrzekleta Dusza", 1, GlobalItem.getItem("I4", 2)),
     M5(5, "&8[&4&lBOSS&8] &e&lTryton", 3, ItemHelper.createSword("&5Mityczne Ostrze Wyslannika", Material.STONE_SWORD, 25, 9, false)),
     M6(6, "&8[&4&lBOSS&8] &bKrol Lodu", 2, GlobalItem.getItem("I4", 3)),
-    M7(7, "&8[&4&lBOSS&8] &0&lPiekielny Rycerz", 2, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
+    M7(7, "&8[&4&lBOSS&8] &c&lPiekielny Rycerz", 2, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack()),
     M8(8, "&8[&4&lBOSS&8] &5&lPrzeklety Czarnoksieznik", 2, new ItemBuilder(Material.STONE).setName("&c&lDo ustawienia!").toItemStack());
     private final int mission;
     private final String mobName;

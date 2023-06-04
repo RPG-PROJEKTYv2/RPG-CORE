@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.managers.miecze.SwordType;
+import rpg.rpgcore.npc.mistyczny_kowal.SwordType;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
@@ -86,6 +86,12 @@ public enum GlobalItem {
     )).addGlowing().toItemStack().clone()),
     // SAKWA?
     SAKWA("SAKWA", new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&8✦&eSakiewka&8✦").toItemStack().clone()),
+    RUDA_MITHRYLU("RUDA_MITHRYLU", new ItemBuilder(Material.PRISMARINE).setName("&2Ruda Mithrylu").setLore(Arrays.asList(
+            "&8Bardzo rzadka ruda...",
+            "&8Ciekawe skad wziela sie u potworw",
+            "",
+            "&8&oKomus na pewno sie to przyda..."
+    )).toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 
@@ -141,20 +147,22 @@ public enum GlobalItem {
     public static ItemStack getPercentSword(final SwordType swordType, final int percent) {
         ItemBuilder is;
         if (swordType == SwordType.KS) {
-            is = new ItemBuilder(ItemHelper.createSword("&cKS", Material.IRON_SWORD, 35, 15, false));
+            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, false));
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&9Silny Na Ludzi: &e+" + percent + "%",
-                    "&9Silny Na Potwory: &e-" + (percent * 2) + "%",
+                    "&3Silny Na Ludzi: &f+" + percent + "%",
+                    "&3Silny Na Potwory: &f-" + (percent * 2) + "%",
+                    "",
                     "&cWymagany Poziom: &665"
             )).addTagInt("ludzie", percent).addTagString("type", "ks").addTagInt("lvl", 65);
             return is.toItemStack().clone();
         } else {
-            is = new ItemBuilder(ItemHelper.createSword("&cTYRA", Material.IRON_SWORD, 35, 15, false));
+            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowy Sztylet", Material.DIAMOND_SWORD, 35, 15, false));
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&9Silny Na Potwory: &e+" + percent + "%",
-                    "&9Silny Na Ludzi: &e-" + (percent * 2) + "%",
+                    "&3Silny Na Potwory: &f+" + percent + "%",
+                    "&3Silny Na Ludzi: &f-" + (percent * 2) + "%",
+                    "",
                     "&cWymagany Poziom: &665"
             )).addTagInt("moby", percent).addTagString("type", "tyra").addTagInt("lvl", 65);
             return is.toItemStack().clone();

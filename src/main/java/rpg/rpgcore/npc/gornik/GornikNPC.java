@@ -18,6 +18,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.gornik.enums.GornikDlutoLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
+import rpg.rpgcore.npc.gornik.objects.GornikObject;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
@@ -106,7 +108,7 @@ public class GornikNPC {
 
     public void openSklep(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lSklep Gorniczy"));
-        gui.setItem(0, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100", "", "&7Koszt: &6100,000,000&2$")).toItemStack());
+        gui.setItem(0, new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList("&7Poziom: &61", "&7Exp: &60&7/&6100", "", "&7Koszt: &665,000,000&2$")).toItemStack());
 
         player.openInventory(gui);
     }

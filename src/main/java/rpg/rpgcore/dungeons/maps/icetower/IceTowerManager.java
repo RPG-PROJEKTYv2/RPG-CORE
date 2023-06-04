@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.metiny.MetinyHelper;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -459,6 +460,14 @@ public class IceTowerManager {
         this.liftGate();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
+
+        for (Player player : this.dungeonWorld.getPlayers()) {
+            final MagazynierUser magazynier = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+            if (magazynier.getMissions().getSelectedMission() == 10) {
+                magazynier.getMissions().setProgress(magazynier.getMissions().getProgress() + 1);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(magazynier.getUuid(), magazynier));
+            }
+        }
 
         int taskId = rpgcore.getServer().getScheduler().runTaskLater(rpgcore,() -> {
             this.spawnPlayers();

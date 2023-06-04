@@ -46,6 +46,10 @@ public class DamageManager {
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
         stand.setInvisible(true);
+        stand.setSmall(true);
+        stand.setArms(false);
+        stand.setBasePlate(false);
+        stand.n(true);
 
         final PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(stand);
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);

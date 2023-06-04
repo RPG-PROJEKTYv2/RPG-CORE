@@ -107,11 +107,26 @@ public class MagazynierNPC {
         final MagazynierMissions missionsU = magazynierUser.getMissions();
         boolean done = false;
         switch (mission) {
-            case 1: if (missionsU.isMission1done())done = true;
-            case 2: if (missionsU.isMission2done()) done = true;
-            case 3: if (missionsU.isMission3done()) done = true;
-            case 4: if (missionsU.isMission4done()) done = true;
-            case 5: if (missionsU.isMission5done()) done = true;
+            case 1: if (missionsU.isMission1done()) {
+                done = true;
+                break;
+            }
+            case 2: if (missionsU.isMission2done()) {
+                done = true;
+                break;
+            }
+            case 3: if (missionsU.isMission3done()) {
+                done = true;
+                break;
+            }
+            case 4: if (missionsU.isMission4done()) {
+                done = true;
+                break;
+            }
+            case 5: if (missionsU.isMission5done()) {
+                done = true;
+                break;
+            }
         }
         String progress = String.valueOf(missionsU.getProgress());
         String reqAmount = String.valueOf(missions.getReqAmount());

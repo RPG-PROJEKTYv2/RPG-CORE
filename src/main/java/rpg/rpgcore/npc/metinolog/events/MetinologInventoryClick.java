@@ -66,7 +66,7 @@ public class MetinologInventoryClick implements Listener {
                     return;
                 }
 
-                if (!player.getInventory().containsAtLeast(MetinologItems.getItem("I" + mission.getMapa(), 1), 1)) {
+                if (!player.getInventory().containsAtLeast(MetinologItems.getItem("I" + mission.getMapa().replace(" ", "-"), 1), 1)) {
                     return;
                 }
 

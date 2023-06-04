@@ -32,7 +32,7 @@ public class KrolLoduManager {
         this.mroznywladca.add(new Items("13", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lZwykly Pierscien Krola Lodu").toItemStack(), 1));
         this.mroznywladca.add(new Items("14", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lZwykla Tarcza Krola Lodu").toItemStack(), 1));
         this.mroznywladca.add(new Items("15", 6.0, GlobalItem.I10.getItemStack().clone(), 1));
-        this.mroznywladca.add(new Items("16", 9.0, ItemHelper.createSword("&b&lLodowy Sztylet", Material.DIAMOND_SWORD, 26, 18, false), 1));
+        this.mroznywladca.add(new Items("16", 9.0, ItemHelper.createSword("&b&lLodowy Sztylet", Material.DIAMOND_SWORD, 26, 16, false), 1));
         this.mroznywladca.add(new Items("17", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1));
 
     }

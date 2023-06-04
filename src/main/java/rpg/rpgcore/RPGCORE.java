@@ -25,7 +25,7 @@ import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
 import rpg.rpgcore.bossy.events.MitycznyPajakListener80_90;
-import rpg.rpgcore.bossy.events.PiekielnaDuszaListener60_70;
+import rpg.rpgcore.bossy.events.PiekielnyRycerzListener60_70;
 import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
 import rpg.rpgcore.bossy.events.SmoczyCesarzListener;
 import rpg.rpgcore.chat.ChatCommand;
@@ -55,7 +55,7 @@ import rpg.rpgcore.chests.Expowisko4.ZjawaManager;
 import rpg.rpgcore.chests.Expowisko5.StraznikSwiatyniManager;
 import rpg.rpgcore.chests.Expowisko5.TrytonManager;
 import rpg.rpgcore.chests.Expowisko6.MroznyWilkManager;
-import rpg.rpgcore.chests.Expowisko7.PrzekletyRycerzManager;
+import rpg.rpgcore.chests.Expowisko7.PiekielnyRycerzManager;
 import rpg.rpgcore.chests.Expowisko7.ZywiolakOgniaManager;
 import rpg.rpgcore.chests.Expowisko8.MrocznaDuszaManager;
 import rpg.rpgcore.chests.Expowisko8.PrzekletyCzarnoksieznikManager;
@@ -165,7 +165,6 @@ import rpg.rpgcore.managers.BackupManager;
 import rpg.rpgcore.managers.CooldownManager;
 import rpg.rpgcore.managers.NMSManager;
 import rpg.rpgcore.managers.disabled.DisabledManager;
-import rpg.rpgcore.managers.miecze.MieczePickupListener;
 import rpg.rpgcore.metiny.MetinCommand;
 import rpg.rpgcore.metiny.MetinyManager;
 import rpg.rpgcore.msg.IgnoreCommand;
@@ -191,15 +190,15 @@ import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryCloseListener;
-import rpg.rpgcore.npc.kolekcjoner.KolekcjonerInventoryClick;
+import rpg.rpgcore.npc.kolekcjoner.events.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
-import rpg.rpgcore.npc.kowal.KowalInventoryClickListener;
-import rpg.rpgcore.npc.kowal.KowalInventoryCloseListener;
+import rpg.rpgcore.npc.kowal.events.KowalInventoryClickListener;
+import rpg.rpgcore.npc.kowal.events.KowalInventoryCloseListener;
 import rpg.rpgcore.npc.kowal.KowalNPC;
-import rpg.rpgcore.npc.lesnik.LesnikInventoryClick;
-import rpg.rpgcore.npc.lesnik.LesnikInventoryClose;
+import rpg.rpgcore.npc.lesnik.events.LesnikInventoryClick;
+import rpg.rpgcore.npc.lesnik.events.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
-import rpg.rpgcore.npc.lowca.LowcaInventoryClick;
+import rpg.rpgcore.npc.lowca.events.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
 import rpg.rpgcore.npc.magazynier.MagazynyCommand;
@@ -212,7 +211,9 @@ import rpg.rpgcore.npc.metinolog.events.MetinologInventoryClick;
 import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.mistrz_yang.MistrzYangNPC;
 import rpg.rpgcore.npc.mistrz_yang.events.MistrzYangInventoryClickListener;
-import rpg.rpgcore.npc.przyrodnik.PrzyrodnikInventoryClick;
+import rpg.rpgcore.npc.mistyczny_kowal.MistycznyKowalManager;
+import rpg.rpgcore.npc.mistyczny_kowal.events.MistycznyKowalInventoryClickListener;
+import rpg.rpgcore.npc.przyrodnik.events.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
 import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
@@ -336,7 +337,7 @@ public final class RPGCORE extends JavaPlugin {
     // EXPOWISKO 6
     private MroznyWilkManager mroznyWilkManager;
     // EXPOWISKO 7
-    private PrzekletyRycerzManager przekletyRycerzManager;
+    private PiekielnyRycerzManager piekielnyRycerzManager;
     private ZywiolakOgniaManager zywiolakOgniaManager;
     // EXPOWISKO 8
     private MrocznaDuszaManager mrocznaDuszaManager;
@@ -380,6 +381,7 @@ public final class RPGCORE extends JavaPlugin {
     private CzarownicaNPC czarownicaNPC;
     private PrzedsionekManager przedsionekManager;
     private UstawieniaKontaManager ustawieniaKontaManager;
+    private MistycznyKowalManager mistycznyKowalManager;
 
 
     private int i = 1;
@@ -770,6 +772,9 @@ public final class RPGCORE extends JavaPlugin {
         // ...CZAROWNICA
         this.getServer().getPluginManager().registerEvents(new CzarownicaInventoryClickListener(this), this);
 
+        // ...MISTYCZNY KOWAL
+        this.getServer().getPluginManager().registerEvents(new MistycznyKowalInventoryClickListener(), this);
+
         // DUNGEONS
 
         // ...ICE TOWER
@@ -810,9 +815,6 @@ public final class RPGCORE extends JavaPlugin {
 
         // BOSSY
         this.getServer().getPluginManager().registerEvents(new BossyTargetChangeListener(), this);
-
-        // MIECZE
-        this.getServer().getPluginManager().registerEvents(new MieczePickupListener(this), this);
 
         // USTAWIENIA KONTA
         this.getServer().getPluginManager().registerEvents(new UstawieniaKontaInventoryClickListener(this), this);
@@ -888,6 +890,7 @@ public final class RPGCORE extends JavaPlugin {
         this.pustelnikNPC = new PustelnikNPC(this);
         this.mistrzYangNPC = new MistrzYangNPC(this);
         this.czarownicaNPC = new CzarownicaNPC(this);
+        this.mistycznyKowalManager = new MistycznyKowalManager();
     }
 
     private void initChests() {
@@ -919,7 +922,7 @@ public final class RPGCORE extends JavaPlugin {
         // EXPOWISKO 6
         this.mroznyWilkManager = new MroznyWilkManager();
         // EXPOWISKO 7
-        this.przekletyRycerzManager = new PrzekletyRycerzManager();
+        this.piekielnyRycerzManager = new PiekielnyRycerzManager();
         this.zywiolakOgniaManager = new ZywiolakOgniaManager();
         // EXPOWISKO 8
         this.mrocznaDuszaManager = new MrocznaDuszaManager();
@@ -963,7 +966,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initBosses() {
         this.bossyManager = new BossyManager();
-        this.getServer().getPluginManager().registerEvents(new PiekielnaDuszaListener60_70(), this);
+        this.getServer().getPluginManager().registerEvents(new PiekielnyRycerzListener60_70(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
         this.getServer().getPluginManager().registerEvents(new SmoczyCesarzListener(), this);
@@ -1241,8 +1244,8 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     // exp7
-    public PrzekletyRycerzManager getPrzekletyRycerzManager() {
-        return przekletyRycerzManager;
+    public PiekielnyRycerzManager getPrzekletyRycerzManager() {
+        return piekielnyRycerzManager;
     }
 
     public ZywiolakOgniaManager getZywiolakOgniaManager() {
@@ -1425,5 +1428,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public UstawieniaKontaManager getUstawieniaKontaManager() {
         return ustawieniaKontaManager;
+    }
+
+    public MistycznyKowalManager getMistycznyKowalManager() {
+        return mistycznyKowalManager;
     }
 }

@@ -8,8 +8,8 @@ import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 public enum OsGracze {
-    M1(1, 0, 5, ItemHelper.createSword("&8Miecz Skrytobojcy", Material.IRON_SWORD, 35, 15, false).clone()),
-    M2(2, 1, 20, ItemHelper.createArmor("&8Helm Skrytobojcy", Material.IRON_HELMET, 45, 12).clone()),
+    M1(1, 0, 5, ItemHelper.createSword("&8Miecz Skrytobojcy", Material.IRON_SWORD, 25, 15, false).clone()),
+    M2(2, 1, 20, ItemHelper.createArmor("&8Helm Skrytobojcy", Material.IRON_HELMET, 33, 7).clone()),
     M3(3, 2, 50, ItemHelper.createArmor("&8Zbroja Skrytobojcy", Material.IRON_CHESTPLATE, 55, 15).clone()),
     M4(4, 3, 120, GlobalItem.getItem("I1", 1).clone()),
     M5(5, 4, 300, GlobalItem.getItem("I1", 5).clone()),

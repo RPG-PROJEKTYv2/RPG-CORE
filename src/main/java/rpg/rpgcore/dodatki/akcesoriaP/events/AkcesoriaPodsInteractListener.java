@@ -163,7 +163,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + ludzie);
             bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + odpo);
-            bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - mspeed);
+            bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + mspeed);
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);

@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.lesnik.enums.LesnikMissions;
+import rpg.rpgcore.npc.lesnik.objects.LesnikObject;
+import rpg.rpgcore.npc.lesnik.objects.LesnikUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 

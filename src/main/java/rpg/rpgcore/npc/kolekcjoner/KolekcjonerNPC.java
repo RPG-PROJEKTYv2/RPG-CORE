@@ -11,6 +11,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
+import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
+import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 

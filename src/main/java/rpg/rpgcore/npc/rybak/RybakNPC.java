@@ -16,7 +16,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
@@ -39,6 +38,8 @@ public class RybakNPC {
     private final Map<UUID, RybakObject> usersMap;
     private final Map<UUID, Integer> failedAttemptMap = new HashMap<>();
     private final Map<UUID, Integer> fishingCount = new HashMap<>();
+    private final Map<UUID, Integer> taskMap = new HashMap<>();
+    private final List<UUID> passed = new ArrayList<>();
     private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
 
     public RybakNPC(final RPGCORE rpgcore) {
@@ -142,25 +143,21 @@ public class RybakNPC {
         gui.setItem(ChanceHelper.getRandInt(0, 17), new ItemBuilder(Material.FISHING_ROD).setName("&a&lAnty-AFK").setLore(Arrays.asList("&7Kliknij, zeby przejsc weryfikacje &cAnty-AFK")).addGlowing().toItemStack());
 
         player.openInventory(gui);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+        int task = rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             if (player == null || !player.isOnline()) return;
             if (player.getOpenInventory().getTopInventory() == null) {
                 return;
             }
             if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Rybak » Anty-AFK")) {
-                for (int i = 0; i < 17; i++) {
-                    if (player.getOpenInventory().getTopInventory().getItem(i).getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
-                        player.getOpenInventory().getTopInventory().setItem(i, new ItemStack(Material.AIR));
-                    }
+                if (this.passed.contains(player.getUniqueId())) {
+                    this.passed.remove(player.getUniqueId());
+                    return;
                 }
                 player.closeInventory();
-                this.addFailedAttempt(player.getUniqueId());
-                player.sendMessage(Utils.format("&6&lRybak &8>> &cNie udalo sie przeslac weryfikacji Anty-AFK &4(" +this.getFailedAttempts(player.getUniqueId()) + "/3)"));
-                if (this.getFailedAttempts(player.getUniqueId()) >= 3) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + "6 h Afk na lowienie (skrypt?)");
-                }
             }
-        }, 200L);
+        }, 200L).getTaskId();
+        this.taskMap.put(player.getUniqueId(), task);
+
     }
 
 
@@ -347,6 +344,10 @@ public class RybakNPC {
         eq.setItemInHandDropChance(0f);
 
 
+    }
+
+    public List<UUID> getPassed() {
+        return passed;
     }
 
     public void add(final RybakObject rybakObject) {

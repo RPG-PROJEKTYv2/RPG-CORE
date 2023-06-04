@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.npc.gornik.GornikObject;
-import rpg.rpgcore.npc.gornik.GornikUser;
+import rpg.rpgcore.npc.gornik.objects.GornikObject;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.enums.GornikExchange;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.user.User;
@@ -140,7 +140,7 @@ public class GornikInventoryClick implements Listener {
                 return;
             }
             if (slot == 22) {
-                //if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() < 28) return;
+                if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() < 28) return;
                 RPGCORE.getInstance().getGornikNPC().openDrzewko(player);
                 return;
             }
@@ -153,12 +153,13 @@ public class GornikInventoryClick implements Listener {
             }
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
             if (slot == 0) {
-                if (user.getKasa() < 100000000) {
+                if (user.getKasa() < 65_000_000) {
                     player.sendMessage(Utils.format("&6&lGornik &8>> &7Nie masz wystarczajaco pieniedzy zeby kupic moj kilof!"));
                     player.closeInventory();
                     return;
                 }
-                user.setKasa(user.getKasa() - 100000000);
+                user.setKasa(user.getKasa() - 65_000_000);
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
                 player.getInventory().addItem(GornikItems.getKilof(player.getName()));
                 player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj... Mam nadzieje, ze bedzie ci dobrze sluzyl."));
                 player.sendMessage(Utils.format("&8Pssst... Kilof ten posiada niesamowite wlasciowsci przemiany."));

@@ -104,7 +104,7 @@ public class ArmorEffectsHelper {
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.SPEED);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.ceil((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) -1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) -1));
         }
     }
 

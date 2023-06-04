@@ -15,15 +15,15 @@ import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaManager;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
-import rpg.rpgcore.npc.gornik.GornikObject;
-import rpg.rpgcore.npc.kolekcjoner.KolekcjonerObject;
-import rpg.rpgcore.npc.lesnik.LesnikObject;
-import rpg.rpgcore.npc.lowca.LowcaObject;
+import rpg.rpgcore.npc.gornik.objects.GornikObject;
+import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
+import rpg.rpgcore.npc.lesnik.objects.LesnikObject;
+import rpg.rpgcore.npc.lowca.objects.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
-import rpg.rpgcore.npc.przyrodnik.PrzyrodnikObject;
+import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
@@ -2028,6 +2028,14 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     double exp = DoubleUtils.round(value * rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1) / 100, 2);
                     user.setExp(user.getExp() + exp);
                     break;
+            }
+            final Player target = Bukkit.getPlayer(user.getId());
+            if (target != null) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    rpgcore.getLvlManager().updateLvlBelowName(p, target.getName(), user.getLvl());
+                }
+                target.setLevel(user.getLvl());
+                target.setExp((float) (user.getExp() / rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)));
             }
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
             rpgcore.getUstawieniaKontaManager().openLvlIExp(player, user.getId());

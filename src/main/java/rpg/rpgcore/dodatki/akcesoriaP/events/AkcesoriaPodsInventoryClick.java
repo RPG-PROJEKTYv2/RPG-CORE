@@ -108,7 +108,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     user.getAkcesoriaPodstawowe().setKolczyki("");
                     bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() - ludzie);
                     bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() - odpo);
-                    bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + mspeed);
+                    bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - mspeed);
 
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                         rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);

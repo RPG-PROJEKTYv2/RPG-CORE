@@ -367,19 +367,16 @@ public class RybakInventoryClick implements Listener {
         if (title.equals("Rybak » Anty-AFK")) {
             e.setCancelled(true);
             if (item != null && item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
-                clickedInventory.setItem(slot, new ItemStack(Material.AIR));
+                rpgcore.getRybakNPC().getPassed().add(uuid);
                 rpgcore.getRybakNPC().resetFishingCount(uuid);
                 rpgcore.getRybakNPC().resetFailedAttempt(uuid);
+                Bukkit.getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskMap().get(uuid));
                 player.closeInventory();
                 player.sendMessage(Utils.format("&6&lRybak &8>> &aPomyslnie przeszedles/-as weryfikacje &cAnty-AFK&a!"));
                 return;
             }
+            Bukkit.getScheduler().cancelTask(rpgcore.getRybakNPC().getTaskMap().get(uuid));
             player.closeInventory();
-            rpgcore.getRybakNPC().addFailedAttempt(uuid);
-            player.sendMessage(Utils.format("&6&lRybak &8>> &cNie udalo sie przeslac weryfikacji Anty-AFK &4(" + rpgcore.getRybakNPC().getFailedAttempts(uuid) + "/3)"));
-            if (rpgcore.getRybakNPC().getFailedAttempts(uuid) >= 3) {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + "6 h Afk na lowienie (skrypt?)");
-            }
         }
 
 

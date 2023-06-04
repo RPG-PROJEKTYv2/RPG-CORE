@@ -127,14 +127,6 @@ public class WyszkolenieInventoryClickListener implements Listener {
             final Bonuses bonuses = this.rpgcore.getBonusesManager().find(uuid);
             
             switch (slot) {
-                case 0:
-                    player.closeInventory();
-                    player.getInventory().addItem(WyszkolenieItems.getItem("I1", 1), WyszkolenieItems.getItem("I2", 1), WyszkolenieItems.getItem("I3", 1),
-                            WyszkolenieItems.getItem("I4", 1), WyszkolenieItems.getItem("I5", 1), WyszkolenieItems.getItem("I6", 1), WyszkolenieItems.getItem("I7", 1),
-                            WyszkolenieItems.getItem("I8", 1), WyszkolenieItems.getItem("I9", 1), WyszkolenieItems.getItem("I10", 1), WyszkolenieItems.getItem("I11", 1),
-                            WyszkolenieItems.getItem("I12", 1), WyszkolenieItems.getItem("I13", 1), WyszkolenieItems.getItem("I14", 1), WyszkolenieItems.getItem("I15", 1),
-                            WyszkolenieItems.getItem("I16", 1), WyszkolenieItems.getItem("I17", 1));
-                    return;
                 case 40:
                     final DrzewkoWyszkoleniaUser.D1 d1 = user.getD1();
                     if (!player.getInventory().containsAtLeast(WyszkolenieItems.getItem(d1.getReqItem(), 1), 1))

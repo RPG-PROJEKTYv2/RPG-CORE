@@ -167,23 +167,23 @@ public class ProfileCommand extends CommandAPI {
 
         final ItemStack[] armor = Utils.itemStackArrayFromBase64(RPGCORE.getInstance().getUserManager().find(targetUUID).getInventoriesUser().getArmor());
 
-        if (armor[0] != null && armor[0].getType() != Material.AIR) {
-            gui.setItem(11, armor[0].clone());
+        if (armor[3] != null && armor[3].getType() != Material.AIR) {
+            gui.setItem(11, armor[3].clone());
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
-        if (armor[1] != null && armor[1].getType() != Material.AIR) {
-            gui.setItem(20, armor[1].clone());
+        if (armor[2] != null && armor[2].getType() != Material.AIR) {
+            gui.setItem(20, armor[2].clone());
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
-        if (armor[2] != null && armor[2].getType() != Material.AIR) {
-            gui.setItem(29, armor[2].clone());
+        if (armor[1] != null && armor[1].getType() != Material.AIR) {
+            gui.setItem(29, armor[1].clone());
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
-        if (armor[3] != null && armor[3].getType() != Material.AIR) {
-            gui.setItem(38, armor[3].clone());
+        if (armor[0] != null && armor[0].getType() != Material.AIR) {
+            gui.setItem(38, armor[0].clone());
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }

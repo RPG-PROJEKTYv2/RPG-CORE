@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.lowca.enums.LowcaMissions;
+import rpg.rpgcore.npc.lowca.objects.LowcaObject;
+import rpg.rpgcore.npc.lowca.objects.LowcaUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 

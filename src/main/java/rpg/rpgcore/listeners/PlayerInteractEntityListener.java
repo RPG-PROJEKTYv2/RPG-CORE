@@ -1,5 +1,7 @@
 package rpg.rpgcore.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -137,6 +139,19 @@ public class PlayerInteractEntityListener implements Listener {
             // ITEMSHOP
             if (entityName.equals("Czarownica")) {
                 rpgcore.getCzarownicaNPC().click(player);
+                return;
+            }
+        }
+        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+            e.setCancelled(true);
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            // ITEMSHOP
+            if (e.getRightClicked().getLocation().equals(new Location(Bukkit.getWorld("60-70map"), 49.5, 73, 169.5))) {
+                if (user.getLvl() < 65) {
+                    player.sendMessage(Utils.format("&d&l&kMityczny Kowal&8 >> &c..."));
+                    return;
+                }
+                rpgcore.getMistycznyKowalManager().openGUI(player);
                 return;
             }
         }

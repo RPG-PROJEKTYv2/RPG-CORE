@@ -16,9 +16,9 @@ public class SurowceManager {
 
     public SurowceManager() {
         // kufer
-        surowce.add(new Items("1", 1.0, GlobalItem.getItem("I1", 1), 1));
+        surowce.add(new Items("1", 0.01, GlobalItem.getItem("I1", 1), 1));
         // tajemnicza
-        surowce.add(new Items("23", 1.5, GlobalItem.getItem("I4", 1), 1));
+        surowce.add(new Items("23", 0.5, GlobalItem.getItem("I4", 1), 1));
         // materialy
         // SZANSA NA 3
         surowce.add(new Items("19", 1.5, GlobalItem.getItem("I15", 1), 3));
