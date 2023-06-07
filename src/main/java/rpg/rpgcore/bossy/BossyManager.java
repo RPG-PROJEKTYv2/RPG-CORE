@@ -200,7 +200,9 @@ public class BossyManager {
             if (sb.toString().contains(player.getName())) continue;
             sb.append("&e").append(player.getName()).append(", ");
         }
+        Bukkit.broadcastMessage(" ");
         Bukkit.broadcastMessage(Utils.format(Stage70_80.SPAWNED.getMessage() + sb.substring(0, sb.toString().length() - 2)));
+        Bukkit.broadcastMessage(" ");
 
         location70_80Map.clear();
         armorStands70_80Map.clear();
@@ -239,7 +241,9 @@ public class BossyManager {
 
     // 100-110
     public void spawn100_110Boss() {
+        Bukkit.broadcastMessage(" ");
         Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &3przyplywa z glebin i czeka na swoja ofiare!"));
+        Bukkit.broadcastMessage(" ");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 100-110-BOSS 1 100-110map,73.5,79,199.5");
         this.bossyUser.resetMobsCount100_110();
         this.bossyUser.save();

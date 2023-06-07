@@ -16,19 +16,20 @@ public class WodzGoblinowManager {
     private final Set<Items> wodzgoblin = Sets.newConcurrentHashSet();
 
     public WodzGoblinowManager() {
-        this.wodzgoblin.add(new Items("1", 12.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 2), 1));
-        this.wodzgoblin.add(new Items("2", 12.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 10, 2), 1));
-        this.wodzgoblin.add(new Items("3", 12.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 8, 2), 1));
-        this.wodzgoblin.add(new Items("4", 12.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 6, 2), 1));
-        this.wodzgoblin.add(new Items("5", 9.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
-        this.wodzgoblin.add(new Items("6", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lZwykly Naszyjnik Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&a&lZwykly Diadem Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lZwykly Pierscien Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lZwykla Tarcza Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("10", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lUlepszony Naszyjnik Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("11", 0.75, new ItemBuilder(Material.WATCH).setName("&a&lUlepszony Diadem Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("12", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lUlepszony Pierscien Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("13", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lUlepszona Tarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lUlepszony Naszyjnik Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&a&lUlepszony Diadem Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lUlepszony Pierscien Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lUlepszona Tarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("5", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lZwykly Naszyjnik Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("6", 5.0, new ItemBuilder(Material.WATCH).setName("&a&lZwykly Diadem Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("7", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lZwykly Pierscien Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("8", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lZwykla Tarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("9", 9.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
+        this.wodzgoblin.add(new Items("10", 12.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 2), 1));
+        this.wodzgoblin.add(new Items("11", 12.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 10, 2), 1));
+        this.wodzgoblin.add(new Items("12", 12.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 8, 2), 1));
+        this.wodzgoblin.add(new Items("13", 12.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 6, 2), 1));
+
     }
 
     public Items getDrawnItems(final Player player) {

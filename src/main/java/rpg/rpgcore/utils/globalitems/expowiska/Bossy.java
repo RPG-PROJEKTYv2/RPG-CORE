@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public enum Bossy {
     // ITEM DO RESPU BOSSA 60-70
-    I1("I1", new ItemBuilder(Material.FIREBALL).setName("&cZaczarowana Kula").setLore(Arrays.asList(" ","&7Dzieki tej kuli przywolasz &c&lPiekielna Dusze&7!")).hideFlag().toItemStack().clone()),
+    I1("I1", new ItemBuilder(Material.FIREBALL).setName("&cZaczarowana Kula").setLore(Arrays.asList(" ","&7Dzieki tej kuli przywolasz &c&lPiekielnego Rycerza&7!")).hideFlag().toItemStack().clone()),
    // ITEM DO RESPU BOSSA 70-80
     I2("I2", new ItemBuilder(Material.MAGMA_CREAM).setName("&cPrzeklete Serce").setLore(Arrays.asList(" ","&7Serce to pozwoli ci ozywic krag &3&lCzarnoksieznika&7...")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 80-90

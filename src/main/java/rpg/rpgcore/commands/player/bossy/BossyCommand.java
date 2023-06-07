@@ -53,12 +53,12 @@ public class BossyCommand extends CommandAPI {
         gui.setItem(4, this.makeBOSSY("&e&lTryton", -89, 68, -248, 30));
         // przepustki
         gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&b&lKrol Lodu").setLore(Arrays.asList(" ", "&7Lokalizacja XYZ: &6&l-4 | 66 | 122 &8&l(&f&lICETOWER&8&l)")).addGlowing().toItemStack().clone());
-        gui.setItem(6, this.makeWBOSSY("&1&lPiekielny Rycerz", 43,79,106));
+        gui.setItem(6, new ItemBuilder(Material.PAPER,1).setName("&c&lPiekielny Rycerz").setLore(Arrays.asList(" ", "&7Lokalizacja: &6Resp obok gracza")).addGlowing().toItemStack().clone());
         gui.setItem(7, this.makeWBOSSY("&5&lPrzeklety  Czarnoksieznik", -0,83,248));
         gui.setItem(8, this.makeWBOSSY("&e&lMityczny Pajak", -40,67,146));
-        gui.setItem(9, this.makeWBOSSY("&5&lPodziemny Rozpruwacz", 366,79,235));
+        gui.setItem(9, this.makeWBOSSY("&5&lPodziemny Rozpruwacz", 407,101,69));
         gui.setItem(10, this.makeWBOSSY("&b&lMityczny Kraken", 77,77,221));
-        gui.setItem(11, this.makeWBOSSY("&1&lKrysztalowy Wladca", 000,000,000));
+        gui.setItem(11, this.makeWBOSSY("&1&lKrysztalowy Wladca", -0,76, -155));
         gui.setItem(12, this.makeWBOSSY("&5&lStarozytny Smoczy Cesarz", 000,000,000));
 
         player.openInventory(gui);

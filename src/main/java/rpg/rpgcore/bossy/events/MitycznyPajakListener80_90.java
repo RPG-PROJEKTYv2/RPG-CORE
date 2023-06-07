@@ -35,7 +35,9 @@ public class MitycznyPajakListener80_90 implements Listener {
         e.setCancelled(true);
         e.setUseItemInHand(Event.Result.DENY);
         player.getInventory().removeItem(new ItemBuilder(item.clone()).setAmount(1).toItemStack().clone());
+        Bukkit.broadcastMessage(" ");
         Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &fGracz &6" + player.getName() + " &fprzywolal &e&lMitycznego Pajaka&f!"));
+        Bukkit.broadcastMessage(" ");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 80-90-BOSS 1 80-90map,-40.5,68,146.5");
     }
 }

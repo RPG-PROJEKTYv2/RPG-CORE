@@ -31,7 +31,7 @@ public enum Skrzynki {
     I_LODOWY_CHEST("I_LODOWY_CHEST", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Lodowego Slugi").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I12("I12", new ItemBuilder(Material.CHEST).setName("&bSkrzynia Mroznego Wilka").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 7
-    I13("I13", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &c&lPiekielnej Duszy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I13("I13", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &c&lPiekielnego Rycerza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I14("I14", new ItemBuilder(Material.CHEST).setName("&6Skrzynia Zywiolaka Ognia").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // Expowisko 8
     I15("I15", new ItemBuilder(Material.ENDER_CHEST).setName("&8[&4&lBOSS&8] &3&lSkrzynia &5&lPrzekletego Czarnoksieznika").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),

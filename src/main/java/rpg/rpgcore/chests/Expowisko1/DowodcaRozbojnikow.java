@@ -16,19 +16,21 @@ public class DowodcaRozbojnikow {
     private final Set<Items> wygnaniec = Sets.newConcurrentHashSet();
 
     public DowodcaRozbojnikow() {
-        this.wygnaniec.add(new Items("1", 12.0, ItemHelper.createArmor("&c&lHelm Dowodcy Rozbojnikow", Material.LEATHER_HELMET, 4, 1), 1));
-        this.wygnaniec.add(new Items("2", 12.0, ItemHelper.createArmor("&c&lZbroja Dowodcy Rozbojnikow", Material.LEATHER_CHESTPLATE, 5, 1), 1));
-        this.wygnaniec.add(new Items("3", 12.0, ItemHelper.createArmor("&c&lSpodnie Dowodcy Rozbojnikow", Material.LEATHER_LEGGINGS, 4, 1), 1));
-        this.wygnaniec.add(new Items("4", 12.0, ItemHelper.createArmor("&c&lButy Dowodcy Rozbojnikow", Material.LEATHER_BOOTS, 3, 1), 1));
-        this.wygnaniec.add(new Items("5", 9.0, ItemHelper.createSword("&c&lMiecz Dowodcy Rozbojnikow", Material.WOOD_SWORD, 3, 2, false), 1));
-        this.wygnaniec.add(new Items("6", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lZwykly Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lZwykly Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lZwykly Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lZwykla Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("10", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("11", 0.75, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("12", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("13", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("5", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lZwykly Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("6", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lZwykly Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("7", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lZwykly Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("8", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lZwykla Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
+        this.wygnaniec.add(new Items("9", 9.0, ItemHelper.createSword("&c&lMiecz Dowodcy Rozbojnikow", Material.WOOD_SWORD, 3, 2, false), 1));
+        this.wygnaniec.add(new Items("10", 12.0, ItemHelper.createArmor("&c&lHelm Dowodcy Rozbojnikow", Material.LEATHER_HELMET, 4, 1), 1));
+        this.wygnaniec.add(new Items("11", 12.0, ItemHelper.createArmor("&c&lZbroja Dowodcy Rozbojnikow", Material.LEATHER_CHESTPLATE, 5, 1), 1));
+        this.wygnaniec.add(new Items("12", 12.0, ItemHelper.createArmor("&c&lSpodnie Dowodcy Rozbojnikow", Material.LEATHER_LEGGINGS, 4, 1), 1));
+        this.wygnaniec.add(new Items("13", 12.0, ItemHelper.createArmor("&c&lButy Dowodcy Rozbojnikow", Material.LEATHER_BOOTS, 3, 1), 1));
+
+
     }
 
 

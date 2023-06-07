@@ -591,7 +591,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SetNameCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HsCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DisableCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new ChangeLeashRangeCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ChangeMobsCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ResetDungeonCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new UstawieniaKontaCommand(this));
     }

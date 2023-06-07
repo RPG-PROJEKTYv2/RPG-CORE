@@ -238,7 +238,7 @@ public class PrzedsionekManager {
                 message = "&c&lEtap 1 &8>> &7Zabij wszystkie moby!";
                 break;
             case 2:
-                message = "&c&lEtap 2 &8>> &7Zniszcz wszystkie kammienie mmetin!";
+                message = "&c&lEtap 2 &8>> &7Zniszcz wszystkie kamienie metin!";
                 break;
             case 3:
                 message = "&c&lEtap 3 &8>> &7Zabij wszystkie moby!";

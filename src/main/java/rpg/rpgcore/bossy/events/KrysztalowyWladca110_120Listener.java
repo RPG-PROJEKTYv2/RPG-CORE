@@ -80,7 +80,9 @@ public class KrysztalowyWladca110_120Listener implements Listener {
             return;
         }
         if (this.bossyUser.getOdlamki110_120() == 250) {
+            Bukkit.broadcastMessage(" ");
             Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &1&lKrysztalowy Wladca &bobudzil sie ze snu i jest gotowy do walki!"));
+            Bukkit.broadcastMessage(" ");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 110-120-BOSS 1 110-120map,-0.5,77,-155.5");
             this.bossyUser.resetOdlamki110_120();
             this.bossyUser.save();

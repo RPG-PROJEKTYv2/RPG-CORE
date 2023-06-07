@@ -49,7 +49,9 @@ public class PiekielnyRycerzListener60_70 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 60-70-BOSS 1 " + cordsToString);
-        player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &aPomyslnie przywolano &c&lPiekielnego Rycerza!"));
+        Bukkit.broadcastMessage(" ");
+        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lPiekielny Rycerz &7przybyl do swojego pana!"));
+        Bukkit.broadcastMessage(" ");
         bossyManager.incrementBoss60_70count();
     }
 

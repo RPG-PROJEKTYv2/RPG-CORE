@@ -319,31 +319,50 @@ public class TeleporterNPC {
                 return;
             case 2:
                 player.teleport(new Location(Bukkit.getWorld("50-60map"), -80.465, 72, 174.225, -0.8F, 0.1F));
-        }    }
+        }
+    }
 
     public void teleportExp7(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("60-70map"), 152.5, 76, 278.5, 90F, -0F));
+        switch (new Random().nextInt(2)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("60-70map"), -204.700, 72, 213.632, -68.3F, 1.1F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("60-70map"), 114.255, 75, 31.376, -36.9F, 2.2F));
+        }
     }
 
     public void teleportExp8(final Player player) {
-        switch (new Random().nextInt(3)) {
+        switch (new Random().nextInt(2)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("70-80map"), -0.53, 85, 152.5, 0F, 0F));
-                return;
-            case 1:
                 player.teleport(new Location(Bukkit.getWorld("70-80map"), 95.53, 85, 248.5, 90F, 0F));
                 return;
-            case 2:
+            case 1:
                 player.teleport(new Location(Bukkit.getWorld("70-80map"), -96.53, 85, 248.5, -90F, 0F));
         }
     }
 
     public void teleportExp9(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("80-90map"), -17, 67, 391, -165F, -0F));
+        switch (new Random().nextInt(2)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("80-90map"), -17, 67, 391, -165F, -0F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("80-90map"), 31, 67, 37, 23.4F, 0.9F));
+        }
     }
 
     public void teleportExp10(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("90-100map"), 30, 71, 52, -51F, -1));
+        switch (new Random().nextInt(3)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("90-100map"), 399, 119, 145, 110.4F, 0.7F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("90-100map"), 388, 87, 74, -142.0F, 2.7F));
+                return;
+            case 2:
+                player.teleport(new Location(Bukkit.getWorld("90-100map"), 347, 100, 153, 117.9F, 5.5F));
+        }
     }
 
     public void teleportExp11(final Player player) {
@@ -351,10 +370,22 @@ public class TeleporterNPC {
     }
 
     public void teleportExp12(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("110-120map"), -135, 66, -155, -90.3F, 0.3F));
+        switch (new Random().nextInt(2)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("110-120map"), -100, 66, -156, -90.1F, -0.6F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("110-120map"), 100, 66, -156, 90.1F, -0.6F));
+        }
     }
 
     public void teleportExp13(final Player player) {
-        player.teleport(new Location(Bukkit.getWorld("120-130map"), 0.5, 82, -5.5, -0.0F, 8.9F));
+        switch (new Random().nextInt(2)) {
+            case 0:
+                player.teleport(new Location(Bukkit.getWorld("120-130map"), -13, 80, -94, 7.2F, 0.9F));
+                return;
+            case 1:
+                player.teleport(new Location(Bukkit.getWorld("120-130map"), 1, 79, 79, 176.4F, 0.8F));
+        }
     }
 }
