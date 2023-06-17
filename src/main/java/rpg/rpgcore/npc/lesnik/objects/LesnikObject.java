@@ -15,7 +15,13 @@ public class LesnikObject {
 
     public LesnikObject(Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.user = new LesnikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("przeszycie"), document.getDouble("wzmKryta"), document.getDouble("defNaLudzi"), document.getLong("cooldown"));
+        long cooldown;
+        try {
+            cooldown = document.getLong("cooldown");
+        } catch (ClassCastException e) {
+            cooldown = (long) document.getInteger("cooldown");
+        }
+        this.user = new LesnikUser(document.getInteger("mission"), document.getInteger("progress"), document.getDouble("przeszycie"), document.getDouble("wzmKryta"), document.getDouble("defNaLudzi"), cooldown);
     }
 
     public UUID getId() {

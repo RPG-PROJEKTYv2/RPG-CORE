@@ -29,9 +29,8 @@ public class WartosciowykuferManager {
         // bao, ksiega magii
         this.wartosciowykufer.add(new Items("7", 8.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
         this.wartosciowykufer.add(new Items("8", 4.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
-        // zmianki miecz i set
-        this.wartosciowykufer.add(new Items("9", 5.0, GlobalItem.getItem("I50",1),1));
-        this.wartosciowykufer.add(new Items("10", 5.0, GlobalItem.getItem("I51",1),1));
+        // zmianka
+        this.wartosciowykufer.add(new Items("9", 7.0, GlobalItem.getItem("I50",1),1));
         // wywar z kory
         this.wartosciowykufer.add(new Items("11", 6.0, LesnikItems.getByItem("POTION", 1), 1));
         // hellcase i dwa kufry

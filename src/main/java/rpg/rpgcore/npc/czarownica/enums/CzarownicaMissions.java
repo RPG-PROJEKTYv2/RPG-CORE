@@ -21,7 +21,7 @@ public enum CzarownicaMissions {
     M6(6, 192, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M7(7, 15, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M8(8, 256, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
-    M9(9, 256, Arrays.asList(new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa &5Magiczna Receptura &f&kaa").setLore(Arrays.asList(
+    M9(9, 256, Arrays.asList(new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa&5 Magiczna Receptura &f&kaa").setLore(Arrays.asList(
             "&7Receptura ta umozliwi Ci wytwarzanie",
             "&5&lKsiega Magii"
     )).toItemStack().clone()));
@@ -101,17 +101,18 @@ public enum CzarownicaMissions {
             default:
                 break;
         }
-        if (user.getMission() == 9) {
-            map.put(GlobalItem.I_KAMIENBAO.getItemStack(), 16);
-            map.put(GlobalItem.I1.getItemStack(), 4);
-            map.put(GlobalItem.I2.getItemStack(), 16);
-            map.put(GlobalItem.I4.getItemStack(), 12);
-            map.put(GlobalItem.I5.getItemStack(), 64);
-            map.put(GlobalItem.I6.getItemStack(), 2);
-        }
 
         for (final ItemStack item : itemList) {
             map.put(item, this.reqAmountPer);
+        }
+
+        if (user.getMission() == 9) {
+            map.put(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
+            map.put(new ItemBuilder(GlobalItem.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 4);
+            map.put(new ItemBuilder(GlobalItem.I2.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
+            map.put(new ItemBuilder(GlobalItem.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 12);
+            map.put(new ItemBuilder(GlobalItem.I5.getItemStack().clone()).setAmount(1).toItemStack().clone(), 64);
+            map.put(new ItemBuilder(GlobalItem.I6.getItemStack().clone()).setAmount(1).toItemStack().clone(), 2);
         }
 
         for (final ItemStack item : map.keySet()) {
@@ -123,16 +124,33 @@ public enum CzarownicaMissions {
     public static final ItemStack mission3Item = new ItemBuilder(Material.DIRT).setName("Misja 3").toItemStack();
     public static final ItemStack mission5Item = new ItemBuilder(Material.DIRT).setName("Misja 5").toItemStack();
     public static final ItemStack mission7Item = new ItemBuilder(Material.DIRT).setName("Misja 7").toItemStack();
+
+    public void fix(final CzarownicaUser user) {
+        final LinkedHashMap<ItemStack, Integer> req = this.getReqProgressMap(user);
+        for (final ItemStack item : req.keySet()) {
+            if (user.getProgressMap().containsKey(item)) continue;
+            user.getProgressMap().put(item, 0);
+        }
+        final List<ItemStack> toRemove = new ArrayList<>();
+        for (final ItemStack item : user.getProgressMap().keySet()) {
+            if (item.getAmount() > 1) {
+                toRemove.add(item);
+            }
+        }
+        for (final ItemStack item : toRemove) {
+            int reqAmount = user.getProgressMap().get(item);
+            user.getProgressMap().remove(item);
+            item.setAmount(1);
+            user.getProgressMap().put(item, reqAmount);
+        }
+    }
+
     public ItemStack getMissionItem(final CzarownicaUser user) {
         final ItemBuilder builder = new ItemBuilder(Material.BOOK).setName("&5Misja " + this.missionId);
         final List<String> lore = new ArrayList<>();
         int progress;
         final LinkedHashMap<ItemStack, Integer> req = this.getReqProgressMap(user);
-
-        for (ItemStack item : req.keySet()) {
-            if (user.getProgressMap().containsKey(item)) continue;
-            user.getProgressMap().put(item, 0);
-        }
+        this.fix(user);
 
 
         switch (user.getMission()) {

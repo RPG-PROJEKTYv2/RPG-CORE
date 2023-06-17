@@ -48,8 +48,6 @@ public class Utils {
     public static final String GUILDSPREFIX = format("&4&lHELL&8&lKLANY&7 &8>> ");
     public static final String WHITELIST = format("&7&lWHITE&6&lLIST&7 >>");
     public static final String RYBAK = format("&6&lRybak &8>> &7");
-    public static final String KUPIEC = format("&2&lKupiec &8>> &a");
-    public static final String TRENER = format("&6&lTrener &8>> &7");
     public static final String NIEMATAKIEGOGRACZA = format("&cNie znaleziono podanego gracza");
     public static final String ALREADYBANNED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
     public static final String ALREADYMUTED = (BANPREFIX + format("&cTen gracz jest juz zbanowany!"));
@@ -298,7 +296,6 @@ public class Utils {
     public static ItemStack deserializeItem(String encodedObject) {
         if (encodedObject.isEmpty()) return new ItemStack(Material.AIR);
         try {
-            ByteArrayOutputStream io = new ByteArrayOutputStream();
             byte[] serializedObject;
             serializedObject = Base64.getDecoder().decode(encodedObject);
             ByteArrayInputStream in = new ByteArrayInputStream(serializedObject);
@@ -809,6 +806,23 @@ public class Utils {
         tagCompound.setBoolean(tag, value);
         nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
+    public static int getPlayerInventoryItemCount(final Player player, final ItemStack itemStack) {
+        int count = 0;
+        for (final ItemStack item : player.getInventory().getContents()) {
+            if (item == null) continue;
+            if (item.isSimilar(itemStack)) count += item.getAmount();
+        }
+        return count;
+    }
+    public static int getPlayerInventoryItemCount(final Player player, final Material material) {
+        int count = 0;
+        for (final ItemStack item : player.getInventory().getContents()) {
+            if (item == null) continue;
+            if (item.getType().equals(material)) count += item.getAmount();
+        }
+        return count;
     }
 
 }

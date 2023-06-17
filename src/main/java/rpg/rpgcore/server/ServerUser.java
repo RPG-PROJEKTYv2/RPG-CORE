@@ -13,7 +13,13 @@ public class ServerUser {
 
     public ServerUser(Document document) {
         this.name = document.getString("_id");
-        this.server = new Server(document.getInteger("dodatkowyExp"), document.getLong("czas"), document.getBoolean("aktywny"));
+        long czas;
+        try {
+            czas = document.getLong("czas");
+        } catch (ClassCastException e) {
+            czas = (long) document.getInteger("czas");
+        }
+        this.server = new Server(document.getInteger("dodatkowyExp"), czas, document.getBoolean("aktywny"));
     }
 
     public String getName() {

@@ -41,8 +41,7 @@ public class RangiCommand extends CommandAPI {
                 "&7* Prefix: &8[&bLvl. &fX&8] &e&lVip &7" + player.getName() + "&f: wiadomosc",
                 "&7* &eDodatkowy exp: &c+25%",
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
-                "&7* &eZwiekszone Szczescie: &c+25",
-                "&7* &e/zestawvip &c- co 24 godziny"
+                "&7* &eZwiekszone Szczescie: &c+25"
         )).addGlowing().toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.BOOK).setName("&9&lTworca").setLore(Arrays.asList(" ",
                 "&7Ranga ta posiada:",
@@ -50,7 +49,7 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eDodatkowy exp: &c+25%",
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
                 "&7* &eZwiekszony % na drop z mobow: &c+25%",
-                "&7* &e/zestawvip &c- co 24 godziny",
+                "&7* &eDostep do /live",
                 "",
                 "&7Wymagania:",
                 "&4&lYou&f&lTube&7: &eminimum 200 subskrypcji",
@@ -67,8 +66,7 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eDodatkowy exp: &c+50%",
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+50%",
                 "&7* &eZwiekszone Szczescie: &c+50",
-                "&7* &e/zestawelita &c- co 24 godziny",
-                "&7 &e/enderchest"
+                "&7* &e/enderchest"
         )).addGlowing().toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(
                 " ",

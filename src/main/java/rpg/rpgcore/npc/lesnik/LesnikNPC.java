@@ -46,8 +46,6 @@ public class LesnikNPC {
             gui.setItem(16, new ItemBuilder(Material.WATCH).setName("&aGotowe do oddania!").toItemStack().clone());
         }
 
-        gui.setItem(22, new ItemBuilder(Material.BARRIER).setName("&cBrak Wywaru z Kory").toItemStack().clone());
-
         player.openInventory(gui);
     }
 

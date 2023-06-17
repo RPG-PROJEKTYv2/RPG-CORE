@@ -17,56 +17,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ZmiankiManager {
-    public void openGUI(final Player player, final ItemStack is) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lZmiana Bonusow"));
+    public void openGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lZmiana Bonusow"));
 
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName(" ").toItemStack());
         }
-        if (is == null) {
-            gui.setItem(13, new ItemBuilder(Material.AIR).toItemStack());
-        } else {
-            gui.setItem(13, is.clone());
-            gui.setItem(22, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&4&lInformacje").setLore(Arrays.asList(
-                    "&8Dostepne sa 2 rodzaje bonusow: na 50lvl i na 80lvl",
-                    "",
-                    "&8Kliknij &6&l1 Zwojem Zaczarowania&8, zeby",
-                    "&8wylosowac nowe bonusy!",
-                    "",
-                    "&8Pamietaj! Nie mozesz klikac wiecej, niz &c1 &8przedmiotem",
-                    "",
-                    "&c&lPrzedmiot dostaje nowy wymagany poziom rowny 50!",
-                    "&8(jesli byl wiekszy, to zostaje wiekszy)")).toItemStack());
-            if (is.getType().toString().contains("_SWORD")) {
-                if (Utils.getTagInt(is, "dodatkowe") == 0) {
-                    gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
-                } else {
-                    gui.setItem(38, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Dodatkowe Obrazenia: &f+" + Utils.getTagInt(is, "dodatkowe")).toItemStack().clone());
-                }
-                if (Utils.getTagString(is, "silny-na-mob").equals("") || Utils.getTagDouble(is, "silny-na-val") == 0) {
-                    gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
-                } else {
-                    gui.setItem(39, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Silny Na " + Utils.getTagString(is, "silny-na-mob") + ": &f+" + Utils.getTagDouble(is, "silny-na-val") + "%").toItemStack().clone());
-                }
-                if (Utils.getTagDouble(is, "krytyk") == 0) {
-                    gui.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
-                } else {
-                    gui.setItem(40, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(is, "krytyk") + "%").toItemStack().clone());
-                }
-                if (Utils.getTagString(is, "silny-lvl").equals("") || Utils.getTagDouble(is, "silny-lvl-val") == 0) {
-                    gui.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
-                } else {
-                    gui.setItem(41, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Silny Na " + Utils.getTagString(is, "silny-lvl") + " poziomy: &f+" + Utils.getTagDouble(is, "silny-lvl-val") + "%").toItemStack().clone());
-                }
-                if (Utils.getTagDouble(is, "przeszywka") == 0) {
-                    gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&c&lWylosuj Bonus!").toItemStack());
-                } else {
-                    gui.setItem(42, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(is, "przeszywka") + "%").toItemStack().clone());
-                }
-            }
-
-        }
+        gui.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
+        gui.setItem(14, new ItemBuilder(Material.ANVIL).setName("&6&lZmien Bonusy").toItemStack());
 
         player.openInventory(gui);
     }

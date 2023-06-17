@@ -11,6 +11,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -41,7 +42,9 @@ public class ProfileCommand extends CommandAPI {
                     return;
                 }
 
-                if (RPGCORE.getInstance().getUserManager().find(offlineTarget.getUniqueId()) == null) {
+                final User user = RPGCORE.getInstance().getUserManager().find(offlineTarget.getUniqueId());
+
+                if (user == null) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
                     return;
                 }
@@ -159,7 +162,7 @@ public class ProfileCommand extends CommandAPI {
 
     private void createProfileGUI(final Player player, final UUID targetUUID, final String targetName) throws IOException {
         final BonusesUser user = RPGCORE.getInstance().getBonusesManager().find(targetUUID).getBonusesUser();
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + targetName));
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + targetName + " &8&l(&c&lAdmin&8&l)"));
 
         for (int i = 0; i < 54; i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
@@ -239,6 +242,8 @@ public class ProfileCommand extends CommandAPI {
                 "&7Podstawowa Szybkosc: &f100",
                 "&7Szybkosc: &f" + user.getSzybkosc()
         )).addGlowing().toItemStack().clone());
+
+        gui.setItem(40, new ItemBuilder(Material.CHEST).setName("&6&lMagazyny").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu magazynow")).toItemStack().clone());
 
         gui.setItem(48, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lAkcesoria Podstawowe").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu podstawowego akcesorium")).toItemStack().clone());
         gui.setItem(49, new ItemBuilder(Material.SIGN).setName("&6&lBony").setLore(Arrays.asList("&8Kliknij, aby otworzyc menu bonow")).toItemStack().clone());

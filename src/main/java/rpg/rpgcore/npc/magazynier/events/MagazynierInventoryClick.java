@@ -149,25 +149,20 @@ public class MagazynierInventoryClick implements Listener {
                     user.setPoints(user.getPoints() - price);
                     player.sendMessage(Utils.format("&b&lMagazynier &8» &aPomyslnie Oblokowales/-as swoj magazyn!"));
                     break;
-                    case 1:
-                        if (user.isRemoteCommand()) {
-                            player.sendMessage(Utils.format("&b&lMagazynier &8» &7Odblokowales/-as juz ta komende!"));
-                            player.closeInventory();
-                            return;
-                        }
-                        user.setRemoteCommand(true);
-                        user.setPoints(user.getPoints() - price);
-                        player.sendMessage(Utils.format("&b&lMagazynier &8» &aPomyslnie Odblokowales/-as komende /magazyny!"));
-                        break;
+                case 1:
+                    if (user.isRemoteCommand()) {
+                        player.sendMessage(Utils.format("&b&lMagazynier &8» &7Odblokowales/-as juz ta komende!"));
+                        player.closeInventory();
+                        return;
+                    }
+                    user.setRemoteCommand(true);
+                    user.setPoints(user.getPoints() - price);
+                    player.sendMessage(Utils.format("&b&lMagazynier &8» &aPomyslnie Odblokowales/-as komende /magazyny!"));
+                    break;
             }
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));
             rpgcore.getMagazynierNPC().openMagazynierSklepGUI(player);
         }
-
-
-
-
-
 
 
         if (title.equals("Lista Magazynow")) {
@@ -181,8 +176,8 @@ public class MagazynierInventoryClick implements Listener {
             switch (slot) {
                 case 0:
                     if (user.isUnlocked1()) {
-                       rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn1(), 1);
-                       return;
+                        rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn1(), 1);
+                        return;
                     }
                     break;
                 case 1:
@@ -211,6 +206,51 @@ public class MagazynierInventoryClick implements Listener {
                     break;
             }
         }
+
+
+        if (title.contains("Lista Magazynow - ")) {
+            e.setCancelled(true);
+            final UUID target = UUID.fromString(title.replaceAll("Lista Magazynow - ", "").trim());
+            if (rpgcore.getCooldownManager().hasMagazynyCooldown(uuid)) {
+                player.sendMessage(Utils.format("&b&lMagazynier &8>> &cOdczekaj jeszcze chwile przed ponownym otwarciem magazynu!"));
+                player.closeInventory();
+                return;
+            }
+            final MagazynierUser user = rpgcore.getMagazynierNPC().find(target);
+            switch (slot) {
+                case 0:
+                    if (user.isUnlocked1()) {
+                        rpgcore.getMagazynierNPC().openMagazyn(player, target, user.getMagazyn1(), 1);
+                        return;
+                    }
+                    break;
+                case 1:
+                    if (user.isUnlocked2()) {
+                        rpgcore.getMagazynierNPC().openMagazyn(player, target, user.getMagazyn2(), 2);
+                        return;
+                    }
+                    break;
+                case 2:
+                    if (user.isUnlocked3()) {
+                        rpgcore.getMagazynierNPC().openMagazyn(player, target, user.getMagazyn3(), 3);
+                        return;
+                    }
+                    break;
+                case 3:
+                    if (user.isUnlocked4()) {
+                        rpgcore.getMagazynierNPC().openMagazyn(player, target, user.getMagazyn4(), 4);
+                        return;
+                    }
+                    break;
+                case 4:
+                    if (user.isUnlocked5()) {
+                        rpgcore.getMagazynierNPC().openMagazyn(player, target, user.getMagazyn5(), 5);
+                        return;
+                    }
+                    break;
+            }
+        }
+
     }
 
 }

@@ -6,9 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
@@ -26,6 +28,20 @@ public class ZmiankiInventoryClickListener implements Listener {
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
+        if (clickedInventory.getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Zmiana Bonusow")) {
+            e.setCancelled(true);
+            final String type = String.valueOf(item.getType());
+            if (!type.contains("_SWORD") && !type.contains("_HELMET") && !type.contains("_CHESTPLATE") && !type.contains("_LEGGINGS") && !type.contains("_BOOTS")) return;
+            if (!item.hasItemMeta()) return;
+            if (!item.getItemMeta().hasDisplayName()) return;
+            if (!item.getItemMeta().hasLore()) return;
+
+            player.getOpenInventory().getTopInventory().setItem(13, item.clone());
+            player.getInventory().removeItem(new ItemBuilder(item.clone()).setAmount(1).toItemStack());
+
+            return;
+        }
+
         if (title.equals("Zmiana Bonusow")) {
             e.setCancelled(true);
 
@@ -35,41 +51,28 @@ public class ZmiankiInventoryClickListener implements Listener {
 
 
             if (slot == 13) {
-                if (clickedInventory.getItem(13) == null || clickedInventory.getItem(13).getType() == Material.AIR) {
-                    if (e.getCursor() == null || e.getCursor().getType() == Material.AIR) {
-                        return;
-                    }
+                if (item.getType() == Material.IRON_FENCE) return;
 
-                    final String type = e.getCursor().getType().toString();
-                    if (!type.contains("_SWORD") && !type.contains("_HELMET") && !type.contains("_CHESTPLATE") && !type.contains("_LEGGINGS") && !type.contains("_BOOTS")) {
-                        return;
-                    }
+                final String type = item.getType().toString();
+                if (!type.contains("_SWORD") && !type.contains("_HELMET") && !type.contains("_CHESTPLATE") && !type.contains("_LEGGINGS") && !type.contains("_BOOTS")) return;
 
+                final ItemStack is = item.clone();
+                player.getInventory().addItem(is);
 
-                    final ItemStack is = e.getCursor().clone();
-                    e.setCursor(null);
-                    RPGCORE.getInstance().getZmiankiManager().openGUI(player, is);
-                } else {
-                    if (e.getCursor() != null && e.getCursor().getType() != Material.AIR) {
-                        if (e.getCursor().getAmount() > 1) {
-                            return;
-                        }
+                clickedInventory.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
+                return;
+            }
 
-                        if (clickedInventory.getItem(13).getType().toString().contains("_SWORD")) {
-                            if (!e.getCursor().equals(GlobalItem.getItem("I50", 1))) {
-                                return;
-                            }
-                            e.setCursor(null);
-                            player.getInventory().addItem(RPGCORE.getInstance().getZmiankiManager().rollNewBonuses(clickedInventory.getItem(13), player)); //NIE DZIALA
-                            clickedInventory.setItem(13, new ItemStack(Material.AIR));
-                            player.closeInventory();
-                            return;
-                        }
-                    }
-                    player.getInventory().addItem(clickedInventory.getItem(13).clone());
-                    clickedInventory.setItem(13, new ItemStack(Material.AIR));
-                    RPGCORE.getInstance().getZmiankiManager().openGUI(player, null);
-                }
+            if (slot == 14) {
+                if (clickedInventory.getItem(13).getType() == Material.IRON_FENCE) return;
+                final String type = clickedInventory.getItem(13).getType().toString();
+                if (!type.contains("_SWORD") && !type.contains("_HELMET") && !type.contains("_CHESTPLATE") && !type.contains("_LEGGINGS") && !type.contains("_BOOTS")) return;
+
+                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I50.getItemStack().clone()).setAmount(1).toItemStack());
+
+                player.getInventory().addItem(RPGCORE.getInstance().getZmiankiManager().rollNewBonuses(clickedInventory.getItem(13), player));
+                clickedInventory.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
+                player.closeInventory();
             }
         }
     }

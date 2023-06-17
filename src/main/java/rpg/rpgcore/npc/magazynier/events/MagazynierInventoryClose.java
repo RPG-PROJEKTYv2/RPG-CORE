@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -27,31 +28,33 @@ public class MagazynierInventoryClose implements Listener {
         }
 
         final Inventory closedInventory = e.getInventory();
-        final String closedInventoryTitle = closedInventory.getTitle();
+        final String closedInventoryTitle = Utils.removeColor(closedInventory.getTitle());
         final Player player = (Player) e.getPlayer();
-        final UUID uuid = player.getUniqueId();
 
         if (closedInventoryTitle.contains("Magazyn #")) {
-            final int nrMagazynu = Integer.parseInt(Utils.removeColor(closedInventoryTitle).replaceAll("Magazyn #", "").trim());
+            final int nrMagazynu = Integer.parseInt(closedInventoryTitle.split("-")[0].replace("Magazyn #", "").trim());
+            UUID target = player.getUniqueId();
+            if (closedInventoryTitle.contains(" - ")) target = UUID.fromString(closedInventoryTitle.replaceAll("Magazyn #" + nrMagazynu + " - ", "").trim());
+            final MagazynierUser user = rpgcore.getMagazynierNPC().find(target);
             switch (nrMagazynu) {
                 case 1:
-                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn1(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    user.setMagazyn1(Utils.itemStackArrayToBase64(closedInventory.getContents()));
                     break;
                 case 2:
-                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn2(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    user.setMagazyn2(Utils.itemStackArrayToBase64(closedInventory.getContents()));
                     break;
                 case 3:
-                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn3(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    user.setMagazyn3(Utils.itemStackArrayToBase64(closedInventory.getContents()));
                     break;
                 case 4:
-                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn4(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    user.setMagazyn4(Utils.itemStackArrayToBase64(closedInventory.getContents()));
                     break;
                 case 5:
-                    rpgcore.getMagazynierNPC().find(uuid).setMagazyn5(Utils.itemStackArrayToBase64(closedInventory.getContents()));
+                    user.setMagazyn5(Utils.itemStackArrayToBase64(closedInventory.getContents()));
                     break;
             }
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid)));
-            rpgcore.getCooldownManager().givePlayerMagazynyCooldown(uuid);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(user.getUuid(), user));
+            rpgcore.getCooldownManager().givePlayerMagazynyCooldown(target);
         }
 
     }

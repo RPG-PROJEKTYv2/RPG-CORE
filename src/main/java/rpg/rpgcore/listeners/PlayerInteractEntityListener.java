@@ -144,7 +144,6 @@ public class PlayerInteractEntityListener implements Listener {
         }
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
             e.setCancelled(true);
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
             // ITEMSHOP
             if (e.getRightClicked().getLocation().equals(new Location(Bukkit.getWorld("60-70map"), 49.5, 73, 169.5))) {
                 if (user.getLvl() < 65) {
@@ -212,12 +211,6 @@ public class PlayerInteractEntityListener implements Listener {
                 } else {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWroc jak osiagniesz 30 poziom!"));
                 }
-                return;
-            }
-
-            // ZMIANKI //TODO Przerobic na stol itd.
-            if (entityName.equalsIgnoreCase("Zmianki")) {
-                rpgcore.getZmiankiManager().openGUI(player, null);
                 return;
             }
 

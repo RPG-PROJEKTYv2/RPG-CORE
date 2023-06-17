@@ -15,15 +15,15 @@ import rpg.rpgcore.utils.Utils;
 public class NMSManager {
 
     private PacketPlayOutChat makeActionBar(final String str) {
-        return new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), (byte) 2);
+        return new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "\"}"), (byte) 2);
     }
 
     public PacketPlayOutTitle makeTitle(final String str, final int fadeIn, final int last, final int fadeOut) {
-        return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), fadeIn, last, fadeOut);
+        return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "\"}"), fadeIn, last, fadeOut);
     }
 
     public PacketPlayOutTitle makeSubTitle(final String str, final int fadeIn, final int last, final int fadeOut) {
-        return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "" + "\"}"), fadeIn, last, fadeOut);
+        return new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + Utils.format(str) + "\"}"), fadeIn, last, fadeOut);
     }
 
     public void sendActionBar(final Player player, final String msg) {
@@ -33,6 +33,11 @@ public class NMSManager {
     public void sendTitleAndSubTitle(final Player player, final PacketPlayOutTitle title, final PacketPlayOutTitle subtitle) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subtitle);
+    }
+
+    public void sendTitleAndSubTitle(final Player player, final String title, final String subtitle, final int fadeInOut, final int last) {
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(this.makeTitle(title, fadeInOut, last, fadeInOut));
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(this.makeSubTitle(subtitle, fadeInOut, last, fadeInOut));
     }
 
     public void sendMobInfo(final Player player, final LivingEntity entity) {

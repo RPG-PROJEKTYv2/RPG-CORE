@@ -18,6 +18,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class CommandAPI extends Command {
@@ -25,6 +27,28 @@ public abstract class CommandAPI extends Command {
     private String name;
     private boolean restrictedForPlayer;
     private boolean blockedInNether;
+
+
+    private final List<String> ownCommandsPlayer = Arrays.asList(
+            "administracja", "admin", "adm",
+            "hellcode", "hc", "admincode", "ac", "code",
+            "spawn",
+            "bossy",
+            "pomoc", "help",
+            "lvl", "os", "osiagniecia",
+            "message", "msg", "pv" ,"pw", "m", "reply", "r",
+            "targ", "ah", "gielda",
+            "ec", "enderchest",
+            "kasa", "money", "bal", "balance", "wyplac", "withdraw", "wystaw", "sprawdz", "helpop",
+            "guild", "g", "klan", "gildia", "kosz", "chatpanel", "panel", "chatp", "party", "p",
+            "pety", "pets", "ignore", "ignoruj", "dodatki", "bony", "akce", "akcesoria", "ekwipunek",
+            "profile", "magazyny", "magazyn", "mag", "ranktime", "czasrangi", "pd", "piersciendoswiadczenia",
+            "artefakty", "craft", "rozpiska", "crafting", "listanpc", "lnpc", "npc", "poziom", "level",
+            "showcaseitem", "profil", "staty", "hs", "stats", "hellsy", "statystyki", "coins", "online", "k",
+            "misje", "list", "lista", "gracze", "onlinelist", "listagraczy", "craftingi", "rangi", "vip", "elita",
+            "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision"
+    );
+
 
     public CommandAPI(final String name) {
         super(name);
@@ -82,16 +106,7 @@ public abstract class CommandAPI extends Command {
                     return false;
                 }
             }
-            if (!s.equals("ac") && !s.equals("admincode") && !s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("help") && !s.equals("lvl") && !s.equals("os") && !s.equals("osiagniecia")
-                    && !s.equals("message") && !s.equals("msg") && !s.equals("pv") && !s.equals("pw") && !s.equals("m") && !s.equals("reply") && !s.equals("r") && !s.equals("targ") && !s.equals("ah") && !s.equals("gielda")
-                    && !s.equals("kasa") && !s.equals("money") && !s.equals("bal") && !s.equals("balance") && !s.equals("wyplac") && !s.equals("withdraw") && !s.equals("wystaw") && !s.equals("sprawdz") && !s.equals("helpop")
-                    && !s.equals("guild") && !s.equals("g") && !s.equals("klan") && !s.equals("gildia") && !s.equals("kosz") && !s.equals("chatpanel") && !s.equals("panel") && !s.equals("chatp") && !s.equals("party") && !s.equals("p")
-                    && !s.equals("pety") && !s.equals("pets") && !s.equals("ignore") && !s.equals("ignoruj") && !s.equals("dodatki") && !s.equals("bony") && !s.equals("akce") && !s.equals("akcesoria") && !s.equals("ekwipunek")
-                    && !s.equals("profile") && !s.equals("magazyny") && !s.equals("magazyn") && !s.equals("mag") && !s.equals("ranktime") && !s.equals("czasrangi") && !s.equals("pd") && !s.equals("piersciendoswiadczenia") && !s.equals("artefakty")
-                    && !s.equals("arte") && !s.equals("enderchest") && !s.equals("ec") && !s.equals("topki") && !s.equals("top") && !s.equals("rangi") && !s.equals("vip") && !s.equals("svip") && !s.equals("elita") && !s.equals("craftingi")
-                    && !s.equals("craft") && !s.equals("rozpiska") && !s.equals("crafting") && !s.equals("listanpc") && !s.equals("lnpc") && !s.equals("npc") && !s.equals("poziom") && !s.equals("level") && !s.equals("showcaseitem") && !s.equals("profil")
-                    && !s.equals("staty") && !s.equals("stats") && !s.equals("statystyki") && !s.equals("online") && !s.equals("list") && !s.equals("lista") && !s.equals("gracze") && !s.equals("onlinelist") && !s.equals("listagraczy")
-                    && !s.equals("hs") && !s.equals("hellsy") && !s.equals("coins") && !s.equals("k") && !s.equals("misje")) {
+            if (!ownCommandsPlayer.contains(s)) {
                 if (userProfile.getRankUser().isStaff()) {
                     if (!userProfile.isAdminCodeLogin()) {
                         player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim AdminCode! Uzyj: &c/admmincode <kod>"));

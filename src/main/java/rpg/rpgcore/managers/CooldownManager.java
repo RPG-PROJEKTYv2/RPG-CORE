@@ -22,11 +22,13 @@ public class CooldownManager {
     private final Cache<UUID, Long> eliksirObronncyCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> egzekutorCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
-    private final Cache<UUID, Long> pelerynkaCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> odlamkiCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> klejnoty120_130Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> bossBarCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> pelerynkaCooldownAfk = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -179,12 +181,23 @@ public class CooldownManager {
     public boolean hasPvpCooldown(final UUID uuid) {
         return this.pvpCooldown.asMap().containsKey(uuid);
     }
-    public void givePelerynkaCooldown(final UUID uuid) {
-        this.pelerynkaCooldown.put(uuid, System.currentTimeMillis() + 300L);
+    public void givePelerynkaCooldownAfk(final UUID uuid) {
+        this.pelerynkaCooldownAfk.put(uuid, System.currentTimeMillis() + 500L);
     }
 
-    public boolean hasPelerynkaCooldown(final UUID uuid) {
-        return this.pelerynkaCooldown.asMap().containsKey(uuid);
+    public boolean hasPelerynkaCooldownAfk(final UUID uuid) {
+        return this.pelerynkaCooldownAfk.asMap().containsKey(uuid);
+    }
+    public void givePelerynkaCooldownExp(final UUID uuid) {
+        this.pelerynkaCooldownExp.put(uuid, System.currentTimeMillis() + 30_000L);
+    }
+
+    public boolean hasPelerynkaCooldownExp(final UUID uuid) {
+        return this.pelerynkaCooldownExp.asMap().containsKey(uuid);
+    }
+
+    public String getPelerynkaCooldownExp(final UUID uuid) {
+        return Utils.durationToString(this.pelerynkaCooldownExp.asMap().get(uuid), false);
     }
 
     public void givePlayerOdlamkiCooldown(final UUID uuid) {
@@ -217,5 +230,17 @@ public class CooldownManager {
 
     public boolean hasBossBarCooldown(final UUID uuid) {
         return this.bossBarCooldown.asMap().containsKey(uuid);
+    }
+
+    public void giveLiveCommandCooldown(final UUID uuid) {
+        this.liveCommandCooldown.put(uuid, System.currentTimeMillis() + 120_000);
+    }
+
+    public boolean hasLiveCommandCooldown(final UUID uuid) {
+        return this.liveCommandCooldown.asMap().containsKey(uuid);
+    }
+
+    public String getLiveCommandCooldown(final UUID uuid) {
+        return Utils.durationToString(this.liveCommandCooldown.asMap().get(uuid), false);
     }
 }

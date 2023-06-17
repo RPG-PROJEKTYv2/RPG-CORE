@@ -1,4 +1,4 @@
-package rpg.rpgcore.listeners;
+package rpg.rpgcore.dmg;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

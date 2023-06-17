@@ -2,8 +2,6 @@ package rpg.rpgcore.npc.handlarz.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,20 +71,19 @@ public class HandlarzInteractListener implements Listener {
                 RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
                 RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user);
             });
-            return;
         }
-        if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
-            if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldown(uuid)) return;
-
-            final int range = Utils.getTagInt(eventItem, "range");
-
-            for (Entity entity : player.getNearbyEntities(range, range, range)) {
-                if (entity instanceof Creature) {
-                    final Creature creature = (Creature) entity;
-                    creature.setTarget(player);
-                }
-            }
-            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldown(uuid);
-        }
+//        if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
+//            if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldown(uuid)) return;
+//
+//            final int range = Utils.getTagInt(eventItem, "range");
+//
+//            for (Entity entity : player.getNearbyEntities(range, range, range)) {
+//                if (entity instanceof Creature) {
+//                    final Creature creature = (Creature) entity;
+//                    creature.setTarget(player);
+//                }
+//            }
+//            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldown(uuid);
+//        }
     }
 }

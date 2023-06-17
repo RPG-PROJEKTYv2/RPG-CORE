@@ -14,6 +14,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
+import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
@@ -51,9 +53,7 @@ public class EntityDeathListener implements Listener {
 //        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
         e.getEntity().setHealth(e.getEntity().getMaxHealth());
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn());
-        }, 1L);
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
         if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
             return;
         }
@@ -70,7 +70,7 @@ public class EntityDeathListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(e.getEntity(),
                     rpgcore.getNmsManager().makeTitle("&4&lZGINALES!", 5, 20, 5),
                     rpgcore.getNmsManager().makeSubTitle("&7Zostales zabity przez &c" + e2.getDamager().getName() + " &8(&c" +
-                            DoubleUtils.round(((LivingEntity) e2.getDamager()).getHealth(), 0) + "♥&8)", 5, 20, 5)));
+                            DoubleUtils.round(((LivingEntity) e2.getDamager()).getHealth() / 2, 0) + "♥&8)", 5, 20, 5)));
         }
 
         final Player victim = e.getEntity();
@@ -92,6 +92,10 @@ public class EntityDeathListener implements Listener {
                 pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
                 rpgcore.getPustelnikNPC().save(pustelnikUser);
             }
+        }
+        if (rpgcore.getCzarownicaNPC().find(killer.getUniqueId()).getMission() == 7) {
+            final CzarownicaUser czarownicaUser = rpgcore.getCzarownicaNPC().find(killer.getUniqueId());
+            czarownicaUser.getProgressMap().put(CzarownicaMissions.mission7Item, czarownicaUser.getProgressMap().get(CzarownicaMissions.mission7Item) + 1);
         }
         final OsUser killerOs = rpgcore.getOsManager().find(killer.getUniqueId());
         killerOs.setGraczeProgress(killerOs.getGraczeProgress() + 1);

@@ -1,6 +1,5 @@
 package rpg.rpgcore.artefakty.events;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -72,7 +71,11 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 final String map = player.getWorld().getName().replace("map", "");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn " + map + "-MOB3 " + ChanceHelper.getRandInt(15, 30) + " " + player.getWorld().getName() + "," + String.format("%.2f", player.getLocation().getX()) + "," + String.format("%.2f", player.getLocation().getY() + 5) + "," + String.format("%.2f", player.getLocation().getZ()));
+                for (int i = 0; i < ChanceHelper.getRandInt(15, 30); i++) {
+                    final double x = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    final double z = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    RPGCORE.getMythicMobs().getMobManager().spawnMob(map + "-MOB3", player.getLocation().clone().add(x, 5, z));
+                }
                 rpgcore.getCooldownManager().givePlayerRogCooldown(uuid);
                 player.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie uzyto &4&lKrwistego Legendarnego Rogu!"));
                 return;

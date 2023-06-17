@@ -65,7 +65,13 @@ public class OsUser {
         this.drwalProgress = document.getInteger("drwalProgress");
         this.rybakProgress = document.getInteger("rybakProgress");
         this.gornikProgress = document.getInteger("gornikProgress");
-        this.czasProgress = document.getLong("czasProgress");
+        long czasProgress;
+        try {
+            czasProgress = document.getLong("czasProgress");
+        } catch (Exception e) {
+            czasProgress = (long) document.getInteger("czasProgress");
+        }
+        this.czasProgress = czasProgress;
         this.krysztalyProgress = document.getInteger("krysztalyProgress");
         this.dungeonyProgress = document.getInteger("dungeonyProgress");
     }

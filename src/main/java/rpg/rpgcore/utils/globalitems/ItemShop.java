@@ -83,19 +83,25 @@ public enum ItemShop {
             "&3www.hellrpg.pl &8lub na naszym discordzie &3dc.hellrpg.pl"
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "30d").toItemStack().clone())),
     IS19("PELERYNKA", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora").setLore(Arrays.asList(
-            "&7Zasieg: &612 kratek",
+            "&7Tryb: &aExpienie",
+            "&7Cooldown: &c30 sekund",
             "",
-            "&8Tajemnicza skora, zdarta z pradawnego smoka",
-            "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
-            "&8jej dzialania zostana zwrocone przeciwko tobie"
-    )).addTagInt("range", 12).addGlowing().toItemStack().clone())),
+            "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
+            "&7Zmienia tryb na &aExpienie &7lub &cAFK",
+            "",
+            "&6Umiejetnosc: Uzycie przedmiotu &e&lRMB",
+            "&7Respi od &e1 &7do &e5 &7najlepszych mobów z mapy"
+    )).addTagString("type", "exp").addTagInt("range", 30).addGlowing().toItemStack().clone())),
     IS20("PELERYNKA+", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora&b&l+").setLore(Arrays.asList(
-            "&7Zasieg: &625 kratek",
+            "&7Tryb: &aExpienie",
+            "&7Cooldown: &c30 sekund",
             "",
-            "&8Tajemnicza skora, zdarta z pradawnego smoka",
-            "&8uzycie jej spowoduje, ze wszystkie potwory w zasiegu",
-            "&8jej dzialania zostana zwrocone przeciwko tobie"
-    )).addTagInt("range", 25).addGlowing().toItemStack().clone())),
+            "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
+            "&7Zmienia tryb na &aExpienie &7lub &cAFK",
+            "",
+            "&6Umiejetnosc: Uzycie przedmiotu &e&lRMB",
+            "&7Respi od &e3 &7do &e7 &7najlepszych mobów z mapy"
+    )).addTagString("type", "exp").addTagInt("range", 40).addGlowing().toItemStack().clone())),
     IS21("DAR_KLEOPATRY", Arrays.asList(new ItemBuilder(Material.INK_SACK, 1, (short) 11).setName("&e&lDar Kleopatry").setLore(Arrays.asList(
             "&fPrzedmiot ten pozwoli Ci zresetowac misje u &e&lPustelnika"
     )).addGlowing().toItemStack().clone()));

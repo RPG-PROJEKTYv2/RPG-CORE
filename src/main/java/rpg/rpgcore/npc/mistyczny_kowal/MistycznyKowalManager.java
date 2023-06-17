@@ -53,49 +53,49 @@ public class MistycznyKowalManager {
         String prefix;
         int itemCount;
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.RUDA_MITHRYLU.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.RUDA_MITHRYLU.getItemStack());
         prefix = (itemCount >= 5 ? "&2&m" : "&2");
         lore.add("  &8- " + prefix + "Ruda Mithrylu&8 x5 (" + itemCount + "/5)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_SZATAROZBOJNIKA.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_SZATAROZBOJNIKA.getItem());
         prefix = (itemCount >= 16 ? "&8&m" : "&8");
         lore.add("  &8- " + prefix + "Szata Rozbojnika&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_OKOGOBLINA.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_OKOGOBLINA.getItem());
         prefix = (itemCount >= 16 ? "&a&m" : "&a");
         lore.add("  &8- " + prefix + "Oko Goblina&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_SKORAGORYLA.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_SKORAGORYLA.getItem());
         prefix = (itemCount >= 16 ? "&f&m" : "&f");
         lore.add("  &8- " + prefix + "Skora Goryla&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_ZLAMANAKOSC.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_ZLAMANAKOSC.getItem());
         prefix = (itemCount >= 16 ? "&7&m" : "&7");
         lore.add("  &8- " + prefix + "Zlamana Kosc&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_LZAOCEANU.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_LZAOCEANU.getItem());
         prefix = (itemCount >= 16 ? "&b&m" : "&b");
         lore.add("  &8- " + prefix + "Lza Oceanu&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_WILCZEFUTRO.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_WILCZEFUTRO.getItem());
         prefix = (itemCount >= 16 ? "&7&m" : "&7");
         lore.add("  &8- " + prefix + "Wilcze Futro&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, Ulepszacze.I_OGNISTYPYL.getItem());
+        itemCount = Utils.getPlayerInventoryItemCount(player, Ulepszacze.I_OGNISTYPYL.getItem());
         prefix = (itemCount >= 16 ? "&c&m" : "&c");
         lore.add("  &8- " + prefix + "Ognisty Pyl&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I12.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I12.getItemStack());
         prefix = (itemCount >= 24 ? "&e&m" : "&e");
         lore.add("  &8- " + prefix + "Zloto&8 x24 (" + itemCount + "/24)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I13.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I13.getItemStack());
         prefix = (itemCount >= 24 ? "&b&m" : "&b");
         lore.add("  &8- " + prefix + "Brylant&8 x24 (" + itemCount + "/24)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I14.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I14.getItemStack());
         prefix = (itemCount >= 24 ? "&a&m" : "&a");
         lore.add("  &8- " + prefix + "Szmaragd&8 x24 (" + itemCount + "/24)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I15.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I15.getItemStack());
         prefix = (itemCount >= 20 ? "&c&m" : "&c");
         lore.add("  &8- " + prefix + "Pyl&8 x20 (" + itemCount + "/20)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I16.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I16.getItemStack());
         prefix = (itemCount >= 20 ? "&7&m" : "&7");
         lore.add("  &8- " + prefix + "Kamien&8 x20 (" + itemCount + "/20)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I17.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I17.getItemStack());
         prefix = (itemCount >= 16 ? "&8&m" : "&8");
         lore.add("  &8- " + prefix + "Stal&8 x16 (" + itemCount + "/16)");
-        itemCount = getPlayerInventoryItemCount(player, GlobalItem.I18.getItemStack());
+        itemCount = Utils.getPlayerInventoryItemCount(player, GlobalItem.I18.getItemStack());
         prefix = (itemCount >= 16 ? "&7&m" : "&7");
         lore.add("  &8- " + prefix + "Proch&8 x16 (" + itemCount + "/16)");
         prefix = (kasa >= 10_000_000 ? "&a&m" : "&c");
@@ -103,15 +103,6 @@ public class MistycznyKowalManager {
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
 
         return lore;
-    }
-
-    private int getPlayerInventoryItemCount(final Player player, final ItemStack itemStack) {
-        int count = 0;
-        for (final ItemStack item : player.getInventory().getContents()) {
-            if (item == null) continue;
-            if (item.isSimilar(itemStack)) count += item.getAmount();
-        }
-        return count;
     }
 
     public void getRandomMiecz(final Player player) {

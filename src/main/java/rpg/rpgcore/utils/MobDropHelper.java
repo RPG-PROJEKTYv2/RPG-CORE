@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
+import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.przyrodnik.enums.PrzyrodnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -53,13 +55,16 @@ public class MobDropHelper {
         if (rank == RankTypePlayer.TWORCA) szczescie += 35;
         if (rank == RankTypePlayer.ELITA) szczescie += 50;
         final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
-        final double niesDropChance50plus = getDropChance(szczescie, 0.04);
+        final double niesDropChance50plus = getDropChance(szczescie, 0.03);
         final double chestDropChance50lvl = getDropChance(szczescie, 2.7);
         final double chestDropChance50plus = getDropChance(szczescie, 1.25);
-        final double sakwaDropChance = getDropChance(szczescie, 0.03);
 
 
         rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
+        if (rpgcore.getCzarownicaNPC().find(uuid).getMission() == 5) {
+            final CzarownicaUser czarownicaUser = rpgcore.getCzarownicaNPC().find(uuid);
+            czarownicaUser.getProgressMap().put(CzarownicaMissions.mission5Item, czarownicaUser.getProgressMap().get(CzarownicaMissions.mission5Item) + 1);
+        }
 
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
         // TODO PODSTAWOWY HELLCASE DROPI TYLKO Z KUFRA WARTOSCIOWEGO BADZ MISJI :]
@@ -293,7 +298,7 @@ public class MobDropHelper {
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.04), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.07), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I3.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I9.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, Bossy.I1.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);
@@ -311,7 +316,7 @@ public class MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
                 rpgcore.getBossyManager().reset70_80();
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.06), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
                     addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);
                 }

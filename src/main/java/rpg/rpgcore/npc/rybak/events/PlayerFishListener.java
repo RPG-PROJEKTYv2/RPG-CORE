@@ -81,6 +81,10 @@ public class PlayerFishListener implements Listener {
             final float toCheckBefore = (check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
                 final float toCheckAfter = (check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
+                if (rpgcore.getRybakNPC().isSameLocation(player.getUniqueId(), String.valueOf(check), toCheckAfter)) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
+                    return;
+                }
                 rpgcore.getRybakNPC().addFishingCount(player.getUniqueId());
                 player.sendMessage(Utils.format("&6&lRybak &8>> &7Do ochrony &cAnty-AFK &7pozostalo &6" + (10 - rpgcore.getRybakNPC().getFishingCount(uuid) + " &7polowow.")));
                 if (toCheckBefore == toCheckAfter) {

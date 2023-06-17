@@ -107,26 +107,31 @@ public class MagazynierNPC {
         final MagazynierMissions missionsU = magazynierUser.getMissions();
         boolean done = false;
         switch (mission) {
-            case 1: if (missionsU.isMission1done()) {
-                done = true;
+            case 1:
+                if (missionsU.isMission1done()) {
+                    done = true;
+                }
                 break;
-            }
-            case 2: if (missionsU.isMission2done()) {
-                done = true;
+            case 2:
+                if (missionsU.isMission2done()) {
+                    done = true;
+                }
                 break;
-            }
-            case 3: if (missionsU.isMission3done()) {
-                done = true;
+            case 3:
+                if (missionsU.isMission3done()) {
+                    done = true;
+                }
                 break;
-            }
-            case 4: if (missionsU.isMission4done()) {
-                done = true;
+            case 4:
+                if (missionsU.isMission4done()) {
+                    done = true;
+                }
                 break;
-            }
-            case 5: if (missionsU.isMission5done()) {
-                done = true;
+            case 5:
+                if (missionsU.isMission5done()) {
+                    done = true;
+                }
                 break;
-            }
         }
         String progress = String.valueOf(missionsU.getProgress());
         String reqAmount = String.valueOf(missions.getReqAmount());
@@ -134,11 +139,13 @@ public class MagazynierNPC {
             progress = Utils.durationToString((long) magazynierUser.getMissions().getProgress(), true);
             reqAmount = Utils.durationToString((long) missions.getReqAmount(), true);
         }
-        if (done) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
+        if (done)
+            return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&a&lWykonano!"
             )).toItemStack().clone();
-        if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(missions.getMissionItem(), "mission")) return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
+        if (magazynierUser.getMissions().getSelectedMission() == Utils.getTagInt(missions.getMissionItem(), "mission"))
+            return new ItemBuilder(missions.getMissionItem().clone()).addGlowing().setLoreCrafting(missions.getMissionItem().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&7Postep: &6" + progress + "&7/&6" + reqAmount
             )).toItemStack().clone();
@@ -148,12 +155,18 @@ public class MagazynierNPC {
 
     private int getPrice(final Player player) {
         switch (this.find(player.getUniqueId()).getUnlocked()) {
-            case 0: return 150;
-            case 1: return 250;
-            case 2: return 500;
-            case 3: return 750;
-            case 4: return 1_500;
-            default: return 999_999;
+            case 0:
+                return 150;
+            case 1:
+                return 250;
+            case 2:
+                return 500;
+            case 3:
+                return 750;
+            case 4:
+                return 1_500;
+            default:
+                return 999_999;
         }
     }
 
@@ -208,10 +221,55 @@ public class MagazynierNPC {
 
         player.openInventory(gui);
     }
+    public void openMagazynyList(final Player player, final UUID target) {
+        final MagazynierUser user = this.find(target);
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lLista Magazynow &8&l- &6&l" + target.toString()));
+        if (user.isUnlocked1()) {
+            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&aMagazyn #1").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+        } else {
+            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&cMagazyn #1").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
+        }
+        if (user.isUnlocked2()) {
+            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&aMagazyn #2").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+        } else {
+            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&cMagazyn #2").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
+        }
+        if (user.isUnlocked3()) {
+            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&aMagazyn #3").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+        } else {
+            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&cMagazyn #3").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
+        }
+        if (user.isUnlocked4()) {
+            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&aMagazyn #4").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+        } else {
+            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&cMagazyn #4").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
+        }
+        if (user.isUnlocked5()) {
+            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&aMagazyn #5").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+        } else {
+            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&cMagazyn #5").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
+        }
+
+        player.openInventory(gui);
+    }
 
 
     public void openMagazyn(final Player player, final String magazynContents, final int magazynNumber) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&c&lMagazyn #" + magazynNumber));
+        if (magazynContents.isEmpty()) {
+            player.openInventory(gui);
+            return;
+        }
+        try {
+            ItemStack[] contents = Utils.itemStackArrayFromBase64(magazynContents);
+            gui.setContents(contents);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        player.openInventory(gui);
+    }
+    public void openMagazyn(final Player player, final UUID target, final String magazynContents, final int magazynNumber) {
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&c&lMagazyn #" + magazynNumber + " &8&l- &6&l" + target.toString()));
         if (magazynContents.isEmpty()) {
             player.openInventory(gui);
             return;

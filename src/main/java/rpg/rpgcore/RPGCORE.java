@@ -24,10 +24,7 @@ import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
-import rpg.rpgcore.bossy.events.MitycznyPajakListener80_90;
-import rpg.rpgcore.bossy.events.PiekielnyRycerzListener60_70;
-import rpg.rpgcore.bossy.events.PrzekletyCzarnoksieznikListener;
-import rpg.rpgcore.bossy.events.SmoczyCesarzListener;
+import rpg.rpgcore.bossy.events.*;
 import rpg.rpgcore.chat.ChatCommand;
 import rpg.rpgcore.chat.ChatManager;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
@@ -70,6 +67,7 @@ import rpg.rpgcore.commands.admin.ban.BanManager;
 import rpg.rpgcore.commands.admin.ban.TempBanCommand;
 import rpg.rpgcore.commands.admin.ban.UnBanCommand;
 import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
+import rpg.rpgcore.commands.admin.drop.DropCommand;
 import rpg.rpgcore.commands.admin.god.GodCommand;
 import rpg.rpgcore.commands.admin.god.GodManager;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListCommand;
@@ -112,10 +110,7 @@ import rpg.rpgcore.commands.player.topki.TopkiInventoryClickListener;
 import rpg.rpgcore.commands.player.topki.TopkiManager;
 import rpg.rpgcore.database.MongoManager;
 import rpg.rpgcore.discord.DiscordBot;
-import rpg.rpgcore.dmg.DamageManager;
-import rpg.rpgcore.dmg.EntityCombustListener;
-import rpg.rpgcore.dmg.EntityDamageEntityListener;
-import rpg.rpgcore.dmg.EntityDeathListener;
+import rpg.rpgcore.dmg.*;
 import rpg.rpgcore.dodatki.DodatkiManager;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInteractListener;
 import rpg.rpgcore.dodatki.akcesoriaD.events.AkcesoriaDodatInventoryClickListener;
@@ -190,14 +185,15 @@ import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryCloseListener;
+import rpg.rpgcore.npc.handlarz.events.PelerynkiInteractListener;
 import rpg.rpgcore.npc.kolekcjoner.events.KolekcjonerInventoryClick;
 import rpg.rpgcore.npc.kolekcjoner.KolekcjonerNPC;
 import rpg.rpgcore.npc.kowal.events.KowalInventoryClickListener;
 import rpg.rpgcore.npc.kowal.events.KowalInventoryCloseListener;
 import rpg.rpgcore.npc.kowal.KowalNPC;
 import rpg.rpgcore.npc.lesnik.events.LesnikInventoryClick;
-import rpg.rpgcore.npc.lesnik.events.LesnikInventoryClose;
 import rpg.rpgcore.npc.lesnik.LesnikNPC;
+import rpg.rpgcore.npc.lesnik.events.LesnikItemInteractListener;
 import rpg.rpgcore.npc.lowca.events.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
@@ -255,6 +251,7 @@ import rpg.rpgcore.wyszkolenie.events.WyszkolenieInventoryClickListener;
 import rpg.rpgcore.zmianki.ZmiankiManager;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryClickListener;
 import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
+import rpg.rpgcore.zmianki.events.ZmiankiItemInteractListener;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.Field;
@@ -594,6 +591,9 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new ChangeMobsCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ResetDungeonCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new UstawieniaKontaCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new LiveCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new GammaCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new DropCommand());
     }
 
     private void initEvents() {
@@ -727,6 +727,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new HandlarzInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new HandlarzInventoryCloseListener(this), this);
         this.getServer().getPluginManager().registerEvents(new HandlarzInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PelerynkiInteractListener(), this);
 
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClickListener(this), this);
@@ -754,7 +755,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...LESNIK
         this.getServer().getPluginManager().registerEvents(new LesnikInventoryClick(this), this);
-        this.getServer().getPluginManager().registerEvents(new LesnikInventoryClose(), this);
+        this.getServer().getPluginManager().registerEvents(new LesnikItemInteractListener(), this);
 
         // ...WYSLANNIK
         this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
@@ -793,6 +794,7 @@ public final class RPGCORE extends JavaPlugin {
         // ZMIANKI
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ZmiankiInventoryCloseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ZmiankiItemInteractListener(), this);
 
         // EFFEKTY ARMOR
         this.getServer().getPluginManager().registerEvents(new ArmorEffectListener(this), this);
@@ -800,9 +802,6 @@ public final class RPGCORE extends JavaPlugin {
         // ARTEFAKTY
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArtefaktyInteractListener(this), this);
-
-        // book and quill blocked
-        this.getServer().getPluginManager().registerEvents(new BookInteractListener(this), this);
 
         // PLAYER INVENTORY
         this.getServer().getPluginManager().registerEvents(new PlayerOpenInventoryListener(), this);
@@ -969,6 +968,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PiekielnyRycerzListener60_70(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
+        this.getServer().getPluginManager().registerEvents(new PodwodnyStraznikEntityInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new SmoczyCesarzListener(), this);
     }
 

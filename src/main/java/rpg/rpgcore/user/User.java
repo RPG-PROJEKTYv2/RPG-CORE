@@ -8,6 +8,7 @@ import rpg.rpgcore.ranks.RankPlayerUser;
 import rpg.rpgcore.ranks.RankUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
+import rpg.rpgcore.utils.DoubleUtils;
 
 import java.util.UUID;
 
@@ -73,7 +74,13 @@ public class User {
         this.muteInfo = document.getString("muteInfo");
         this.punishmentHistory = document.getString("punishmentHistory");
         this.rankUser = new RankUser(RankType.valueOf(document.getString("rankName")));
-        this.rankPlayerUser = new RankPlayerUser(RankTypePlayer.valueOf(document.getString("rankPlayerName").toUpperCase()), document.getLong("rankPlayerTime"));
+        long rankPlayerTime;
+        try {
+            rankPlayerTime = document.getLong("rankPlayerTime");
+        } catch (ClassCastException e) {
+            rankPlayerTime = (long) document.getInteger("rankPlayerTime");
+        }
+        this.rankPlayerUser = new RankPlayerUser(RankTypePlayer.valueOf(document.getString("rankPlayerName").toUpperCase()), rankPlayerTime);
         this.lvl = document.getInteger("lvl");
         this.exp = document.getDouble("exp");
         this.kasa = document.getDouble("kasa");
@@ -85,9 +92,21 @@ public class User {
         this.hellCodeLogin = document.getBoolean("hellCodeLogin");
         this.inventoriesUser = new InventoriesUser(document.getString("inventory"), document.getString("enderchest"), document.getString("armor"));
         this.pierscienDoswiadczenia = document.getInteger("pierscienDoswiadczenia");
-        this.pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
+        long pierscienDoswiadczeniaTime;
+        try {
+            pierscienDoswiadczeniaTime = document.getLong("pierscienDoswiadczeniaTime");
+        } catch (ClassCastException e) {
+            pierscienDoswiadczeniaTime = (long) document.getInteger("pierscienDoswiadczeniaTime");
+        }
+        this.pierscienDoswiadczeniaTime = pierscienDoswiadczeniaTime;
         this.krytyk = document.getDouble("krytyk");
-        this.kitCooldown = document.getLong("kitCooldown");
+        long kitCooldown;
+        try {
+            kitCooldown = document.getLong("kitCooldown");
+        } catch (ClassCastException e) {
+            kitCooldown = (long) document.getInteger("kitCooldown");
+        }
+        this.kitCooldown = kitCooldown;
         this.tworca = document.getBoolean("tworca");
     }
 
@@ -109,8 +128,8 @@ public class User {
                 .append("rankPlayerName", this.rankPlayerUser.getRankType().getName())
                 .append("rankPlayerTime", this.rankPlayerUser.getTime())
                 .append("lvl", this.lvl)
-                .append("exp", this.exp)
-                .append("kasa", this.kasa)
+                .append("exp", DoubleUtils.round(this.exp, 2))
+                .append("kasa", DoubleUtils.round(this.kasa, 2))
                 .append("hellcoins", this.hellcoins)
                 .append("msgOff", this.msgOff)
                 .append("adminCode", this.adminCode)

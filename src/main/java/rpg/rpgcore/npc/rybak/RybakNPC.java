@@ -39,6 +39,7 @@ public class RybakNPC {
     private final Map<UUID, Integer> failedAttemptMap = new HashMap<>();
     private final Map<UUID, Integer> fishingCount = new HashMap<>();
     private final Map<UUID, Integer> taskMap = new HashMap<>();
+    private final Map<UUID, Map<String, Float>> locationMap = new HashMap<>();
     private final List<UUID> passed = new ArrayList<>();
     private final RandomItems<ItemStack> rybakDrops = new RandomItems<>();
 
@@ -348,6 +349,17 @@ public class RybakNPC {
 
     public List<UUID> getPassed() {
         return passed;
+    }
+
+    public void addLocation(final UUID uuid, final String type, final float loc) {
+        if (!this.locationMap.containsKey(uuid)) this.locationMap.put(uuid, new HashMap<>());
+        this.locationMap.get(uuid).put(type, loc);
+    }
+
+    public boolean isSameLocation(final UUID uuid, final String type, final float loc) {
+        if (!this.locationMap.containsKey(uuid)) return false;
+        if (!this.locationMap.get(uuid).containsKey(type)) return false;
+        return this.locationMap.get(uuid).get(type) == loc;
     }
 
     public void add(final RybakObject rybakObject) {

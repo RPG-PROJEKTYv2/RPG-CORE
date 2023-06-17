@@ -50,10 +50,8 @@ import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 
 public class UstawieniaKontaManager {
     private final RPGCORE rpgcore;
@@ -517,9 +515,11 @@ public class UstawieniaKontaManager {
         final CzarownicaMissions czarownicaMission = CzarownicaMissions.getMissionById(czarownica.getMission());
         final List<String> lore2 = new ArrayList<>();
         if (czarownicaMission != null) {
-            czarownicaMission.getReqProgressMap(czarownica).forEach((key, value) -> lore2.add("&7    - &c" + key.getItemMeta().getDisplayName() + "&7: &e" + value));
+            final LinkedHashMap<ItemStack, Integer> reqMap = czarownicaMission.getReqProgressMap(czarownica);
+            czarownicaMission.fix(czarownica);
+            reqMap.forEach((key, value) -> lore2.add("&7    - &c" + key.getItemMeta().getDisplayName() + "&7: &e" + value));
             lore2.add("&7Postep:");
-            czarownica.getProgressMap().forEach((key, value) -> lore2.add("&7  -&c" + key.getItemMeta().getDisplayName() + ": &e" + value + "&7/&e" + czarownicaMission.getReqProgressMap(czarownica).get(key) + "&7(&e" + DoubleUtils.round(((double) value / czarownicaMission.getReqProgressMap(czarownica).get(key)) * 100, 2) + "%&7)"));
+            czarownica.getProgressMap().forEach((key, value) -> lore2.add("&7  -&c" + key.getItemMeta().getDisplayName() + ": &e" + value + "&7/&e" + reqMap.get(key) + "&7(&e" + DoubleUtils.round(((double) value / reqMap.get(key)) * 100, 2) + "%&7)"));
         }
         gui.setItem(14, new ItemBuilder(Material.BOOK).setName("&7Ustaw &5&lCzarownica &7gracza &6&l" + user.getName()).setLoreCrafting(Arrays.asList(
                 "&7Kliknij, zeby ustawic postep misji/misje",
@@ -956,7 +956,7 @@ public class UstawieniaKontaManager {
     }
 
     public void openCzarownica(final Player player, final UUID uuid) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&a&lMisje &8&l>> &5&lCzarownica &4&l- &e&l" + uuid.toString()));
+        final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&a&lMisje &8&l>> &5&lCzarownica &4&l- &e&l" + uuid.toString()));
         final CzarownicaUser user = rpgcore.getCzarownicaNPC().find(uuid);
 
         gui.setItem(3, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje").setLore(Arrays.asList(
@@ -970,6 +970,7 @@ public class UstawieniaKontaManager {
         )).toItemStack().clone());
         int i = 10;
         for (ItemStack item : user.getProgressMap().keySet()) {
+            if (i == 17) i += 11;
             gui.setItem(i, item.clone());
             gui.setItem(i + 9, new ItemBuilder(Material.BOOK).setName("&7Postep: &c" + user.getProgressMap().get(item)).setLore(Arrays.asList(
                     "&6LMB &7- zeby dodac 1.",

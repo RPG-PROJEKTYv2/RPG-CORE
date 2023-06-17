@@ -146,7 +146,6 @@ public class AdminPanelManager {
         gui.setItem(2, Przepustki.getItem("I3", 1));
         gui.setItem(3, Przepustki.getItem("I4", 1));
         gui.setItem(4, GlobalItem.I50.getItemStack());
-        gui.setItem(5, GlobalItem.I51.getItemStack());
 
         gui.setItem(6, GlobalItem.I_OCZYSZCZENIE.getItemStack());
         gui.setItem(7, GlobalItem.I10.getItemStack());

@@ -900,6 +900,13 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                 case 23:
                 case 24:
                 case 25:
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
                     czarownica.getProgressMap().replace(gui.getItem(slot - 9), czarownica.getProgressMap().get(gui.getItem(slot - 9)) + value);
                     break;
             }

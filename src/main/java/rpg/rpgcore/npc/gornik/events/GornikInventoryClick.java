@@ -140,7 +140,7 @@ public class GornikInventoryClick implements Listener {
                 return;
             }
             if (slot == 22) {
-                if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() < 28) return;
+                if (RPGCORE.getInstance().getGornikNPC().find(uuid).getGornikUser().getMission() <= 28) return;
                 RPGCORE.getInstance().getGornikNPC().openDrzewko(player);
                 return;
             }

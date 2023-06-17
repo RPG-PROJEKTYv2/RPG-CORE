@@ -44,8 +44,7 @@ public enum GlobalItem {
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki
-    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&6&lKamien Zaczarowania Miecza").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu")).toItemStack().clone()),
-    I51("I51", new ItemBuilder(Material.INK_SACK, 1, (short) 14).setName("&6&lKamien Zaczarowania Zbroi").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twojej zbroi")).toItemStack().clone()),
+    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 13).setName("&d&lKamien Magicznego Zaczarowania").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu lub zbroi")).toItemStack().clone()),
 
     // PIERSCIENIE DOSWIADCZENIA
     I52("I52", new ItemBuilder(Material.GHAST_TEAR).setName("&e&lPierscien Doswiadczenia &6&l25%").setLore(Arrays.asList(
@@ -147,7 +146,7 @@ public enum GlobalItem {
     public static ItemStack getPercentSword(final SwordType swordType, final int percent) {
         ItemBuilder is;
         if (swordType == SwordType.KS) {
-            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, false));
+            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, true));
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&3Silny Na Ludzi: &f+" + percent + "%",
@@ -157,7 +156,7 @@ public enum GlobalItem {
             )).addTagInt("ludzie", percent).addTagString("type", "ks").addTagInt("lvl", 65);
             return is.toItemStack().clone();
         } else {
-            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowy Sztylet", Material.DIAMOND_SWORD, 35, 15, false));
+            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowy Sztylet", Material.DIAMOND_SWORD, 35, 15, true));
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&3Silny Na Potwory: &f+" + percent + "%",

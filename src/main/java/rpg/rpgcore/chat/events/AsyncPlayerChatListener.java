@@ -170,6 +170,7 @@ public class AsyncPlayerChatListener implements Listener {
             "lvl", "os", "osiagniecia",
             "message", "msg", "pv" ,"pw", "m", "reply", "r",
             "targ", "ah", "gielda",
+            "ec", "enderchest",
             "kasa", "money", "bal", "balance", "wyplac", "withdraw", "wystaw", "sprawdz", "helpop",
             "guild", "g", "klan", "gildia", "kosz", "chatpanel", "panel", "chatp", "party", "p",
             "pety", "pets", "ignore", "ignoruj", "dodatki", "bony", "akce", "akcesoria", "ekwipunek",
@@ -177,7 +178,7 @@ public class AsyncPlayerChatListener implements Listener {
             "artefakty", "craft", "rozpiska", "crafting", "listanpc", "lnpc", "npc", "poziom", "level",
             "showcaseitem", "profil", "staty", "hs", "stats", "hellsy", "statystyki", "coins", "online", "k",
             "misje", "list", "lista", "gracze", "onlinelist", "listagraczy", "craftingi", "rangi", "vip", "elita",
-            "topki", "top", "ping", "tower", "dt", "demontower"
+            "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision"
     );
     final List<String> ownCommandsAdmin = Arrays.asList(
             "adminpanel", "paneladmin",
@@ -196,14 +197,12 @@ public class AsyncPlayerChatListener implements Listener {
             "clear",
             "disable", "wylacz",
             "enchant", "ench",
-            "ec", "enderchest",
             "enchantcustom", "cenchant", "enchc",
             "fly",
             "giveakcesoria", "akcedaj", "dajakce", "giveakce",
             "gm", "gamemode",
             "heal",
             "itemshop", "sklep", "is",
-            "max",
             "mem", "ram", "memory",
             "removenearbyentities",
             "resetdungeon",
@@ -215,7 +214,8 @@ public class AsyncPlayerChatListener implements Listener {
             "setpremium", "spremium", "setp", "setpremium", "premium", "tworca",
             "speed",
             "testanimation",
-            "test"
+            "test",
+            "drop"
     );
 
     @EventHandler
@@ -226,11 +226,11 @@ public class AsyncPlayerChatListener implements Listener {
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
         if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
-//            if (!ownCommandsPlayer.contains(command.toLowerCase()) && !ownCommandsAdmin.contains(command.toLowerCase())) {
-//                event.setCancelled(true);
-//                player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
-//                return;
-//            }
+            if (!ownCommandsPlayer.contains(command.toLowerCase()) && !ownCommandsAdmin.contains(command.toLowerCase())) {
+                event.setCancelled(true);
+                player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
+                return;
+            }
         }
         if (topic == null) {
             event.setCancelled(true);
