@@ -141,7 +141,10 @@ public class ArmorEffectListener implements Listener {
 
                 if (type.contains("_HELMET")) {
                     if (e.getSlot() == 39 && player.getInventory().getItem(39) == null) {
-                        ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(e.getCursor(), "prot"));
+                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                            if (player.getInventory().getHelmet() == null) return;
+                            ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getInventory().getHelmet(), "prot"));
+                        }, 1L);
                     }
                 }
                 if (e.getSlot() == 39 && player.getInventory().getItem(39) != null) {
@@ -149,7 +152,10 @@ public class ArmorEffectListener implements Listener {
                 }
                 if (type.contains("_CHESTPLATE")) {
                     if (e.getSlot() == 38 && player.getInventory().getItem(38) == null) {
-                        ArmorEffectsHelper.addEffectChestPlate(player, Utils.getTagInt(e.getCursor(), "prot"));
+                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                            if (player.getInventory().getChestplate() == null) return;
+                            ArmorEffectsHelper.addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getChestplate(), "prot"));
+                        }, 1L);
                     }
                 }
                 if (e.getSlot() == 38 && player.getInventory().getItem(38) != null) {
@@ -161,7 +167,10 @@ public class ArmorEffectListener implements Listener {
 
                 if (type.contains("_LEGGINGS")) {
                     if (e.getSlot() == 37 && player.getInventory().getItem(37) == null) {
-                        ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
+                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                            if (player.getInventory().getLeggings() == null) return;
+                            ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getLeggings(), "prot"));
+                        }, 1L);
                     }
                 }
                 if (e.getSlot() == 37 && player.getInventory().getItem(37) != null) {
@@ -169,7 +178,10 @@ public class ArmorEffectListener implements Listener {
                 }
                 if (type.contains("_BOOTS")) {
                     if (e.getSlot() == 36 && player.getInventory().getItem(36) == null) {
-                        ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
+                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                            if (player.getInventory().getBoots() == null) return;
+                            ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getBoots(), "prot"));
+                        }, 1L);
                     }
                 }
                 if (e.getSlot() == 36 && player.getInventory().getItem(36) != null) {

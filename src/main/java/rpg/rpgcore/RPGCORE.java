@@ -969,6 +969,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
         this.getServer().getPluginManager().registerEvents(new PodwodnyStraznikEntityInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new KrysztalowyWladca110_120Listener(this), this);
         this.getServer().getPluginManager().registerEvents(new SmoczyCesarzListener(), this);
     }
 

@@ -1,7 +1,9 @@
 package rpg.rpgcore.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,13 +20,16 @@ import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.pets.Pet;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
@@ -47,7 +52,7 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(final PlayerLoginEvent e) {
         if (!rpgcore.getUserManager().isUser(e.getPlayer().getUniqueId())) {
             if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_EXISTING_DATABASE&8)")), 1L);
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString())), 1L);
                 return;
             }
             final Player player = e.getPlayer();
@@ -72,6 +77,20 @@ public class PlayerJoinListener implements Listener {
         }
     }
 
+    private final World world = Bukkit.getWorld("1-10map");
+    private final List<Location> spawnLocations1_10 = Arrays.asList(
+            new Location(world, -68.5, 76, -296.5),
+            new Location(world, -95.5, 76, -346.5),
+            new Location(world, -160.5, 76, -306.5),
+            new Location(world, -28.5, 76, -283.5),
+            new Location(world, 31.5, 76, -290.5),
+            new Location(world, 51.5, 76, -210.5),
+            new Location(world, 83.5, 78, -157.5),
+            new Location(world, 96.5, 78, -61.5)
+    );
+
+
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoinListener(final PlayerJoinEvent e) {
 
@@ -87,11 +106,16 @@ public class PlayerJoinListener implements Listener {
         player.getOpenInventory().getTopInventory().clear();
 
 
-        player.teleport(rpgcore.getSpawnManager().getSpawn());
         e.setJoinMessage(null);
 
 
         final User user = rpgcore.getUserManager().find(uuid);
+        if (user.getLvl() <= 5) {
+            player.teleport(spawnLocations1_10.get(ChanceHelper.getRandInt(0, spawnLocations1_10.size() - 1)));
+        } else {
+            player.teleport(rpgcore.getSpawnManager().getSpawn());
+        }
+
         user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
 

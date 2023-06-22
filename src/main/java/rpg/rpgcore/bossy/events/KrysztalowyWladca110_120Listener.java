@@ -1,6 +1,7 @@
 package rpg.rpgcore.bossy.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,9 +34,11 @@ public class KrysztalowyWladca110_120Listener implements Listener {
 
         final Player player = e.getPlayer();
         final Location loc = e.getClickedBlock().getLocation();
+        if (!loc.getWorld().getName().equals("110-120map")) return;
         if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.MAGMA_CREAM)) {
             final User user = rpgcore.getUserManager().find(player.getUniqueId());
-            if (user.getRankUser().isHighStaff()) {
+            if (user.getRankUser().isHighStaff() && user.isAdminCodeLogin() && player.getGameMode().equals(GameMode.CREATIVE)) {
+                if (!(e.getClickedBlock().getType().equals(Material.STAINED_GLASS_PANE) || e.getClickedBlock().getType().equals(Material.STAINED_GLASS))) return;
                 if (this.bossyUser.isRdzen110_120Location(e.getClickedBlock().getLocation())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa lokalizacja jest już zapisana!"));
                     return;
@@ -51,7 +54,8 @@ public class KrysztalowyWladca110_120Listener implements Listener {
 
         if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.FIREBALL)) {
             final User user = rpgcore.getUserManager().find(player.getUniqueId());
-            if (user.getRankUser().isHighStaff()) {
+            if (user.getRankUser().isHighStaff() && user.isAdminCodeLogin() && player.getGameMode().equals(GameMode.CREATIVE)) {
+                if (!(e.getClickedBlock().getType().equals(Material.STAINED_GLASS_PANE) || e.getClickedBlock().getType().equals(Material.STAINED_GLASS))) return;
                 if (!this.bossyUser.isRdzen110_120Location(e.getClickedBlock().getLocation())) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa lokalizacja nie jest zapisana!"));
                     return;
@@ -67,6 +71,8 @@ public class KrysztalowyWladca110_120Listener implements Listener {
 
         if (!this.bossyUser.isRdzen110_120Location(loc)) return;
         if (!player.getInventory().containsAtLeast(Bossy.I4.getItemStack(), 1)) return;
+        if (e.getItem() == null) return;
+        if (!e.getItem().isSimilar(Bossy.I4.getItemStack())) return;
         if (rpgcore.getCooldownManager().hasOdlamkiCooldown(player.getUniqueId())) return;
         e.setCancelled(true);
         e.setUseItemInHand(Event.Result.DENY);

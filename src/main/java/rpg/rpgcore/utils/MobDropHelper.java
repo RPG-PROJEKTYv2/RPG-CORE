@@ -54,6 +54,22 @@ public class MobDropHelper {
         if (rank == RankTypePlayer.VIP) szczescie += 25;
         if (rank == RankTypePlayer.TWORCA) szczescie += 35;
         if (rank == RankTypePlayer.ELITA) szczescie += 50;
+
+        // MAGICZNE ZACZAROWANIE (ZBROJA)
+        if (player.getInventory().getHelmet() != null) {
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
+        }
+        if (player.getInventory().getChestplate() != null) {
+            szczescie += Utils.getTagInt(player.getInventory().getChestplate(), "szczescie");
+        }
+        if (player.getInventory().getLeggings() != null) {
+            szczescie += Utils.getTagInt(player.getInventory().getLeggings(), "szczescie");
+        }
+        if (player.getInventory().getBoots() != null) {
+            szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
+        }
+
+
         final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
         final double niesDropChance50plus = getDropChance(szczescie, 0.03);
         final double chestDropChance50lvl = getDropChance(szczescie, 2.7);
@@ -481,6 +497,7 @@ public class MobDropHelper {
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I15.getItem().clone(), getDropChance(szczescie, 0.01), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I7.getItem().clone(), getDropChance(szczescie, 0.005), true, true, entity);
+                addDropPlayer(player, Bossy.I4.getItemStack().clone(), getDropChance(szczescie, 0.5), true, true, entity);
                 if (przyrodnikMission.getNumber() == 11) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("110-120"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }

@@ -126,6 +126,20 @@ public class DamageManager {
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
         wzmKrytDmg += bonuses.getWzmocnienieKryta();
 
+        // MAGICZNE ZACZAROWANIE (ZBROJA)
+        if (attacker.getInventory().getHelmet() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getHelmet(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getChestplate() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getChestplate(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getLeggings() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getLeggings(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getBoots() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getBoots(), "szansaWzmKryt");
+        }
+
 
         if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
@@ -217,6 +231,21 @@ public class DamageManager {
         krytyk += bonuses.getSzansanakryta();
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
         wzmKrytDmg += bonuses.getWzmocnienieKryta();
+
+        // MAGICZNE ZACZAROWANIE (ZBROJA)
+        if (attacker.getInventory().getHelmet() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getHelmet(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getChestplate() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getChestplate(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getLeggings() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getLeggings(), "szansaWzmKryt");
+        }
+        if (attacker.getInventory().getBoots() != null) {
+            wzmKryt += Utils.getTagDouble(attacker.getInventory().getBoots(), "szansaWzmKryt");
+        }
+
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
@@ -455,6 +484,21 @@ public class DamageManager {
         mnoznikProcenty += bonuses.getDefnamoby();
         mnoznikProcenty -= bonuses.getMinusdefnamoby();
         mnoznikProcenty -= bonuses.getMinussredniadefensywa();
+
+        // MAGICZNE ZACZAROWANIE (ZBROJA)
+        if (victim.getInventory().getHelmet() != null) {
+            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getHelmet(), "defMoby");
+        }
+        if (victim.getInventory().getChestplate() != null) {
+            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getChestplate(), "defMoby");
+        }
+        if (victim.getInventory().getLeggings() != null) {
+            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getLeggings(), "defMoby");
+        }
+        if (victim.getInventory().getBoots() != null) {
+            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getBoots(), "defMoby");
+        }
+
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {

@@ -45,7 +45,9 @@ public class ZmiankiManager {
                 lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(is, "silny-lvl-val") + "%"));
                 lore.remove(Utils.format("&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(is, "przeszywka") + "%"));
             } else {
-                // ZBROJA
+                lore.remove(Utils.format("&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(is, "defMoby") + "%"));
+                lore.remove(Utils.format("&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(is, "szansaWzmKryt") + "%"));
+                lore.remove(Utils.format("&7Szczescie: &f+" + Utils.getTagInt(is, "szczescie")));
             }
             lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
             lore.remove(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
@@ -56,21 +58,23 @@ public class ZmiankiManager {
         ItemStack toReturn = null;
         final int lvl = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getLvl();
         int loreLvl = 0;
-        if (lvl < 80) {
-            toReturn = rollFirstBonus(is, 1, 50);
-            toReturn = rollSecondBonus(toReturn.clone(), 0.01, 10);
-            toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
-            toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
-            toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
-            loreLvl = 50;
-        } else {
-            toReturn = rollFirstBonus(is, 1, 200);
-            toReturn = rollSecondBonus(toReturn.clone(), 0.01, 20);
-            toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
-            toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
-            toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
-            loreLvl = 80;
-        }
+        if (is.getType().toString().contains("_SWORD")) {
+            if (lvl < 80) {
+                toReturn = rollFirstBonus(is, 1, 50);
+                toReturn = rollSecondBonus(toReturn.clone(), 0.01, 10);
+                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
+                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
+                toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
+                loreLvl = 50;
+            } else {
+                toReturn = rollFirstBonus(is, 1, 200);
+                toReturn = rollSecondBonus(toReturn.clone(), 0.01, 20);
+                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
+                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
+                toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
+                loreLvl = 80;
+            }
+
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&8------------{&dMagiczne Zaczarowanie&8}------------",
@@ -82,6 +86,26 @@ public class ZmiankiManager {
                     "&cWymagany Poziom: &6" + loreLvl,
                     "&8------------{&dMagiczne Zaczarowanie&8}------------"
             )).addTagInt("lvl", loreLvl).toItemStack().clone();
+        } else {
+            net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
+            NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+            tag.setDouble("defMoby", ChanceHelper.getRandDouble(1, 10));
+            tag.setDouble("szansaWzmKryt", ChanceHelper.getRandDouble(0.1, 2.5));
+            tag.setInt("szczescie", ChanceHelper.getRandInt(1, 5));
+            nmsStack.setTag(tag);
+            toReturn = CraftItemStack.asBukkitCopy(nmsStack);
+
+            toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&8------------{&dMagiczne Zaczarowanie&8}------------",
+                    "&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(toReturn, "defMoby") + "%",
+                    "&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(toReturn, "szansaWzmKryt") + "%",
+                    "&7Szczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
+                    "&cWymagany Poziom: &645",
+                    "&8------------{&dMagiczne Zaczarowanie&8}------------"
+            )).addTagInt("lvl", 45).toItemStack().clone();
+        }
+
 
         return toReturn.clone();
     }
@@ -89,11 +113,8 @@ public class ZmiankiManager {
     public final ItemStack rollFirstBonus(final ItemStack is, final int min, final int max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        if (is.getType().toString().contains("_SWORD")) {
-            tag.setInt("dodatkowe", ChanceHelper.getRandInt(min, max));
-        } else {
-            //ZBROJA
-        }
+        tag.setInt("dodatkowe", ChanceHelper.getRandInt(min, max));
+
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
     }
@@ -101,12 +122,9 @@ public class ZmiankiManager {
     public final ItemStack rollSecondBonus(final ItemStack is, final double min, final double max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        if (is.getType().toString().contains("_SWORD")) {
-            tag.setString("silny-na-mob", getRandomMob());
-            tag.setDouble("silny-na-val", ChanceHelper.getRandDouble(min, max));
-        } else {
-            //ZBROJA
-        }
+        tag.setString("silny-na-mob", getRandomMob());
+        tag.setDouble("silny-na-val", ChanceHelper.getRandDouble(min, max));
+
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
     }
@@ -119,11 +137,8 @@ public class ZmiankiManager {
     public final ItemStack rollThirdBonus(final ItemStack is, final double min, final double max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        if (is.getType().toString().contains("_SWORD")) {
-            tag.setDouble("krytyk", ChanceHelper.getRandDouble(min, max));
-        } else {
-            //ZBROJA
-        }
+        tag.setDouble("krytyk", ChanceHelper.getRandDouble(min, max));
+
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
     }
@@ -131,12 +146,9 @@ public class ZmiankiManager {
     public final ItemStack rollFourthBonus(final ItemStack is, final double min, final double max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        if (is.getType().toString().contains("_SWORD")) {
-            tag.setString("silny-lvl", getRandomLvl());
-            tag.setDouble("silny-lvl-val", ChanceHelper.getRandDouble(min, max));
-        } else {
-            //ZBROJA
-        }
+        tag.setString("silny-lvl", getRandomLvl());
+        tag.setDouble("silny-lvl-val", ChanceHelper.getRandDouble(min, max));
+
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
     }
@@ -150,11 +162,8 @@ public class ZmiankiManager {
     public final ItemStack rollFifthBonus(final ItemStack is, final double min, final double max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-        if (is.getType().toString().contains("_SWORD")) {
-            tag.setDouble("przeszywka", ChanceHelper.getRandDouble(min, max));
-        } else {
-            //ZBROJA
-        }
+        tag.setDouble("przeszywka", ChanceHelper.getRandDouble(min, max));
+
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
     }
