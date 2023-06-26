@@ -129,6 +129,8 @@ public class TeleporterInventoryClick implements Listener {
                     if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
+                            player.closeInventory();
+                            rpgcore.getTeleporterNPC().teleportExp12(player);
                         } else {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&7Twoj poziom jest zbyt niski aby uzywac talizmanu!"));
                         }

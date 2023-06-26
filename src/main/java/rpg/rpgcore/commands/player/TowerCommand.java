@@ -12,7 +12,7 @@ public class TowerCommand extends CommandAPI {
     public TowerCommand() {
         super("tower");
         setRestrictedForPlayer(true);
-        setAliases(Arrays.asList("dt", "demontower"));
+        setAliases(Arrays.asList("dt", "demontower", "icetower"));
     }
 
     public void executeCommand(final CommandSender sender, final String[] args) {

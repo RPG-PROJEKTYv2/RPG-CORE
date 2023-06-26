@@ -16,8 +16,8 @@ import java.util.Objects;
 public enum GlobalItem {
     // SKRZYNKI //
     // RARE
-    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&6&lWartosciowy Kufer").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&f&lSkrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
+    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&e&lPozlacany Kufer").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
+    I2("I2", new ItemBuilder(Material.CHEST).setName("&7&lCiezka Skrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
     I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia Ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "Normal").hideFlag().toItemStack().clone()),
     // INNE
     I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
@@ -70,7 +70,7 @@ public enum GlobalItem {
 
     // ZNISZCZONE RUBINOWE SERCE (MEDRZEC ITEM)
     ZNISZCZONE_RUBINOWE_SERCE("ZNISZCZONE_RUBINOWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&cZniszczone Rubinowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
-    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("&bZniszczone Szafirowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
+    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
     RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",

@@ -85,19 +85,19 @@ public class MobDropHelper {
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
         // TODO PODSTAWOWY HELLCASE DROPI TYLKO Z KUFRA WARTOSCIOWEGO BADZ MISJI :]
         // WARTOSCIOWY KUFER
-        addDropPlayer(player, GlobalItem.getItem("I1", 1), getDropChance(szczescie, 0.005), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I1", 1), getDropChance(szczescie, 0.01), true, true, entity);
         // SKRZYNIA KOWALA
-        addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.025), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // SKRZYNIA ZE ZWIERZAKAMI
         //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
         // TAJEMNICZA SKRZYNIA
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.05), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.06), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
         addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2), true, true, entity);
         // LESNIK NPC
         addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1.0), true, true, entity);
         // FRAGMENT STALI
-        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.015), true, true, entity);
+        addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.025), true, true, entity);
 
         // MEDRZEC
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();

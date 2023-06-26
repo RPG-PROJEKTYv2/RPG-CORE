@@ -325,7 +325,7 @@ public class TeleporterNPC {
     public void teleportExp7(final Player player) {
         switch (new Random().nextInt(2)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("60-70map"), -204.700, 72, 213.632, -68.3F, 1.1F));
+                player.teleport(new Location(Bukkit.getWorld("60-70map"), 146, 76, 285, 96.7F, 1.8F));
                 return;
             case 1:
                 player.teleport(new Location(Bukkit.getWorld("60-70map"), 114.255, 75, 31.376, -36.9F, 2.2F));
@@ -335,10 +335,10 @@ public class TeleporterNPC {
     public void teleportExp8(final Player player) {
         switch (new Random().nextInt(2)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("70-80map"), 95.53, 85, 248.5, 90F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("70-80map"), -93.572, 84, 248.489, -89.9F, 0.4F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("70-80map"), -96.53, 85, 248.5, -90F, 0F));
+                player.teleport(new Location(Bukkit.getWorld("70-80map"), 92.550, 84, 248.421, 90.2F, 0.1F));
         }
     }
 

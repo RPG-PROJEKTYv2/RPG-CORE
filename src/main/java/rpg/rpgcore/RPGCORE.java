@@ -70,6 +70,7 @@ import rpg.rpgcore.commands.admin.dodatkowyexp.DodatkowyExpCommand;
 import rpg.rpgcore.commands.admin.drop.DropCommand;
 import rpg.rpgcore.commands.admin.god.GodCommand;
 import rpg.rpgcore.commands.admin.god.GodManager;
+import rpg.rpgcore.commands.admin.kolorki.KolorkiCommand;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListCommand;
 import rpg.rpgcore.commands.admin.serverwhitelist.SerwerWhiteListManager;
 import rpg.rpgcore.commands.admin.teleport.TeleportCommand;
@@ -272,7 +273,6 @@ public final class RPGCORE extends JavaPlugin {
     private NMSManager nmsManager;
     private GodManager godManager;
     private AdminPanelManager adminPanelManager;
-    private RozpiskaManager rozpiskaManager;
     private LvlManager lvlManager;
     private DamageManager damageManager;
     private ChatManager chatManager;
@@ -280,6 +280,7 @@ public final class RPGCORE extends JavaPlugin {
     private OsManager osManager;
     private DodatkiManager dodatkiManager;
     private PomocManager pomocManager;
+    private RozpiskaManager rozpiskaManager;
     private MuteManager muteManager;
     private MSGManager msgManager;
     private DuszologNPC duszologNPC;
@@ -311,10 +312,10 @@ public final class RPGCORE extends JavaPlugin {
     // ================================ SKRZYNKI INNE ================================
     private HellcaseManager hellcaseManager;
     private ZwierzakiManager zwierzakiManager;
-    private KowalManager kowalManager;
+    private CiezkaSkrzyniaKowalaManager ciezkaSkrzyniaKowalaManager;
     private SurowceManager surowceManager;
     private TajemniczaManager tajemniczaManager;
-    private WartosciowykuferManager wartosciowykuferManager;
+    private PozlacanykuferManager pozlacanykuferManager;
     // ================================ SKRZYNKI EXPOWISKO ================================
     // EXPOWISKO 1
     private RozbojnikManager najemnikManager;
@@ -518,6 +519,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new HistoryCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BackCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ClearCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new KolorkiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new LvlCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new GmCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HealCommand(this));
@@ -833,7 +835,6 @@ public final class RPGCORE extends JavaPlugin {
         this.nmsManager = new NMSManager();
         this.godManager = new GodManager(this);
         this.adminPanelManager = new AdminPanelManager();
-        this.rozpiskaManager = new RozpiskaManager();
         this.lvlManager = new LvlManager(this);
         this.damageManager = new DamageManager(this);
         this.chatManager = new ChatManager(this);
@@ -858,6 +859,7 @@ public final class RPGCORE extends JavaPlugin {
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
         this.oreManager = new OreManager(this);
+        this.rozpiskaManager = new RozpiskaManager(this);
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
@@ -897,10 +899,10 @@ public final class RPGCORE extends JavaPlugin {
         // ================================ SKRZYNKI INNE ================================
         this.hellcaseManager = new HellcaseManager();
         this.zwierzakiManager = new ZwierzakiManager();
-        this.kowalManager = new KowalManager();
+        this.ciezkaSkrzyniaKowalaManager = new CiezkaSkrzyniaKowalaManager();
         this.surowceManager = new SurowceManager();
         this.tajemniczaManager = new TajemniczaManager();
-        this.wartosciowykuferManager = new WartosciowykuferManager();
+        this.pozlacanykuferManager = new PozlacanykuferManager();
         this.zwierzakiManager = new ZwierzakiManager();
         // ================================ SKRZYNKI EXPOWISKO ================================
         // EXPOWISKO 1
@@ -1096,10 +1098,6 @@ public final class RPGCORE extends JavaPlugin {
         return pomocManager;
     }
 
-    public RozpiskaManager getRozpiskaManager() {
-        return rozpiskaManager;
-    }
-
     public MuteManager getMuteManager() {
         return muteManager;
     }
@@ -1177,8 +1175,8 @@ public final class RPGCORE extends JavaPlugin {
         return hellcaseManager;
     }
 
-    public KowalManager getKowalManager() {
-        return kowalManager;
+    public CiezkaSkrzyniaKowalaManager getCiezkaSkrzyniaKowalaManager() {
+        return ciezkaSkrzyniaKowalaManager;
     }
 
     public SurowceManager getSurowceManager() {
@@ -1189,8 +1187,8 @@ public final class RPGCORE extends JavaPlugin {
         return tajemniczaManager;
     }
 
-    public WartosciowykuferManager getWartosciowykuferManager() {
-        return wartosciowykuferManager;
+    public PozlacanykuferManager getWartosciowykuferManager() {
+        return pozlacanykuferManager;
     }
 
     // ================================ SKRZYNKI EXPOWISKA ===============================
@@ -1312,6 +1310,9 @@ public final class RPGCORE extends JavaPlugin {
         return baoManager;
     }
 
+    public RozpiskaManager getRozpiskaManager() {
+        return rozpiskaManager;
+    }
     public UserManager getUserManager() {
         return userManager;
     }
