@@ -15,7 +15,7 @@ public class UstawieniaKontaCommand extends CommandAPI {
 
     public UstawieniaKontaCommand(final RPGCORE rpgcore) {
         super("ustawieniakonta");
-        this.setRankLevel(RankType.DEV);
+        this.setRankLevel(RankType.HA);
         this.setAliases(Arrays.asList("konto", "ustawienia"));
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;

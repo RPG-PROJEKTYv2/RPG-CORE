@@ -79,7 +79,7 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        final Items item = rpgcore.getKowalManager().getDrawnItems(player);
+                        final Items item = rpgcore.getCiezkaSkrzyniaKowalaManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }

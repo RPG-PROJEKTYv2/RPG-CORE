@@ -66,6 +66,28 @@ public class PlayerInteractEntityListener implements Listener {
             return;
         }
 
+        // NPCTY ===========================================================================//
+        // TELEPORTER
+        if (e.getRightClicked().getType().equals(EntityType.MAGMA_CUBE)) {
+            if (Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")) {
+                e.setCancelled(true);
+                rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
+                return;
+            }
+        }
+        // HANDLARZ
+        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+            if (Utils.removeColor(e.getRightClicked().getName()).equals("Handlarz")) {
+                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
+                return;
+            }
+        }
+
+
+
+
+
+
         // MAGAZYNIER
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             if (Utils.removeColor(e.getRightClicked().getName()).equals("Magazynier")) {
@@ -168,11 +190,6 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getDuszologNPC().openMainGUI(player);
                 return;
             }
-            // TELEPORTER
-            if (entityName.equalsIgnoreCase("TELEPORTER")) {
-                rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
-                return;
-            }
             // RYBAK
             if (entityName.equalsIgnoreCase("Rybak")) {
                 if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 30) {
@@ -217,11 +234,6 @@ public class PlayerInteractEntityListener implements Listener {
             // WYSLANNIK
             if (entityName.equalsIgnoreCase("Wyslannik")) {
                 rpgcore.getWyslannikNPC().openGUI(player);
-                return;
-            }
-            // HANDLARZ
-            if (entityName.equalsIgnoreCase("Handlarz")) {
-                rpgcore.getHandlarzNPC().openHandlarzGUI(player);
                 return;
             }
             // MEDRZEC

@@ -43,8 +43,8 @@ public class CraftingiManager {
 
         gui.setItem(10, new ItemBuilder(Material.ITEM_FRAME).setName("&f&lAnielska Tarcza").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Zwiekszona Defensywa: &c1% - 17%",
-                "&7Szansa na Blok: &c1% - 10%",
+                "&7Zwiekszona Defensywa: &c1% - 16%",
+                "&7Szansa na Blok: &c1% - 15%",
                 "&7Dodatkowe Serca: &c+1 - 5",
                 "",
                 "&cWymagany poziom: &61 - 30",
@@ -81,9 +81,9 @@ public class CraftingiManager {
 
         gui.setItem(14, new ItemBuilder(Material.STORAGE_MINECART).setName("&f&lAnielski Naszyjnik").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Dodatkowe Obrazenia: &c+1 - 20",
+                "&7Dodatkowe Obrazenia: &c+1 - 30",
                 "&7Szansa na Cios Krytyczny: &c1% - 10%",
-                "&7Zwiekszone Obrazenia: &c1% - 7%",
+                "&7Zwiekszone Obrazenia: &c1% - 10%",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -100,9 +100,9 @@ public class CraftingiManager {
 
         gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&f&lAnielski Pierscien").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Szansa na Przeszycie Bloku: &c1% - 6%",
-                "&7Wzmocnienie Ciosu Krytycznego: &c1% - 5%",
-                "&7Zwiekszona Szybkosc Ruchu, &c+1 - 10",
+                "&7Szansa na Przeszycie Bloku: &c1% - 5%",
+                "&7Wzmocnienie Ciosu Krytycznego: &c1% - 10%",
+                "&7Zwiekszona Szybkosc Ruchu, &c+1 - 30",
                 "",
                 "&cWymagany poziom: &61 - 30",
                 "",
@@ -141,20 +141,20 @@ public class CraftingiManager {
 
         gui.setItem(10, new ItemBuilder(Material.ITEM_FRAME).setName("&4&lDiabelska Tarcza").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Zwiekszona Defensywa: &c5% - 35%",
-                "&7Szansa na Blok: &c3% - 20%",
-                "&7Dodatkowe Serca: &c+1 - 10",
+                "&7Zwiekszona Defensywa: &c5% - 28%",
+                "&7Szansa na Blok: &c3% - 26%",
+                "&7Dodatkowe Serca: &c+1 - 14",
                 "",
                 "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &632x &eZloto",
-                "&8- &632x &bBrylant",
-                "&8- &632x &aSzmaragd",
-                "&8- &632x &cPyl",
-                "&8- &632x &7Kamien",
-                "&8- &632x &8Stal",
-                "&8- &632x &7Proch",
+                "&8- &624x &eZloto",
+                "&8- &624x &bBrylant",
+                "&8- &624x &aSzmaragd",
+                "&8- &624x &cPyl",
+                "&8- &624x &7Kamien",
+                "&8- &624x &8Stal",
+                "&8- &624x &7Proch",
                 "&8- &6200 000&2$"
         )).toItemStack());
 
@@ -167,13 +167,13 @@ public class CraftingiManager {
                 "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &648x &eZloto",
-                "&8- &648x &bBrylant",
-                "&8- &648x &aSzmaragd",
-                "&8- &648x &cPyl",
-                "&8- &648x &7Kamien",
-                "&8- &648x &8Stal",
-                "&8- &648x &7Proch",
+                "&8- &636x &eZloto",
+                "&8- &636x &bBrylant",
+                "&8- &636x &aSzmaragd",
+                "&8- &636x &cPyl",
+                "&8- &636x &7Kamien",
+                "&8- &636x &8Stal",
+                "&8- &636x &7Proch",
                 "&8- &6400 000&2$"
         )).toItemStack());
         
@@ -186,41 +186,22 @@ public class CraftingiManager {
                 "&cWymagany poziom: &630 - 60",
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &656x &eZloto",
-                "&8- &656x &bBrylant",
-                "&8- &656x &aSzmaragd",
-                "&8- &656x &cPyl",
-                "&8- &656x &7Kamien",
-                "&8- &656x &8Stal",
-                "&8- &656x &7Proch",
+                "&8- &642x &eZloto",
+                "&8- &642x &bBrylant",
+                "&8- &642x &aSzmaragd",
+                "&8- &642x &cPyl",
+                "&8- &642x &7Kamien",
+                "&8- &642x &8Stal",
+                "&8- &642x &7Proch",
                 "&8- &6400 000&2$"
         )).toItemStack());
         
 
         gui.setItem(14, new ItemBuilder(Material.STORAGE_MINECART).setName("&4&lDiabelski Naszyjnik").setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
-                "&7Dodatkowe Obrazenia: &c+12 - 60",
-                "&7Szansa na Cios Krytyczny: &c5% - 18%",
-                "&7Zwiekszone Obrazenia: &c5% - 18%",
-                "",
-                "&cWymagany poziom: &630 - 60",
-                "",
-                "&7Potrzebne przedmioty:",
-                "&8- &664x &eZloto",
-                "&8- &664x &bBrylant",
-                "&8- &664x &aSzmaragd",
-                "&8- &664x &cPyl",
-                "&8- &664x &7Kamien",
-                "&8- &664x &8Stal",
-                "&8- &664x &7Proch",
-                "&8- &6500 000&2$"
-        )).toItemStack());
-
-        gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lDiabelski Pierscien").setLore(Arrays.asList(
-                "&7Typ: &cAkcesorium Podstawowe",
-                "&7Szansa na Przeszycie Bloku: &c4% - 12%",
-                "&7Wzmocnienie Ciosu Krytycznego: &c3% - 10%",
-                "&7Zwiekszona Szybkosc Ruchu, &c+15 - 30",
+                "&7Dodatkowe Obrazenia: &c+12 - 90",
+                "&7Szansa na Cios Krytyczny: &c5% - 17%",
+                "&7Zwiekszone Obrazenia: &c5% - 17%",
                 "",
                 "&cWymagany poziom: &630 - 60",
                 "",
@@ -232,6 +213,25 @@ public class CraftingiManager {
                 "&8- &648x &7Kamien",
                 "&8- &648x &8Stal",
                 "&8- &648x &7Proch",
+                "&8- &6500 000&2$"
+        )).toItemStack());
+
+        gui.setItem(16, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lDiabelski Pierscien").setLore(Arrays.asList(
+                "&7Typ: &cAkcesorium Podstawowe",
+                "&7Szansa na Przeszycie Bloku: &c4% - 15%",
+                "&7Wzmocnienie Ciosu Krytycznego: &c3% - 16%",
+                "&7Zwiekszona Szybkosc Ruchu, &c+15 - 50",
+                "",
+                "&cWymagany poziom: &630 - 60",
+                "",
+                "&7Potrzebne przedmioty:",
+                "&8- &636x &eZloto",
+                "&8- &636x &bBrylant",
+                "&8- &636x &aSzmaragd",
+                "&8- &636x &cPyl",
+                "&8- &636x &7Kamien",
+                "&8- &636x &8Stal",
+                "&8- &636x &7Proch",
                 "&8- &6300 000&2$"
         )).toItemStack());
 
@@ -263,7 +263,7 @@ public class CraftingiManager {
                 "&8- &640x &7Kamien",
                 "&8- &640x &8Stal",
                 "&8- &640x &7Proch",
-                "&8- &65 000 000&2$"
+                "&8- &61 000 000&2$"
         )).toItemStack());
 
         gui.setItem(12, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&e&lSwietlny Napiersnik").setLore(Arrays.asList(
@@ -278,7 +278,7 @@ public class CraftingiManager {
                 "&8- &664x &7Kamien",
                 "&8- &664x &8Stal",
                 "&8- &664x &7Proch",
-                "&8- &65 000 000&2$"
+                "&8- &61 250 000&2$"
         )).toItemStack());
 
         gui.setItem(14, new ItemBuilder(Material.DIAMOND_LEGGINGS).setName("&e&lSwietlne Nogawice").setLore(Arrays.asList(
@@ -293,7 +293,7 @@ public class CraftingiManager {
                 "&8- &656x &7Kamien",
                 "&8- &656x &8Stal",
                 "&8- &656x &7Proch",
-                "&8- &65 000 000&2$"
+                "&8- &61 150 000&2$"
         )).toItemStack());
 
         gui.setItem(16, new ItemBuilder(Material.DIAMOND_BOOTS).setName("&e&lSwietlne Buty").setLore(Arrays.asList(
@@ -308,7 +308,7 @@ public class CraftingiManager {
                 "&8- &632x &7Kamien",
                 "&8- &632x &8Stal",
                 "&8- &632x &7Proch",
-                "&8- &65 000 000&2$"
+                "&8- &61 000 000&2$"
         )).toItemStack());
 
         gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
@@ -332,33 +332,21 @@ public class CraftingiManager {
         gui.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         gui.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
 
+        
         gui.setItem(10, new ItemBuilder(GlobalItem.getItem("I50", 1).clone()).setLoreCrafting(GlobalItem.getItem("I50", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
-                "&8- &632x &eZloto",
-                "&8- &632x &bBrylant",
-                "&8- &632x &aSzmaragd",
-                "&8- &632x &cPyl",
-                "&8- &632x &7Kamien",
-                "&8- &632x &8Stal",
-                "&8- &632x &7Proch",
-                "&8- &62 500 000&2$"
+                "&8- &614x &eZloto",
+                "&8- &614x &bBrylant",
+                "&8- &614x &aSzmaragd",
+                "&8- &614x &cPyl",
+                "&8- &614x &7Kamien",
+                "&8- &614x &8Stal",
+                "&8- &614x &7Proch",
+                "&8- &6300 000&2$"
         )).toItemStack());
         
-        gui.setItem(11, new ItemBuilder(GlobalItem.getItem("I51", 1).clone()).setLoreCrafting(GlobalItem.getItem("I51", 1).clone().getItemMeta().getLore(), Arrays.asList(
-                "",
-                "&7Potrzebne przedmioty:",
-                "&8- &632x &eZloto",
-                "&8- &632x &bBrylant",
-                "&8- &632x &aSzmaragd",
-                "&8- &632x &cPyl",
-                "&8- &632x &7Kamien",
-                "&8- &632x &8Stal",
-                "&8- &632x &7Proch",
-                "&8- &62 500 000&2$"
-        )).toItemStack());
-        
-        gui.setItem(13, new ItemBuilder(GlobalItem.getItem("I_METAL", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_METAL", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(12, new ItemBuilder(GlobalItem.getItem("I_METAL", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_METAL", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &63x &8&lFragment Magicznej Stali",
@@ -366,19 +354,19 @@ public class CraftingiManager {
                 "&8- &616x &cPyl",
                 "&8- &616x &7Kamien",
                 "&8- &616x &8Stal",
-                "&8- &68 000 000&2$"
+                "&8- &61 000 000&2$"
         )).toItemStack());
-        gui.setItem(14, new ItemBuilder(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(13, new ItemBuilder(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &61x &8&lFragment Magicznej Stali",
                 "&8- &616x &bBrylant",
                 "&8- &616x &aSzmaragd",
                 "&8- &616x &7Proch",
-                "&8- &61 000 000&2$"
+                "&8- &6700 000&2$"
         )).toItemStack());
         
-        gui.setItem(16, new ItemBuilder(GlobalItem.getItem("I_KAMIENBAO", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_KAMIENBAO", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(15, new ItemBuilder(GlobalItem.getItem("I_KAMIENBAO", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_KAMIENBAO", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &61x &d&lCzastka Magii",

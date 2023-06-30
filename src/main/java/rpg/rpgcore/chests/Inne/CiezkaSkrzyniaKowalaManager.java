@@ -10,11 +10,11 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class KowalManager {
+public class CiezkaSkrzyniaKowalaManager {
 
     private final Set<Items> kowal = Sets.newConcurrentHashSet();
 
-    public KowalManager() {
+    public CiezkaSkrzyniaKowalaManager() {
         // metale
         this.kowal.add(new Items("1", 4.0, GlobalItem.getItem("I_METAL", 1), 1));
         this.kowal.add(new Items("2", 3.0, GlobalItem.getItem("I_METAL", 1), 2));

@@ -1,14 +1,11 @@
 package rpg.rpgcore.commands.player.rozpiska;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
@@ -31,6 +28,5 @@ public class RozpiskaCommand extends CommandAPI {
             return;
         }
         rpgcore.getRozpiskaManager().openROZPISKAGUI(player);
-        return;
     }
 }
