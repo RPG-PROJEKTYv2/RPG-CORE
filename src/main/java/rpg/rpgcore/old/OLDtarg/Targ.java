@@ -1,4 +1,4 @@
-package rpg.rpgcore.OLDtarg;
+package rpg.rpgcore.old.OLDtarg;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

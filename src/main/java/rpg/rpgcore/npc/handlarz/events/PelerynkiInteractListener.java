@@ -49,7 +49,7 @@ public class PelerynkiInteractListener implements Listener {
             final ItemMeta meta = itemStack.getItemMeta();
             final List<String> lore = Arrays.asList(
                     "&7Tryb: &cAFK",
-                    "&7Cooldown: &c0.5 sekundy",
+                    "&7Cooldown: &c0.1 sekundy",
                     "&7Zasieg Dzialania: &c" + Utils.getTagInt(itemStack, "range") + " blokow",
                     "",
                     "&6Umiejetnosc: Zmiana Trybu &e&lLMB",

@@ -1,4 +1,4 @@
-package rpg.rpgcore.OLDtarg;
+package rpg.rpgcore.old.OLDtarg;
 
 
 import lombok.Getter;

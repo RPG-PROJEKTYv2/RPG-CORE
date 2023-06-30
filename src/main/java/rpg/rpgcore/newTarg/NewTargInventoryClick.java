@@ -276,9 +276,6 @@ public class NewTargInventoryClick implements Listener {
                 final int itemCategory = this.getItemCategory(clickedItem);
 
                 this.updateInventory(itemCategory);
-
-                player.closeInventory();
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma wystawionych zadnych przedmiotow"));
                 return;
             }
 
@@ -347,6 +344,11 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
+        if (!rpgcore.getNewTargManager().getPlayerTargItems(targetUUID).contains(clickedItem)) {
+            player.closeInventory();
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));
+            return;
+        }
         final UUID playerUUID = player.getUniqueId();
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
         rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
@@ -388,6 +390,11 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
+        if (!rpgcore.getNewTargManager().getPlayerTargItems(targetUUID).contains(clickedItem)) {
+            player.closeInventory();
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));
+            return;
+        }
         final UUID playerUUID = player.getUniqueId();
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
         rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);

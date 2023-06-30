@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.events;
+package rpg.rpgcore.old.gornik.events;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,10 +13,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.npc.gornik.objects.GornikObject;
-import rpg.rpgcore.npc.gornik.objects.GornikUser;
-import rpg.rpgcore.npc.gornik.enums.GornikExchange;
-import rpg.rpgcore.npc.gornik.enums.GornikMissions;
+import rpg.rpgcore.old.gornik.objects.GornikObject;
+import rpg.rpgcore.old.gornik.objects.GornikUser;
+import rpg.rpgcore.old.gornik.enums.GornikExchange;
+import rpg.rpgcore.old.gornik.enums.GornikMissions;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;

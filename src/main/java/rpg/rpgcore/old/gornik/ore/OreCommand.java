@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.ore;
+package rpg.rpgcore.old.gornik.ore;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

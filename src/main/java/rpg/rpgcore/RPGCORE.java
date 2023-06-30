@@ -10,8 +10,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
-import rpg.rpgcore.OLDtarg.SprawdzCommand;
-import rpg.rpgcore.OLDtarg.TargManager;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
@@ -175,12 +173,6 @@ import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
-import rpg.rpgcore.npc.gornik.events.GornikBlockBreakListener;
-import rpg.rpgcore.npc.gornik.events.GornikInventoryClick;
-import rpg.rpgcore.npc.gornik.events.GornikInventoryCloseListener;
-import rpg.rpgcore.npc.gornik.events.OreBlockPlaceListener;
-import rpg.rpgcore.npc.gornik.ore.OreCommand;
-import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
@@ -283,7 +275,6 @@ public final class RPGCORE extends JavaPlugin {
     private MuteManager muteManager;
     private MSGManager msgManager;
     private DuszologNPC duszologNPC;
-    private TargManager targManager;
     private TeleporterNPC teleporterNPC;
     private CooldownManager cooldownManager;
     private MagazynierNPC magazynierNPC;
@@ -298,7 +289,6 @@ public final class RPGCORE extends JavaPlugin {
     private MetinologNPC metinologNPC;
     private RozpiskaCommand rozpiskaCommand;
     private ServerManager serverManager;
-    private GornikNPC gornikNPC;
     private PrzyrodnikNPC przyrodnikNPC;
     private ListaNPCManager listaNPCManager;
     private UserManager userManager;
@@ -355,7 +345,6 @@ public final class RPGCORE extends JavaPlugin {
     private LodowySlugaManager lodowySlugaManager;
 
     // cos innego...
-    private OreManager oreManager;
     private DungeonsManager dungeonsManager;
     private ZmiankiManager zmiankiManager;
     private WyslannikNPC wyslannikNPC;
@@ -379,6 +368,7 @@ public final class RPGCORE extends JavaPlugin {
     private PrzedsionekManager przedsionekManager;
     private UstawieniaKontaManager ustawieniaKontaManager;
     private MistycznyKowalManager mistycznyKowalManager;
+    private GornikNPC gornikNPC;
 
 
     private int i = 1;
@@ -468,7 +458,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllBao();
         this.mongo.saveAllDuszolog();
         this.mongo.saveAllGuilds();
-        this.mongo.saveAllGornik();
+//        this.mongo.saveAllGornik();
         this.mongo.saveAllMedrzec();
         this.mongo.saveAllKolekcjoner();
         this.mongo.saveAllMetinolog();
@@ -483,7 +473,6 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMagazyny();
         this.mongo.saveAllLowca();
         this.mongo.saveAllLesnik();
-        this.mongo.saveAllOreLocations();
         this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
         this.mongo.saveAllHandlarz();
@@ -533,7 +522,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new KasaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new WyplacCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new NewTargWystawCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new SprawdzCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new HelpOPCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new MetinCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
@@ -560,7 +548,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new PartyCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new InventoryCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PetCommand(this));
-        CommandAPI.getCommand().register("HellRPGCore", new OreCommand());
         CommandAPI.getCommand().register("HellRPGCore", new EnchantCustomCommand());
         CommandAPI.getCommand().register("HellRPGCore", new EnchantCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MemoryCommand());
@@ -740,12 +727,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
 
         // ...GORNIK
-        this.getServer().getPluginManager().registerEvents(new GornikInventoryClick(), this);
-        this.getServer().getPluginManager().registerEvents(new GornikBlockBreakListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new GornikInventoryCloseListener(), this);
 
-        // ...ORE
-        this.getServer().getPluginManager().registerEvents(new OreBlockPlaceListener(this), this);
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
@@ -843,7 +825,6 @@ public final class RPGCORE extends JavaPlugin {
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
         this.tradeManager = new TradeManager();
-        this.targManager = new TargManager(this);
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);
         new TabManager(this);
@@ -857,7 +838,6 @@ public final class RPGCORE extends JavaPlugin {
         this.magazynierNPC = new MagazynierNPC(this);
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
-        this.oreManager = new OreManager(this);
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
@@ -879,7 +859,6 @@ public final class RPGCORE extends JavaPlugin {
         this.handlarzNPC = new HandlarzNPC(this);
         this.kowalNPC = new KowalNPC(this);
         this.metinologNPC = new MetinologNPC(this);
-        this.gornikNPC = new GornikNPC(this);
         this.przyrodnikNPC = new PrzyrodnikNPC(this);
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
@@ -890,6 +869,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mistrzYangNPC = new MistrzYangNPC(this);
         this.czarownicaNPC = new CzarownicaNPC(this);
         this.mistycznyKowalManager = new MistycznyKowalManager();
+        this.gornikNPC = new GornikNPC(this);
     }
 
     private void initChests() {
@@ -1116,9 +1096,6 @@ public final class RPGCORE extends JavaPlugin {
         return duszologNPC;
     }
 
-    public TargManager getTargManager() {
-        return targManager;
-    }
 
     public TeleporterNPC getTeleporterNPC() {
         return teleporterNPC;
@@ -1296,9 +1273,6 @@ public final class RPGCORE extends JavaPlugin {
         return lodowySlugaManager;
     }
 
-    public GornikNPC getGornikNPC() {
-        return gornikNPC;
-    }
 
     public PrzyrodnikNPC getPrzyrodnikNPC() {
         return przyrodnikNPC;
@@ -1340,9 +1314,6 @@ public final class RPGCORE extends JavaPlugin {
         return zwierzakiManager;
     }
 
-    public OreManager getOreManager() {
-        return oreManager;
-    }
 
     public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
         return zamekNieskonczonosciManager;
@@ -1433,5 +1404,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public MistycznyKowalManager getMistycznyKowalManager() {
         return mistycznyKowalManager;
+    }
+    public GornikNPC getGornikNPC() {
+        return gornikNPC;
     }
 }

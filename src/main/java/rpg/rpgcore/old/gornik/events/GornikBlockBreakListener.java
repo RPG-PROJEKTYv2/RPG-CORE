@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.events;
+package rpg.rpgcore.old.gornik.events;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -7,10 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
-import rpg.rpgcore.npc.gornik.objects.GornikObject;
-import rpg.rpgcore.npc.gornik.objects.GornikUser;
-import rpg.rpgcore.npc.gornik.enums.GornikOres;
-import rpg.rpgcore.npc.gornik.ore.Ore;
+import rpg.rpgcore.old.gornik.objects.GornikObject;
+import rpg.rpgcore.old.gornik.objects.GornikUser;
+import rpg.rpgcore.old.gornik.enums.GornikOres;
+import rpg.rpgcore.old.gornik.ore.Ore;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;

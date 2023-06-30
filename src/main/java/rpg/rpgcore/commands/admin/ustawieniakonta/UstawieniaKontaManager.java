@@ -13,8 +13,6 @@ import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
-import rpg.rpgcore.npc.gornik.objects.GornikUser;
-import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
@@ -536,24 +534,24 @@ public class UstawieniaKontaManager {
                 "&7podanego gracza u &7&lDuszologa&7."
         )).addGlowing().toItemStack().clone());
 
-        final GornikUser gornik = rpgcore.getGornikNPC().find(uuid).getGornikUser();
-        final GornikMissions gornikMission = GornikMissions.getMission(gornik.getMission());
-        gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&7Ustaw &6&lGornik &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
-                "&7Kliknij, zeby ustawic postep misji/misje",
-                "&7podanego gracza u &6&lGornika&7.",
-                "",
-                "&f&lStatystyki",
-                "&7Drzewko Gornika: &e" + gornik.getDrzewkoUnlocked() + "&7/&e30",
-                "&7Misja: &e" + gornik.getMission() + "&7/&e28 &7(&e" + DoubleUtils.round(((double) gornik.getMission() / 28) * 100, 2) + "%&7)",
-                "&7  - Blok Ciosu (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getBlok()) + "%",
-                "&7  - Srednia Defensywa (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getDef()) + "%",
-                "&7  - Przeszycie Bloku Ciosu (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getPrzeszycie()) + "%",
-                "&7Postep: &e" + gornik.getProgress() + "&7/&e" + (gornikMission == null ? 0 : gornikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) gornik.getProgress() / (gornikMission == null ? 0 : gornikMission.getReqAmount())) * 100, 2) + "%&7)",
-                "&7Blok Ciosu (User): &e+" + gornik.getBlokCiosu() + "%",
-                "&7Srednia Defensywa (User): &e+" + gornik.getSredniaOdpornosc() + "%",
-                "&7Przeszycie Bloku Ciosu (User): &e+" + gornik.getPrzeszycieBloku() + "%"
-
-        )).addGlowing().toItemStack().clone());
+//        final GornikUser gornik = rpgcore.getGornikNPC().find(uuid).getGornikUser();
+//        final GornikMissions gornikMission = GornikMissions.getMission(gornik.getMission());
+//        gui.setItem(16, new ItemBuilder(Material.BOOK).setName("&7Ustaw &6&lGornik &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
+//                "&7Kliknij, zeby ustawic postep misji/misje",
+//                "&7podanego gracza u &6&lGornika&7.",
+//                "",
+//                "&f&lStatystyki",
+//                "&7Drzewko Gornika: &e" + gornik.getDrzewkoUnlocked() + "&7/&e30",
+//                "&7Misja: &e" + gornik.getMission() + "&7/&e28 &7(&e" + DoubleUtils.round(((double) gornik.getMission() / 28) * 100, 2) + "%&7)",
+//                "&7  - Blok Ciosu (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getBlok()) + "%",
+//                "&7  - Srednia Defensywa (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getDef()) + "%",
+//                "&7  - Przeszycie Bloku Ciosu (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getPrzeszycie()) + "%",
+//                "&7Postep: &e" + gornik.getProgress() + "&7/&e" + (gornikMission == null ? 0 : gornikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) gornik.getProgress() / (gornikMission == null ? 0 : gornikMission.getReqAmount())) * 100, 2) + "%&7)",
+//                "&7Blok Ciosu (User): &e+" + gornik.getBlokCiosu() + "%",
+//                "&7Srednia Defensywa (User): &e+" + gornik.getSredniaOdpornosc() + "%",
+//                "&7Przeszycie Bloku Ciosu (User): &e+" + gornik.getPrzeszycieBloku() + "%"
+//
+//        )).addGlowing().toItemStack().clone());
 
         final HandlarzUser handlarz = rpgcore.getHandlarzNPC().find(uuid);
         gui.setItem(19, new ItemBuilder(Material.BOOK).setName("&7Ustaw &a&lHandlarz &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
@@ -982,219 +980,219 @@ public class UstawieniaKontaManager {
         player.openInventory(gui);
     }
 
-    public void openGornikM(final Player player, final UUID uuid) {
-        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &6&lGornik &4&l- &e&l" + uuid.toString()));
-        final GornikUser user = rpgcore.getGornikNPC().find(uuid).getGornikUser();
-        gui.setItem(0, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getMission(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1."
-        )).toItemStack().clone());
-        gui.setItem(1, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getProgress(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1."
-        )).toItemStack().clone());
-        gui.setItem(2, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Blok Ciosu").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getBlokCiosu(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1.",
-                "&6Shift + LMB &7- zeby dodac 10",
-                "&6Shift + RMB &7- zeby odjac 10",
-                "&6KEYBOARD &7- zeby dodac 0.1"
-        )).toItemStack().clone());
-        gui.setItem(3, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Sredni Def").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getSredniaOdpornosc(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1.",
-                "&6Shift + LMB &7- zeby dodac 10",
-                "&6Shift + RMB &7- zeby odjac 10",
-                "&6KEYBOARD &7- zeby dodac 0.1"
-        )).toItemStack().clone());
-        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Przeszycie Bloku").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getPrzeszycieBloku(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1.",
-                "&6Shift + LMB &7- zeby dodac 10",
-                "&6Shift + RMB &7- zeby odjac 10",
-                "&6KEYBOARD &7- zeby dodac 0.1"
-        )).toItemStack().clone());
-
-        gui.setItem(8, new ItemBuilder(Material.BEACON).setName("&c&lDrzewko Gornika").toItemStack());
-
-        player.openInventory(gui);
-    }
-
-    public void openGornikDrzewko(final Player player, final UUID uuid) {
-        final GornikUser user = rpgcore.getGornikNPC().find(uuid).getGornikUser();
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lMisje &8&l>> &6&lGornik &8&l>> &c&lDrzewko &4&l- &e&l" + uuid.toString()));
-
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-        }
-
-        if (user.isD1()) {
-            gui.setItem(49, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk I").setLore(Arrays.asList("&6Srednie Obrazenia: &c1%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(49, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk I").setLore(Arrays.asList("&6Srednie Obrazenia: &c1%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD2()) {
-            gui.setItem(40, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Szybki Kopacz I").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c1 &6poziom", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(40, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Szybki Kopacz I").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c1 &6poziom", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-
-
-        // GORA
-        if (user.isD3_3()) {
-            gui.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Mistrz Destrukcji I").setLore(Arrays.asList("&6Przebicie Pancerza: &c1%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Mistrz Destrukcji I").setLore(Arrays.asList("&6Przebicie Pancerza: &c1%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_7()) {
-            gui.setItem(22, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pogromca Potworow").setLore(Arrays.asList("&6Odpornosc Na Potwory: &c5%", "&6Silny Na Potwory: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(22, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pogromca Potworow").setLore(Arrays.asList("&6Odpornosc Na Potwory: &c5%", "&6Silny Na Potwory: &c5%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD5_5()) {
-            gui.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Szczesliwy Lowca").setLore(Arrays.asList("&6Silny Na Potwory: &c5%", "&6Szczescie &c10", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Szczesliwy Lowca").setLore(Arrays.asList("&6Silny Na Potwory: &c5%", "&6Szczescie &c10", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD6_5()) {
-            gui.setItem(4, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Szybki Kopacz II").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c2 &6poziomy", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(4, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Szybki Kopacz II").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c2 &6poziomy", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD7_3()) {
-            gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Szczesciarz").setLore(Arrays.asList("&6Szczescie &c15", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Szczesciarz").setLore(Arrays.asList("&6Szczescie &c15", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD7_4()) {
-            gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Mistrz Destrukcji II").setLore(Arrays.asList("&6Przebicie Pancerza: &c2%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Mistrz Destrukcji II").setLore(Arrays.asList("&6Przebicie Pancerza: &c2%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-
-
-        // PRAWO
-        if (user.isD3_2()) {
-            gui.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Tarczownik I").setLore(Arrays.asList("&6Bloku Ciosu: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Tarczownik I").setLore(Arrays.asList("&6Bloku Ciosu: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_1()) {
-            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Tarczownik II").setLore(Arrays.asList("&6Bloku Ciosu: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Tarczownik II").setLore(Arrays.asList("&6Bloku Ciosu: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_2()) {
-            gui.setItem(51, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz I").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(51, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz I").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_3()) {
-            gui.setItem(33, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pasjonat").setLore(Arrays.asList("&6Srednie Obrazenia: &c4%", "&6Dodatkowe Obrazenia: &c150", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(33, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pasjonat").setLore(Arrays.asList("&6Srednie Obrazenia: &c4%", "&6Dodatkowe Obrazenia: &c150", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD5_1()) {
-            gui.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk II").setLore(Arrays.asList("&6Srednie Obrazenia: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk II").setLore(Arrays.asList("&6Srednie Obrazenia: &c2%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD6_1()) {
-            gui.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk III").setLore(Arrays.asList("&6Srednie Obrazenia: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk III").setLore(Arrays.asList("&6Srednie Obrazenia: &c3%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD5_2()) {
-            gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD6_2()) {
-            gui.setItem(15, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Oczyszczenie I").setLore(Arrays.asList("&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(15, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Oczyszczenie I").setLore(Arrays.asList("&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD7_1()) {
-            gui.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz III").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz III").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD8_1()) {
-            gui.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz IV").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz IV").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD9_1()) {
-            gui.setItem(8, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Oczyszczenie II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(8, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Oczyszczenie II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-
-
-        // LEWO
-        if (user.isD3_1()) {
-            gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca I").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca I").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_4()) {
-            gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_5()) {
-            gui.setItem(47, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca III").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(47, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca III").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD4_6()) {
-            gui.setItem(29, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pogromca Pokolen I").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c5%", "&6Silny Na Ludzi: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(29, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pogromca Pokolen I").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c5%", "&6Silny Na Ludzi: &c5%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD5_3()) {
-            gui.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen II").setLore(Arrays.asList("&6Silny Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen II").setLore(Arrays.asList("&6Silny Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD6_3()) {
-            gui.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen III").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c1%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen III").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c1%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD5_4()) {
-            gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen IV").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen IV").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD6_4()) {
-            gui.setItem(11, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Przyspieszenie I").setLore(Arrays.asList("&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(11, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Przyspieszenie I").setLore(Arrays.asList("&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD7_2()) {
-            gui.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen V").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen V").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD8_2()) {
-            gui.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen VI").setLore(Arrays.asList("&6Silny Na Ludzi: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen VI").setLore(Arrays.asList("&6Silny Na Ludzi: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-        if (user.isD9_2()) {
-            gui.setItem(0, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Przyspieszenie II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
-        } else {
-            gui.setItem(0, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Przyspieszenie II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
-        }
-
-        player.openInventory(gui);
-    }
+//    public void openGornikM(final Player player, final UUID uuid) {
+//        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &6&lGornik &4&l- &e&l" + uuid.toString()));
+//        final GornikUser user = rpgcore.getGornikNPC().find(uuid).getGornikUser();
+//        gui.setItem(0, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje").setLore(Arrays.asList(
+//                "&7Aktualna: &e" + user.getMission(),
+//                "&6LMB &7- zeby dodac 1.",
+//                "&6RMB &7- zeby odjac 1."
+//        )).toItemStack().clone());
+//        gui.setItem(1, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep").setLore(Arrays.asList(
+//                "&7Aktualna: &e" + user.getProgress(),
+//                "&6LMB &7- zeby dodac 1.",
+//                "&6RMB &7- zeby odjac 1."
+//        )).toItemStack().clone());
+//        gui.setItem(2, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Blok Ciosu").setLore(Arrays.asList(
+//                "&7Aktualna: &e" + user.getBlokCiosu(),
+//                "&6LMB &7- zeby dodac 1.",
+//                "&6RMB &7- zeby odjac 1.",
+//                "&6Shift + LMB &7- zeby dodac 10",
+//                "&6Shift + RMB &7- zeby odjac 10",
+//                "&6KEYBOARD &7- zeby dodac 0.1"
+//        )).toItemStack().clone());
+//        gui.setItem(3, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Sredni Def").setLore(Arrays.asList(
+//                "&7Aktualna: &e" + user.getSredniaOdpornosc(),
+//                "&6LMB &7- zeby dodac 1.",
+//                "&6RMB &7- zeby odjac 1.",
+//                "&6Shift + LMB &7- zeby dodac 10",
+//                "&6Shift + RMB &7- zeby odjac 10",
+//                "&6KEYBOARD &7- zeby dodac 0.1"
+//        )).toItemStack().clone());
+//        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Przeszycie Bloku").setLore(Arrays.asList(
+//                "&7Aktualna: &e" + user.getPrzeszycieBloku(),
+//                "&6LMB &7- zeby dodac 1.",
+//                "&6RMB &7- zeby odjac 1.",
+//                "&6Shift + LMB &7- zeby dodac 10",
+//                "&6Shift + RMB &7- zeby odjac 10",
+//                "&6KEYBOARD &7- zeby dodac 0.1"
+//        )).toItemStack().clone());
+//
+//        gui.setItem(8, new ItemBuilder(Material.BEACON).setName("&c&lDrzewko Gornika").toItemStack());
+//
+//        player.openInventory(gui);
+//    }
+//
+//    public void openGornikDrzewko(final Player player, final UUID uuid) {
+//        final GornikUser user = rpgcore.getGornikNPC().find(uuid).getGornikUser();
+//        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lMisje &8&l>> &6&lGornik &8&l>> &c&lDrzewko &4&l- &e&l" + uuid.toString()));
+//
+//        for (int i = 0; i < gui.getSize(); i++) {
+//            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+//        }
+//
+//        if (user.isD1()) {
+//            gui.setItem(49, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk I").setLore(Arrays.asList("&6Srednie Obrazenia: &c1%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(49, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk I").setLore(Arrays.asList("&6Srednie Obrazenia: &c1%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD2()) {
+//            gui.setItem(40, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Szybki Kopacz I").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c1 &6poziom", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(40, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Szybki Kopacz I").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c1 &6poziom", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//
+//
+//        // GORA
+//        if (user.isD3_3()) {
+//            gui.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Mistrz Destrukcji I").setLore(Arrays.asList("&6Przebicie Pancerza: &c1%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Mistrz Destrukcji I").setLore(Arrays.asList("&6Przebicie Pancerza: &c1%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_7()) {
+//            gui.setItem(22, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pogromca Potworow").setLore(Arrays.asList("&6Odpornosc Na Potwory: &c5%", "&6Silny Na Potwory: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(22, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pogromca Potworow").setLore(Arrays.asList("&6Odpornosc Na Potwory: &c5%", "&6Silny Na Potwory: &c5%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD5_5()) {
+//            gui.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Szczesliwy Lowca").setLore(Arrays.asList("&6Silny Na Potwory: &c5%", "&6Szczescie &c10", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Szczesliwy Lowca").setLore(Arrays.asList("&6Silny Na Potwory: &c5%", "&6Szczescie &c10", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD6_5()) {
+//            gui.setItem(4, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Szybki Kopacz II").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c2 &6poziomy", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(4, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Szybki Kopacz II").setLore(Arrays.asList("&6Zmniejszenie Spowolnienia o &c2 &6poziomy", "&7Pozwala zmniejszyc poziom efektu &5Spowolnienia", "&7nalozonego pod czas przebywania w Kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD7_3()) {
+//            gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Szczesciarz").setLore(Arrays.asList("&6Szczescie &c15", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Szczesciarz").setLore(Arrays.asList("&6Szczescie &c15", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD7_4()) {
+//            gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Mistrz Destrukcji II").setLore(Arrays.asList("&6Przebicie Pancerza: &c2%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Mistrz Destrukcji II").setLore(Arrays.asList("&6Przebicie Pancerza: &c2%", "&7Zwieksza szanse na &6100% &7przebicie", "&7pancerza ofiary", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//
+//
+//        // PRAWO
+//        if (user.isD3_2()) {
+//            gui.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Tarczownik I").setLore(Arrays.asList("&6Bloku Ciosu: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Tarczownik I").setLore(Arrays.asList("&6Bloku Ciosu: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_1()) {
+//            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Tarczownik II").setLore(Arrays.asList("&6Bloku Ciosu: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Tarczownik II").setLore(Arrays.asList("&6Bloku Ciosu: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_2()) {
+//            gui.setItem(51, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz I").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(51, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz I").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_3()) {
+//            gui.setItem(33, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pasjonat").setLore(Arrays.asList("&6Srednie Obrazenia: &c4%", "&6Dodatkowe Obrazenia: &c150", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(33, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pasjonat").setLore(Arrays.asList("&6Srednie Obrazenia: &c4%", "&6Dodatkowe Obrazenia: &c150", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD5_1()) {
+//            gui.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk II").setLore(Arrays.asList("&6Srednie Obrazenia: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk II").setLore(Arrays.asList("&6Srednie Obrazenia: &c2%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD6_1()) {
+//            gui.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Berserk III").setLore(Arrays.asList("&6Srednie Obrazenia: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Berserk III").setLore(Arrays.asList("&6Srednie Obrazenia: &c3%", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD5_2()) {
+//            gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD6_2()) {
+//            gui.setItem(15, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Oczyszczenie I").setLore(Arrays.asList("&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(15, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Oczyszczenie I").setLore(Arrays.asList("&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD7_1()) {
+//            gui.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz III").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz III").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD8_1()) {
+//            gui.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Silacz IV").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Silacz IV").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c50", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD9_1()) {
+//            gui.setItem(8, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Oczyszczenie II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(8, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Oczyszczenie II").setLore(Arrays.asList("&6Dodatkowe Obrazenia: &c100", "&6Zmniejszenie Wyczerpania o &c1 &6poziom", "&7Zmniejsza wartosc efektu &8Wyczerpanie", "&7nakladanego pod czas pobytu w kopalni", "&8Koszt:", "&8- &63x Legendarny Krysztal Wzmocnienia", "&8- &6150,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//
+//
+//        // LEWO
+//        if (user.isD3_1()) {
+//            gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca I").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca I").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_4()) {
+//            gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_5()) {
+//            gui.setItem(47, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Skrytobojca III").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(47, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Skrytobojca III").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD4_6()) {
+//            gui.setItem(29, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Pogromca Pokolen I").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c5%", "&6Silny Na Ludzi: &c5%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(29, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Pogromca Pokolen I").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c5%", "&6Silny Na Ludzi: &c5%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD5_3()) {
+//            gui.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen II").setLore(Arrays.asList("&6Silny Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen II").setLore(Arrays.asList("&6Silny Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD6_3()) {
+//            gui.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen III").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c1%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen III").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c1%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD5_4()) {
+//            gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen IV").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen IV").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD6_4()) {
+//            gui.setItem(11, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Przyspieszenie I").setLore(Arrays.asList("&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(11, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Przyspieszenie I").setLore(Arrays.asList("&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD7_2()) {
+//            gui.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen V").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen V").setLore(Arrays.asList("&6Odpornosc Na Ludzi: &c2%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD8_2()) {
+//            gui.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("&6Pogromca Pokolen VI").setLore(Arrays.asList("&6Silny Na Ludzi: &c3%", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&6Pogromca Pokolen VI").setLore(Arrays.asList("&6Silny Na Ludzi: &c3%", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//        if (user.isD9_2()) {
+//            gui.setItem(0, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5).setName("&6Przyspieszenie II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "", "&a&lOdblokowano!")).addGlowing().toItemStack());
+//        } else {
+//            gui.setItem(0, new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14).setName("&6Przyspieszenie II").setLore(Arrays.asList("&6Przeszycie Bloku Ciosu: &c5%", "&6Zwieksza poziom Przyspieszenia o &c1 &6poziom", "&7Zwieksza poziom efetku &ePrzyspieszenie &7nakladanego", "&7pod czas pobytu w Kopalni", "&8Koszt:", "&8- &61x Legendarny Krysztal Wzmocnienia", "&8- &650,000,000&2$", "", "&4&lZablokowano!")).toItemStack());
+//        }
+//
+//        player.openInventory(gui);
+//    }
 
 
     public void openKolekcjoner(final Player player, final UUID uuid) {

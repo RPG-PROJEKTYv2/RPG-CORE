@@ -6,7 +6,6 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.npc.gornik.enums.GornikDlutoLevels;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -129,7 +128,7 @@ public enum GornikItems {
         if (lvl == 50) {
             lore.set(1, Utils.format("&7Exp: &60&7/&6MAX"));
         } else {
-            lore.set(1, Utils.format("&7Exp: &60&7/&6" + GornikDlutoLevels.getExpByLevel(lvl + 1, tier)));
+            //lore.set(1, Utils.format("&7Exp: &60&7/&6" + GornikDlutoLevels.getExpByLevel(lvl + 1, tier)));
         }
         lore.add("");
         lore.add(Utils.format("&7Wlasciciel: &6" + name));
@@ -144,7 +143,7 @@ public enum GornikItems {
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("Lvl", lvl);
         tag.setInt("Exp", 0);
-        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(lvl + 1, tier));
+//        tag.setInt("ReqExp", GornikDlutoLevels.getExpByLevel(lvl + 1, tier));
         tag.setBoolean("Unbreakable", true);
         tag.setDouble("Chance", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(2).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));
         tag.setDouble("DubleDrop", Double.parseDouble(Utils.removeColor(is.getItemMeta().getLore().get(3).substring(is.getItemMeta().getLore().get(2).lastIndexOf(" ")).replace("+", "").replace("%", ""))));

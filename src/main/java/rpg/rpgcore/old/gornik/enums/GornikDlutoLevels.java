@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.enums;
+package rpg.rpgcore.old.gornik.enums;
 
 public enum GornikDlutoLevels {
     L2(2, 20),

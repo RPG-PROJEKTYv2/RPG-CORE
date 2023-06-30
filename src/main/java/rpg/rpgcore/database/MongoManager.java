@@ -24,8 +24,6 @@ import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
 import rpg.rpgcore.managers.disabled.Disabled;
 import rpg.rpgcore.metiny.Metiny;
 import rpg.rpgcore.npc.duszolog.objects.DuszologObject;
-import rpg.rpgcore.npc.gornik.objects.GornikObject;
-import rpg.rpgcore.npc.gornik.ore.Ore;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.objects.LesnikObject;
@@ -263,16 +261,6 @@ public class MongoManager {
                 rpgcore.getDodatkiManager().add(user);
             }
 
-            try {
-                obj = pool.getTargi().find(new Document("_id", uuid.toString())).first();
-                if (obj != null) {
-                    if (!obj.getString("Targ").isEmpty()) {
-                        rpgcore.getTargManager().putPlayerInTargMap(uuid, Utils.fromBase64(obj.getString("Targ"), "&f&lTarg gracza &3" + rpgcore.getUserManager().find(uuid).getName()));
-                    }
-                }
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
 
             if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() == null) {
                 final MetinologObject user = new MetinologObject(uuid);
@@ -289,11 +277,11 @@ public class MongoManager {
                 this.addDataMedrzec(user);
                 rpgcore.getMedrzecNPC().add(user);
             }
-            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
-                final GornikObject user = new GornikObject(uuid);
-                this.addDataGornik(user);
-                rpgcore.getGornikNPC().add(user);
-            }
+//            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
+//                final GornikObject user = new GornikObject(uuid);
+//                this.addDataGornik(user);
+//                rpgcore.getGornikNPC().add(user);
+//            }
             if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() == null) {
                 final DuszologObject user = new DuszologObject(uuid);
                 this.addDataDuszolog(user);
@@ -516,12 +504,6 @@ public class MongoManager {
         this.addDataTest(testUser);
         rpgcore.getTestNPC().add(testUser);*/
 
-        Document document;
-
-        document = new Document();
-        document.append("_id", uuid.toString());
-        document.append("Targ", Utils.toBase64(rpgcore.getTargManager().getPlayerTarg(uuid)));
-        pool.getTargi().insertOne(document);
     }
 
     public void savePlayer(final Player player, final UUID uuid) {
@@ -639,7 +621,7 @@ public class MongoManager {
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
             this.saveDataUserPets(uuid, rpgcore.getPetyManager().findUserPets(uuid));
             this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
-            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
+//            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
             this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
             this.saveDataTarg(uuid, user.getName());
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
@@ -867,28 +849,7 @@ public class MongoManager {
 
 
     // GORNIK
-    public Map<UUID, GornikObject> loadAllGornik() {
-        Map<UUID, GornikObject> gornik = new ConcurrentHashMap<>();
-        for (Document document : this.pool.getGornik().find()) {
-            GornikObject gornikObject = new GornikObject(document);
-            gornik.put(gornikObject.getID(), gornikObject);
-        }
-        return gornik;
-    }
 
-    public void addDataGornik(final GornikObject gornikObject) {
-        this.pool.getGornik().insertOne(gornikObject.toDocument());
-    }
-
-    public void saveDataGornik(final UUID id, final GornikObject gornikObject) {
-        this.pool.getGornik().findOneAndReplace(new Document("_id", id.toString()), gornikObject.toDocument());
-    }
-
-    public void saveAllGornik() {
-        for (GornikObject gornikObject : rpgcore.getGornikNPC().getGornikObject()) {
-            this.saveDataGornik(gornikObject.getID(), gornikObject);
-        }
-    }
 
 
     // OsiagnieciaCommand
@@ -1326,33 +1287,6 @@ public class MongoManager {
     }
 
 
-    // RUDY DO GORNIKA
-    public Map<Location, Ore> loadAllOreLocations() {
-        Map<Location, Ore> oreMap = new HashMap<>();
-        for (Document document : this.pool.getOreLocations().find()) {
-            Ore ore = new Ore(document);
-            oreMap.put(ore.getLocation(), ore);
-        }
-        return oreMap;
-    }
-
-    public void addDataOreLocation(final Ore ore) {
-        this.pool.getOreLocations().insertOne(ore.toDocument());
-    }
-
-    public void removeDataOreLocation(final Ore ore) {
-        this.pool.getOreLocations().findOneAndDelete(new Document("_id", ore.getId()));
-    }
-
-    public void saveDataOreLocation(final Ore ore) {
-        this.pool.getOreLocations().findOneAndReplace(new Document("_id", ore.getId()), ore.toDocument());
-    }
-
-    public void saveAllOreLocations() {
-        for (Ore ore : rpgcore.getOreManager().getOreLocations()) {
-            this.saveDataOreLocation(ore);
-        }
-    }
 
     // WYSLANNIK
     public Map<UUID, WyslannikObject> loadAllWyslannik() {

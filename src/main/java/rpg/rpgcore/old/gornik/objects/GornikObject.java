@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.objects;
+package rpg.rpgcore.old.gornik.objects;
 
 import org.bson.Document;
 

@@ -141,7 +141,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + d1.getName() + "&a!"));
                     } else {
-                        if (lvl < d1.getReqLvl()) return;
+                        if (lvl < d1.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + d1.getReqLvl() + " poziom &caby odblokowac &6" + d1.getName() + "&c!"));
+                            return;
+                        }
                         
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(d1.getReqItem(), 1)).setAmount(1).toItemStack().clone());
                         d1.setUnlocked(true);
@@ -162,7 +165,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + d2.getName() + "&a!"));
                     } else {
-                        if (lvl < d2.getReqLvl()) return;
+                        if (lvl < d2.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + d2.getReqLvl() + " poziom &caby odblokowac &6" + d2.getName() + "&c!"));
+                            return;
+                        }
                         if (!user.getD1().isUnlocked()) return;
                         
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(d2.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -185,7 +191,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dl1.getName() + "&a!"));
                     } else {
-                        if (lvl < dl1.getReqLvl()) return;
+                        if (lvl < dl1.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dl1.getReqLvl() + " poziom &caby odblokowac &6" + dl1.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dl1.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -207,7 +216,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dl2.getName() + "&a!"));
                     } else {
-                        if (lvl < dl2.getReqLvl()) return;
+                        if (lvl < dl2.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dl2.getReqLvl() + " poziom &caby odblokowac &6" + dl2.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDl1().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dl2.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -229,7 +241,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dl3.getName() + "&a!"));
                     } else {
-                        if (lvl < dl3.getReqLvl()) return;
+                        if (lvl < dl3.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dl3.getReqLvl() + " poziom &caby odblokowac &6" + dl3.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDl1().isUnlocked() && user.getDl2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dl3.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -275,7 +290,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dl5.getName() + "&a!"));
                     } else {
-                        if (lvl < dl5.getReqLvl()) return;
+                        if (lvl < dl5.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dl5.getReqLvl() + " poziom &caby odblokowac &6" + dl5.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDl1().isUnlocked() && user.getDl2().isUnlocked() &&
                                 user.getDl3().isUnlocked() && user.getDl4().isUnlocked())) return;
 
@@ -298,7 +316,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dl6.getName() + "&a!"));
                     } else {
-                        if (lvl < dl6.getReqLvl()) return;
+                        if (lvl < dl6.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dl6.getReqLvl() + " poziom &caby odblokowac &6" + dl6.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDl1().isUnlocked() && user.getDl2().isUnlocked() &&
                                 user.getDl3().isUnlocked() && user.getDl4().isUnlocked() && user.getDl5().isUnlocked())) return;
 
@@ -322,7 +343,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dg1.getName() + "&a!"));
                     } else {
-                        if (lvl < dg1.getReqLvl()) return;
+                        if (lvl < dg1.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dg1.getReqLvl() + " poziom &caby odblokowac &6" + dg1.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dg1.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -344,7 +368,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dg2.getName() + "&a!"));
                     } else {
-                        if (lvl < dg2.getReqLvl()) return;
+                        if (lvl < dg2.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dg2.getReqLvl() + " poziom &caby odblokowac &6" + dg2.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDg1().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dg2.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -366,7 +393,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dg3.getName() + "&a!"));
                     } else {
-                        if (lvl < dg3.getReqLvl()) return;
+                        if (lvl < dg3.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dg3.getReqLvl() + " poziom &caby odblokowac &6" + dg3.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDg1().isUnlocked() && user.getDg2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dg3.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -390,7 +420,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp1.getName() + "&a!"));
                     } else {
-                        if (lvl < dp1.getReqLvl()) return;
+                        if (lvl < dp1.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp1.getReqLvl() + " poziom &caby odblokowac &6" + dp1.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dp1.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -412,7 +445,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp2.getName() + "&a!"));
                     } else {
-                        if (lvl < dp2.getReqLvl()) return;
+                        if (lvl < dp2.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp2.getReqLvl() + " poziom &caby odblokowac &6" + dp2.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDp1().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dp2.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -434,7 +470,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp3.getName() + "&a!"));
                     } else {
-                        if (lvl < dp3.getReqLvl()) return;
+                        if (lvl < dp3.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp3.getReqLvl() + " poziom &caby odblokowac &6" + dp3.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDp1().isUnlocked() && user.getDp2().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dp3.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -456,7 +495,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp4.getName() + "&a!"));
                     } else {
-                        if (lvl < dp4.getReqLvl()) return;
+                        if (lvl < dp4.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp4.getReqLvl() + " poziom &caby odblokowac &6" + dp4.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDp1().isUnlocked() && user.getDp2().isUnlocked() && user.getDp3().isUnlocked())) return;
 
                         player.getInventory().removeItem(new ItemBuilder(WyszkolenieItems.getItem(dp4.getReqItem(), 1)).setAmount(1).toItemStack().clone());
@@ -478,7 +520,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp5.getName() + "&a!"));
                     } else {
-                        if (lvl < dp5.getReqLvl()) return;
+                        if (lvl < dp5.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp5.getReqLvl() + " poziom &caby odblokowac &6" + dp5.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDp1().isUnlocked() && user.getDp2().isUnlocked() && user.getDp3().isUnlocked() &&
                                 user.getDp4().isUnlocked())) return;
 
@@ -501,7 +546,10 @@ public class WyszkolenieInventoryClickListener implements Listener {
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses));
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &aPomyslnie ulepszyles &6" + dp6.getName() + "&a!"));
                     } else {
-                        if (lvl < dp6.getReqLvl()) return;
+                        if (lvl < dp6.getReqLvl()) {
+                            player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cMusisz miec conajmniej &6" + dp6.getReqLvl() + " poziom &caby odblokowac &6" + dp6.getName() + "&c!"));
+                            return;
+                        }
                         if (!(user.getD1().isUnlocked() && user.getD2().isUnlocked() && user.getDp1().isUnlocked() && user.getDp2().isUnlocked() && user.getDp3().isUnlocked() &&
                                 user.getDp4().isUnlocked() && user.getDp5().isUnlocked())) return;
 

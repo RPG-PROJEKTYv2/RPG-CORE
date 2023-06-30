@@ -463,6 +463,15 @@ public class IceTowerManager {
 
         for (Player player : this.dungeonWorld.getPlayers()) {
             final MagazynierUser magazynier = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+            if (magazynier == null) {
+                Utils.sendToHighStaff("&8===========================");
+                Utils.sendToHighStaff("   &6Gracz: &c" + player.getName());
+                Utils.sendToHighStaff("   &6UUID: &c" + player.getUniqueId().toString());
+                Utils.sendToHighStaff("   &6Błąd: &cBrak Magazyniera (DT)");
+                Utils.sendToHighStaff("&8===========================");
+                player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cCos poszlo nie tak!\n&c&lJak najszybciej zglos sie do administracji!!!\n&8Blad: &cBrak Magazyniera!\n&8UUID: " + player.getUniqueId().toString()));
+             continue;
+            }
             if (magazynier.getMissions().getSelectedMission() == 10) {
                 magazynier.getMissions().setProgress(magazynier.getMissions().getProgress() + 1);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(magazynier.getUuid(), magazynier));

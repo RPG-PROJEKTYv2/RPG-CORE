@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.ore;
+package rpg.rpgcore.old.gornik.ore;
 
 import com.google.common.collect.ImmutableSet;
 import org.bukkit.Location;

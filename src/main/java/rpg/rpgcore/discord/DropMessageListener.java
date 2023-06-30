@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 
@@ -66,15 +67,35 @@ public class DropMessageListener extends ListenerAdapter {
         final Player player = Bukkit.getServer().getPlayer(user.getId());
         switch (prize) {
             case "ELITA na 7 dni":
+                if (user.getRankPlayerUser().hasRank(RankTypePlayer.ELITA)) {
+                    final long time = Utils.durationFromString("7d", false);
+                    user.getRankPlayerUser().setTime(user.getRankPlayerUser().getTime() + time);
+                    break;
+                }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "premium " + user.getName() + " Elita 7d true");
                 break;
             case "ELITA na 3 dni":
+                if (user.getRankPlayerUser().hasRank(RankTypePlayer.ELITA)) {
+                    final long time = Utils.durationFromString("3d", false);
+                    user.getRankPlayerUser().setTime(user.getRankPlayerUser().getTime() + time);
+                    break;
+                }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "premium " + user.getName() + " Elita 3d true");
                 break;
             case "VIP na 7 dni":
+                if (user.getRankPlayerUser().hasRank(RankTypePlayer.VIP)) {
+                    final long time = Utils.durationFromString("7d", false);
+                    user.getRankPlayerUser().setTime(user.getRankPlayerUser().getTime() + time);
+                    break;
+                }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "premium " + user.getName() + " Vip 7d true");
                 break;
             case "VIP na 3 dni":
+                if (user.getRankPlayerUser().hasRank(RankTypePlayer.VIP)) {
+                    final long time = Utils.durationFromString("3d", false);
+                    user.getRankPlayerUser().setTime(user.getRankPlayerUser().getTime() + time);
+                    break;
+                }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "premium " + user.getName() + " Vip 3d true");
                 break;
             case "HS 25":

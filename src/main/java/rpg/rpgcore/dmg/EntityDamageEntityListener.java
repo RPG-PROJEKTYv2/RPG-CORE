@@ -19,6 +19,9 @@ import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class EntityDamageEntityListener implements Listener {
 
@@ -28,17 +31,31 @@ public class EntityDamageEntityListener implements Listener {
         this.rpgcore = rpgcore;
     }
 
+    private final List<String> allowedPvP = Arrays.asList(
+            "50-60map",
+            "DemonTower",
+            "60-70map",
+            "70-80map",
+            "80-90map",
+            "90-100map",
+            "100-110map",
+            "110-120map",
+            "120-130map",
+            "Dungeon60-70",
+            "Dungeon70-80",
+            "Dungeon80-90",
+            "Dungeon90-100",
+            "Dungeon100-110",
+            "Dungeon110-120",
+            "Dungeon120-130");
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(final EntityDamageByEntityEvent e) {
         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
-        if (!(e.getEntity() instanceof EnderCrystal)) {
-            e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
-            e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
-        }
-        if (!(e.getEntity() instanceof Creature || e.getEntity() instanceof EnderCrystal)) {
-            e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, 0);
-            e.setDamage(EntityDamageEvent.DamageModifier.MAGIC, 0);
-        }
+        if (e.isApplicable(EntityDamageEvent.DamageModifier.ARMOR)) e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
+        if (e.isApplicable(EntityDamageEvent.DamageModifier.RESISTANCE)) e.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
+        if (e.isApplicable(EntityDamageEvent.DamageModifier.BLOCKING)) e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, 0);
+        if (e.isApplicable(EntityDamageEvent.DamageModifier.MAGIC)) e.setDamage(EntityDamageEvent.DamageModifier.MAGIC, 0);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -229,11 +246,7 @@ public class EntityDamageEntityListener implements Listener {
 
                 final Player victim = (Player) e.getEntity();
 
-                if (!e.getDamager().getLocation().getWorld().getName().equals("50-60map") && !e.getDamager().getLocation().getWorld().getName().equals("DemonTower") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("60-70map") && !e.getDamager().getLocation().getWorld().getName().equals("70-80map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("80-90map") && !e.getDamager().getLocation().getWorld().getName().equals("90-100map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("100-110map") && !e.getDamager().getLocation().getWorld().getName().equals("110-120map") &&
-                        !e.getDamager().getLocation().getWorld().getName().equals("120-130map")) {
+                if (!allowedPvP.contains(e.getDamager().getLocation().getWorld().getName())) {
                     e.setCancelled(true);
                     return;
                 }

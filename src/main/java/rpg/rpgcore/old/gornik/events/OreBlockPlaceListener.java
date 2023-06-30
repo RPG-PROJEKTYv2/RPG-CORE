@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.events;
+package rpg.rpgcore.old.gornik.events;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -6,8 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.npc.gornik.enums.GornikOres;
-import rpg.rpgcore.npc.gornik.ore.Ore;
+import rpg.rpgcore.old.gornik.enums.GornikOres;
+import rpg.rpgcore.old.gornik.ore.Ore;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.gornik.enums;
+package rpg.rpgcore.old.gornik.enums;
 
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.DoubleUtils;

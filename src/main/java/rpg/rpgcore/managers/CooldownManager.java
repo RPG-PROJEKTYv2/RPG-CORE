@@ -26,7 +26,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> klejnoty120_130Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> bossBarCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
-    private final Cache<UUID, Long> pelerynkaCooldownAfk = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> pelerynkaCooldownAfk = CacheBuilder.newBuilder().expireAfterWrite(100, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
 
@@ -182,7 +182,7 @@ public class CooldownManager {
         return this.pvpCooldown.asMap().containsKey(uuid);
     }
     public void givePelerynkaCooldownAfk(final UUID uuid) {
-        this.pelerynkaCooldownAfk.put(uuid, System.currentTimeMillis() + 500L);
+        this.pelerynkaCooldownAfk.put(uuid, System.currentTimeMillis() + 100L);
     }
 
     public boolean hasPelerynkaCooldownAfk(final UUID uuid) {
