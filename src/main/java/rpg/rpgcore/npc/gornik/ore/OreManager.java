@@ -14,11 +14,11 @@ public class OreManager {
 
     public OreManager(final RPGCORE rpgcore) {
         this.oreMap = rpgcore.getMongoManager().loadAllOre();
-        //this.fixOres();
+        this.resetOres();
         //rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, this::lagServer);
     }
 
-    public void fixOres() {
+    public void resetOres() {
         for (final Ore ore : this.oreMap.values()) {
             final Ores ores = Ores.getRandomOre();
             ore.setType(ores.getMaterial());
@@ -26,6 +26,7 @@ public class OreManager {
             ore.setMaxHp(ores.getHp());
             ore.setCurrentHp(ores.getHp());
             ore.getLocation().getBlock().setType(ores.getMaterial());
+            ore.setRespawnTime(-1L);
         }
     }
 
