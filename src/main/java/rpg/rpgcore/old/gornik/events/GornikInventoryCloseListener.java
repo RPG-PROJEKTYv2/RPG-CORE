@@ -11,7 +11,7 @@ import rpg.rpgcore.utils.Utils;
 public class GornikInventoryCloseListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClose(final InventoryCloseEvent e) {
-        if (Utils.removeColor(e.getInventory().getTitle()).equals("Osadzanie Krysztalow")) {
+        /*if (Utils.removeColor(e.getInventory().getTitle()).equals("Osadzanie Krysztalow")) {
             //TODO NAPRAWIC PRZY WSADZANIU KRYSZTALU WPIERDALA SIE DO PETLI
             if (e.getInventory().getSize() == 54){
                 if (e.getInventory().getItem(13) != null) {
@@ -19,6 +19,6 @@ public class GornikInventoryCloseListener implements Listener {
                     e.getPlayer().sendMessage(Utils.format("&cMusisz najpier wyjac swoj przedmiot!"));
                 }
             }
-        }
+        }*/
     }
 }

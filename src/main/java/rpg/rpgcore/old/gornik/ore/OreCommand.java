@@ -20,7 +20,7 @@ public class OreCommand extends CommandAPI {
 
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
-        final Player player = (Player) sender;
+        /*final Player player = (Player) sender;
         if (args.length == 0) {
             player.sendMessage(Utils.poprawneUzycie("/ore <list/remove> [id]"));
             return;
@@ -64,7 +64,7 @@ public class OreCommand extends CommandAPI {
                 RPGCORE.getInstance().getOreManager().remove(RPGCORE.getInstance().getOreManager().findById(id));
             });
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie usunieto rude o id &6" + id));
-        }
+        }*/
     }
 
 }

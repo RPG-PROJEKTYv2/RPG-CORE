@@ -10,6 +10,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
+import rpg.rpgcore.npc.gornik.ore.objects.Ore;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.chat.ChatUser;
@@ -47,7 +49,6 @@ import rpg.rpgcore.user.WWWUser;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -277,11 +278,11 @@ public class MongoManager {
                 this.addDataMedrzec(user);
                 rpgcore.getMedrzecNPC().add(user);
             }
-//            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
-//                final GornikObject user = new GornikObject(uuid);
-//                this.addDataGornik(user);
-//                rpgcore.getGornikNPC().add(user);
-//            }
+            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() == null) {
+                final GornikUser user = new GornikUser(uuid);
+                this.addDataGornik(user);
+                rpgcore.getGornikNPC().add(user);
+            }
             if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() == null) {
                 final DuszologObject user = new DuszologObject(uuid);
                 this.addDataDuszolog(user);
@@ -439,6 +440,10 @@ public class MongoManager {
         final RybakObject rybakObject = new RybakObject(uuid);
         this.addDataRybak(rybakObject);
         rpgcore.getRybakNPC().add(rybakObject);
+
+        final GornikUser gornikUser = new GornikUser(uuid);
+        this.addDataGornik(gornikUser);
+        rpgcore.getGornikNPC().add(gornikUser);
 
         final OsUser osObject = new OsUser(uuid);
         this.addDataOs(osObject);
@@ -621,7 +626,7 @@ public class MongoManager {
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
             this.saveDataUserPets(uuid, rpgcore.getPetyManager().findUserPets(uuid));
             this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
-//            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
+            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
             this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
             this.saveDataTarg(uuid, user.getName());
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
@@ -761,7 +766,7 @@ public class MongoManager {
     }
 
     public Map<UUID, MetinologObject> loadAllMetinolog() {
-        Map<UUID, MetinologObject> metinolog = new ConcurrentHashMap<>();
+        Map<UUID, MetinologObject> metinolog = new HashMap<>();
         for (Document document : this.pool.getMetinolog().find()) {
             MetinologObject metinologObject = new MetinologObject(document);
             metinolog.put(metinologObject.getID(), metinologObject);
@@ -804,7 +809,7 @@ public class MongoManager {
     }
 
     /*public Map<UUID, Klasy> loadAllKlasy() {
-        Map<UUID, Klasy> klasy = new ConcurrentHashMap<>();
+        Map<UUID, Klasy> klasy = new HashMap<>();
         for (Document document : this.pool.getKlasy().find()) {
             Klasy klasyUser = new Klasy(document);
             klasy.put(klasyUser.getId(), klasyUser);
@@ -822,7 +827,7 @@ public class MongoManager {
 
     // MEDYK
     public Map<UUID, MedrzecUser> loadAllMedrzec() {
-        Map<UUID, MedrzecUser> medrzec = new ConcurrentHashMap<>();
+        Map<UUID, MedrzecUser> medrzec = new HashMap<>();
         for (Document document : this.pool.getMedrzec().find()) {
             MedrzecUser medrzecUser = new MedrzecUser(document);
             medrzec.put(medrzecUser.getUuid(), medrzecUser);
@@ -849,12 +854,76 @@ public class MongoManager {
 
 
     // GORNIK
+    public Map<UUID, GornikUser> loadAllGornik() {
+        Map<UUID, GornikUser> gornik = new HashMap<>();
+        for (final Document document : this.pool.getGornik().find()) {
+            final GornikUser gornikUser = new GornikUser(document);
+            gornik.put(gornikUser.getUuid(), gornikUser);
+        }
+        return gornik;
+    }
 
+    public void addDataGornik(final GornikUser gornikUser) {
+        if (this.pool.getGornik().find(new Document("_id", gornikUser.getUuid().toString())).first() != null) {
+            this.removeDataGornik(gornikUser);
+        }
+        this.pool.getGornik().insertOne(gornikUser.toDocument());
+    }
+
+    public void removeDataGornik(final GornikUser gornikUser) {
+        this.pool.getGornik().deleteOne(new Document("_id", gornikUser.getUuid().toString()));
+    }
+
+    public void saveDataGornik(final UUID uuid, final GornikUser gornikUser) {
+        this.pool.getGornik().findOneAndReplace(new Document("_id", uuid.toString()), gornikUser.toDocument());
+    }
+
+    public void saveAllGornik() {
+        for (final GornikUser gornikUser : rpgcore.getGornikNPC().getGornikUsers()) {
+            this.saveDataGornik(gornikUser.getUuid(), gornikUser);
+        }
+    }
+
+    // ORE
+    public Map<Location, Ore> loadAllOre() {
+        final Map<Location, Ore> ores = new HashMap<>();
+        for (final Document document : this.pool.getOreLocations().find()) {
+            final Ore ore = new Ore(document);
+            ores.put(ore.getLocation(), ore);
+        }
+        return ores;
+    }
+
+    public void addDataOre(final Ore ore) {
+        if (this.pool.getOreLocations().find(new Document("_id", ore.getId())).first() != null) {
+            this.removeDataOre(ore);
+        }
+        this.pool.getOreLocations().insertOne(ore.toDocument());
+    }
+
+    public void removeDataOre(final Ore ore) {
+        this.pool.getOreLocations().deleteOne(new Document("_id", ore.getId()));
+    }
+
+    public void saveDataOre(final int id, final Ore ore) {
+        if (this.pool.getOreLocations().find(new Document("_id", id)).first() == null) {
+            this.addDataOre(ore);
+            return;
+        }
+        this.pool.getOreLocations().findOneAndReplace(new Document("_id", id), ore.toDocument());
+    }
+
+    public void saveAllOre() {
+        for (final Ore ore : rpgcore.getOreManager().getOres()) {
+            ore.setCurrentHp(ore.getMaxHp());
+            this.saveDataOre(ore.getId(), ore);
+        }
+    }
 
 
     // OsiagnieciaCommand
     public Map<UUID, OsUser> loadAllOs() {
-        Map<UUID, OsUser> osUserMap = new ConcurrentHashMap<>();
+        Map<UUID, OsUser> osUserMap = new HashMap<>();
         for (Document document : this.pool.getOsiagniecia().find()) {
             OsUser osUser = new OsUser(document);
             osUserMap.put(osUser.getUuid(), osUser);
@@ -881,7 +950,7 @@ public class MongoManager {
 
     // Kolekcjoner
     public Map<UUID, KolekcjonerObject> loadAllKolekcjoner() {
-        Map<UUID, KolekcjonerObject> kolekcjoner = new ConcurrentHashMap<>();
+        Map<UUID, KolekcjonerObject> kolekcjoner = new HashMap<>();
         for (Document document : this.pool.getKolekcjoner().find()) {
             KolekcjonerObject kolekcjonerObject = new KolekcjonerObject(document);
             kolekcjoner.put(kolekcjonerObject.getID(), kolekcjonerObject);
@@ -908,7 +977,7 @@ public class MongoManager {
 
     // Duszolog
     public Map<UUID, DuszologObject> loadAllDuszolog() {
-        Map<UUID, DuszologObject> duszolog = new ConcurrentHashMap<>();
+        Map<UUID, DuszologObject> duszolog = new HashMap<>();
         for (Document document : this.pool.getDuszolog().find()) {
             DuszologObject duszologObject = new DuszologObject(document);
             duszolog.put(duszologObject.getID(), duszologObject);
@@ -936,7 +1005,7 @@ public class MongoManager {
 
     // Przyrodnik
     public Map<UUID, PrzyrodnikObject> loadAllPrzyrodnik() {
-        Map<UUID, PrzyrodnikObject> przyrodnik = new ConcurrentHashMap<>();
+        Map<UUID, PrzyrodnikObject> przyrodnik = new HashMap<>();
         for (Document document : this.pool.getPrzyrodnik().find()) {
             PrzyrodnikObject przyrodnikObject = new PrzyrodnikObject(document);
             przyrodnik.put(przyrodnikObject.getId(), przyrodnikObject);

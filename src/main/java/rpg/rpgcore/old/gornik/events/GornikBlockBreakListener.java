@@ -25,7 +25,7 @@ public class GornikBlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMine(final BlockBreakEvent e) {
-        if (e.getPlayer().getWorld().getName().equals("Gornik")) {
+        /*if (e.getPlayer().getWorld().getName().equals("Gornik")) {
             e.setCancelled(true);
             if (rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().getRankType().getPriority() > RankType.HA.getPriority() && rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isAdminCodeLogin()) {
                 e.setCancelled(false);
@@ -150,6 +150,6 @@ public class GornikBlockBreakListener implements Listener {
                 ore.setOreMaterial(Material.BEDROCK);
                 e.getBlock().setType(Material.BEDROCK);
             }
-        }
+        }*/
     }
 }

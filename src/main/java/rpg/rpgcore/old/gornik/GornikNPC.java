@@ -27,12 +27,12 @@ import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 import java.util.*;
 
 public class GornikNPC {
-    private final RPGCORE rpgcore;
+    /*private final RPGCORE rpgcore;
     private final Map<UUID, GornikObject> userMap;
 
     public GornikNPC(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.userMap = rpgcore.getMongoManager().loadAllGornik();
+        this.userMap = new HashMap<>();
         this.loadMissions();
     }
 
@@ -1018,6 +1018,6 @@ public class GornikNPC {
 
     public ImmutableSet<GornikObject> getGornikObject() {
         return ImmutableSet.copyOf(this.userMap.values());
-    }
+    }*/
 
 }

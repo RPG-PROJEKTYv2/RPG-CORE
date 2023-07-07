@@ -6,12 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
-
-
-import java.util.UUID;
 
 public class AdminPanelInventoryClick implements Listener {
     private final RPGCORE rpgcore;
@@ -189,9 +185,10 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
         if (title.equals("Gornik - ADMINISTRACJA")) {
-            if (slot == 53) {
+            if (slot == 22) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
             }
         }
         if (title.equals("Podreczniki - ADMINISTRACJA") || title.equals("Bossy & Klucze - ADMINISTRACJA")
@@ -199,18 +196,22 @@ public class AdminPanelInventoryClick implements Listener {
             if (slot == 26) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
+                return;
             }
         }
         if (title.equals("Przedmioty S - ADMINISTRACJA")) {
             e.setCancelled(true);
             if (slot == 12) {
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGuiPodreczniki(player);
+                return;
             }
             if (slot == 13) {
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGuiBossyKlucze(player);
+                return;
             }
             if (slot == 14) {
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneInne(player);
+                return;
             }
             if (slot == 26) {
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);

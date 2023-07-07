@@ -174,6 +174,9 @@ import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
+import rpg.rpgcore.npc.gornik.events.GornikBlockBreakListener;
+import rpg.rpgcore.npc.gornik.events.GornikInventoryClickListener;
+import rpg.rpgcore.npc.gornik.ore.OreManager;
 import rpg.rpgcore.npc.handlarz.HandlarzNPC;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInteractListener;
 import rpg.rpgcore.npc.handlarz.events.HandlarzInventoryClickListener;
@@ -370,6 +373,7 @@ public final class RPGCORE extends JavaPlugin {
     private UstawieniaKontaManager ustawieniaKontaManager;
     private MistycznyKowalManager mistycznyKowalManager;
     private GornikNPC gornikNPC;
+    private OreManager oreManager;
 
 
     private int i = 1;
@@ -459,7 +463,8 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllBao();
         this.mongo.saveAllDuszolog();
         this.mongo.saveAllGuilds();
-//        this.mongo.saveAllGornik();
+        this.mongo.saveAllGornik();
+        this.mongo.saveAllOre();
         this.mongo.saveAllMedrzec();
         this.mongo.saveAllKolekcjoner();
         this.mongo.saveAllMetinolog();
@@ -583,6 +588,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new LiveCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new GammaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new DropCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new GornikZaplacCommand(this));
     }
 
     private void initEvents() {
@@ -729,7 +735,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MetinologInventoryClick(), this);
 
         // ...GORNIK
-
+        this.getServer().getPluginManager().registerEvents(new GornikInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new GornikBlockBreakListener(this), this);
 
         // ...PRZYRODNIK
         this.getServer().getPluginManager().registerEvents(new PrzyrodnikInventoryClick(), this);
@@ -839,7 +846,7 @@ public final class RPGCORE extends JavaPlugin {
         this.magazynierNPC = new MagazynierNPC(this);
         this.partyManager = new PartyManager();
         this.petyManager = new PetyManager(this);
-        this.rozpiskaManager = new RozpiskaManager();
+        this.rozpiskaManager = new RozpiskaManager(this);
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
@@ -851,6 +858,7 @@ public final class RPGCORE extends JavaPlugin {
         this.wyszkolenieManager = new WyszkolenieManager(this);
         this.invseeManager = new InvseeManager();
         this.ustawieniaKontaManager = new UstawieniaKontaManager(this);
+        this.oreManager = new OreManager(this);
     }
 
     private void initNPCS() {
@@ -1408,5 +1416,9 @@ public final class RPGCORE extends JavaPlugin {
     }
     public GornikNPC getGornikNPC() {
         return gornikNPC;
+    }
+
+    public OreManager getOreManager() {
+        return oreManager;
     }
 }

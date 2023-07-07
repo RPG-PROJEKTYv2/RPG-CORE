@@ -384,7 +384,7 @@ public class NewTargInventoryClick implements Listener {
                         "**Typ Sprzedazy: ** Targ gracza `" + player.getName() + "`\n" +
                         "**Nazwa Przedmiotu: **" + itemName + "\n" +
                         "**Ilosc Przedmiotu: **" + clickedItem.getAmount() + "\n" +
-                        "**Cena Przedmiotu: **\n" + Utils.spaceNumber(itemCena) + "\n" +
+                        "**Cena Przedmiotu: **" + Utils.spaceNumber(itemCena) + "\n" +
                         "**Typ Przedmiotu: **`" + clickedItem.getType().toString() + "`\n" +
                         "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedItem.getItemMeta().getLore()) + "\n", Color.RED));
     }
@@ -429,7 +429,7 @@ public class NewTargInventoryClick implements Listener {
                         "**Typ Sprzedazy: ** Targ gracza `" + player.getName() + "`\n" +
                         "**Nazwa Przedmiotu: **" + itemName + "\n" +
                         "**Ilosc Przedmiotu: **" + clickedItem.getAmount() + "\n" +
-                        "**Cena Przedmiotu: **\n" + Utils.spaceNumber(itemCena) + "\n" +
+                        "**Cena Przedmiotu: **" + Utils.spaceNumber(itemCena) + "\n" +
                         "**Typ Przedmiotu: **`" + clickedItem.getType().toString() + "`\n" +
                         "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedItem.getItemMeta().getLore()) + "\n", Color.RED));
     }

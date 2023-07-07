@@ -36,7 +36,7 @@ public class DropMessageListener extends ListenerAdapter {
             String prize = "";
             for (String s : Objects.requireNonNull(embed.getDescription()).split("\n")) {
                 if (s.contains("Nick:")) nick = s.trim().replace("**Nick:** ", "").replaceAll("`", "");
-                else if (s.contains("Nagroda:")) prize = s.trim().replace("**Nagroda:** ", "").replaceAll("`", "");
+                if (s.contains("Nagroda:")) prize = s.trim().replace("**Nagroda:** ", "").replaceAll("`", "");
             }
             if (nick.isEmpty() || prize.isEmpty()) return;
             if (!rpgcore.getUserManager().isUserName(nick)) {
@@ -114,6 +114,12 @@ public class DropMessageListener extends ListenerAdapter {
                         RPGCORE.getInstance().getNmsManager().makeSubTitle("&7Pomyslnie zakupiles pakiet &6HS 5&7! &6Dziekujemy!", 5, 20, 5));
                 break;
         }
+        RPGCORE.getDiscordBot().sendChannelMessage("drop-logs", new EmbedBuilder()
+                .setTitle("**Drop!**")
+                .setDescription("Gracz `" + user.getName() + "` znalazł nagrodę!\n" +
+                        "Nagroda: **" + prize + "**")
+                .setColor(Color.decode("#0fb8d6"))
+                .setFooter("© 2023 HELLRPG.PL"));
         if (player == null) return;
         player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otrzymales/-as nagrode z dropu na naszym discordzie! &6&lGratulacje!"));
     }

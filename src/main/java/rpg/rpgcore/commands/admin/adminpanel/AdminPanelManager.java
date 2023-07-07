@@ -315,25 +315,16 @@ public class AdminPanelManager {
     }
 
     public void openGornikItemsGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lGornik &f- ADMINISTRACJA"));
-        for (final GornikItems item : GornikItems.values()) {
-            if (item.getName().equals("KILOF") || item.getName().equals("ZMIOTKA_T0") || item.getName().equals("ZMIOTKA_T1")
-                    || item.getName().equals("ZMIOTKA_T2") || item.getName().equals("ZMIOTKA_T3") || item.getName().equals("ZMIOTKA_T4")) {
-                continue;
-            }
-            gui.setItem(gui.firstEmpty(), item.getItemStack().clone());
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lGornik &f- ADMINISTRACJA"));
+        for (final GornikItems gornikItems : GornikItems.values()) {
+            gui.setItem(gui.firstEmpty(), gornikItems.getItemStack());
         }
+        gui.setItem(gui.firstEmpty(), GornikItems.getKilof(player).clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.IRON_PICKAXE).toItemStack().clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.GOLD_PICKAXE).toItemStack().clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.DIAMOND_PICKAXE).toItemStack().clone());
 
-        gui.setItem(45, GornikItems.getKilof(player.getName()).clone());
-        gui.setItem(46, GornikItems.getZmiotka("T0", 50, player.getName()).clone());
-        gui.setItem(47, GornikItems.getZmiotka("T1", 50, player.getName()).clone());
-        gui.setItem(48, GornikItems.getZmiotka("T2", 50, player.getName()).clone());
-        gui.setItem(49, GornikItems.getZmiotka("T3", 50, player.getName()).clone());
-        gui.setItem(50, GornikItems.getZmiotka("T4", 50, player.getName()).clone());
-
-
-
-        gui.setItem(53, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(22, Utils.powrot().clone());
 
         player.openInventory(gui);
     }

@@ -42,6 +42,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setType(final Material material) {
+        this.is.setType(material);
+        return this;
+    }
+
     public ItemBuilder hideFlag() {
         ItemMeta im = this.is.getItemMeta();
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);

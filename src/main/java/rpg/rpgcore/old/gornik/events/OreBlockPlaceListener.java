@@ -22,7 +22,7 @@ public class OreBlockPlaceListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlace(final BlockPlaceEvent e) {
-        if (e.isCancelled()) return;
+        /*if (e.isCancelled()) return;
 
         if (!e.getBlock().getWorld().getName().equals("Gornik")) return;
 
@@ -34,6 +34,6 @@ public class OreBlockPlaceListener implements Listener {
         this.rpgcore.getOreManager().add(block.getLocation(), ore);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().addDataOreLocation(ore));
         e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie dodano rude o id &6" + id + " &amateriale &6" + block.getType().name() + "&a i lokalizacji x:&6" + block.getLocation().getBlockX() + " &ay:&6" + block.getLocation().getBlockY() + " &az:&6" + block.getLocation().getBlockZ()));
-
+        */
     }
 }

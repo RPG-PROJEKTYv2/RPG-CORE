@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class OreManager {
 
-    private final Map<Location, Ore> oreMap;
+    /*private final Map<Location, Ore> oreMap;
 
     public OreManager(final RPGCORE rpgcore) {
         this.oreMap = rpgcore.getMongoManager().loadAllOreLocations();
@@ -55,5 +55,5 @@ public class OreManager {
 
     public ImmutableSet<Ore> getOreLocations() {
         return ImmutableSet.copyOf(this.oreMap.values());
-    }
+    }*/
 }

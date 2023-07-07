@@ -30,7 +30,7 @@ public class GornikInventoryClick implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(final InventoryClickEvent e) {
 
-        if (e.getInventory() == null || e.getClickedInventory() == null) {
+        /*if (e.getInventory() == null || e.getClickedInventory() == null) {
             return;
         }
 
@@ -1560,7 +1560,7 @@ public class GornikInventoryClick implements Listener {
 
         if (title.equals("Pomocnik Gornika")) {
             e.setCancelled(true);
-        }
+        }*/
     }
 
     private void updateLore(final ItemStack is, final int slot, final String prefix) {

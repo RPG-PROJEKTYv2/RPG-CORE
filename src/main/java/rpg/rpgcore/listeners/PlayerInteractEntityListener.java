@@ -146,15 +146,6 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
-        if (e.getRightClicked().getType().equals(EntityType.ENDERMITE)) {
-            e.setCancelled(true);
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // ITEMSHOP
-            if (entityName.equals("Pomocnik Gornika")) {
-                rpgcore.getGornikNPC().openPomocnikGUI(player);
-                return;
-            }
-        }
         if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
@@ -212,8 +203,8 @@ public class PlayerInteractEntityListener implements Listener {
                     rpgcore.getGornikNPC().onClick(player);
                     return;
                 }
-                if (playerRightClicked.getLocation().getWorld().getName().equals("Gornik")) {
-                    rpgcore.getGornikNPC().openGornikGUI(player);
+                if (playerRightClicked.getLocation().getWorld().getName().equals("Kopalnia")) {
+                    rpgcore.getGornikNPC().openGornik(player);
                     return;
                 }
             }
