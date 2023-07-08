@@ -29,6 +29,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> pelerynkaCooldownAfk = CacheBuilder.newBuilder().expireAfterWrite(100, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -242,5 +243,17 @@ public class CooldownManager {
 
     public String getLiveCommandCooldown(final UUID uuid) {
         return Utils.durationToString(this.liveCommandCooldown.asMap().get(uuid), false);
+    }
+
+    public void givePlayerPickaxeAbilityCooldown(final UUID uuid) {
+        this.pickaxeAbility.put(uuid, System.currentTimeMillis() + 300_000L);
+    }
+
+    public boolean hasPlayerPickaxeAbilityCooldown(final UUID uuid) {
+        return this.pickaxeAbility.asMap().containsKey(uuid);
+    }
+
+    public String getPlayerPickaxeAbilityCooldown(final UUID uuid) {
+        return Utils.durationToString(this.pickaxeAbility.asMap().get(uuid), false);
     }
 }

@@ -32,7 +32,7 @@ public enum GornikLevels {
     L28(28, 3_250),
     L29(29, 3_500),
     L30(30, 4_000),
-    L99(0, 0);
+    L99(0, 999999999);
 
 
     private final int lvl, exp;

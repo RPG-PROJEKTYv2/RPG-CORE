@@ -12,11 +12,13 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
+import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
 
 public class DropFromChestsListener implements Listener {
@@ -190,6 +192,10 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // TODO SKRZYNIA GORNIKA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GornikItems.I8.getItemStack().getItemMeta().getDisplayName()))) {
+                    final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
+                    if (gornikUser.getMission() == 10 || gornikUser.getMission() == 24) gornikUser.setProgress(gornikUser.getProgress() + 1);
+                }
 
                 // ================================ SKRZYNKI EXPOWISKA ================================
 

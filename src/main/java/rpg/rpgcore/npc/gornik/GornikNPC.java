@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
+import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -132,9 +133,19 @@ public class GornikNPC {
 
     public void openKampania(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lGornik &8>> &4&lKampania"));
-        for (int i = 0; i < gui.getSize(); i++)
+        final GornikUser user = this.find(player.getUniqueId());
+        for (int i = 0; i < gui.getSize(); i++) {
+            if ((i > 9 && i < 17) || (i > 18 && i < 26) || (i > 27 && i < 35) || (i > 36 && i < 44)) continue;
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        }
 
+        for (final GornikMissions mission : GornikMissions.values()) {
+            if (mission.getId() < user.getMission()) gui.setItem(gui.firstEmpty(), new ItemBuilder(Material.BOOK).setName("&7Misja &c" + mission.getId()).setLore(Arrays.asList("&a&lUkonczono")).addGlowing().toItemStack().clone());
+            else if (mission.getId() == user.getMission()) gui.setItem(gui.firstEmpty(), new ItemBuilder(mission.getItem().clone()).setLoreCrafting(mission.getItem().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&7Postep: &e" + user.getProgress() + "&7/&e" + mission.getReqAmount() + " &7(&e" + DoubleUtils.round(user.getProgress() / (double) mission.getReqAmount() * 100, 2) + "%&7)"
+            )).toItemStack().clone());
+        }
 
         gui.setItem(49, Utils.powrot().clone());
         player.openInventory(gui);
@@ -322,7 +333,11 @@ public class GornikNPC {
         Utils.setTagInt(item, "exp", itemExp + exp);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
-        lore.set(1, Utils.format("&7Exp: &6" + Utils.spaceNumber(itemExp + exp) + "&7/&6" + Utils.spaceNumber(reqExp)));
+        if (Utils.getTagInt(item, "lvl") == 31) {
+            lore.set(1, Utils.format("&7Exp: &6" + Utils.spaceNumber(itemExp + exp) + "&7/&c&lMAX"));
+        } else {
+            lore.set(1, Utils.format("&7Exp: &6" + Utils.spaceNumber(itemExp + exp) + "&7/&6" + Utils.spaceNumber(reqExp)));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
         if (itemExp + exp >= reqExp) {
@@ -338,13 +353,22 @@ public class GornikNPC {
         Utils.setTagInt(item, "reqExp", reqExp);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
-        lore.set(0, Utils.format("&7Poziom: &e" + (lvl + 1)));
-        lore.set(1, Utils.format("&7Exp: &60&7/&6" + Utils.spaceNumber(reqExp)));
+        if (lvl == 30) {
+            lore.set(0, Utils.format("&7Poziom: &c&lMAX"));
+            lore.set(1, Utils.format("&7Exp: &60&7/&c&lMAX"));
+            lore.add(" ");
+            lore.add("&6Umiejetnosc: Prawdziwy Kopacz &e&lRMB");
+            lore.add("&7Otrzymaj efekt &eHaste II &7na &e60 &7sekund");
+            lore.add("&7oraz nadaj go wszystkim graczom w zasiegu &a10 &7kratek");
+            lore.add("&7Dodatkowo otrzymaj &a+25% &7szansy na podwojenie rudy");
+            lore.add("&7na &a30 &7sekund &8(Cooldown: 5 &8minut)");
+        } else {
+            lore.set(0, Utils.format("&7Poziom: &e" + (lvl + 1)));
+            lore.set(1, Utils.format("&7Exp: &60&7/&6" + Utils.spaceNumber(reqExp)));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
-
-
 
 
     public void giveRandomChestReward(final Player player) {

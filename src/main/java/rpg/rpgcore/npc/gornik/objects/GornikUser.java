@@ -14,7 +14,7 @@ public class GornikUser {
     private int mission, progress;
     private double silnyNaLudzi, defNaMoby;
     private long timeLeft, maxTimeLeft;
-    private long freePass;
+    private long freePass, pickaxeAbility;
 
     public GornikUser(final UUID uuid) {
         this.uuid = uuid;
@@ -25,6 +25,7 @@ public class GornikUser {
         this.timeLeft = 0;
         this.maxTimeLeft = 15 * 60 * 1000;
         this.freePass = System.currentTimeMillis();
+        this.pickaxeAbility = -1;
     }
 
     public GornikUser(final Document document) {
@@ -36,6 +37,7 @@ public class GornikUser {
         this.timeLeft = document.getLong("timeLeft");
         this.maxTimeLeft = document.getLong("maxTimeLeft");
         this.freePass = document.getLong("freePass");
+        this.pickaxeAbility = document.getLong("pickaxeAbility");
     }
 
     public void save() {
@@ -44,6 +46,13 @@ public class GornikUser {
 
     public void giveFreePassCooldown() {
         this.freePass = System.currentTimeMillis() + 4 * 60 * 60 * 1000;
+    }
+    public void activatePickaxeAbility() {
+        this.pickaxeAbility = System.currentTimeMillis() + 60 * 1000;
+    }
+
+    public boolean isPickaxeAbilityActive() {
+        return this.pickaxeAbility > System.currentTimeMillis();
     }
 
     public Document toDocument() {
@@ -54,6 +63,7 @@ public class GornikUser {
                 .append("defNaMoby", defNaMoby)
                 .append("timeLeft", timeLeft)
                 .append("maxTimeLeft", maxTimeLeft)
-                .append("freePass", freePass);
+                .append("freePass", freePass)
+                .append("pickaxeAbility", pickaxeAbility);
     }
 }

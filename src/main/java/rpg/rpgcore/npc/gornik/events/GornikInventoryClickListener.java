@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.gornik.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -7,8 +8,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.npc.gornik.enums.GornikMissions;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -57,10 +62,57 @@ public class GornikInventoryClickListener implements Listener {
         if (title.equals("Gornik » Kampania")) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) return;
+            if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)) return;
+
+            final GornikUser user = rpgcore.getGornikNPC().find(uuid);
+            final GornikMissions mission = GornikMissions.getById(user.getMission());
+
+            if (user.getProgress() >= mission.getReqAmount()) {
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
+                user.setProgress(0);
+                user.setMission(user.getMission() + 1);
+                user.setDefNaMoby(user.getDefNaMoby() + mission.getDefNaMoby());
+                user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
+                user.setMaxTimeLeft(user.getMaxTimeLeft() + mission.getBonusTime());
+                bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + mission.getSilnyNaLudzi());
+                bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + mission.getDefNaMoby());
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataGornik(uuid, user);
+                    rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
+                });
+                Bukkit.getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &e" + player.getName() + " &7ukonczyl moja &e" + mission.getId() + " &7misje!"));
+                return;
+            }
+
+            if (user.getMission() == 5 || user.getMission() == 15 || user.getMission() == 18 || user.getMission() == 28) {
+                if (player.getItemInHand() == null) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cMusisz trzymac w rece &6Kilof Gornika&c!"));
+                    return;
+                }
+                if (!player.getItemInHand().getItemMeta().getDisplayName().contains("Kilof Gornika")) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cMusisz trzymac w rece &6Kilof Gornika&c!"));
+                    return;
+                }
+                if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+                    return;
+                }
+                if (!Utils.getTagString(player.getItemInHand(), "owner-uuid").equals(player.getUniqueId().toString())) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+                    return;
+                }
+                if (Utils.getTagInt(player.getItemInHand(), "lvl") < Utils.getTagInt(item, "reqPickaxeLvl")) return;
+                user.setProgress(1);
+                return;
+            }
+
             if (slot == 49) {
                 rpgcore.getGornikNPC().openGornik(player);
                 return;
             }
+            return;
         }
 
         if (title.equals("Gornik » Sklep Gorniczy")) {
