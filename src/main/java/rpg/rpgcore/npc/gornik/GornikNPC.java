@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -353,6 +354,17 @@ public class GornikNPC {
         Utils.setTagInt(item, "reqExp", reqExp);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
+        switch (lvl + 1) {
+            case 10:
+                meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                break;
+            case 20:
+                meta.addEnchant(Enchantment.DIG_SPEED, 2, true);
+                break;
+            case 30:
+                meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                break;
+        }
         if (lvl == 30) {
             lore.set(0, Utils.format("&7Poziom: &c&lMAX"));
             lore.set(1, Utils.format("&7Exp: &60&7/&c&lMAX"));

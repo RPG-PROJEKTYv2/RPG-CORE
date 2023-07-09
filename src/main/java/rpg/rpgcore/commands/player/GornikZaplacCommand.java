@@ -56,13 +56,16 @@ public class GornikZaplacCommand extends CommandAPI {
                 isFullGornikArmor = false;
             }
         }
+        if (isFullGornikArmor) {
+            bonusTime += 480_000;
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 6_000, 0));
+        }
         gornikUser.setTimeLeft(gornikUser.getMaxTimeLeft() + bonusTime);
         rpgcore.getGornikNPC().removeFromPayList(player.getUniqueId());
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
            rpgcore.getMongoManager().saveDataUser(user.getId(), user);
            rpgcore.getMongoManager().saveDataGornik(gornikUser.getUuid(), gornikUser);
         });
-        if (isFullGornikArmor) player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 6_000, 0));
         player.teleport(new Location(Bukkit.getWorld("kopalnia"), -143.5, 76, -3.5, -45, 0));
     }
 }

@@ -406,6 +406,7 @@ public final class RPGCORE extends JavaPlugin {
         instance = this;
         holographicDisplaysAPI = HolographicDisplaysAPI.get(Bukkit.getServer().getPluginManager().getPlugin("HolographicDisplays"));
         mythicMobs = MythicMobs.inst();
+        new PluginMessageReceiveListener(this);
         this.config.createConfig();
         this.initDatabase();
         this.initManagers();
@@ -462,6 +463,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllUsers();
         this.mongo.saveAllMetins();
         this.mongo.saveAllBao();
+        this.mongo.saveAllBaoArmorStands();
         this.mongo.saveAllDuszolog();
         this.mongo.saveAllGuilds();
         this.mongo.saveAllGornik();
@@ -498,6 +500,7 @@ public final class RPGCORE extends JavaPlugin {
         this.bossyManager.reset70_80();
         this.bossyManager.despawnKlejnot(null, 1);
         this.bossyManager.despawnKlejnot(null, 2);
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "rpgproxy:main:log");
     }
 
     private void initGlobalCommands() {

@@ -3,11 +3,15 @@ package rpg.rpgcore.database;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.EulerAngle;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bao.BaoObject;
+import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
@@ -46,6 +50,7 @@ import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.spawn.SpawnManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.user.WWWUser;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
@@ -1055,6 +1060,100 @@ public class MongoManager {
     public void saveAllBao() {
         for (BaoObject baoObject : rpgcore.getBaoManager().getBaoObjects()) {
             this.saveDataBao(baoObject.getId(), baoObject);
+        }
+    }
+
+    // BAO ARMORSTANDS
+    public Map<Integer, ArmorStand> loadAllBaoArmorStands() {
+        Map<Integer, ArmorStand> armorStands = new HashMap<>();
+        for (Document document : this.pool.getBaoArmorStands().find()) {
+            final Location location = new Location(
+                    Bukkit.getWorld(document.getString("world")),
+                    document.getDouble("x"),
+                    document.getDouble("y"),
+                    document.getDouble("z"),
+                    Float.parseFloat(String.valueOf(document.getDouble("yaw"))),
+                    Float.parseFloat(String.valueOf(document.getDouble("pitch"))));
+            final ArmorStand as = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+            final EulerAngle headPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("headX")),
+                    Math.toRadians(document.getDouble("headY")),
+                    Math.toRadians(document.getDouble("headZ")));
+            final EulerAngle bodyPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("bodyX")),
+                    Math.toRadians(document.getDouble("bodyY")),
+                    Math.toRadians(document.getDouble("bodyZ")));
+            final EulerAngle leftArmPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("leftArmX")),
+                    Math.toRadians(document.getDouble("leftArmY")),
+                    Math.toRadians(document.getDouble("leftArmZ")));
+            final EulerAngle rightArmPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("rightArmX")),
+                    Math.toRadians(document.getDouble("rightArmY")),
+                    Math.toRadians(document.getDouble("rightArmZ")));
+            final EulerAngle leftLegPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("leftLegX")),
+                    Math.toRadians(document.getDouble("leftLegY")),
+                    Math.toRadians(document.getDouble("leftLegZ")));
+            final EulerAngle rightLegPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("rightLegX")),
+                    Math.toRadians(document.getDouble("rightLegY")),
+                    Math.toRadians(document.getDouble("rightLegZ")));
+            as.setHeadPose(headPose);
+            as.setBodyPose(bodyPose);
+            as.setLeftArmPose(leftArmPose);
+            as.setRightArmPose(rightArmPose);
+            as.setLeftLegPose(leftLegPose);
+            as.setRightLegPose(rightLegPose);
+            as.setBasePlate(document.getBoolean("basePlate"));
+            as.setArms(document.getBoolean("arms"));
+            as.setCustomNameVisible(document.getBoolean("customNameVisible"));
+            if (as.isCustomNameVisible()) as.setCustomName(Utils.format(document.getString("customName")));
+            as.setSmall(document.getBoolean("small"));
+            as.setVisible(document.getBoolean("visible"));
+            as.setGravity(false);
+            if (!document.getString("itemInHand").isEmpty()) as.setItemInHand(new ItemStack(Material.valueOf(document.getString("itemInHand"))));
+            if (!document.getString("helmet").isEmpty()) {
+                if (document.getString("helmet").equals("WOOD_STEP")) as.setHelmet(new ItemBuilder(Material.valueOf(document.getString("helmet")), 1, (short) 1).toItemStack().clone());
+                else as.setHelmet(new ItemStack(Material.valueOf(document.getString("helmet"))));
+            }
+            if (!document.getString("chestplate").isEmpty()) as.setChestplate(new ItemStack(Material.valueOf(document.getString("chestplate"))));
+            if (!document.getString("leggings").isEmpty()) as.setLeggings(new ItemStack(Material.valueOf(document.getString("leggings"))));
+            if (!document.getString("boots").isEmpty()) as.setBoots(new ItemStack(Material.valueOf(document.getString("boots"))));
+            as.setCanPickupItems(false);
+
+            armorStands.put(document.getInteger("_id"), as);
+        }
+        return armorStands;
+    }
+
+    public void addDataBaoArmorStand(final int id, final ArmorStand as) {
+        if (this.pool.getBaoArmorStands().find(new Document("_id", id)).first() != null) {
+            System.out.println("BaoArmorStand o id: " + id + " już istnieje w bazie danych!");
+            return;
+        }
+        this.pool.getBaoArmorStands().insertOne(rpgcore.getBaoManager().armorStandToDocument(id, as));
+    }
+
+    public void removeDataBaoArmorStand(final int id) {
+        if (this.pool.getBaoArmorStands().find(new Document("_id", id)).first() == null) {
+            System.out.println("BaoArmorStand o id: " + id + " nie istnieje w bazie danych!");
+            return;
+        }
+        this.pool.getBaoArmorStands().deleteOne(new Document("_id", id));
+    }
+
+    public void saveDataBaoArmorStand(final int id, final ArmorStand as) {
+        if (this.pool.getBaoArmorStands().find(new Document("_id", id)).first() == null) {
+            this.addDataBaoArmorStand(id, as);
+            return;
+        }
+        this.pool.getBaoArmorStands().findOneAndReplace(new Document("_id", id), rpgcore.getBaoManager().armorStandToDocument(id, as));
+    }
+
+    public void saveAllBaoArmorStands() {
+        for (Map.Entry<Integer, ArmorStand> entry : rpgcore.getBaoManager().getArmorStands().entrySet()) {
+            this.saveDataBaoArmorStand(entry.getKey(), entry.getValue());
         }
     }
 

@@ -1,7 +1,6 @@
-package rpg.rpgcore.bao;
+package rpg.rpgcore.bao.objects;
 
 import org.bson.Document;
-import rpg.rpgcore.RPGCORE;
 
 import java.util.UUID;
 

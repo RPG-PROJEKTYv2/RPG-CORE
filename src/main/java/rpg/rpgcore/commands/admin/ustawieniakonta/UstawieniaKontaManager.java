@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bao.BaoUser;
+import rpg.rpgcore.bao.objects.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;

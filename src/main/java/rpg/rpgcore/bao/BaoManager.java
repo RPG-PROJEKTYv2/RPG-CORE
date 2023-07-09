@@ -1,32 +1,45 @@
 package rpg.rpgcore.bao;
 
 import com.google.common.collect.ImmutableSet;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bao.objects.BaoObject;
+import rpg.rpgcore.bao.objects.BaoUser;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BaoManager {
     private final RPGCORE rpgcore;
     private final Map<UUID, BaoObject> userMap;
-    private final List<Integer> entityIdList;
+    private final Map<Integer, ArmorStand> baoArmorStands;
     private final Random random = new Random();
 
     public BaoManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllBao();
-        this.entityIdList = this.getAllEntities();
+        this.removeEntities();
+        this.baoArmorStands = rpgcore.getMongoManager().loadAllBaoArmorStands();
+    }
+
+    private void removeEntities() {
+        final ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -98.5, 95, -139.5), EntityType.ARMOR_STAND);
+        as.setGravity(false);
+        for (final ArmorStand armorStand : as.getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof ArmorStand && entity.getType() == EntityType.ARMOR_STAND).map(entity -> (ArmorStand) entity).collect(Collectors.toList())) {
+           armorStand.remove();
+        }
+        as.remove();
     }
 
 
@@ -358,20 +371,6 @@ public class BaoManager {
     }
 
 
-    public ItemStack getItemDoLosowania() {
-        return new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu")
-                .setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic swoje bonusy w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"))
-                .toItemStack().clone();
-    }
-
-
-    public ItemStack getItemDoZmianki() {
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&4&lKsiega Magii")
-                .setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic jeden bonus w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy"))
-                .toItemStack().clone();
-    }
-
-
     public void add(BaoObject baoObject) {
         this.userMap.put(baoObject.getId(), baoObject);
     }
@@ -385,17 +384,47 @@ public class BaoManager {
         return ImmutableSet.copyOf(this.userMap.values());
     }
 
-    public List<Integer> getAllEntities() {
-        final List<Integer> entityList = new ArrayList<>();
-        ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -46.5, 99, -274.55), EntityType.ARMOR_STAND);
-        as.setVisible(false);
-        for (Entity e : as.getNearbyEntities(1, 2, 1)) {
-            if (!(e instanceof Player)) {
-                entityList.add(e.getEntityId());
-            }
-        }
-        Bukkit.getServer().getScheduler().runTaskLater(rpgcore, as::remove, 100L);
-        return entityList;
+    public Map<Integer, ArmorStand> getArmorStands() {
+        return this.baoArmorStands;
+    }
+
+    public Document armorStandToDocument(final int id, final ArmorStand as) {
+        return new Document("_id", id)
+                .append("world", as.getWorld().getName())
+                .append("x", as.getLocation().getX())
+                .append("y", as.getLocation().getY())
+                .append("z", as.getLocation().getZ())
+                .append("yaw", as.getLocation().getYaw())
+                .append("pitch", as.getLocation().getPitch())
+                .append("headX", Math.toDegrees(as.getHeadPose().getX()))
+                .append("headY", Math.toDegrees(as.getHeadPose().getY()))
+                .append("headZ", Math.toDegrees(as.getHeadPose().getZ()))
+                .append("bodyX", Math.toDegrees(as.getBodyPose().getX()))
+                .append("bodyY", Math.toDegrees(as.getBodyPose().getY()))
+                .append("bodyZ", Math.toDegrees(as.getBodyPose().getZ()))
+                .append("leftArmX", Math.toDegrees(as.getLeftArmPose().getX()))
+                .append("leftArmY", Math.toDegrees(as.getLeftArmPose().getY()))
+                .append("leftArmZ", Math.toDegrees(as.getLeftArmPose().getZ()))
+                .append("rightArmX", Math.toDegrees(as.getRightArmPose().getX()))
+                .append("rightArmY", Math.toDegrees(as.getRightArmPose().getY()))
+                .append("rightArmZ", Math.toDegrees(as.getRightArmPose().getZ()))
+                .append("leftLegX", Math.toDegrees(as.getLeftLegPose().getX()))
+                .append("leftLegY", Math.toDegrees(as.getLeftLegPose().getY()))
+                .append("leftLegZ", Math.toDegrees(as.getLeftLegPose().getZ()))
+                .append("rightLegX", Math.toDegrees(as.getRightLegPose().getX()))
+                .append("rightLegY", Math.toDegrees(as.getRightLegPose().getY()))
+                .append("rightLegZ", Math.toDegrees(as.getRightLegPose().getZ()))
+                .append("basePlate", as.hasBasePlate())
+                .append("arms", as.hasArms())
+                .append("customNameVisible", as.isCustomNameVisible())
+                .append("customName", (as.getCustomName() == null ? "" : as.getCustomName()))
+                .append("small", as.isSmall())
+                .append("visible", as.isVisible())
+                .append("itemInHand", (as.getItemInHand() == null ? "" : as.getItemInHand().getType().toString()))
+                .append("helmet", (as.getHelmet() == null ? "" : as.getHelmet().getType().toString()))
+                .append("chestplate", (as.getChestplate() == null ? "" : as.getChestplate().getType().toString()))
+                .append("leggings", (as.getLeggings() == null ? "" : as.getLeggings().getType().toString()))
+                .append("boots", (as.getBoots() == null ? "" : as.getBoots().getType().toString()));
     }
 
     public boolean isNotRolled(final UUID uuid) {
@@ -403,7 +432,8 @@ public class BaoManager {
         return user.getBonus1().equalsIgnoreCase("brak bonusu") || user.getBonus2().equalsIgnoreCase("brak bonusu") || user.getBonus3().equalsIgnoreCase("brak bonusu") || user.getBonus4().equalsIgnoreCase("brak bonusu") || user.getBonus5().equalsIgnoreCase("brak bonusu");
     }
 
-    public boolean checkIfClickedEntityIsInList(final int entityId) {
-        return this.entityIdList.contains(entityId);
+    public boolean checkIfClickedEntityIsInList(final Location location) {
+        System.out.println(this.baoArmorStands.values().stream().anyMatch(armorStand -> armorStand.getLocation().equals(location)));
+        return this.baoArmorStands.values().stream().anyMatch(armorStand -> armorStand.getLocation().equals(location));
     }
 }

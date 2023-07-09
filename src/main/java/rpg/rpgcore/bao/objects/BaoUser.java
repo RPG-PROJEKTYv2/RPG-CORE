@@ -1,4 +1,4 @@
-package rpg.rpgcore.bao;
+package rpg.rpgcore.bao.objects;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -69,7 +69,7 @@ public class ArmorEffectListener implements Listener {
                 if (type.contains("_HELMET")) {
                     if (player.getInventory().getHelmet() == null) {
                         if (player.getInventory().getItem(e.getSlot()) != null) {
-                            User user = this.rpgcore.getUserManager().find(player.getUniqueId());
+                            final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
                             int level = Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "lvl");
                             if (user.getLvl() < level) {
                                 e.setCancelled(true);

@@ -10,7 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bao.BaoUser;
+import rpg.rpgcore.bao.objects.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
 import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
