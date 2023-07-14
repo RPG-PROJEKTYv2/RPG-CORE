@@ -123,8 +123,8 @@ public class  HandlarzNPC {
 
         // TU RESZTA
         gui.setItem(33, addPrice(ItemShop.IS21.getItems().get(0).clone(), 100));
-        /*gui.setItem(34, null);
-        gui.setItem(42, null);
+        gui.setItem(34, addPrice(ItemShop.IS23.getItems().get(0).clone(), 350));
+        /*gui.setItem(42, null);
         gui.setItem(43, null);*/
 
         gui.setItem(49, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());

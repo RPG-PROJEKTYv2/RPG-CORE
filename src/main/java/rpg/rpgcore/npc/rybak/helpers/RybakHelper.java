@@ -5,171 +5,166 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.enums.WedkaStats;
-import rpg.rpgcore.npc.rybak.objects.RybakObject;
-import rpg.rpgcore.osiagniecia.objects.OsUser;
-import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.List;
 
 public class RybakHelper {
 
     public static void getDrop(final Player player) {
-        final OsUser osUser = RPGCORE.getInstance().getOsManager().find(player.getUniqueId());
-        osUser.setRybakProgress(osUser.getRybakProgress() + 1);
-        if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 1) {
-            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
-        }
-        if (player.getItemInHand() == null || !player.getItemInHand().getType().equals(Material.FISHING_ROD)) {
-            player.sendMessage(Utils.format("&8[&c✘&8] &cCos poszlo nie tak lub nie masz wedki w rece!"));
-            return;
-        }
-
-        final RybakObject rybakObject = RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId());
-        final int mission = rybakObject.getRybakUser().getMission();
-
-        final double podwojnyDrop = Utils.getTagDouble(player.getItemInHand(), "podwojnyDrop");
-        final double kufer = Utils.getTagDouble(player.getItemInHand(), "kufer");
-        double nies = Utils.getTagDouble(player.getItemInHand(), "nies");
-
-        nies += (nies * (rybakObject.getRybakUser().getMorskieSzczescie() + Utils.getTagDouble(player.getItemInHand(), "szczescie")) / 100);
-
-        boolean doubleDrop = false;
-        boolean event = false;
-
-        //if od eventu
-
-        if (ChanceHelper.getChance(nies)) {
-            final ItemStack niesItem = getNiesDrop();
-            double exp = 1000;
-            assert niesItem != null;
-            increaseExp(player.getItemInHand(), exp);
-            if (mission == 20) {
-                rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + niesItem.getAmount());
-                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-            }
-            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
-            player.getInventory().addItem(niesItem);
-            player.sendMessage(Utils.format("&8[&a+&8] &6" + niesItem.getAmount() + "x " + niesItem.getItemMeta().getDisplayName()));
-            RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7znalazl &b&lNiesamowity Przedmiot!"));
-            return;
-        }
-        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
-
-
-        if (ChanceHelper.getChance(podwojnyDrop)) {
-            doubleDrop = true;
-        }
-
-        if (ChanceHelper.getChance(kufer)) {
-            final ItemStack kuferItem = RybakItems.I11.getItemStack();
-            double exp = 150;
-            assert kuferItem != null;
-            if (event) {
-                kuferItem.setAmount(kuferItem.getAmount() * 2);
-                exp *=2;
-                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony przez Event Rybacki"));
-            }
-            if (doubleDrop) {
-                exp *=2;
-                kuferItem.setAmount(kuferItem.getAmount() * 2);
-                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
-            }
-            increaseExp(player.getItemInHand(), exp);
-            if (mission == 12 || mission == 24) {
-                rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + kuferItem.getAmount());
-                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-            }
-            player.getInventory().addItem(kuferItem);
-            player.sendMessage(Utils.format("&8[&a+&8] &6" + kuferItem.getAmount() + "x " + kuferItem.getItemMeta().getDisplayName()));
-            return;
-        }
-
-
-        final ItemStack item = RPGCORE.getInstance().getRybakNPC().getDrop();
-        assert item != null;
-        double exp = getExp(Utils.removeColor(item.getItemMeta().getDisplayName()));
-        if (event) {
-            item.setAmount(item.getAmount() * 2);
-            exp *= 2;
-            player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony przez Event Rybacki"));
-        }
-        if (doubleDrop) {
-            item.setAmount(item.getAmount() * 2);
-            exp *= 2;
-            player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
-        }
-        increaseExp(player.getItemInHand(), exp);
-        switch (Utils.removeColor(item.getItemMeta().getDisplayName())) {
-            case "Sledz":
-                if (mission == 1) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Dorsz":
-                if (mission == 2) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-
-            case "Krasnopiorka":
-                if (mission == 3) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Fladra":
-                if (mission == 4) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Karas":
-                if (mission == 5) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Karp":
-                if (mission == 6) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Leszcz":
-                if (mission == 8) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Makrela":
-                if (mission == 9) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Mintaj":
-                if (mission == 10) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-            case "Okon":
-                if (mission == 11) {
-                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
-                }
-                break;
-        }
-
-        player.getInventory().addItem(item);
-        player.sendMessage(Utils.format("&8[&a+&8] &6" + item.getAmount() + "x " + item.getItemMeta().getDisplayName()));
+//        final OsUser osUser = RPGCORE.getInstance().getOsManager().find(player.getUniqueId());
+//        osUser.setRybakProgress(osUser.getRybakProgress() + 1);
+//        if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 1) {
+//            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+//            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
+//        }
+//        if (player.getItemInHand() == null || !player.getItemInHand().getType().equals(Material.FISHING_ROD)) {
+//            player.sendMessage(Utils.format("&8[&c✘&8] &cCos poszlo nie tak lub nie masz wedki w rece!"));
+//            return;
+//        }
+//
+//        final RybakObject rybakObject = RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId());
+//        final int mission = rybakObject.getRybakUser().getMission();
+//
+//        final double podwojnyDrop = Utils.getTagDouble(player.getItemInHand(), "podwojnyDrop");
+//        final double kufer = Utils.getTagDouble(player.getItemInHand(), "kufer");
+//        double nies = Utils.getTagDouble(player.getItemInHand(), "nies");
+//
+//        nies += (nies * (rybakObject.getRybakUser().getMorskieSzczescie() + Utils.getTagDouble(player.getItemInHand(), "szczescie")) / 100);
+//
+//        boolean doubleDrop = false;
+//        boolean event = false;
+//
+//        //if od eventu
+//
+//        if (ChanceHelper.getChance(nies)) {
+//            final ItemStack niesItem = getNiesDrop();
+//            double exp = 1000;
+//            assert niesItem != null;
+//            increaseExp(player.getItemInHand(), exp);
+//            if (mission == 20) {
+//                rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + niesItem.getAmount());
+//                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//            }
+//            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
+//            player.getInventory().addItem(niesItem);
+//            player.sendMessage(Utils.format("&8[&a+&8] &6" + niesItem.getAmount() + "x " + niesItem.getItemMeta().getDisplayName()));
+//            RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&6&lRybak &8>> &7Gracz &6" + player.getName() + " &7znalazl &b&lNiesamowity Przedmiot!"));
+//            return;
+//        }
+//        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
+//
+//
+//        if (ChanceHelper.getChance(podwojnyDrop)) {
+//            doubleDrop = true;
+//        }
+//
+//        if (ChanceHelper.getChance(kufer)) {
+//            final ItemStack kuferItem = RybakItems.I11.getItemStack();
+//            double exp = 150;
+//            assert kuferItem != null;
+//            if (event) {
+//                kuferItem.setAmount(kuferItem.getAmount() * 2);
+//                exp *=2;
+//                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony przez Event Rybacki"));
+//            }
+//            if (doubleDrop) {
+//                exp *=2;
+//                kuferItem.setAmount(kuferItem.getAmount() * 2);
+//                player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
+//            }
+//            increaseExp(player.getItemInHand(), exp);
+//            if (mission == 12 || mission == 24) {
+//                rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + kuferItem.getAmount());
+//                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//            }
+//            player.getInventory().addItem(kuferItem);
+//            player.sendMessage(Utils.format("&8[&a+&8] &6" + kuferItem.getAmount() + "x " + kuferItem.getItemMeta().getDisplayName()));
+//            return;
+//        }
+//
+//
+//        final ItemStack item = RPGCORE.getInstance().getRybakNPC().getDrop();
+//        assert item != null;
+//        double exp = getExp(Utils.removeColor(item.getItemMeta().getDisplayName()));
+//        if (event) {
+//            item.setAmount(item.getAmount() * 2);
+//            exp *= 2;
+//            player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony przez Event Rybacki"));
+//        }
+//        if (doubleDrop) {
+//            item.setAmount(item.getAmount() * 2);
+//            exp *= 2;
+//            player.sendMessage(Utils.format("&8[&a✔&8] &aTwoj polow zostal podwojony"));
+//        }
+//        increaseExp(player.getItemInHand(), exp);
+//        switch (Utils.removeColor(item.getItemMeta().getDisplayName())) {
+//            case "Sledz":
+//                if (mission == 1) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Dorsz":
+//                if (mission == 2) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//
+//            case "Krasnopiorka":
+//                if (mission == 3) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Fladra":
+//                if (mission == 4) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Karas":
+//                if (mission == 5) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Karp":
+//                if (mission == 6) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Leszcz":
+//                if (mission == 8) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Makrela":
+//                if (mission == 9) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Mintaj":
+//                if (mission == 10) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//            case "Okon":
+//                if (mission == 11) {
+//                    rybakObject.getRybakUser().setProgress(rybakObject.getRybakUser().getProgress() + item.getAmount());
+//                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataRybak(player.getUniqueId(), rybakObject));
+//                }
+//                break;
+//        }
+//
+//        player.getInventory().addItem(item);
+//        player.sendMessage(Utils.format("&8[&a+&8] &6" + item.getAmount() + "x " + item.getItemMeta().getDisplayName()));
 
     }
 

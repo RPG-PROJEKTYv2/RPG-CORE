@@ -13,6 +13,7 @@ import org.bukkit.util.EulerAngle;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
@@ -39,7 +40,7 @@ import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.rybak.objects.RybakObject;
+import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.PetObject;
@@ -256,7 +257,7 @@ public class MongoManager {
             }
 
             if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() == null) {
-                final RybakObject user = new RybakObject(uuid);
+                final RybakUser user = new RybakUser(uuid);
                 this.addDataRybak(user);
                 rpgcore.getRybakNPC().add(user);
             }
@@ -273,11 +274,11 @@ public class MongoManager {
                 this.addDataMetinolog(user);
                 rpgcore.getMetinologNPC().add(user);
             }
-            /*if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
-                final Klasy user = new Klasy(uuid);
-                this.addKlasyData(user);
-                rpgcore.getklasyHelper().add(user);
-            }*/
+            if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() == null) {
+                final Klasa user = new Klasa(uuid);
+                this.addDataKlasy(user);
+                rpgcore.getKlasyManager().add(user);
+            }
             if (pool.getMedrzec().find(new Document("_id", uuid.toString())).first() == null) {
                 final MedrzecUser user = new MedrzecUser(uuid);
                 this.addDataMedrzec(user);
@@ -418,9 +419,9 @@ public class MongoManager {
         this.addDataBao(baoObject);
         rpgcore.getBaoManager().add(baoObject);
 
-        /*final Klasy klasy = new Klasy(uuid);
-        this.addKlasyData(klasy);
-        rpgcore.getklasyHelper().add(klasy);*/
+        final Klasa klasa = new Klasa(uuid);
+        this.addDataKlasy(klasa);
+        rpgcore.getKlasyManager().add(klasa);
 
         final DuszologObject duszologObject = new DuszologObject(uuid);
         this.addDataDuszolog(duszologObject);
@@ -442,9 +443,9 @@ public class MongoManager {
         this.addDataPrzyrodnik(przyrodnikObject);
         rpgcore.getPrzyrodnikNPC().add(przyrodnikObject);
 
-        final RybakObject rybakObject = new RybakObject(uuid);
-        this.addDataRybak(rybakObject);
-        rpgcore.getRybakNPC().add(rybakObject);
+        final RybakUser rybakUser = new RybakUser(uuid);
+        this.addDataRybak(rybakUser);
+        rpgcore.getRybakNPC().add(rybakUser);
 
         final GornikUser gornikUser = new GornikUser(uuid);
         this.addDataGornik(gornikUser);
@@ -615,7 +616,7 @@ public class MongoManager {
             this.saveDataDodatki(uuid, dodatkiUser);
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
             this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
-            //this.saveKlasyData(uuid, rpgcore.getklasyHelper().find(uuid));
+            this.saveDataKlasy(uuid, rpgcore.getKlasyManager().find(uuid));
             this.saveDataDuszolog(uuid, rpgcore.getDuszologNPC().find(uuid));
             this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
             this.saveDataMedrzec(uuid, rpgcore.getMedrzecNPC().find(uuid));
@@ -813,21 +814,32 @@ public class MongoManager {
         pool.getOther().findOneAndReplace(new Document("_id", "dodatkowyExp"), rpgcore.getServerManager().find(name).toDocument());
     }
 
-    /*public Map<UUID, Klasy> loadAllKlasy() {
-        Map<UUID, Klasy> klasy = new HashMap<>();
+    // KLASY
+
+    public Map<UUID, Klasa> loadAllKlasy() {
+        Map<UUID, Klasa> klasy = new HashMap<>();
         for (Document document : this.pool.getKlasy().find()) {
-            Klasy klasyUser = new Klasy(document);
-            klasy.put(klasyUser.getId(), klasyUser);
+            Klasa klasa = new Klasa(document);
+            klasy.put(klasa.getUuid(), klasa);
         }
         return klasy;
     }
-    public void addKlasyData(Klasy klasy) {
-        this.pool.getKlasy().insertOne(klasy.toDocument());
+    public void addDataKlasy(final Klasa klasa) {
+        if (this.pool.getKlasy().find(new Document("_id", klasa.getUuid().toString())).first() != null) {
+            this.pool.getKlasy().deleteOne(new Document("_id", klasa.getUuid().toString()));
+        }
+        this.pool.getKlasy().insertOne(klasa.toDocument());
     }
 
-    public void saveKlasyData(UUID uuid, Klasy klasy) {
-        pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), klasy.toDocument());
-    }*/
+    public void saveDataKlasy(final UUID uuid, final Klasa klasa) {
+        pool.getKlasy().findOneAndReplace(new Document("_id", uuid.toString()), klasa.toDocument());
+    }
+
+    public void saveAllKlasy() {
+        for (Klasa klasa : rpgcore.getKlasyManager().getKlasy()) {
+            this.saveDataKlasy(klasa.getUuid(), klasa);
+        }
+    }
 
 
     // MEDYK
@@ -1214,29 +1226,103 @@ public class MongoManager {
 
 
     // RYBAK
-    public Map<UUID, RybakObject> loadAllRybak() {
-        Map<UUID, RybakObject> rybak = new HashMap<>();
+    public Map<UUID, RybakUser> loadAllRybak() {
+        Map<UUID, RybakUser> rybak = new HashMap<>();
         for (Document document : this.pool.getRybak().find()) {
-            RybakObject rybakObject = new RybakObject(document);
-            rybak.put(rybakObject.getId(), rybakObject);
+            if (document.getString("_id").equals("asLocations")) continue;
+            RybakUser rybakUser = new RybakUser(document);
+            rybak.put(rybakUser.getUuid(), rybakUser);
         }
         return rybak;
     }
 
-    public void addDataRybak(final RybakObject rybakObject) {
-        if (this.pool.getRybak().find(new Document("_id", rybakObject.getId().toString())).first() != null) {
-            this.pool.getRybak().deleteOne(new Document("_id", rybakObject.getId().toString()));
+    public Map<Integer, ArmorStand> loadAllRybakArmorStands() {
+        final Map<Integer, ArmorStand> armorStands = new HashMap<>();
+        final Document doc = this.pool.getRybakArmorStands().find(new Document("_id", "asLocations")).first();
+        assert doc != null;
+        for (final String s : doc.keySet()) {
+            if (s.equals("_id")) continue;
+            final Document document = doc.get(s, Document.class);
+            final Location location = new Location(
+                    Bukkit.getWorld(document.getString("world")),
+                    document.getDouble("x"),
+                    document.getDouble("y"),
+                    document.getDouble("z"),
+                    Float.parseFloat(String.valueOf(document.getDouble("yaw"))),
+                    Float.parseFloat(String.valueOf(document.getDouble("pitch"))));
+            final ArmorStand as = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+            final EulerAngle headPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("headX")),
+                    Math.toRadians(document.getDouble("headY")),
+                    Math.toRadians(document.getDouble("headZ")));
+            final EulerAngle bodyPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("bodyX")),
+                    Math.toRadians(document.getDouble("bodyY")),
+                    Math.toRadians(document.getDouble("bodyZ")));
+            final EulerAngle leftArmPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("leftArmX")),
+                    Math.toRadians(document.getDouble("leftArmY")),
+                    Math.toRadians(document.getDouble("leftArmZ")));
+            final EulerAngle rightArmPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("rightArmX")),
+                    Math.toRadians(document.getDouble("rightArmY")),
+                    Math.toRadians(document.getDouble("rightArmZ")));
+            final EulerAngle leftLegPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("leftLegX")),
+                    Math.toRadians(document.getDouble("leftLegY")),
+                    Math.toRadians(document.getDouble("leftLegZ")));
+            final EulerAngle rightLegPose = new EulerAngle(
+                    Math.toRadians(document.getDouble("rightLegX")),
+                    Math.toRadians(document.getDouble("rightLegY")),
+                    Math.toRadians(document.getDouble("rightLegZ")));
+            as.setHeadPose(headPose);
+            as.setBodyPose(bodyPose);
+            as.setLeftArmPose(leftArmPose);
+            as.setRightArmPose(rightArmPose);
+            as.setLeftLegPose(leftLegPose);
+            as.setRightLegPose(rightLegPose);
+            as.setBasePlate(document.getBoolean("basePlate"));
+            as.setArms(document.getBoolean("arms"));
+            as.setCustomNameVisible(document.getBoolean("customNameVisible"));
+            if (as.isCustomNameVisible()) as.setCustomName(Utils.format(document.getString("customName")));
+            as.setSmall(document.getBoolean("small"));
+            as.setVisible(document.getBoolean("visible"));
+            as.setGravity(false);
+            if (!document.getString("itemInHand").isEmpty())
+                as.setItemInHand(new ItemStack(Material.valueOf(document.getString("itemInHand"))));
+            if (!document.getString("helmet").isEmpty()) {
+                if (document.getString("helmet").equals("WOOD_STEP"))
+                    as.setHelmet(new ItemBuilder(Material.valueOf(document.getString("helmet")), 1, (short) 1).toItemStack().clone());
+                else as.setHelmet(new ItemStack(Material.valueOf(document.getString("helmet"))));
+            }
+            if (!document.getString("chestplate").isEmpty())
+                as.setChestplate(new ItemStack(Material.valueOf(document.getString("chestplate"))));
+            if (!document.getString("leggings").isEmpty())
+                as.setLeggings(new ItemStack(Material.valueOf(document.getString("leggings"))));
+            if (!document.getString("boots").isEmpty())
+                as.setBoots(new ItemStack(Material.valueOf(document.getString("boots"))));
+            as.setCanPickupItems(false);
+
+            armorStands.put(document.getInteger("_id"), as);
         }
-        this.pool.getRybak().insertOne(rybakObject.toDocument());
+
+        return armorStands;
     }
 
-    public void saveDataRybak(final UUID id, final RybakObject rybakObject) {
-        this.pool.getRybak().findOneAndReplace(new Document("_id", id.toString()), rybakObject.toDocument());
+    public void addDataRybak(final RybakUser rybakUser) {
+        if (this.pool.getRybak().find(new Document("_id", rybakUser.getUuid().toString())).first() != null) {
+            this.pool.getRybak().deleteOne(new Document("_id", rybakUser.getUuid().toString()));
+        }
+        this.pool.getRybak().insertOne(rybakUser.toDocument());
+    }
+
+    public void saveDataRybak(final UUID id, final RybakUser rybakUser) {
+        this.pool.getRybak().findOneAndReplace(new Document("_id", id.toString()), rybakUser.toDocument());
     }
 
     public void saveAllRybak() {
-        for (RybakObject rybakObject : rpgcore.getRybakNPC().getRybakObjects()) {
-            this.saveDataRybak(rybakObject.getId(), rybakObject);
+        for (RybakUser rybakUser : rpgcore.getRybakNPC().getRybakObjects()) {
+            this.saveDataRybak(rybakUser.getUuid(), rybakUser);
         }
     }
 

@@ -26,33 +26,6 @@ public class AdministracjaCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("administracja"));
             return;
         }
-        /*player.sendMessage(Utils.format("&8&m--------{--&3&l Lista Administracji &8&m--}--------"));
-        player.sendMessage(Utils.format("&4&lDeveloper"));
-        player.sendMessage(Utils.format("&8- &cMires_"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&4&lHeadAdmin"));
-        player.sendMessage(Utils.format("&8- &cZwariowanyOrzel"));
-        player.sendMessage(Utils.format("&8- &cChytryy"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&4&lAdmin"));
-        player.sendMessage(Utils.format("&8- &cFabiLord"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&2&lGameMaster"));
-        player.sendMessage(Utils.format("&8- &7Brak"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&2&lModerator"));
-        player.sendMessage(Utils.format("&8- &7Brak"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&2&lKid Moderator"));
-        player.sendMessage(Utils.format("&8- &7Brak"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&3&lHelper"));
-        player.sendMessage(Utils.format("&8- &7Brak"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&3&lJuniorHelper"));
-        player.sendMessage(Utils.format("&8- &7Brak"));
-        player.sendMessage(Utils.format(""));
-        player.sendMessage(Utils.format("&8&m--------{--&3&l Lista Administracji &8&m--}--------"));*/
         this.openAdministracjaGUI(player);
     }
 
@@ -81,11 +54,6 @@ public class AdministracjaCommand extends CommandAPI {
                 "&7Prefix rangi: &4&lAdmin",
                 "&7Nick: &cFabiLord",
                 "&7Online: " + (Bukkit.getPlayer("FabiLord") != null ? "&aOnline" : "&cOffline")
-        )).toItemStack());
-        gui.setItem(4, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&2&lGameMaster").setSkullOwner("KoMiK120").setLore(Arrays.asList(
-                "&7Prefix rangi: &2&lGM",
-                "&7Nick: &aKoMiK120",
-                "&7Online: " + (Bukkit.getPlayer("KoMiK120") != null ? "&aOnline" : "&cOffline")
         )).toItemStack());
 
         player.openInventory(gui);

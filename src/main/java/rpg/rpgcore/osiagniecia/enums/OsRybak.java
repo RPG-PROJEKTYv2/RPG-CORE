@@ -8,9 +8,9 @@ import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 public enum OsRybak {
-    M1(1, 0, 50, new ItemBuilder(RybakItems.getByName("I11").getItemStack().clone()).setAmount(3).toItemStack().clone()),
+    M1(1, 0, 50, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(3).toItemStack().clone()),
     M2(2, 1, 200, GlobalItem.getItem("I6", 2).clone()),
-    M3(3, 2, 500, new ItemBuilder(RybakItems.getByName("I11").getItemStack().clone()).setAmount(5).toItemStack().clone()),
+    M3(3, 2, 500, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(5).toItemStack().clone()),
     M4(4, 3, 1_200, GlobalItem.getItem("I2", 4).clone()),
     M5(5, 4, 3_000, GlobalItem.getItem("I1", 2).clone()),
     M6(6, 5, 7_500, GlobalItem.getItem("I1", 4).clone()),

@@ -4,19 +4,17 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
-import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.Arrays;
 
 public enum MagazynierMissions {
-    M1(1, new ItemBuilder(Material.BOOK).setName("&c&lMistrz Polowow").setLore(Arrays.asList(
-            "&7Wykonaj &e200 &7udanych polowow!",
-            "",
-            "&f&lNAGRODA",
-            "&8- &b30 punktow",
-            "&8- &a&lKufer Rybacki")).addTagInt("mission", 1).toItemStack(), 200, 30, RybakItems.getByName("I11").getItemStack()),
+//    M1(1, new ItemBuilder(Material.BOOK).setName("&c&lMistrz Polowow").setLore(Arrays.asList(
+//            "&7Wykonaj &e200 &7udanych polowow!",
+//            "",
+//            "&f&lNAGRODA",
+//            "&8- &b30 punktow",
+//            "&8- &a&lKufer Rybacki")).addTagInt("mission", 1).toItemStack(), 200, 30, RybakItems.getByName("I11").getItemStack()),
     M2(2, new ItemBuilder(Material.BOOK).setName("&c&lKolekcjoner").setLore(Arrays.asList(
             "&7Otworz &e450 &7skrzyn",
             "",
@@ -28,13 +26,13 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b75 punktow")).addTagInt("mission", 3).toItemStack(), 10, 75, null),
-    M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb").setLore(Arrays.asList(
-            "&7Ukoncz &e3 &7dungeony &8(&4&SOON&8)",
-            "",
-            "&f&lNAGRODA",
-            "&8- &b150 punktow",
-            "&8- &625 000 000 &2$"
-    )).addTagInt("mission", 4).toItemStack(), 3, 150, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(25000000)) + " &2$").addGlowing().toItemStack()),
+//    M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb").setLore(Arrays.asList(
+//            "&7Ukoncz &e3 &7dungeony &8(&4&SOON&8)",
+//            "",
+//            "&f&lNAGRODA",
+//            "&8- &b150 punktow",
+//            "&8- &625 000 000 &2$"
+//    )).addTagInt("mission", 4).toItemStack(), 3, 150, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l" + Utils.spaceNumber(Utils.kasaFormat.format(25000000)) + " &2$").addGlowing().toItemStack()),
     M5(5, new ItemBuilder(Material.BOOK).setName("&c&lKrysztalowy Niszczyciel").setLore(Arrays.asList(
             "&7Zniszcz &e100 &7krysztalow metin",
             "",

@@ -2,6 +2,7 @@ package rpg.rpgcore.dmg;
 
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,5 +22,6 @@ public class EntityCombustListener implements Listener {
     public void onExplode(final EntityExplodeEvent e) {
         if (e.getEntity() instanceof EnderCrystal) e.setCancelled(true);
         if (e.getEntity() instanceof Creeper) e.setCancelled(true);
+        if (e.getEntity() instanceof Fireball) e.setCancelled(true);
     }
 }

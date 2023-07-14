@@ -147,6 +147,10 @@ import rpg.rpgcore.inventory.InventoryCommand;
 import rpg.rpgcore.inventory.InvseeInventoryClickListener;
 import rpg.rpgcore.inventory.InvseeInventoryCloseListener;
 import rpg.rpgcore.inventory.InvseeManager;
+import rpg.rpgcore.klasy.KlasyManager;
+import rpg.rpgcore.klasy.events.KlasyInteractListener;
+import rpg.rpgcore.klasy.events.KlasyInventoryClickListener;
+import rpg.rpgcore.klasy.tasks.KlasyTask;
 import rpg.rpgcore.kociolki.KociolkiManager;
 import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
@@ -212,6 +216,7 @@ import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
 import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
 import rpg.rpgcore.npc.rybak.RybakNPC;
 import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
+import rpg.rpgcore.npc.rybak.events.RybakEntityInteractListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
@@ -292,7 +297,6 @@ public final class RPGCORE extends JavaPlugin {
     private KolekcjonerNPC kolekcjonerNPC;
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
-    private RozpiskaCommand rozpiskaCommand;
     private ServerManager serverManager;
     private PrzyrodnikNPC przyrodnikNPC;
     private ListaNPCManager listaNPCManager;
@@ -375,6 +379,8 @@ public final class RPGCORE extends JavaPlugin {
     private MistycznyKowalManager mistycznyKowalManager;
     private GornikNPC gornikNPC;
     private OreManager oreManager;
+
+    private KlasyManager klasyManager;
 
 
     private int i = 1;
@@ -461,6 +467,7 @@ public final class RPGCORE extends JavaPlugin {
 
     public void onDisable() {
         this.mongo.saveAllUsers();
+        this.mongo.saveAllKlasy();
         this.mongo.saveAllMetins();
         this.mongo.saveAllBao();
         this.mongo.saveAllBaoArmorStands();
@@ -714,6 +721,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new RybakEntityInteractListener(this), this);
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
@@ -814,6 +822,11 @@ public final class RPGCORE extends JavaPlugin {
         // USTAWIENIA KONTA
         this.getServer().getPluginManager().registerEvents(new UstawieniaKontaInventoryClickListener(this), this);
 
+        // KLASY
+        this.getServer().getPluginManager().registerEvents(new KlasyInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new KlasyInteractListener(this), this);
+
+
     }
 
     private void initDatabase() {
@@ -864,6 +877,7 @@ public final class RPGCORE extends JavaPlugin {
         this.invseeManager = new InvseeManager();
         this.ustawieniaKontaManager = new UstawieniaKontaManager(this);
         this.oreManager = new OreManager(this);
+        this.klasyManager = new KlasyManager(this);
     }
 
     private void initNPCS() {
@@ -994,6 +1008,9 @@ public final class RPGCORE extends JavaPlugin {
         new PiekielnyPrzedsionekTask(this);
         // ... ICE TOWER
         new IceTowerTask(this);
+
+        // KLASY
+        new KlasyTask(this);
     }
 
     private void fixBuckets() {
@@ -1425,5 +1442,9 @@ public final class RPGCORE extends JavaPlugin {
 
     public OreManager getOreManager() {
         return oreManager;
+    }
+
+    public KlasyManager getKlasyManager() {
+        return klasyManager;
     }
 }

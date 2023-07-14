@@ -9,7 +9,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bao.objects.BaoUser;
@@ -36,7 +35,7 @@ public class BaoManager {
     private void removeEntities() {
         final ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -98.5, 95, -139.5), EntityType.ARMOR_STAND);
         as.setGravity(false);
-        for (final ArmorStand armorStand : as.getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof ArmorStand && entity.getType() == EntityType.ARMOR_STAND).map(entity -> (ArmorStand) entity).collect(Collectors.toList())) {
+        for (final ArmorStand armorStand : as.getNearbyEntities(4, 4, 4).stream().filter(entity -> entity instanceof ArmorStand && entity.getType() == EntityType.ARMOR_STAND).map(entity -> (ArmorStand) entity).collect(Collectors.toList())) {
            armorStand.remove();
         }
         as.remove();
@@ -433,7 +432,6 @@ public class BaoManager {
     }
 
     public boolean checkIfClickedEntityIsInList(final Location location) {
-        System.out.println(this.baoArmorStands.values().stream().anyMatch(armorStand -> armorStand.getLocation().equals(location)));
         return this.baoArmorStands.values().stream().anyMatch(armorStand -> armorStand.getLocation().equals(location));
     }
 }

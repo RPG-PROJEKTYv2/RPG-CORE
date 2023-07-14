@@ -145,8 +145,10 @@ public class LvlManager {
             if (nextLvlGracza == 2) {
                 rpgcore.getWyszkolenieManager().find(killerUUID).setPunkty(2);
                 rpgcore.getWyszkolenieManager().find(killerUUID).setTotalPoints(2);
+                killer.sendMessage(Utils.format(Utils.LVLPREFIX + "&fOtrzymales &32 &fpunkty wyszkolenia!"));
             } else {
                 rpgcore.getWyszkolenieManager().find(killerUUID).addPoint();
+                killer.sendMessage(Utils.format(Utils.LVLPREFIX + "&fOtrzymales &31 &fpunkt wyszkolenia!"));
             }
         }
         user.setLvl(nextLvlGracza);

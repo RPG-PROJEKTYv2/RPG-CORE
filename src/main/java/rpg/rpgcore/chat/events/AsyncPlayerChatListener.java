@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
 import rpg.rpgcore.RPGCORE;
@@ -235,6 +236,16 @@ public class AsyncPlayerChatListener implements Listener {
         if (topic == null) {
             event.setCancelled(true);
             player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onTabComplete(final PlayerChatTabCompleteEvent e) {
+        if (e.getChatMessage().contains("/")) {
+            final User user = this.rpgcore.getUserManager().find(e.getPlayer().getUniqueId());
+            if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
+                e.getTabCompletions().clear();
+            }
         }
     }
 }

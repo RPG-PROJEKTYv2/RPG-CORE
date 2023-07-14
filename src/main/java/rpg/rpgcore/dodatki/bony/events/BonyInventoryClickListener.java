@@ -42,7 +42,7 @@ public class BonyInventoryClickListener implements Listener {
         e.setCancelled(true);
         if (item.getType() == Material.IRON_FENCE || item.getType() == Material.STAINED_GLASS_PANE) return;
 
-        if (item.getType() == Material.ARROW) {
+        if (e.getSlot() == 17) {
             rpgcore.getDodatkiManager().openDodatkiGUI(player);
             return;
         }

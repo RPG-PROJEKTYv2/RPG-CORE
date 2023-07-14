@@ -85,6 +85,7 @@ public class PlayerFishListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
                     return;
                 }
+                rpgcore.getRybakNPC().addLocation(player.getUniqueId(), String.valueOf(check), toCheckAfter);
                 rpgcore.getRybakNPC().addFishingCount(player.getUniqueId());
                 player.sendMessage(Utils.format("&6&lRybak &8>> &7Do ochrony &cAnty-AFK &7pozostalo &6" + (10 - rpgcore.getRybakNPC().getFishingCount(uuid) + " &7polowow.")));
                 if (toCheckBefore == toCheckAfter) {

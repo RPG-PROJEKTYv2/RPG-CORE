@@ -161,7 +161,7 @@ public class HandlarzInventoryClickListener implements Listener {
                 case 12:
                     player.getInventory().addItem(ItemShop.IS11.getItems().get(0).clone());
                     return;
-                    case 13:
+                case 13:
                     player.getInventory().addItem(ItemShop.IS22.getItems().get(0).clone());
                     return;
                 case 15:
@@ -196,6 +196,9 @@ public class HandlarzInventoryClickListener implements Listener {
                     return;
                 case 33:
                     player.getInventory().addItem(ItemShop.IS21.getItems().get(0).clone());
+                    return;
+                case 34:
+                    player.getInventory().addItem(ItemShop.IS23.getItems().get(0).clone());
                     return;
             }
             return;
@@ -248,7 +251,6 @@ public class HandlarzInventoryClickListener implements Listener {
 
                 rpgcore.getHandlarzNPC().removeUserItemMap(uuid);
                 player.closeInventory();
-
 
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));

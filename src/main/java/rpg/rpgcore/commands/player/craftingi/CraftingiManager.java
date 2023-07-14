@@ -117,7 +117,7 @@ public class CraftingiManager {
                 "&8- &6100 000&2$"
         )).toItemStack());
 
-        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(22, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -235,7 +235,7 @@ public class CraftingiManager {
                 "&8- &6300 000&2$"
         )).toItemStack());
 
-        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(22, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -311,7 +311,7 @@ public class CraftingiManager {
                 "&8- &61 000 000&2$"
         )).toItemStack());
 
-        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(22, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -378,7 +378,7 @@ public class CraftingiManager {
                 "&8- &67 500 000&2$"
         )).toItemStack());
 
-        gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(22, Utils.powrot());
 
 
         player.openInventory(gui);

@@ -67,7 +67,7 @@ public class OsManager {
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."
         )).toItemStack().clone());
 
-        gui.setItem(28, new ItemBuilder(Material.FISHING_ROD).setName("&cUdane Polowy").setLore(Arrays.asList(
+        gui.setItem(28, new ItemBuilder(Material.FISHING_ROD).setName("&cUdane Polowy &8(&4&lWKROTCE&8)").setLore(Arrays.asList(
                 "&7Wykonane: &6" + osUser.getRybak() + "&7/&69",
                 "",
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."

@@ -277,6 +277,7 @@ public class AdminPanelManager {
         gui.setItem(2, ItemShop.IS11.getItems().get(0).clone());
         gui.setItem(3, ItemShop.IS22.getItems().get(0).clone());
 
+        gui.setItem(5, ItemShop.IS23.getItems().get(0).clone());
         gui.setItem(6, ItemShop.IS21.getItems().get(0).clone());
         gui.setItem(7, ItemShop.IS19.getItems().get(0).clone());
         gui.setItem(8, ItemShop.IS20.getItems().get(0).clone());

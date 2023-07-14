@@ -40,7 +40,6 @@ public enum GlobalItem {
     I17("I17", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
 
-    I21("I21", new ItemBuilder(Material.CHEST).setName("&8&lSkrzynia Gornika").setLore(Arrays.asList("&8&oMoze zawierac wartosciowe przedmioty...")).hideFlag().toItemStack().clone()),
     I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki

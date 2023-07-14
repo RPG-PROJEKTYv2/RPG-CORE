@@ -83,10 +83,12 @@ public class ChatInventoryClickListener implements Listener {
                     final TextComponent itemComponent = new TextComponent(Utils.format("&8[&6x" + player.getItemInHand().getAmount() + " " + itemName + "&8]"));
                     itemComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(player.getItemInHand()).save(new NBTTagCompound()).toString()).create()));
                     rpgcore.getShowcaseItemManager().addShowcaseItem(player.getName(), player.getItemInHand().clone());
-                    if (item.getItemMeta().hasDisplayName()) {
-                        itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName().replace(" ", "_"))));
-                    } else {
-                        itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getType().name().replace(" ", "_"))));
+                    if (item.hasItemMeta()) {
+                        if (item.getItemMeta().hasDisplayName()) {
+                            itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName().replace(" ", "_"))));
+                        } else {
+                            itemComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/showcaseitem " + player.getName() + " " + Utils.removeColor(player.getItemInHand().getType().name().replace(" ", "_"))));
+                        }
                     }
 
                     if (msg.isEmpty()) {
@@ -240,15 +242,15 @@ public class ChatInventoryClickListener implements Listener {
                 case 4:
                     // POKAZYWANIE KASY NA CHAT
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
+                        finalMessage = new StringBuilder(Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()))  + " &2$&8]"));
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa())) + " &2$&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" &f").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()) + " &2$&8]")));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&2Kasa: &a" + Utils.spaceNumber(String.format("%.2f", rpgcore.getUserManager().find(uuid).getKasa()))  + " &2$&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(color).append(msg.get(i));
                             }

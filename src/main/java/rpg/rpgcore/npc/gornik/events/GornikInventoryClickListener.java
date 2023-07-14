@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
@@ -82,6 +83,19 @@ public class GornikInventoryClickListener implements Listener {
                     rpgcore.getMongoManager().saveDataGornik(uuid, user);
                     rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 });
+                if (mission.getId() == 28) {
+                    Bukkit.getServer().broadcastMessage(Utils.format(""));
+                    Bukkit.getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &e" + player.getName() + " &7ukonczyl moja &4&lKAMPANIE"));
+                    if (rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() < 4 && !rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().contains(player.getName())) {
+                        rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getGracze().add(player.getName());
+                        rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().setNadanych(rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + 1);
+                        rpgcore.getArtefaktyZaLvlManager().save();
+                        player.getInventory().addItem(Artefakty.getArtefakt("Eliksir-Obroncy", player));
+                        Bukkit.getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Poniewaz ukonczyl ja, jako &c" + rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getGornik().getNadanych() + " &7na serwerze, otrzymal &6&lEliksir Obroncy&7!"));
+                    }
+                    Bukkit.getServer().broadcastMessage(Utils.format(""));
+                    return;
+                }
                 Bukkit.getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &e" + player.getName() + " &7ukonczyl moja &e" + mission.getId() + " &7misje!"));
                 return;
             }

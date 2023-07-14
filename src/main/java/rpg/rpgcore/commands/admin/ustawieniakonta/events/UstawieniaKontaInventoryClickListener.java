@@ -15,6 +15,7 @@ import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaManager;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.objects.LesnikObject;
 import rpg.rpgcore.npc.lowca.objects.LowcaObject;
@@ -24,7 +25,6 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.rybak.objects.RybakObject;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
@@ -516,7 +516,7 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     //ustawieniaKontaManager.openBonusy(player, target);
                     return;
                 case 16:
-//                    ustawieniaKontaManager.openGornikM(player, target);
+                    ustawieniaKontaManager.openGornikM(player, target);
                     return;
                 case 19:
                     //ustawieniaKontaManager.openBonusy(player, target);
@@ -915,184 +915,44 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
             return;
         }
 
-//        if (title.contains("Misje » Gornik - ")) {
-//            e.setCancelled(true);
-//
-//            if (item == null) return;
-//            final GornikObject gornik = rpgcore.getGornikNPC().find(this.getUUIDFromTitle(title));
-//            final Bonuses bonuses = rpgcore.getBonusesManager().find(gornik.getID());
-//            final double value = this.getValueFromClickKey(e.getClick());
-//
-//            switch (slot) {
-//                case 0:
-//                    gornik.getGornikUser().setMission(gornik.getGornikUser().getMission() + (int) value);
-//                    break;
-//                case 1:
-//                    gornik.getGornikUser().setProgress(gornik.getGornikUser().getProgress() + (int) value);
-//                    break;
-//                case 2:
-//                    gornik.getGornikUser().setBlokCiosu(gornik.getGornikUser().getBlokCiosu() + value);
-//                    bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + value);
-//                    break;
-//                case 3:
-//                    gornik.getGornikUser().setSredniaOdpornosc(gornik.getGornikUser().getSredniaOdpornosc() + value);
-//                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
-//                    break;
-//                case 4:
-//                    gornik.getGornikUser().setPrzeszycieBloku(gornik.getGornikUser().getPrzeszycieBloku() + value);
-//                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + value);
-//                    break;
-//                case 8:
-//                    rpgcore.getUstawieniaKontaManager().openGornikDrzewko(player, gornik.getID());
-//                    return;
-//            }
-//
-//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-//                rpgcore.getMongoManager().saveDataGornik(gornik.getID(), gornik);
-//                rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
-//            });
-//            rpgcore.getUstawieniaKontaManager().openGornikM(player, gornik.getID());
-//            return;
-//        }
-//
-//        if (title.contains("Misje » Gornik » Drzewko - ")) {
-//            e.setCancelled(true);
-//
-//            if (item == null || (item.getType() == Material.STAINED_GLASS_PANE && item.getDurability() == 7)) return;
-//
-//            final GornikObject gornik = rpgcore.getGornikNPC().find(this.getUUIDFromTitle(title));
-//            final Bonuses bonuses = rpgcore.getBonusesManager().find(gornik.getID());
-//
-//
-//            switch (slot) {
-//                case 3:
-//                    gornik.getGornikUser().setD7_3(!gornik.getGornikUser().isD7_3());
-//                    bonuses.getBonusesUser().setSzczescie(gornik.getGornikUser().isD7_3() ? bonuses.getBonusesUser().getSzczescie() + 15 : bonuses.getBonusesUser().getSzczescie() - 15);
-//                    break;
-//                case 5:
-//                    gornik.getGornikUser().setD7_4(!gornik.getGornikUser().isD7_4());
-//                    bonuses.getBonusesUser().setPrzebiciePancerza(gornik.getGornikUser().isD7_4() ? bonuses.getBonusesUser().getPrzebiciePancerza() + 2 : bonuses.getBonusesUser().getPrzebiciePancerza() - 2);
-//                    break;
-//                case 4:
-//                    gornik.getGornikUser().setD6_5(!gornik.getGornikUser().isD6_5());
-//                    break;
-//                case 13:
-//                    gornik.getGornikUser().setD5_5(!gornik.getGornikUser().isD5_5());
-//                    bonuses.getBonusesUser().setSilnynapotwory(gornik.getGornikUser().isD5_5() ? bonuses.getBonusesUser().getSilnynapotwory() + 5 : bonuses.getBonusesUser().getSilnynapotwory() - 5);
-//                    bonuses.getBonusesUser().setSzczescie(gornik.getGornikUser().isD5_5() ? bonuses.getBonusesUser().getSzczescie() + 10 : bonuses.getBonusesUser().getSzczescie() - 10);
-//                case 22:
-//                    gornik.getGornikUser().setD4_7(!gornik.getGornikUser().isD4_7());
-//                    bonuses.getBonusesUser().setSilnynapotwory(gornik.getGornikUser().isD4_7() ? bonuses.getBonusesUser().getSilnynapotwory() + 5 : bonuses.getBonusesUser().getSilnynapotwory() - 5);
-//                    bonuses.getBonusesUser().setDefnamoby(gornik.getGornikUser().isD4_7() ? bonuses.getBonusesUser().getDefnamoby() + 5 : bonuses.getBonusesUser().getDefnamoby() - 5);
-//                    break;
-//                case 31:
-//                    gornik.getGornikUser().setD3_3(!gornik.getGornikUser().isD3_3());
-//                    bonuses.getBonusesUser().setPrzebiciePancerza(gornik.getGornikUser().isD3_3() ? bonuses.getBonusesUser().getPrzebiciePancerza() + 1 : bonuses.getBonusesUser().getPrzebiciePancerza() - 1);
-//                    break;
-//                case 40:
-//                    gornik.getGornikUser().setD2(!gornik.getGornikUser().isD2());
-//                    break;
-//                case 49:
-//                    gornik.getGornikUser().setD1(!gornik.getGornikUser().isD1());
-//                    bonuses.getBonusesUser().setSrednieobrazenia(gornik.getGornikUser().isD1() ? bonuses.getBonusesUser().getSrednieobrazenia() + 1 : bonuses.getBonusesUser().getSrednieobrazenia() - 1);
-//                    break;
-//                case 0:
-//                    gornik.getGornikUser().setD9_2(!gornik.getGornikUser().isD9_2());
-//                    bonuses.getBonusesUser().setPrzeszyciebloku(gornik.getGornikUser().isD9_2() ? bonuses.getBonusesUser().getPrzeszyciebloku() + 5 : bonuses.getBonusesUser().getPrzeszyciebloku() - 5);
-//                    break;
-//                case 9:
-//                    gornik.getGornikUser().setD8_2(!gornik.getGornikUser().isD8_2());
-//                    bonuses.getBonusesUser().setSilnynaludzi(gornik.getGornikUser().isD8_2() ? bonuses.getBonusesUser().getSilnynaludzi() + 3 : bonuses.getBonusesUser().getSilnynaludzi() - 3);
-//                    break;
-//                case 10:
-//                    gornik.getGornikUser().setD7_2(!gornik.getGornikUser().isD7_2());
-//                    bonuses.getBonusesUser().setDefnaludzi(gornik.getGornikUser().isD7_2() ? bonuses.getBonusesUser().getDefnaludzi() + 2 : bonuses.getBonusesUser().getDefnaludzi() - 2);
-//                    break;
-//                case 11:
-//                    gornik.getGornikUser().setD6_4(!gornik.getGornikUser().isD6_4());
-//                    break;
-//                case 20:
-//                    gornik.getGornikUser().setD5_4(!gornik.getGornikUser().isD5_4());
-//                    bonuses.getBonusesUser().setDefnaludzi(gornik.getGornikUser().isD5_4() ? bonuses.getBonusesUser().getDefnaludzi() + 2 : bonuses.getBonusesUser().getDefnaludzi() - 2);
-//                    break;
-//                case 29:
-//                    gornik.getGornikUser().setD4_6(!gornik.getGornikUser().isD4_6());
-//                    bonuses.getBonusesUser().setDefnaludzi(gornik.getGornikUser().isD4_6() ? bonuses.getBonusesUser().getDefnaludzi() + 5 : bonuses.getBonusesUser().getDefnaludzi() - 5);
-//                    bonuses.getBonusesUser().setSilnynaludzi(gornik.getGornikUser().isD4_6() ? bonuses.getBonusesUser().getSilnynaludzi() + 5 : bonuses.getBonusesUser().getSilnynaludzi() - 5);
-//                    break;
-//                case 28:
-//                    gornik.getGornikUser().setD5_3(!gornik.getGornikUser().isD5_3());
-//                    bonuses.getBonusesUser().setSilnynaludzi(gornik.getGornikUser().isD5_3() ? bonuses.getBonusesUser().getSilnynaludzi() + 2 : bonuses.getBonusesUser().getSilnynaludzi() - 2);
-//                    break;
-//                case 27:
-//                    gornik.getGornikUser().setD6_3(!gornik.getGornikUser().isD6_3());
-//                    bonuses.getBonusesUser().setDefnaludzi(gornik.getGornikUser().isD6_3() ? bonuses.getBonusesUser().getDefnaludzi() + 1 : bonuses.getBonusesUser().getDefnaludzi() - 1);
-//                    break;
-//                case 38:
-//                    gornik.getGornikUser().setD4_4(!gornik.getGornikUser().isD4_4());
-//                    bonuses.getBonusesUser().setPrzeszyciebloku(gornik.getGornikUser().isD4_4() ? bonuses.getBonusesUser().getPrzeszyciebloku() + 3 : bonuses.getBonusesUser().getPrzeszyciebloku() - 3);
-//                    break;
-//                case 47:
-//                    gornik.getGornikUser().setD4_5(!gornik.getGornikUser().isD4_5());
-//                    bonuses.getBonusesUser().setPrzeszyciebloku(gornik.getGornikUser().isD4_5() ? bonuses.getBonusesUser().getPrzeszyciebloku() + 5 : bonuses.getBonusesUser().getPrzeszyciebloku() - 5);
-//                    break;
-//                case 39:
-//                    gornik.getGornikUser().setD3_1(!gornik.getGornikUser().isD3_1());
-//                    bonuses.getBonusesUser().setPrzeszyciebloku(gornik.getGornikUser().isD3_1() ? bonuses.getBonusesUser().getPrzeszyciebloku() + 2 : bonuses.getBonusesUser().getPrzeszyciebloku() - 2);
-//                    break;
-//                case 8:
-//                    gornik.getGornikUser().setD9_1(!gornik.getGornikUser().isD9_1());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD9_1() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 100 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 100);
-//                    break;
-//                case 17:
-//                    gornik.getGornikUser().setD8_1(!gornik.getGornikUser().isD8_1());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD8_1() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 50 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 50);
-//                    break;
-//                case 16:
-//                    gornik.getGornikUser().setD7_1(!gornik.getGornikUser().isD7_1());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD7_1() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 50 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 50);
-//                    break;
-//                case 15:
-//                    gornik.getGornikUser().setD6_2(!gornik.getGornikUser().isD6_2());
-//                    break;
-//                case 24:
-//                    gornik.getGornikUser().setD5_2(!gornik.getGornikUser().isD5_2());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD5_2() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 50 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 50);
-//                    break;
-//                case 33:
-//                    gornik.getGornikUser().setD4_3(!gornik.getGornikUser().isD4_3());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD4_3() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 150 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 150);
-//                    bonuses.getBonusesUser().setSrednieobrazenia(gornik.getGornikUser().isD4_3() ? bonuses.getBonusesUser().getSrednieobrazenia() + 4 : bonuses.getBonusesUser().getSrednieobrazenia() - 4);
-//                    break;
-//                case 34:
-//                    gornik.getGornikUser().setD5_1(!gornik.getGornikUser().isD5_1());
-//                    bonuses.getBonusesUser().setSrednieobrazenia(gornik.getGornikUser().isD5_1() ? bonuses.getBonusesUser().getSrednieobrazenia() + 2 : bonuses.getBonusesUser().getSrednieobrazenia() - 2);
-//                    break;
-//                case 35:
-//                    gornik.getGornikUser().setD6_1(!gornik.getGornikUser().isD6_1());
-//                    bonuses.getBonusesUser().setSrednieobrazenia(gornik.getGornikUser().isD6_1() ? bonuses.getBonusesUser().getSrednieobrazenia() + 3 : bonuses.getBonusesUser().getSrednieobrazenia() - 3);
-//                    break;
-//                case 42:
-//                    gornik.getGornikUser().setD4_1(!gornik.getGornikUser().isD4_1());
-//                    bonuses.getBonusesUser().setBlokciosu(gornik.getGornikUser().isD4_1() ? bonuses.getBonusesUser().getBlokciosu() + 3 : bonuses.getBonusesUser().getBlokciosu() - 3);
-//                    break;
-//                case 51:
-//                    gornik.getGornikUser().setD4_2(!gornik.getGornikUser().isD4_2());
-//                    bonuses.getBonusesUser().setDodatkoweobrazenia(gornik.getGornikUser().isD4_2() ? bonuses.getBonusesUser().getDodatkoweobrazenia() + 100 : bonuses.getBonusesUser().getDodatkoweobrazenia() - 100);
-//                    break;
-//                case 41:
-//                    gornik.getGornikUser().setD3_2(!gornik.getGornikUser().isD3_2());
-//                    bonuses.getBonusesUser().setBlokciosu(gornik.getGornikUser().isD3_2() ? bonuses.getBonusesUser().getBlokciosu() + 2 : bonuses.getBonusesUser().getBlokciosu() - 2);
-//                    break;
-//            }
-//
-//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-//                rpgcore.getMongoManager().saveDataGornik(gornik.getID(), gornik);
-//                rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
-//            });
-//            rpgcore.getUstawieniaKontaManager().openGornikDrzewko(player, gornik.getID());
-//            return;
-//        }
+        if (title.contains("Misje » Gornik - ")) {
+            e.setCancelled(true);
+
+            if (item == null) return;
+            final GornikUser gornik = rpgcore.getGornikNPC().find(this.getUUIDFromTitle(title));
+            final Bonuses bonuses = rpgcore.getBonusesManager().find(gornik.getUuid());
+            final double value = this.getValueFromClickKey(e.getClick());
+
+            switch (slot) {
+                case 0:
+                    gornik.setMission(gornik.getMission() + (int) value);
+                    break;
+                case 1:
+                    gornik.setProgress(gornik.getProgress() + (int) value);
+                    break;
+                case 2:
+                    gornik.setMaxTimeLeft(gornik.getMaxTimeLeft() + (int) value * 1000L);
+                    break;
+                case 3:
+                    gornik.setSilnyNaLudzi(gornik.getSilnyNaLudzi() + value);
+                    bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + value);
+                    break;
+                case 4:
+                    gornik.setDefNaMoby(gornik.getDefNaMoby() + value);
+                    bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + value);
+                    break;
+                case 5:
+                    gornik.setFreePass(System.currentTimeMillis());
+                    break;
+            }
+
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataGornik(gornik.getUuid(), gornik);
+                rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
+            });
+            rpgcore.getUstawieniaKontaManager().openGornikM(player, gornik.getUuid());
+            return;
+        }
 
         if (title.contains("Misje » Kolekcjoner - ")) {
             e.setCancelled(true);
@@ -1348,45 +1208,45 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
             return;
         }
 
-        if (title.contains("Misje » Rybak - ")) {
-            e.setCancelled(true);
-
-            if (item == null) return;
-            final RybakObject rybak = rpgcore.getRybakNPC().find(this.getUUIDFromTitle(title));
-            final Bonuses bonuses = rpgcore.getBonusesManager().find(rybak.getId());
-            final double value = this.getValueFromClickKey(e.getClick());
-
-            switch (slot) {
-                case 0:
-                    rybak.getRybakUser().setMission(rybak.getRybakUser().getMission() + (int) value);
-                    break;
-                case 1:
-                    rybak.getRybakUser().setProgress(rybak.getRybakUser().getProgress() + (int) value);
-                    break;
-                case 2:
-                    rybak.getRybakUser().setBlok(rybak.getRybakUser().getBlok() + value);
-                    bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + value);
-                    break;
-                case 6:
-                    rybak.getRybakUser().setKryt(rybak.getRybakUser().getKryt() + value);
-                    bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + value);
-                    break;
-                case 7:
-                    rybak.getRybakUser().setMorskieSzczescie(rybak.getRybakUser().getMorskieSzczescie() + value);
-                    break;
-                case 8:
-                    rybak.getRybakUser().setSrDef(rybak.getRybakUser().getSrDef() + value);
-                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
-                    break;
-            }
-
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().saveDataRybak(rybak.getId(), rybak);
-                rpgcore.getMongoManager().saveDataBonuses(rybak.getId(), bonuses);
-            });
-            rpgcore.getUstawieniaKontaManager().openRybakM(player, rybak.getId());
-            return;
-        }
+//        if (title.contains("Misje » Rybak - ")) {
+//            e.setCancelled(true);
+//
+//            if (item == null) return;
+//            final RybakObject rybak = rpgcore.getRybakNPC().find(this.getUUIDFromTitle(title));
+//            final Bonuses bonuses = rpgcore.getBonusesManager().find(rybak.getId());
+//            final double value = this.getValueFromClickKey(e.getClick());
+//
+//            switch (slot) {
+//                case 0:
+//                    rybak.getRybakUser().setMission(rybak.getRybakUser().getMission() + (int) value);
+//                    break;
+//                case 1:
+//                    rybak.getRybakUser().setProgress(rybak.getRybakUser().getProgress() + (int) value);
+//                    break;
+//                case 2:
+//                    rybak.getRybakUser().setBlok(rybak.getRybakUser().getBlok() + value);
+//                    bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + value);
+//                    break;
+//                case 6:
+//                    rybak.getRybakUser().setKryt(rybak.getRybakUser().getKryt() + value);
+//                    bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + value);
+//                    break;
+//                case 7:
+//                    rybak.getRybakUser().setMorskieSzczescie(rybak.getRybakUser().getMorskieSzczescie() + value);
+//                    break;
+//                case 8:
+//                    rybak.getRybakUser().setSrDef(rybak.getRybakUser().getSrDef() + value);
+//                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
+//                    break;
+//            }
+//
+//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+//                rpgcore.getMongoManager().saveDataRybak(rybak.getId(), rybak);
+//                rpgcore.getMongoManager().saveDataBonuses(rybak.getId(), bonuses);
+//            });
+//            rpgcore.getUstawieniaKontaManager().openRybakM(player, rybak.getId());
+//            return;
+//        }
 
         if (title.contains("Misje » Wyslannik - ")) {
             e.setCancelled(true);

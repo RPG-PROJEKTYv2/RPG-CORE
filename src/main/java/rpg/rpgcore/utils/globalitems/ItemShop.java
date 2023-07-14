@@ -104,6 +104,9 @@ public enum ItemShop {
     )).addTagString("type", "exp").addTagInt("range", 40).addGlowing().toItemStack().clone())),
     IS21("DAR_KLEOPATRY", Arrays.asList(new ItemBuilder(Material.INK_SACK, 1, (short) 11).setName("&e&lDar Kleopatry").setLore(Arrays.asList(
             "&fPrzedmiot ten pozwoli Ci zresetowac misje u &e&lPustelnika"
+    )).addGlowing().toItemStack().clone())),
+    IS23("ZMIANA_KLASY", Arrays.asList(new ItemBuilder(Material.PAPER).setName("&b&lReset Klasy").setLore(Arrays.asList(
+            "&7Przedmiot ten pozwoli Ci zresetowac swoja klase"
     )).addGlowing().toItemStack().clone()));
 
 

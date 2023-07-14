@@ -17,10 +17,12 @@ import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.MobDropHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class EntityDamageEntityListener implements Listener {
@@ -61,7 +63,21 @@ public class EntityDamageEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
 
-        if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) return;
+        if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+            if (e.getDamager() instanceof Fireball) {
+                e.setCancelled(true);
+                e.setDamage(0);
+                final Fireball fireball = (Fireball) e.getDamager();
+                if (!fireball.getMetadata("fireball").get(0).getOwningPlugin().equals(rpgcore)) return;
+                final Player victim = (Player) e.getEntity();
+                victim.setHealth(victim.getHealth() * 0.2);
+                victim.setWalkSpeed(0.1f);
+                rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> victim.setWalkSpeed(0.2f), 100L);
+                victim.sendMessage(Utils.format("&cGracz &e" + ((Player) fireball.getShooter()).getName() + " &ctrafil Cie &6Ognista Kula&c!"));
+                return;
+            }
+            return;
+        }
 
         if (e.getEntity().getType().equals(EntityType.ENDER_CRYSTAL)) {
             if (e.getDamager() instanceof Player) {
@@ -359,6 +375,53 @@ public class EntityDamageEntityListener implements Listener {
                 if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
                     if (((Monster) victim).getTarget() != attacker) {
                         ((Monster) victim).setTarget(attacker);
+                    }
+                }
+                if (rpgcore.getKlasyManager().getMagRMB().contains(attacker.getUniqueId())) {
+                    final Location loc = victim.getLocation();
+                    final List<LivingEntity> list = victim.getNearbyEntities(8, 8, 8).stream().filter(entity -> entity instanceof LivingEntity && !(entity instanceof Player)).map(entity -> (LivingEntity) entity).collect(Collectors.toList());
+                    //rpgcore.getKlasyManager().getMagRMBEntities().put(attacker.getUniqueId(), list.stream().map(LivingEntity::getEntityId).collect(Collectors.toList()));
+                    rpgcore.getKlasyManager().getMagRMB().remove(attacker.getUniqueId());
+                    for (LivingEntity rest : list) {
+                        if (rest.equals(victim)) continue;
+
+                        final double distance = rest.getLocation().distance(loc);
+                        if (distance > 5 && distance <= 8) {
+                            final double dmg = attackerDmg * 0.25;
+                            if (rest.getHealth() > dmg) {
+                                rest.damage(dmg);
+                            } else {
+                                MobDropHelper.dropFromMob(attacker, rest);
+                                rest.damage(dmg);
+                            }
+                            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&a&l", dmg, rest, attacker));
+                        } else if (distance > 3 && distance <= 5) {
+                            final double dmg = attackerDmg * 0.5;
+                            if (rest.getHealth() > dmg) {
+                                rest.damage(dmg);
+                            } else {
+                                MobDropHelper.dropFromMob(attacker, rest);
+                                rest.damage(dmg);
+                            }
+                            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&a&l", dmg, rest, attacker));
+                        } else if (distance > 1 && distance <= 3) {
+                            final double dmg = attackerDmg * 0.75;
+                            if (rest.getHealth() > dmg) {
+                                rest.damage(dmg);
+                            } else {
+                                MobDropHelper.dropFromMob(attacker, rest);
+                                rest.damage(dmg);
+                            }
+                            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&a&l", dmg, rest, attacker));
+                        } else if (distance <= 1) {
+                            if (rest.getHealth() > attackerDmg) {
+                                rest.damage(attackerDmg);
+                            } else {
+                                MobDropHelper.dropFromMob(attacker, rest);
+                                rest.damage(attackerDmg);
+                            }
+                            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&a&l", attackerDmg, rest, attacker));
+                        }
                     }
                 }
 

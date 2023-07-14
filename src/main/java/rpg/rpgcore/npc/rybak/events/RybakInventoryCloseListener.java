@@ -17,7 +17,9 @@ public class RybakInventoryCloseListener implements Listener {
                 return;
             }
             RPGCORE.getInstance().getRybakNPC().addFailedAttempt(e.getPlayer().getUniqueId());
-            e.getPlayer().sendMessage(Utils.format("&6&lRybak &8>> &cNie udalo sie przeslac weryfikacji Anty-AFK &4(" + RPGCORE.getInstance().getRybakNPC().getFailedAttempts(e.getPlayer().getUniqueId()) + "/3)"));
+            e.getPlayer().sendMessage(Utils.format("&7Ochrona &cAnty-AFK"));
+            e.getPlayer().sendMessage(Utils.format("&cNie udalo sie przeslac weryfikacji Anty-AFK &4(" + RPGCORE.getInstance().getRybakNPC().getFailedAttempts(e.getPlayer().getUniqueId()) + "/3)"));
+            e.getPlayer().sendMessage(Utils.format("&7Ochrona &cAnty-AFK"));
             if (RPGCORE.getInstance().getRybakNPC().getFailedAttempts(e.getPlayer().getUniqueId()) >= 3) {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tempban " + e.getPlayer().getName() + " 6 h Afk na lowienie (skrypt?)");
             }

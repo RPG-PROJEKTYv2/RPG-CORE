@@ -182,12 +182,12 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
             // RYBAK
-            if (entityName.equalsIgnoreCase("Rybak")) {
+            if (entityName.equalsIgnoreCase("Wloczykij")) {
                 if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 30) {
-                    player.sendMessage(Utils.format(Utils.RYBAK + "&7Osiagnij przynajmniej &630 &7poziom, aby odblokowac kampanie rybaka!"));
+                    player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Osiagnij przynajmniej &630 &7poziom!"));
                     return;
                 }
-                rpgcore.getRybakNPC().openRybakGUI(player);
+                rpgcore.getRybakNPC().clickWloczykij(player);
                 return;
             }
             // KOWAL
@@ -196,6 +196,10 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
             // KLASY
+            if (entityName.equalsIgnoreCase("Dowodca Strazy")) {
+                rpgcore.getKlasyManager().openGUI(player);
+                return;
+            }
 
             // GORNIK
             if (entityName.equalsIgnoreCase("Gornik")) {
@@ -277,8 +281,8 @@ public class PlayerInteractEntityListener implements Listener {
                         if (rpgcore.getTradeManager().isInTradeRequestMap(uuid) || rpgcore.getTradeManager().isInTradeRequestMap(entityUUID)) {
                             rpgcore.getTradeManager().removeTradeRequest(uuid, entityUUID);
                             if (playerRightClicked != null && playerRightClicked.isOnline() && player != null && player.isOnline()) {
-                                playerRightClicked.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane od gracza &6" + player.getName() + " &7wygasla!"));
-                                player.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane do gracza &6" + playerRightClicked.getName() + " &7wygasla!"));
+                                playerRightClicked.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane od gracza &6" + player.getName() + " &cwygasla!"));
+                                player.sendMessage(Utils.format(Utils.TRADEPREFIX + "&cProsba o wymiane do gracza &6" + playerRightClicked.getName() + " &cwygasla!"));
                             }
                         }
                     }, 200L);

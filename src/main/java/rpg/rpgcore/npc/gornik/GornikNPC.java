@@ -14,12 +14,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -101,7 +104,20 @@ public class GornikNPC {
             player.sendMessage(Utils.format("&6&lGornik &8>> &7Tym razem Ci odpuszcze... Ale nastepna wycieczka jest na twoj koszt!"));
             player.sendMessage(Utils.format("&8(Kolejna darmowa wycieczka do kopalni bedzie dostepna za 4H)"));
             gornikUser.giveFreePassCooldown();
-            gornikUser.setTimeLeft(gornikUser.getMaxTimeLeft());
+            boolean isFullGornikArmor = true;
+            long bonusTime = 0;
+            for (final ItemStack armor : player.getInventory().getArmorContents()) {
+                if (armor != null && armor.getType().toString().contains("LEATHER") && armor.getItemMeta().hasDisplayName() && armor.getItemMeta().getDisplayName().contains("Gornika")) {
+                    bonusTime += Utils.getTagInt(armor, "bonusTime");
+                } else {
+                    isFullGornikArmor = false;
+                }
+            }
+            if (isFullGornikArmor) {
+                bonusTime += 480_000;
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 6_000, 0));
+            }
+            gornikUser.setTimeLeft(gornikUser.getMaxTimeLeft() + bonusTime);
             player.teleport(new Location(Bukkit.getWorld("kopalnia"), -143.5, 76, -3.5, -45, 0));
         } else {
             player.sendMessage(Utils.format("&6&lGornik &8>> &7Hola hola, tym razem to ty placisz!"));
@@ -385,7 +401,7 @@ public class GornikNPC {
 
     public void giveRandomChestReward(final Player player) {
         player.sendMessage(Utils.format("&f&lZawartosc Skrzyni:"));
-        for (int i = 0; i < 5; i++) getDrawnItems(player);
+        for (int i = 0; i < ChanceHelper.getRandInt(1, 5); i++) getDrawnItems(player);
     }
 
     private void getDrawnItems(final Player player) {

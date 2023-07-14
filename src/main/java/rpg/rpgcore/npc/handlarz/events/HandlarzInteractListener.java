@@ -11,11 +11,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.klasy.enums.KlasyMain;
+import rpg.rpgcore.klasy.enums.KlasySide;
+import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class HandlarzInteractListener implements Listener {
@@ -37,7 +42,7 @@ public class HandlarzInteractListener implements Listener {
         if (eventItem.getType() == Material.BOOK && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Voucher na range")) {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
 
-            if (user.getRankPlayerUser().getRankType().getPriority() > RankTypePlayer.getByName(Utils.getTagString(eventItem, "rank")).getPriority()) {
+            if (user.getRankPlayerUser().getRankType().getPriority() > Objects.requireNonNull(RankTypePlayer.getByName(Utils.getTagString(eventItem, "rank"))).getPriority()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cUzyj tego voucher, kiedy czas twojej rangi dobiegnie konca."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cCzas swojej rangi mozesz sprawdzic pod /ranktime."));
                 return;
@@ -72,18 +77,31 @@ public class HandlarzInteractListener implements Listener {
                 RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user);
             });
         }
-//        if (eventItem.getType() == Material.LEATHER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
-//            if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldown(uuid)) return;
-//
-//            final int range = Utils.getTagInt(eventItem, "range");
-//
-//            for (Entity entity : player.getNearbyEntities(range, range, range)) {
-//                if (entity instanceof Creature) {
-//                    final Creature creature = (Creature) entity;
-//                    creature.setTarget(player);
-//                }
-//            }
-//            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldown(uuid);
-//        }
+        if (eventItem.getType() == Material.PAPER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Reset Klasy")) {
+            final Klasa klasa = RPGCORE.getInstance().getKlasyManager().find(uuid);
+            final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+
+            if (klasa.getMainKlasa() == KlasyMain.NIE_WYBRANO) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wybranej klasy."));
+                return;
+            }
+
+            if (user.getKasa() < 5_000_000) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wystarczajacej ilosci pieniedzy &8(&65 000 000&2$&8)."));
+                return;
+            }
+            user.setKasa(DoubleUtils.round(user.getKasa() - 5_000_000, 2));
+            player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
+            klasa.setMainKlasa(KlasyMain.NIE_WYBRANO);
+            klasa.setPodKlasa(KlasySide.NIE_WYBRANO);
+            klasa.setCdLMB(0L);
+            klasa.setCdRMB(0L);
+            klasa.setUpgrade(0);
+            klasa.setBonus1(0);
+            klasa.setBonus2(0);
+            klasa.save();
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zresetowales/-as swoja klase."));
+        }
     }
 }

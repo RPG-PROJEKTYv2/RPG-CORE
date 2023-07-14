@@ -1,6 +1,7 @@
 package rpg.rpgcore.dmg;
 
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -15,6 +16,7 @@ import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
 import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
+import rpg.rpgcore.klasy.enums.KlasyMain;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
@@ -140,6 +142,34 @@ public class DamageManager {
             wzmKryt += Utils.getTagDouble(attacker.getInventory().getBoots(), "szansaWzmKryt");
         }
 
+        switch (rpgcore.getKlasyManager().find(uuid).getMainKlasa()) {
+            case WOJOWNIK:
+                mnoznik += 5;
+                break;
+            case ZABOJCA:
+                mnoznik += 8;
+                krytyk += 5;
+                break;
+            case CZARODZIEJ:
+                mnoznik += 3;
+                break;
+            default:
+                break;
+        }
+
+        if (rpgcore.getKlasyManager().getBerserkLMB().asMap().containsKey(uuid)) {
+            mnoznik += 10;
+        }
+        if (rpgcore.getKlasyManager().getNinjaRMB().asMap().containsKey(uuid)) {
+            mnoznik += 5;
+        }
+
+        if (!victim.canSee(attacker)) {
+            mnoznik += 5;
+            for (Player rest : Bukkit.getOnlinePlayers()) rest.showPlayer(attacker);
+            rpgcore.getKlasyManager().getUsedSkrytoPassive().remove(attacker.getUniqueId());
+        }
+
 
         if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
@@ -247,6 +277,34 @@ public class DamageManager {
         }
 
 
+        switch (rpgcore.getKlasyManager().find(uuid).getMainKlasa()) {
+            case WOJOWNIK:
+                mnoznik += 5;
+                break;
+            case ZABOJCA:
+                mnoznik += 8;
+                krytyk += 5;
+                break;
+            case CZARODZIEJ:
+                mnoznik += 3;
+                break;
+            default:
+                break;
+        }
+
+        if (rpgcore.getKlasyManager().getBerserkLMB().asMap().containsKey(uuid)) {
+            mnoznik += 10;
+        }
+
+        if (rpgcore.getKlasyManager().getNinjaRMB().asMap().containsKey(uuid)) {
+            mnoznik += 5;
+        }
+
+        if (rpgcore.getKlasyManager().getBerserkRMB().contains(uuid)) {
+            mnoznik += 250;
+            rpgcore.getKlasyManager().getBerserkRMB().remove(uuid);
+        }
+
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
@@ -342,6 +400,10 @@ public class DamageManager {
             drugiMnoznik += 15;
         }
 
+        if (rpgcore.getKlasyManager().getPaladinPassive().asMap().containsKey(uuid)) {
+            mnoznik += 10;
+        }
+
         final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
         if (!akcesoriaPodst.getTarcza().isEmpty()) {
             final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
@@ -383,6 +445,9 @@ public class DamageManager {
         attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR && String.valueOf(attacker.getItemInHand().getType()).contains("SWORD")) {
             attackerPrzeszywka += Utils.getTagInt(attacker.getItemInHand(), "przeszywka");
+        }
+        if (rpgcore.getKlasyManager().find(victimUUID).getMainKlasa() == KlasyMain.CZARODZIEJ) {
+            victimBlok += 5;
         }
 
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
@@ -497,6 +562,10 @@ public class DamageManager {
         }
         if (victim.getInventory().getBoots() != null) {
             mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getBoots(), "defMoby");
+        }
+
+        if (rpgcore.getKlasyManager().getPaladinPassive().asMap().containsKey(uuid)) {
+            mnoznikProcenty += 10;
         }
 
 

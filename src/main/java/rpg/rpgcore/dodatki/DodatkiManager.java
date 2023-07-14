@@ -75,7 +75,7 @@ public class DodatkiManager {
             gui.setItem(6, Utils.deserializeItem(user.getDiadem()));
         }
 
-        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(8, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -196,7 +196,7 @@ public class DodatkiManager {
             gui.setItem(23, Utils.deserializeItem(user.getDmgMetiny()));
         }
 
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(17, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -235,7 +235,7 @@ public class DodatkiManager {
             gui.setItem(7, Utils.deserializeItem(user.getEnergia()));
         }
 
-        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(8, Utils.powrot());
 
         player.openInventory(gui);
     }

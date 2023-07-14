@@ -8,7 +8,6 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
-import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.*;
 
@@ -77,16 +76,16 @@ public enum CzarownicaMissions {
                 itemList.add(mission7Item);
                 break;
             case 8:
-                itemList.add(RybakItems.I1.getItemStack());
-                itemList.add(RybakItems.I2.getItemStack());
-                itemList.add(RybakItems.I3.getItemStack());
-                itemList.add(RybakItems.I4.getItemStack());
-                itemList.add(RybakItems.I5.getItemStack());
-                itemList.add(RybakItems.I6.getItemStack());
-                itemList.add(RybakItems.I7.getItemStack());
-                itemList.add(RybakItems.I8.getItemStack());
-                itemList.add(RybakItems.I9.getItemStack());
-                itemList.add(RybakItems.I10.getItemStack());
+//                itemList.add(RybakItems.I1.getItemStack());
+//                itemList.add(RybakItems.I2.getItemStack());
+//                itemList.add(RybakItems.I3.getItemStack());
+//                itemList.add(RybakItems.I4.getItemStack());
+//                itemList.add(RybakItems.I5.getItemStack());
+//                itemList.add(RybakItems.I6.getItemStack());
+//                itemList.add(RybakItems.I7.getItemStack());
+//                itemList.add(RybakItems.I8.getItemStack());
+//                itemList.add(RybakItems.I9.getItemStack());
+//                itemList.add(RybakItems.I10.getItemStack());
                 break;
             case 9:
                 itemList.add(Skrzynki.I2.getItemStack());

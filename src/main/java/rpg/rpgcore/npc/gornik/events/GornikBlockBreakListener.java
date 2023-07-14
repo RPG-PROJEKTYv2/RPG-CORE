@@ -25,6 +25,7 @@ import rpg.rpgcore.npc.gornik.enums.PickaxePriority;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.enums.Ores;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.MobDropHelper;
@@ -70,6 +71,7 @@ public class GornikBlockBreakListener implements Listener {
             return;
         }
         ore.setCurrentHp(ore.getCurrentHp() - 1);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, info.getReward().getItemMeta().getDisplayName(), "&e" + ore.getCurrentHp() + "&7/&e" + ore.getMaxHp(), 5, 10));
         if (ore.getCurrentHp() <= 0) {
             ore.breakOre();
 
@@ -126,12 +128,12 @@ public class GornikBlockBreakListener implements Listener {
                     break;
             }
             final ItemStack reward = info.getReward().clone();
-            double chestDropChance = 1.0;
-            double doubleDrop = 5.0;
+            double chestDropChance = 0.5;
+            double doubleDrop = 2.0;
             if (user.isPickaxeAbilityActive()) doubleDrop += 25.0;
             for (final ItemStack armor : player.getInventory().getArmorContents()) {
                 if (armor != null && armor.getType().toString().contains("LEATHER") && armor.getItemMeta().hasDisplayName() && armor.getItemMeta().getDisplayName().contains("Gornika")) {
-                    chestDropChance += Utils.getTagDouble(armor, "chestDrop");
+                    chestDropChance += Utils.getTagDouble(armor, "chestDrop")/2;
                     doubleDrop += Utils.getTagDouble(armor, "doubleDrop");
                 }
             }
@@ -153,7 +155,7 @@ public class GornikBlockBreakListener implements Listener {
                 block.setType(Material.CHEST);
                 final MaterialData data = block.getState().getData();
                 final Directional directional = ((Directional) data);
-                directional.setFacingDirection(Utils.getDirection(player).getOppositeFace());
+                directional.setFacingDirection(Utils.getDirection(player));
                 block.getState().setData(data);
                 block.getState().update(true);
                 player.sendMessage(Utils.format("&aZnalazles zakopana skrzynie!"));
@@ -161,9 +163,12 @@ public class GornikBlockBreakListener implements Listener {
                 rpgcore.getGornikNPC().updateExp(player.getItemInHand(), 22);
                 rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> location.getBlock().setType(Material.BEDROCK), 240L);
             }
-            return;
+            if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 8) {
+                final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+                magazynierUser.getMissions().setProgress(magazynierUser.getMissions().getProgress() + 1);
+            }
+            player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wykopales rude " + info.getReward().getItemMeta().getDisplayName() + "&a!"));
         }
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, info.getReward().getItemMeta().getDisplayName(), "&e" + ore.getCurrentHp() + "&7/&e" + ore.getMaxHp(), 5, 10));
     }
 
 

@@ -1,18 +1,13 @@
 package rpg.rpgcore.pomoc;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
-import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 
 public class POMOCInventoryClick implements Listener {
 
@@ -33,7 +28,6 @@ public class POMOCInventoryClick implements Listener {
         }
 
         final String clickedInventoryTitle = clickedInventory.getTitle();
-        final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
 
         if (Utils.removeColor(clickedInventoryTitle).equals("Pomoc")) {
@@ -41,9 +35,9 @@ public class POMOCInventoryClick implements Listener {
             if (clickedSlot == 0) {
                 player.closeInventory();
                 player.sendMessage(Utils.format("&e&lPoradnik &f&l* &7Witaj &c" + player.getName() + " &7na samym poczatku powinienes przeczytac regulamin serwerowy ktory znajdziesz na naszym discordzie - &edc.hellrpg.pl&7!\n" +
-                        "&7Znajdujesz sie na trybie &4&lMMO/RPG &7z poziomem &cmedium.\n" +
+                        "&7Znajdujesz sie na trybie &4&lMMO/RPG &7z poziomem &cmedium&7.\n" +
                         "&7Tryb polega na zwiekszaniu poziomu postaci poprzez zabijanie potworow na poszczegolnych mapach, ulepszaniu swojego konta jak i ekwipunku oraz rywalizacji z innymi graczami!\n" +
-                        "&7Aby teleportowac sie na pierwsza mape musisz udac sie do &9&lTeleportera&7.\n" +
+                        "&7Aby teleportowac sie na pierwsza mape musisz udac sie do &4&lTeleportera&7.\n" +
                         "&7Wszystkie najwazniejsze npcty znajdziesz pod - &e/listanpc&7.\n" +
                         "\n " +
                         "&cZyczymy udanej rozgrywki! ~&4&lHELLRPG.PL"));

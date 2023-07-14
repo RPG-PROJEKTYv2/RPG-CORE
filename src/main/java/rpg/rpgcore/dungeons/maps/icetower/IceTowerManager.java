@@ -462,6 +462,7 @@ public class IceTowerManager {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc spawn");
 
         for (Player player : this.dungeonWorld.getPlayers()) {
+            if (Utils.removeColor(player.getName()).equals("Kowal")) continue;
             final MagazynierUser magazynier = rpgcore.getMagazynierNPC().find(player.getUniqueId());
             if (magazynier == null) {
                 Utils.sendToHighStaff("&8===========================");

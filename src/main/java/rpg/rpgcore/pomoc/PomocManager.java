@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -38,7 +37,7 @@ public class PomocManager {
         gui.setItem(5, itemGUI.setName("&e/profil").addGlowing().toItemStack().clone());
         gui.setItem(6, itemGUI.setName("&e/chatpanel").addGlowing().toItemStack().clone());
         gui.setItem(7, itemGUI.setName("&e/msg <gracz> <wiadomosc>, /r <wiadomosc>").addGlowing().toItemStack().clone());
-        gui.setItem(8, itemGUI.setName("&e/itemshop").addGlowing().toItemStack().clone());
+        gui.setItem(8, itemGUI.setName("&e/hs").addGlowing().toItemStack().clone());
         gui.setItem(9, itemGUI.setName("&e/icetower").addGlowing().toItemStack().clone());
         gui.setItem(10, itemGUI.setName("&e/enderchest").addGlowing().toItemStack().clone());
         gui.setItem(11, itemGUI.setName("&e/hellcode").addGlowing().toItemStack().clone());
@@ -54,18 +53,16 @@ public class PomocManager {
         gui.setItem(21, itemGUI.setName("&e/topki").addGlowing().toItemStack().clone());
         gui.setItem(22, itemGUI.setName("&e/helpop").addGlowing().toItemStack().clone());
         gui.setItem(23, itemGUI.setName("&e/listagraczy").addGlowing().toItemStack().clone());
-        gui.setItem(24, itemGUI.setName("&e/piersciendoswiadczenia").addGlowing().toItemStack().clone());
-        gui.setItem(25, itemGUI.setName("&e/sprawdzefekty <gracz>").addGlowing().toItemStack().clone());
-        gui.setItem(26, itemGUI.setName("&e[item] &f- interakcja gui z chatem").addGlowing().toItemStack().clone());
-        gui.setItem(27, itemGUI.setName("&e/ranktime").addGlowing().toItemStack().clone());
-        gui.setItem(28, itemGUI.setName("&e/rozpiska").addGlowing().toItemStack().clone());
-        gui.setItem(29, itemGUI.setName("&e/gamma").addGlowing().toItemStack().clone());
-        gui.setItem(30, itemGUI.setName("&e/live").addGlowing().toItemStack().clone());
-        gui.setItem(31, itemGUI.setName("&e/listagraczy").addGlowing().toItemStack().clone());
-        gui.setItem(32, itemGUI.setName("&e/party").addGlowing().toItemStack().clone());
+        gui.setItem(24, itemGUI.setName("&e/piersciendoswiadczenia, /pd").addGlowing().toItemStack().clone());
+        gui.setItem(25, itemGUI.setName("&e[item] &f- interakcja gui z chatem").addGlowing().toItemStack().clone());
+        gui.setItem(26, itemGUI.setName("&e/ranktime").addGlowing().toItemStack().clone());
+        gui.setItem(27, itemGUI.setName("&e/rozpiska").addGlowing().toItemStack().clone());
+        gui.setItem(28, itemGUI.setName("&e/gamma").addGlowing().toItemStack().clone());
+        gui.setItem(29, itemGUI.setName("&e/live").addGlowing().toItemStack().clone());
+        gui.setItem(30, itemGUI.setName("&e/osiagniecia, /os").addGlowing().toItemStack().clone());
 
 
-        gui.setItem(35, new ItemBuilder(Material.ARROW,1 ).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(35, Utils.powrot());
         player.openInventory(gui);
     }
 }

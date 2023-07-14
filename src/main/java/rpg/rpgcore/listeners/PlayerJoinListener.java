@@ -104,7 +104,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         player.getOpenInventory().getTopInventory().clear();
-
+        player.setWalkSpeed(0.2F);
 
         e.setJoinMessage(null);
 
