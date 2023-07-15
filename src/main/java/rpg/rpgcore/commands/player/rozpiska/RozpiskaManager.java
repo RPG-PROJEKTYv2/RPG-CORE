@@ -176,7 +176,7 @@ public class RozpiskaManager {
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
                 "",
                 "&8Szata Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
-                "&6Zardzewialy Pierscien: &f" + MobDropHelper.getDropChance(szczescie, 2.8) + "%",
+                "&6Zardzewialy Lej: &f" + MobDropHelper.getDropChance(szczescie, 2.8) + "%",
                 "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
                 "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
@@ -188,7 +188,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openFIRSTgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&9&lMetin Rozbojnikow").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 1-10: &f25%",
+                "&4Odlamek Kamienia Metin 1-10: &f65%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -225,7 +225,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openSECONDgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&2&lMetin Lasu").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 10-20: &f25%",
+                "&4Odlamek Kamienia Metin 10-20: &f65%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -262,7 +262,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openTHIRDgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&7&lMetin Zapomnienia").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 20-30: &f25%",
+                "&4Odlamek Kamienia Metin 20-30: &f60%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -299,7 +299,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openFOURTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&8&lMetin Przekletych").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 30-40: &f25%",
+                "&4Odlamek Kamienia Metin 30-40: &f50%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -377,7 +377,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openSIXTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&f&lMetin Mrozu").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 50-60: &f25%",
+                "&4Odlamek Kamienia Metin 50-60: &f45%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -420,7 +420,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openSEVENTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&6&lMetin Zywiolu").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 60-70: &f25%",
+                "&4Odlamek Kamienia Metin 60-70: &f35%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",

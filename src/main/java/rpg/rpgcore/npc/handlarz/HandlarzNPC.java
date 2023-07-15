@@ -90,6 +90,7 @@ public class  HandlarzNPC {
 
     public void openHandlarzItemShop(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lHandlarz &8>> &6&lItem&2&lShop"));
+        final UUID uuid = player.getUniqueId();
 
         for (int i = 0; i < 54; i++) {
             if (i % 2 == 0) {
@@ -129,6 +130,7 @@ public class  HandlarzNPC {
 
         gui.setItem(49, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
+        gui.setItem(53, new ItemBuilder(Material.GOLD_NUGGET).setName("&cTwoje &4&lH&6&lS&c: " + Utils.spaceNumber(String.valueOf(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getHellcoins()))).toItemStack());
         player.openInventory(gui);
     }
 

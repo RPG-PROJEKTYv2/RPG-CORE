@@ -32,14 +32,13 @@ public class RozpiskaInventoryClick implements Listener {
         final int slot = e.getSlot();
 
         if (title.equals("Expowisko * (1-10)") || title.equals("Expowisko * (10-20)") || title.equals("Expowisko * (20-30)") ||
-                title.equals("Expowisko * (30-40)") || title.equals("Rozpiska * (40-50)") || title.equals("Expowisko * (50-60)") ||
+                title.equals("Expowisko * (30-40)") || title.equals("Expowisko * (40-50)") || title.equals("Expowisko * (50-60)") ||
                 title.equals("Expowisko * (60-70)") || title.equals("Expowisko * (70-80)") || title.equals("Expowisko * (80-90)") ||
                 title.equals("Expowisko * (90-100)") || title.equals("Expowisko * (100-110)") || title.equals("Expowisko * (110-120)") ||
                 title.equals("Expowisko * (120-130)")) {
             e.setCancelled(true);
-            if (slot == 44) {
+            if (slot == 43) {
                 rpgcore.getRozpiskaManager().openROZPISKAGUI(player);
-                return;
             }
         }
         if (title.equals("Rozpiska - menu")) {
@@ -59,8 +58,8 @@ public class RozpiskaInventoryClick implements Listener {
             }
             if (slot == 13) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 19) {
-                        rpgcore.getRozpiskaManager().openTHIRDexp(player);
-                        return;
+                    rpgcore.getRozpiskaManager().openTHIRDexp(player);
+                    return;
                 } else {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
@@ -102,6 +101,8 @@ public class RozpiskaInventoryClick implements Listener {
                 player.closeInventory();
                 player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
             }
+        }
+    }
             /*if (slot == 30) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 }
@@ -132,6 +133,5 @@ public class RozpiskaInventoryClick implements Listener {
                 }
                 return;
             }*/
-        }
-    }
+
 }

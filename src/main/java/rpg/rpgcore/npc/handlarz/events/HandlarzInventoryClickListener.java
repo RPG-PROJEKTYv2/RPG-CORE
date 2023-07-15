@@ -131,7 +131,7 @@ public class HandlarzInventoryClickListener implements Listener {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
 
-            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) {
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.GOLD_NUGGET) {
                 return;
             }
 

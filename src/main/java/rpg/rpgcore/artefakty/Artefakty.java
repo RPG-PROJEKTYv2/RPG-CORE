@@ -41,7 +41,7 @@ public enum Artefakty {
             "&7Czas trwania: &e5 min",
             "",
             "&8Odebrany od Potwora z glebin z dna Glebokiego Morza.",
-            "&8Wypicie go podowuje uczucie palenia w gardle",
+            "&8Wypicie go powoduje uczucie palenia w gardle",
             "&8dzieki czemu wpadamy w &cfurie&8.",
             "&4&lARTEFAKT"
     )).toItemStack().clone()),
@@ -50,7 +50,7 @@ public enum Artefakty {
             "&7Czas trwania: &e5 min",
             "",
             "&8Wydobyty spod gruzow starej kopalni.",
-            "&8Wypicie go podowuje przyplyw tajemniczej energii",
+            "&8Wypicie go powoduje przyplyw tajemniczej energii",
             "&8dzieki ktorej stajemy sie &3niepokonani&8.",
             "&4&lARTEFAKT"
     )).toItemStack().clone()),

@@ -72,8 +72,8 @@ public class MobDropHelper {
         }
 
 
-        final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
-        final double niesDropChance50plus = getDropChance(szczescie, 0.03);
+        final double niesDropChance50lvl = getDropChance(szczescie, 0.08);
+        final double niesDropChance50plus = getDropChance(szczescie, 0.05);
         final double chestDropChance50lvl = getDropChance(szczescie, 2.7);
         final double chestDropChance50plus = getDropChance(szczescie, 1.25);
 
@@ -120,7 +120,7 @@ public class MobDropHelper {
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10-2 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
                 // LOWCA
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
-                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 404), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 1) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);

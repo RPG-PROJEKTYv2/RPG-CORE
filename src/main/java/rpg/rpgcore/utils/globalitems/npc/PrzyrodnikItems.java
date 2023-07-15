@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public enum PrzyrodnikItems {
 
-    I0("1-10", new ItemBuilder(Material.WATCH).setName("&6Zardzewialy Pierscien").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
+    I0("1-10", new ItemBuilder(Material.HOPPER).setName("&6Zardzewialy Lej").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I1("10-20", new ItemBuilder(Material.WATER_LILY).setName("&2Ucho Goblina").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I2("20-30", new ItemBuilder(Material.QUARTZ).setName("&7Zab Goryla").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I3("30-40", new ItemBuilder(Material.SULPHUR).setName("&8Prochy Zjawy").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),

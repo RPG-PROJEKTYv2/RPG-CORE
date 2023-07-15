@@ -160,7 +160,7 @@ public class MetinyHelper {
         if ((id >= 1 && id <= 10) || (id >= 10001 && id <= 10010)) {
             kasaToAdd = 50;
             if (metinolog.getMetinologUser().getPostepGive() == 0) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I1-10", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I1-10", 1), 65, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 0) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -169,7 +169,7 @@ public class MetinyHelper {
         if ((id >= 11 && id <= 20) || (id >= 10011 && id <= 10020)) {
             kasaToAdd = 100;
             if (metinolog.getMetinologUser().getPostepGive() == 1) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I10-20", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I10-20", 1), 65, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 1) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -178,7 +178,7 @@ public class MetinyHelper {
         if ((id >= 21 && id <= 30) || (id >= 10021 && id <= 10030)) {
             kasaToAdd = 150;
             if (metinolog.getMetinologUser().getPostepGive() == 2) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I20-30", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I20-30", 1), 60, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 2) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -187,7 +187,7 @@ public class MetinyHelper {
         if ((id >= 31 && id <= 40) || (id >= 10031 && id <= 10040)) {
             kasaToAdd = 250;
             if (metinolog.getMetinologUser().getPostepGive() == 3) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I30-40", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I30-40", 1), 50, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 3) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -196,7 +196,7 @@ public class MetinyHelper {
         if ((id >= 41 && id <= 50) || (id >= 10041 && id <= 10050)) {
             kasaToAdd = 400;
             if (metinolog.getMetinologUser().getPostepGive() == 4) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I40-50", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I40-50", 1), 45, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 4) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -205,7 +205,7 @@ public class MetinyHelper {
         if ((id >= 51 && id <= 60) || (id >= 10051 && id <= 10060)) {
             kasaToAdd = 550;
             if (metinolog.getMetinologUser().getPostepGive() == 5) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I50-60", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I50-60", 1), 35, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 5) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
@@ -214,7 +214,7 @@ public class MetinyHelper {
         if ((id >= 61 && id <= 70) || (id >= 10061 && id <= 10070)) {
             kasaToAdd = 700;
             if (metinolog.getMetinologUser().getPostepGive() == 7) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I60-70", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I60-70", 1), 30, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 7) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
