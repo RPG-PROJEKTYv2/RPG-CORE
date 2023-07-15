@@ -36,9 +36,12 @@ public class KlasyTask implements Runnable{
             }
             if (klasa.getPodKlasa() == KlasySide.NINJA) {
                 if (rpgcore.getKlasyManager().getNinjaRMB().asMap().containsKey(player.getUniqueId())) {
-                    player.setWalkSpeed(0.3F);
-                } else {
-                    player.setWalkSpeed(0.2F);
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                        player.setWalkSpeed(0.3F);
+                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                            player.setWalkSpeed(0.2F);
+                        }, 200L);
+                    }, 1L);
                 }
                 continue;
             }

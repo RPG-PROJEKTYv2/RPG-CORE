@@ -34,7 +34,7 @@ DIADEM
 
 public class AkcesoriaPodsHelper {
     public static ItemStack createTarcza(final int def, final int blok, final int hp, final int lvl, final String... name) {
-        return new ItemBuilder(Material.ITEM_FRAME).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
+        return new ItemBuilder(Material.ITEM_FRAME).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Zwiekszona Defensywa: &c" + def + "%",
                 "&7Szansa na Blok: &c" + blok + "%",
@@ -45,7 +45,7 @@ public class AkcesoriaPodsHelper {
     }
 
     public static ItemStack createKolczyki(final int ludzie, final int odpo, final int mspeed, final int lvl, final String... name) {
-        return new ItemBuilder(Material.HOPPER_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
+        return new ItemBuilder(Material.HOPPER_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Silny przeciwko ludziom: &c" + ludzie + "%",
                 "&7Odpornosc na Ludzi: &c" + odpo + "%",
@@ -56,7 +56,7 @@ public class AkcesoriaPodsHelper {
     }
 
     public static ItemStack createNaszyjnik(final int ddmg, final int kryt, final int srdmg, final int lvl, final String... name) {
-        return new ItemBuilder(Material.STORAGE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
+        return new ItemBuilder(Material.STORAGE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Dodatkowe Obrazenia: &c+" + ddmg,
                 "&7Szansa na Cios Krytyczny: &c" + kryt + "%",
@@ -67,7 +67,7 @@ public class AkcesoriaPodsHelper {
     }
 
     public static ItemStack createPierscien(final int przeszycie, final int kryt, final int speed, final int lvl, final String... name) {
-        return new ItemBuilder(Material.EXPLOSIVE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
+        return new ItemBuilder(Material.EXPLOSIVE_MINECART).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Szansa na Przeszycie Bloku: &c" + przeszycie + "%",
                 "&7Wzmocnienie Ciosu Krytycznego: &c" + kryt + "%",
@@ -78,7 +78,7 @@ public class AkcesoriaPodsHelper {
     }
 
     public static ItemStack createDiadem(final int srdmg, final int potwory, final double exp, final int lvl, final String... name) {
-        return new ItemBuilder(Material.WATCH).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
+        return new ItemBuilder(Material.WATCH).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Podstawowe",
                 "&7Srednie Obrazenia: &c" + srdmg + "%",
                 "&7Silny przeciwko potworom: &c" + potwory + "%",
