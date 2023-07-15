@@ -72,7 +72,7 @@ public class EntityDamageEntityListener implements Listener {
                 final Player victim = (Player) e.getEntity();
                 victim.setHealth(victim.getHealth() * 0.2);
                 victim.setWalkSpeed(0.1f);
-                rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> victim.setWalkSpeed(0.2f), 100L);
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> victim.setWalkSpeed(0.2f), 100L);
                 victim.sendMessage(Utils.format("&cGracz &e" + ((Player) fireball.getShooter()).getName() + " &ctrafil Cie &6Ognista Kula&c!"));
                 return;
             }
@@ -190,11 +190,14 @@ public class EntityDamageEntityListener implements Listener {
                         wartoscDefa *= 0.5;
                     }
 
-                    final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
+                    final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 80), 2);
+                    victim.sendMessage("Redukcja - " + redukcja);
 
                     final double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
+                    attacker.sendMessage("Final Damage - " + finalDmg);
 
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
+                    attacker.sendMessage("Thorns Damage - " + finalThornsDamage);
 
 //                    victim.sendMessage("Redukcja - " + redukcja);
 //                    victim.sendMessage("Final Damage - " + finalDmg);
@@ -379,8 +382,7 @@ public class EntityDamageEntityListener implements Listener {
                 }
                 if (rpgcore.getKlasyManager().getMagRMB().contains(attacker.getUniqueId())) {
                     final Location loc = victim.getLocation();
-                    final List<LivingEntity> list = victim.getNearbyEntities(8, 8, 8).stream().filter(entity -> entity instanceof LivingEntity && !(entity instanceof Player)).map(entity -> (LivingEntity) entity).collect(Collectors.toList());
-                    //rpgcore.getKlasyManager().getMagRMBEntities().put(attacker.getUniqueId(), list.stream().map(LivingEntity::getEntityId).collect(Collectors.toList()));
+                    final List<LivingEntity> list = victim.getNearbyEntities(8, 8, 8).stream().filter(entity -> !(entity instanceof Player) && entity instanceof Creature).map(entity -> (LivingEntity) entity).collect(Collectors.toList());
                     rpgcore.getKlasyManager().getMagRMB().remove(attacker.getUniqueId());
                     for (LivingEntity rest : list) {
                         if (rest.equals(victim)) continue;

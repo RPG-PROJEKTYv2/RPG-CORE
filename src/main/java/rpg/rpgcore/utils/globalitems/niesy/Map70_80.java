@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
@@ -63,12 +65,13 @@ public enum Map70_80 {
     }
     public static void getDrop(final Player player, final double szczescie) {
         final Set<Items> drop = Sets.newConcurrentHashSet();
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Map70_80 item : Map70_80.values()) {
             drop.add(new Items(item.getName(), item.getDropChance(), item.getItemStack(), 1));
         }
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(130, 500),
                             ChanceHelper.getRandInt(18, 24), ChanceHelper.getRandInt(12, 20), ChanceHelper.getRandInt(70, 80), "&7&lMglisty Naszyjnik"));
@@ -111,6 +114,6 @@ public enum Map70_80 {
                 return;
             }
         }
-        player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
+        if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
     }
 }

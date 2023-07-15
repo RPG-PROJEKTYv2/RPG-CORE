@@ -380,10 +380,12 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            drugiMnoznik += bao.getValue2();
-            mnoznik -= bao.getValue2();
+            if (!bao.getBonus2().equals("Srednia defensywa przeciwko potworom")) {
+                drugiMnoznik += bao.getValue2();
+                mnoznik -= bao.getValue2();
+            }
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();

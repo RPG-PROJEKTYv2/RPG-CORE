@@ -1,4 +1,4 @@
-package rpg.rpgcore.msg;
+package rpg.rpgcore.msg.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

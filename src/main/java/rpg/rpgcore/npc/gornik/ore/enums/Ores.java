@@ -13,10 +13,10 @@ public enum Ores {
     O1(Material.COAL_ORE, 4, 1, 22, 100, 1, GornikItems.I1.getItemStack()),
     O2(Material.IRON_ORE, 5, 2, 23.5, 45, 1, GornikItems.I2.getItemStack()),
     O3(Material.GOLD_ORE, 7, 4, 25, 25, 2, GornikItems.I3.getItemStack()),
-    O4(Material.LAPIS_ORE, 9, 6, 27.5, 20.5, 2, GornikItems.I4.getItemStack()),
-    O5(Material.EMERALD_ORE, 11, 8, 30, 17.5,3, GornikItems.I5.getItemStack()),
-    O6(Material.DIAMOND_ORE, 14, 12, 32.5, 15,3, GornikItems.I6.getItemStack()),
-    O7(Material.REDSTONE_ORE, 18, 15, 35, 10, 4, GornikItems.I7.getItemStack()),
+    O4(Material.LAPIS_ORE, 9, 6, 27.5, 17.5, 2, GornikItems.I4.getItemStack()),
+    O5(Material.EMERALD_ORE, 11, 8, 30, 12.5,3, GornikItems.I5.getItemStack()),
+    O6(Material.DIAMOND_ORE, 14, 12, 32.5, 7.5,3, GornikItems.I6.getItemStack()),
+    O7(Material.REDSTONE_ORE, 18, 15, 35, 2.5, 4, GornikItems.I7.getItemStack()),
     O8(Material.GLOWING_REDSTONE_ORE, 18, 15, 35, 0, 4, GornikItems.I7.getItemStack());
 
     private final Material material;

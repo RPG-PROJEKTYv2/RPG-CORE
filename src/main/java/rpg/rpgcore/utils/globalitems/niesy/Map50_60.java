@@ -4,9 +4,10 @@ import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
-import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -61,12 +62,13 @@ public enum Map50_60 {
     }
     public static void getDrop(final Player player, final double szczescie) {
         final Set<Items> drop = Sets.newConcurrentHashSet();
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Map50_60 item : Map50_60.values()) {
             drop.add(new Items(item.getName(), item.getDropChance(), item.getItemStack(), 1));
         }
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f&l" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f&l" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(37, 100),
                             ChanceHelper.getRandInt(13, 19), ChanceHelper.getRandInt(10, 16), ChanceHelper.getRandInt(50, 60), "&f&lSniezny Naszyjnik"));
@@ -101,6 +103,6 @@ public enum Map50_60 {
                 return;
             }
         }
-        player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
+        if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
     }
 }

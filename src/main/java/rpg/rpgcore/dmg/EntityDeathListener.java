@@ -168,6 +168,9 @@ public class EntityDeathListener implements Listener {
         if (entity.getName() == null) {
             return;
         }
+        if (entity instanceof Player && Bukkit.getOnlinePlayers().stream().anyMatch(p -> p.equals(entity))) {
+            return;
+        }
         if (entity.getCustomName() != null && entity.getCustomName().contains("Ksiaze Mroku")) {
             if (rpgcore.getZamekNieskonczonosciManager().phase != DungeonStatus.ETAP_1_BOSS) {
                 return;

@@ -28,12 +28,11 @@ public class KickMessageListener extends ListenerAdapter {
         final String displayText = message.getContentDisplay();
         final Channel channel = e.getChannel();
 
-        if (!channel.getName().equals("ticket-" + user.getId()) || !Objects.requireNonNull(((TextChannel) channel).getParentCategoryId()).equals("1014503883176947752"))
+        if (!channel.getName().contains("ticket-") || !Objects.requireNonNull(((TextChannel) channel).getParentCategoryId()).equals("1105464211414462574"))
             return;
         if (!displayText.startsWith("!") || !displayText.contains("!kick")) return;
 
         final String[] args = Arrays.stream(displayText.split(" ")).skip(1).toArray(String[]::new);
-        System.out.println(Arrays.toString(args));
         if (args.length != 2) {
             this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> {
                 MessageCreateBuilder send = new MessageCreateBuilder().setEmbeds(EmbedUtil.create(":no_entry_sign: Błąd!", "Poprawne użycie tej komendy to: !kick <nick> <hellcode>", new Color(255, 0, 33)).build());

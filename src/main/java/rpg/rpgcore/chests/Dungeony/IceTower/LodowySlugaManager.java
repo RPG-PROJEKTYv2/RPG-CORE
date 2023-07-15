@@ -3,6 +3,8 @@ package rpg.rpgcore.chests.Dungeony.IceTower;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
@@ -31,14 +33,16 @@ public class LodowySlugaManager {
 
 
     public Items getDrawnItems(final Player player) {
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
+
         for (Items item : this.lodowysluga) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 item.getRewardItem().setAmount(item.getAmount());
-                player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }
-        player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
+        if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
         return null;
     }
 }

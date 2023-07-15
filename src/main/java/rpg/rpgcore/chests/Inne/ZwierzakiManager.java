@@ -3,6 +3,8 @@ package rpg.rpgcore.chests.Inne;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.pets.enums.PetItems;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;
@@ -63,9 +65,10 @@ public class ZwierzakiManager {
 
 
     public ItemStack getDrawnItems(final Player player) {
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         switch (randomItems.next()) {
             case "pusta":
-                player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
                 return null;
             case "zwykly":
                 return zwykle.next().clone();

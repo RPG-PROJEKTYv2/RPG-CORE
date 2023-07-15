@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
@@ -27,18 +28,19 @@ import java.util.UUID;
 public class MobDropHelper {
 
     public static void addDropPlayer(Player player, ItemStack is, double chance, boolean message, boolean pickup, Entity entity) {
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         if (pickup) {
             if (ChanceHelper.getChance(chance)) {
                 player.getInventory().addItem(is);
                 if (message) {
-                    player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
+                    if (user.isItemDropEnabled()) player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
                 }
             }
         } else {
             if (ChanceHelper.getChance(chance)) {
                 entity.getWorld().dropItem(entity.getLocation(), is);
                 if (message) {
-                    player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
+                    if (user.isItemDropEnabled()) player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
                 }
             }
         }

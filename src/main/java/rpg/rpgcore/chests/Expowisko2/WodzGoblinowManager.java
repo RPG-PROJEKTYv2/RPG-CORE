@@ -3,6 +3,8 @@ package rpg.rpgcore.chests.Expowisko2;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
@@ -33,13 +35,14 @@ public class WodzGoblinowManager {
     }
 
     public Items getDrawnItems(final Player player) {
+        final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.wodzgoblin) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }
-        player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
+        if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
         return null;
     }
 }

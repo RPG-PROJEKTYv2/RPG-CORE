@@ -2,6 +2,7 @@ package rpg.rpgcore.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -28,7 +29,9 @@ public class NiesyPickUpListener implements Listener {
             final String expowisko = itemName.substring(itemName.lastIndexOf(" ") + 1).trim();
             final OsUser osUser = rpgcore.getOsManager().find(e.getPlayer().getUniqueId());
             osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
-            Bukkit.broadcastMessage(Utils.format("&6&lDROP " + expowisko + " &8>> &fGracz &b" + e.getPlayer().getName() + " &fznalazl &b&lNiesamowity Przedmiot"));
+            for (Player server : Bukkit.getOnlinePlayers()) {
+                if (rpgcore.getChatManager().find(server.getUniqueId()).isNiesDropEnabled()) server.sendMessage(Utils.format("&6&lDROP " + expowisko + " &8>> &fGracz &b" + e.getPlayer().getName() + " &fznalazl &b&lNiesamowity Przedmiot"));
+            }
 
             int amount = e.getItem().getItemStack().getAmount();
 

@@ -1,6 +1,7 @@
 package rpg.rpgcore.tasks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.enums.Ores;
@@ -33,13 +34,15 @@ public class KopalniaTask implements Runnable{
         });
         rpgcore.getOreManager().getOres().forEach(ore -> {
             if (ore.getRespawnTime() <= System.currentTimeMillis() && ore.getRespawnTime() != -1L) {
-                final Ores info = Ores.getRandomOre();
-                ore.setType(info.getMaterial());
-                ore.setExp(info.getExp());
-                ore.setCurrentHp(info.getHp());
-                ore.setMaxHp(info.getHp());
-                ore.setRespawnTime(-1L);
-                ore.getLocation().getBlock().setType(info.getMaterial());
+                Ores ores = Ores.getRandomOre();
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.COAL_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.25))  ores = Ores.O1;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.IRON_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.225))  ores = Ores.O2;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.GOLD_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.185))  ores = Ores.O3;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.LAPIS_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.125))  ores = Ores.O4;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.EMERALD_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.095))  ores = Ores.O5;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.DIAMOND_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.05))  ores = Ores.O6;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.REDSTONE_ORE) || ore1.getType().equals(Material.GLOWING_REDSTONE_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.02))  ores = Ores.O7;
+                rpgcore.getOreManager().setOre(ore, ores);
             }
         });
     }

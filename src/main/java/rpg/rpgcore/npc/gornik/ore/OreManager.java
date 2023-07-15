@@ -1,15 +1,17 @@
 package rpg.rpgcore.npc.gornik.ore;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.gornik.ore.enums.Ores;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
 
-import java.util.Map;
+import java.util.*;
 
 public class OreManager {
+    @Getter
     private final Map<Location, Ore> oreMap;
 
     public OreManager(final RPGCORE rpgcore) {
@@ -20,13 +22,33 @@ public class OreManager {
 
     public void resetOres() {
         for (final Ore ore : this.oreMap.values()) {
-            final Ores ores = Ores.getRandomOre();
-            ore.setType(ores.getMaterial());
-            ore.setExp(ores.getExp());
-            ore.setMaxHp(ores.getHp());
-            ore.setCurrentHp(ores.getHp());
-            ore.getLocation().getBlock().setType(ores.getMaterial());
-            ore.setRespawnTime(-1L);
+            this.setOre(ore, Ores.getRandomOre());
+        }
+        this.fixOres();
+    }
+
+    public void setOre(final Ore ore, final Ores info) {
+        ore.setType(info.getMaterial());
+        ore.setExp(info.getExp());
+        ore.setMaxHp(info.getHp());
+        ore.setCurrentHp(info.getHp());
+        ore.setRespawnTime(-1L);
+        ore.getLocation().getBlock().setType(info.getMaterial());
+    }
+
+    public void fixOres() {
+        final List<Ore> oreList = new ArrayList<>(this.oreMap.values());
+        Collections.shuffle(oreList);
+        for (final Ore ore : oreList) {
+            Ores ores = Ores.getRandomOre();
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.COAL_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.225))  ores = Ores.O1;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.IRON_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.205))  ores = Ores.O2;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.GOLD_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.165))  ores = Ores.O3;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.LAPIS_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.135))  ores = Ores.O4;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.EMERALD_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.105))  ores = Ores.O5;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.DIAMOND_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.08))  ores = Ores.O6;
+            if (this.oreMap.values().stream().filter(ore1 -> ore1.getType().equals(Material.REDSTONE_ORE) || ore1.getType().equals(Material.GLOWING_REDSTONE_ORE)).count() < Math.ceil(this.oreMap.values().size() * 0.05))  ores = Ores.O7;
+            this.setOre(ore, ores);
         }
     }
 
