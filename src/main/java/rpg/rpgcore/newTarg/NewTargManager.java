@@ -1,6 +1,7 @@
 package rpg.rpgcore.newTarg;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
@@ -19,14 +21,15 @@ import java.util.stream.Stream;
 public class NewTargManager {
 
     private final RPGCORE rpgcore;
+    private final Map<UUID, Targ> playerTargItems;
+
 
     public NewTargManager(RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
+        this.playerTargItems = rpgcore.getMongoManager().loadAllTarg();
     }
-
     // WAZNE MAPY I LISTY
 
-    private final Map<UUID, List<ItemStack>> playerTargItems = new HashMap<>();
     private final List<ItemStack> allItems = new ArrayList<>();
     private final List<UUID> wystawia = new ArrayList<>();
 
@@ -67,7 +70,8 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
                         allItems.add(gracze.setName(Utils.format("&c&l" + p.getName())).hideFlag().toItemStack().clone());
                     }
                 }
@@ -87,8 +91,9 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
-                        for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
+                        for (ItemStack item : targ.getItemList()) {
                             if (String.valueOf(item.getType()).contains("HELMET") || String.valueOf(item.getType()).contains("CHESTPLATE")
                                     || String.valueOf(item.getType()).contains("LEGGINGS") || String.valueOf(item.getType()).contains("BOOTS")) {
                                 allItems.add(item.clone());
@@ -112,8 +117,9 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
-                        for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
+                        for (ItemStack item : targ.getItemList()) {
                             if (String.valueOf(item.getType()).contains("SWORD") || String.valueOf(item.getType()).contains("AXE")
                                     || String.valueOf(item.getType()).contains("HOE") || String.valueOf(item.getType()).contains("PICKAXE")) {
                                 allItems.add(item.clone());
@@ -137,8 +143,9 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
-                        for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
+                        for (ItemStack item : targ.getItemList()) {
                             if (String.valueOf(item.getType()).contains("MINECART") || item.getType().equals(Material.WATCH) || item.getType().equals(Material.ITEM_FRAME)) {
                                 allItems.add(item.clone());
                             }
@@ -161,8 +168,9 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
-                        for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
+                        for (ItemStack item : targ.getItemList()) {
                             if (item.getItemMeta().getLore().contains("§8§oMaterial")) {
                                 allItems.add(item.clone());
                             }
@@ -185,8 +193,9 @@ public class NewTargManager {
                 }
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!(getPlayerTargItems(p.getUniqueId()) == null || getPlayerTargItems(p.getUniqueId()).isEmpty())) {
-                        for (ItemStack item : getPlayerTargItems(p.getUniqueId())) {
+                    final Targ targ = this.find(p.getUniqueId());
+                    if (!targ.getItemList().isEmpty()) {
+                        for (ItemStack item : targ.getItemList()) {
                             if (!(String.valueOf(item.getType()).contains("HELMET") || String.valueOf(item.getType()).contains("CHESTPLATE")
                                     || String.valueOf(item.getType()).contains("LEGGINGS") || String.valueOf(item.getType()).contains("BOOTS")
                                     || String.valueOf(item.getType()).contains("SWORD") || String.valueOf(item.getType()).contains("AXE")
@@ -342,6 +351,7 @@ public class NewTargManager {
 
     public Inventory getPlayerTarg(final String playerName, final UUID uuid) {
         final Inventory gui = Bukkit.createInventory(null, 36, Utils.format("&cTarg gracza " + playerName));
+        final Targ targ = this.find(uuid);
         fill.setName(" ").addGlowing();
 
         for (int i = 27; i < 36; i++) {
@@ -350,7 +360,7 @@ public class NewTargManager {
 
         gui.setItem(31, goBack.setName("&cPowrot").toItemStack());
 
-        for (ItemStack is : getPlayerTargItems(uuid)) {
+        for (ItemStack is : targ.getItemList()) {
             gui.setItem(gui.firstEmpty(), is);
         }
         return gui;
@@ -398,17 +408,16 @@ public class NewTargManager {
         player.getInventory().addItem(is);
     }
 
-    public List<ItemStack> getPlayerTargItems(final UUID uuid) {
-        return playerTargItems.getOrDefault(uuid, new ArrayList<>());
+    public Targ find(final UUID uuid) {
+        return playerTargItems.get(uuid);
     }
 
-    public void removePlayerTargItem(final UUID uuid, final ItemStack is) {
-        playerTargItems.get(uuid).remove(is);
+    public void add(final Targ targ) {
+        playerTargItems.put(targ.getUuid(), targ);
     }
 
-    public void addPlayerTargItems(final UUID uuid, final ItemStack item) {
-        playerTargItems.computeIfAbsent(uuid, k -> new ArrayList<>());
-        playerTargItems.get(uuid).add(item);
+    public ImmutableSet<Targ> getTargs() {
+        return ImmutableSet.copyOf(playerTargItems.values());
     }
 
     public void addToWystawia(final UUID uuid) {

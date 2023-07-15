@@ -173,6 +173,10 @@ import rpg.rpgcore.msg.commands.ReplyCommand;
 import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.newTarg.*;
+import rpg.rpgcore.newTarg.commands.NewTargCommand;
+import rpg.rpgcore.newTarg.commands.NewTargWystawCommand;
+import rpg.rpgcore.newTarg.events.NewTargInventoryClick;
+import rpg.rpgcore.newTarg.events.NewTargInventoryClose;
 import rpg.rpgcore.npc.czarownica.CzarownicaNPC;
 import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
@@ -423,6 +427,7 @@ public final class RPGCORE extends JavaPlugin {
         this.initNPCS();
 
         this.mongo.loadAll();
+        //this.mongo.clearDatabase();
 
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
@@ -479,6 +484,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllGuilds();
         this.mongo.saveAllGornik();
         this.mongo.saveAllOre();
+        this.mongo.saveAllTarg();
         this.mongo.saveAllMedrzec();
         this.mongo.saveAllKolekcjoner();
         this.mongo.saveAllMetinolog();

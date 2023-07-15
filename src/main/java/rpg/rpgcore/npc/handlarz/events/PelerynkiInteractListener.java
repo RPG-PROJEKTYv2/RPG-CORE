@@ -101,6 +101,7 @@ public class PelerynkiInteractListener implements Listener {
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
                     final Creature creature = (Creature) entity;
+                    if (creature.getName().contains("BOSS")) continue;
                     creature.teleport(player);
                 }
             }

@@ -1,4 +1,4 @@
-package rpg.rpgcore.newTarg;
+package rpg.rpgcore.newTarg.events;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

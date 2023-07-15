@@ -1,4 +1,4 @@
-package rpg.rpgcore.newTarg;
+package rpg.rpgcore.newTarg.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

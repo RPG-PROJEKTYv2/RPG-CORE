@@ -161,7 +161,7 @@ public class RozpiskaManager {
     // odlamek metina w #metinolog % jest
     // bony metinow jako RARE &kSSSS item... w #metin helper % jest
     public void openFIRSTexp(final Player player) {
-        final Inventory openFIRSTgui = this.ramkaGUI("&cRozpiska &8* &f(&a1-10&f)");
+        final Inventory openFIRSTgui = this.ramkaGUI("&cExpowisko &8* &f(&a1-10&f)");
         final UUID uuid = player.getUniqueId();
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();

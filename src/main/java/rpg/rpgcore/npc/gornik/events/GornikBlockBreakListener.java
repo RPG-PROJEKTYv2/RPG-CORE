@@ -141,6 +141,7 @@ public class GornikBlockBreakListener implements Listener {
                 reward.setAmount(reward.getAmount() * 2);
                 player.sendMessage(Utils.format("&6&lGornik &8>> &aOtrzymales dodatkowa rude!"));
             }
+            rpgcore.getOsManager().find(player.getUniqueId()).setGornikProgress(rpgcore.getOsManager().find(player.getUniqueId()).getGornikProgress() + reward.getAmount());
             if (ChanceHelper.getChance(MobDropHelper.getDropChance(player.getUniqueId(), 6.5))) {
                 if (user.getMission() == 9 || user.getMission() == 23) user.setProgress(user.getProgress() + 1);
                 player.sendMessage(Utils.format("&6&lGornik &8>> &aZnalazles &7Skrzynie Gornika!"));

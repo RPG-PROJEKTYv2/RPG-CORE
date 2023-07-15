@@ -14,6 +14,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.klasy.objects.Klasa;
+import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
@@ -55,9 +56,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MongoManager {
@@ -120,87 +119,110 @@ public class MongoManager {
         }
     }
 
-    public void clearDatabase(final UUID uuid) {
-        Document document;
-        if (pool.getGracze().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getGracze().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
-        }
-
-        if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getOsiagniecia().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getKolekcjoner().deleteOne(new Document("_id", uuid.toString()));
-
-        }
-
-        if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() != null) {
-            this.pool.getBao().deleteOne(new Document("_id", uuid.toString()));
-        }
-
-        if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() != null) {
-            this.pool.getRybak().deleteOne(new Document("_id", uuid.toString()));
-        }
-
-        if (this.pool.getDodatki().find(new Document("_id", uuid.toString())).first() != null) {
-            this.pool.getDodatki().deleteOne(new Document("_id", uuid.toString()));
-        }
-
-        pool.getTargi().deleteOne(new Document("_id", uuid.toString()));
-
-        if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getMetinolog().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getKlasy().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getMedrzec().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getMedrzec().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getGornik().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getGornik().deleteOne(new Document("_id", uuid.toString()));
-
-        }
-        if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getDuszolog().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getPrzyrodnik().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getChatUsers().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getMagazynier().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getMagazynier().deleteOne(new Document("_id", uuid.toString()));
-
-        }
-        if (pool.getLowca().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getLowca().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getLesnik().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getPety().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getPety().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() != null) {
-            pool.getUserPets().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
-            pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
-        }
-        if (pool.getHandlarz().find(new Document("_id", uuid.toString())).first() == null) {
-            pool.getHandlarz().deleteOne(new Document("_id", uuid.toString()));
-        }
-    }
     //dd3d637b-aff4-4fa5-8484-d120ed492d43 - Mires
     //c166a38d-6ddf-47cb-8aed-2b05fb502051 - Chytryy
     //672d510e-083b-39f8-9681-4d8bc892586d - Orzel
 
     //4d335d52-df9f-479c-8d0a-57de4a4cb2fe - Fabi
+
+    public void clearDatabase() {
+        final List<Document> toRemove = new ArrayList<>();
+        for (final Document doc : this.pool.getGracze().find()) {
+            final UUID uuid = UUID.fromString(doc.getString("_id"));
+            if (uuid.toString().equals("dd3d637b-aff4-4fa5-8484-d120ed492d43") || uuid.toString().equals("c166a38d-6ddf-47cb-8aed-2b05fb502051") ||
+                    uuid.toString().equals("672d510e-083b-39f8-9681-4d8bc892586d") || uuid.toString().equals("4d335d52-df9f-479c-8d0a-57de4a4cb2fe")) continue;
+            if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
+            }
+
+            if (pool.getOsiagniecia().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getOsiagniecia().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getKolekcjoner().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getKolekcjoner().deleteOne(new Document("_id", uuid.toString()));
+
+            }
+
+            if (this.pool.getBao().find(new Document("_id", uuid.toString())).first() != null) {
+                this.pool.getBao().deleteOne(new Document("_id", uuid.toString()));
+            }
+
+            if (this.pool.getRybak().find(new Document("_id", uuid.toString())).first() != null) {
+                this.pool.getRybak().deleteOne(new Document("_id", uuid.toString()));
+            }
+
+            if (this.pool.getDodatki().find(new Document("_id", uuid.toString())).first() != null) {
+                this.pool.getDodatki().deleteOne(new Document("_id", uuid.toString()));
+            }
+
+            if (pool.getMetinolog().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getMetinolog().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getKlasy().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getKlasy().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getMedrzec().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getMedrzec().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getGornik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getGornik().deleteOne(new Document("_id", uuid.toString()));
+
+            }
+            if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getDuszolog().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getPrzyrodnik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getPrzyrodnik().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getChatUsers().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getChatUsers().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getMagazynier().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getMagazynier().deleteOne(new Document("_id", uuid.toString()));
+
+            }
+            if (pool.getLowca().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getLowca().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getLesnik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getLesnik().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getPety().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getPety().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getUserPets().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getHandlarz().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getHandlarz().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getKociolki().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getKociolki().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getWyszkolenie().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getWyszkolenie().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getJSON().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getJSON().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getPustelnik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getPustelnik().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getMistrzYang().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getMistrzYang().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getCzarownica().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getCzarownica().deleteOne(new Document("_id", uuid.toString()));
+            }
+            toRemove.add(doc);
+        }
+        for (Document doc : toRemove) {
+            pool.getGracze().deleteOne(doc);
+        }
+    }
 
     public void loadAll() {
 
@@ -378,6 +400,11 @@ public class MongoManager {
                 this.addDataCzarownica(user);
                 rpgcore.getCzarownicaNPC().add(user);
             }
+            if (pool.getTargi().find(new Document("_id", uuid.toString())).first() == null) {
+                final Targ user = new Targ(uuid);
+                addDataTarg(user);
+                rpgcore.getNewTargManager().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -507,6 +534,10 @@ public class MongoManager {
         this.addDataCzarownica(czarownicaUser);
         rpgcore.getCzarownicaNPC().add(czarownicaUser);
 
+        final Targ targ = new Targ(uuid);
+        this.addDataTarg(targ);
+        rpgcore.getNewTargManager().add(targ);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -634,7 +665,7 @@ public class MongoManager {
             this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
             this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
             this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
-            this.saveDataTarg(uuid, user.getName());
+            this.saveDataTarg(uuid, rpgcore.getNewTargManager().find(uuid));
             this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
             this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
             this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
@@ -1570,12 +1601,30 @@ public class MongoManager {
     }
 
     // TARGI
-    public void addDataTarg(final UUID uuid, final Inventory playerTarg) {
-        this.pool.getTargi().insertOne(new Document("_id", uuid.toString()).append("Targ", Utils.toBase64(playerTarg)));
+    public Map<UUID, Targ> loadAllTarg() {
+        Map<UUID, Targ> userMap = new HashMap<>();
+        for (Document document : this.pool.getTargi().find()) {
+            final Targ targ = new Targ(document);
+            userMap.put(targ.getUuid(), targ);
+        }
+        return userMap;
     }
 
-    public void saveDataTarg(final UUID uuid, final String playerName) {
-        this.pool.getTargi().findOneAndReplace(new Document("_id", uuid.toString()), new Document("_id", uuid.toString()).append("Targ", (rpgcore.getNewTargManager().getPlayerTargItems(uuid)).isEmpty() ? "" : Utils.toBase64(rpgcore.getNewTargManager().getPlayerTarg(playerName, uuid))));
+    public void addDataTarg(final Targ targ) {
+        if (this.pool.getTargi().find(new Document("_id", targ.getUuid().toString())).first() != null) {
+            this.pool.getTargi().deleteOne(new Document("_id", targ.getUuid().toString()));
+        }
+        this.pool.getTargi().insertOne(targ.toDocument());
+    }
+
+    public void saveDataTarg(final UUID uuid, final Targ targ) {
+        this.pool.getTargi().findOneAndReplace(new Document("_id", uuid.toString()), targ.toDocument());
+    }
+
+    public void saveAllTarg() {
+        for (final Targ targ : rpgcore.getNewTargManager().getTargs()) {
+            this.saveDataTarg(targ.getUuid(), targ);
+        }
     }
 
     // PRZYKLADOWY NPC

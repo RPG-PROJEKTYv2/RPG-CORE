@@ -42,7 +42,7 @@ public class KlasyManager {
     }
 
     public void openGUI(final Player player) {
-        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 30) {
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 1) {
             player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz miec &c30 &7poziom aby moc wybrac klase!"));
             return;
         }

@@ -93,10 +93,10 @@ public class GornikNPC {
     public void onClick(final Player player) {
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
-        if (user.getLvl() < 60) {
-            player.sendMessage(Utils.format("&6&lGornik &8>> &7Osiagnij &e&l60 &7poziom... Moze wtedy bedziesz godny rozmowy ze mna"));
-            return;
-        }
+//        if (user.getLvl() < 40) {
+//            player.sendMessage(Utils.format("&6&lGornik &8>> &7Osiagnij &e&l60 &7poziom... Moze wtedy bedziesz godny rozmowy ze mna"));
+//            return;
+//        }
 
         final GornikUser gornikUser = this.find(player.getUniqueId());
 
@@ -122,7 +122,7 @@ public class GornikNPC {
         } else {
             player.sendMessage(Utils.format("&6&lGornik &8>> &7Hola hola, tym razem to ty placisz!"));
             final TextComponent message = new TextComponent(Utils.format("&a&l[Kliknij, aby zaplacic!]"));
-            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Koszt: &e250 000&2$"))}));
+            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Koszt: &e1&2$"))})); //250 000
             message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/gornikzaplac"));
             this.addToPayList(player.getUniqueId());
             player.spigot().sendMessage(message);
@@ -173,8 +173,8 @@ public class GornikNPC {
 
         gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player).clone()).setLoreCrafting(GornikItems.getKilof(player).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$"
-        )).addTagInt("price", 50_000_000).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(1) + "&2$" //50_000_000
+        )).addTagInt("price", 1).toItemStack().clone());
 
         gui.setItem(8, Utils.powrot().clone());
         player.openInventory(gui);
@@ -188,37 +188,37 @@ public class GornikNPC {
         gui.setItem(1, new ItemBuilder(Material.COAL_ORE).setName("&8Ruda Wegla &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &8Ruda wegla &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$" //50 000
         )).hideFlag().toItemStack());
         gui.setItem(2, new ItemBuilder(Material.IRON_ORE).setName("&7Ruda Zelaza &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &7Ruda Zelaza &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
         gui.setItem(3, new ItemBuilder(Material.GOLD_ORE).setName("&eRuda Topazu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &eRuda Topazu &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
         gui.setItem(4, new ItemBuilder(Material.LAPIS_ORE).setName("&1Ruda Tanzanitu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &1Ruda Tanzanitu &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
         gui.setItem(5, new ItemBuilder(Material.EMERALD_ORE).setName("&aRuda Jadeitu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &aRuda Jadeitu &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
         gui.setItem(6, new ItemBuilder(Material.DIAMOND_ORE).setName("&bRuda Diamentu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &bRuda Diamentu &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
         gui.setItem(7, new ItemBuilder(Material.REDSTONE_ORE).setName("&cRuda Rubinu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &cRuda Rubinu &7x64",
-                "&8- &650 000&2$"
+                "&8- &61&2$"
         )).hideFlag().toItemStack());
 
         // SET GORNICZY
@@ -298,7 +298,7 @@ public class GornikNPC {
                 "&8- &6Kilof Gornika &8&l(&7&lKamienny&8&l) &7min Lvl. &e10",
                 "&8- &8Ruda Wegla &8&l(x64) &7x5",
                 "&8- &7Ruda Zelaza &8&l(x64) &7x5",
-                "&8- &610 000 000&2$",
+                "&8- &61&2$", //10 000 000
                 " ",
                 "&4&lUWAGA!",
                 "&cZeby wykonac ten crafting musisz posiadac swoj kilof w rece!",
@@ -313,7 +313,7 @@ public class GornikNPC {
                 "&8- &7Ruda Zelaza &8&l(x64) &7x10",
                 "&8- &eRuda Topazu &8&l(x64) &7x5",
                 "&8- &1Ruda Tanzanitu &8&l(x64) &7x5",
-                "&8- &625 000 000&2$",
+                "&8- &61&2$", //25 000 000
                 " ",
                 "&4&lUWAGA!",
                 "&cZeby wykonac ten crafting musisz posiadac swoj kilof w rece!",
@@ -330,7 +330,7 @@ public class GornikNPC {
                 "&8- &1Ruda Tanzanitu &8&l(x64) &7x10",
                 "&8- &aRuda Jadeitu &8&l(x64) &7x5",
                 "&8- &bRuda Diamentu &8&l(x64) &7x5",
-                "&8- &650 000 000&2$",
+                "&8- &61&2$", //50 000 000
                 " ",
                 "&4&lUWAGA!",
                 "&cZeby wykonac ten crafting musisz posiadac swoj kilof w rece!",

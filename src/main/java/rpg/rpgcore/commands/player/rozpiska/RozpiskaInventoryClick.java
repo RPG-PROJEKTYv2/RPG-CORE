@@ -31,11 +31,11 @@ public class RozpiskaInventoryClick implements Listener {
         final String title = Utils.removeColor(gui.getTitle());
         final int slot = e.getSlot();
 
-        if (title.equals("Rozpiska * (1-10)") || title.equals("Rozpiska * (10-20)") || title.equals("Rozpiska * (20-30)") ||
-                title.equals("Rozpiska * (30-40)") || title.equals("Rozpiska * (40-50)") || title.equals("Rozpiska * (50-60)") ||
-                title.equals("Rozpiska * (60-70)") || title.equals("Rozpiska * (70-80)") || title.equals("Rozpiska * (80-90)") ||
-                title.equals("Rozpiska * (90-100)") || title.equals("Rozpiska * (100-110)") || title.equals("Rozpiska * (110-120)") ||
-                title.equals("Rozpiska * (120-130)")) {
+        if (title.equals("Expowisko * (1-10)") || title.equals("Expowisko * (10-20)") || title.equals("Expowisko * (20-30)") ||
+                title.equals("Expowisko * (30-40)") || title.equals("Rozpiska * (40-50)") || title.equals("Expowisko * (50-60)") ||
+                title.equals("Expowisko * (60-70)") || title.equals("Expowisko * (70-80)") || title.equals("Expowisko * (80-90)") ||
+                title.equals("Expowisko * (90-100)") || title.equals("Expowisko * (100-110)") || title.equals("Expowisko * (110-120)") ||
+                title.equals("Expowisko * (120-130)")) {
             e.setCancelled(true);
             if (slot == 44) {
                 rpgcore.getRozpiskaManager().openROZPISKAGUI(player);

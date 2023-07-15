@@ -1,4 +1,4 @@
-package rpg.rpgcore.newTarg;
+package rpg.rpgcore.newTarg.events;
 
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.discord.EmbedUtil;
+import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
@@ -118,7 +119,7 @@ public class NewTargInventoryClick implements Listener {
             }
 
             // RESZTA KATEGORI
-            if (clickedItem.getType().equals(Material.AIR) || clickedItem.getType().equals(Material.ARROW) || clickedItem.getType().equals(Material.STAINED_GLASS_PANE)) {
+            if (clickedItem == null || clickedItem.getType().equals(Material.AIR) || clickedItem.getType().equals(Material.ARROW) || clickedItem.getType().equals(Material.STAINED_GLASS_PANE)) {
                 return;
             }
 
@@ -128,8 +129,14 @@ public class NewTargInventoryClick implements Listener {
             final double playerMoney = rpgcore.getUserManager().find(playerUUID).getKasa();
 
             if (player.getName().equals(itemOwnwer)) {
+                final Targ targ = rpgcore.getNewTargManager().find(itemOwnerUUID);
+                if (!targ.getItemList().contains(clickedItem)) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));
+                    return;
+                }
                 rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
-                rpgcore.getNewTargManager().removePlayerTargItem(itemOwnerUUID, clickedItem.clone());
+                targ.removeItem(clickedItem.clone());
+                targ.save();
                 if (clickedItem.getItemMeta().getDisplayName() == null) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zdjales ze swojego targu &6" + clickedItem.getAmount() + "x " + clickedItem.getType()));
                 } else {
@@ -204,7 +211,9 @@ public class NewTargInventoryClick implements Listener {
                 meta.setLore(Utils.format(lore));
                 item.setItemMeta(meta);
 
-                rpgcore.getNewTargManager().addPlayerTargItems(playerUUID, item);
+                final Targ targ = rpgcore.getNewTargManager().find(playerUUID);
+                targ.addItem(item.clone());
+                targ.save();
                 for (int i = 0; i < rpgcore.getNewTargManager().getPlayerTarg(player.getName(), playerUUID).getViewers().size(); i++) {
                     Player p = (Player) rpgcore.getNewTargManager().getPlayerTarg(player.getName(), playerUUID).getViewers().get(i);
                     p.updateInventory();
@@ -265,8 +274,14 @@ public class NewTargInventoryClick implements Listener {
             final UUID targetUUID = rpgcore.getUserManager().find(targetName).getId();
 
             if (player.getName().equals(targetName)) {
+                final Targ targ = rpgcore.getNewTargManager().find(targetUUID);
+                if (!targ.getItemList().contains(clickedItem)) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));
+                    return;
+                }
                 rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
-                rpgcore.getNewTargManager().removePlayerTargItem(targetUUID, clickedItem.clone());
+                targ.removeItem(clickedItem.clone());
+                targ.save();
                 if (clickedItem.getItemMeta().getDisplayName() == null) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie zdjales ze swojego targu &6" + clickedItem.getAmount() + "x " + clickedItem.getType()));
                 } else {
@@ -344,7 +359,8 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
-        if (!rpgcore.getNewTargManager().getPlayerTargItems(targetUUID).contains(clickedItem)) {
+        final Targ targetTarg = rpgcore.getNewTargManager().find(targetUUID);
+        if (!targetTarg.getItemList().contains(clickedItem)) {
             player.closeInventory();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));
             return;
@@ -358,7 +374,8 @@ public class NewTargInventoryClick implements Listener {
         });
         rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
 
-        rpgcore.getNewTargManager().removePlayerTargItem(targetUUID, clickedItem.clone());
+        targetTarg.removeItem(clickedItem.clone());
+        targetTarg.save();
 
         player.closeInventory();
 
@@ -390,7 +407,8 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private void finalizeTradeCategory(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
-        if (!rpgcore.getNewTargManager().getPlayerTargItems(targetUUID).contains(clickedItem)) {
+        final Targ targetTarg = rpgcore.getNewTargManager().find(targetUUID);
+        if (!targetTarg.getItemList().contains(clickedItem)) {
             player.closeInventory();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));
             return;
@@ -404,7 +422,8 @@ public class NewTargInventoryClick implements Listener {
         });
         rpgcore.getNewTargManager().givePlayerBoughtItem(player, clickedItem.clone());
 
-        rpgcore.getNewTargManager().removePlayerTargItem(targetUUID, clickedItem.clone());
+        targetTarg.removeItem(clickedItem.clone());
+        targetTarg.save();
 
         player.closeInventory();
         final int itemCategory = this.getItemCategory(clickedItem);
@@ -472,7 +491,8 @@ public class NewTargInventoryClick implements Listener {
                 }
                 if (Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targ gracza")) {
                     final String targetName = Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).replace("Targ gracza", "").replaceAll(" ", "").trim();
-                    if (rpgcore.getNewTargManager().getPlayerTargItems(rpgcore.getUserManager().find(targetName).getId()).isEmpty()) {
+                    final Targ targ = rpgcore.getNewTargManager().find(rpgcore.getUserManager().find(targetName).getId());
+                    if (targ.getItemList().isEmpty()) {
                         p.closeInventory();
                         p.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen gracz nie ma wystawionych zadnych przedmiotow"));
                         return;

@@ -67,7 +67,7 @@ public class KlasyInteractListener implements Listener {
         if (e.getItem() == null) return;
         final ItemStack item = e.getItem();
         if (item.getType() != Material.DOUBLE_PLANT) return;
-        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || item.getItemMeta().getDisplayName().contains("Zywica")) return;
+        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || item.getItemMeta().getDisplayName().contains("Zywica") || item.getItemMeta().getDisplayName().contains("Czek")) return;
         final Klasa klasa = rpgcore.getKlasyManager().find(e.getPlayer().getUniqueId());
         if (klasa.getMainKlasa() == KlasyMain.NIE_WYBRANO) {
             e.getPlayer().sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz wybrac klase!"));
