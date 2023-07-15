@@ -19,10 +19,10 @@ public enum HandlarzSellItems {
     I9("Buty Dowodcy Rozbojnikow", Material.LEATHER_BOOTS, 12.0),
     I10("Miecz Dowodcy Rozbojnikow", Material.WOOD_SWORD, 15.0),
     // 1-10 BOSS AKCE ZWYKŁE
-    I11("Zwykly Naszyjnik Dowodcy Rozbojnikow", Material.WOOD_SWORD, 25.0),
-    I12("Zwykly Diadem Dowodcy Rozbojnikow", Material.WOOD_SWORD, 20.0),
-    I13("Zwykly Pierscien Dowodcy Rozbojnikow", Material.WOOD_SWORD, 20.0),
-    I14("Zwykla Tarcza Dowodcy Rozbojnikow", Material.WOOD_SWORD, 25.0),
+    I11("Zwykly Naszyjnik Dowodcy Rozbojnikow", Material.STORAGE_MINECART, 25.0),
+    I12("Zwykly Diadem Dowodcy Rozbojnikow", Material.WATCH, 20.0),
+    I13("Zwykly Pierscien Dowodcy Rozbojnikow", Material.EXPLOSIVE_MINECART, 20.0),
+    I14("Zwykla Tarcza Dowodcy Rozbojnikow", Material.ITEM_FRAME, 25.0),
     // 1-10 BOSS AKCE ULEPSZONE
     I15("Ulepszony Naszyjnik Dowodcy Rozbojnikow", Material.STORAGE_MINECART, 35.0),
     I16("Ulepszony Diadem Dowodcy Rozbojnikow", Material.WATCH, 30.0),

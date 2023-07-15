@@ -245,7 +245,7 @@ public class AdminPanelManager {
         gui.setItem(3, GlobalItem.getItem("I4",1));
         gui.setItem(4, GlobalItem.getItem("I5",1));
         gui.setItem(5, GlobalItem.getItem("I6",1));
-        gui.setItem(6, GlobalItem.getItem("I21",1));
+        gui.setItem(6, GlobalItem.getItem("I22",1));
 
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);

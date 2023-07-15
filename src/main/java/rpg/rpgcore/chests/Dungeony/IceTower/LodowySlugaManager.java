@@ -20,9 +20,9 @@ public class LodowySlugaManager {
     public LodowySlugaManager() {
         this.lodowysluga.add(new Items("1", 1.0 , GlobalItem.I_METAL.getItemStack().clone(), 2));
         this.lodowysluga.add(new Items("2", 2.0 , GlobalItem.I_METAL.getItemStack().clone(), 1));
-        this.lodowysluga.add(new Items("3", 6.0 , GlobalItem.I10.getItemStack().clone(), 3));
-        this.lodowysluga.add(new Items("4", 8.0 , GlobalItem.I10.getItemStack().clone(), 2));
-        this.lodowysluga.add(new Items("5", 10.0 , GlobalItem.I10.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("3", 2.5 , GlobalItem.I10.getItemStack().clone(), 3));
+        this.lodowysluga.add(new Items("4", 4.0 , GlobalItem.I10.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("5", 6.0 , GlobalItem.I10.getItemStack().clone(), 1));
         this.lodowysluga.add(new Items("6", 16.0, ItemHelper.createSword("&bMiecz Lodowego Slugi", Material.IRON_SWORD, 20, 18,false), 1));
         this.lodowysluga.add(new Items("7", 18.0 , ItemHelper.createArmor("&bHelm Lodowego Slugi", Material.IRON_HELMET, 30, 6), 1));
         this.lodowysluga.add(new Items("8", 18.0 , ItemHelper.createArmor("&bZbroja Lodowego Slugi", Material.IRON_CHESTPLATE, 33, 6), 1));

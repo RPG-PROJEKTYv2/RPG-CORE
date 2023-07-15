@@ -68,22 +68,22 @@ public enum Map30_40 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(15, 42),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(37, 54),
                             ChanceHelper.getRandInt(8, 13), ChanceHelper.getRandInt(6, 12), ChanceHelper.getRandInt(30, 40), "&c&lPrzeklety Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(5, 14),
-                            ChanceHelper.getRandInt(6, 18), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(30, 40), "&c&lPrzeklety Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(14, 16),
+                            ChanceHelper.getRandInt(15, 20), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(30, 40), "&c&lPrzeklety Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(14, 21),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(15, 23),
                             ChanceHelper.getRandInt(10, 18), ChanceHelper.getRandInt(6, 9), ChanceHelper.getRandInt(30, 40), "&c&lPrzekleta Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(1, 11), ChanceHelper.getRandInt(3, 14), ChanceHelper.getRandInt(10, 35),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(12, 16), ChanceHelper.getRandInt(14, 17), ChanceHelper.getRandInt(30, 35),
                             ChanceHelper.getRandInt(30, 40), "&c&lPrzeklety Pierscien"));
                     return;
                 }

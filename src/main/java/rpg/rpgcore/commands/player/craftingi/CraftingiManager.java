@@ -325,11 +325,13 @@ public class CraftingiManager {
 
         gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         gui.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-        gui.setItem(21, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-        gui.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
-        gui.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         gui.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         gui.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(21, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        gui.setItem(23, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         gui.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
 
         
@@ -345,28 +347,7 @@ public class CraftingiManager {
                 "&8- &614x &7Proch",
                 "&8- &6300 000&2$"
         )).toItemStack());
-        
-        gui.setItem(12, new ItemBuilder(GlobalItem.getItem("I_METAL", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_METAL", 1).clone().getItemMeta().getLore(), Arrays.asList(
-                "",
-                "&7Potrzebne przedmioty:",
-                "&8- &63x &8&lFragment Magicznej Stali",
-                "&8- &616x &eZloto",
-                "&8- &616x &cPyl",
-                "&8- &616x &7Kamien",
-                "&8- &616x &8Stal",
-                "&8- &61 000 000&2$"
-        )).toItemStack());
-        gui.setItem(13, new ItemBuilder(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone().getItemMeta().getLore(), Arrays.asList(
-                "",
-                "&7Potrzebne przedmioty:",
-                "&8- &61x &8&lFragment Magicznej Stali",
-                "&8- &616x &bBrylant",
-                "&8- &616x &aSzmaragd",
-                "&8- &616x &7Proch",
-                "&8- &6700 000&2$"
-        )).toItemStack());
-        
-        gui.setItem(15, new ItemBuilder(GlobalItem.getItem("I_KAMIENBAO", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_KAMIENBAO", 1).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(11, new ItemBuilder(GlobalItem.getItem("I_KAMIENBAO", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_KAMIENBAO", 1).clone().getItemMeta().getLore(), Arrays.asList(
                 "",
                 "&7Potrzebne przedmioty:",
                 "&8- &61x &d&lCzastka Magii",
@@ -377,6 +358,27 @@ public class CraftingiManager {
                 "&8- &632x &7Proch",
                 "&8- &67 500 000&2$"
         )).toItemStack());
+
+        gui.setItem(15, new ItemBuilder(GlobalItem.getItem("I_METAL", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_METAL", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&7Potrzebne przedmioty:",
+                "&8- &63x &8&lFragment Magicznej Stali",
+                "&8- &616x &eZloto",
+                "&8- &616x &cPyl",
+                "&8- &616x &7Kamien",
+                "&8- &616x &8Stal",
+                "&8- &61 000 000&2$"
+        )).toItemStack());
+        gui.setItem(16, new ItemBuilder(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()).setLoreCrafting(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone().getItemMeta().getLore(), Arrays.asList(
+                "",
+                "&7Potrzebne przedmioty:",
+                "&8- &61x &8&lFragment Magicznej Stali",
+                "&8- &616x &bBrylant",
+                "&8- &616x &aSzmaragd",
+                "&8- &616x &7Proch",
+                "&8- &6700 000&2$"
+        )).toItemStack());
+
 
         gui.setItem(22, Utils.powrot());
 

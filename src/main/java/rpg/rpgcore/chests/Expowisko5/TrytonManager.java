@@ -18,9 +18,9 @@ public class TrytonManager {
     private final Set<Items> tryton = Sets.newConcurrentHashSet();
 
     public TrytonManager() {
-        this.tryton.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lUlepszona Naszyjnik Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&5&lUlepszona Diadem Trytona").toItemStack(),1 ));
-        this.tryton.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lUlepszona Pierscien Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lUlepszony Naszyjnik Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&5&lUlepszony Diadem Trytona").toItemStack(),1 ));
+        this.tryton.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lUlepszony Pierscien Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lUlepszona Tarcza Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("5", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lZwykly Naszyjnik Trytona").toItemStack(),1 ));
         this.tryton.add(new Items("6", 5.0, new ItemBuilder(Material.WATCH).setName("&5&lZwykly Diadem Trytona").toItemStack(),1 ));

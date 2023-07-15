@@ -17,11 +17,11 @@ public class MrocznaDuszaManager {
     private final Set<Items> mrocznadusza = Sets.newConcurrentHashSet();
 
     public MrocznaDuszaManager() {
-        this.mrocznadusza.add(new Items("1", 18.0, ItemHelper.createArmor("&7Helm Mrocznej Duszy", Material.IRON_HELMET, 35, 6), 1));
-        this.mrocznadusza.add(new Items("2", 18.0, ItemHelper.createArmor("&7Zbroja Mrocznej Duszy", Material.DIAMOND_CHESTPLATE, 35, 7), 1));
-        this.mrocznadusza.add(new Items("3", 18.0, ItemHelper.createArmor("&7Spodnie Mrocznej Duszy", Material.IRON_LEGGINGS, 35, 7), 1));
-        this.mrocznadusza.add(new Items("4", 18.0, ItemHelper.createArmor("&7Buty Mrocznej Duszy", Material.DIAMOND_BOOTS, 35, 6), 1));
-        this.mrocznadusza.add(new Items("5", 16.0, ItemHelper.createSword("&7Miecz Mrocznej Duszy", Material.DIAMOND_SWORD, 32, 18,false), 1));
+        this.mrocznadusza.add(new Items("1", 16.0, ItemHelper.createSword("&7Miecz Mrocznej Duszy", Material.DIAMOND_SWORD, 32, 18,false), 1));
+        this.mrocznadusza.add(new Items("2", 18.0, ItemHelper.createArmor("&7Helm Mrocznej Duszy", Material.IRON_HELMET, 35, 6), 1));
+        this.mrocznadusza.add(new Items("3", 18.0, ItemHelper.createArmor("&7Zbroja Mrocznej Duszy", Material.DIAMOND_CHESTPLATE, 35, 7), 1));
+        this.mrocznadusza.add(new Items("4", 18.0, ItemHelper.createArmor("&7Spodnie Mrocznej Duszy", Material.IRON_LEGGINGS, 35, 7), 1));
+        this.mrocznadusza.add(new Items("5", 18.0, ItemHelper.createArmor("&7Buty Mrocznej Duszy", Material.DIAMOND_BOOTS, 35, 6), 1));
     }
 
     public Items getDrawnItems(final Player player) {

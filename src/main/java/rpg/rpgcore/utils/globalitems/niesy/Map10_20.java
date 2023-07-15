@@ -69,21 +69,21 @@ public enum Map10_20 {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
                     player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(3, 10),
-                            ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(3, 9), ChanceHelper.getRandInt(10, 20), "&2&lZielony Naszyjnik"));
+                            ChanceHelper.getRandInt(10, 17), ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(3, 9), "&2&lZielony Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(3, 8), ChanceHelper.getRandInt(4, 10), ChanceHelper.getRandInt(1, 3),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(9, 10), ChanceHelper.getRandInt(11, 15), ChanceHelper.getRandInt(1, 5),
                             ChanceHelper.getRandInt(10, 20), "&2&lZielony Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(8, 13),
-                            ChanceHelper.getRandInt(6, 11), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(10, 20), "&2&lZielona Tarcza"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(9, 16),
+                            ChanceHelper.getRandInt(6, 11), ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(10, 20), "&2&lZielona Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(1, 6), ChanceHelper.getRandInt(2, 8), ChanceHelper.getRandInt(5, 25),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(8, 10), ChanceHelper.getRandInt(10, 12), ChanceHelper.getRandInt(25, 35),
                             ChanceHelper.getRandInt(10, 20), "&2&lZielony Pierscien"));
                     return;
                 }

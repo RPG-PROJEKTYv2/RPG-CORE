@@ -60,6 +60,7 @@ public class PomocManager {
         gui.setItem(28, itemGUI.setName("&e/gamma").addGlowing().toItemStack().clone());
         gui.setItem(29, itemGUI.setName("&e/live").addGlowing().toItemStack().clone());
         gui.setItem(30, itemGUI.setName("&e/osiagniecia, /os").addGlowing().toItemStack().clone());
+        gui.setItem(31, itemGUI.setName("&e/kontakt").addGlowing().toItemStack().clone());
 
 
         gui.setItem(35, Utils.powrot());

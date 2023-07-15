@@ -17,17 +17,22 @@ public class PiekielnyRycerzManager {
 
     private final Set<Items> przekletyrycerz = Sets.newConcurrentHashSet();
 
-    public PiekielnyRycerzManager() {
-        this.przekletyrycerz.add(new Items("1", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lNaszyjnik Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("2", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lDiadem Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("3", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lPierscien Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("4", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lTarcza Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("5", 5.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&c&lKolczyki Przekletego Rycerza").toItemStack(),1 ));
-        this.przekletyrycerz.add(new Items("6", 9.0, ItemHelper.createSword("&c&lMiecz Przekletego Rycerza", Material.DIAMOND_SWORD, 32, 22,false), 1));
-        this.przekletyrycerz.add(new Items("7", 12.0, ItemHelper.createArmor("&c&lHelm Przekletego Rycerza", Material.IRON_HELMET, 55, 12), 1));
-        this.przekletyrycerz.add(new Items("8", 12.0, ItemHelper.createArmor("&c&lZbroja Przekletego Rycerza", Material.IRON_CHESTPLATE, 57, 14), 1));
-        this.przekletyrycerz.add(new Items("9", 12.0, ItemHelper.createArmor("&c&lSpodnie Przekletego Rycerza", Material.IRON_LEGGINGS, 60, 20), 1));
-        this.przekletyrycerz.add(new Items("10", 12.0, ItemHelper.createArmor("&c&lButy Przekletego Rycerza", Material.IRON_BOOTS, 55, 13), 1));
+    public PiekielnyRycerzManager() {  
+        this.przekletyrycerz.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("5", 0.75, new ItemBuilder(Material.HOPPER_MINECART).setName("&c&lUlepszone Kolczyki Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("6", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lZwykly Naszyjnik Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("7", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lZwykly Diadem Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("8", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lZwykly Pierscien Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("9", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lZwykly Tarcza Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("10", 5.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&c&lZwykly Kolczyki Piekielnego Rycerza").toItemStack(),1 ));
+        this.przekletyrycerz.add(new Items("11", 9.0, ItemHelper.createSword("&c&lMiecz Przekletego Rycerza", Material.DIAMOND_SWORD, 32, 22,false), 1));
+        this.przekletyrycerz.add(new Items("12", 12.0, ItemHelper.createArmor("&c&lHelm Przekletego Rycerza", Material.DIAMOND_HELMET, 55, 12), 1));
+        this.przekletyrycerz.add(new Items("13", 12.0, ItemHelper.createArmor("&c&lZbroja Przekletego Rycerza", Material.DIAMOND_CHESTPLATE, 57, 14), 1));
+        this.przekletyrycerz.add(new Items("14", 12.0, ItemHelper.createArmor("&c&lSpodnie Przekletego Rycerza", Material.DIAMOND_LEGGINGS, 60, 20), 1));
+        this.przekletyrycerz.add(new Items("15", 12.0, ItemHelper.createArmor("&c&lButy Przekletego Rycerza", Material.DIAMOND_BOOTS, 55, 13), 1));
 
     }
 

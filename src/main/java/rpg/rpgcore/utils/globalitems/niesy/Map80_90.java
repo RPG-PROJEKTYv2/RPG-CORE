@@ -74,27 +74,27 @@ public enum Map80_90 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(299, 1100),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(399, 1100),
                             ChanceHelper.getRandInt(20, 26), ChanceHelper.getRandInt(15, 21), ChanceHelper.getRandInt(80, 90), "&e&lSloneczny Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(17, 27),
-                            ChanceHelper.getRandInt(17, 38), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(80, 90), "&e&lSloneczny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(20, 27),
+                            ChanceHelper.getRandInt(20, 38), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(80, 90), "&e&lSloneczny Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(25, 46),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(27, 46),
                             ChanceHelper.getRandInt(30, 42), ChanceHelper.getRandInt(18, 26), ChanceHelper.getRandInt(80, 90), "&e&lSloneczna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(15, 23),
-                            ChanceHelper.getRandInt(20, 32), ChanceHelper.getRandInt(-100, -65), ChanceHelper.getRandInt(80, 90), "&e&lSloneczne Kolczyki"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(17, 23),
+                            ChanceHelper.getRandInt(21, 32), ChanceHelper.getRandInt(-100, -65), ChanceHelper.getRandInt(80, 90), "&e&lSloneczne Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(9, 26), ChanceHelper.getRandInt(12, 27), ChanceHelper.getRandInt(25, 95),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(16, 26), ChanceHelper.getRandInt(18, 27), ChanceHelper.getRandInt(60, 95),
                             ChanceHelper.getRandInt(80, 90), "&e&lSloneczny Pierscien"));
                     return;
                 }

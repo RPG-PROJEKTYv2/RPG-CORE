@@ -437,7 +437,7 @@ public class CraftingiInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(14).toItemStack());
                     user.setKasa(user.getKasa() - 300_000);
                     player.getInventory().addItem(GlobalItem.getItem("I50", 1).clone());
-                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &6&lKamien Zaczarowania Miecza"));
+                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &d&lKamien Magicznego Zaczarowania!"));
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
                     return;
                 } else {
@@ -445,40 +445,7 @@ public class CraftingiInventoryClickListener implements Listener {
                     return;
                 }
             }
-            if (slot == 12) {
-                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_FRAGMENT_STALI", 1), 3) && player.getInventory().containsAtLeast(GlobalItem.getItem("I12", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I15", 1), 16)
-                        && player.getInventory().containsAtLeast(GlobalItem.getItem("I16", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I17", 1), 16)
-                        && user.getKasa() >= 1_000_000) {
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_FRAGMENT_STALI", 1).clone()).setAmount(3).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I12", 1).clone()).setAmount(16).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I15", 1).clone()).setAmount(16).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I16", 1).clone()).setAmount(16).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(16).toItemStack());
-                    user.setKasa(user.getKasa() - 1_000_000);
-                    player.getInventory().addItem(GlobalItem.getItem("I_METAL", 1).clone());
-                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &7&lMagiczna Stal"));
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
-                    return;
-                }
-            }
-            if (slot == 13) {
-                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1) && player.getInventory().containsAtLeast(GlobalItem.getItem("I13", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I14", 1), 16)
-                        && player.getInventory().containsAtLeast(GlobalItem.getItem("I18", 1), 16) && user.getKasa() >= 700_000) {
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_FRAGMENT_STALI", 1).clone()).setAmount(1).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I13", 1).clone()).setAmount(16).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I14", 1).clone()).setAmount(16).toItemStack());
-                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(16).toItemStack());
-                    user.setKasa(user.getKasa() - 700_000);
-                    player.getInventory().addItem(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone());
-                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &fLze Aniola"));
-                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
-                    return;
-                } else {
-                    player.sendMessage(Utils.format("&e&lCraftingi &8>> &7Nie posiadasz wszystkich potrzebnych przedmiotow!"));
-                    return;
-                }
-            }
-            if (slot == 15) {
+            if (slot == 11) {
                 if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_CZASTkA_MAGII", 1), 1) && player.getInventory().containsAtLeast(GlobalItem.getItem("I12", 1), 32)
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I13", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I14", 1), 32)
                         && player.getInventory().containsAtLeast(GlobalItem.getItem("I15", 1), 32) && player.getInventory().containsAtLeast(GlobalItem.getItem("I18", 1), 32)
@@ -495,6 +462,42 @@ public class CraftingiInventoryClickListener implements Listener {
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
                 } else {
                     player.sendMessage(Utils.format("&e&lCraftingi &8>> &7Nie posiadasz wszystkich potrzebnych przedmiotow!"));
+                }
+            }
+            if (slot == 15) {
+                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_FRAGMENT_STALI", 1), 3) && player.getInventory().containsAtLeast(GlobalItem.getItem("I12", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I15", 1), 16)
+                        && player.getInventory().containsAtLeast(GlobalItem.getItem("I16", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I17", 1), 16)
+                        && user.getKasa() >= 1_000_000) {
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_FRAGMENT_STALI", 1).clone()).setAmount(3).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I12", 1).clone()).setAmount(16).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I15", 1).clone()).setAmount(16).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I16", 1).clone()).setAmount(16).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I17", 1).clone()).setAmount(16).toItemStack());
+                    user.setKasa(user.getKasa() - 1_000_000);
+                    player.getInventory().addItem(GlobalItem.getItem("I_METAL", 1).clone());
+                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &7&lMagiczna Stal"));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+                    return;
+                } else {
+                    player.sendMessage(Utils.format("&e&lCraftingi &8>> &7Nie posiadasz wszystkich potrzebnych przedmiotow!"));
+                    return;
+                }
+            }
+            if (slot == 16) {
+                if (player.getInventory().containsAtLeast(GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1) && player.getInventory().containsAtLeast(GlobalItem.getItem("I13", 1), 16) && player.getInventory().containsAtLeast(GlobalItem.getItem("I14", 1), 16)
+                        && player.getInventory().containsAtLeast(GlobalItem.getItem("I18", 1), 16) && user.getKasa() >= 700_000) {
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I_FRAGMENT_STALI", 1).clone()).setAmount(1).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I13", 1).clone()).setAmount(16).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I14", 1).clone()).setAmount(16).toItemStack());
+                    player.getInventory().removeItem(new ItemBuilder(GlobalItem.getItem("I18", 1).clone()).setAmount(16).toItemStack());
+                    user.setKasa(user.getKasa() - 700_000);
+                    player.getInventory().addItem(GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone());
+                    Bukkit.broadcastMessage(Utils.format("&e&lCraftingi &8>> &7Gracz &6" + player.getName() + " &7wytworzyl &fLze Aniola"));
+                    RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(uuid, user));
+                    return;
+                } else {
+                    player.sendMessage(Utils.format("&e&lCraftingi &8>> &7Nie posiadasz wszystkich potrzebnych przedmiotow!"));
+                    return;
                 }
             }
         }

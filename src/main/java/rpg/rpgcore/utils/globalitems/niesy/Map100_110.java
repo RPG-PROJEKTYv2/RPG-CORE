@@ -79,8 +79,8 @@ public enum Map100_110 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(22, 32),
-                            ChanceHelper.getRandInt(27, 52), ChanceHelper.getRandInt(6, 10), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(25, 32),
+                            ChanceHelper.getRandInt(30, 52), ChanceHelper.getRandInt(6, 10), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
@@ -89,12 +89,12 @@ public enum Map100_110 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(17, 28),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(19, 28),
                             ChanceHelper.getRandInt(25, 40), ChanceHelper.getRandInt(-98, -80), ChanceHelper.getRandInt(100, 110), "&b&lMityczne Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(16, 34), ChanceHelper.getRandInt(19, 32), ChanceHelper.getRandInt(30, 105),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(20, 34), ChanceHelper.getRandInt(20, 32), ChanceHelper.getRandInt(63, 105),
                             ChanceHelper.getRandInt(100, 110), "&b&lMityczny Pierscien"));
                     return;
                 }

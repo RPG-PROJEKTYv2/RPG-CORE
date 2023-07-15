@@ -82,12 +82,6 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
-
-
-
-
-
-
         // MAGAZYNIER
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             if (Utils.removeColor(e.getRightClicked().getName()).equals("Magazynier")) {
@@ -96,6 +90,16 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
+        // PRZYRODNIK
+        if (e.getRightClicked().getType().equals(EntityType.CREEPER)) {
+            if (Utils.removeColor(e.getRightClicked().getName()).equals("Przyrodnik")) {
+                e.setCancelled(true);
+                rpgcore.getPrzyrodnikNPC().openMainGUI(player);
+                return;
+            }
+        }
+
+
 
         if (e.getRightClicked().getType().equals(EntityType.ENDERMAN)) {
             e.setCancelled(true);
@@ -103,15 +107,6 @@ public class PlayerInteractEntityListener implements Listener {
             // METINOLOG
             if (entityName.equalsIgnoreCase("Metinolog")) {
                 rpgcore.getMetinologNPC().openMetinologGUI(player);
-                return;
-            }
-        }
-        if (e.getRightClicked().getType().equals(EntityType.CREEPER)) {
-            e.setCancelled(true);
-            final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // PRZYRODNIK
-            if (entityName.equalsIgnoreCase("przyrodnik")) {
-                rpgcore.getPrzyrodnikNPC().openMainGUI(player);
                 return;
             }
         }
@@ -139,7 +134,7 @@ public class PlayerInteractEntityListener implements Listener {
             // DUNGEONS
             if (entityName.equals("Dungeony")) {
                 if (!rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff()) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen NPC jest aktualnie niedostepny dla graczy, pozniewaz trwaja nad nim prace!"));
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTen NPC jest aktualnie niedostepny dla graczy, bedzie on dodany w update!"));
                     return;
                 }
                 rpgcore.getDungeonsManager().openDungeonMenu(player);
@@ -149,7 +144,6 @@ public class PlayerInteractEntityListener implements Listener {
         if (e.getRightClicked().getType().equals(EntityType.WITCH)) {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
-            // ITEMSHOP
             if (entityName.equals("Czarownica")) {
                 rpgcore.getCzarownicaNPC().click(player);
                 return;
@@ -157,7 +151,6 @@ public class PlayerInteractEntityListener implements Listener {
         }
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
             e.setCancelled(true);
-            // ITEMSHOP
             if (e.getRightClicked().getLocation().equals(new Location(Bukkit.getWorld("60-70map"), 49.5, 73, 169.5))) {
                 if (user.getLvl() < 65) {
                     player.sendMessage(Utils.format("&d&l&kMityczny Kowal&8 >> &c..."));

@@ -17,15 +17,17 @@ import java.util.UUID;
 
 public class RozpiskaManager {
     private final RPGCORE rpgcore;
+
     public RozpiskaManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
+
     public void openROZPISKAGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&7Rozpiska - menu"));
-        ItemStack itemGUI1 = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short)15).setName(" ").toItemStack().clone();
-        ItemStack itemGUI2 = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short)7).setName(" ").toItemStack().clone();
-        ItemBuilder itemGUI3 = new ItemBuilder(Material.STAINED_CLAY, 1, (short)5);
-        ItemBuilder itemGUI4 = new ItemBuilder(Material.STAINED_CLAY, 1, (short)14);
+        ItemStack itemGUI1 = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack().clone();
+        ItemStack itemGUI2 = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack().clone();
+        ItemBuilder itemGUI3 = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 5);
+        ItemBuilder itemGUI4 = new ItemBuilder(Material.STAINED_CLAY, 1, (short) 14);
         gui.setItem(0, itemGUI1);
         gui.setItem(1, itemGUI1);
         gui.setItem(2, itemGUI2);
@@ -82,49 +84,50 @@ public class RozpiskaManager {
         gui.setItem(53, itemGUI1);
         player.openInventory(gui);
     }
+
     private Inventory ramkaGUI(final String nazwagui) {
         final Inventory ramkaGUI = Bukkit.createInventory(null, 45, Utils.format(nazwagui));
-        ramkaGUI.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(7, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(12, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(14, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(15, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(19, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(25, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1,(short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(30, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(32, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)13).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(33, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(36, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(37, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)5).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
-        ramkaGUI.setItem(43, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(3, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(5, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(6, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(7, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(10, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(12, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(13, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(14, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(15, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(16, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(18, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(19, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(24, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(25, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(26, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(27, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(28, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(30, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(31, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(32, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 13).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(33, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(34, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(35, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(36, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(37, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(39, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(40, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(41, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(42, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
+        ramkaGUI.setItem(43, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack().clone());
         ramkaGUI.setItem(44, Utils.powrot());
         return ramkaGUI;
     }
@@ -161,28 +164,27 @@ public class RozpiskaManager {
         final Inventory openFIRSTgui = this.ramkaGUI("&cRozpiska &8* &f(&a1-10&f)");
         final UUID uuid = player.getUniqueId();
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
-        final PrzyrodnikMissions przyrodnikMission = PrzyrodnikMissions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
         openFIRSTgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
-                "&6Skrzynia Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie,2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie,2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie,0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie,0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie,0.01) + "%",
+                "&6Skrzynia Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
                 "",
-                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie,0.05) + "%",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
                 "",
-                "&8Szata Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie,2.5) + "%",
-                "&6Zardzewialy Pierscien: &f" + MobDropHelper.getDropChance(szczescie, przyrodnikMission.getDropChance()) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie,1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie,0.025) + "%",
-                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f"  + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                "&8Szata Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
+                "&6Zardzewialy Pierscien: &f" + MobDropHelper.getDropChance(szczescie, 2.8) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
         openFIRSTgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
                 "&3&lSkrzynia &c&lDowodcy Rozbojnikow: &f100%",
-                "&4Trofeum Bossa 1-10: &f" + MobDropHelper.getDropChance(szczescie,15) + "%",
+                "&4Trofeum Bossa 1-10: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
         openFIRSTgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&9&lMetin Rozbojnikow").setLore(Arrays.asList("",
@@ -197,9 +199,188 @@ public class RozpiskaManager {
     }
     public void openSECONDexp(final Player player) {
         final Inventory openSECONDgui = this.ramkaGUI("&cExpowisko &8* &f(&a10-20&f)");
-        openSECONDgui.setItem(21, new ItemBuilder(Material.MONSTER_EGG).setName("&6Rozbojnik").setLore(Arrays.asList("", "&7Skrzynka: &6X%")).addGlowing().toItemStack().clone());
-        openSECONDgui.setItem(22, new ItemBuilder(Material.FIREWORK_CHARGE).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("", "&eSzansa: &aX")).addGlowing().toItemStack().clone());
-        openSECONDgui.setItem(23, new ItemBuilder(Material.RABBIT_HIDE).setName("&9&lMetin Rozbojnikow").setLore(Arrays.asList("", "&eSzansa: &aX")).addGlowing().toItemStack().clone());
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openSECONDgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&fSkrzynia Goblina: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "",
+                "&aOko Goblina: &f" + MobDropHelper.getDropChance(szczescie, 2.0) + "%",
+                "&3Ucho Goblina: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSECONDgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &a&lWodza Goblinow: &f100%",
+                "&4Trofeum Bossa 10-20: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSECONDgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&2&lMetin Lasu").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 10-20: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
         player.openInventory(openSECONDgui);
     }
+    public void openTHIRDexp(final Player player) {
+        final Inventory openTHIRDgui = this.ramkaGUI("&cExpowisko &8* &f(&a20-30&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openTHIRDgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&7Skrzynia Goryla: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "",
+                "&fSkora Goryla: &f" + MobDropHelper.getDropChance(szczescie, 1.6) + "%",
+                "&7Zab Goryla: &f" + MobDropHelper.getDropChance(szczescie,  2.1) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTHIRDgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &f&lKrola Goryli: &f100%",
+                "&4Trofeum Bossa 20-30: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTHIRDgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&7&lMetin Zapomnienia").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 20-30: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openTHIRDgui);
+    }
+    public void openFOURTHexp(final Player player) {
+        final Inventory openFOURTHgui = this.ramkaGUI("&cExpowisko &8* &f(&a30-40&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openFOURTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&8Skrzynia Zjawy: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "",
+                "&7Zlamana Kosc: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
+                "&8Prochy Zjawy: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openFOURTHgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &7&lPrzekletej Duszy: &f100%",
+                "&4Trofeum Bossa 30-40: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openFOURTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&8&lMetin Przekletych").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 30-40: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openFOURTHgui);
+    }
+    public void openFIFHTexp(final Player player) {
+        final Inventory openFIFHTgui = this.ramkaGUI("&cExpowisko &8* &f(&a40-50&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openFIFHTgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&3Skrzynia Straznika Swiatyni: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "",
+                "&bLza Oceanu: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
+                "&1Akwamaryn: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openFIFHTgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &e&lTrytona: &f100%",
+                "&4Trofeum Bossa 40-50: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openFIFHTgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&3&lMetin Swiatyni").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 40-50: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openFIFHTgui);
+    }
+    public void openSIXTHexp(final Player player) {
+        final Inventory openSIXTHgui = this.ramkaGUI("&cExpowisko &8* &f(&a50-60&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openSIXTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&bSkrzynia Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "",
+                "&7Wilcze Futro: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
+                "&bKiel Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie,  2.2) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSIXTHgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &b&lKrola Lodu &8&l(&f&lICETOWER&8&l): &f100%",
+                "&4Trofeum Bossa 50-60: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSIXTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&f&lMetin Mrozu").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 50-60: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openSIXTHgui);
+    }
+
 }

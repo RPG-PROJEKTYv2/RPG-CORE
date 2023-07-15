@@ -194,7 +194,22 @@ public class DropFromChestsListener implements Listener {
                 // TODO SKRZYNIA GORNIKA
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GornikItems.I8.getItemStack().getItemMeta().getDisplayName()))) {
                     final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
-                    if (gornikUser.getMission() == 10 || gornikUser.getMission() == 24) gornikUser.setProgress(gornikUser.getProgress() + 1);
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(GornikItems.getItem("Skrzynia_Gornika", 1));
+                        if (gornikUser.getMission() == 10 || gornikUser.getMission() == 24) gornikUser.setProgress(gornikUser.getProgress() + 1);
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
+                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+                        }
+                        final Items item = rpgcore.getGornikChestManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
                 }
 
                 // ================================ SKRZYNKI EXPOWISKA ================================
@@ -217,30 +232,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(5, 5, 5, ChanceHelper.getRandInt(5, 10), "&c&lZwykly Naszyjnik Dowodcy Rozbojnikow");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(5, 5, 5, 5, "&c&lZwykly Naszyjnik Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(8, 6, 6, 10, "&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(3, 5, 2, ChanceHelper.getRandInt(5, 10), "&c&lZwykly Diadem Dowodcy Rozbojnikow");
+                                    is = AkcesoriaPodsHelper.createDiadem(3, 5, 2, 5, "&c&lZwykly Diadem Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createDiadem(6, 8, 2, 10, "&c&lUlepszony Diadem Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(3, 5, 17, ChanceHelper.getRandInt(5, 10), "&c&lZwykly Pierscien Dowodcy Rozbojnikow");
+                                    is = AkcesoriaPodsHelper.createPierscien(3, 5, 17, 5, "&c&lZwykly Pierscien Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(7, 9, 30, 10, "&c&lUlepszony Pierscien Dowodcy Rozbojnikow");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(7, 15, 2, ChanceHelper.getRandInt(5, 10), "&c&lZwykla Tarcza Dowodcy Rozbojnikow");
+                                    is = AkcesoriaPodsHelper.createTarcza(7, 7, 2, 5, "&c&lZwykla Tarcza Dowodcy Rozbojnikow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(10, 20, 5, 10, "&c&lUlepszona Tarcza Dowodcy Rozbojnikow");
+                                    is = AkcesoriaPodsHelper.createTarcza(10, 9, 5, 10, "&c&lUlepszona Tarcza Dowodcy Rozbojnikow");
                                 }
                                 break;
                             default:
@@ -291,30 +306,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(7, 5, 5, ChanceHelper.getRandInt(15, 20),"&a&lZwykly Naszyjnik Wodza Goblinow");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(7, 5, 5, 15,"&a&lZwykly Naszyjnik Wodza Goblinow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(10, 7, 7, 20,"&a&lUlepszony Naszyjnik Wodza Goblinow");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(5, 7, 2, ChanceHelper.getRandInt(15, 20), "&a&lZwykly Diadem Wodza Goblinow");
+                                    is = AkcesoriaPodsHelper.createDiadem(5, 7, 2, 15, "&a&lZwykly Diadem Wodza Goblinow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createDiadem(8, 10, 2, 20, "&a&lUlepszony Diadem Wodza Goblinow");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(4, 6, 20, ChanceHelper.getRandInt(15, 20), "&a&lZwykly Pierscien Wodza Goblinow");
+                                    is = AkcesoriaPodsHelper.createPierscien(4, 6, 20, 15, "&a&lZwykly Pierscien Wodza Goblinow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(8, 10, 30, 20, "&a&lUlepszony Pierscien Wodza Goblinow");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(11, 21, 4, ChanceHelper.getRandInt(15, 20), "&a&lZwykla Tarcza Wodza Goblinow");
+                                    is = AkcesoriaPodsHelper.createTarcza(11, 10, 4, 15, "&a&lZwykla Tarcza Wodza Goblinow");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(15, 25, 5, 20, "&a&lUlepszona Tarcza Wodza Goblinow");
+                                    is = AkcesoriaPodsHelper.createTarcza(15, 12, 5, 20, "&a&lUlepszona Tarcza Wodza Goblinow");
                                 }
                                 break;
                             default:
@@ -387,30 +402,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(14, 6, 6, ChanceHelper.getRandInt(25, 30),"&f&lZwykly Naszyjnik Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(14, 6, 6, 25,"&f&lZwykly Naszyjnik Krola Goryli");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(20, 10, 10, 30,"&f&lUlepszony Naszyjnik Krola Goryli");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(7, 9, 2, ChanceHelper.getRandInt(25, 30), "&f&lZwykly Diadem Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createDiadem(7, 9, 2, 25, "&f&lZwykly Diadem Krola Goryli");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(8, 10, 2, 30, "&f&lUlepszony Diadem Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createDiadem(12, 15, 4, 30, "&f&lUlepszony Diadem Krola Goryli");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(5, 9, 23, ChanceHelper.getRandInt(25, 30), "&f&lZwykly Pierscien Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createPierscien(5, 9, 23, 25, "&f&lZwykly Pierscien Krola Goryli");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(8, 12, 30, 30, "&f&lUlepszony Pierscien Krola Goryli");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(15, 25, 6, ChanceHelper.getRandInt(25, 30), "&f&lZwykla Tarcza Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createTarcza(15, 12, 6, 25, "&f&lZwykla Tarcza Krola Goryli");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(17, 35, 8, 30, "&f&lUlepszona Tarcza Krola Goryli");
+                                    is = AkcesoriaPodsHelper.createTarcza(17, 14, 8, 30, "&f&lUlepszona Tarcza Krola Goryli");
                                 }
                                 break;
                             default:
@@ -460,30 +475,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(30, 9, 9, ChanceHelper.getRandInt(35, 40), "&7&lZwykly Naszyjnik Przekletej Duszy");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(30, 9, 9,35, "&7&lZwykly Naszyjnik Przekletej Duszy");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(44, 13, 13, 40,"&7&lUlepszony Naszyjnik Przekletej Duszy");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(10, 12, 3, ChanceHelper.getRandInt(35, 40), "&7&lZwykly Diadem Przekletej Duszy");
+                                    is = AkcesoriaPodsHelper.createDiadem(10, 12, 3, 35, "&7&lZwykly Diadem Przekletej Duszy");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createDiadem(15, 20, 4, 40, "&7&lUlepszony Diadem Przekletej Duszy");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(7, 10, 25, ChanceHelper.getRandInt(35, 40), "&7&lZwykly Pierscien Przekletej Duszy");
+                                    is = AkcesoriaPodsHelper.createPierscien(7, 10, 25, 35, "&7&lZwykly Pierscien Przekletej Duszy");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(12, 15, 35, 40, "&7&lUlepszony Pierscien Przekletej Duszy");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(17, 29, 7, ChanceHelper.getRandInt(35, 40), "&7&lZwykla Tarcza Przekletej Duszy");
+                                    is = AkcesoriaPodsHelper.createTarcza(17, 16, 7, 35, "&7&lZwykla Tarcza Przekletej Duszy");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(20, 35, 10, 40, "&7&lUlepszona Tarcza Przekletej Duszy");
+                                    is = AkcesoriaPodsHelper.createTarcza(20, 18, 10, 40, "&7&lUlepszona Tarcza Przekletej Duszy");
                                 }
                                 break;
                             default:
@@ -533,30 +548,30 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(43, 12, 10, ChanceHelper.getRandInt(45, 50),"&5&lZwykly Naszyjnik Trytona");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(43, 12, 10, 45,"&5&lZwykly Naszyjnik Trytona");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(65, 15, 15, 50,"&5&lUlepszony Naszyjnik Trytona");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(12, 14, 4, ChanceHelper.getRandInt(45, 50), "&5&lZwykly Diadem Trytona");
+                                    is = AkcesoriaPodsHelper.createDiadem(12, 14, 4, 45, "&5&lZwykly Diadem Trytona");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createDiadem(18, 22, 5, 50, "&5&lUlepszony Diadem Trytona");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(8, 11, 30, ChanceHelper.getRandInt(45, 50), "&5&lZwykly Pierscien Trytona");
+                                    is = AkcesoriaPodsHelper.createPierscien(8, 11, 30, 45, "&5&lZwykly Pierscien Trytona");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(15, 17, 45, 50, "&5&lUlepszony Pierscien Trytona");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(22, 35, 8, ChanceHelper.getRandInt(45, 50), "&5&lZwykla Tarcza Trytona");
+                                    is = AkcesoriaPodsHelper.createTarcza(22, 20, 8,45, "&5&lZwykla Tarcza Trytona");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(25, 45, 10, 50, "&5&lUlepszona Tarcza Trytona");
+                                    is = AkcesoriaPodsHelper.createTarcza(25, 24, 10, 50, "&5&lUlepszona Tarcza Trytona");
                                 }
                                 break;
                             default:
@@ -611,7 +626,7 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // Skrzynia Przekletego Rycerza
+                // Skrzynia Piekielnego Rycerza
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Skrzynki.getByName("I13").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Skrzynki.getItem("I13", 1));
@@ -624,6 +639,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(150, 20, 15, 65,"&c&lZwykly Naszyjnik Piekielnego Rycerza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(180, 20, 17, 70,"&c&lUlepszony Naszyjnik Piekielnego Rycerza");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(16, 21, 5, 65, "&c&lZwykly Diadem Piekielnego Rycerza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(22, 29, 6, 70, "&c&lUlepszony Diadem Piekielnego Rycerza");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(12, 13, 48, 65, "&c&lZwykly Pierscien Piekielnego Rycerza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(22, 22, 75, 70, "&c&lUlepszony Pierscien Piekielnego Rycerza");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(29, 26, 12,65, "&c&lZwykly Tarcza Piekielnego Rycerza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(35, 30, 15, 70, "&c&lUlepszona Tarcza Piekielnego Rycerza");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(13, 20, -55,65, "&c&lZwykle Kolczyki Piekielnego Rycerza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(16, 13, -50, 70, "&c&lUlepszone Kolczyki Piekielnego Rycerza");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -664,6 +718,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(340, 20, 17, 75,"&5&lZwykly Naszyjnik Przekletego Czarnoksieznika");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(450, 22, 18, 80,"&5&lUlepszony Naszyjnik Przekletego Czarnoksieznika");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(18, 22, 5, 75, "&5&lZwykly Diadem Przekletego Czarnoksieznika");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(24, 32, 6, 80, "&5&lUlepszony Diadem Przekletego Czarnoksieznika");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(13, 15, 52, 75, "&5&lZwykly Pierscien Przekletego Czarnoksieznika");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(24, 24, 80, 80, "&5&lUlepszony Pierscien Przekletego Czarnoksieznika");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(30, 32, 14,75, "&5&lZwykla Tarcza Przekletego Czarnoksieznika");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(40, 35, 20, 80, "&5&lUlepszona Tarcza Przekletego Czarnoksieznika");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(14, 21, -70,75, "&5&lZwykle Kolczyki Przekletego Czarnoksieznika");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(20, 26, -64, 80, "&5&lUlepszone Kolczyki Przekletego Czarnoksieznika");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -683,6 +776,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(710, 21, 18, 85,"&e&lZwykly Naszyjnik Mitycznego Pajaka");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(970, 25, 20, 90,"&e&lUlepszony Naszyjnik Mitycznego Pajaka");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(20, 26, 5, 85, "&e&lZwykly Diadem Mitycznego Pajaka");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(26, 35, 7, 90, "&e&lUlepszony Diadem Mitycznego Pajaka");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(15, 16, 57, 85, "&e&lZwykly Pierscien Mitycznego Pajaka");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(25, 25, 85, 90, "&e&lUlepszony Pierscien Mitycznego Pajaka");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(32, 36, 17,85, "&e&lZwykla Tarcza Mitycznego Pajaka");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(45, 40, 25, 90, "&e&lUlepszona Tarcza Mitycznego Pajaka");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(16, 23, -83,85, "&e&lZwykle Kolczyki Mitycznego Pajaka");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(22, 29, -68, 90, "&e&lUlepszone Kolczyki Mitycznego Pajaka");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -702,6 +834,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(1300, 23, 19, 95,"&6&lZwykly Naszyjnik Podziemnego Rozpruwacza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(1600, 25, 21, 100,"&6&lUlepszony Naszyjnik Podziemnego Rozpruwacza");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(22, 28, 5, 95, "&6&lZwykly Diadem Podziemnego Rozpruwacza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(28, 40, 7, 100, "&6&lUlepszony Diadem Podziemnego Rozpruwacza");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(20, 20, 59, 95, "&6&lZwykly Pierscien Podziemnego Rozpruwacza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(27, 27, 90, 100, "&6&lUlepszony Pierscien Podziemnego Rozpruwacza");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(38, 42, 20,95, "&6&lZwykla Tarcza Podziemnego Rozpruwacza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(50, 45, 28, 100, "&6&lUlepszona Tarcza Podziemnego Rozpruwacza");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(19, 25, -83,95, "&6&lZwykle Kolczyki Podziemnego Rozpruwacza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(23, 31, -79, 100, "&6&lUlepszone Kolczyki Podziemnego Rozpruwacza");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -721,6 +892,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(2030, 25, 20, 105,"&b&lZwykly Naszyjnik Mitycznego Krakena");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(2469, 28, 23, 110,"&b&lUlepszony Naszyjnik Mitycznego Krakena");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(26, 36, 5, 105, "&b&lZwykly Diadem Mitycznego Krakena");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(30, 48, 8, 110, "&b&lUlepszony Diadem Mitycznego Krakena");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(22, 22, 68, 105, "&b&lZwykly Pierscien Mitycznego Krakena");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(31, 30, 95, 110, "&b&lUlepszony Pierscien Mitycznego Krakena");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(46, 44, 27,105, "&b&lZwykla Tarcza Mitycznego Krakena");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(57, 50, 35, 110, "&b&lUlepszona Tarcza Mitycznego Krakena");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(21, 28, -90,105, "&b&lZwykle Kolczyki Mitycznego Krakena");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(25, 35, -87, 110, "&b&lUlepszone Kolczyki Mitycznego Krakena");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -740,6 +950,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(2997, 28, 23, 115,"&b&lZwykly Naszyjnik Krysztalowego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(3610, 30, 25, 120,"&b&lUlepszony Naszyjnik Krysztalowego Wladcy");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(29, 45, 5, 115, "&b&lZwykly Diadem Krysztalowego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(35, 56, 10, 120, "&b&lUlepszony Diadem Krysztalowego Wladcy");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(24, 24, 65, 115, "&b&lZwykly Pierscien Krysztalowego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(34, 34, 105, 120, "&b&lUlepszony Pierscien Krysztalowego Wladcy");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(51, 50, 35,115, "&b&lZwykla Tarcza Krysztalowego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(65, 55, 42, 120, "&b&lUlepszona Tarcza Krysztalowego Wladcy");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(23, 30, -105,115, "&b&lZwykle Kolczyki Krysztalowego Wladcy");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(30, 39, -100, 120, "&b&lUlepszone Kolczyki Krysztalowego Wladcy");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -759,6 +1008,45 @@ public class DropFromChestsListener implements Listener {
                             return;
                         }
                         ItemStack is = item.getRewardItem();
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(4544, 30, 25, 125,"&5&lZwykly Naszyjnik Smoczego Cesarza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(5455, 34, 28, 130,"&5&lUlepszony Naszyjnik Smoczego Cesarza");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(32, 52, 5, 125, "&5&lZwykly Diadem Smoczego Cesarza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(40, 70, 12, 130, "&5&lUlepszony Diadem Smoczego Cesarza");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(29, 28, 70, 125, "&5&lZwykly Pierscien Smoczego Cesarza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(36, 36, 115, 130, "&5&lUlepszony Pierscien Smoczego Cesarza");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(63, 55, 45,125, "&5&lZwykla Tarcza Smoczego Cesarza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(75, 60, 57, 130, "&5&lUlepszona Tarcza Smoczego Cesarza");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(26, 36, -135,125, "&5&lZwykle Kolczyki Smoczego Cesarza");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(33, 46, -130, 130, "&5&lUlepszone Kolczyki Smoczego Cesarza");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                     }
@@ -799,30 +1087,37 @@ public class DropFromChestsListener implements Listener {
                         switch (is.getType()) {
                             case STORAGE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(75, 15, 15, ChanceHelper.getRandInt(55, 60), "&b&lZwykly Naszyjnik Krola Lodu");
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(75, 15, 15, 55, "&b&lZwykly Naszyjnik Krola Lodu");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createNaszyjnik(100, 20, 16, 60, "&b&lUlepszony Naszyjnik Krola Lodu");
                                 }
                                 break;
                             case WATCH:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(14, 17, 4, ChanceHelper.getRandInt(55, 60), "&b&lZwykly Diadem Krola Lodu");
+                                    is = AkcesoriaPodsHelper.createDiadem(14, 17, 4,55, "&b&lZwykly Diadem Krola Lodu");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createDiadem(19, 26, 5, 60, "&b&lUlepszony Diadem Krola Lodu");
                                 }
                                 break;
                             case EXPLOSIVE_MINECART:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(11, 13, 40, ChanceHelper.getRandInt(55, 60), "&b&lZwykly Pierscien Krola Lodu");
+                                    is = AkcesoriaPodsHelper.createPierscien(11, 13, 40, 55, "&b&lZwykly Pierscien Krola Lodu");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
                                     is = AkcesoriaPodsHelper.createPierscien(20, 20, 60, 60, "&b&lUlepszony Pierscien Krola Lodu");
                                 }
                                 break;
                             case ITEM_FRAME:
                                 if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(26, 23, 10, ChanceHelper.getRandInt(55, 60), "&b&lZwykla Tarcza Krola Lodu");
+                                    is = AkcesoriaPodsHelper.createTarcza(26, 23, 10, 55, "&b&lZwykla Tarcza Krola Lodu");
                                 } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
                                     is = AkcesoriaPodsHelper.createTarcza(30, 28, 10, 60, "&b&lUlepszona Tarcza Krola Lodu");
+                                }
+                                break;
+                            case HOPPER_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykle")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(10, 16, -50,55, "&b&lZwykle Kolczyki Krola Lodu");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszone")) {
+                                    is = AkcesoriaPodsHelper.createKolczyki(12, 18, -45, 60, "&b&lUlepszone Kolczyki Krola Lodu");
                                 }
                                 break;
                             default:

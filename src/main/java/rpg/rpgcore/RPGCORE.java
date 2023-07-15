@@ -56,6 +56,7 @@ import rpg.rpgcore.chests.Expowisko8.MrocznaDuszaManager;
 import rpg.rpgcore.chests.Expowisko8.PrzekletyCzarnoksieznikManager;
 import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
 import rpg.rpgcore.chests.Inne.*;
+import rpg.rpgcore.chests.Npc.GornikChestManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
@@ -352,6 +353,9 @@ public final class RPGCORE extends JavaPlugin {
     // ice tower
     private KrolLoduManager krolLoduManager;
     private LodowySlugaManager lodowySlugaManager;
+    // ================================ SKRZYNKI NPCTY & INNE ================================
+    private GornikChestManager gornikChestManager;
+
 
     // cos innego...
     private DungeonsManager dungeonsManager;
@@ -548,6 +552,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new RozpiskaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new OnlineCommand());
         CommandAPI.getCommand().register("HellRPGCore", new PingCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new KontaktCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RangiCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ListaNPCCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GuildCommand(this));
@@ -949,7 +954,8 @@ public final class RPGCORE extends JavaPlugin {
         // ice tower
         this.krolLoduManager = new KrolLoduManager();
         this.lodowySlugaManager = new LodowySlugaManager();
-
+        // ================================ SKRZYNKI NPCTY & INNE ================================
+        this.gornikChestManager = new GornikChestManager();
     }
 
     public void initOwnDungeons() {
@@ -1300,7 +1306,10 @@ public final class RPGCORE extends JavaPlugin {
     public LodowySlugaManager getLodowySlugaManager() {
         return lodowySlugaManager;
     }
-
+    // ================================ SKRZYNKI NPCTY & INNE ================================
+    public GornikChestManager getGornikChestManager() {
+        return gornikChestManager;
+    }
 
     public PrzyrodnikNPC getPrzyrodnikNPC() {
         return przyrodnikNPC;

@@ -16,10 +16,10 @@ public enum PrzyrodnikMissions {
     M6(6,50, 60,4,3,"&6Zywiolak Ognia",1.7, PrzyrodnikItems.getItem("60-70")),
     M7(7,60, 60, 3,3,"&fMroczna Dusza",0.9, PrzyrodnikItems.getItem("70-80")),
     M8(8,70, 60,3,3,"&6Pustynny Ptasznik",0.66, PrzyrodnikItems.getItem("80-90")),
-    M9(9,80, 55,3,3,"&ePodziemna Lowczyni",0.24, PrzyrodnikItems.getItem("90-100")),
+    M9(9,80, 55,3,3,"&5Podziemna Lowczyni",0.24, PrzyrodnikItems.getItem("90-100")),
     M10(10,90, 45,3,3,"&bPodwodny Straznik",0.16, PrzyrodnikItems.getItem("100-110")),
-    M11(11,120, 30,4,5,"&5Centaur",0.12, PrzyrodnikItems.getItem("110-120")),
-    M12(12,130, 30,4,5,"&bStraznik Nieba",0.06, PrzyrodnikItems.getItem("120-130")),
+    M11(11,120, 30,4,5,"&fMrozny Stroz",0.12, PrzyrodnikItems.getItem("110-120")),
+    M12(12,130, 30,4,5,"&6Mnich",0.06, PrzyrodnikItems.getItem("120-130")),
     M_ERROR(99, 0,0,0,0,"", 0, GlobalItem.getItem("error", 1));
 
     private final int number, reqAmount;

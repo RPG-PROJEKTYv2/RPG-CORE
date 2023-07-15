@@ -18,24 +18,25 @@ public class KrolLoduManager {
     private final Set<Items> mroznywladca = Sets.newConcurrentHashSet();
 
     public KrolLoduManager() {
-        this.mroznywladca.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lUlepszony Naszyjnik Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&b&lUlepszony Diadem Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lUlepszony Pierscien Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lUlepszona Tarcza Krola Lodu").toItemStack(), 1));
-
-        this.mroznywladca.add(new Items("5", 1.0, GlobalItem.I_METAL.getItemStack().clone(), 3));
-        this.mroznywladca.add(new Items("6", 1.5, GlobalItem.I_METAL.getItemStack().clone(), 2));
-        this.mroznywladca.add(new Items("7", 2.5, GlobalItem.I_METAL.getItemStack().clone(), 1));
-        this.mroznywladca.add(new Items("8", 3.0, GlobalItem.I10.getItemStack().clone(), 5));
-        this.mroznywladca.add(new Items("9", 3.5, GlobalItem.getItem("I2", 1), 1));
-        this.mroznywladca.add(new Items("10", 4.0, GlobalItem.I10.getItemStack().clone(), 3));
-        this.mroznywladca.add(new Items("11", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lZwykly Naszyjnik Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("12", 5.0, new ItemBuilder(Material.WATCH).setName("&b&lZwykly Diadem Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("13", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lZwykly Pierscien Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("14", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lZwykla Tarcza Krola Lodu").toItemStack(), 1));
-        this.mroznywladca.add(new Items("15", 6.0, GlobalItem.I10.getItemStack().clone(), 1));
-        this.mroznywladca.add(new Items("16", 9.0, ItemHelper.createSword("&b&lLodowy Sztylet", Material.DIAMOND_SWORD, 26, 16, false), 1));
-        this.mroznywladca.add(new Items("17", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1));
+        this.mroznywladca.add(new Items("1", 0.55, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lUlepszony Naszyjnik Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("2", 0.55, new ItemBuilder(Material.WATCH).setName("&b&lUlepszony Diadem Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("3", 0.55, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lUlepszony Pierscien Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("4", 0.55, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lUlepszona Tarcza Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("5", 0.55, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lUlepszone Kolczyki Krola Lodu").toItemStack(),1 ));
+        this.mroznywladca.add(new Items("6", 1.0, GlobalItem.I_METAL.getItemStack().clone(), 3));
+        this.mroznywladca.add(new Items("7", 1.5, GlobalItem.I_METAL.getItemStack().clone(), 2));
+        this.mroznywladca.add(new Items("8", 2.5, GlobalItem.I_METAL.getItemStack().clone(), 1));
+        this.mroznywladca.add(new Items("9", 2.0, GlobalItem.I10.getItemStack().clone(), 2));
+        this.mroznywladca.add(new Items("10", 2.5, GlobalItem.getItem("I2", 1), 1));
+        this.mroznywladca.add(new Items("11", 4.0, GlobalItem.I10.getItemStack().clone(), 1));
+        this.mroznywladca.add(new Items("12", 4.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lZwykly Naszyjnik Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("13", 4.0, new ItemBuilder(Material.WATCH).setName("&b&lZwykly Diadem Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("14", 4.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lZwykly Pierscien Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("15", 4.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lZwykla Tarcza Krola Lodu").toItemStack(), 1));
+        this.mroznywladca.add(new Items("16", 4.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lZwykle Kolczyki Krola Lodu").toItemStack(),1 ));
+        this.mroznywladca.add(new Items("17", 6.0, GlobalItem.I10.getItemStack().clone(), 1));
+        this.mroznywladca.add(new Items("18", 9.0, ItemHelper.createSword("&b&lLodowy Sztylet", Material.DIAMOND_SWORD, 26, 16, false), 1));
+        this.mroznywladca.add(new Items("19", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1));
 
     }
 

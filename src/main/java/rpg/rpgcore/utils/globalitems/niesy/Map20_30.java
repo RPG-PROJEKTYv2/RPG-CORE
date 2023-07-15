@@ -68,23 +68,23 @@ public enum Map20_30 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(8, 20),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(20, 25),
                             ChanceHelper.getRandInt(6, 9), ChanceHelper.getRandInt(4, 10), ChanceHelper.getRandInt(20, 30), "&6&lTropikalny Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(4, 11),
-                            ChanceHelper.getRandInt(5, 14), ChanceHelper.getRandInt(1, 4), ChanceHelper.getRandInt(20, 30), "&6&lTropikalny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(10, 12),
+                            ChanceHelper.getRandInt(15, 17), ChanceHelper.getRandInt(1, 5), ChanceHelper.getRandInt(20, 30), "&6&lTropikalny Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(12, 17),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(14, 19),
                             ChanceHelper.getRandInt(7, 14), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(20, 30), "&6&lTropikalna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(1, 8), ChanceHelper.getRandInt(3, 11), ChanceHelper.getRandInt(8, 30),
-                            ChanceHelper.getRandInt(20, 30), "&6&lTropikalny Pierscien"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(8, 15), ChanceHelper.getRandInt(13, 16), ChanceHelper.getRandInt(8, 30),
+                            ChanceHelper.getRandInt(25, 40), "&6&lTropikalny Pierscien"));
                     return;
                 }
                 player.getInventory().addItem(item.getRewardItem());

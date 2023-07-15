@@ -46,7 +46,7 @@ public class TeleporterNPC {
     private final ItemBuilder brakdostepu = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14);
 
     public void openTeleporterEXPOWISKA(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&9&lTELEPORTER"));
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lTELEPORTER"));
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
         fillInventory.setName(" ");
         for (int i = 0; i < gui.getSize(); i++) {

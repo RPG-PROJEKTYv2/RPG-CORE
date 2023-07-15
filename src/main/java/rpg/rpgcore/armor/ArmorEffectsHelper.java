@@ -96,10 +96,10 @@ public class ArmorEffectsHelper {
             k = 200;
         }
         if (value > 199) {
-            k = 250;
+            k = 300;
         }
         if (value > 249) {
-            k = 400;
+            k = 600;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
         if (k > 0) {

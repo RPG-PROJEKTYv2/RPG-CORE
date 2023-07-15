@@ -9,7 +9,7 @@ import java.util.Arrays;
 public enum LesnikItems {
 
     I1("I1", new ItemBuilder(Material.DOUBLE_PLANT).setName("&6Zywica").setLore(Arrays.asList("&8Chyba Lesnik tego potrzebuje...")).toItemStack().clone()),
-    POTION("Potion", new ItemBuilder(Material.GLASS_BOTTLE).setName("&2Wywar z Kory").setLore(Arrays.asList("&8Dzieki tej miksturze zresetujesz czas", "&8ponownego oddania przedmiotu u &2&lLesnika")).toItemStack());
+    POTION("Potion", new ItemBuilder(Material.GLASS_BOTTLE).setName("&2Wywar z Kory").setLore(Arrays.asList("&8Dzieki tej miksturze zresetujesz czas", "&8ponownego oddania przedmiotu u &2&lLesnika", "", "&8Kliknij aby uzyc...")).toItemStack());
 
     private final String name;
     private final ItemStack item;

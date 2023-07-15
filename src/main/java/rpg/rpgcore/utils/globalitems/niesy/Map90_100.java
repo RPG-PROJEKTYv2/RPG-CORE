@@ -79,8 +79,8 @@ public enum Map90_100 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(19, 29),
-                            ChanceHelper.getRandInt(19, 48), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(20, 29),
+                            ChanceHelper.getRandInt(20, 44), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
@@ -89,12 +89,12 @@ public enum Map90_100 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(16, 25),
-                            ChanceHelper.getRandInt(20, 35), ChanceHelper.getRandInt(-87, -75), ChanceHelper.getRandInt(90, 100), "&9&lSkradzione Kolczyki"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(18, 25),
+                            ChanceHelper.getRandInt(21, 35), ChanceHelper.getRandInt(-87, -75), ChanceHelper.getRandInt(90, 100), "&9&lSkradzione Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(12, 30), ChanceHelper.getRandInt(15, 29), ChanceHelper.getRandInt(30, 100),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(18, 30), ChanceHelper.getRandInt(19, 29), ChanceHelper.getRandInt(60, 100),
                             ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Pierscien"));
                     return;
                 }

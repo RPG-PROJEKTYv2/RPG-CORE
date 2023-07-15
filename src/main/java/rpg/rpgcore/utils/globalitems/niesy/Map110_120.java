@@ -79,8 +79,8 @@ public enum Map110_120 {
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(26, 36),
-                            ChanceHelper.getRandInt(37, 62), ChanceHelper.getRandInt(7, 12), ChanceHelper.getRandInt(110, 120), "&3&lSzkarlatny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(25, 36),
+                            ChanceHelper.getRandInt(30, 62), ChanceHelper.getRandInt(7, 12), ChanceHelper.getRandInt(110, 120), "&3&lSzkarlatny Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
