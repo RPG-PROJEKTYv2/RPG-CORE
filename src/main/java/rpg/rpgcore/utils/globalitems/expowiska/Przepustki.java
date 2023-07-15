@@ -10,7 +10,7 @@ public enum Przepustki {
     I1(1000000,"I1", new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &bSwiatyni").setLore(Arrays.asList("&7Jednorazowa wejsciowka...")).toItemStack().clone()),
     I2(2000000,"I2", new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &fKrysztalowej Sali").setLore(Arrays.asList("&7Jednorazowa wejsciowka...")).toItemStack().clone()),
     I3(5000000,"I3", new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &6Tajemniczej Siedziby").setLore(Arrays.asList("&7Jednorazowa wejsciowka...")).toItemStack().clone()),
-    I4(0,"I4", new ItemBuilder(Material.BOOK_AND_QUILL).setName("&f&lTalizman &e&lWejsciowki").setLore(Arrays.asList("&7Nieskonczona wejsciowka...", "", "&cWymagany poziom: &6120")).toItemStack().clone());
+    I4(0,"I4", new ItemBuilder(Material.BEACON).setName("&f&lTalizman &e&lWejsciowki").setLore(Arrays.asList("&7Nieskonczona wejsciowka...", "", "&cWymagany poziom: &6120")).toItemStack().clone());
     private final int cena;
     private final ItemStack itemStack;
     private final String name;

@@ -93,12 +93,16 @@ public class RozpiskaInventoryClick implements Listener {
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
             }
-            /*if (slot == 29) {
+            if (slot == 29) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
+                    rpgcore.getRozpiskaManager().openSEVENTHexp(player);
+                    return;
                 }
-                return;
+            } else {
+                player.closeInventory();
+                player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
             }
-            if (slot == 30) {
+            /*if (slot == 30) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 }
                 return;
@@ -128,7 +132,6 @@ public class RozpiskaInventoryClick implements Listener {
                 }
                 return;
             }*/
-            return;
         }
     }
 }

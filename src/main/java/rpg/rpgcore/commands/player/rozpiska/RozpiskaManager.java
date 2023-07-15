@@ -363,6 +363,10 @@ public class RozpiskaManager {
                 "&7Wilcze Futro: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
                 "&bKiel Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie,  2.2) + "%",
                 "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+
+                "&cPodrecznik Potegi: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&ePodrecznik Talentu I: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
+
                 "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
@@ -381,6 +385,49 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         player.openInventory(openSIXTHgui);
+    }
+
+    public void openSEVENTHexp(final Player player) {
+        final Inventory openSEVENTHgui = this.ramkaGUI("&cExpowisko &8* &f(&a60-70&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openSEVENTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
+                "&6Skrzynia Zywiolaka Ognia" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.03) + "%",
+                "",
+                "&cOgnisty Pyl: &f" + MobDropHelper.getDropChance(szczescie, 1.5) + "%",
+                "&cRdzen Zywiolaka: &f" + MobDropHelper.getDropChance(szczescie,  1.7) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&c&lKlucz do Piekielnego Przedsionka: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&2Ruda Mithrylu: &f" + MobDropHelper.getDropChance(szczescie, 0.09) + "%",
+                "&cZaczarowana Kula: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
+                "&dPodrecznik Silnego Ciala: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
+                "&6Podrecznik Wojownika I: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSEVENTHgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lDowodca Rozbojnikow").setLore(Arrays.asList("",
+                "&3&lSkrzynia &c&lPiekielnego Rycerza: &f100%",
+                "&4Trofeum Bossa 60-70: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openSEVENTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&6&lMetin Zywiolu").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 60-70: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openSEVENTHgui);
     }
 
 }

@@ -316,7 +316,7 @@ public class MobDropHelper {
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.07), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.09), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I3.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I9.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, Bossy.I1.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);
