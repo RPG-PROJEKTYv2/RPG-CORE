@@ -290,7 +290,7 @@ public class IceTowerManager {
         for (Player player : dungeonWorld.getPlayers()) {
             player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
             player.sendMessage(Utils.format("&fUkonczo aktualny etap!"));
-            player.sendMessage(Utils.format("&fNastepny rozpocznie sie sa &c15 &fsekund!"));
+            player.sendMessage(Utils.format("&fNastepny rozpocznie sie za &c15 &fsekund!"));
             player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
         }
     }

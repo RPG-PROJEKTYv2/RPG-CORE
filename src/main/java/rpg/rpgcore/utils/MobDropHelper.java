@@ -120,7 +120,7 @@ public class MobDropHelper {
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10-2 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
                 // LOWCA
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
-                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 404), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 40), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 1) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
@@ -132,7 +132,7 @@ public class MobDropHelper {
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-1-10 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
                 // LOWCA
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
-                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 40), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 1) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
@@ -171,7 +171,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-10-20 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
-                    addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 35), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 2) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);
@@ -198,7 +198,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
                 rpgcore.getServer().dispatchCommand(Bukkit.getConsoleSender(), "holo setLine boss-20-30 3 &cData ostatniego zabicia: &6" + new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()));
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
-                    addDropPlayer(player, LowcaItems.getItem("20-30", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("20-30", 1), getDropChance(szczescie, 25), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMission() == 3) {
                     rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser().getKillBossMissionProgress() + 1);

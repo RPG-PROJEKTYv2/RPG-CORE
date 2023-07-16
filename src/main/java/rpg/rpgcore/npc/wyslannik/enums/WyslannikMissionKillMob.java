@@ -7,7 +7,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 
 public enum WyslannikMissionKillMob {
     M1(1, "&6Rozbojnik", 300, AkcesoriaPodsHelper.createTarcza(5, 4, 2, 8, "&a&lSlaba Tarcza Wyslannika")),
-    M2(2, "&2Goblin", 600, AkcesoriaPodsHelper.createNaszyjnik(4, 5, 3, 15, "&a&lSlaby Naszyjnik Wyslannika")),
+    M2(2, "&2Goblin", 600, AkcesoriaPodsHelper.createNaszyjnik(6, 5, 5, 15, "&a&lSlaby Naszyjnik Wyslannika")),
     M3(3, "&7Goryl", 1_000, AkcesoriaPodsHelper.createTarcza(12, 9, 3, 27, "&a&lTarcza Wyslannika")),
     M4(4, "&8Zjawa", 1_200, AkcesoriaPodsHelper.createDiadem(9, 9, 2, 36, "&a&lDiadem Wyslannika")),
     M5(5, "&3Straznik Swiatyni", 1_600, AkcesoriaPodsHelper.createTarcza(20, 13, 4, 49, "&a&lWzmocniona Tarcza Wyslannika")),
