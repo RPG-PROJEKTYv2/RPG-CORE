@@ -29,7 +29,7 @@ public class TrytonManager {
         this.tryton.add(new Items("9", 9.0, ItemHelper.createSword("&6&lMiecz Trytona", Material.IRON_SWORD, 23, 15,false), 1));
         this.tryton.add(new Items("10", 12.0, ItemHelper.createArmor("&6&lHelm Trytona", Material.IRON_HELMET, 35, 9), 1));
         this.tryton.add(new Items("11", 12.0, ItemHelper.createArmor("&6&lZbroja Trytona", Material.IRON_CHESTPLATE, 30, 7), 1));
-        this.tryton.add(new Items("12", 12.0, ItemHelper.createArmor("&6&lSpodnie Trytona", Material.IRON_LEGGINGS, 44, 15), 1));
+        this.tryton.add(new Items("12", 12.0, ItemHelper.createArmor("&6&lSpodnie Trytona", Material.IRON_LEGGINGS, 34, 15), 1));
         this.tryton.add(new Items("13", 12.0, ItemHelper.createArmor("&6&lButy Trytona", Material.IRON_BOOTS, 33, 8), 1));
 
     }
