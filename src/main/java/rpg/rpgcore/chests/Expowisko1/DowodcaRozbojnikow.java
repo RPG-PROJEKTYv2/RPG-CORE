@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -18,14 +17,6 @@ public class DowodcaRozbojnikow {
     private final Set<Items> wygnaniec = Sets.newConcurrentHashSet();
 
     public DowodcaRozbojnikow() {
-        this.wygnaniec.add(new Items("1", 0.75, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("2", 0.75, new ItemBuilder(Material.WATCH).setName("&c&lUlepszony Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("3", 0.75, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lUlepszony Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("4", 0.75, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lUlepszona Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("5", 5.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&c&lZwykly Naszyjnik Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("6", 5.0, new ItemBuilder(Material.WATCH).setName("&c&lZwykly Diadem Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("7", 5.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&c&lZwykly Pierscien Dowodcy Rozbojnikow").toItemStack(), 1));
-        this.wygnaniec.add(new Items("8", 5.0, new ItemBuilder(Material.ITEM_FRAME).setName("&c&lZwykla Tarcza Dowodcy Rozbojnikow").toItemStack(), 1));
         this.wygnaniec.add(new Items("9", 9.0, ItemHelper.createSword("&c&lMiecz Dowodcy Rozbojnikow", Material.WOOD_SWORD, 3, 2, false), 1));
         this.wygnaniec.add(new Items("10", 12.0, ItemHelper.createArmor("&c&lHelm Dowodcy Rozbojnikow", Material.LEATHER_HELMET, 4, 1), 1));
         this.wygnaniec.add(new Items("11", 12.0, ItemHelper.createArmor("&c&lZbroja Dowodcy Rozbojnikow", Material.LEATHER_CHESTPLATE, 5, 1), 1));
@@ -36,15 +27,15 @@ public class DowodcaRozbojnikow {
     }
 
 
-    public Items getDrawnItems(final Player player) {
+    public void getDrawnItems(final Player player) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.wygnaniec) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                return item;
+                player.getInventory().addItem(item.getRewardItem());
+                return;
             }
         }
-        if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
-        return null;
+        this.getDrawnItems(player);
     }
 }

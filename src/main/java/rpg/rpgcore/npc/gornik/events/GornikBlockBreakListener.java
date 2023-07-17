@@ -70,8 +70,14 @@ public class GornikBlockBreakListener implements Listener {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, "&4&lBlad!", "&7Posiadasz za slaby kilof!", 5, 10));
             return;
         }
-        ore.setCurrentHp(ore.getCurrentHp() - 1);
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, info.getReward().getItemMeta().getDisplayName(), "&e" + ore.getCurrentHp() + "&7/&e" + ore.getMaxHp(), 5, 10));
+        if (player.hasPotionEffect(PotionEffectType.FAST_DIGGING) && player.getActivePotionEffects().stream().anyMatch(effect -> {
+            if (effect.getType() == PotionEffectType.FAST_DIGGING) {
+                System.out.println(effect.getAmplifier());
+                return true;
+            }
+            return false;
+        })) ore.setCurrentHp(ore.getCurrentHp() - 2);
+        else ore.setCurrentHp(ore.getCurrentHp() - 1);
         if (ore.getCurrentHp() <= 0) {
             ore.breakOre();
 
@@ -168,8 +174,11 @@ public class GornikBlockBreakListener implements Listener {
                 final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(player.getUniqueId());
                 magazynierUser.getMissions().setProgress(magazynierUser.getMissions().getProgress() + 1);
             }
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, info.getReward().getItemMeta().getDisplayName(), "&a&lWykopano!", 5, 10));
             player.sendMessage(Utils.format("&6&lGornik &8>> &aPomyslnie wykopales rude " + info.getReward().getItemMeta().getDisplayName() + "&a!"));
+            return;
         }
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, info.getReward().getItemMeta().getDisplayName(), "&e" + ore.getCurrentHp() + "&7/&e" + ore.getMaxHp(), 5, 10));
     }
 
 

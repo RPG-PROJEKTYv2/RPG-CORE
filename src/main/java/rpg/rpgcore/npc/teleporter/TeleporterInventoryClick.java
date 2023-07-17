@@ -86,9 +86,8 @@ public class TeleporterInventoryClick implements Listener {
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 if (slot == 30) {
                     player.closeInventory();
-                    player.sendMessage(Utils.SERVERNAME + Utils.format("&cTa oraz kolejne mapy zostaly zablokowane na czas trwania &6Beta Testow&c!"));
-                    //player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
-                   // rpgcore.getTeleporterNPC().teleportExp8(player);
+                    player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
+                    rpgcore.getTeleporterNPC().teleportExp8(player);
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {

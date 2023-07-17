@@ -121,8 +121,8 @@ public class DamageManager {
 
         mnoznik += bonuses.getSrednieobrazenia();
         mnoznik += bonuses.getSilnynaludzi();
-        mnoznik -= bonuses.getMinussrednieobrazenia();
-        mnoznik -= bonuses.getMinusobrazenianaludzi();
+        mnoznik += bonuses.getMinussrednieobrazenia();
+        mnoznik += bonuses.getMinusobrazenianaludzi();
         dmg += bonuses.getDodatkoweobrazenia();
         krytyk += bonuses.getSzansanakryta();
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
@@ -255,8 +255,8 @@ public class DamageManager {
 
         mnoznik += bonuses.getSrednieobrazenia();
         mnoznik += bonuses.getSilnynapotwory();
-        mnoznik -= bonuses.getMinussrednieobrazenia();
-        mnoznik -= bonuses.getMinusobrazenianamoby();
+        mnoznik += bonuses.getMinussrednieobrazenia();
+        mnoznik += bonuses.getMinusobrazenianamoby();
         dmg += bonuses.getDodatkoweobrazenia();
         krytyk += bonuses.getSzansanakryta();
         wzmKryt += bonuses.getSzansanawzmocnieniekryta();
@@ -370,8 +370,8 @@ public class DamageManager {
 
         mnoznik += bonuses.getSredniadefensywa();
         mnoznik += bonuses.getDefnaludzi();
-        mnoznik -= bonuses.getMinusdefnaludzi();
-        mnoznik -= bonuses.getMinussredniadefensywa();
+        mnoznik += bonuses.getMinusdefnaludzi();
+        mnoznik += bonuses.getMinussredniadefensywa();
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
@@ -522,8 +522,8 @@ public class DamageManager {
 
             mnoznik += bonuses.getSrednieobrazenia();
             mnoznik += bonuses.getSilnynaludzi();
-            mnoznik -= bonuses.getMinussrednieobrazenia();
-            mnoznik -= bonuses.getMinusobrazenianamoby();
+            mnoznik += bonuses.getMinussrednieobrazenia();
+            mnoznik += bonuses.getMinusobrazenianamoby();
             thornsDmg += bonuses.getDodatkoweobrazenia();
 
             // GILDIA
@@ -549,8 +549,8 @@ public class DamageManager {
 
         mnoznikProcenty += bonuses.getSredniadefensywa();
         mnoznikProcenty += bonuses.getDefnamoby();
-        mnoznikProcenty -= bonuses.getMinusdefnamoby();
-        mnoznikProcenty -= bonuses.getMinussredniadefensywa();
+        mnoznikProcenty += bonuses.getMinusdefnamoby();
+        mnoznikProcenty += bonuses.getMinussredniadefensywa();
 
         // MAGICZNE ZACZAROWANIE (ZBROJA)
         if (victim.getInventory().getHelmet() != null) {

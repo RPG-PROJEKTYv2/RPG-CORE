@@ -160,8 +160,8 @@ public class KlasyInteractListener implements Listener {
                                 targetHealth.add(target.getHealth() * 0.1);
                             }
                             double toAdd = 0;
-                            for (int i = 0; i < 3; i++)
-                                toAdd += targetHealth.get(ChanceHelper.getRandInt(0, targetHealth.size() - 1));
+                            if (targetHealth.size() > 0) for (int i = 0; i < 3; i++) toAdd += targetHealth.get(ChanceHelper.getRandInt(0, targetHealth.size() - 1));
+
                             player.setHealth(Math.min(player.getHealth() + toAdd, player.getMaxHealth()));
                             player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie uzyles/-as &eBurza Ostrzy&a!"));
                             break;

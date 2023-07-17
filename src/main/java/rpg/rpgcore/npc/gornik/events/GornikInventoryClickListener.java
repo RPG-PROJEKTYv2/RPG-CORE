@@ -83,6 +83,7 @@ public class GornikInventoryClickListener implements Listener {
                     rpgcore.getMongoManager().saveDataGornik(uuid, user);
                     rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
                 });
+                player.closeInventory();
                 if (mission.getId() == 28) {
                     Bukkit.getServer().broadcastMessage(Utils.format(""));
                     Bukkit.getServer().broadcastMessage(Utils.format("&6&lGornik &8>> &7Gracz &e" + player.getName() + " &7ukonczyl moja &4&lKAMPANIE"));
@@ -109,14 +110,15 @@ public class GornikInventoryClickListener implements Listener {
                     player.sendMessage(Utils.format("&6&lGornika &8>> &cMusisz trzymac w rece &6Kilof Gornika&c!"));
                     return;
                 }
-                if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
-                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
-                    return;
-                }
-                if (!Utils.getTagString(player.getItemInHand(), "owner-uuid").equals(player.getUniqueId().toString())) {
-                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
-                    return;
-                }
+//                if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+//                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+//                    return;
+//                }
+//                if (!Utils.getTagString(player.getItemInHand(), "owner-uuid").equals(player.getUniqueId().toString())) {
+//                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+//                    return;
+//                }
+                player.sendMessage(Utils.getTagInt(player.getItemInHand(), "lvl") + "");
                 if (Utils.getTagInt(player.getItemInHand(), "lvl") < Utils.getTagInt(item, "reqPickaxeLvl")) return;
                 user.setProgress(1);
                 return;

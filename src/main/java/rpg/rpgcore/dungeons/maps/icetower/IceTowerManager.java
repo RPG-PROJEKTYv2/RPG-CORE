@@ -253,7 +253,7 @@ public class IceTowerManager {
         stand.setCustomNameVisible(false);
         Bukkit.getServer().broadcastMessage(Utils.format("&b&lIce Tower &3>> &fKamien zostal zniszczony przez &b" + playerName + "&f!"));
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            stand.getNearbyEntities(3, 10, 3).forEach(entity -> {
+            stand.getNearbyEntities(6, 10, 6).forEach(entity -> {
                 if (entity instanceof Player) {
                     entity.teleport(this.spawnLoc);
                 }
@@ -284,6 +284,7 @@ public class IceTowerManager {
     }
 
     public void startPrePhase() {
+        this.setAntyAfkTime(0);
         this.count = 0;
         this.status = DungeonStatus.WAITING;
         this.updateEtap();

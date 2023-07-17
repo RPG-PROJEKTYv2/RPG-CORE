@@ -100,7 +100,7 @@ public class HellCodeCommand extends CommandAPI {
                 return;
             }
 
-            if (obvPass.contains(args[1].toLowerCase()) || args[1].contains(player.getName())) {
+            if (obvPass.contains(args[1].toLowerCase())) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie za prosty ten kod? :D"));
                 return;
             }

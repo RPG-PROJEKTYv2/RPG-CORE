@@ -132,7 +132,7 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - def);
                     bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - blok);
                     bonuses.getBonusesUser().setPrzebiciePancerza(bonuses.getBonusesUser().getPrzebiciePancerza() - przebicie);
-                    bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() + mspeed);
+                    bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - mspeed);
 
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                         rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);

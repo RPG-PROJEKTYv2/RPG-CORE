@@ -26,15 +26,15 @@ public class RozbojnikManager {
 
 
 
-    public Items getDrawnItems(final Player player) {
+    public void getDrawnItems(final Player player) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.najemnik) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                return item;
+                player.getInventory().addItem(item.getRewardItem());
+                return;
             }
         }
-        if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));
-        return null;
+        this.getDrawnItems(player);
     }
 }

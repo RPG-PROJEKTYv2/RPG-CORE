@@ -14,7 +14,6 @@ import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
-import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -223,46 +222,7 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        final Items item = rpgcore.getDowodcaRozbojnikow().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
-                        ItemStack is = item.getRewardItem();
-
-                        switch (is.getType()) {
-                            case STORAGE_MINECART:
-                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(5, 5, 5, 5, "&c&lZwykly Naszyjnik Dowodcy Rozbojnikow");
-                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createNaszyjnik(8, 6, 6, 10, "&c&lUlepszony Naszyjnik Dowodcy Rozbojnikow");
-                                }
-                                break;
-                            case WATCH:
-                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(3, 5, 2, 5, "&c&lZwykly Diadem Dowodcy Rozbojnikow");
-                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createDiadem(6, 8, 2, 10, "&c&lUlepszony Diadem Dowodcy Rozbojnikow");
-                                }
-                                break;
-                            case EXPLOSIVE_MINECART:
-                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(3, 5, 17, 5, "&c&lZwykly Pierscien Dowodcy Rozbojnikow");
-                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
-                                    is = AkcesoriaPodsHelper.createPierscien(7, 9, 30, 10, "&c&lUlepszony Pierscien Dowodcy Rozbojnikow");
-                                }
-                                break;
-                            case ITEM_FRAME:
-                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(7, 7, 2, 5, "&c&lZwykla Tarcza Dowodcy Rozbojnikow");
-                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
-                                    is = AkcesoriaPodsHelper.createTarcza(10, 9, 5, 10, "&c&lUlepszona Tarcza Dowodcy Rozbojnikow");
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        is.setAmount(item.getAmount());
-                        player.getInventory().addItem(is);
+                        rpgcore.getDowodcaRozbojnikow().getDrawnItems(player);
                         return;
                     }
                 }
@@ -277,13 +237,7 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 1) {
                             rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
-                        final Items item = rpgcore.getNajemnikManager().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
-                        ItemStack is = item.getRewardItem();
-                        is.setAmount(item.getAmount());
-                        player.getInventory().addItem(is);
+                        rpgcore.getNajemnikManager().getDrawnItems(player);
                         return;
                     }
                 }
