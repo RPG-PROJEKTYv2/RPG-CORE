@@ -64,8 +64,8 @@ public class BAOEntityInteract implements Listener {
         if (!rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getLocation())) return;
 
         e.setCancelled(true);
-        if (rpgcore.getUserManager().find(uuid).getLvl() < 74) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c75 &7poziom, zeby uzywac &6STOLU MAGII"));
+        if (rpgcore.getUserManager().find(uuid).getLvl() < 70) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c70 &7poziom, zeby uzywac &6STOLU MAGII"));
             return;
         }
         rpgcore.getBaoManager().openMainGUI(player, false);

@@ -28,16 +28,52 @@ public class BossyManager {
 
     // 60-70
     @Getter
+    private int boss1_10count = 0;
+    @Getter
+    private int boss10_20count = 0;
+    @Getter
+    private int boss20_30count = 0;
+    @Getter
+    private int boss30_40count = 0;
+    @Getter
+    private int boss40_50count = 0;
+    @Getter
     private int boss60_70count = 0;
 
+    public void incrementBoss1_10count() { boss1_10count++; }
+    public void incrementBoss10_20count() { boss10_20count++; }
+    public void incrementBoss20_30count() { boss20_30count++; }
+    public void incrementBoss30_40count() { boss30_40count++; }
+    public void incrementBoss40_50count() { boss40_50count++; }
     public void incrementBoss60_70count() {
         boss60_70count++;
     }
 
+    public void decrementBoss1_10count() {
+        if (boss1_10count <= 0) return;
+        boss1_10count--;
+    }
+    public void decrementBoss10_20count() {
+        if (boss10_20count <= 0) return;
+        boss10_20count--;
+    }
+    public void decrementBoss20_30count() {
+        if (boss20_30count <= 0) return;
+        boss20_30count--;
+    }
+    public void decrementBoss30_40count() {
+        if (boss30_40count <= 0) return;
+        boss30_40count--;
+    }
+    public void decrementBoss40_50count() {
+        if (boss40_50count <= 0) return;
+        boss40_50count--;
+    }
     public void decrementBoss60_70count() {
         if (boss60_70count <= 0) return;
         boss60_70count--;
     }
+
 
     // 70-80
     @Getter

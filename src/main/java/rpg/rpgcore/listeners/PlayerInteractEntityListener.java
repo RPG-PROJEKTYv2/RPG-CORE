@@ -149,15 +149,18 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
         }
-        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+        if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {
             e.setCancelled(true);
-            if (e.getRightClicked().getLocation().equals(new Location(Bukkit.getWorld("60-70map"), 49.5, 73, 169.5))) {
-                if (user.getLvl() < 65) {
-                    player.sendMessage(Utils.format("&d&l&kMityczny Kowal&8 >> &c..."));
+            final String entityName = Utils.removeColor(e.getRightClicked().getName());
+            if (e.getRightClicked().getLocation().getWorld().getName().equals("60-70map")) {
+                if (entityName.equalsIgnoreCase("Mistyczny Kowal")) {
+                    if (user.getLvl() < 65) {
+                        player.sendMessage(Utils.format("&7&l&kMistyczny Kowal&8 >> &c..."));
+                        return;
+                    }
+                    rpgcore.getMistycznyKowalManager().openGUI(player);
                     return;
                 }
-                rpgcore.getMistycznyKowalManager().openGUI(player);
-                return;
             }
         }
 

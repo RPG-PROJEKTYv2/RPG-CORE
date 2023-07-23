@@ -35,8 +35,8 @@ public class GuildEntityDeath implements Listener {
                 return;
             }
 
-            rpgcore.getGuildManager().updateGuildExp(killerGuild, 1);
-            rpgcore.getGuildManager().updateGuildExpEarned(killerGuild, killer.getUniqueId(), 1);
+            rpgcore.getGuildManager().updateGuildExp(killerGuild, 1.5);
+            rpgcore.getGuildManager().updateGuildExpEarned(killerGuild, killer.getUniqueId(), 1.5);
         }
 
     }

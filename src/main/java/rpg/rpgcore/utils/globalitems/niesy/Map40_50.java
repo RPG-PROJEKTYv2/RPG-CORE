@@ -21,13 +21,7 @@ public enum Map40_50 {
     I40_50_2("40-50-2", 10, ItemHelper.createArmor("&b&lPradawny Kaftan", Material.IRON_CHESTPLATE, 30, 7)),
     I40_50_3("40-50-3", 10, ItemHelper.createArmor("&b&lPradawne Portki", Material.IRON_LEGGINGS, 35, 8)),
     I40_50_4("40-50-4", 10, ItemHelper.createArmor("&b&lPradawne Buty", Material.IRON_BOOTS, 33, 8)),
-    I40_50_5("40-50-5", 10, ItemHelper.createSword("&b&lPradawny Sztylet", Material.IRON_SWORD, 30, 12,true)),
-
-    I40_50_6("40-50-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lPradawny Naszyjnik").toItemStack()),
-    I40_50_7("40-50-7", 10, new ItemBuilder(Material.WATCH).setName("&b&lPradawny Diadem").toItemStack()),
-    I40_50_8("40-50-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lPradawna Tarcza").toItemStack()),
-    I40_50_9("40-50-9", 10, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lPradawne Kolczyki").toItemStack()),
-    I40_50_10("40-50-10", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lPradawny Pierscien").toItemStack());
+    I40_50_5("40-50-5", 10, ItemHelper.createSword("&b&lPradawny Sztylet", Material.IRON_SWORD, 30, 12,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -68,31 +62,6 @@ public enum Map40_50 {
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(40, 81),
-                            ChanceHelper.getRandInt(10, 16), ChanceHelper.getRandInt(8, 14), ChanceHelper.getRandInt(40, 50), "&b&lPradawny Naszyjnik"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(18, 20),
-                            ChanceHelper.getRandInt(20, 25), ChanceHelper.getRandInt(2, 5), ChanceHelper.getRandInt(40, 50), "&b&lPradawny Diadem"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(21, 27),
-                            ChanceHelper.getRandInt(15, 24), ChanceHelper.getRandInt(7, 10), ChanceHelper.getRandInt(40, 50), "&b&lPradawna Tarcza"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(6 ,10),
-                            ChanceHelper.getRandInt(8, 12), ChanceHelper.getRandInt(-55, -40), ChanceHelper.getRandInt(40, 50), "&b&lPradawne Kolczyki"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(13, 14), ChanceHelper.getRandInt(14, 17), ChanceHelper.getRandInt(10, 45),
-                            ChanceHelper.getRandInt(40, 50), "&b&lPradawny Pierscien"));
-                    return;
-                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

@@ -148,8 +148,8 @@ public class ChatInventoryClickListener implements Listener {
                 case 2:
                     // POKAZYWANIE BAO NA CHAT
 
-                    if (rpgcore.getUserManager().find(uuid).getLvl() < 74) {
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c75 &7poziom, zeby pokazac bao na chacie"));
+                    if (rpgcore.getUserManager().find(uuid).getLvl() < 70) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c70 &7poziom, zeby pokazac bao na chacie"));
                         player.closeInventory();
                         break;
                     }

@@ -37,7 +37,7 @@ public class RozpiskaInventoryClick implements Listener {
                 title.equals("Expowisko * (90-100)") || title.equals("Expowisko * (100-110)") || title.equals("Expowisko * (110-120)") ||
                 title.equals("Expowisko * (120-130)")) {
             e.setCancelled(true);
-            if (slot == 43) {
+            if (slot == 44) {
                 rpgcore.getRozpiskaManager().openROZPISKAGUI(player);
             }
         }

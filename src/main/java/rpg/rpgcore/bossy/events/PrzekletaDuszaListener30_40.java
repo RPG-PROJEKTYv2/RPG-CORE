@@ -16,7 +16,7 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
 
-public class PiekielnyRycerzListener60_70 implements Listener {
+public class PrzekletaDuszaListener30_40 implements Listener {
     private final BossyManager bossyManager = RPGCORE.getInstance().getBossyManager();
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -25,34 +25,29 @@ public class PiekielnyRycerzListener60_70 implements Listener {
         if (e.getItem() == null) return;
 
         if (e.getItem().getType() != Material.FIREBALL || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName()
-                || !Utils.removeColor(e.getItem().getItemMeta().getDisplayName()).equals("Przywolanie * Piekielny Rycerz")) return;
+                || !Utils.removeColor(e.getItem().getItemMeta().getDisplayName()).equals("Przywolanie * Przekleta Dusza")) return;
 
         final Player player = e.getPlayer();
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
 
-        if (!player.getWorld().getName().equals("60-70map")) {
+        if (!player.getWorld().getName().equals("30-40map")) {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cNie mozesz tego uzyc w tej lokacji!"));
             return;
         }
-
-        if (user.getLvl() < 60) {
+        if (user.getLvl() < 30) {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cPosiadasz zbyt niski poziom, zeby wykonacz ta czynnosc!"));
             return;
         }
 
-        if (bossyManager.getBoss60_70count() == 2) {
-            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &c&lPiekielnych Rycerzy! &7(Limit: 2)"));
+        if (bossyManager.getBoss30_40count() == 3) {
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &7&lPrzekletej Duszy! &7(Limit na mape: 3)"));
             return;
         }
-
-        player.getInventory().removeItem(new ItemBuilder(Bossy.I60_70.getItemStack().clone()).setAmount(1).toItemStack());
+        player.getInventory().removeItem(new ItemBuilder(Bossy.I30_40.getItemStack().clone()).setAmount(1).toItemStack());
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 60-70-BOSS 1 " + cordsToString);
-        Bukkit.broadcastMessage(" ");
-        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lPiekielny Rycerz &7przybyl do swojego pana!"));
-        Bukkit.broadcastMessage(" ");
-        bossyManager.incrementBoss60_70count();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 30-40-BOSS 1 " + cordsToString);
+        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &7przybyla do swojego pana!"));
+        bossyManager.incrementBoss30_40count();
     }
-
 }

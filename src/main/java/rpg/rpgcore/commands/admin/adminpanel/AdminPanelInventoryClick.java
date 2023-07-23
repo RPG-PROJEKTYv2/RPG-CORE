@@ -35,7 +35,7 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
             if (slot == 11) {
-                rpgcore.getAdminPanelManager().openNiesamowiteGUI(player);
+                rpgcore.getAdminPanelManager().openGuiAKCENIES(player);
                 return;
             }
             if (slot == 12) {
@@ -75,6 +75,18 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
 
+        if (title.equals("NIES & AKCE - ADMINISTRACJA")) {
+            e.setCancelled(true);
+            if (slot == 3) {
+                rpgcore.getAdminPanelManager().openNiesamowiteGUI(player);
+            }
+            if (slot == 5) {
+                rpgcore.getAdminPanelManager().openAkcesoriumGUI(player);
+            }
+            if (slot == 8) {
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+            }
+        }
         if (title.equals("Skrzynki - ADMINISTRACJA")) {
             e.setCancelled(true);
             if (slot == 12) {
@@ -112,7 +124,7 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
         }
-        if (title.equals("Ulepszacze - ADMINISTRACJA")) {
+        if (title.equals("Niesamowite - ADMINISTRACJA") || title.equals("Akcesorium - ADMINISTRACJA") ||  title.equals("Ulepszacze - ADMINISTRACJA")) {
             if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
@@ -165,13 +177,6 @@ public class AdminPanelInventoryClick implements Listener {
         }
         if (title.equals("ItemShop - ADMINISTRACJA")) {
             if (slot == 26) {
-                e.setCancelled(true);
-                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
-                return;
-            }
-        }
-        if (title.equals("Niesamowite - ADMINISTRACJA")) {
-            if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
                 return;

@@ -7,8 +7,8 @@ public enum Dungeons {
     ICE_TOWER_MOB2("Lodowy Sluga Lvl. 58", 1_850, 300, 50, 60),
     ICE_TOWER_MOB3("Lodowy Sluga Lvl. 59", 2_300, 325, 50, 60),
     ICE_TOWER_BOSS("[BOSS] Krol Lodu", 60_000, 50_000, 50, 60),
-    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 30_471, 800, 60, 70),
-    PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 35_861, 884_800, 60, 70),
+    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 7_366.3, 800, 60, 70),
+    PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 500_500.0, 884_800, 60, 70),
     ERROR("Error", 0, 0, 1, 1);
 
     private final String name;

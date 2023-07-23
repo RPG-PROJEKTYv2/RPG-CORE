@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 public enum Dungeony {
 
-    I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz Przekletych Wojownikow").setLore(Arrays.asList(" ", "&7Klucz ten otwiera wrota na arene &4&lWOJOWNIKOW&7!")).hideFlag().toItemStack().clone()),
     I_KLUCZ_PIEKIELNY_PRZEDSIONEK("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz do Piekielnego Przedsionka").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPiekielnego Przedsionka&7!")).hideFlag().toItemStack().clone()),
     I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA("I_PRZEDSIONEK_BOSS", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Piekielnego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
 

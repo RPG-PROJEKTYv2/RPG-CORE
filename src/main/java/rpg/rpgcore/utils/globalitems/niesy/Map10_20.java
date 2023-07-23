@@ -21,12 +21,7 @@ public enum Map10_20 {
     I10_20_2("10-20-2", 10, ItemHelper.createArmor("&2&lZielony Kubrak", Material.LEATHER_CHESTPLATE, 8, 2)),
     I10_20_3("10-20-3", 10, ItemHelper.createArmor("&2&lZielone Spodnie", Material.LEATHER_LEGGINGS, 8, 1)),
     I10_20_4("10-20-4", 10, ItemHelper.createArmor("&2&lZielone Buty", Material.LEATHER_BOOTS, 7, 2)),
-    I10_20_5("10-20-5", 10, ItemHelper.createSword("&2&lZielona Maczeta", Material.STONE_SWORD, 6, 3,true)),
-
-    I10_20_6("10-20-6", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&2&lZielony Naszyjnik").toItemStack()),
-    I10_20_7("10-20-7", 10, new ItemBuilder(Material.WATCH).setName("&2&lZielony Diadem").toItemStack()),
-    I10_20_8("10-20-8", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&2&lZielona Tarcza").toItemStack()),
-    I10_20_9("10-20-9", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&2&lZielony Pierscien").toItemStack());
+    I10_20_5("10-20-5", 10, ItemHelper.createSword("&2&lZielona Maczeta", Material.STONE_SWORD, 6, 3,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;
@@ -67,26 +62,6 @@ public enum Map10_20 {
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(3, 10),
-                            ChanceHelper.getRandInt(10, 17), ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(3, 9), "&2&lZielony Naszyjnik"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(9, 10), ChanceHelper.getRandInt(11, 15), ChanceHelper.getRandInt(1, 5),
-                            ChanceHelper.getRandInt(10, 20), "&2&lZielony Diadem"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(9, 16),
-                            ChanceHelper.getRandInt(6, 11), ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(10, 20), "&2&lZielona Tarcza"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(8, 10), ChanceHelper.getRandInt(10, 12), ChanceHelper.getRandInt(25, 35),
-                            ChanceHelper.getRandInt(10, 20), "&2&lZielony Pierscien"));
-                    return;
-                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

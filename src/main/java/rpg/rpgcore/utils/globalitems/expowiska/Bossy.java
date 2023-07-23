@@ -9,8 +9,12 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Arrays;
 
 public enum Bossy {
-    // ITEM DO RESPU BOSSA 60-70
-    I1("I1", new ItemBuilder(Material.FIREBALL).setName("&cZaczarowana Kula").setLore(Arrays.asList(" ","&7Dzieki tej kuli przywolasz &c&lPiekielnego Rycerza&7!")).hideFlag().toItemStack().clone()),
+    I1_10("I1_10", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &c&lDowodca Rozbojnikow").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
+    I10_20("I10_20", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &a&lWodz Goblinow").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
+    I20_30("I20_30", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &f&lKrol Goryli").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
+    I30_40("I30_40", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &7&lPrzekleta Dusza").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
+    I40_50("I40_50", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &e&lTryton").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
+    I60_70("I60_70", new ItemBuilder(Material.FIREBALL).setName("&f&lPrzywolanie &8&l* &c&lPiekielny Rycerz").setLore(Arrays.asList("", "&7Kliknij aby przywolac go obok siebie...")).toItemStack().clone()),
    // ITEM DO RESPU BOSSA 70-80
     I2("I2", new ItemBuilder(Material.MAGMA_CREAM).setName("&cPrzeklete Serce").setLore(Arrays.asList(" ","&7Serce to pozwoli ci ozywic krag &3&lCzarnoksieznika&7...")).hideFlag().toItemStack().clone()),
     // ITEM DO RESPU BOSSA 80-90

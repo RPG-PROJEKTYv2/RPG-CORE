@@ -54,7 +54,7 @@ public class MistycznyKowalInventoryClickListener implements Listener {
                     player.getInventory().containsAtLeast(GlobalItem.I18.getItemStack(), 16) &&
                     user.getKasa() >= 10_000_000
                     )) {
-                player.sendMessage(Utils.format("&d&lMistyczny Kowal &8>> &fCzegos Ci tutaj brakuje&c..."));
+                player.sendMessage(Utils.format("&7&lMistyczny Kowal &8>> &fCzegos Ci tutaj brakuje&c..."));
                 player.closeInventory();
                 return;
             }

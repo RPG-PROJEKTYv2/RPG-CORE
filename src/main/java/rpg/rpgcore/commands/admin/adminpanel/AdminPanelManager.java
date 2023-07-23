@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.AkceItems;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
@@ -29,7 +31,7 @@ public class AdminPanelManager {
         }
 
         gui.setItem(10, new ItemBuilder(Material.CHEST).setName("&cSkrzynki - &fMob/Boss/Dungeony/Inne").addGlowing().toItemStack().clone());
-        gui.setItem(11, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&bNiesamowite Przedmioty").addGlowing().toItemStack().clone());
+        gui.setItem(11, new ItemBuilder(Material.JUKEBOX).setName("&b&lNiesamowite Przedmioty &8&l& &6&lAkcesorium").addGlowing().toItemStack().clone());
         gui.setItem(12, new ItemBuilder(Material.SIGN).setName("&cBony").addGlowing().toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.SNOW_BALL).setName("&fUlepszacze").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.GOLD_INGOT).setName("&6Itemshop").addGlowing().toItemStack().clone());
@@ -98,6 +100,41 @@ public class AdminPanelManager {
         for (final LesnikItems lesnikItems : LesnikItems.values()) {
             gui.setItem(gui.firstEmpty(), lesnikItems.getItem());
         }
+        gui.setItem(4, new ItemBuilder(Material.DIAMOND_SWORD).setName("&b&lLodowy Sztylet").setLore(Arrays.asList(
+                "&7Obrazenia: &c110",
+                "&7Obrazenia na potwory: &c37",
+                "",
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
+                "&eDodatkowe Obrazenia: &f+40",
+                "&eSrednie Obrazenia: &f+40%",
+                "&eSilny na &6Zywiolak Ognia&7: &f+9.59%",
+                "&ePrzeszycie Bloku Ciosu: &f+5.56%",
+                "&cWymagany Poziom: &650",
+                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
+                ""
+        )).toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&b&lLodowa Klata").setLore(Arrays.asList(
+                "&7Obrona: &f250",
+                "&7Ciernie: &f50",
+                "",
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
+                "&eSrednia Defensywa: &f+40%",
+                "&eOdpornosc Na Potwory: &f+10%",
+                "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
+                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
+                ""
+                )).toItemStack().clone());
+        gui.setItem(6, new ItemBuilder(Material.DIAMOND_HELMET).setName("&b&lLodowy Helm").setLore(Arrays.asList(
+                "&7Obrona: &f250",
+                "&7Ciernie: &f50",
+                "",
+                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
+                "&eSrednia Defensywa: &f+40%",
+                "&eOdpornosc Na Przeciwnikow: &f+10%",
+                "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
+                ""
+        )).toItemStack().clone());
         gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
@@ -126,16 +163,9 @@ public class AdminPanelManager {
     }
     public void openPrzedmiotySpecjalneGuiBossyKlucze(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lBossy & Klucze &f- ADMINISTRACJA"));
-        gui.setItem(0, Bossy.getItem("I1", 1));
-        gui.setItem(1, Bossy.getItem("I2", 1));
-        gui.setItem(2, Bossy.getItem("I3", 1));
-        gui.setItem(3, Bossy.getItem("I3_1", 1));
-        gui.setItem(4, Bossy.getItem("I4", 1));
-        gui.setItem(5, Bossy.getItem("I5", 1));
-        gui.setItem(6, Bossy.getItem("I5_1", 1));
-        gui.setItem(7, Bossy.getItem("I5_2", 1));
-        gui.setItem(9, Dungeony.getItem("I_KLUCZ_ARENA_PRZEKLETYCH_WOJOWNIKOW", 1));
-        gui.setItem(10, Dungeony.getItem("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", 1));
+        for (final Bossy bossy : Bossy.values()) {
+            gui.setItem(gui.firstEmpty(), bossy.getItemStack());
+        }
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
@@ -305,7 +335,21 @@ public class AdminPanelManager {
         player.openInventory(gui);
     }
 
-
+    public void openGuiAKCENIES(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&b&lNIES &8&l& &6&lAKCE &f- ADMINISTRACJA"));
+        gui.setItem(3, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&b&lNIESAMOWITE PRZEDMIOTY").toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.IRON_BLOCK).setName("&6&lAKCESORIUM").toItemStack().clone());
+        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
+    public void openAkcesoriumGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lAkcesorium &f- ADMINISTRACJA"));
+        for (final AkceItems akceItems : AkceItems.values()) {
+            gui.setItem(gui.firstEmpty(), akceItems.getAkceItems());
+        }
+        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
     public void openNiesamowiteGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&b&lNiesamowite &f- ADMINISTRACJA"));
         for (final NiesyItems niesyItems : NiesyItems.values()) {

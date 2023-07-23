@@ -131,7 +131,7 @@ public class MistycznyKowalManager {
 
         final ItemStack item = GlobalItem.getPercentSword(swordType, randomPercent);
         player.getInventory().addItem(item);
-        player.sendMessage(Utils.format("&d&lMistyczny Kowal &8>> &aPomyslnie wytworzylem twoj miecz!"));
-        Bukkit.getServer().broadcastMessage(Utils.format("&d&lMistyczny Kowal &8>> &fGracz &5" + player.getName() + " &fwytworzyl " + item.getItemMeta().getDisplayName() + " (" + randomPercent + "%)&a!"));
+        player.sendMessage(Utils.format("&7&lMistyczny Kowal &8>> &aPomyslnie wytworzylem twoj miecz!"));
+        Bukkit.getServer().broadcastMessage(Utils.format("&7&lMistyczny Kowal &8>> &fGracz &5" + player.getName() + " &fwytworzyl " + item.getItemMeta().getDisplayName() + " (" + randomPercent + "%)&a!"));
     }
 }

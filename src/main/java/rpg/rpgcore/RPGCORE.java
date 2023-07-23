@@ -628,6 +628,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
         this.getServer().getPluginManager().registerEvents(new NiesyPickUpListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new AkcesoriumPickUpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
@@ -986,6 +987,11 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initBosses() {
         this.bossyManager = new BossyManager();
+        this.getServer().getPluginManager().registerEvents(new DowodcaRozbojnikowListener1_10(), this);
+        this.getServer().getPluginManager().registerEvents(new WodzGoblinowListener10_20(), this);
+        this.getServer().getPluginManager().registerEvents(new KrolGoryliListener20_30(), this);
+        this.getServer().getPluginManager().registerEvents(new PrzekletaDuszaListener30_40(), this);
+        this.getServer().getPluginManager().registerEvents(new TrytonListener40_50(), this);
         this.getServer().getPluginManager().registerEvents(new PiekielnyRycerzListener60_70(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyCzarnoksieznikListener(), this);
         this.getServer().getPluginManager().registerEvents(new MitycznyPajakListener80_90(), this);
