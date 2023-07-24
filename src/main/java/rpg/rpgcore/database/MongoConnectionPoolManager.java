@@ -5,9 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import rpg.rpgcore.utils.Utils;
+
 
 import java.util.ArrayList;
 
@@ -218,11 +216,9 @@ public class MongoConnectionPoolManager {
         this.hellrpg_rybak_armorStands = database.getCollection("hellrpg_rybak_armorStands");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            if (player.hasPermission("*")) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&a&lPomyslnie podlaczono do bazy danych"));
-            }
-        }
+        System.out.println(" ");
+        System.out.println("[RPG-CORE] >> Pomyslnie podlaczono do bazy danych  << [RPG-CORE]");
+        System.out.println(" ");
     }
 
     public MongoCollection<Document> getSpawn() {

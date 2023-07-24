@@ -69,6 +69,7 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
             player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0,false));
             rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
+            rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
 
             player.setLevel(1);
             player.setExp(0);
@@ -137,7 +138,7 @@ public class PlayerJoinListener implements Listener {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        rpgcore.getBackupManager().savePlayer(player, uuid);
+        rpgcore.getUserSaveManager().savePlayer(player, uuid);
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
         }

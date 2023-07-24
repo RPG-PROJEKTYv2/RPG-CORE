@@ -7,11 +7,11 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class BackupManager {
+public class UserSaveManager {
 
     private final RPGCORE rpgcore;
 
-    public BackupManager(final RPGCORE rpgcore) {
+    public UserSaveManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 

@@ -10,6 +10,9 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
+import rpg.rpgcore.BACKUP.BackupManager;
+import rpg.rpgcore.BACKUP.commands.BackupCommand;
+import rpg.rpgcore.BACKUP.database.BackupMongoManager;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
@@ -160,7 +163,7 @@ import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.lvl.LvlCommand;
 import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
-import rpg.rpgcore.managers.BackupManager;
+import rpg.rpgcore.managers.UserSaveManager;
 import rpg.rpgcore.managers.CooldownManager;
 import rpg.rpgcore.managers.NMSManager;
 import rpg.rpgcore.managers.disabled.DisabledManager;
@@ -273,6 +276,7 @@ public final class RPGCORE extends JavaPlugin {
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
+    private BackupMongoManager backupMongo;
     private TeleportManager teleportManager;
     private BanManager banManager;
     private VanishManager vanishManager;
@@ -295,7 +299,7 @@ public final class RPGCORE extends JavaPlugin {
     private MagazynierNPC magazynierNPC;
     private RybakNPC rybakNPC;
     private GuildManager guildManager;
-    private BackupManager backup;
+    private UserSaveManager userSaveManager;
     private HandlarzNPC handlarzNPC;
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
@@ -387,8 +391,8 @@ public final class RPGCORE extends JavaPlugin {
     private MistycznyKowalManager mistycznyKowalManager;
     private GornikNPC gornikNPC;
     private OreManager oreManager;
-
     private KlasyManager klasyManager;
+    private BackupManager backupManager;
 
 
     private int i = 1;
@@ -611,6 +615,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GammaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new DropCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GornikZaplacCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new BackupCommand(this));
     }
 
     private void initEvents() {
@@ -843,6 +848,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initDatabase() {
         this.mongo = new MongoManager(this);
+        this.backupMongo = new BackupMongoManager(this);
     }
 
     private void initManagers() {
@@ -867,7 +873,7 @@ public final class RPGCORE extends JavaPlugin {
         this.guildManager = new GuildManager(this);
         new TabManager(this);
         this.newTargManager = new NewTargManager(this);
-        this.backup = new BackupManager(this);
+        this.userSaveManager = new UserSaveManager(this);
         this.metinyManager = new MetinyManager(this);
         this.serverManager = new ServerManager(this);
         this.listaNPCManager = new ListaNPCManager(this);
@@ -890,6 +896,7 @@ public final class RPGCORE extends JavaPlugin {
         this.ustawieniaKontaManager = new UstawieniaKontaManager(this);
         this.oreManager = new OreManager(this);
         this.klasyManager = new KlasyManager(this);
+        this.backupManager = new BackupManager(this);
     }
 
     private void initNPCS() {
@@ -1073,6 +1080,10 @@ public final class RPGCORE extends JavaPlugin {
         return mongo;
     }
 
+    public BackupMongoManager getBackupMongoManager() {
+        return backupMongo;
+    }
+
     public SpawnManager getSpawnManager() {
         return spawn;
     }
@@ -1171,8 +1182,8 @@ public final class RPGCORE extends JavaPlugin {
         return newTargManager;
     }
 
-    public BackupManager getBackupManager() {
-        return backup;
+    public UserSaveManager getUserSaveManager() {
+        return userSaveManager;
     }
 
     public HandlarzNPC getHandlarzNPC() {
@@ -1467,5 +1478,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public KlasyManager getKlasyManager() {
         return klasyManager;
+    }
+    public BackupManager getBackupManager() {
+        return backupManager;
     }
 }
