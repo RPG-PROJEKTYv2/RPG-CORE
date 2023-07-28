@@ -7,9 +7,11 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chat.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 
 import java.util.Set;
@@ -23,35 +25,28 @@ public class TajemniczaManager {
 
 
     public TajemniczaManager() {
-        // bony 5%
-        this.tajemnicza.add(new Items("1", 0.001, BonType.SREDNIE_5.getBon(), 1));
-        this.tajemnicza.add(new Items("2", 0.001, BonType.DEFENSYWA_5.getBon(), 1));
-        this.tajemnicza.add(new Items("3", 0.001, BonType.KRYTYK_5.getBon(), 1));
-        // szkata z surowcami
-        this.tajemnicza.add(new Items("4", 10.0, GlobalItem.getItem("I5", 1), 1));
-        this.tajemnicza.add(new Items("5", 5, GlobalItem.getItem("I5", 2), 2));
         // set I
-        this.tajemnicza.add(new Items("11", 15.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Helm", Material.LEATHER_HELMET, 3, 1), 1));
-        this.tajemnicza.add(new Items("12", 15.0, ItemHelper.createArmor("&3Uszkodzony Tajemniczy Napiersnik", Material.LEATHER_CHESTPLATE, 3, 1), 1));
-        this.tajemnicza.add(new Items("13", 15.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Spodnie", Material.LEATHER_LEGGINGS, 3, 1), 1));
-        this.tajemnicza.add(new Items("14", 15.0, ItemHelper.createArmor("&3Uszkodzone Tajemnicze Buty", Material.LEATHER_BOOTS, 3, 1), 1));
-        this.tajemnicza.add(new Items("15", 15.0, ItemHelper.createSword("&3Uszkodzony Tajemniczy Miecz", Material.STONE_SWORD, 5, 2, false), 1));
+        this.tajemnicza.add(new Items("1", 16.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lI&8&l]", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("2", 16.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lI&8&l]", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("3", 16.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lI&8&l]", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("4", 16.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lI&8&l]", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
         // set II
-        this.tajemnicza.add(new Items("11", 12.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.GOLD_HELMET, 8, 2), 1));
-        this.tajemnicza.add(new Items("12", 12.0, ItemHelper.createArmor("&3Tajemniczy Napiersnik", Material.GOLD_CHESTPLATE, 8, 2), 1));
-        this.tajemnicza.add(new Items("13", 12.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.GOLD_LEGGINGS, 8, 2), 1));
-        this.tajemnicza.add(new Items("14", 12.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.GOLD_BOOTS, 8, 2), 1));
-        this.tajemnicza.add(new Items("15", 12.0, ItemHelper.createSword("&3Tajemniczy Miecz", Material.IRON_SWORD, 11, 4, false), 1));
-        // set III
-        this.tajemnicza.add(new Items("16", 7.0, ItemHelper.createArmor("&3Ulepszony Tajemniczy Helm", Material.IRON_HELMET, 14, 2), 1));
-        this.tajemnicza.add(new Items("17", 7.0, ItemHelper.createArmor("&3Ulepszony Tajemniczy Napiersnik", Material.IRON_CHESTPLATE, 14, 2), 1));
-        this.tajemnicza.add(new Items("18", 7.0, ItemHelper.createArmor("&3Ulepszony Tajemnicze Spodnie", Material.IRON_LEGGINGS, 14, 2), 1));
-        this.tajemnicza.add(new Items("19", 7.0, ItemHelper.createArmor("&3Ulepszony Tajemnicze Buty", Material.IRON_BOOTS, 14, 2), 1));
-        this.tajemnicza.add(new Items("20", 7.0, ItemHelper.createSword("&3Ulepszony Tajemniczy Miecz", Material.DIAMOND_SWORD, 15, 7, false), 1));
-        // wywar
-        this.tajemnicza.add(new Items("21", 4, LesnikItems.getByItem("POTION", 1), 1));
-        // kufer
-        this.tajemnicza.add(new Items("22", 2.5, GlobalItem.getItem("I1", 1), 2));
+        this.tajemnicza.add(new Items("5", 12.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lII&8&l]", Material.DIAMOND_HELMET, ChanceHelper.getRandInt(7, 20), ChanceHelper.getRandInt(2, 4)), 1));
+        this.tajemnicza.add(new Items("6", 12.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lII&8&l]", Material.DIAMOND_CHESTPLATE, ChanceHelper.getRandInt(8, 22), ChanceHelper.getRandInt(2, 5)), 1));
+        this.tajemnicza.add(new Items("7", 12.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lII&8&l]", Material.DIAMOND_LEGGINGS, ChanceHelper.getRandInt(7, 18), ChanceHelper.getRandInt(2, 4)), 1));
+        this.tajemnicza.add(new Items("8", 12.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lII&8&l]", Material.DIAMOND_BOOTS, ChanceHelper.getRandInt(6, 17), ChanceHelper.getRandInt(2, 7)), 1));
+        // fragment stali
+        this.tajemnicza.add(new Items("9", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
+        // zmianka
+        this.tajemnicza.add(new Items("10", 10.0, GlobalItem.getItem("I50", 1), 1));
+        // podrecznik
+        // oczyszczenie
+        this.tajemnicza.add(new Items("11", 8.0, GlobalItem.getItem("I10", 1), 2));
+        this.tajemnicza.add(new Items("12", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
+        // pozlacany skarb
+        this.tajemnicza.add(new Items("13", 5.0, SkrzynkiOther.getItem("I1", 1),1));
+        // fragment bona
+        this.tajemnicza.add(new Items("14", 0.06, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 2));
     }
 
 

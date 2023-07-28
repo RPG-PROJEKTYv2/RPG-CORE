@@ -227,6 +227,8 @@ import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
 import rpg.rpgcore.npc.rybak.events.RybakEntityInteractListener;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
 import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
+import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
+import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
@@ -317,12 +319,11 @@ public final class RPGCORE extends JavaPlugin {
     private ZamekNieskonczonosciManager zamekNieskonczonosciManager;
     private BonusesManager bonusesManager;
     // ================================ SKRZYNKI INNE ================================
-    private HellcaseManager hellcaseManager;
-    private ZwierzakiManager zwierzakiManager;
+    private PozlacanySkarbManager pozlacanySkarbManager;
     private CiezkaSkrzyniaKowalaManager ciezkaSkrzyniaKowalaManager;
     private SurowceManager surowceManager;
     private TajemniczaManager tajemniczaManager;
-    private PozlacanykuferManager pozlacanykuferManager;
+    private ZwierzakiManager zwierzakiManager;
     // ================================ SKRZYNKI EXPOWISKO ================================
     // EXPOWISKO 1
     private RozbojnikManager najemnikManager;
@@ -389,6 +390,7 @@ public final class RPGCORE extends JavaPlugin {
     private PrzedsionekManager przedsionekManager;
     private UstawieniaKontaManager ustawieniaKontaManager;
     private MistycznyKowalManager mistycznyKowalManager;
+    private RzemieslnikManager rzemieslnikManager;
     private GornikNPC gornikNPC;
     private OreManager oreManager;
     private KlasyManager klasyManager;
@@ -797,6 +799,9 @@ public final class RPGCORE extends JavaPlugin {
         // ...MISTYCZNY KOWAL
         this.getServer().getPluginManager().registerEvents(new MistycznyKowalInventoryClickListener(), this);
 
+        // ...RZEMIESLNIK
+        this.getServer().getPluginManager().registerEvents(new RzemieslnikInventoryClickListener(), this);
+
         // DUNGEONS
 
         // ...ICE TOWER
@@ -918,17 +923,16 @@ public final class RPGCORE extends JavaPlugin {
         this.czarownicaNPC = new CzarownicaNPC(this);
         this.mistycznyKowalManager = new MistycznyKowalManager();
         this.gornikNPC = new GornikNPC(this);
+        this.rzemieslnikManager = new RzemieslnikManager();
     }
 
     private void initChests() {
         this.getServer().getPluginManager().registerEvents(new DropFromChestsListener(this), this);
         // ================================ SKRZYNKI INNE ================================
-        this.hellcaseManager = new HellcaseManager();
-        this.zwierzakiManager = new ZwierzakiManager();
+        this.pozlacanySkarbManager = new PozlacanySkarbManager();
         this.ciezkaSkrzyniaKowalaManager = new CiezkaSkrzyniaKowalaManager();
         this.surowceManager = new SurowceManager();
         this.tajemniczaManager = new TajemniczaManager();
-        this.pozlacanykuferManager = new PozlacanykuferManager();
         this.zwierzakiManager = new ZwierzakiManager();
         // ================================ SKRZYNKI EXPOWISKO ================================
         // EXPOWISKO 1
@@ -1207,8 +1211,8 @@ public final class RPGCORE extends JavaPlugin {
     }
 
     // ================================ SKRZYNKI INNE ================================
-    public HellcaseManager gethellcaseManager() {
-        return hellcaseManager;
+    public PozlacanySkarbManager getPozlacanySkarbManager() {
+        return pozlacanySkarbManager;
     }
 
     public CiezkaSkrzyniaKowalaManager getCiezkaSkrzyniaKowalaManager() {
@@ -1223,8 +1227,8 @@ public final class RPGCORE extends JavaPlugin {
         return tajemniczaManager;
     }
 
-    public PozlacanykuferManager getWartosciowykuferManager() {
-        return pozlacanykuferManager;
+    public ZwierzakiManager getZwierzakiManager() {
+        return zwierzakiManager;
     }
 
     // ================================ SKRZYNKI EXPOWISKA ===============================
@@ -1373,11 +1377,6 @@ public final class RPGCORE extends JavaPlugin {
         return petyManager;
     }
 
-    public ZwierzakiManager getZwierzakiManager() {
-        return zwierzakiManager;
-    }
-
-
     public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
         return zamekNieskonczonosciManager;
     }
@@ -1468,6 +1467,8 @@ public final class RPGCORE extends JavaPlugin {
     public MistycznyKowalManager getMistycznyKowalManager() {
         return mistycznyKowalManager;
     }
+
+    public RzemieslnikManager getRzemieslnikManager() { return rzemieslnikManager; }
     public GornikNPC getGornikNPC() {
         return gornikNPC;
     }

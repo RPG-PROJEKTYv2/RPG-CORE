@@ -16,21 +16,18 @@ public class CiezkaSkrzyniaKowalaManager {
     private final Set<Items> kowal = Sets.newConcurrentHashSet();
 
     public CiezkaSkrzyniaKowalaManager() {
-        // metale
-        this.kowal.add(new Items("1", 4.0, GlobalItem.getItem("I_METAL", 1), 1));
-        this.kowal.add(new Items("2", 3.0, GlobalItem.getItem("I_METAL", 1), 2));
-        this.kowal.add(new Items("3", 2.0, GlobalItem.getItem("I_METAL", 1), 3));
-        // zwoje
-        this.kowal.add(new Items("4", 16.0, GlobalItem.getItem("I10", 1), 1));
-        this.kowal.add(new Items("5", 12.0, GlobalItem.getItem("I10", 1), 2));
-        this.kowal.add(new Items("6", 8.0, GlobalItem.getItem("I10", 1), 3));
+        // fragmenty stali
+        this.kowal.add(new Items("1", 15.0, GlobalItem.getItem("I_FRAGMENT_STALI",1 ),1));
+        this.kowal.add(new Items("2", 13.0, GlobalItem.getItem("I_FRAGMENT_STALI",1 ),2));
+        this.kowal.add(new Items("3", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",1 ),3));
+        // podreczniki
+        this.kowal.add(new Items("4", 12.0, GlobalItem.getItem("I10", 1), 1));
+        this.kowal.add(new Items("5", 10.0, GlobalItem.getItem("I10", 1), 2));
         // oczyszczenie
-        this.kowal.add(new Items("7", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 1));
-        this.kowal.add(new Items("8", 5.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
-        this.kowal.add(new Items("9", 2.5, GlobalItem.getItem("I_OCZYSZCZENIE", 1), 3));
-        // skrzynki
-        this.kowal.add(new Items("10", 1.0, GlobalItem.getItem("I1", 1),1));
-        this.kowal.add(new Items("11", 0.05, GlobalItem.getItem("I6", 1),1));
+        this.kowal.add(new Items("6", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
+        this.kowal.add(new Items("7", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
+        // metal
+        this.kowal.add(new Items("8", 6.0, GlobalItem.getItem("I_METAL", 1), 1));
     }
 
     public Items getDrawnItems(final Player player) {

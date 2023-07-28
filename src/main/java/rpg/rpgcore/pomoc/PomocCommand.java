@@ -4,6 +4,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 

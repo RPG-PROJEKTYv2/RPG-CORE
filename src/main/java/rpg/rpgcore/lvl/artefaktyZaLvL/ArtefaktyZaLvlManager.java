@@ -13,7 +13,7 @@ public class ArtefaktyZaLvlManager {
 
     public void checkArteZaLvl(final Player player, final int lvl) {
         if (lvl == 50) {
-            if (artefaktyZaLvl.getPoziom50().getNadanych() == 5) return;
+            if (artefaktyZaLvl.getPoziom50().getNadanych() == 4) return;
             if (artefaktyZaLvl.getPoziom50().getGracze().contains(player.getName())) return;
             artefaktyZaLvl.getPoziom50().setNadanych(artefaktyZaLvl.getPoziom50().getNadanych() + 1);
             artefaktyZaLvl.getPoziom50().getGracze().add(player.getName());
@@ -23,7 +23,7 @@ public class ArtefaktyZaLvlManager {
             return;
         }
         if (lvl == 60) {
-            if (artefaktyZaLvl.getPoziom60().getNadanych() == 5) return;
+            if (artefaktyZaLvl.getPoziom60().getNadanych() == 4) return;
             if (artefaktyZaLvl.getPoziom60().getGracze().contains(player.getName())) return;
             artefaktyZaLvl.getPoziom60().setNadanych(artefaktyZaLvl.getPoziom60().getNadanych() + 1);
             artefaktyZaLvl.getPoziom60().getGracze().add(player.getName());
@@ -33,7 +33,7 @@ public class ArtefaktyZaLvlManager {
             return;
         }
         if (lvl == 70) {
-            if (artefaktyZaLvl.getPoziom70().getNadanych() == 5) return;
+            if (artefaktyZaLvl.getPoziom70().getNadanych() == 4) return;
             if (artefaktyZaLvl.getPoziom70().getGracze().contains(player.getName())) return;
             artefaktyZaLvl.getPoziom70().setNadanych(artefaktyZaLvl.getPoziom70().getNadanych() + 1);
             artefaktyZaLvl.getPoziom70().getGracze().add(player.getName());

@@ -71,30 +71,30 @@ public class ArtefaktyCommand extends CommandAPI {
             }
         }
         final ArtefaktyZaLvl arteZaLvl = RPGCORE.getInstance().getArtefaktyZaLvlManager().getArtefaktyZaLvl();
-        final List<String> poziom50Names = new ArrayList<>(5);
+        final List<String> poziom50Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom50().getGracze().isEmpty()) {
             poziom50Names.addAll(arteZaLvl.getPoziom50().getGracze());
         }
-        if (poziom50Names.size() < 5) {
-            for (int i = poziom50Names.size(); i < 5; i++) {
+        if (poziom50Names.size() < 4) {
+            for (int i = poziom50Names.size(); i < 4; i++) {
                 poziom50Names.add("Brak");
             }
         }
-        final List<String> poziom60Names = new ArrayList<>(5);
+        final List<String> poziom60Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom60().getGracze().isEmpty()) {
             poziom60Names.addAll(arteZaLvl.getPoziom60().getGracze());
         }
-        if (poziom60Names.size() < 5) {
-            for (int i = poziom60Names.size(); i < 5; i++) {
+        if (poziom60Names.size() < 4) {
+            for (int i = poziom60Names.size(); i < 4; i++) {
                 poziom60Names.add("Brak");
             }
         }
-        final List<String> poziom70Names = new ArrayList<>(5);
+        final List<String> poziom70Names = new ArrayList<>(4);
         if (!arteZaLvl.getPoziom70().getGracze().isEmpty()) {
             poziom70Names.addAll(arteZaLvl.getPoziom70().getGracze());
         }
-        if (poziom70Names.size() < 5) {
-            for (int i = poziom70Names.size(); i < 5; i++) {
+        if (poziom70Names.size() < 4) {
+            for (int i = poziom70Names.size(); i < 4; i++) {
                 poziom70Names.add("Brak");
             }
         }
@@ -165,9 +165,8 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom50Names.get(0) + " &8(&c15%&8)",
                 "&62." + " &6" + poziom50Names.get(1) + " &8(&c10%&8)",
-                "&e3." + " &e" + poziom50Names.get(2) + " &8(&c10%&8)",
-                "&74." + " &7" + poziom50Names.get(3) + " &8(&c5%&8)",
-                "&75." + " &7" + poziom50Names.get(4) + " &8(&c5%&8)"
+                "&e3." + " &7" + poziom50Names.get(2) + " &8(&c5%&8)",
+                "&74." + " &7" + poziom50Names.get(3) + " &8(&c5%&8)"
         )).toItemStack());
         gui.setItem(11, new ItemBuilder(Material.SIGN).setName("&2Bon Sredniej Defensywy").setLore(Arrays.asList(
                 "",
@@ -178,10 +177,9 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom60Names.get(0) + " &8(&215%&8)",
                 "&62." + " &6" + poziom60Names.get(1) + " &8(&210%&8)",
-                "&e3." + " &e" + poziom60Names.get(2) + " &8(&210%&8)",
-                "&74." + " &7" + poziom60Names.get(3) + " &8(&25%&8)",
-                "&75." + " &7" + poziom60Names.get(4) + " &8(&25%&8)"
-        )).toItemStack());
+                "&e3." + " &7" + poziom60Names.get(2) + " &8(&25%&8)",
+                "&74." + " &7" + poziom60Names.get(3) + " &8(&25%&8)"
+                )).toItemStack());
         gui.setItem(12, new ItemBuilder(Material.SIGN).setName("&5Bon Szansy Na Cios Krytyczny").setLore(Arrays.asList(
                 "",
                 "&4&lBONUS",
@@ -191,9 +189,8 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom70Names.get(0) + " &8(&515%&8)",
                 "&62." + " &6" + poziom70Names.get(1) + " &8(&510%&8)",
-                "&e3." + " &e" + poziom70Names.get(2) + " &8(&510%&8)",
-                "&74." + " &7" + poziom70Names.get(3) + " &8(&55%&8)",
-                "&75." + " &7" + poziom70Names.get(4) + " &8(&55%&8)"
+                "&e3." + " &7" + poziom70Names.get(2) + " &8(&55%&8)",
+                "&74." + " &7" + poziom70Names.get(3) + " &8(&55%&8)"
         )).toItemStack());
 
         gui.setItem(13, new ItemBuilder(Artefakty.A1.getItem().clone()).setLoreCrafting(Artefakty.A1.getItem().clone().getItemMeta().getLore(), Arrays.asList(

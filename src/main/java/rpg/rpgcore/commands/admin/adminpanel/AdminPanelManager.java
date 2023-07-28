@@ -110,8 +110,7 @@ public class AdminPanelManager {
                 "&eSilny na &6Zywiolak Ognia&7: &f+9.59%",
                 "&ePrzeszycie Bloku Ciosu: &f+5.56%",
                 "&cWymagany Poziom: &650",
-                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
-                ""
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------"
         )).toItemStack().clone());
         gui.setItem(5, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&b&lLodowa Klata").setLore(Arrays.asList(
                 "&7Obrona: &f250",
@@ -121,14 +120,14 @@ public class AdminPanelManager {
                 "&eSrednia Defensywa: &f+40%",
                 "&eOdpornosc Na Potwory: &f+10%",
                 "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
-                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
                 ""
                 )).toItemStack().clone());
         gui.setItem(6, new ItemBuilder(Material.DIAMOND_HELMET).setName("&b&lLodowy Helm").setLore(Arrays.asList(
                 "&7Obrona: &f250",
                 "&7Ciernie: &f50",
                 "",
-                "&8&l&m-------- &8&l&n( &9&lMagiczne Zaczarowanie &8&l&n) &8&l&m--------",
+                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
                 "&eSrednia Defensywa: &f+40%",
                 "&eOdpornosc Na Przeciwnikow: &f+10%",
                 "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
@@ -269,14 +268,9 @@ public class AdminPanelManager {
     }
     public void openInneCaseGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&2&lSkrzynki &4&lINNE &f- ADMINISTRACJA"));
-        gui.setItem(0, GlobalItem.getItem("I1",1));
-        gui.setItem(1, GlobalItem.getItem("I2",1));
-        gui.setItem(2, GlobalItem.getItem("I3",1));
-        gui.setItem(3, GlobalItem.getItem("I4",1));
-        gui.setItem(4, GlobalItem.getItem("I5",1));
-        gui.setItem(5, GlobalItem.getItem("I6",1));
-        gui.setItem(6, GlobalItem.getItem("I22",1));
-
+        for (final SkrzynkiOther skrzynkiOther : SkrzynkiOther.values()) {
+            gui.setItem(gui.firstEmpty(), skrzynkiOther.getItemStack());
+        }
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }

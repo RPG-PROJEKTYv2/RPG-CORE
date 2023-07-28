@@ -117,7 +117,7 @@ public class EntityDamageEntityListener implements Listener {
                 entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
                 entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
                 entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
-                entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
+                entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")|| entityName.equalsIgnoreCase("Rzemieslnik")) {
             e.setCancelled(true);
             return;
         }

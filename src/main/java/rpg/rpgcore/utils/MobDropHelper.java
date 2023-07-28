@@ -72,12 +72,12 @@ public class    MobDropHelper {
             szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
         }
 
-        final double akceDropChance50lvl= getDropChance(szczescie, 0.5);
-        final double akceDropChance50plus = getDropChance(szczescie, 0.3);
-        final double niesDropChance50lvl = getDropChance(szczescie, 0.8);
-        final double niesDropChance50plus = getDropChance(szczescie, 0.5);
-        final double chestDropChance50lvl = getDropChance(szczescie, 2.7);
-        final double chestDropChance50plus = getDropChance(szczescie, 1.25);
+        final double akceDropChance50lvl= getDropChance(szczescie, 0.1);
+        final double akceDropChance50plus = getDropChance(szczescie, 0.05);
+        final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
+        final double niesDropChance50plus = getDropChance(szczescie, 0.03);
+        final double chestDropChance50lvl = getDropChance(szczescie, 1);
+        final double chestDropChance50plus = getDropChance(szczescie, 1);
 
 
         rpgcore.getOsManager().find(uuid).setMobyProgress(rpgcore.getOsManager().find(uuid).getMobyProgress() + 1);
@@ -87,19 +87,19 @@ public class    MobDropHelper {
         }
 
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
-        // TODO PODSTAWOWY HELLCASE DROPI TYLKO Z KUFRA WARTOSCIOWEGO BADZ MISJI :]
-        // WARTOSCIOWY KUFER
-        addDropPlayer(player, GlobalItem.getItem("I1", 1), getDropChance(szczescie, 0.01), true, true, entity);
+        // POZLACANY SKARB
+        addDropPlayer(player, SkrzynkiOther.getItem("I1", 1), getDropChance(szczescie, 0.01), true, true, entity);
         // SKRZYNIA KOWALA
-        addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+        // TAJEMNICZA SKRZYNIA
+        addDropPlayer(player, SkrzynkiOther.getItem("I4", 1), getDropChance(szczescie, 0.55), true, true, entity);
+        // SKRZYNIA Z SUROWCAMI
+        addDropPlayer(player, SkrzynkiOther.getItem("I5", 1), getDropChance(szczescie, 1.2), true, true, entity);
         // SKRZYNIA ZE ZWIERZAKAMI
         //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
-        // TAJEMNICZA SKRZYNIA
-        addDropPlayer(player, GlobalItem.getItem("I4", 1), getDropChance(szczescie, 0.06), true, true, entity);
-        // SKRZYNIA Z SUROWCAMI
-        addDropPlayer(player, GlobalItem.getItem("I5", 1), getDropChance(szczescie, 2), true, true, entity);
+
         // LESNIK NPC
-        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1.0), true, true, entity);
+        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
         // FRAGMENT STALI
         addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.025), true, true, entity);
 
@@ -325,6 +325,7 @@ public class    MobDropHelper {
             case "Zywiolak Ognia Lvl. 66":
             case "Zywiolak Ognia Lvl. 68":
                 addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false ,entity);
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
@@ -333,7 +334,6 @@ public class    MobDropHelper {
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.09), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I3.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I9.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
-                addDropPlayer(player, Bossy.I60_70.getItemStack().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 if (przyrodnikMission.getNumber() == 6) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("60-70"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }

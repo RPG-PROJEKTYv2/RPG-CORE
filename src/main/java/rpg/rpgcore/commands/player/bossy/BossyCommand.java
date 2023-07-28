@@ -60,7 +60,7 @@ public class BossyCommand extends CommandAPI {
                 " ",
                 "&eLokalizacja obok gracza &8&l(&4&lPRZYWOLANIE&8&l)"
         )).addGlowing().toItemStack().clone());
-        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&b&lKrol Lodu").setLore(Arrays.asList(" ", "&7Lokalizacja XYZ: &6&l-4 | 66 | 122 &8&l(&f&lICETOWER&8&l)")).addGlowing().toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(Material.PAPER, 1).setName("&b&lKrol Lodu").setLore(Arrays.asList(" ", "&eLokalizacja XYZ: &6&l-4 | 66 | 122 &8&l(&f&lICETOWER&8&l)")).addGlowing().toItemStack().clone());
         gui.setItem(6, new ItemBuilder(Material.PAPER,1).setName("&c&lPiekielny Rycerz").setLore(Arrays.asList(
                 " ",
                 "&eLokalizacja obok gracza &8&l(&4&lPRZYWOLANIE&8&l)"

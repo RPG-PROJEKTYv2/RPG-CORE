@@ -171,7 +171,11 @@ public class PlayerInteractEntityListener implements Listener {
             e.setCancelled(true);
             final Player playerRightClicked = (Player) e.getRightClicked();
             final String entityName = Utils.removeColor(playerRightClicked.getName());
-
+            // rzemieslnik
+            if (entityName.equalsIgnoreCase("Rzemieslnik")) {
+                rpgcore.getRzemieslnikManager().openGUI(player);
+                return;
+            }
             // DUSZOLOG
             if (entityName.equalsIgnoreCase("Duszolog")) {
                 rpgcore.getDuszologNPC().openMainGUI(player);
@@ -196,6 +200,7 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getKlasyManager().openGUI(player);
                 return;
             }
+
 
             // GORNIK
             if (entityName.equalsIgnoreCase("Gornik")) {
@@ -258,7 +263,7 @@ public class PlayerInteractEntityListener implements Listener {
                         entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
                         entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medrzec") || entityName.equalsIgnoreCase("Gornik") ||
                         entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
-                        entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")) {
+                        entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")|| entityName.equalsIgnoreCase("Rzemieslnik")) {
                     e.setCancelled(true);
                     return;
                 }

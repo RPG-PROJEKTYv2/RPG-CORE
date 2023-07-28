@@ -8,6 +8,7 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 
 import java.util.*;
 
@@ -61,13 +62,13 @@ public enum CzarownicaMissions {
                 itemList.add(GlobalItem.I18.getItemStack());
                 break;
             case 2:
-                itemList.add(GlobalItem.I4.getItemStack());
+                itemList.add(Skrzynki.I2.getItemStack());
                 break;
             case 3:
                 itemList.add(mission3Item);
                 break;
             case 4:
-                itemList.add(GlobalItem.I1.getItemStack());
+                itemList.add(Skrzynki.I2.getItemStack());
                 break;
             case 5:
                 itemList.add(mission5Item);
@@ -107,11 +108,11 @@ public enum CzarownicaMissions {
 
         if (user.getMission() == 9) {
             map.put(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
-            map.put(new ItemBuilder(GlobalItem.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 4);
-            map.put(new ItemBuilder(GlobalItem.I2.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
-            map.put(new ItemBuilder(GlobalItem.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 12);
-            map.put(new ItemBuilder(GlobalItem.I5.getItemStack().clone()).setAmount(1).toItemStack().clone(), 64);
-            map.put(new ItemBuilder(GlobalItem.I6.getItemStack().clone()).setAmount(1).toItemStack().clone(), 2);
+            map.put(new ItemBuilder(SkrzynkiOther.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 4);
+            map.put(new ItemBuilder(SkrzynkiOther.I2.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
+            map.put(new ItemBuilder(SkrzynkiOther.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 12);
+            map.put(new ItemBuilder(SkrzynkiOther.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 64);
+            map.put(new ItemBuilder(SkrzynkiOther.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 8);
         }
 
         for (final ItemStack item : map.keySet()) {

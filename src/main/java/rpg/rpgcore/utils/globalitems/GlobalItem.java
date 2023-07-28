@@ -14,15 +14,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public enum GlobalItem {
-    // SKRZYNKI //
-    // RARE
-    I1("I1", new ItemBuilder(Material.ENDER_CHEST).setName("&e&lPozlacany Kufer").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).hideFlag().toItemStack().clone()),
-    I2("I2", new ItemBuilder(Material.CHEST).setName("&7&lCiezka Skrzynia Kowala").setLore(Arrays.asList("&8&oTa skrzynia zawiera asortyment kowalski...")).hideFlag().toItemStack().clone()),
-    I3("I3", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia Ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "Normal").hideFlag().toItemStack().clone()),
-    // INNE
-    I4("I4", new ItemBuilder(Material.CHEST).setName("&3Tajemnicza Skrzynia").setLore(Arrays.asList("&8&oSkrzynia ta zawiera cenne przedmioty...")).hideFlag().toItemStack().clone()),
-    I5("I5", new ItemBuilder(Material.CHEST).setName("&2Skrzynia Z Surowcami").setLore(Arrays.asList("&8&oSkrzynia ta zawiera rozne materialy...")).hideFlag().toItemStack().clone()),
-    I6("I6", new ItemBuilder(Material.CHEST).setName("&4&lHELLCASE").setLore(Arrays.asList("&8&oSerwerowa skrzynia skrywa cenne przedmioty...")).hideFlag().toItemStack().clone()),
+    I_FRAGMENT_BONA("I_FRAGMENT_BONA", new ItemBuilder(Material.BOWL).setName("&3&lFragment Tajemniczego Bona").setLore(Arrays.asList("", "&7Wartosc nie do opisania...")).toItemStack().clone()),
     I_FRAGMENT_STALI("I_FRAGMENT_STALI", new ItemBuilder(Material.PRISMARINE_CRYSTALS).setName("&8&lFragment Magicznej Stali").toItemStack().clone()),
     I_METAL("I_METAL", new ItemBuilder(Material.IRON_INGOT).setName("&7&lStal Kowalska").setLore(Arrays.asList("&dMagiczny &8przedmiot uzywany do wykucia", "&8najlepszych ostrzy, jakie widzial ten swiat.", "&8Nie tylko &achroni &8twoj przedmiot przed &cspaleniem", "&8ale daje ci szanse na &apewne", "&8ulepszenie twojego przedmiotu")).addGlowing().toItemStack().clone()),
     I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR, 1).setName("&fLza Aniola").setLore(Arrays.asList("&8Lza uroniona przez &fAniola&8.", "&8Jest tak czysta ze uzycie", "&8jej w polaczeniu z twoim przedmiotem", "&8w &6Kowadle &8sprawi, ze bedziesz mogl", "&8jeszcze raz ulepszyc swoj przedmiot")).addGlowing().toItemStack().clone()),
@@ -39,8 +31,6 @@ public enum GlobalItem {
     I16("I16", new ItemBuilder(Material.STONE).setName("&7Kamien").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I17("I17", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
-
-    I22("I22", new ItemBuilder(Material.CHEST).setName("&e&lSkrzynia ze Zwierzakami").setLore(Arrays.asList("&8&oOtworz i zobacz co skrywa...")).addTagString("Type", "ItemShop").hideFlag().toItemStack().clone()),
 
     // Zmianki
     I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 13).setName("&d&lKamien Magicznego Zaczarowania").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu lub zbroi")).toItemStack().clone()),

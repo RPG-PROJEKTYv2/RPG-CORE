@@ -14,9 +14,11 @@ import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 
 
@@ -54,36 +56,39 @@ public class DropFromChestsListener implements Listener {
 
                 final OsUser osUser = rpgcore.getOsManager().find(player.getUniqueId());
                 // ================================ SKRZYNKI INNE ================================
-                // WARTOSCIOWY KUFER
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
+                // POZLACANY SKARB
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.getByName("I1").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I1", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I1", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
-                        final Items item = rpgcore.getWartosciowykuferManager().getDrawnItems(player);
+                        final Items item = rpgcore.getPozlacanySkarbManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
-                        final ItemStack is = item.getRewardItem();
+                        ItemStack is = item.getRewardItem();
+                        if (is.equals(GlobalItem.getItem("I_FRAGMENT_BONA", 1))) {
+                            Bukkit.broadcastMessage(" ");
+                            Bukkit.broadcastMessage(Utils.format("&e&lPozlacany Skarb &8>> &7Gracz &6" + player.getName() + " &7znalazl &3&lFragment Tajemniczego Bona&7!"));
+                            Bukkit.broadcastMessage(" ");
+                        }
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
                     }
                 }
-                // SKRZYNIA KOWALA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
+                // CIEZKA SKRZYNIA KOWALA
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.getByName("I2").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I2", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I2", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
                         final Items item = rpgcore.getCiezkaSkrzyniaKowalaManager().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
+                        if (item == null) { return; }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
@@ -91,62 +96,35 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // SKRZYNIA Z SUROWCAMI
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.getByName("I5").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I5", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I5", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
                         final Items item = rpgcore.getSurowceManager().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
+                        if (item == null) { return; }
                         final ItemStack is = item.getRewardItem();
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
                     }
                 }
-                // HELLCASE
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I6").getItemStack().getItemMeta().getDisplayName()))) {
-                    if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I6", 1));
-                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
-                        if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
-                            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        final Items item = rpgcore.gethellcaseManager().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
-                        ItemStack is = item.getRewardItem();
-
-                        /*if (is.getType().equals(Material.STORAGE_MINECART)) {
-                            is = AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1, 10), ChanceHelper.getRandInt(1, 5), ChanceHelper.getRandInt(1, 5), ChanceHelper.getRandInt(1, 10), "&7Naszyjnik Najemnika");
-                        }*/
-
-                        is.setAmount(item.getAmount());
-                        player.getInventory().addItem(is);
-                        return;
-                    }
-                }
                 // TAJEMNICZA SKRZYNIA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.getByName("I4").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I4", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I4", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
                         final Items item = rpgcore.getTajemniczaManager().getDrawnItems(player);
-                        if (item == null) {
-                            return;
-                        }
+                        if (item == null) { return; }
                         ItemStack is = item.getRewardItem();
-                        if (is.equals(BonType.SREDNIE_5.getBon()) || is.equals(BonType.KRYTYK_5.getBon()) || is.equals(BonType.DEFENSYWA_5.getBon())) {
+                        if (is.equals(GlobalItem.getItem("I_FRAGMENT_BONA", 1))) {
                             Bukkit.broadcastMessage(" ");
-                            Bukkit.broadcastMessage(Utils.format("&3Tajemnicza Skrzynia &8>> &7Gracz &6" + player.getName() + " &7znalazl jeden z &6rzadkich &7przedmiotow!"));
+                            Bukkit.broadcastMessage(Utils.format("&3Tajemnicza Skrzynia &8>> &7Gracz &6" + player.getName() + " &7znalazl &3&lFragment Tajemniczego Bona&7!"));
                             Bukkit.broadcastMessage(" ");
                         }
                         is.setAmount(item.getAmount());
@@ -154,10 +132,13 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
+
+
+
                 // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
-                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I3").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.I_PETY1.getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I3", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I_PETY1", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
@@ -171,9 +152,9 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
                 // SKRZYNIA ZE ZWIERZAKAMI RARE ITEMSHOP
-              if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GlobalItem.getByName("I22").getItemStack().getItemMeta().getDisplayName()))) {
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.I_PETY2.getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
-                        player.getInventory().removeItem(GlobalItem.getItem("I22", 1));
+                        player.getInventory().removeItem(SkrzynkiOther.getItem("I_PETY2", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);

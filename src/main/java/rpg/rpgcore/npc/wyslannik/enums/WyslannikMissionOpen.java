@@ -2,17 +2,18 @@ package rpg.rpgcore.npc.wyslannik.enums;
 
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 
 public enum WyslannikMissionOpen {
 
-    M1(1, "&6Skrzynia Rozbojnika",12, GlobalItem.getItem("I4", 1)),
-    M2(2, "&2Skrzynia Goblina",20, GlobalItem.getItem("I4", 1)),
-    M3(3, "&7Skrzynia Goryla",25, GlobalItem.getItem("I4", 1)),
-    M4(4, "&8Skrzynia Zjawy",32, GlobalItem.getItem("I4", 2)),
-    M5(5, "&3Skrzynia Straznika Swiatyni",36, GlobalItem.getItem("I4", 2)),
-    M6(6, "&bSkrzynia Mroznego Wilka",40, GlobalItem.getItem("I4", 2)),
-    M7(7, "&6Skrzynia Zywiolaka Ognia",48, GlobalItem.getItem("I4", 3)),
-    M8(8, "&fSkrzynia Mrocznej Duszy",56, GlobalItem.getItem("I4", 3));
+    M1(1, "&6Skrzynia Rozbojnika",12, SkrzynkiOther.getItem("I4", 1)),
+    M2(2, "&2Skrzynia Goblina",20, SkrzynkiOther.getItem("I4", 1)),
+    M3(3, "&7Skrzynia Goryla",25, SkrzynkiOther.getItem("I4", 1)),
+    M4(4, "&8Skrzynia Zjawy",32, SkrzynkiOther.getItem("I4", 2)),
+    M5(5, "&3Skrzynia Straznika Swiatyni",36, SkrzynkiOther.getItem("I4", 2)),
+    M6(6, "&bSkrzynia Mroznego Wilka",40, SkrzynkiOther.getItem("I4", 2)),
+    M7(7, "&6Skrzynia Zywiolaka Ognia",48, SkrzynkiOther.getItem("I4", 3)),
+    M8(8, "&fSkrzynia Mrocznej Duszy",56, SkrzynkiOther.getItem("I4", 3));
     private final int mission;
     private final String chestName;
     private final int reqAmount;
