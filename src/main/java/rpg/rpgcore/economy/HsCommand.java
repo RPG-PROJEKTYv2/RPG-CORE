@@ -26,39 +26,10 @@ public class HsCommand extends CommandAPI {
 
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-
-        if (args.length == 0) {
-            player.sendMessage(Utils.format("&7Twoj aktualny stan &4&lH&6&lS&7: &c" + Utils.spaceNumber(String.valueOf(rpgcore.getUserManager().find(player.getUniqueId()).getHellcoins()))));
+        if (args.length > 0) {
+            player.sendMessage(Utils.poprawneUzycie("hs"));
             return;
         }
-
-        if (args.length == 2 && args[0].equals("wyplac")) {
-            int amount;
-            try {
-                amount = Integer.parseInt(args[1]);
-            } catch (NumberFormatException e) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Niepoprawna liczba!"));
-                return;
-            }
-            if (amount < 1) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Niepoprawna liczba!"));
-                return;
-            }
-
-            User user = rpgcore.getUserManager().find(player.getUniqueId());
-
-            if (user.getHellcoins() < amount) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie posiadasz tylu &4&lH&6&lS&7!"));
-                return;
-            }
-
-            user.setHellcoins(user.getHellcoins() - amount);
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(player.getUniqueId(), user));
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wyplacono &6" + Utils.spaceNumber(String.valueOf(amount)) + " &4&lH&6&lS&a!"));
-            player.getInventory().addItem(GlobalItem.getHells(amount).clone());
-            return;
-        }
-
-        player.sendMessage(Utils.poprawneUzycie("hs [wyplac] [ilosc]"));
+        player.sendMessage(Utils.format("&7Twoj aktualny stan &4&lH&6&lS&7: &c" + Utils.spaceNumber(String.valueOf(rpgcore.getUserManager().find(player.getUniqueId()).getHellcoins()))));
     }
 }

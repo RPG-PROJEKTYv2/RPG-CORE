@@ -20,17 +20,10 @@ public class BanCommand extends CommandAPI {
         this.setRankLevel(RankType.MOD);
         this.rpgcore = rpgcore;
     }
-
-    private void sendHelp(final CommandSender sender) {
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
-        sender.sendMessage(Utils.format("&c/ban <gracz> [-s] [powod] &7- blokuje gracza na zawsze za podany powod, [-s] jesli ma sie nie pokazywac na chacie"));
-        sender.sendMessage(Utils.format("&8-_-_-_-_-_-_-_-_-_-_-{&4&lBAN&8}-_-_-_-_-_-_-_-_-_-_-"));
-    }
-
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         if (args.length < 1) {
-            sendHelp(sender);
+            sender.sendMessage(Utils.format(Utils.poprawneUzycie("ban <gracz> [-s] <powod>")));
             return;
         }
         final String senderName = sender.getName();

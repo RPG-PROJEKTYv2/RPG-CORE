@@ -25,6 +25,7 @@ import rpg.rpgcore.bao.events.BAOPlayerInteract;
 import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikBossManager;
 import rpg.rpgcore.bossy.events.*;
 import rpg.rpgcore.chat.ChatCommand;
 import rpg.rpgcore.chat.ChatManager;
@@ -231,8 +232,8 @@ import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
-import rpg.rpgcore.npc.wyslannik.WyslannikInventoryClickListener;
-import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
+import rpg.rpgcore.npc.oldwyslannik.WyslannikInventoryClickListener;
+import rpg.rpgcore.npc.oldwyslannik.WyslannikNPC;
 import rpg.rpgcore.osiagniecia.OsManager;
 import rpg.rpgcore.osiagniecia.OsiagnieciaCommand;
 import rpg.rpgcore.osiagniecia.events.OsInventoryClickListener;
@@ -306,6 +307,7 @@ public final class RPGCORE extends JavaPlugin {
     private KowalNPC kowalNPC;
     private NewTargManager newTargManager;
     private KolekcjonerNPC kolekcjonerNPC;
+    private PrzekletyCzarnoksieznikBossManager przekletyCzarnoksieznikBossManager;
     private MetinyManager metinyManager;
     private MetinologNPC metinologNPC;
     private ServerManager serverManager;
@@ -631,6 +633,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ItemSpawnListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BlockInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
@@ -874,6 +877,7 @@ public final class RPGCORE extends JavaPlugin {
         this.muteManager = new MuteManager(this);
         this.msgManager = new MSGManager();
         this.tradeManager = new TradeManager();
+        this.przekletyCzarnoksieznikBossManager = new PrzekletyCzarnoksieznikBossManager(this);
         this.cooldownManager = new CooldownManager();
         this.guildManager = new GuildManager(this);
         new TabManager(this);
@@ -1371,6 +1375,10 @@ public final class RPGCORE extends JavaPlugin {
 
     public LesnikNPC getLesnikNPC() {
         return lesnikNPC;
+    }
+
+    public PrzekletyCzarnoksieznikBossManager getPrzekletyCzarnoksieznikBossManager() {
+        return przekletyCzarnoksieznikBossManager;
     }
 
     public PetyManager getPetyManager() {

@@ -1,4 +1,4 @@
-package rpg.rpgcore.npc.wyslannik.objects;
+package rpg.rpgcore.npc.oldwyslannik.objects;
 
 import org.bson.Document;
 

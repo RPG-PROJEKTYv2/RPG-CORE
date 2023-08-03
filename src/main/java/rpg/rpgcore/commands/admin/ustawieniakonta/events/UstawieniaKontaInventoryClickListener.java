@@ -25,7 +25,7 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
+import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;

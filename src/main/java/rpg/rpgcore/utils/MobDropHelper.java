@@ -88,7 +88,7 @@ public class    MobDropHelper {
 
         // -------------------- SKRZYNKI PODSTAWOWE --------------------
         // POZLACANY SKARB
-        addDropPlayer(player, SkrzynkiOther.getItem("I1", 1), getDropChance(szczescie, 0.01), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I1", 1), getDropChance(szczescie, 0.02), true, true, entity);
         // SKRZYNIA KOWALA
         addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // TAJEMNICZA SKRZYNIA
@@ -346,6 +346,8 @@ public class    MobDropHelper {
             // BOSS
             case "[BOSS] Przeklety Czarnoksieznik":
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
+                Bukkit.getServer().broadcastMessage(" ");
+                rpgcore.getPrzekletyCzarnoksieznikBossManager().LosBONUS(player);
                 rpgcore.getBossyManager().reset70_80();
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);

@@ -100,40 +100,6 @@ public class AdminPanelManager {
         for (final LesnikItems lesnikItems : LesnikItems.values()) {
             gui.setItem(gui.firstEmpty(), lesnikItems.getItem());
         }
-        gui.setItem(4, new ItemBuilder(Material.DIAMOND_SWORD).setName("&b&lLodowy Sztylet").setLore(Arrays.asList(
-                "&7Obrazenia: &c110",
-                "&7Obrazenia na potwory: &c37",
-                "",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
-                "&eDodatkowe Obrazenia: &f+40",
-                "&eSrednie Obrazenia: &f+40%",
-                "&eSilny na &6Zywiolak Ognia&7: &f+9.59%",
-                "&ePrzeszycie Bloku Ciosu: &f+5.56%",
-                "&cWymagany Poziom: &650",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------"
-        )).toItemStack().clone());
-        gui.setItem(5, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&b&lLodowa Klata").setLore(Arrays.asList(
-                "&7Obrona: &f250",
-                "&7Ciernie: &f50",
-                "",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
-                "&eSrednia Defensywa: &f+40%",
-                "&eOdpornosc Na Potwory: &f+10%",
-                "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
-                ""
-                )).toItemStack().clone());
-        gui.setItem(6, new ItemBuilder(Material.DIAMOND_HELMET).setName("&b&lLodowy Helm").setLore(Arrays.asList(
-                "&7Obrona: &f250",
-                "&7Ciernie: &f50",
-                "",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
-                "&eSrednia Defensywa: &f+40%",
-                "&eOdpornosc Na Przeciwnikow: &f+10%",
-                "&eZwiekszona Defensywa Przeciwko &6Zywiolak Ognia&7: 10%",
-                "&8&l&m-------- &8&l&m( &9&lMagiczne Zaczarowanie &8&l&m) &8&l&m--------",
-                ""
-        )).toItemStack().clone());
         gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }

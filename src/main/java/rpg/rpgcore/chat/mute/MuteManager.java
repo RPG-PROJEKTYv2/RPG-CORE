@@ -53,6 +53,8 @@ public class MuteManager {
 
         if (!(silent)) {
             rpgcore.getServer().broadcastMessage(Utils.muteBroadcast(nameOfPlayerToMute, muteSender, String.valueOf(reason), muteExpiry));
+        } else {
+            Bukkit.getPlayer(muteSender).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Wyciszyles gracza: &c" + nameOfPlayerToMute + " &7Wygasa: &c" + muteExpiry + " &7Powod: &c" + String.valueOf(reason)));
         }
 
 
@@ -97,8 +99,9 @@ public class MuteManager {
         }
         if (!(silent)) {
             rpgcore.getServer().broadcastMessage(Utils.muteBroadcast(nameOfThePlayerToTempMute, adminName, String.valueOf(reason), expiryDateInString));
+        } else {
+            Bukkit.getPlayer(adminName).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Wyciszyles gracza: &c" + playerToTempMute + " &7Wygasa: &c" + expiryDateInString + " &7Powod: &c" + String.valueOf(reason)));
         }
-
         final String tempMuteInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempMuteExpireDate) + ";" + Utils.dateFormat.format(tempMuteDate);
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().mutePlayer(uuidPlayerToTempMute, tempMuteInfo));
 

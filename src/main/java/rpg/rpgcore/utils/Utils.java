@@ -131,11 +131,11 @@ public class Utils {
     }
 
     public static String banBroadcast(final String namePlayerToBan, final String senderName, final String reason, final String banExpiry) {
-        return (BANPREFIX + format("&7Gracz &c" + namePlayerToBan + " &7zostal zbanowany na serwerze przez &c" + senderName + "&7. Wygasa: " + banExpiry + "&7. Powod: &c" + reason));
+        return (BANPREFIX + format("&7Gracz &c" + namePlayerToBan + " &7zostal zbanowany na serwerze przez &c" + senderName + "&7. Wygasa: &c" + banExpiry + "&7. Powod: &c" + reason));
     }
 
     public static String muteBroadcast(final String namePlayerToMute, final String senderName, final String reason, final String muteExpiry) {
-        return (MUTEPREFIX + format("&7Gracz &c" + namePlayerToMute + " &7zostal wyciszony na serwerze przez &c" + senderName + "&7. Wygasa: " + muteExpiry + "&7. Powod: &c" + reason));
+        return (MUTEPREFIX + format("&7Gracz &c" + namePlayerToMute + " &7zostal wyciszony na serwerze przez &c" + senderName + "&7. Wygasa: &c" + muteExpiry + "&7. Powod: &c" + reason));
     }
 
 

@@ -200,7 +200,7 @@ public class BossyManager {
 
     public ArmorStand spawnArmorStandOnPlace70_80(final Location location) {
         final Location toSpawn = getSpawnLocation(location);
-        System.out.println(toSpawn.serialize().toString());
+        //System.out.println(toSpawn.serialize().toString());
         final ArmorStand as = location.getWorld().spawn(toSpawn, ArmorStand.class);
         final ItemStack item = Bossy.I2.getItemStack().clone();
         as.setGravity(false);

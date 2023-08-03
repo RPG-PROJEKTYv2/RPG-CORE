@@ -145,8 +145,12 @@ public class PlayerInteractEntityListener implements Listener {
             e.setCancelled(true);
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             if (entityName.equals("Czarownica")) {
-                rpgcore.getCzarownicaNPC().click(player);
-                return;
+                if (user.getLvl() > 74) {
+                    rpgcore.getCzarownicaNPC().click(player);
+                    return;
+                } else {
+                    player.sendMessage(Utils.format("&5&lCzarownica &8>> &7Twoj poziom jest zbyt niski... &8&l[&4&l75&8&l]"));
+                }
             }
         }
         if (e.getRightClicked().getType().equals(EntityType.IRON_GOLEM)) {

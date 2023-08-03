@@ -30,6 +30,9 @@ public class ZmiankiManager {
         player.openInventory(gui);
     }
 
+    public ItemStack ItemToBlock() {
+        return new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack();
+    }
 
     public ItemStack rollNewBonuses(final ItemStack is, final Player player) {
         final ItemMeta meta = is.getItemMeta();

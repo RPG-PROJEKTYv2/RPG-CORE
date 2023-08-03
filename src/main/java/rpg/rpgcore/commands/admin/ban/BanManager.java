@@ -53,6 +53,8 @@ public class BanManager {
         }
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfPlayerToBan, banSender, String.valueOf(reason), banExpiry));
+        } else {
+            Bukkit.getPlayer(banSender).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfPlayerToBan + " &7Wygasa: &c" + banExpiry + " &7Powod:&c" + String.valueOf(reason)));
         }
 
         final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
@@ -113,6 +115,8 @@ public class BanManager {
         }
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfThePlayerToTempBan, adminName, String.valueOf(reason), Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate)));
+        } else {
+            Bukkit.getPlayer(adminName).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfThePlayerToTempBan + " &7Wygasa: &c" + Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate) + " &7Powod: &c" + String.valueOf(reason)));
         }
 
         final String tempBanInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempBanExpireDate) + ";" + Utils.dateFormat.format(tempBanDate);

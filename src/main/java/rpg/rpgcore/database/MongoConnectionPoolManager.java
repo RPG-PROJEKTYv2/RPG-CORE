@@ -40,6 +40,9 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_oreLocations;
     private final MongoCollection<Document> hellrpg_wyslannik;
     //private final MongoCollection<Document> hellrpg_przykladowyNPC; // TU TWORZYSZ ZMIENNA DO KOLEKCJI ZEBY MOC SIE DO NIEJ ODOWLAC !!!!
+
+    private final MongoCollection<Document> hellrpg_PrzekletyCzarnoksieznikEffect;
+
     private final MongoCollection<Document> hellrpg_kociolki;
     private final MongoCollection<Document> hellrpg_serwerWhiteList;
     private final MongoCollection<Document> hellrpg_artefaktyZaLvL;
@@ -172,6 +175,10 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_rybak_armorStands")) {
             database.createCollection("hellrpg_rybak_armorStands");
         }
+
+        if (!collections.contains("hellrpg_PrzekletyCzarnoksieznikEffect")) {
+            database.createCollection("hellrpg_PrzekletyCzarnoksieznikEffect");
+        }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
             database.createCollection("hellrpg_przykladowyNPC");
@@ -214,6 +221,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_authUsers = database.getCollection("hellrpg_authUsers");
         this.hellrpg_bao_armorStands = database.getCollection("hellrpg_bao_armorStands");
         this.hellrpg_rybak_armorStands = database.getCollection("hellrpg_rybak_armorStands");
+        this.hellrpg_PrzekletyCzarnoksieznikEffect = database.getCollection("hellrpg_PrzekletyCzarnoksieznikEffect");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         System.out.println(" ");
@@ -335,7 +343,7 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getRybakArmorStands() {
         return hellrpg_rybak_armorStands;
     }
-
+    public MongoCollection<Document> getPrzekletyCzarnoksieznikEffect() { return hellrpg_PrzekletyCzarnoksieznikEffect; }
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI
     /*public MongoCollection<Document> getPrzykladowyNPC() {
         return hellrpg_przykladowyNPC;

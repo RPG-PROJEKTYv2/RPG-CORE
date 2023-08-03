@@ -26,7 +26,7 @@ public class CiezkaSkrzyniaKowalaManager {
         // oczyszczenie
         this.kowal.add(new Items("6", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
         this.kowal.add(new Items("7", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
-        // metal
+        // stal
         this.kowal.add(new Items("8", 6.0, GlobalItem.getItem("I_METAL", 1), 1));
     }
 

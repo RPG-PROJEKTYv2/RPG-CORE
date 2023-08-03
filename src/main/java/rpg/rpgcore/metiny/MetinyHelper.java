@@ -158,7 +158,7 @@ public class MetinyHelper {
         //MobDropHelper.addDropPlayer(player, "I183", 1, 100.0, true, true, entity);
         double kasaToAdd = 0;
         if ((id >= 1 && id <= 10) || (id >= 10001 && id <= 10010)) {
-            kasaToAdd = 50;
+            kasaToAdd = 100;
             if (metinolog.getMetinologUser().getPostepGive() == 0) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I1-10", 1), 65, true, true, entity);
             }
@@ -167,7 +167,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 11 && id <= 20) || (id >= 10011 && id <= 10020)) {
-            kasaToAdd = 100;
+            kasaToAdd = 200;
             if (metinolog.getMetinologUser().getPostepGive() == 1) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I10-20", 1), 65, true, true, entity);
             }
@@ -176,7 +176,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 21 && id <= 30) || (id >= 10021 && id <= 10030)) {
-            kasaToAdd = 150;
+            kasaToAdd = 350;
             if (metinolog.getMetinologUser().getPostepGive() == 2) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I20-30", 1), 60, true, true, entity);
             }
@@ -185,7 +185,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 31 && id <= 40) || (id >= 10031 && id <= 10040)) {
-            kasaToAdd = 250;
+            kasaToAdd = 400;
             if (metinolog.getMetinologUser().getPostepGive() == 3) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I30-40", 1), 50, true, true, entity);
             }
@@ -194,7 +194,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 41 && id <= 50) || (id >= 10041 && id <= 10050)) {
-            kasaToAdd = 400;
+            kasaToAdd = 500;
             if (metinolog.getMetinologUser().getPostepGive() == 4) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I40-50", 1), 45, true, true, entity);
             }
@@ -203,7 +203,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 51 && id <= 60) || (id >= 10051 && id <= 10060)) {
-            kasaToAdd = 550;
+            kasaToAdd = 700;
             if (metinolog.getMetinologUser().getPostepGive() == 5) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I50-60", 1), 35, true, true, entity);
             }
@@ -212,7 +212,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 61 && id <= 70) || (id >= 10061 && id <= 10070)) {
-            kasaToAdd = 700;
+            kasaToAdd = 1000;
             if (metinolog.getMetinologUser().getPostepGive() == 7) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I60-70", 1), 30, true, true, entity);
             }
@@ -221,7 +221,7 @@ public class MetinyHelper {
             }
         }
         if ((id >= 71 && id <= 80) || (id >= 10071 && id <= 10080)) {
-            kasaToAdd = 850;
+            kasaToAdd = 2000;
             if (metinolog.getMetinologUser().getPostepGive() == 8) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I70-80", 1), 25, true, true, entity);
             }
@@ -230,7 +230,7 @@ public class MetinyHelper {
             }
         }
         if (id >= 81 && id <= 90) {
-            kasaToAdd = 1000;
+            kasaToAdd = 3000;
             if (metinolog.getMetinologUser().getPostepGive() == 9) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I80-90", 1), 25, true, true, entity);
             }
@@ -244,7 +244,7 @@ public class MetinyHelper {
             }
         }
         if (id >= 91 && id <= 100) {
-            kasaToAdd = 1250;
+            kasaToAdd = 4000;
             if (metinolog.getMetinologUser().getPostepGive() == 10) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I90-100", 1), 25, true, true, entity);
             }
@@ -253,7 +253,7 @@ public class MetinyHelper {
             }
         }
         if (id >= 101 && id <= 110) {
-           kasaToAdd = 1500;
+           kasaToAdd = 6000;
             if (metinolog.getMetinologUser().getPostepGive() == 11) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I100-110", 1), 25, true, true, entity);
             }
@@ -262,7 +262,7 @@ public class MetinyHelper {
             }
         }
         if (id >= 111 && id <= 120) {
-           kasaToAdd = 1750;
+           kasaToAdd = 8000;
             if (metinolog.getMetinologUser().getPostepGive() == 12) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I110-120", 1), 25, true, true, entity);
             }
@@ -271,7 +271,7 @@ public class MetinyHelper {
             }
         }
         if (id >= 121 && id <= 130) {
-           kasaToAdd = 2000;
+           kasaToAdd = 10000;
             if (metinolog.getMetinologUser().getPostepGive() == 13) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I120-130", 1), 25, true, true, entity);
             }

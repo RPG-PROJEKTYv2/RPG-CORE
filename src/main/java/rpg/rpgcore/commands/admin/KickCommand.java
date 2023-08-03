@@ -25,7 +25,7 @@ public class KickCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         if (args.length < 1) {
-            sender.sendMessage(Utils.format("&cUsage: /kick <player> [reason]"));
+            sender.sendMessage(Utils.format(Utils.poprawneUzycie("kick <gracz>")));
             return;
         }
         final String senderName = sender.getName();

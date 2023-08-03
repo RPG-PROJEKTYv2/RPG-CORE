@@ -7,12 +7,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
@@ -42,7 +42,7 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
-import rpg.rpgcore.npc.wyslannik.objects.WyslannikObject;
+import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.PetObject;
 import rpg.rpgcore.pets.UserPets;
@@ -385,6 +385,11 @@ public class MongoManager {
                 this.addDataTest(user);
                 rpgcore.getTestNPC().add(user);
             }*/
+            if (pool.getPrzekletyCzarnoksieznikEffect().find(new Document("_id", uuid.toString())).first() == null) {
+                final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser = new PrzekletyCzarnoksieznikUser(uuid);
+                this.addDataPrzekletyCzarnoksieznikEffect(przekletyCzarnoksieznikUser);
+                rpgcore.getPrzekletyCzarnoksieznikBossManager().add(przekletyCzarnoksieznikUser);
+            }
             if (pool.getPustelnik().find(new Document("_id", uuid.toString())).first() == null) {
                 final PustelnikUser user = new PustelnikUser(uuid);
                 this.addDataPustelnik(user);
@@ -538,6 +543,10 @@ public class MongoManager {
         this.addDataTarg(targ);
         rpgcore.getNewTargManager().add(targ);
 
+        final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser = new PrzekletyCzarnoksieznikUser(uuid);
+        this.addDataPrzekletyCzarnoksieznikEffect(przekletyCzarnoksieznikUser);
+        rpgcore.getPrzekletyCzarnoksieznikBossManager().add(przekletyCzarnoksieznikUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -672,6 +681,7 @@ public class MongoManager {
             this.saveDataPustelnik(uuid, rpgcore.getPustelnikNPC().find(uuid));
             this.saveDataMistrzYang(uuid, rpgcore.getMistrzYangNPC().find(uuid));
             this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
+            this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1627,6 +1637,28 @@ public class MongoManager {
         }
     }
 
+    // BOSSY EFFECTS
+    // PRZEKELTY CZARNOKSIEZNIK
+
+    public Map<UUID, PrzekletyCzarnoksieznikUser> loadAllPrzekletyCzarnoksieznikUser() {
+        Map<UUID, PrzekletyCzarnoksieznikUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getPrzekletyCzarnoksieznikEffect().find()) {
+            final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser = new PrzekletyCzarnoksieznikUser(document);
+            userMap.put(przekletyCzarnoksieznikUser.getUuid(), przekletyCzarnoksieznikUser);
+        }
+        return userMap;
+    }
+    public void addDataPrzekletyCzarnoksieznikEffect(final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser) {
+        this.pool.getPrzekletyCzarnoksieznikEffect().insertOne(przekletyCzarnoksieznikUser.toDocument());
+    }
+    public void saveDataPrzekletyCzarnoksieznikEffect(final UUID uuid, final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser) {
+        this.pool.getPrzekletyCzarnoksieznikEffect().findOneAndReplace(new Document("_id", uuid.toString()), przekletyCzarnoksieznikUser.toDocument());
+    }
+    public void saveAllPrzekletyCzarnoksieznikEffect() {
+        for (final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser : rpgcore.getPrzekletyCzarnoksieznikBossManager().getPrzekletyCzarnoksieznikUser()) {
+            this.saveDataPrzekletyCzarnoksieznikEffect(przekletyCzarnoksieznikUser.getUuid(), przekletyCzarnoksieznikUser);
+        }
+    }
     // PRZYKLADOWY NPC
     // TO JEST PODSTAWA DO ZAPISU I ODCZYTY USERA Z BAZY, ZMIENIASZ TYLKO NAZWY FUNKCJI WEDLUG WZORU (PATRZ POPRZEDNIE) I TO JAKIE PRZYJMUJA ZMIENNE I GDZIE ZAPISUJE
     // PAMIETAJ ZEBY ZMIENIC KOLEKCJE NP. getPrzykladowyNPC() NA getTwojNPC() BO INACZEJ SIE WSZYTSKO SPIERDOLI :D

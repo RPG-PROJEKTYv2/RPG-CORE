@@ -35,7 +35,9 @@ public class ZmiankiInventoryClickListener implements Listener {
             if (!item.hasItemMeta()) return;
             if (!item.getItemMeta().hasDisplayName()) return;
             if (!item.getItemMeta().hasLore()) return;
-
+            if (!player.getOpenInventory().getTopInventory().getItem(13).equals(RPGCORE.getInstance().getZmiankiManager().ItemToBlock())) {
+                return;
+            }
             player.getOpenInventory().getTopInventory().setItem(13, item.clone());
             player.getInventory().removeItem(new ItemBuilder(item.clone()).setAmount(1).toItemStack());
 

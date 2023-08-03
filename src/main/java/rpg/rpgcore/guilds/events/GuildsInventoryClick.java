@@ -113,7 +113,6 @@ public class GuildsInventoryClick implements Listener {
 
             if (guildPoints < 1) {
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cTwoj Klan nie posiada dostepnych kredytow do rozdania. Mozesz je zdobyc zwiekszajac poziom swojej gildi"));
-                rpgcore.getGuildManager().setGuildBalance(tag, 1);
                 player.closeInventory();
                 return;
             }
@@ -125,6 +124,7 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildSredniDmg(tag, 2.5);
+                    rpgcore.getGuildManager().setGuildBalance(tag, -1);
                     break;
                 case 1:
                     return;
@@ -135,6 +135,7 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildSredniDef(tag, 2.5);
+                    rpgcore.getGuildManager().setGuildBalance(tag, -1);
                     break;
                 case 3:
                     return;
@@ -162,6 +163,7 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildDefNaLudzi(tag, 2.5);
+                    rpgcore.getGuildManager().updateGuildBalance(tag, -1);
                     break;
                 case 7:
                     return;
@@ -172,9 +174,9 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildSilnyNaLudzi(tag, 2.5);
+                    rpgcore.getGuildManager().updateGuildBalance(tag, -1);
                     break;
             }
-            rpgcore.getGuildManager().updateGuildBalance(tag, -1);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataGuild(tag, rpgcore.getGuildManager().find(tag)));
             player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie ulepszono drzewko " + item.getItemMeta().getDisplayName()));
             rpgcore.getGuildManager().showUpgrades(tag, player);

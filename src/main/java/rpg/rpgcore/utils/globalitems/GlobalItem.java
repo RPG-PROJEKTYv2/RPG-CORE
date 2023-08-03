@@ -33,7 +33,7 @@ public enum GlobalItem {
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
 
     // Zmianki
-    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 13).setName("&d&lKamien Magicznego Zaczarowania").setLore(Arrays.asList("&8Pozwala zmienic bonusy na twoim mieczu lub zbroi")).toItemStack().clone()),
+    I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 13).setName("&9&lMagiczne Zaczarowanie").setLore(Arrays.asList("&7Pozwala nadac bonusy twojego miecza i ekwipunku...")).toItemStack().clone()),
 
     // PIERSCIENIE DOSWIADCZENIA
     I52("I52", new ItemBuilder(Material.GHAST_TEAR).setName("&e&lPierscien Doswiadczenia &6&l25%").setLore(Arrays.asList(

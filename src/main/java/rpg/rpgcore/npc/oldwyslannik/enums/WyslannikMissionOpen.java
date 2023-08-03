@@ -1,7 +1,6 @@
-package rpg.rpgcore.npc.wyslannik.enums;
+package rpg.rpgcore.npc.oldwyslannik.enums;
 
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 
 public enum WyslannikMissionOpen {
