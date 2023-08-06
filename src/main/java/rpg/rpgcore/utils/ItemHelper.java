@@ -33,17 +33,6 @@ public class ItemHelper {
         set.addGlowing();
         set.addTagInt("prot", prot);
         set.addTagInt("thorns", thorns);
-        set.addTagString("Wody", "false");
-        set.addTagDouble("Wody-Bonus", 0);
-        set.addTagString("Lodu", "false");
-        set.addTagDouble("Lodu-Bonus", 0);
-        if (String.valueOf(itemType).contains("_BOOTS")) {
-            set.addTagString("Powietrza", "false");
-            set.addTagDouble("Powietrza-Bonus", 0);
-        } else {
-            set.addTagString("Lasu", "false");
-            set.addTagInt("Lasu-Bonus", 0);
-        }
 
         return set.toItemStack();
     }
@@ -65,12 +54,6 @@ public class ItemHelper {
         if (addGlowing) {
             sword.addGlowing();
         }
-        sword.addTagString("Mroku", "false");
-        sword.addTagDouble("Mroku-Bonus", 0);
-        sword.addTagString("Blasku", "false");
-        sword.addTagInt("Blasku-Bonus", 0);
-        sword.addTagString("Ognia", "false");
-        sword.addTagDouble("Ognia-Bonus", 0);
 
 
         return sword.toItemStack();
@@ -82,7 +65,7 @@ public class ItemHelper {
         }
         List<String> lore = new ArrayList<>();
         final net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
-        final net.minecraft.server.v1_8_R3.NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new net.minecraft.server.v1_8_R3.NBTTagCompound();
+        final net.minecraft.server.v1_8_R3.NBTTagCompound tag = nmsStack.hasTag() ? nmsStack.getTag() : new net.minecraft.server.v1_8_R3.NBTTagCompound();
         if (is.getItemMeta().hasLore()) {
             lore = is.getItemMeta().getLore();
             if (type.equalsIgnoreCase("zbroja")) {

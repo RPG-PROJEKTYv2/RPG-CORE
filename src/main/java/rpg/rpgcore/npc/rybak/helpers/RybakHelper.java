@@ -13,6 +13,7 @@ import java.util.List;
 public class RybakHelper {
 
     public static void getDrop(final Player player) {
+        player.sendMessage("drop");
 //        final OsUser osUser = RPGCORE.getInstance().getOsManager().find(player.getUniqueId());
 //        osUser.setRybakProgress(osUser.getRybakProgress() + 1);
 //        if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 1) {

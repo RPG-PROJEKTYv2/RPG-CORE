@@ -22,7 +22,7 @@ public class MistycznyKowalManager {
             if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).toItemStack());
             else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 11).toItemStack());
         }
-        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
+        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowy Sztylet").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
                 "&7Obrazenia na potwory: &c15",
                 "",
@@ -34,7 +34,7 @@ public class MistycznyKowalManager {
 
         gui.setItem(13, new ItemBuilder(Material.WORKBENCH).setName("&eWytworz &9&lMithrylowy Miecz").setLore(this.getLore(player)).addGlowing().toItemStack().clone());
 
-        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowy Sztylet").setLore(Arrays.asList(
+        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
                 "&7Obrazenia na potwory: &c15",
                 "",

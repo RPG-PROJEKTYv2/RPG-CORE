@@ -9,10 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
@@ -35,13 +32,6 @@ public class ArmorEffectListener implements Listener {
         ArmorEffectsHelper.addEffectsArmor(p);
     }
 
-    @EventHandler(priority = HIGHEST)
-    public void onTeleport(final PlayerTeleportEvent e) {
-        if (e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN || e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND) {
-            e.getPlayer().closeInventory();
-            ArmorEffectsHelper.addEffectsArmor(e.getPlayer());
-        }
-    }
 
     @EventHandler(priority = HIGHEST)
     public void onInventoryClick(final InventoryClickEvent e) {
@@ -76,7 +66,6 @@ public class ArmorEffectListener implements Listener {
                                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
                                 return;
                             }
-                            ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
                     }
                 }
@@ -104,7 +93,6 @@ public class ArmorEffectListener implements Listener {
                                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
                                 return;
                             }
-                            ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
                     }
                 }
@@ -118,7 +106,6 @@ public class ArmorEffectListener implements Listener {
                                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz tego zalozyc, poniewaz nie posiadasz wymaganego poziomu."));
                                 return;
                             }
-                            ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getItem(e.getSlot()), "prot"));
                         }
                     }
                 }
@@ -139,17 +126,6 @@ public class ArmorEffectListener implements Listener {
 
                 e.setCursor(ItemHelper.checkEnchants(e.getCursor(), player));
 
-                if (type.contains("_HELMET")) {
-                    if (e.getSlot() == 39 && player.getInventory().getItem(39) == null) {
-                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                            if (player.getInventory().getHelmet() == null) return;
-                            ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getInventory().getHelmet(), "prot"));
-                        }, 1L);
-                    }
-                }
-                if (e.getSlot() == 39 && player.getInventory().getItem(39) != null) {
-                    player.removePotionEffect(PotionEffectType.JUMP);
-                }
                 if (type.contains("_CHESTPLATE")) {
                     if (e.getSlot() == 38 && player.getInventory().getItem(38) == null) {
                         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
@@ -159,34 +135,9 @@ public class ArmorEffectListener implements Listener {
                     }
                 }
                 if (e.getSlot() == 38 && player.getInventory().getItem(38) != null) {
-                    player.removePotionEffect(PotionEffectType.ABSORPTION);
-                    player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                    Bonuses bonuses = this.rpgcore.getBonusesManager().find(player.getUniqueId());
-                    player.setMaxHealth(bonuses.getBonusesUser().getDodatkowehp() * 2);
+                    player.setMaxHealth(this.rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
                 }
 
-                if (type.contains("_LEGGINGS")) {
-                    if (e.getSlot() == 37 && player.getInventory().getItem(37) == null) {
-                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                            if (player.getInventory().getLeggings() == null) return;
-                            ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getInventory().getLeggings(), "prot"));
-                        }, 1L);
-                    }
-                }
-                if (e.getSlot() == 37 && player.getInventory().getItem(37) != null) {
-                    player.removePotionEffect(PotionEffectType.REGENERATION);
-                }
-                if (type.contains("_BOOTS")) {
-                    if (e.getSlot() == 36 && player.getInventory().getItem(36) == null) {
-                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                            if (player.getInventory().getBoots() == null) return;
-                            ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getInventory().getBoots(), "prot"));
-                        }, 1L);
-                    }
-                }
-                if (e.getSlot() == 36 && player.getInventory().getItem(36) != null) {
-                    player.removePotionEffect(PotionEffectType.SPEED);
-                }
             }
         }
     }
@@ -217,24 +168,9 @@ public class ArmorEffectListener implements Listener {
 
             player.setItemInHand(ItemHelper.checkEnchants(player.getItemInHand(), player));
 
-            if (type.contains("_HELMET")) {
-                if (player.getInventory().getHelmet() == null) {
-                    ArmorEffectsHelper.addEffectHelmet(player, Utils.getTagInt(player.getItemInHand(), "prot"));
-                }
-            }
             if (type.contains("_CHESTPLATE")) {
                 if (player.getInventory().getChestplate() == null) {
                     ArmorEffectsHelper.addEffectChestPlate(player, Utils.getTagInt(player.getItemInHand(), "prot"));
-                }
-            }
-            if (type.contains("_LEGGINGS")) {
-                if (player.getInventory().getLeggings() == null) {
-                    ArmorEffectsHelper.addEffectLeggings(player, Utils.getTagInt(player.getItemInHand(), "prot"));
-                }
-            }
-            if (type.contains("_BOOTS")) {
-                if (player.getInventory().getBoots() == null) {
-                    ArmorEffectsHelper.addEffectBoots(player, Utils.getTagInt(player.getItemInHand(), "prot"));
                 }
             }
         }

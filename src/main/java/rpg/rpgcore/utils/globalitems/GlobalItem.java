@@ -135,16 +135,6 @@ public enum GlobalItem {
     public static ItemStack getPercentSword(final SwordType swordType, final int percent) {
         ItemBuilder is;
         if (swordType == SwordType.KS) {
-            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, true));
-            is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
-                    "&3Silny Na Ludzi: &f+" + percent + "%",
-                    "&3Silny Na Potwory: &f-" + (percent * 2) + "%",
-                    "",
-                    "&cWymagany Poziom: &665"
-            )).addTagInt("ludzie", percent).addTagString("type", "ks").addTagInt("lvl", 65);
-            return is.toItemStack().clone();
-        } else {
             is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowy Sztylet", Material.DIAMOND_SWORD, 35, 15, true));
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
@@ -152,7 +142,17 @@ public enum GlobalItem {
                     "&3Silny Na Ludzi: &f-" + (percent * 2) + "%",
                     "",
                     "&cWymagany Poziom: &665"
-            )).addTagInt("moby", percent).addTagString("type", "tyra").addTagInt("lvl", 65);
+            )).addTagInt("moby", percent).addTagString("type", "ks").addTagInt("lvl", 65);
+            return is.toItemStack().clone();
+        } else {
+            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, true));
+            is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
+                    " ",
+                    "&3Silny Na Ludzi: &f+" + percent + "%",
+                    "&3Silny Na Potwory: &f-" + (percent * 2) + "%",
+                    "",
+                    "&cWymagany Poziom: &665"
+            )).addTagInt("ludzie", percent).addTagString("type", "tyra").addTagInt("lvl", 65);
             return is.toItemStack().clone();
         }
     }

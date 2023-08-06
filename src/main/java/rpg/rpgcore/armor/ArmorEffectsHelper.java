@@ -11,8 +11,6 @@ import rpg.rpgcore.utils.Utils;
 public class ArmorEffectsHelper {
     public static void addEffectChestPlate(Player player, int prot) {
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
-        player.setMaxHealth(bonuses.getBonusesUser().getDodatkowehp() * 2);
-        int k = 0;
         int k1 = 0;
         if (prot > 30) {
             k1 = 2;
@@ -21,7 +19,6 @@ public class ArmorEffectsHelper {
             k1 = 4;
         }
         if (prot > 49) {
-            k = 1;
             k1 = 5;
         }
         if (prot > 59) {
@@ -34,27 +31,21 @@ public class ArmorEffectsHelper {
             k1 = 12;
         }
         if (prot > 149) {
-            k = 2;
             k1 = 15;
         }
         if (prot > 199) {
-            k = 3;
             k1 = 17;
         }
         if (prot > 200) {
-            k = 4;
             k1 = 20;
         }
         if (prot > 249) {
             k1 = 25;
         }
-        if (k > 0) {
-            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999999, k - 1));
-            player.setMaxHealth((bonuses.getBonusesUser().getDodatkowehp() * 2) + (k1 * 2));
-            if (player.getWorld().getName().equals("world")) {
-                player.setHealth(player.getMaxHealth());
-            }
+        player.setMaxHealth((bonuses.getBonusesUser().getDodatkowehp() * 2) + (k1 * 2));
+
+        if (player.getWorld().getName().equals("world")) {
+            player.setHealth(player.getMaxHealth());
         }
     }
 
@@ -102,10 +93,10 @@ public class ArmorEffectsHelper {
             k = 600;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
-        if (k > 0) {
-            player.removePotionEffect(PotionEffectType.SPEED);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) -1));
-        }
+        final float walkSpeed =  Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
+        player.setWalkSpeed(walkSpeed);
+        //player.removePotionEffect(PotionEffectType.SPEED);
+        //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) - 1));
     }
 
     public static void addEffectHelmet(Player player, int value) {
@@ -142,15 +133,10 @@ public class ArmorEffectsHelper {
             }
         }
         if (player.getInventory().getChestplate() == null) {
-            if (player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                player.setMaxHealth(RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
-            }
+            player.setMaxHealth(RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
         } else {
             player.getInventory().setChestplate(ItemHelper.checkEnchants(player.getInventory().getChestplate(), player));
-            if (!player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getChestplate(), "prot"));
-            }
+            addEffectChestPlate(player, Utils.getTagInt(player.getInventory().getChestplate(), "prot"));
         }
         if (player.getInventory().getLeggings() == null) {
             if (player.hasPotionEffect(PotionEffectType.REGENERATION)) {
@@ -163,14 +149,10 @@ public class ArmorEffectsHelper {
             }
         }
         if (player.getInventory().getBoots() == null) {
-            if (player.hasPotionEffect(PotionEffectType.SPEED)) {
-                player.removePotionEffect(PotionEffectType.SPEED);
-            }
+            addEffectBoots(player, 0);
         } else {
             player.getInventory().setBoots(ItemHelper.checkEnchants(player.getInventory().getBoots(), player));
-            if (!player.hasPotionEffect(PotionEffectType.SPEED)) {
-                addEffectBoots(player, Utils.getTagInt(player.getInventory().getBoots(), "prot"));
-            }
+            addEffectBoots(player, Utils.getTagInt(player.getInventory().getBoots(), "prot"));
         }
     }
 }

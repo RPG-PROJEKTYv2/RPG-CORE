@@ -59,7 +59,7 @@ public class RybakNPC {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &eRybacka Wyspa?!")), 40L);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &ePewnie&7! To tuz za rogiem")), 80L);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                player.teleport(new Location(Bukkit.getWorld("Rybak"), -65, 77, -117, -90, 0));
+                player.teleport(new Location(Bukkit.getWorld("Rybak"), -10.5, 157, -133.5, -90, 0));
                 player.sendMessage(Utils.format("&3&lWloczykij &8>> &ePuff!"));
             }, 120L);
             return;

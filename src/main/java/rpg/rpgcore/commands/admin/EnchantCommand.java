@@ -25,7 +25,7 @@ public class EnchantCommand extends CommandAPI {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPoprawne uzycie: /enchant <zaklecie> <poziom>"));
             return;
         }
-        final Enchantment enchantment = Enchantment.getByName(args[0]);
+        final Enchantment enchantment = Enchantment.getByName(args[0].toUpperCase());
         if (enchantment == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPodane zaklecie nie istnieje."));
             return;

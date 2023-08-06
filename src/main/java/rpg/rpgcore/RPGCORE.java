@@ -15,6 +15,7 @@ import rpg.rpgcore.BACKUP.commands.BackupCommand;
 import rpg.rpgcore.BACKUP.database.BackupMongoManager;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
+import rpg.rpgcore.armor.ArmorEffectTask;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
 import rpg.rpgcore.artefakty.events.ArtefaktyInteractListener;
 import rpg.rpgcore.artefakty.events.ArtefaktyInventoryClickListener;
@@ -1048,6 +1049,8 @@ public final class RPGCORE extends JavaPlugin {
 
         // KLASY
         new KlasyTask(this);
+
+        new ArmorEffectTask(this);
     }
 
     private void fixBuckets() {

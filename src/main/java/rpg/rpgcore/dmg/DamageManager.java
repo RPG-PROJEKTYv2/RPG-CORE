@@ -1,13 +1,17 @@
 package rpg.rpgcore.dmg;
 
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
@@ -58,10 +62,10 @@ public class DamageManager {
 
         rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, p), 20L);
         if (rpgcore.getChatManager().find(p.getUniqueId()).isDmgHologramsVisable()) {
-            for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)){
-                if (e instanceof Player){
+            for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)) {
+                if (e instanceof Player) {
                     Player player = (Player) e;
-                    if (player != p){
+                    if (player != p) {
                         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                         rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, player), 20L);
                     }
@@ -90,6 +94,18 @@ public class DamageManager {
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
+            final String type = Utils.getTagString(weapon, "type");
+
+            switch (type) {
+                case "ks":
+                    return 0;
+                case "tyra":
+                    mnoznik += Utils.getTagInt(weapon, "ludzie");
+                    break;
+                default:
+                    break;
+            }
+
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
             final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
@@ -171,7 +187,7 @@ public class DamageManager {
         }
 
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus1().equals("Silny Na Potwory")) {
                 drugiMnoznik += bao.getValue1();
@@ -242,6 +258,19 @@ public class DamageManager {
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
+
+            final String type = Utils.getTagString(weapon, "type");
+
+            switch (type) {
+                case "tyra":
+                    return 0;
+                case "ks":
+                    mnoznik += Utils.getTagInt(weapon, "moby");
+                    break;
+                default:
+                    break;
+            }
+
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "moby");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
@@ -311,7 +340,7 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus1().equals("Silny Na Ludzi")) {
                 drugiMnoznik += bao.getValue1();
@@ -577,7 +606,7 @@ public class DamageManager {
             mnoznikProcenty += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus2().equals("Srednia defensywa przeciwko ludziom")) {
                 drugiMnoznik += bao.getValue2();
@@ -621,7 +650,7 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) /  (drugiMnoznik * 0.9 / 100);
+        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) / (drugiMnoznik * 0.9 / 100);
 
 
         return DoubleUtils.round(finalDmg * 2, 3);
