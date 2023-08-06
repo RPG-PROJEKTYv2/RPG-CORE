@@ -21,19 +21,25 @@ public class PozlacanySkarbManager {
 
     public PozlacanySkarbManager() {
         // fragment stali i magii
-        this.pozlacanyskarb.add(new Items("1", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
-        this.pozlacanyskarb.add(new Items("2", 10.0, GlobalItem.getItem("I_CZASTKA_MAGII", 1), 2));
+        this.pozlacanyskarb.add(new Items("1", 14.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
+        this.pozlacanyskarb.add(new Items("2", 12.0, GlobalItem.getItem("I_CZASTKA_MAGII", 1), 2));
         // zmianki
-        this.pozlacanyskarb.add(new Items("3", 10.0, GlobalItem.getItem("I50", 1), 1));
-        this.pozlacanyskarb.add(new Items("4", 10.0, GlobalItem.getItem("I50", 1), 2));
+        this.pozlacanyskarb.add(new Items("3", 11.0, GlobalItem.getItem("I50", 1), 1));
+        this.pozlacanyskarb.add(new Items("4", 11.0, GlobalItem.getItem("I50", 1), 2));
         // bao kamyk
-        this.pozlacanyskarb.add(new Items("5", 7.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
         // bao ksiega
-        this.pozlacanyskarb.add(new Items("6", 4.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
+        this.pozlacanyskarb.add(new Items("5", 9.5, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
+        this.pozlacanyskarb.add(new Items("6", 8.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
+        // podrecznik
+        // lza
+        // metal
+        this.pozlacanyskarb.add(new Items("7", 8.0, GlobalItem.getItem("I10", 1), 1));
+        this.pozlacanyskarb.add(new Items("8", 7.5, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
+        this.pozlacanyskarb.add(new Items("9", 5.5, GlobalItem.getItem("I_METAL", 1), 1));
         // pota do lesnika
-        this.pozlacanyskarb.add(new Items("7", 3.5, LesnikItems.getByItem("POTION", 1), 1));
+        this.pozlacanyskarb.add(new Items("10", 5.5, LesnikItems.getByItem("POTION", 1), 1));
         // fragment bona
-        this.pozlacanyskarb.add(new Items("8", 0.40, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
+        this.pozlacanyskarb.add(new Items("11", 0.4, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
     }
 
 

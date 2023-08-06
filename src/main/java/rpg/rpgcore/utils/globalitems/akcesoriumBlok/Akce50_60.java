@@ -77,11 +77,6 @@ public enum Akce50_60 {
                             ChanceHelper.getRandInt(50, 60), "&f&lSniezny Pierscien"));
                     return;
                 }
-                if (item.getRewardItem().getType() == Material.MINECART) {
-                    player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-16, -9), ChanceHelper.getRandInt(20, 34),
-                            ChanceHelper.getRandInt(28, 44), ChanceHelper.getRandDouble(0.05, 0.1), ChanceHelper.getRandInt(-45, -30),ChanceHelper.getRandInt(50, 60), "&f&lSniezna Energia"));
-                    return;
-                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

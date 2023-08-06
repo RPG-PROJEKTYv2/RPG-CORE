@@ -26,27 +26,33 @@ public class TajemniczaManager {
 
     public TajemniczaManager() {
         // set I
-        this.tajemnicza.add(new Items("1", 16.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lI&8&l]", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("2", 16.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lI&8&l]", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("3", 16.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lI&8&l]", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("4", 16.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lI&8&l]", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("1", 12.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lI&8&l]", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("2", 12.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lI&8&l]", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("3", 12.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lI&8&l]", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("4", 12.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lI&8&l]", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
         // set II
-        this.tajemnicza.add(new Items("5", 12.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lII&8&l]", Material.DIAMOND_HELMET, ChanceHelper.getRandInt(7, 20), ChanceHelper.getRandInt(2, 4)), 1));
-        this.tajemnicza.add(new Items("6", 12.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lII&8&l]", Material.DIAMOND_CHESTPLATE, ChanceHelper.getRandInt(8, 22), ChanceHelper.getRandInt(2, 5)), 1));
-        this.tajemnicza.add(new Items("7", 12.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lII&8&l]", Material.DIAMOND_LEGGINGS, ChanceHelper.getRandInt(7, 18), ChanceHelper.getRandInt(2, 4)), 1));
-        this.tajemnicza.add(new Items("8", 12.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lII&8&l]", Material.DIAMOND_BOOTS, ChanceHelper.getRandInt(6, 17), ChanceHelper.getRandInt(2, 7)), 1));
+        this.tajemnicza.add(new Items("5", 10.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lII&8&l]", Material.DIAMOND_HELMET, ChanceHelper.getRandInt(7, 20), ChanceHelper.getRandInt(2, 4)), 1));
+        this.tajemnicza.add(new Items("6", 10.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lII&8&l]", Material.DIAMOND_CHESTPLATE, ChanceHelper.getRandInt(8, 22), ChanceHelper.getRandInt(2, 5)), 1));
+        this.tajemnicza.add(new Items("7", 10.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lII&8&l]", Material.DIAMOND_LEGGINGS, ChanceHelper.getRandInt(7, 18), ChanceHelper.getRandInt(2, 4)), 1));
+        this.tajemnicza.add(new Items("8", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lII&8&l]", Material.DIAMOND_BOOTS, ChanceHelper.getRandInt(6, 17), ChanceHelper.getRandInt(2, 7)), 1));
         // fragment stali
-        this.tajemnicza.add(new Items("9", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
+        this.tajemnicza.add(new Items("9", 7.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
         // zmianka
-        this.tajemnicza.add(new Items("10", 10.0, GlobalItem.getItem("I50", 1), 1));
+        this.tajemnicza.add(new Items("10", 6.0, GlobalItem.getItem("I50", 1), 1));
+        // wywar z kory
+        this.tajemnicza.add(new Items("11", 5.0, LesnikItems.POTION.getItem(), 1));
+        // skrzynia z surowcami
+        this.tajemnicza.add(new Items("12", 4.2, SkrzynkiOther.I4.getItemStack(), 1));
         // podrecznik
         // oczyszczenie
-        this.tajemnicza.add(new Items("11", 8.0, GlobalItem.getItem("I10", 1), 2));
-        this.tajemnicza.add(new Items("12", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
+        this.tajemnicza.add(new Items("13", 4.0, GlobalItem.getItem("I10", 1), 2));
+        this.tajemnicza.add(new Items("14", 4.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
+        // kamien bao
+        this.tajemnicza.add(new Items("15", 2.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
         // pozlacany skarb
-        this.tajemnicza.add(new Items("13", 5.0, SkrzynkiOther.getItem("I1", 1),1));
+        this.tajemnicza.add(new Items("16", 1.0, SkrzynkiOther.getItem("I1", 1),1));
         // fragment bona
-        this.tajemnicza.add(new Items("14", 0.06, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 2));
+        this.tajemnicza.add(new Items("17", 0.06, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 2));
     }
 
 

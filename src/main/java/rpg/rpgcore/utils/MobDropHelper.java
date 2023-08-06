@@ -345,9 +345,8 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 8 -----------------------------------------
             // BOSS
             case "[BOSS] Przeklety Czarnoksieznik":
+                addDropPlayer(player, Bossy.I70_80_BONUS.getItemStack().clone(), getDropChance(szczescie, 25), true, true, entity);
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
-                Bukkit.getServer().broadcastMessage(" ");
-                rpgcore.getPrzekletyCzarnoksieznikBossManager().LosBONUS(player);
                 rpgcore.getBossyManager().reset70_80();
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);

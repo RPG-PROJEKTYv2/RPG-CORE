@@ -26,6 +26,8 @@ import rpg.rpgcore.bonuses.BonusesManager;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.BossyTargetChangeListener;
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikBossManager;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyOdlamekInteractListener;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyOdlamekInventoryClick;
 import rpg.rpgcore.bossy.events.*;
 import rpg.rpgcore.chat.ChatCommand;
 import rpg.rpgcore.chat.ChatManager;
@@ -638,6 +640,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryItemDragListener(), this);
         this.getServer().getPluginManager().registerEvents(new NiesyPickUpListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new PrzekletyOdlamekInventoryClick(), this);
+        this.getServer().getPluginManager().registerEvents(new PrzekletyOdlamekInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new AkcesoriumPickUpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
