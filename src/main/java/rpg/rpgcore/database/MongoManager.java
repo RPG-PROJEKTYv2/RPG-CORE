@@ -605,7 +605,7 @@ public class MongoManager {
             final AkcesoriaPodstUser akcesoriaPodstUser = dodatkiUser.getAkcesoriaPodstawowe();
             final AkcesoriaDodatUser akcesoriaDodatUser = dodatkiUser.getAkcesoriaDodatkowe();
 
-            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Arrays.asList(
                     bonyUser.getDmg5(),
                     bonyUser.getDmg10(),
                     bonyUser.getDmg15(),
@@ -626,7 +626,7 @@ public class MongoManager {
                     bonyUser.getDmgMetiny()
             )));
 
-            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
                     akcesoriaPodstUser.getTarcza(),
                     akcesoriaPodstUser.getNaszyjnik(),
                     akcesoriaPodstUser.getKolczyki(),
@@ -634,7 +634,7 @@ public class MongoManager {
                     akcesoriaPodstUser.getDiadem()
             )));
 
-            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Utils.deserializeStringsToItemStackArray(
+            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
                     akcesoriaDodatUser.getSzarfa(),
                     akcesoriaDodatUser.getPas(),
                     akcesoriaDodatUser.getMedalion(),

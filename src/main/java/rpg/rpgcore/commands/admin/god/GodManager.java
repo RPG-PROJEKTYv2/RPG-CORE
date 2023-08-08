@@ -1,8 +1,6 @@
 package rpg.rpgcore.commands.admin.god;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -11,12 +9,9 @@ import java.util.UUID;
 
 public class GodManager {
 
-    private final RPGCORE rpgcore;
     private final ArrayList<UUID> godList = new ArrayList<>();
-    private BukkitTask task;
 
     public GodManager(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
     }
 
     public boolean containsPlayer(final UUID uuid) {
@@ -36,14 +31,12 @@ public class GodManager {
         final UUID uuid = p.getUniqueId();
 
         if (!(this.containsPlayer(uuid))) {
-            p.sendMessage(Utils.format("&aWlaczono&7 goda"));
-            task = Bukkit.getScheduler().runTaskTimerAsynchronously(rpgcore, new SendGodBar(rpgcore, p), 0L, 40L);
+            p.sendMessage(Utils.format(Utils.SERVERNAME + "&aWlaczono&7 goda"));
             this.addUserToGodList(uuid);
             return;
         }
 
-        p.sendMessage(Utils.format("&cWylaczono&7 goda"));
-        task.cancel();
+        p.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono&7 goda"));
         this.removeUserFromGodList(uuid);
 
     }

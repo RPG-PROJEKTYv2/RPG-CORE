@@ -8,7 +8,7 @@ public class TopkiTask implements Runnable {
     private final RPGCORE rpgcore;
     public TopkiTask(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(this.rpgcore, this, 20L, 12_000L);
+        this.rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(this.rpgcore, this, 20L, 12_000L);
     }
 
     @Override

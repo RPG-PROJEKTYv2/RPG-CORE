@@ -53,7 +53,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     final double blok = Utils.getTagDouble(item, "blok");
                     final int hp = Utils.getTagInt(item, "hp");
 
-                    user.getAkcesoriaPodstawowe().setTarcza("");
+                    user.getAkcesoriaPodstawowe().setTarcza(new ItemStack(Material.AIR));
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - def);
                     bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - blok);
                     bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - hp);
@@ -79,7 +79,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     final double kryt = Utils.getTagDouble(item, "kryt");
                     final double srdmg = Utils.getTagDouble(item, "srdmg");
 
-                    user.getAkcesoriaPodstawowe().setNaszyjnik("");
+                    user.getAkcesoriaPodstawowe().setNaszyjnik(new ItemStack(Material.AIR));
                     bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() - ddmg);
                     bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - kryt);
                     bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - srdmg);
@@ -105,7 +105,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     final double odpo = Utils.getTagDouble(item, "odpo");
                     final int mspeed = Utils.getTagInt(item, "mspeed");
 
-                    user.getAkcesoriaPodstawowe().setKolczyki("");
+                    user.getAkcesoriaPodstawowe().setKolczyki(new ItemStack(Material.AIR));
                     bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() - ludzie);
                     bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() - odpo);
                     bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - mspeed);
@@ -131,7 +131,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     final double wkryt = Utils.getTagDouble(item, "wkryt");
                     final int speed = Utils.getTagInt(item, "speed");
 
-                    user.getAkcesoriaPodstawowe().setPierscien("");
+                    user.getAkcesoriaPodstawowe().setPierscien(new ItemStack(Material.AIR));
                     bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() - przeszycie);
                     bonuses.getBonusesUser().setWzmocnienieKryta(bonuses.getBonusesUser().getWzmocnienieKryta() - wkryt);
                     bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - speed);
@@ -157,7 +157,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     final double potwory = Utils.getTagDouble(item, "potwory");
                     final double exp = Utils.getTagInt(item, "exp");
 
-                    user.getAkcesoriaPodstawowe().setDiadem("");
+                    user.getAkcesoriaPodstawowe().setDiadem(new ItemStack(Material.AIR));
                     bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - srdmg2);
                     bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() - potwory);
                     bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - exp);

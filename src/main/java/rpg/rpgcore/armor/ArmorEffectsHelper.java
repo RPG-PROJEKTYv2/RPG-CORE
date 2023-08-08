@@ -63,6 +63,7 @@ public class ArmorEffectsHelper {
         if (value > 239) {
             k = 4;
         }
+        if (k == 0) player.removePotionEffect(PotionEffectType.REGENERATION);
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.REGENERATION);
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999999, k));
@@ -113,6 +114,7 @@ public class ArmorEffectsHelper {
         if (value > 159) {
             k = 4;
         }
+        if (k == 0) player.removePotionEffect(PotionEffectType.JUMP);
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.JUMP);
             if (!player.getWorld().getName().equals("world")) {
@@ -128,9 +130,7 @@ public class ArmorEffectsHelper {
             }
         } else {
             player.getInventory().setHelmet(ItemHelper.checkEnchants(player.getInventory().getHelmet(), player));
-            if (!player.hasPotionEffect(PotionEffectType.JUMP)) {
-                addEffectHelmet(player, Utils.getTagInt(player.getInventory().getHelmet(), "prot"));
-            }
+            addEffectHelmet(player, Utils.getTagInt(player.getInventory().getHelmet(), "prot"));
         }
         if (player.getInventory().getChestplate() == null) {
             player.setMaxHealth(RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getDodatkowehp() * 2);
@@ -144,9 +144,7 @@ public class ArmorEffectsHelper {
             }
         } else {
             player.getInventory().setLeggings(ItemHelper.checkEnchants(player.getInventory().getLeggings(), player));
-            if (!player.hasPotionEffect(PotionEffectType.REGENERATION)) {
-                addEffectLeggings(player, Utils.getTagInt(player.getInventory().getLeggings(), "prot"));
-            }
+            addEffectLeggings(player, Utils.getTagInt(player.getInventory().getLeggings(), "prot"));
         }
         if (player.getInventory().getBoots() == null) {
             addEffectBoots(player, 0);

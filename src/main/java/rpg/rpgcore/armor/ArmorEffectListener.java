@@ -35,7 +35,7 @@ public class ArmorEffectListener implements Listener {
 
     @EventHandler(priority = HIGHEST)
     public void onInventoryClick(final InventoryClickEvent e) {
-        if (e.getClickedInventory() == null || e.getInventory() == null) return;
+        if (e.getClickedInventory() == null) return;
 
         if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
             final Player player = (Player) e.getWhoClicked();
@@ -48,7 +48,7 @@ public class ArmorEffectListener implements Listener {
 
     @EventHandler(priority = LOWEST)
     public void inventoryClickArmorContents(final InventoryClickEvent e) {
-        if (e.getClickedInventory() == null || e.getInventory() == null) {
+        if (e.getClickedInventory() == null) {
             return;
         }
         Player player = (Player) e.getWhoClicked();

@@ -86,6 +86,7 @@ import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaCommand;
 import rpg.rpgcore.commands.admin.ustawieniakonta.UstawieniaKontaManager;
 import rpg.rpgcore.commands.admin.ustawieniakonta.events.UstawieniaKontaInventoryClickListener;
 import rpg.rpgcore.commands.admin.vanish.VanishCommand;
+import rpg.rpgcore.commands.admin.vanish.VanishListener;
 import rpg.rpgcore.commands.admin.vanish.VanishManager;
 import rpg.rpgcore.commands.player.*;
 import rpg.rpgcore.commands.player.administracja.AdministracjaCommand;
@@ -856,6 +857,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KlasyInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KlasyInteractListener(this), this);
 
+        //VANISH
+        this.getServer().getPluginManager().registerEvents(new VanishListener(this), this);
+
 
     }
 
@@ -1051,6 +1055,7 @@ public final class RPGCORE extends JavaPlugin {
         new KlasyTask(this);
 
         new ArmorEffectTask(this);
+        new GodVanishTask(this);
     }
 
     private void fixBuckets() {

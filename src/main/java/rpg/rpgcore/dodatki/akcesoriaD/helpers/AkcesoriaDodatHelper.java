@@ -30,14 +30,14 @@ public class AkcesoriaDodatHelper {
         )).addTagDouble("defLudzie", defLudzie).addTagDouble("defMoby", defMoby).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
-    public static ItemStack createMedalion(final int srdmg, final int zloteSerca, final int lvl, final String... name) {
+    public static ItemStack createMedalion(final int srdmg, final int dodatkoweHp, final int lvl, final String... name) {
         return new ItemBuilder(Material.FIREBALL).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
                 "&7Srednie obrazenia: &c" + srdmg + "%",
-                "&7Zlote serca: &c" + zloteSerca,
+                "&7Dodatkowe HP: &c" + dodatkoweHp,
                 " ",
                 "&cWymagany poziom: &6" + lvl
-        )).addTagDouble("srdmg", srdmg).addTagInt("zloteSerca", zloteSerca).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
+        )).addTagDouble("srdmg", srdmg).addTagInt("dodatkoweHP", dodatkoweHp).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
     public static ItemStack createEnergia(final int mDmg, final int def, final int blok, final double przebicie, final int mspeed, final int lvl, final String... name) {
@@ -50,7 +50,7 @@ public class AkcesoriaDodatHelper {
                 "&7Zmniejszona Predkosc Ruchu: &c" + mspeed,
                 " ",
                 "&cWymagany poziom: &6" + lvl
-        )).addTagDouble("mDmg", mDmg).addTagDouble("def", def).addTagDouble("blok", blok).addTagDouble("przebicie", przebicie).addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
+        )).addTagInt("mDmg", mDmg).addTagInt("def", def).addTagInt("blok", blok).addTagDouble("przebicie", przebicie).addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 }
 /*

@@ -3,6 +3,9 @@ package rpg.rpgcore.dodatki.akcesoriaP.objects;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
@@ -10,32 +13,32 @@ import java.util.UUID;
 @Setter
 public class AkcesoriaPodstUser {
     private final UUID uuid;
-    private String tarcza, naszyjnik, kolczyki, pierscien, diadem;
+    private ItemStack tarcza, naszyjnik, kolczyki, pierscien, diadem;
 
     public AkcesoriaPodstUser(final UUID uuid) {
         this.uuid = uuid;
-        this.tarcza = "";
-        this.naszyjnik = "";
-        this.kolczyki = "";
-        this.pierscien = "";
-        this.diadem = "";
+        this.tarcza = new ItemStack(Material.AIR);
+        this.naszyjnik = new ItemStack(Material.AIR);
+        this.kolczyki = new ItemStack(Material.AIR);
+        this.pierscien = new ItemStack(Material.AIR);
+        this.diadem = new ItemStack(Material.AIR);
     }
 
     public AkcesoriaPodstUser(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id").replace("-akceP", ""));
-        this.tarcza = document.getString("tarcza");
-        this.naszyjnik = document.getString("naszyjnik");
-        this.kolczyki = document.getString("kolczyki");
-        this.pierscien = document.getString("pierscien");
-        this.diadem = document.getString("diadem");
+        this.tarcza = Utils.deserializeItem(document.getString("tarcza"));
+        this.naszyjnik = Utils.deserializeItem(document.getString("naszyjnik"));
+        this.kolczyki = Utils.deserializeItem(document.getString("kolczyki"));
+        this.pierscien = Utils.deserializeItem(document.getString("pierscien"));
+        this.diadem = Utils.deserializeItem(document.getString("diadem"));
     }
 
     public Document toDocument() {
         return new Document("_id", this.uuid.toString() + "-akceP")
-                .append("tarcza", this.tarcza)
-                .append("naszyjnik", this.naszyjnik)
-                .append("kolczyki", this.kolczyki)
-                .append("pierscien", this.pierscien)
-                .append("diadem", this.diadem);
+                .append("tarcza", Utils.serializeItem(this.tarcza))
+                .append("naszyjnik", Utils.serializeItem(this.naszyjnik))
+                .append("kolczyki", Utils.serializeItem(this.kolczyki))
+                .append("pierscien", Utils.serializeItem(this.pierscien))
+                .append("diadem", Utils.serializeItem(this.diadem));
     }
 }

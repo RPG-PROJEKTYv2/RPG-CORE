@@ -24,7 +24,7 @@ public class MagazynierUser {
         this.magazyn3 = "";
         this.magazyn4 = "";
         this.magazyn5 = "";
-        this.unlocked1 = false;
+        this.unlocked1 = true;
         this.unlocked2 = false;
         this.unlocked3 = false;
         this.unlocked4 = false;

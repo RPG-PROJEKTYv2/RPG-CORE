@@ -196,23 +196,23 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().isEmpty()) {
+        if (!bony.getDmg5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDmg10().isEmpty()) {
+        if (!bony.getDmg10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDmg15().isEmpty()) {
+        if (!bony.getDmg15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
             mnoznik += dmgEnergia;
         }
 
@@ -349,23 +349,23 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().isEmpty()) {
+        if (!bony.getDmg5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDmg10().isEmpty()) {
+        if (!bony.getDmg10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDmg15().isEmpty()) {
+        if (!bony.getDmg15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
             mnoznik += dmgEnergia;
         }
 
@@ -418,15 +418,15 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().isEmpty()) {
+        if (!bony.getDef5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDef10().isEmpty()) {
+        if (!bony.getDef10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDef15().isEmpty()) {
+        if (!bony.getDef15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
@@ -436,15 +436,15 @@ public class DamageManager {
         }
 
         final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().isEmpty()) {
-            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
+            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
             mnoznik -= defTarcza;
             drugiMnoznik += defTarcza;
         }
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double energia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            energia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "def");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            energia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "def");
             mnoznik -= energia;
         }
 
@@ -615,22 +615,22 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().isEmpty()) {
+        if (!bony.getDef5().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDef10().isEmpty()) {
+        if (!bony.getDef10().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDef15().isEmpty()) {
+        if (!bony.getDef15().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().isEmpty()) {
-            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
+            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
             mnoznikProcenty -= defTarcza;
             drugiMnoznik += defTarcza;
         }
