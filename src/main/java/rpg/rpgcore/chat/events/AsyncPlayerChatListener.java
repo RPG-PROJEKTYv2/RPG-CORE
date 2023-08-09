@@ -170,7 +170,7 @@ public class AsyncPlayerChatListener implements Listener {
             "pomoc", "help",
             "lvl", "os", "osiagniecia",
             "message", "msg", "pv" ,"pw", "m", "reply", "r",
-            "targ", "ah", "gielda",
+            "targ", "ah", "gielda", "sprawdz",
             "ec", "enderchest",
             "kasa", "money", "bal", "balance", "wyplac", "withdraw", "wystaw", "sprawdz", "helpop",
             "guild", "g", "klan", "gildia", "kosz", "chatpanel", "panel", "chatp", "party", "p",

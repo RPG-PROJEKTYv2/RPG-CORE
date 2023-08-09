@@ -19,7 +19,7 @@ public class VanishCommand extends CommandAPI {
     public VanishCommand(RPGCORE rpgcore) {
         super("vanish");
         this.setAliases(Arrays.asList("v", "van", "vs"));
-        this.setRankLevel(RankType.MOD);
+        this.setRankLevel(RankType.KIDMOD);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }

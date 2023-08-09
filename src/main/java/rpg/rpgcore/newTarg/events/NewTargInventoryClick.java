@@ -275,6 +275,7 @@ public class NewTargInventoryClick implements Listener {
 
             if (player.getName().equals(targetName)) {
                 final Targ targ = rpgcore.getNewTargManager().find(targetUUID);
+                player.sendMessage(targ.getItemList().toString());
                 if (!targ.getItemList().contains(clickedItem)) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));
                     return;
@@ -360,6 +361,7 @@ public class NewTargInventoryClick implements Listener {
 
     private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
         final Targ targetTarg = rpgcore.getNewTargManager().find(targetUUID);
+        player.sendMessage(targetTarg.getItemList().toString());
         if (!targetTarg.getItemList().contains(clickedItem)) {
             player.closeInventory();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));
@@ -478,8 +480,8 @@ public class NewTargInventoryClick implements Listener {
 
     private void updateInventory(final int itemCategory) {
         for (final Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getOpenInventory() != null && p.getOpenInventory().getTopInventory() != null && Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targi #")
-                    || Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targ gracza")) {
+            if (p.getOpenInventory() != null && p.getOpenInventory().getTopInventory() != null && (Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targi #")
+                    || Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targ gracza"))) {
                 if (Utils.removeColor(p.getOpenInventory().getTopInventory().getTitle()).contains("Targi #")) {
                     int playerCategory = this.getCategory(p.getOpenInventory().getTopInventory());
                     if (playerCategory == itemCategory || playerCategory == 1) {

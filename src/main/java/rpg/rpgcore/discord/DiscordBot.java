@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 import rpg.rpgcore.utils.Utils;
 
 import javax.security.auth.login.LoginException;
@@ -25,6 +26,10 @@ public class DiscordBot extends ListenerAdapter {
 
     public void sendChannelMessage(final String channelName, final EmbedBuilder embed) {
         this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage(new MessageCreateBuilder().setEmbeds(new MessageEmbed[]{embed.build()}).build()).queue();
+    }
+    public void pingAdministration(final String channelName) {
+        final MessageCreateData data = new MessageCreateBuilder().setContent("<@&" + "1010648182981677126" + ">").build();
+        this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage(data).queue();
     }
 
     public String buildStringFromLore(final List<String> lore) {

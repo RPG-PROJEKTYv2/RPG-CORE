@@ -82,7 +82,7 @@ public class TopkiManager {
         }
         final List<String> topka = new ArrayList<>(10);
         Stream<Map.Entry<String, Double>> sorted = krytykMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + DoubleUtils.round(e.getValue(), 2) + " dmg&8)"));
+        sorted.limit(10).forEach(e -> topka.add(e.getKey() + " &8(&7" + Utils.spaceNumber(DoubleUtils.round(e.getValue(), 2)) + " dmg&8)"));
         if (topka.size() < 10) {
             for (int i = topka.size(); i < 10; i++) {
                 topka.add("Brak");

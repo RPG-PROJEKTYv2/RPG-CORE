@@ -17,7 +17,7 @@ public class TempMuteCommand extends CommandAPI {
 
     public TempMuteCommand(final RPGCORE rpgcore) {
         super("tempmute");
-        this.setRankLevel(RankType.KIDMOD);
+        this.setRankLevel(RankType.HELPER);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }

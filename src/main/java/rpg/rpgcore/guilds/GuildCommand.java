@@ -40,6 +40,12 @@ public class GuildCommand extends CommandAPI {
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
 
         if (args.length == 1){
+
+            if (args[0].equals("zaloz")) {
+                player.sendMessage(Utils.poprawneUzycie("klan zaloz <tag> <opis>"));
+                return;
+            }
+
             if (tag.equals("Brak Klanu")) {
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
                 return;
@@ -320,7 +326,7 @@ public class GuildCommand extends CommandAPI {
                 final String description = sb.toString().trim();
                 user.setKasa(user.getKasa() - 100000000);
                 rpgcore.getGuildManager().createGuild(tag, description, player.getUniqueId());
-                rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
+                rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&7Klan &6" + tag + " - " + description + " &7zostal zalozony przez &6" + player.getName() + " &6&lGratulacje!"));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     NameTagUtil.setPlayerNameTag(player, "updatePrefix");
                     this.updateOneMember(player);

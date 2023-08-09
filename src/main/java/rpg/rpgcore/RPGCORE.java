@@ -182,6 +182,7 @@ import rpg.rpgcore.mythicstick.MythicStick;
 import rpg.rpgcore.mythicstick.MythicstickPlayerInteract;
 import rpg.rpgcore.newTarg.*;
 import rpg.rpgcore.newTarg.commands.NewTargCommand;
+import rpg.rpgcore.newTarg.commands.NewTargSprawdzCommand;
 import rpg.rpgcore.newTarg.commands.NewTargWystawCommand;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClick;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClose;
@@ -562,6 +563,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new KasaCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new WyplacCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new NewTargWystawCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new NewTargSprawdzCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new HelpOPCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new MetinCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new DodatkowyExpCommand());
@@ -859,7 +861,6 @@ public final class RPGCORE extends JavaPlugin {
 
         //VANISH
         this.getServer().getPluginManager().registerEvents(new VanishListener(this), this);
-
 
     }
 

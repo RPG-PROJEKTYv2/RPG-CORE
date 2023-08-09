@@ -111,6 +111,19 @@ public class PlayerJoinListener implements Listener {
 
 
         final User user = rpgcore.getUserManager().find(uuid);
+
+        if (user.getRankUser().isHighStaff()) {
+            if (!player.hasPermission("mv.bypass.gamemode.*")) {
+                player.addAttachment(rpgcore, "mv.bypass.gamemode.*", true);
+            }
+        } else {
+            if (player.hasPermission("mv.bypass.gamemode.*")) {
+                player.removeAttachment(player.addAttachment(rpgcore, "mv.bypass.gamemode.*", false));
+            }
+        }
+
+
+
         if (user.getLvl() <= 5) {
             player.teleport(spawnLocations1_10.get(ChanceHelper.getRandInt(0, spawnLocations1_10.size() - 1)));
         } else {
@@ -174,6 +187,7 @@ public class PlayerJoinListener implements Listener {
         TabManager.add(player);
         TabManager.update(player.getUniqueId());
         ArmorEffectsHelper.addEffectsArmor(player);
+
 
         final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
 

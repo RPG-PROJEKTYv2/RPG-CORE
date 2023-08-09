@@ -11,10 +11,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
-import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
@@ -241,7 +239,6 @@ public class DropFromChestsListener implements Listener {
 
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
-                        return;
                         return;
                     }
                 }

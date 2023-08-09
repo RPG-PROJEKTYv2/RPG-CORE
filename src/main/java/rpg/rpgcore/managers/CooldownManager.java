@@ -21,7 +21,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> eliksirPotegiCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> eliksirObronncyCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> egzekutorCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
-    private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(200, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> pvpCooldown = CacheBuilder.newBuilder().expireAfterWrite(125, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> odlamkiCooldown = CacheBuilder.newBuilder().expireAfterWrite(300, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> klejnoty120_130Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
@@ -176,7 +176,7 @@ public class CooldownManager {
     }
 
     public void givePvpCooldown(final UUID uuid) {
-        this.pvpCooldown.put(uuid, System.currentTimeMillis() + 200L);
+        this.pvpCooldown.put(uuid, System.currentTimeMillis() + 125L);
     }
 
     public boolean hasPvpCooldown(final UUID uuid) {

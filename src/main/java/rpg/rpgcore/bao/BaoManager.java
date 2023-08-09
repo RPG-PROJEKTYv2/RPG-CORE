@@ -60,7 +60,7 @@ public class BaoManager {
             if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
                 gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " DMG").toItemStack().clone());
             } else {
-                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " DMG").toItemStack().clone());
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " %").toItemStack().clone());
             }
             if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
                 gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus5() + ": &c" + user.getValue5() + " HP").toItemStack().clone());

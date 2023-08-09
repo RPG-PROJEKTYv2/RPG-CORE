@@ -33,10 +33,10 @@ public class MSGManager {
         final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&6" + sender.getName() + " &8-> &e" + target.getName() + "&8]:"));
 
         senderPrefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.format("&7Kliknij, aby odpowiedziec " + target.getName())).create()));
-        senderPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + target.getName() + " "));
+        senderPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/r ")); // + target.getName() + " "
 
         targetPrefixComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.format("&7Kliknij, aby odpowiedziec " + sender.getName())).create()));
-        targetPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + sender.getName() + " "));
+        targetPrefixComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/r ")); // + sender.getName() + " "
 
         TextComponent item = new TextComponent("");
         if (message.contains("[eq]") || message.contains("[i]") ||message.contains("[item]")) {

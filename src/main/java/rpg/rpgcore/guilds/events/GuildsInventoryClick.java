@@ -113,6 +113,7 @@ public class GuildsInventoryClick implements Listener {
 
             if (guildPoints < 1) {
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cTwoj Klan nie posiada dostepnych kredytow do rozdania. Mozesz je zdobyc zwiekszajac poziom swojej gildi"));
+                rpgcore.getGuildManager().setGuildBalance(tag, 100);
                 player.closeInventory();
                 return;
             }
@@ -124,7 +125,7 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildSredniDmg(tag, 2.5);
-                    rpgcore.getGuildManager().setGuildBalance(tag, -1);
+                    rpgcore.getGuildManager().updateGuildBalance(tag, -1);
                     break;
                 case 1:
                     return;
@@ -135,7 +136,7 @@ public class GuildsInventoryClick implements Listener {
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildSredniDef(tag, 2.5);
-                    rpgcore.getGuildManager().setGuildBalance(tag, -1);
+                    rpgcore.getGuildManager().updateGuildBalance(tag, -1);
                     break;
                 case 3:
                     return;

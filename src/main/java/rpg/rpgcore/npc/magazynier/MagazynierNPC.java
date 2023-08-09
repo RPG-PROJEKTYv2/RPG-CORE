@@ -155,8 +155,6 @@ public class MagazynierNPC {
 
     private int getPrice(final Player player) {
         switch (this.find(player.getUniqueId()).getUnlocked()) {
-            case 0:
-                return 150;
             case 1:
                 return 250;
             case 2:

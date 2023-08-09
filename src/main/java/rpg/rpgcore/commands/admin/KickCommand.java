@@ -18,7 +18,7 @@ public class KickCommand extends CommandAPI {
 
     public KickCommand(RPGCORE rpgcore) {
         super("kick");
-        this.setRankLevel(RankType.KIDMOD);
+        this.setRankLevel(RankType.HELPER);
         this.rpgcore = rpgcore;
     }
 
