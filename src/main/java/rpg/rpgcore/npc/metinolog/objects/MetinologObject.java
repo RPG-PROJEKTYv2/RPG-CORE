@@ -10,12 +10,20 @@ public class MetinologObject {
 
     public MetinologObject(final UUID uuid) {
         this.uuid = uuid;
-        this.metinologObject = new MetinologUser(0,0, 0, 0,0,0,0);
+        this.metinologObject = new MetinologUser(0,0, 0, 0,0,0,0, 0);
     }
 
     public MetinologObject(Document document) {
         this.uuid = UUID.fromString((String) document.get("_id"));
-        this.metinologObject = new MetinologUser(document.getInteger("postepKill"), document.getInteger("postepMisjiKill"), document.getInteger("postepGive"), document.getInteger("postepMisjiGive"), document.getDouble("przeszywka"), document.getDouble("srOdpo"), document.getInteger("dodatkowedmg"));
+        this.metinologObject = new MetinologUser(
+                document.getInteger("postepKill"),
+                document.getInteger("postepMisjiKill"),
+                document.getInteger("postepGive"),
+                document.getInteger("postepMisjiGive"),
+                document.getDouble("przeszywka"),
+                document.getDouble("srOdpo"),
+                document.getInteger("dodatkowedmg"),
+                (document.containsKey("dmgMetiny") ? document.getInteger("dmgMetiny") : 0));
     }
 
     public UUID getID() {
@@ -34,6 +42,7 @@ public class MetinologObject {
                 .append("postepMisjiGive", this.getMetinologUser().getPostepMisjiGive())
                 .append("przeszywka", this.getMetinologUser().getPrzeszycie())
                 .append("srOdpo", this.getMetinologUser().getSrOdpo())
-                .append("dodatkowedmg", this.getMetinologUser().getDodatkowedmg());
+                .append("dodatkowedmg", this.getMetinologUser().getDodatkowedmg())
+                .append("dmgMetiny", this.getMetinologUser().getDodatkowedmg());
     }
 }

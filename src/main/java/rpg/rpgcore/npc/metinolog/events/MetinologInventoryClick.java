@@ -52,15 +52,23 @@ public class MetinologInventoryClick implements Listener {
                     ms.setDodatkowedmg(ms.getDodatkowedmg() + mission.getDodatkoweDmg());
                     ms.setSrOdpo(ms.getSrOdpo() + mission.getSrOdpo());
                     ms.setPostepGive(ms.getPostepGive() + 1);
+
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
+
+                    if (ms.getPostepGive() == ms.getPostepKill()) {
+                        ms.setDmgMetiny(ms.getDmgMetiny() + 1);
+                        bonuses.getBonusesUser().setDmgMetiny(bonuses.getBonusesUser().getDmgMetiny() + 1);
+                        player.sendMessage(Utils.format("&b&lMetinolog &8>> &aDodatkowo za ukonczenie mapy otrzymales/-as:"));
+                        player.sendMessage(Utils.format("&b&lMetinolog &8>> &c+1 obrazen w kamienie metin!"));
+                    }
                     bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + mission.getDodatkoweDmg());
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(mission.getSrOdpo(), 2));
-
 
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
                     });
+
                     RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&b&lMetinolog &8>> &f" + player.getName() + " &bukonczyl moja &f" + ms.getPostepGive() + " &bmisje (&fODDAJ&b)"));
                     player.closeInventory();
                     return;
@@ -85,13 +93,24 @@ public class MetinologInventoryClick implements Listener {
                     ms.setSrOdpo(ms.getSrOdpo() + mission.getSrOdpo());
                     ms.setPrzeszycie(ms.getPrzeszycie() + mission.getPrzeszycie());
                     ms.setPostepKill(ms.getPostepKill() + 1);
+
                     final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
+
+                    if (ms.getPostepGive() == ms.getPostepKill()) {
+                        ms.setDmgMetiny(ms.getDmgMetiny() + 1);
+                        bonuses.getBonusesUser().setDmgMetiny(bonuses.getBonusesUser().getDmgMetiny() + 1);
+                        player.sendMessage(Utils.format("&b&lMetinolog &8>> &aDodatkowo za ukonczenie mapy otrzymales/-as:"));
+                        player.sendMessage(Utils.format("&b&lMetinolog &8>> &c+1 obrazen w kamienie metin!"));
+                    }
+
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(mission.getSrOdpo(), 2));
                     bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + DoubleUtils.round(mission.getPrzeszycie(), 2));
+
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataMetinolog(uuid, RPGCORE.getInstance().getMetinologNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
                     });
+
                     RPGCORE.getInstance().getServer().broadcastMessage(Utils.format("&b&lMetinolog &8>> &f" + player.getName() + " &bukonczyl moja &f" + ms.getPostepKill() + " &bmisje (&fZNISZCZ&b)"));
                     player.closeInventory();
                 }

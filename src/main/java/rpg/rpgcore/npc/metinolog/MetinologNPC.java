@@ -80,7 +80,9 @@ public class MetinologNPC {
         return new ItemBuilder(Material.PAPER).setName("&6&lStatystyki").setLore(Arrays.asList(
                 "&7Dodatkowe Obrazenia: &c" + ms.getDodatkowedmg(),
                 "&7Srednia Odpornosc: &c" + ms.getSrOdpo(),
-                "&7Przeszycie Bloku Ciosu: &c" + ms.getPrzeszycie())).hideFlag().toItemStack().clone();
+                "&7Przeszycie Bloku Ciosu: &c" + ms.getPrzeszycie(),
+                "&7Obrazenia w Kamienie Metin: &c" + ms.getDmgMetiny()
+                )).hideFlag().toItemStack().clone();
     }
 
     public void add(MetinologObject metinologObject) {

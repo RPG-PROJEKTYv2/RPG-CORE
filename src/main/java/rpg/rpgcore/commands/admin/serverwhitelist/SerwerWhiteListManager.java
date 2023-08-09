@@ -10,6 +10,7 @@ public class SerwerWhiteListManager {
 
     public SerwerWhiteListManager(final RPGCORE rpgcore) {
         this.whitelist = rpgcore.getMongoManager().loadSerwerWhiteList();
+        this.whitelist.setEnabled(true);
     }
 
     public SerwerWhiteList getWhitelist() {

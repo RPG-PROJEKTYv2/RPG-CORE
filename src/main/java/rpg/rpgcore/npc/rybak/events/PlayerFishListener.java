@@ -1,7 +1,8 @@
 package rpg.rpgcore.npc.rybak.events;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -9,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -17,18 +19,18 @@ public class PlayerFishListener implements Listener {
 
     private final RPGCORE rpgcore;
 
-    private final List<Chunk> allowedChunksList = Arrays.asList(
-            Bukkit.getWorld("world").getChunkAt(-5, -22),
-            Bukkit.getWorld("world").getChunkAt(-5, -23),
-            Bukkit.getWorld("world").getChunkAt(-6, -22),
-            Bukkit.getWorld("world").getChunkAt(-6, -23),
-            Bukkit.getWorld("world").getChunkAt(-7, -22),
-            Bukkit.getWorld("world").getChunkAt(-7, -23),
-            Bukkit.getWorld("world").getChunkAt(-8, -22),
-            Bukkit.getWorld("world").getChunkAt(-8, -23),
-            Bukkit.getWorld("world").getChunkAt(-9, -22),
-            Bukkit.getWorld("world").getChunkAt(-9, -23)
-    );
+//    private final List<Chunk> allowedChunksList = Arrays.asList(
+//            Bukkit.getWorld("R").getChunkAt(-5, -22),
+//            Bukkit.getWorld("world").getChunkAt(-5, -23),
+//            Bukkit.getWorld("world").getChunkAt(-6, -22),
+//            Bukkit.getWorld("world").getChunkAt(-6, -23),
+//            Bukkit.getWorld("world").getChunkAt(-7, -22),
+//            Bukkit.getWorld("world").getChunkAt(-7, -23),
+//            Bukkit.getWorld("world").getChunkAt(-8, -22),
+//            Bukkit.getWorld("world").getChunkAt(-8, -23),
+//            Bukkit.getWorld("world").getChunkAt(-9, -22),
+//            Bukkit.getWorld("world").getChunkAt(-9, -23)
+//    );
 
     public PlayerFishListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
@@ -40,12 +42,12 @@ public class PlayerFishListener implements Listener {
         final UUID uuid = player.getUniqueId();
         e.setExpToDrop(0);
 
-        if (!allowedChunksList.contains(player.getLocation().getChunk())) {
-            e.setCancelled(true);
-            e.getHook().remove();
-            player.sendMessage(Utils.format("&6&lRybak &8>> &cNie mozesz tutaj lowic!"));
-            return;
-        }
+//        if (!allowedChunksList.contains(player.getLocation().getChunk())) {
+//            e.setCancelled(true);
+//            e.getHook().remove();
+//            player.sendMessage(Utils.format("&6&lRybak &8>> &cNie mozesz tutaj lowic!"));
+//            return;
+//        }
 
         if (rpgcore.getRybakNPC().getFishingCount(uuid) == 10) {
             e.setCancelled(true);
@@ -55,6 +57,7 @@ public class PlayerFishListener implements Listener {
         }
 
         if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+            player.getInventory().addItem(new ItemBuilder(Material.FISHING_ROD).setName("&6Wedka Rybaka").addTagString("owner", player.getName()).addEnchant(Enchantment.LURE, 10).toItemStack());
             e.setCancelled(true);
             e.getHook().remove();
             player.sendMessage(Utils.format("&8[&c✘&8] &cTa wedka nie nalezy do ciebie!"));

@@ -74,7 +74,7 @@ public class AkcesoriaDodatInteractListener implements Listener {
         if (eventItem.getType() == Material.LADDER) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaDodatkowe().getSzarfa().isEmpty()) {
+            if (!user.getAkcesoriaDodatkowe().getSzarfa().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona szarfe!"));
                 return;
             }
@@ -82,7 +82,7 @@ public class AkcesoriaDodatInteractListener implements Listener {
             final double ludzie = Utils.getTagDouble(eventItem, "ludzie");
             final double moby = Utils.getTagDouble(eventItem, "moby");
 
-            user.getAkcesoriaDodatkowe().setSzarfa(Utils.serializeItem(eventItem));
+            user.getAkcesoriaDodatkowe().setSzarfa(eventItem.clone());
 
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
@@ -109,7 +109,7 @@ public class AkcesoriaDodatInteractListener implements Listener {
         if (eventItem.getType() == Material.LEASH) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaDodatkowe().getPas().isEmpty()) {
+            if (!user.getAkcesoriaDodatkowe().getPas().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony pas!"));
                 return;
             }
@@ -117,7 +117,7 @@ public class AkcesoriaDodatInteractListener implements Listener {
             final double defLudzie = Utils.getTagDouble(eventItem, "defLudzie");
             final double defMoby = Utils.getTagDouble(eventItem, "defMoby");
 
-            user.getAkcesoriaDodatkowe().setPas(Utils.serializeItem(eventItem));
+            user.getAkcesoriaDodatkowe().setPas(eventItem.clone());
 
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
@@ -144,21 +144,22 @@ public class AkcesoriaDodatInteractListener implements Listener {
         if (eventItem.getType() == Material.FIREBALL) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaDodatkowe().getMedalion().isEmpty()) {
+            if (!user.getAkcesoriaDodatkowe().getMedalion().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony medalion!"));
                 return;
             }
 
             final double srdmg = Utils.getTagDouble(eventItem, "srdmg");
-            final int zloteSerca = Utils.getTagInt(eventItem, "zloteSerca");
+            final int dodatkoweHP = Utils.getTagInt(eventItem, "dodatkoweHP");
 
-            user.getAkcesoriaDodatkowe().setMedalion(Utils.serializeItem(eventItem));
+            user.getAkcesoriaDodatkowe().setMedalion(eventItem.clone());
 
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
 
             bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + srdmg);
-            bonuses.getBonusesUser().setDodatkowezlotehp(bonuses.getBonusesUser().getDodatkowezlotehp() + zloteSerca);
+            bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + dodatkoweHP);
+            player.setMaxHealth(player.getMaxHealth() + (dodatkoweHP * 2));
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
@@ -171,7 +172,7 @@ public class AkcesoriaDodatInteractListener implements Listener {
                                 "**Typ: **`" + eventItem.getType() + "`\n" +
                                 "**Statystyki:** \n" +
                                 "- Srednie Obrazenia: " + srdmg + "\n" +
-                                "- Zlote Serca: " + zloteSerca + "\n" +
+                                "- Dodatkowe HP: " + dodatkoweHP + "\n" +
                                 "- Wymagazyny Poziom: " + Utils.getTagInt(eventItem, "lvl"), Color.getHSBColor(114, 90, 47)));
             });
         }
@@ -179,18 +180,18 @@ public class AkcesoriaDodatInteractListener implements Listener {
         if (eventItem.getType() == Material.MINECART) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaDodatkowe().getEnergia().isEmpty()) {
+            if (!user.getAkcesoriaDodatkowe().getEnergia().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona energie!"));
                 return;
             }
 
-            final double mDmg = Utils.getTagDouble(eventItem, "mDmg");
-            final double def = Utils.getTagDouble(eventItem, "def");
-            final double blok = Utils.getTagDouble(eventItem, "blok");
+            final int mDmg = Utils.getTagInt(eventItem, "mDmg");
+            final int def = Utils.getTagInt(eventItem, "def");
+            final int blok = Utils.getTagInt(eventItem, "blok");
             final double przebicie = Utils.getTagDouble(eventItem, "przebicie");
             final int mspeed = Utils.getTagInt(eventItem, "mspeed");
 
-            user.getAkcesoriaDodatkowe().setEnergia(Utils.serializeItem(eventItem));
+            user.getAkcesoriaDodatkowe().setEnergia(eventItem.clone());
 
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));

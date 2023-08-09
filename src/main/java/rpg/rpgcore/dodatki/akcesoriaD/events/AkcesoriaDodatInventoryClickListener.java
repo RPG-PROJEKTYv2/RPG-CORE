@@ -51,7 +51,7 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                     final double ludzie = Utils.getTagDouble(item, "ludzie");
                     final double moby = Utils.getTagDouble(item, "moby");
 
-                    user.getAkcesoriaDodatkowe().setSzarfa("");
+                    user.getAkcesoriaDodatkowe().setSzarfa(new ItemStack(Material.AIR));
 
                     bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() - ludzie);
                     bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() - moby);
@@ -75,7 +75,7 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                     final double defLudzie = Utils.getTagDouble(item, "defLudzie");
                     final double defMoby = Utils.getTagDouble(item, "defMoby");
 
-                    user.getAkcesoriaDodatkowe().setPas("");
+                    user.getAkcesoriaDodatkowe().setPas(new ItemStack(Material.AIR));
 
                     bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() - defLudzie);
                     bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() - defMoby);
@@ -97,12 +97,13 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                     break;
                 case 5:
                     final double srdmg = Utils.getTagDouble(item, "srdmg");
-                    final int zloteSerca = Utils.getTagInt(item, "zloteSerca");
+                    final int dodatkoweHP = Utils.getTagInt(item, "dodatkoweHP");
 
-                    user.getAkcesoriaDodatkowe().setMedalion("");
+                    user.getAkcesoriaDodatkowe().setMedalion(new ItemStack(Material.AIR));
 
                     bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - srdmg);
-                    bonuses.getBonusesUser().setDodatkowezlotehp(bonuses.getBonusesUser().getDodatkowezlotehp() - zloteSerca);
+                    bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - dodatkoweHP);
+                    player.setMaxHealth(player.getMaxHealth() - (dodatkoweHP * 2));
 
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                         rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
@@ -115,18 +116,18 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
                                         "**Typ: **`" + item.getType() + "`\n" +
                                         "**Statystyki:** \n" +
                                         "- Srednie Obrazenia: " + srdmg + "\n" +
-                                        "- Zlote Serca: " + zloteSerca + "\n" +
+                                        "- Dodatkowe HP: " + dodatkoweHP + "\n" +
                                         "- Wymagazyny Poziom: " + Utils.getTagInt(item, "lvl"), Color.getHSBColor(114, 90, 47)));
                     });
                     break;
                 case 7:
-                    final double mDmg = Utils.getTagDouble(item, "mDmg");
-                    final double def = Utils.getTagDouble(item, "def");
-                    final double blok = Utils.getTagDouble(item, "blok");
+                    final int mDmg = Utils.getTagInt(item, "mDmg");
+                    final int def = Utils.getTagInt(item, "def");
+                    final int blok = Utils.getTagInt(item, "blok");
                     final double przebicie = Utils.getTagDouble(item, "przebicie");
                     final int mspeed = Utils.getTagInt(item, "mspeed");
 
-                    user.getAkcesoriaDodatkowe().setEnergia("");
+                    user.getAkcesoriaDodatkowe().setEnergia(new ItemStack(Material.AIR));
 
                     bonuses.getBonusesUser().setMinussrednieobrazenia(bonuses.getBonusesUser().getMinussrednieobrazenia() - mDmg);
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - def);

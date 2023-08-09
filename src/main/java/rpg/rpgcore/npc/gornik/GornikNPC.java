@@ -171,6 +171,8 @@ public class GornikNPC {
     public void openSklep(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lGornik &8>> &a&lSklep Gorniczy"));
 
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
+
         gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player).clone()).setLoreCrafting(GornikItems.getKilof(player).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Cena: &e" + Utils.spaceNumber(1) + "&2$" //50_000_000

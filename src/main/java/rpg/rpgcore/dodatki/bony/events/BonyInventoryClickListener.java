@@ -52,105 +52,105 @@ public class BonyInventoryClickListener implements Listener {
 
         switch (Utils.removeColor(item.getItemMeta().getDisplayName())) {
             case "Bon Srednich Obrazen 5%":
-                user.getBony().setDmg5("");
+                user.getBony().setDmg5(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Srednich Obrazen 5%!"));
                 break;
             case "Bon Srednich Obrazen 10%":
-                user.getBony().setDmg10("");
+                user.getBony().setDmg10(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Srednich Obrazen 10%!"));
                 break;
             case "Bon Srednich Obrazen 15%":
-                user.getBony().setDmg15("");
+                user.getBony().setDmg15(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() - 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Srednich Obrazen 15%!"));
                 break;
             case "Bon Sredniej Defensywy 5%":
-                user.getBony().setDef5("");
+                user.getBony().setDef5(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Sredniej Defensywy 5%!"));
                 break;
             case "Bon Sredniej Defensywy 10%":
-                user.getBony().setDef10("");
+                user.getBony().setDef10(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Sredniej Defensywy 10%!"));
                 break;
             case "Bon Sredniej Defensywy 15%":
-                user.getBony().setDef15("");
+                user.getBony().setDef15(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Sredniej Defensywy 15%!"));
                 break;
             case "Bon Szansy Na Cios Krytyczny 5%":
-                user.getBony().setKryt5("");
+                user.getBony().setKryt5(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Cios Krytyczny 5%!"));
                 break;
             case "Bon Szansy Na Cios Krytyczny 10%":
-                user.getBony().setKryt10("");
+                user.getBony().setKryt10(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Cios Krytyczny 10%!"));
                 break;
             case "Bon Szansy Na Cios Krytyczny 15%":
-                user.getBony().setKryt15("");
+                user.getBony().setKryt15(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() - 15);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Cios Krytyczny 15%!"));
                 break;
             case "Bon Szansy Na Wzmocnienie Ciosu Krytycznego 10%":
-                user.getBony().setWzmkryt10("");
+                user.getBony().setWzmkryt10(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzansanawzmocnieniekryta(bonuses.getBonusesUser().getSzansanawzmocnieniekryta() - 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Wzmocnienie Ciosu Krytycznego 10%!"));
                 break;
             case "Bon Szansy Na Blok Ciosu 20%":
-                user.getBony().setBlok20("");
+                user.getBony().setBlok20(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Blok Ciosu 20%!"));
                 break;
             case "Bon Szansy Na Przeszycie Bloku Ciosu 20%":
-                user.getBony().setPrzeszywka20("");
+                user.getBony().setPrzeszywka20(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() - 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Szansy Na Przeszycie Bloku Ciosu 20%!"));
                 break;
             case "Bon Dodatkowego Zdrowia +10":
-                user.getBony().setHp10("");
+                user.getBony().setHp10(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - 10);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Dodatkowego Zdrowia +10!"));
                 player.setMaxHealth(player.getMaxHealth() - 10 * 2);
                 break;
             case "Bon Dodatkowego Zdrowia +20":
-                user.getBony().setHp20("");
+                user.getBony().setHp20(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - 20);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Dodatkowego Zdrowia +20!"));
                 player.setMaxHealth(player.getMaxHealth() - 20 * 2);
                 break;
             case "Bon Dodatkowego Zdrowia +35":
-                user.getBony().setHp35("");
+                user.getBony().setHp35(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() - 35);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Dodatkowego Zdrowia +35!"));
                 player.setMaxHealth(player.getMaxHealth() - 35 * 2);
                 break;
             case "Bon Zwiekszonej Predkosci Ruchu +25":
-                user.getBony().setPredkosc25("");
+                user.getBony().setPredkosc25(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - 25);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonej Predkosci Ruchu +25!"));
                 break;
             case "Bon Zwiekszonej Predkosci Ruchu +50":
-                user.getBony().setPredkosc50("");
+                user.getBony().setPredkosc50(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setSzybkosc(bonuses.getBonusesUser().getSzybkosc() - 50);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonej Predkosci Ruchu +50!"));
                 break;
             case "Bon Zwiekszonych Obrazen W Kamienie Metin +2":
-                user.getBony().setDmgMetiny("");
+                user.getBony().setDmgMetiny(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDmgMetiny(0);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +2!"));
                 break;
             case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
-                user.getBony().setDmgMetiny("");
+                user.getBony().setDmgMetiny(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDmgMetiny(0);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +3!"));
                 break;
             case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
-                user.getBony().setDmgMetiny("");
+                user.getBony().setDmgMetiny(new ItemStack(Material.AIR));
                 bonuses.getBonusesUser().setDmgMetiny(0);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZdjales Bon Zwiekszonych Obrazen W Kamienie Metin +5!"));
                 break;

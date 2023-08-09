@@ -45,34 +45,34 @@ public class DodatkiManager {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());
         }
 
-        if (user.getTarcza().isEmpty()) {
+        if (user.getTarcza().getType().equals(Material.AIR)) {
             gui.setItem(2, this.createNoAkcesoria("Tarczy"));
         } else {
-            gui.setItem(2, Utils.deserializeItem(user.getTarcza()));
+            gui.setItem(2, user.getTarcza());
         }
 
-        if (user.getNaszyjnik().isEmpty()) {
+        if (user.getNaszyjnik().getType().equals(Material.AIR)) {
             gui.setItem(3, this.createNoAkcesoria("Naszyjnika"));
         } else {
-            gui.setItem(3, Utils.deserializeItem(user.getNaszyjnik()));
+            gui.setItem(3, user.getNaszyjnik());
         }
 
-        if (user.getKolczyki().isEmpty()) {
+        if (user.getKolczyki().getType().equals(Material.AIR)) {
             gui.setItem(4, this.createNoAkcesoria("Kolczykow"));
         } else {
-            gui.setItem(4, Utils.deserializeItem(user.getKolczyki()));
+            gui.setItem(4, user.getKolczyki());
         }
 
-        if (user.getPierscien().isEmpty()) {
+        if (user.getPierscien().getType().equals(Material.AIR)) {
             gui.setItem(5, this.createNoAkcesoria("Pierscienia"));
         } else {
-            gui.setItem(5, Utils.deserializeItem(user.getPierscien()));
+            gui.setItem(5, user.getPierscien());
         }
 
-        if (user.getDiadem().isEmpty()) {
+        if (user.getDiadem().getType().equals(Material.AIR)) {
             gui.setItem(6, this.createNoAkcesoria("Diademu"));
         } else {
-            gui.setItem(6, Utils.deserializeItem(user.getDiadem()));
+            gui.setItem(6, user.getDiadem());
         }
 
         gui.setItem(8, Utils.powrot());
@@ -88,112 +88,112 @@ public class DodatkiManager {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName(" ").toItemStack());
         }
 
-        if (user.getDmg5().isEmpty()) {
+        if (user.getDmg5().getType().equals(Material.AIR)) {
             gui.setItem(0, this.createNoAkcesoria("Bonu Srednich Obrazen 5%"));
         } else {
-            gui.setItem(0, Utils.deserializeItem(user.getDmg5()));
+            gui.setItem(0, user.getDmg5());
         }
 
-        if (user.getDmg10().isEmpty()) {
+        if (user.getDmg10().getType().equals(Material.AIR)) {
             gui.setItem(9, this.createNoAkcesoria("Bonu Srednich Obrazen 10%"));
         } else {
-            gui.setItem(9, Utils.deserializeItem(user.getDmg10()));
+            gui.setItem(9, user.getDmg10());
         }
 
-        if (user.getDmg15().isEmpty()) {
+        if (user.getDmg15().getType().equals(Material.AIR)) {
             gui.setItem(18, this.createNoAkcesoria("Bonu Srednich Obrazen 15%"));
         } else {
-            gui.setItem(18, Utils.deserializeItem(user.getDmg15()));
+            gui.setItem(18, user.getDmg15());
         }
 
-        if (user.getDef5().isEmpty()) {
+        if (user.getDef5().getType().equals(Material.AIR)) {
             gui.setItem(1, this.createNoAkcesoria("Bonu Sredniej Defensywy 5%"));
         } else {
-            gui.setItem(1, Utils.deserializeItem(user.getDef5()));
+            gui.setItem(1, user.getDef5());
         }
 
-        if (user.getDef10().isEmpty()) {
+        if (user.getDef10().getType().equals(Material.AIR)) {
             gui.setItem(10, this.createNoAkcesoria("Bonu Sredniej Defensywy 10%"));
         } else {
-            gui.setItem(10, Utils.deserializeItem(user.getDef10()));
+            gui.setItem(10, user.getDef10());
         }
 
-        if (user.getDef15().isEmpty()) {
+        if (user.getDef15().getType().equals(Material.AIR)) {
             gui.setItem(19, this.createNoAkcesoria("Bonu Sredniej Defensywy 15%"));
         } else {
-            gui.setItem(19, Utils.deserializeItem(user.getDef15()));
+            gui.setItem(19, user.getDef15());
         }
 
-        if (user.getKryt5().isEmpty()) {
+        if (user.getKryt5().getType().equals(Material.AIR)) {
             gui.setItem(2, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 5%"));
         } else {
-            gui.setItem(2, Utils.deserializeItem(user.getKryt5()));
+            gui.setItem(2, user.getKryt5());
         }
 
-        if (user.getKryt10().isEmpty()) {
+        if (user.getKryt10().getType().equals(Material.AIR)) {
             gui.setItem(11, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 10%"));
         } else {
-            gui.setItem(11, Utils.deserializeItem(user.getKryt10()));
+            gui.setItem(11, user.getKryt10());
         }
 
-        if (user.getKryt15().isEmpty()) {
+        if (user.getKryt15().getType().equals(Material.AIR)) {
             gui.setItem(20, this.createNoAkcesoria("Bonu Szansy Na Cios Krytyczny 15%"));
         } else {
-            gui.setItem(20, Utils.deserializeItem(user.getKryt15()));
+            gui.setItem(20, user.getKryt15());
         }
 
-        if (user.getWzmkryt10().isEmpty()) {
+        if (user.getWzmkryt10().getType().equals(Material.AIR)) {
             gui.setItem(3, this.createNoAkcesoria("Bonu Szansy Na Wzmocnienie Ciosu Krytycznego 10%"));
         } else {
-            gui.setItem(3, Utils.deserializeItem(user.getWzmkryt10()));
+            gui.setItem(3, user.getWzmkryt10());
         }
 
-        if (user.getBlok20().isEmpty()) {
+        if (user.getBlok20().getType().equals(Material.AIR)) {
             gui.setItem(12, this.createNoAkcesoria("Bonu Szansy Na Blok Ciosu 20%"));
         } else {
-            gui.setItem(12, Utils.deserializeItem(user.getBlok20()));
+            gui.setItem(12, user.getBlok20());
         }
 
-        if (user.getPrzeszywka20().isEmpty()) {
+        if (user.getPrzeszywka20().getType().equals(Material.AIR)) {
             gui.setItem(21, this.createNoAkcesoria("Bonu Szansy Na Przeszycie Bloku Ciosu 20%"));
         } else {
-            gui.setItem(21, Utils.deserializeItem(user.getPrzeszywka20()));
+            gui.setItem(21, user.getPrzeszywka20());
         }
 
-        if (user.getHp10().isEmpty()) {
+        if (user.getHp10().getType().equals(Material.AIR)) {
             gui.setItem(4, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +10"));
         } else {
-            gui.setItem(4, Utils.deserializeItem(user.getHp10()));
+            gui.setItem(4, user.getHp10());
         }
 
-        if (user.getHp20().isEmpty()) {
+        if (user.getHp20().getType().equals(Material.AIR)) {
             gui.setItem(13, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +20"));
         } else {
-            gui.setItem(13, Utils.deserializeItem(user.getHp20()));
+            gui.setItem(13, user.getHp20());
         }
 
-        if (user.getHp35().isEmpty()) {
+        if (user.getHp35().getType().equals(Material.AIR)) {
             gui.setItem(22, this.createNoAkcesoria("Bonu Dodatkowego Zdrowia +35"));
         } else {
-            gui.setItem(22, Utils.deserializeItem(user.getHp35()));
+            gui.setItem(22, user.getHp35());
         }
 
-        if (user.getPredkosc25().isEmpty()) {
+        if (user.getPredkosc25().getType().equals(Material.AIR)) {
             gui.setItem(5, this.createNoAkcesoria("Bonu Zwiekszonej Predkosci Ruchu +25"));
         } else {
-            gui.setItem(5, Utils.deserializeItem(user.getPredkosc25()));
+            gui.setItem(5, user.getPredkosc25());
         }
 
-        if (user.getPredkosc50().isEmpty()) {
+        if (user.getPredkosc50().getType().equals(Material.AIR)) {
             gui.setItem(14, this.createNoAkcesoria("Bonu Zwiekszonej Predkosci Ruchu +50"));
         } else {
-            gui.setItem(14, Utils.deserializeItem(user.getPredkosc50()));
+            gui.setItem(14, user.getPredkosc50());
         }
 
-        if (user.getDmgMetiny().isEmpty()) {
+        if (user.getDmgMetiny().getType().equals(Material.AIR)) {
             gui.setItem(23, this.createNoAkcesoria("Bonu Zwiekszonych Obrazen W Kamienie Metin +2/3/5"));
         } else {
-            gui.setItem(23, Utils.deserializeItem(user.getDmgMetiny()));
+            gui.setItem(23, user.getDmgMetiny());
         }
 
         gui.setItem(17, Utils.powrot());
@@ -211,28 +211,28 @@ public class DodatkiManager {
 
 
 
-        if (user.getSzarfa().isEmpty()) {
+        if (user.getSzarfa().getType().equals(Material.AIR)) {
             gui.setItem(1, this.createNoAkcesoria("Szarfy"));
         } else {
-            gui.setItem(1, Utils.deserializeItem(user.getSzarfa()));
+            gui.setItem(1, user.getSzarfa());
         }
 
-        if (user.getPas().isEmpty()) {
+        if (user.getPas().getType().equals(Material.AIR)) {
             gui.setItem(3, this.createNoAkcesoria("Pasa"));
         } else {
-            gui.setItem(3, Utils.deserializeItem(user.getPas()));
+            gui.setItem(3, user.getPas());
         }
 
-        if (user.getMedalion().isEmpty()) {
+        if (user.getMedalion().getType().equals(Material.AIR)) {
             gui.setItem(5, this.createNoAkcesoria("Medalionu"));
         } else {
-            gui.setItem(5, Utils.deserializeItem(user.getMedalion()));
+            gui.setItem(5, user.getMedalion());
         }
 
-        if (user.getEnergia().isEmpty()) {
+        if (user.getEnergia().getType().equals(Material.AIR)) {
             gui.setItem(7, this.createNoAkcesoria("Energii"));
         } else {
-            gui.setItem(7, Utils.deserializeItem(user.getEnergia()));
+            gui.setItem(7, user.getEnergia());
         }
 
         gui.setItem(8, Utils.powrot());

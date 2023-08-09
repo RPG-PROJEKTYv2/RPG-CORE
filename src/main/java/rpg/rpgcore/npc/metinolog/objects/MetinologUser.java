@@ -14,8 +14,9 @@ public class MetinologUser {
     private double przeszycie;
     private double srOdpo;
     private int dodatkowedmg;
+    private int dmgMetiny;
 
-    public MetinologUser(int postepKill, int postepMisjiKill, int postepGive, int postepMisjiGive, double przeszycie, double srOdpo, int dodatkowedmg) {
+    public MetinologUser(int postepKill, int postepMisjiKill, int postepGive, int postepMisjiGive, double przeszycie, double srOdpo, int dodatkowedmg, int dmgMetiny) {
         this.postepKill = postepKill;
         this.postepMisjiKill = postepMisjiKill;
         this.postepGive = postepGive;
@@ -23,5 +24,6 @@ public class MetinologUser {
         this.przeszycie = przeszycie;
         this.srOdpo = srOdpo;
         this.dodatkowedmg = dodatkowedmg;
+        this.dmgMetiny = dmgMetiny;
     }
 }

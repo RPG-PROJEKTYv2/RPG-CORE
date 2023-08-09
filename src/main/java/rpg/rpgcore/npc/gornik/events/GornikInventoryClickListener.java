@@ -118,7 +118,6 @@ public class GornikInventoryClickListener implements Listener {
 //                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
 //                    return;
 //                }
-                player.sendMessage(Utils.getTagInt(player.getItemInHand(), "lvl") + "");
                 if (Utils.getTagInt(player.getItemInHand(), "lvl") < Utils.getTagInt(item, "reqPickaxeLvl")) return;
                 user.setProgress(1);
                 return;
@@ -156,6 +155,8 @@ public class GornikInventoryClickListener implements Listener {
                 case 8:
                     rpgcore.getGornikNPC().openGornik(player);
                     break;
+                default:
+                    return;
             }
             return;
         }

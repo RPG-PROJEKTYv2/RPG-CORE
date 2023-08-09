@@ -74,7 +74,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.ITEM_FRAME) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaPodstawowe().getTarcza().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getTarcza().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona tarcze!"));
                 return;
             }
@@ -83,7 +83,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double blok = Utils.getTagDouble(eventItem, "blok");
             final int hp = Utils.getTagInt(eventItem, "hp");
 
-            user.getAkcesoriaPodstawowe().setTarcza(Utils.serializeItem(eventItem));
+            user.getAkcesoriaPodstawowe().setTarcza(eventItem.clone());
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + def);
@@ -112,7 +112,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.STORAGE_MINECART) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaPodstawowe().getNaszyjnik().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getNaszyjnik().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony naszyjnik!"));
                 return;
             }
@@ -121,7 +121,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double kryt = Utils.getTagDouble(eventItem, "kryt");
             final double srdmg = Utils.getTagDouble(eventItem, "srdmg");
 
-            user.getAkcesoriaPodstawowe().setNaszyjnik(Utils.serializeItem(eventItem));
+            user.getAkcesoriaPodstawowe().setNaszyjnik(eventItem.clone());
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + ddmg);
@@ -149,7 +149,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.HOPPER_MINECART) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaPodstawowe().getKolczyki().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getKolczyki().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozone kolczyki!"));
                 return;
             }
@@ -158,7 +158,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double odpo = Utils.getTagDouble(eventItem, "odpo");
             final int mspeed = Utils.getTagInt(eventItem, "mspeed");
 
-            user.getAkcesoriaPodstawowe().setKolczyki(Utils.serializeItem(eventItem));
+            user.getAkcesoriaPodstawowe().setKolczyki(eventItem.clone());
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + ludzie);
@@ -186,7 +186,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
         if (eventItem.getType() == Material.EXPLOSIVE_MINECART) {
             e.setCancelled(true);
 
-            if (!user.getAkcesoriaPodstawowe().getPierscien().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getPierscien().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony pierscien!"));
                 return;
             }
@@ -195,7 +195,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double wkryt = Utils.getTagDouble(eventItem, "wkryt");
             final int speed = Utils.getTagInt(eventItem, "speed");
 
-            user.getAkcesoriaPodstawowe().setPierscien(Utils.serializeItem(eventItem));
+            user.getAkcesoriaPodstawowe().setPierscien(eventItem.clone());
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + przeszycie);
@@ -226,7 +226,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             if (eventItem.hasItemMeta() && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Zardzewialy Pierscien"))
                 return;
 
-            if (!user.getAkcesoriaPodstawowe().getDiadem().isEmpty()) {
+            if (!user.getAkcesoriaPodstawowe().getDiadem().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony diadem!"));
                 return;
             }
@@ -235,7 +235,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
             final double potwory = Utils.getTagDouble(eventItem, "potwory");
             final double exp = Utils.getTagInt(eventItem, "exp");
 
-            user.getAkcesoriaPodstawowe().setDiadem(Utils.serializeItem(eventItem));
+            user.getAkcesoriaPodstawowe().setDiadem(eventItem.clone());
             player.getInventory().removeItem(new ItemBuilder(eventItem.clone()).setAmount(1).toItemStack());
             player.sendMessage(Utils.format("&8[&a✔&8] &aPomyslnie zalozyles " + eventItem.getItemMeta().getDisplayName() + "&a!"));
             bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + srdmg);

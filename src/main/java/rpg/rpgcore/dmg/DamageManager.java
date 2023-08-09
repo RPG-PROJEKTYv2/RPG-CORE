@@ -1,13 +1,17 @@
 package rpg.rpgcore.dmg;
 
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
@@ -58,10 +62,10 @@ public class DamageManager {
 
         rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, p), 20L);
         if (rpgcore.getChatManager().find(p.getUniqueId()).isDmgHologramsVisable()) {
-            for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)){
-                if (e instanceof Player){
+            for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)) {
+                if (e instanceof Player) {
                     Player player = (Player) e;
-                    if (player != p){
+                    if (player != p) {
                         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                         rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, player), 20L);
                     }
@@ -90,6 +94,18 @@ public class DamageManager {
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
+            final String type = Utils.getTagString(weapon, "type");
+
+            switch (type) {
+                case "ks":
+                    return 0;
+                case "tyra":
+                    mnoznik += Utils.getTagInt(weapon, "ludzie");
+                    break;
+                default:
+                    break;
+            }
+
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
             final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
@@ -171,7 +187,7 @@ public class DamageManager {
         }
 
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus1().equals("Silny Na Potwory")) {
                 drugiMnoznik += bao.getValue1();
@@ -180,23 +196,23 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().isEmpty()) {
+        if (!bony.getDmg5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDmg10().isEmpty()) {
+        if (!bony.getDmg10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDmg15().isEmpty()) {
+        if (!bony.getDmg15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
             mnoznik += dmgEnergia;
         }
 
@@ -242,6 +258,19 @@ public class DamageManager {
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
+
+            final String type = Utils.getTagString(weapon, "type");
+
+            switch (type) {
+                case "tyra":
+                    return 0;
+                case "ks":
+                    mnoznik += Utils.getTagInt(weapon, "moby");
+                    break;
+                default:
+                    break;
+            }
+
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "moby");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
@@ -311,7 +340,7 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus1().equals("Silny Na Ludzi")) {
                 drugiMnoznik += bao.getValue1();
@@ -320,23 +349,23 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().isEmpty()) {
+        if (!bony.getDmg5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDmg10().isEmpty()) {
+        if (!bony.getDmg10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDmg15().isEmpty()) {
+        if (!bony.getDmg15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            dmgEnergia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "mDmg");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
             mnoznik += dmgEnergia;
         }
 
@@ -389,15 +418,15 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().isEmpty()) {
+        if (!bony.getDef5().getType().equals(Material.AIR)) {
             mnoznik -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDef10().isEmpty()) {
+        if (!bony.getDef10().getType().equals(Material.AIR)) {
             mnoznik -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDef15().isEmpty()) {
+        if (!bony.getDef15().getType().equals(Material.AIR)) {
             mnoznik -= 15;
             drugiMnoznik += 15;
         }
@@ -407,15 +436,15 @@ public class DamageManager {
         }
 
         final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().isEmpty()) {
-            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
+            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
             mnoznik -= defTarcza;
             drugiMnoznik += defTarcza;
         }
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double energia = 100;
-        if (!akcesoriaDodat.getEnergia().isEmpty()) {
-            energia += Utils.getTagDouble(Utils.deserializeItem(akcesoriaDodat.getEnergia()), "def");
+        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
+            energia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "def");
             mnoznik -= energia;
         }
 
@@ -577,7 +606,7 @@ public class DamageManager {
             mnoznikProcenty += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid))  {
+        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
             if (!bao.getBonus2().equals("Srednia defensywa przeciwko ludziom")) {
                 drugiMnoznik += bao.getValue2();
@@ -586,22 +615,22 @@ public class DamageManager {
         }
 
         final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().isEmpty()) {
+        if (!bony.getDef5().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 5;
             drugiMnoznik += 5;
         }
-        if (!bony.getDef10().isEmpty()) {
+        if (!bony.getDef10().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 10;
             drugiMnoznik += 10;
         }
-        if (!bony.getDef15().isEmpty()) {
+        if (!bony.getDef15().getType().equals(Material.AIR)) {
             mnoznikProcenty -= 15;
             drugiMnoznik += 15;
         }
 
         final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().isEmpty()) {
-            final double defTarcza = Utils.getTagDouble(Utils.deserializeItem(akcesoriaPodst.getTarcza()), "def");
+        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
+            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
             mnoznikProcenty -= defTarcza;
             drugiMnoznik += defTarcza;
         }
@@ -621,7 +650,7 @@ public class DamageManager {
 
         protMnoznik = prot * 0.01;
 
-        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) /  (drugiMnoznik * 0.9 / 100);
+        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) / (drugiMnoznik * 0.9 / 100);
 
 
         return DoubleUtils.round(finalDmg * 2, 3);
