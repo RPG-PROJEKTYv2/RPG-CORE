@@ -35,9 +35,11 @@ public class PozlacanySkarbManager {
         // metal
         this.pozlacanyskarb.add(new Items("7", 8.0, GlobalItem.getItem("I10", 1), 1));
         this.pozlacanyskarb.add(new Items("8", 7.5, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
-        this.pozlacanyskarb.add(new Items("9", 5.5, GlobalItem.getItem("I_METAL", 1), 1));
+
+        this.pozlacanyskarb.add(new Items("9", 7.0, LesnikItems.getByItem("POTION", 1), 1));
+
+        this.pozlacanyskarb.add(new Items("10", 5.5, GlobalItem.getItem("I_METAL", 1), 1));
         // pota do lesnika
-        this.pozlacanyskarb.add(new Items("10", 5.5, LesnikItems.getByItem("POTION", 1), 1));
         // fragment bona
         this.pozlacanyskarb.add(new Items("11", 0.4, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
     }

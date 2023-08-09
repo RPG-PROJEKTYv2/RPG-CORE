@@ -151,6 +151,9 @@ public class EntityDamageEntityListener implements Listener {
                             if (ChanceHelper.getChance(15.0)) {
                                 final int trueDmg = rpgcore.getBonusesManager().find(victim.getUniqueId()).getBonusesUser().getTruedamage();
                                 attacker.setHealth(attacker.getHealth() - trueDmg);
+                                if (trueDmg == 0) {
+                                    return;
+                                }
                                 attacker.sendMessage(Utils.format("&cGracz " + victim.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
                                 victim.sendMessage(Utils.format("&aZadales/-as graczu " + attacker.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
                             }
@@ -293,6 +296,9 @@ public class EntityDamageEntityListener implements Listener {
                         if (ChanceHelper.getChance(15.0)) {
                             final int trueDmg = rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getTruedamage();
                             victim.setHealth(victim.getHealth() - trueDmg);
+                            if (trueDmg == 0) {
+                                return;
+                            }
                             victim.sendMessage(Utils.format("&cGracz " + attacker.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
                             attacker.sendMessage(Utils.format("&aZadales/-as graczu " + victim.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
                         }

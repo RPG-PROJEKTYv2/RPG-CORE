@@ -37,10 +37,10 @@ public class TajemniczaManager {
         this.tajemnicza.add(new Items("8", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lII&8&l]", Material.DIAMOND_BOOTS, ChanceHelper.getRandInt(6, 17), ChanceHelper.getRandInt(2, 7)), 1));
         // fragment stali
         this.tajemnicza.add(new Items("9", 7.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
+        this.tajemnicza.add(new Items("10", 7.0, LesnikItems.POTION.getItem(), 1));
         // zmianka
-        this.tajemnicza.add(new Items("10", 6.0, GlobalItem.getItem("I50", 1), 1));
+        this.tajemnicza.add(new Items("11", 6.0, GlobalItem.getItem("I50", 1), 1));
         // wywar z kory
-        this.tajemnicza.add(new Items("11", 5.0, LesnikItems.POTION.getItem(), 1));
         // skrzynia z surowcami
         this.tajemnicza.add(new Items("12", 4.2, SkrzynkiOther.I4.getItemStack(), 1));
         // podrecznik

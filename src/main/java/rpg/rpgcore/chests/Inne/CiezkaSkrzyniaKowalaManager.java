@@ -38,7 +38,7 @@ public class CiezkaSkrzyniaKowalaManager {
         // kamien bao
         this.kowal.add(new Items("8", 4.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
         // ENERGIA RARE
-        this.kowal.add(new Items("9", 0.7, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
+        this.kowal.add(new Items("9", 0.35, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
     }
 
     public void getDrawnItems(final Player player) {
@@ -54,6 +54,7 @@ public class CiezkaSkrzyniaKowalaManager {
                         Bukkit.getServer().broadcastMessage(Utils.format("&eGracz: &c" + player.getName() + " &eznalazl &4&lENERGIE PIEKIELNEGO KOWALA&e!!!"));
                         Bukkit.getServer().broadcastMessage(" ");
                         player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-33, -25), ChanceHelper.getRandInt(27, 61), ChanceHelper.getRandInt(33, 68), ChanceHelper.getRandDouble(0.1, 0.4), ChanceHelper.getRandInt(-50, -45), ChanceHelper.getRandInt(60, 75), "&4&lEnergia Piekielnego Kowala"));
+                        return;
                     }
                 }
                 player.getInventory().addItem(item.getRewardItem());

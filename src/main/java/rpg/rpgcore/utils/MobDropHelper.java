@@ -99,7 +99,7 @@ public class    MobDropHelper {
         //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
 
         // LESNIK NPC
-        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 1), true, true, entity);
+        addDropPlayer(player, LesnikItems.getByItem("I1", 1), getDropChance(szczescie, 0.04), true, true, entity);
         // FRAGMENT STALI
         addDropPlayer(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1), getDropChance(szczescie, 0.025), true, true, entity);
 
@@ -571,7 +571,7 @@ public class    MobDropHelper {
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_1) {
                     rpgcore.getIceTowerManager().incrementCount();
@@ -581,7 +581,7 @@ public class    MobDropHelper {
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_2) {
                     rpgcore.getIceTowerManager().incrementCount();
@@ -591,7 +591,7 @@ public class    MobDropHelper {
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
-                addDropPlayer(player, GlobalItem.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_4) {
                     rpgcore.getIceTowerManager().incrementCount();

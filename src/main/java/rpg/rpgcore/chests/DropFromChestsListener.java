@@ -199,7 +199,49 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        rpgcore.getDowodcaRozbojnikow().getDrawnItems(player);
+                        final Items item = rpgcore.getWodzGoblinowManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case STORAGE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(7, 5, 5, 15,"&a&lZwykly Naszyjnik Wodza Goblinow");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createNaszyjnik(10, 7, 7, 20,"&a&lUlepszony Naszyjnik Wodza Goblinow");
+                                }
+                                break;
+                            case WATCH:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(5, 7, 2, 15, "&a&lZwykly Diadem Wodza Goblinow");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createDiadem(8, 10, 2, 20, "&a&lUlepszony Diadem Wodza Goblinow");
+                                }
+                                break;
+                            case EXPLOSIVE_MINECART:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykly")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(4, 6, 20, 15, "&a&lZwykly Pierscien Wodza Goblinow");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszony")) {
+                                    is = AkcesoriaPodsHelper.createPierscien(8, 10, 30, 20, "&a&lUlepszony Pierscien Wodza Goblinow");
+                                }
+                                break;
+                            case ITEM_FRAME:
+                                if (is.getItemMeta().getDisplayName().contains("Zwykla")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(11, 10, 4, 15, "&a&lZwykla Tarcza Wodza Goblinow");
+                                } else if (is.getItemMeta().getDisplayName().contains("Ulepszona")) {
+                                    is = AkcesoriaPodsHelper.createTarcza(15, 12, 5, 20, "&a&lUlepszona Tarcza Wodza Goblinow");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
+
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
                         return;
                     }
                 }
