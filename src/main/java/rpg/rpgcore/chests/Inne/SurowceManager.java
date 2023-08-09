@@ -19,21 +19,21 @@ public class SurowceManager {
     public SurowceManager() {
         // materialy
         // SZANSA NA 3
-        surowce.add(new Items("1", 1.5, GlobalItem.getItem("I15", 1), 3));
-        surowce.add(new Items("2", 1.5, GlobalItem.getItem("I16", 1), 3));
-        surowce.add(new Items("3", 1.5, GlobalItem.getItem("I17", 1), 3));
-        surowce.add(new Items("4", 1.5, GlobalItem.getItem("I18", 1), 3));
-        surowce.add(new Items("5", 2.0, GlobalItem.getItem("I12", 1), 3));
-        surowce.add(new Items("6", 2.0, GlobalItem.getItem("I13", 1), 3));
-        surowce.add(new Items("7", 2.0, GlobalItem.getItem("I14", 1), 3));
+        surowce.add(new Items("1", 1.5, GlobalItem.getItem("I15", 3), 3));
+        surowce.add(new Items("2", 1.5, GlobalItem.getItem("I16", 3), 3));
+        surowce.add(new Items("3", 1.5, GlobalItem.getItem("I17", 3), 3));
+        surowce.add(new Items("4", 1.5, GlobalItem.getItem("I18", 3), 3));
+        surowce.add(new Items("5", 2.0, GlobalItem.getItem("I12", 3), 3));
+        surowce.add(new Items("6", 2.0, GlobalItem.getItem("I13", 3), 3));
+        surowce.add(new Items("7", 2.0, GlobalItem.getItem("I14", 3), 3));
         // SZANSA NA 2
-        surowce.add(new Items("8", 4.0, GlobalItem.getItem("I18", 1), 2));
-        surowce.add(new Items("9", 4.0, GlobalItem.getItem("I16", 1), 2));
-        surowce.add(new Items("10", 4.0, GlobalItem.getItem("I17", 1), 2));
-        surowce.add(new Items("11", 5.0, GlobalItem.getItem("I14", 1), 2));
-        surowce.add(new Items("12", 5.0, GlobalItem.getItem("I15", 1), 2));
-        surowce.add(new Items("13", 6.0, GlobalItem.getItem("I12", 1), 2));
-        surowce.add(new Items("14", 6.0, GlobalItem.getItem("I13", 1), 2));
+        surowce.add(new Items("8", 4.0, GlobalItem.getItem("I18", 2), 2));
+        surowce.add(new Items("9", 4.0, GlobalItem.getItem("I16", 2), 2));
+        surowce.add(new Items("10", 4.0, GlobalItem.getItem("I17", 2), 2));
+        surowce.add(new Items("11", 5.0, GlobalItem.getItem("I14", 2), 2));
+        surowce.add(new Items("12", 5.0, GlobalItem.getItem("I15", 2), 2));
+        surowce.add(new Items("13", 6.0, GlobalItem.getItem("I12", 2), 2));
+        surowce.add(new Items("14", 6.0, GlobalItem.getItem("I13", 2), 2));
         // SZANSA NA 1
         surowce.add(new Items("15", 11.5, GlobalItem.getItem("I18", 1), 1));
         surowce.add(new Items("16", 12.0, GlobalItem.getItem("I16", 1), 1));

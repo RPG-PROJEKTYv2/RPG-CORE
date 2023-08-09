@@ -22,10 +22,10 @@ public class PozlacanySkarbManager {
     public PozlacanySkarbManager() {
         // fragment stali i magii
         this.pozlacanyskarb.add(new Items("1", 14.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
-        this.pozlacanyskarb.add(new Items("2", 12.0, GlobalItem.getItem("I_CZASTKA_MAGII", 1), 2));
+        this.pozlacanyskarb.add(new Items("2", 12.0, GlobalItem.getItem("I_CZASTKA_MAGII", 2), 2));
         // zmianki
         this.pozlacanyskarb.add(new Items("3", 11.0, GlobalItem.getItem("I50", 1), 1));
-        this.pozlacanyskarb.add(new Items("4", 11.0, GlobalItem.getItem("I50", 1), 2));
+        this.pozlacanyskarb.add(new Items("4", 11.0, GlobalItem.getItem("I50", 2), 2));
         // bao kamyk
         // bao ksiega
         this.pozlacanyskarb.add(new Items("5", 9.5, GlobalItem.getItem("I_KAMIENBAO", 1), 1));

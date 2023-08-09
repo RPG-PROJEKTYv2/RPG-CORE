@@ -25,8 +25,8 @@ public class CiezkaSkrzyniaKowalaManager {
 
     public CiezkaSkrzyniaKowalaManager() {
         // fragmenty stali
-        this.kowal.add(new Items("1", 12.5, GlobalItem.getItem("I_FRAGMENT_STALI",1 ),2));
-        this.kowal.add(new Items("2", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",1 ),3));
+        this.kowal.add(new Items("1", 12.5, GlobalItem.getItem("I_FRAGMENT_STALI",2 ),2));
+        this.kowal.add(new Items("2", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",3 ),3));
         // podreczniki
         this.kowal.add(new Items("3", 12.0, GlobalItem.getItem("I10", 1), 1));
         this.kowal.add(new Items("4", 10.0, GlobalItem.getItem("I10", 1), 2));
