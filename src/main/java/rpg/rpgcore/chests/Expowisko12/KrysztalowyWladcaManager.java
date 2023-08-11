@@ -17,21 +17,16 @@ public class KrysztalowyWladcaManager {
     private final Set<Items> krysztalowyboss = Sets.newConcurrentHashSet();
 
     public KrysztalowyWladcaManager() {
-        this.krysztalowyboss.add(new Items("1", 0.50, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lUlepszony Naszyjnik Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("2", 0.50, new ItemBuilder(Material.WATCH).setName("&b&lUlepszony Diadem Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("3", 0.50, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lUlepszony Pierscien Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("4", 0.50, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lUlepszona Tarcza Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("5", 0.50, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lUlepszone Kolczyki Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("6", 3.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lZwykly Naszyjnik Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("7", 3.0, new ItemBuilder(Material.WATCH).setName("&b&lZwykly Diadem Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("8", 3.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lZwykly Pierscien Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("9", 3.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lZwykla Tarcza Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("10", 3.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lZwykle Kolczyki Krysztalowego Wladcy").toItemStack(), 1));
-        this.krysztalowyboss.add(new Items("11", 5.5, ItemHelper.createSword("&b&lMiecz Krysztalowego Wladcy", Material.DIAMOND_SWORD, 60, 50, false), 1));
-        this.krysztalowyboss.add(new Items("12", 7.0, ItemHelper.createArmor("&b&lHelm Krysztalowego Wladcy", Material.DIAMOND_HELMET, 85, 18), 1));
-        this.krysztalowyboss.add(new Items("13", 7.0, ItemHelper.createArmor("&b&lZbroja Krysztalowego Wladcy", Material.DIAMOND_CHESTPLATE, 85, 18), 1));
-        this.krysztalowyboss.add(new Items("14", 7.0, ItemHelper.createArmor("&b&lSpodnie Krysztalowego Wladcy", Material.DIAMOND_LEGGINGS, 85, 17), 1));
-        this.krysztalowyboss.add(new Items("15", 7.0, ItemHelper.createArmor("&b&lButy Krysztalowego Wladcy", Material.DIAMOND_BOOTS, 82, 18), 1));
+        this.krysztalowyboss.add(new Items("1", 5.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lKolczyki Krysztalowego Wladcy").toItemStack(), 1));
+        this.krysztalowyboss.add(new Items("2", 6.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lNaszyjnik Krysztalowego Wladcy").toItemStack(), 1));
+        this.krysztalowyboss.add(new Items("3", 3.0, new ItemBuilder(Material.WATCH).setName("&b&lDiadem Krysztalowego Wladcy").toItemStack(), 1));
+        this.krysztalowyboss.add(new Items("4", 3.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lPierscien Krysztalowego Wladcy").toItemStack(), 1));
+        this.krysztalowyboss.add(new Items("5", 3.0, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lTarcza Krysztalowego Wladcy").toItemStack(), 1));
+        this.krysztalowyboss.add(new Items("6", 5.5, ItemHelper.createSword("&b&lMiecz Krysztalowego Wladcy", Material.DIAMOND_SWORD, 60, 50, false), 1));
+        this.krysztalowyboss.add(new Items("7", 7.0, ItemHelper.createArmor("&b&lHelm Krysztalowego Wladcy", Material.DIAMOND_HELMET, 85, 18), 1));
+        this.krysztalowyboss.add(new Items("8", 7.0, ItemHelper.createArmor("&b&lZbroja Krysztalowego Wladcy", Material.DIAMOND_CHESTPLATE, 85, 18), 1));
+        this.krysztalowyboss.add(new Items("9", 7.0, ItemHelper.createArmor("&b&lSpodnie Krysztalowego Wladcy", Material.DIAMOND_LEGGINGS, 85, 17), 1));
+        this.krysztalowyboss.add(new Items("10", 7.0, ItemHelper.createArmor("&b&lButy Krysztalowego Wladcy", Material.DIAMOND_BOOTS, 82, 18), 1));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -40,6 +40,8 @@ import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
+import rpg.rpgcore.chests.Dungeony.Dungeon60z70.OgnistyDuchManager;
+import rpg.rpgcore.chests.Dungeony.Dungeon60z70.PiekielnyWladcaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.KrolLoduManager;
 import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
@@ -369,6 +371,9 @@ public final class RPGCORE extends JavaPlugin {
     // ice tower
     private KrolLoduManager krolLoduManager;
     private LodowySlugaManager lodowySlugaManager;
+    // dung 60-70
+    private OgnistyDuchManager ognistyDuchManager;
+    private PiekielnyWladcaManager piekielnyWladcaManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
 

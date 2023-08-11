@@ -17,21 +17,16 @@ public class StarozytnySmoczyCesarzManager {
     private final Set<Items> starozytnycesarz = Sets.newConcurrentHashSet();
 
     public StarozytnySmoczyCesarzManager() {
-        this.starozytnycesarz.add(new Items("6", 0.50, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lUlepszony Naszyjnik Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("7", 0.50, new ItemBuilder(Material.WATCH).setName("&5&lUlepszony Diadem Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("8", 0.50, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lUlepszony Pierscien Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("9", 0.50, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lUlepszona Tarcza Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("10", 0.50, new ItemBuilder(Material.HOPPER_MINECART).setName("&5&lUlepszone Kolczyki Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("6", 3.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lZwykly Naszyjnik Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("7", 3.0, new ItemBuilder(Material.WATCH).setName("&5&lZwykly Diadem Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("8", 3.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lZwykly Pierscien Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("9", 3.0, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lZwykla Tarcza Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("10", 3.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&5&lZwykle Kolczyki Smoczego Cesarza").toItemStack(), 1));
-        this.starozytnycesarz.add(new Items("5", 5.0, ItemHelper.createSword("&5&lMiecz Smoczego Cesarza", Material.DIAMOND_SWORD, 80, 50, false), 1));
-        this.starozytnycesarz.add(new Items("1", 6.0, ItemHelper.createArmor("&5&lHelm Smoczego Cesarza", Material.DIAMOND_HELMET, 95, 20), 1));
-        this.starozytnycesarz.add(new Items("2", 6.0, ItemHelper.createArmor("&5&lZbroja Smoczego Cesarza", Material.DIAMOND_CHESTPLATE, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("3", 6.0, ItemHelper.createArmor("&5&lSpodnie Smoczego Cesarza", Material.DIAMOND_LEGGINGS, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("4", 6.0, ItemHelper.createArmor("&5&lButy Smoczego Cesarza", Material.DIAMOND_BOOTS, 95, 20), 1));
+        this.starozytnycesarz.add(new Items("1", 5.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&5&lKolczyki Smoczego Cesarza").toItemStack(), 1));
+        this.starozytnycesarz.add(new Items("2", 6.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&5&lNaszyjnik Smoczego Cesarza").toItemStack(), 1));
+        this.starozytnycesarz.add(new Items("3", 7.0, new ItemBuilder(Material.WATCH).setName("&5&lDiadem Smoczego Cesarza").toItemStack(), 1));
+        this.starozytnycesarz.add(new Items("4", 8.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lPierscien Smoczego Cesarza").toItemStack(), 1));
+        this.starozytnycesarz.add(new Items("5", 9.0, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lTarcza Smoczego Cesarza").toItemStack(), 1));
+        this.starozytnycesarz.add(new Items("6", 14.0, ItemHelper.createSword("&5&lMiecz Smoczego Cesarza", Material.DIAMOND_SWORD, 80, 50, false), 1));
+        this.starozytnycesarz.add(new Items("7", 16.0, ItemHelper.createArmor("&5&lHelm Smoczego Cesarza", Material.DIAMOND_HELMET, 95, 20), 1));
+        this.starozytnycesarz.add(new Items("8", 16.0, ItemHelper.createArmor("&5&lZbroja Smoczego Cesarza", Material.DIAMOND_CHESTPLATE, 99, 20), 1));
+        this.starozytnycesarz.add(new Items("9", 16.0, ItemHelper.createArmor("&5&lSpodnie Smoczego Cesarza", Material.DIAMOND_LEGGINGS, 99, 20), 1));
+        this.starozytnycesarz.add(new Items("10", 16.0, ItemHelper.createArmor("&5&lButy Smoczego Cesarza", Material.DIAMOND_BOOTS, 95, 20), 1));
     }
 
     public Items getDrawnItems(final Player player) {

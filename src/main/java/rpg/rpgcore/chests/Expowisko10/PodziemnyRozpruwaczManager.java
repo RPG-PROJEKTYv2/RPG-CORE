@@ -18,21 +18,16 @@ public class PodziemnyRozpruwaczManager {
     private final Set<Items> podziemnyrozpruwacz = Sets.newConcurrentHashSet();
 
     public PodziemnyRozpruwaczManager() {
-        this.podziemnyrozpruwacz.add(new Items("1", 0.56, new ItemBuilder(Material.STORAGE_MINECART).setName("&6&lUlepszony Naszyjnik Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("2", 0.56, new ItemBuilder(Material.WATCH).setName("&6&lUlepszony Diadem Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("3", 0.56, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&6&lUlepszony Pierscien Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("4", 0.56, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lUlepszona Tarcza Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("5", 0.56, new ItemBuilder(Material.HOPPER_MINECART).setName("&6&lUlepszone Kolczyki Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("6", 3.8, new ItemBuilder(Material.STORAGE_MINECART).setName("&6&lZwykly Naszyjnik Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("7", 3.8, new ItemBuilder(Material.WATCH).setName("&6&lZwykly Diadem Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("8", 3.8, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&6&lZwykly Pierscien Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("9", 3.8, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lZwykla Tarcza Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("10", 3.8, new ItemBuilder(Material.HOPPER_MINECART).setName("&6&lZwykle Kolczyki Podziemnego Rozpruwacza").toItemStack(),1 ));
-        this.podziemnyrozpruwacz.add(new Items("11", 7.5, ItemHelper.createSword("&6&lMiecz Podziemnego Rozpruwacza", Material.DIAMOND_SWORD, 40, 40,false), 1));
-        this.podziemnyrozpruwacz.add(new Items("12", 9.0, ItemHelper.createArmor("&6&lHelm Podziemnego Rozpruwacza", Material.DIAMOND_HELMET, 70, 17), 1));
-        this.podziemnyrozpruwacz.add(new Items("13", 9.0, ItemHelper.createArmor("&6&lZbroja Podziemnego Rozpruwacza", Material.DIAMOND_CHESTPLATE, 73, 17), 1));
-        this.podziemnyrozpruwacz.add(new Items("14", 9.0, ItemHelper.createArmor("&6&lSpodnie Podziemnego Rozpruwacza", Material.DIAMOND_LEGGINGS, 73, 17), 1));
-        this.podziemnyrozpruwacz.add(new Items("15", 9.0, ItemHelper.createArmor("&6&lButy Podziemnego Rozpruwacza", Material.DIAMOND_BOOTS, 67, 16), 1));
+        this.podziemnyrozpruwacz.add(new Items("1", 5.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&6&lKolczyki Podziemnego Rozpruwacza").toItemStack(),1 ));
+        this.podziemnyrozpruwacz.add(new Items("2", 6.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&6&lNaszyjnik Podziemnego Rozpruwacza").toItemStack(),1 ));
+        this.podziemnyrozpruwacz.add(new Items("3", 7.0, new ItemBuilder(Material.WATCH).setName("&6&lDiadem Podziemnego Rozpruwacza").toItemStack(),1 ));
+        this.podziemnyrozpruwacz.add(new Items("4", 8.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&6&lPierscien Podziemnego Rozpruwacza").toItemStack(),1 ));
+        this.podziemnyrozpruwacz.add(new Items("5", 9.0, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lTarcza Podziemnego Rozpruwacza").toItemStack(),1 ));
+        this.podziemnyrozpruwacz.add(new Items("6", 14.0, ItemHelper.createSword("&6&lMiecz Podziemnego Rozpruwacza", Material.DIAMOND_SWORD, 40, 40,false), 1));
+        this.podziemnyrozpruwacz.add(new Items("7", 16.0, ItemHelper.createArmor("&6&lHelm Podziemnego Rozpruwacza", Material.DIAMOND_HELMET, 70, 17), 1));
+        this.podziemnyrozpruwacz.add(new Items("8", 16.0, ItemHelper.createArmor("&6&lZbroja Podziemnego Rozpruwacza", Material.DIAMOND_CHESTPLATE, 73, 17), 1));
+        this.podziemnyrozpruwacz.add(new Items("9", 16.0, ItemHelper.createArmor("&6&lSpodnie Podziemnego Rozpruwacza", Material.DIAMOND_LEGGINGS, 73, 17), 1));
+        this.podziemnyrozpruwacz.add(new Items("10", 16.0, ItemHelper.createArmor("&6&lButy Podziemnego Rozpruwacza", Material.DIAMOND_BOOTS, 67, 16), 1));
     }
 
     public Items getDrawnItems(final Player player) {
