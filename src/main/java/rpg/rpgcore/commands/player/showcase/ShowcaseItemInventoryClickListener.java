@@ -1,5 +1,6 @@
 package rpg.rpgcore.commands.player.showcase;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ public class ShowcaseItemInventoryClickListener implements Listener {
         if (e.getClickedInventory() == null || e.getInventory() == null) return;
         if (Utils.removeColor(e.getClickedInventory().getTitle()).equals("Pokazywanie Przedmiotu")) {
             e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
         }
     }
 }

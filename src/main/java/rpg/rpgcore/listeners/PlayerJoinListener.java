@@ -68,13 +68,15 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0));
             player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
             player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0,false));
-            rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
-            rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
+                rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
+            });
 
             player.setLevel(1);
             player.setExp(0);
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
         }
     }
 

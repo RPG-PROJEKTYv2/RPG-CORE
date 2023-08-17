@@ -215,6 +215,16 @@ public class ChatManager {
             gui.setItem(22, new ItemBuilder(Material.ARMOR_STAND).setName("&cPokazywanie zadawanych obrazen").setLore(Arrays.asList(" ", "&8* &9Status: &c&lGRACZ")).toItemStack().clone());
         }
 
+        final User mainUser = rpgcore.getUserManager().find(player.getUniqueId());
+
+        if (mainUser.getRankUser().isHighStaff() && mainUser.isAdminCodeLogin()) {
+            if (user.isDatabaseMessageEnabled()) {
+                gui.setItem(26, new ItemBuilder(Material.BOOK).setName("&cWiadomosc z bazy danych").setLore(Arrays.asList(" ", "&8* &9Status: &a&LWLACZONE")).addGlowing().toItemStack().clone());
+            } else {
+                gui.setItem(26, new ItemBuilder(Material.BOOK).setName("&cWiadomosc z bazy danych").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            }
+        }
+
 
         player.openInventory(gui);
     }

@@ -13,15 +13,20 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Getter
@@ -34,7 +39,8 @@ public class RybakNPC {
     private final Map<UUID, Integer> failedAttemptMap = new HashMap<>();
     private final Map<UUID, Integer> fishingCount = new HashMap<>();
     private final Map<UUID, Integer> taskMap = new HashMap<>();
-    private final Map<UUID, Map<String, Float>> locationMap = new HashMap<>();
+    private final Map<UUID, Map<String, Float>> locationMapYaw = new HashMap<>();
+    private final Map<UUID, Map<String, Float>> locationMapPitch = new HashMap<>();
     private final List<UUID> passed = new ArrayList<>();
 
     public RybakNPC(final RPGCORE rpgcore) {
@@ -42,10 +48,26 @@ public class RybakNPC {
         this.usersMap = rpgcore.getMongoManager().loadAllRybak();
         this.spawnArmorStans();
         this.armorStandMap = rpgcore.getMongoManager().loadAllRybakArmorStands();
+
+        this.initWyspa1Drops();
     }
 
+    private ItemStack drop(final Set<Items> playerDrop) {
+        for (Items item : playerDrop) {
+            if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
+                final ItemStack reward = item.getRewardItem();
+                reward.setAmount(item.getAmount());
+                return reward;
+            }
+        }
+        return null;
+    }
+
+
+    // ========================================= SPAWN ========================================= //
+
     private void spawnArmorStans() {
-        final ArmorStand as  = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -98.5, 97, -155.5), EntityType.ARMOR_STAND);
+        final ArmorStand as = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), -98.5, 97, -155.5), EntityType.ARMOR_STAND);
         as.setGravity(false);
         for (ArmorStand stand : as.getNearbyEntities(12, 12, 12).stream().filter(entity -> entity instanceof ArmorStand && entity.getType().equals(EntityType.ARMOR_STAND)).map(entity -> (ArmorStand) entity).collect(Collectors.toList())) {
             stand.remove();
@@ -78,29 +100,157 @@ public class RybakNPC {
             }, 160L);
             return;
         }
-        player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Witaj, &b" + player.getName() + "&7!"));
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Slyszalem, ze szukasz przygod!")), 40L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Swietnie sie sklada!")), 80L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Moge zabrac Cie, na taka jedna &ewyspe &7pelna rybackich zadan i tajemnic!")), 120L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Poznasz tam kilku moich &aprzyjaciol&7!")), 160L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Ale...")), 200L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby sie tam dostac potrzebujemy mojej &6Starej Lodki.")), 240L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Niestety, po ostatniej podrozy uderzylem w &8Skale &7i lodka rozbila sie na kawalki")), 280L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Troche to dziwne...")), 320L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7W moim swiecie, Lodki zazwyczaj tona po takiej interakcji")), 360L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Ale no coz, najwidoczniej w tym Swiecie jest troche inaczej")), 400L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Do sedna...")), 440L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby naprawic swoja lodke potrzebuje:")), 480L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e5 &6Zpruchnialych Desek"));
-            player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e3 Podstawy Masztu"));
-            player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e2 &fPodartych Masztow"));
+        if (!this.find(player.getUniqueId()).isDialog()) {
+            this.find(player.getUniqueId()).setDialog(true);
+            player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Witaj, &b" + player.getName() + "&7!"));
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Slyszalem, ze szukasz przygod!")), 40L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Swietnie sie sklada!")), 80L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Moge zabrac Cie, na taka jedna &ewyspe &7pelna rybackich zadan i tajemnic!")), 120L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Poznasz tam kilku moich &aprzyjaciol&7!")), 160L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Ale...")), 200L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby sie tam dostac potrzebujemy mojej &6Starej Lodki.")), 240L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Niestety, po ostatniej podrozy uderzylem w &8Skale &7i lodka rozbila sie na kawalki")), 280L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Troche to dziwne...")), 320L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7W moim swiecie, Lodki zazwyczaj tona po takiej interakcji")), 360L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Ale no coz, najwidoczniej w tym Swiecie jest troche inaczej")), 400L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Do sedna...")), 440L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby naprawic swoja lodke potrzebuje:")), 480L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e5 &6Zpruchnialych Desek"));
+                player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e3 Podstawy Masztu"));
+                player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e2 &fPodartych Masztow"));
             }, 520L);
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Przynies mi te rzeczy i bedziemy gotowi do drogi")), 560L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Przynies mi te rzeczy i bedziemy gotowi do drogi")), 560L);
+            return;
+        }
+        player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby naprawic swoja lodke potrzebuje:"));
+        player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e5 &6Zpruchnialych Desek"));
+        player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e3 Podstawy Masztu"));
+        player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e2 &fPodartych Masztow"));
+    }
+
+    // ========================================= STARUSZEK - WYSPA 1 ========================================= //
+
+    private final Set<Items> wyspa1Drops = new HashSet<>();
+
+    private void initWyspa1Drops() {
+        this.wyspa1Drops.add(new Items("1", 60, RybakItems.I6.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("2", 40, RybakItems.I7.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("3", 35, RybakItems.I8.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("4", 25, RybakItems.I14.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("5", 20, RybakItems.I9.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("6", 15, RybakItems.I10.getItemStack(), 1));
+    }
+
+    public ItemStack getWyspa1Drop(final Player player) {
+        final StaruszekUser user = this.find(player.getUniqueId()).getStaruszekUser();
+        final Set<Items> playerDrop = new HashSet<>(this.wyspa1Drops);
+        if (user.getMission() == 11) playerDrop.add(new Items("7", 15, RybakItems.I11.getItemStack(), 1));
+        if (user.getMission() == 12) playerDrop.add(new Items("7", 15, RybakItems.I12.getItemStack(), 1));
+        if (user.getMission() == 13) playerDrop.add(new Items("7", 15, RybakItems.I13.getItemStack(), 1));
+
+        ItemStack reward = this.drop(playerDrop);
+
+        while (reward == null) reward = this.drop(playerDrop);
+
+        return reward;
+    }
+
+    private void sendDelayedMessage(final Player player, final String message, final long time) {
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format(message)), time);
+    }
+
+    public void onClickStaruszek(final Player player) {
+        final StaruszekUser staruszekUser = this.find(player.getUniqueId()).getStaruszekUser();
+
+        if (!staruszekUser.isReceivedRod()) {
+            player.sendMessage(Utils.format("&6&lStaruszek &8>> &7Witaj &e" + player.getName() + "&7!"));
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7W koncu znalazl sie ktos, kto mnie wyslucha.", 40L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Jestem bardzo samotny, poniewaz prawie nikt tu nie zaglada...", 80L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Poniewaz utknalem tu sam to jedynym moim zajeciem bylo lowienie ryb", 120L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Jednak po pewnym czasie okazalo sie, ze dzieje sie tutaj cos dziwnego...", 160L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Chodza sluchy, ze w &2&lDzikiej Dzungli &7grasuja &3podwodne stworzenia", 200L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Jednak zanim tam trafisz, potrzebuje twojej pomocy.", 240L);
+            this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Wez ta &6Stara Wedke &7i bierz sie do roboty", 240L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.getInventory().addItem(RybakItems.getStaraWedka(player)), 280L);
+            staruszekUser.setReceivedRod(true);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(player.getUniqueId(), this.find(player.getUniqueId())));
+            return;
+        }
+
+        if (staruszekUser.getMission() == 27) {
+            player.sendMessage(Utils.format("&6&lStaruszek &8>> &7Wykonales juz wszystkie moje misje! Ruszaj dalej w swoja przygode!"));
+            return;
+        }
+
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lStaruszek"));
+        for (int i = 0; i < 27; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        }
+
+        for (int i = 1; i < StaruszekMissions.values().length + 1; i++) {
+            if (staruszekUser.getMission() > i) {
+                gui.setItem(i - 1, new ItemBuilder(Material.BOOK).setName("&7Misja #&c" + i).setLore(Arrays.asList(" ", "&a&lWYKONANO!")).addGlowing().toItemStack().clone());
+            } else if (staruszekUser.getMission() == i) {
+                gui.setItem(i - 1, Objects.requireNonNull(StaruszekMissions.getMissionById(i)).getMissionItem(staruszekUser.getProgress()).clone());
+            } else {
+                gui.setItem(i - 1, new ItemBuilder(Material.BARRIER).setName("&7Misja #&c" + i).setLore(Arrays.asList(" ", "&cWykonaj poprzednia misje, zeby odblokowac!")).addGlowing().toItemStack().clone());
+            }
+        }
+
+        gui.setItem(26, new ItemBuilder(Material.EMERALD).setName("&aSklep").addGlowing().toItemStack());
+
+        player.openInventory(gui);
+    }
+
+    public void openStaruszekShop(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lStaruszek &8>> &aSklep"));
+
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
+
+        gui.setItem(1, this.addPrice(RybakItems.I6.getItemStack(), 100));
+        gui.setItem(2, this.addPrice(RybakItems.I7.getItemStack(), 250));
+        gui.setItem(3, this.addPrice(RybakItems.I8.getItemStack(), 550));
+        gui.setItem(5, this.addPrice(RybakItems.I9.getItemStack(), 850));
+        gui.setItem(6, this.addPrice(RybakItems.I10.getItemStack(), 1250));
+        gui.setItem(7, this.addPrice(RybakItems.I14.getItemStack(), 550));
+
+        player.openInventory(gui);
+    }
+
+    private ItemStack addPrice(final ItemStack is, final int price) {
+        return new ItemBuilder(is.clone()).addLoreLine(" ", "&7Cena: &6" + Utils.spaceNumber(price) + "&2$&7/szt.")
+                .addTagString("itemName", Utils.removeColor(is.getItemMeta().getDisplayName().replaceAll(" ", "-")))
+                .addTagInt("price", price).toItemStack().clone();
+    }
+
+    public void onClickPrzyjaciel(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lPrzyjaciel"));
+
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+
+        gui.setItem(1, new ItemBuilder(RybakItems.I6.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(2, new ItemBuilder(RybakItems.I7.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(3, new ItemBuilder(RybakItems.I8.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(5, new ItemBuilder(RybakItems.I9.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(6, new ItemBuilder(RybakItems.I10.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(7, new ItemBuilder(RybakItems.I14.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+
+        gui.setItem(10, new ItemBuilder(RybakItems.I6.getItemStack().clone()).setName(RybakItems.I6.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(11, new ItemBuilder(RybakItems.I7.getItemStack().clone()).setName(RybakItems.I7.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(12, new ItemBuilder(RybakItems.I8.getItemStack().clone()).setName(RybakItems.I8.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(14, new ItemBuilder(RybakItems.I9.getItemStack().clone()).setName(RybakItems.I9.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(15, new ItemBuilder(RybakItems.I10.getItemStack().clone()).setName(RybakItems.I10.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(16, new ItemBuilder(RybakItems.I14.getItemStack().clone()).setName(RybakItems.I14.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+
+
+
+        player.openInventory(gui);
+
     }
 
 
-
+// ========================================= ANTY AFK ========================================= //
 
     public void getAntyAfk(final Player player) {
         player.sendMessage(Utils.format("&7Ochrona &cAnty-AFK"));
@@ -171,6 +321,8 @@ public class RybakNPC {
     }
 
 
+    // ========================================= RESPIENIE MOBOW ========================================= //
+
 
     public void runFishAnimation(final Player player, final Entity entity) {
         double pushX = player.getLocation().getDirection().normalize().getX() * -2;
@@ -181,6 +333,9 @@ public class RybakNPC {
 
         entity.setVelocity(push);
     }
+
+
+    // ========================================= MOBY ========================================= //
 
     public void spawnNurekGlebinowy(final Player player, final Location location) {
         final LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
@@ -307,20 +462,28 @@ public class RybakNPC {
 
     }
 
+    // ========================================= ANTY AFK cz. 2 ========================================= //
+
     public List<UUID> getPassed() {
         return passed;
     }
 
-    public void addLocation(final UUID uuid, final String type, final float loc) {
-        if (!this.locationMap.containsKey(uuid)) this.locationMap.put(uuid, new HashMap<>());
-        this.locationMap.get(uuid).put(type, loc);
+    public void addLocation(final UUID uuid, final String type, final float yaw, final float pitch) {
+        if (!this.locationMapYaw.containsKey(uuid)) this.locationMapYaw.put(uuid, new HashMap<>());
+        if (!this.locationMapPitch.containsKey(uuid)) this.locationMapPitch.put(uuid, new HashMap<>());
+        this.locationMapYaw.get(uuid).put(type, yaw);
+        this.locationMapPitch.get(uuid).put(type, pitch);
     }
 
-    public boolean isSameLocation(final UUID uuid, final String type, final float loc) {
-        if (!this.locationMap.containsKey(uuid)) return false;
-        if (!this.locationMap.get(uuid).containsKey(type)) return false;
-        return this.locationMap.get(uuid).get(type) == loc;
+    public boolean isSameLocation(final UUID uuid, final String type, final float yaw, final float pitch) {
+        if (!this.locationMapYaw.containsKey(uuid) || !this.locationMapPitch.containsKey(uuid)) return false;
+        if (!this.locationMapYaw.get(uuid).containsKey(type) || !this.locationMapPitch.get(uuid).containsKey(type))
+            return false;
+        return this.locationMapYaw.get(uuid).get(type) == yaw && this.locationMapPitch.get(uuid).get(type) == pitch;
     }
+
+
+    // ========================================= POTRZEBNE I ZAWSZE ========================================= //
 
     public void add(final RybakUser rybakUser) {
         this.usersMap.put(rybakUser.getUuid(), rybakUser);

@@ -320,81 +320,39 @@ public class ChatInventoryClickListener implements Listener {
             final ChatUser user = rpgcore.getChatManager().find(uuid);
             switch (slot) {
                 case 10:
-                    if (user.isItemDropEnabled()) {
-                        user.setItemDropEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-                    user.setItemDropEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setItemDropEnabled(!user.isItemDropEnabled());
+                    break;
                 case 13:
-                    if (user.isPingsEnabled()) {
-                        user.setPingsEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-                    user.setPingsEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setPingsEnabled(!user.isPingsEnabled());
+                    break;
                 case 12:
-                    if (user.isNiesDropEnabled()) {
-                        user.setNiesDropEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-                    user.setNiesDropEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setNiesDropEnabled(!user.isNiesDropEnabled());
+                    break;
                 case 11:
-                    if (user.isChestDropEnabled()) {
-                        user.setChestDropEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-
-                    user.setChestDropEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setChestDropEnabled(!user.isChestDropEnabled());
+                    break;
                 case 14:
-                    if (user.isMsgEnabled()) {
-                        user.setMsgEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-
-                    user.setMsgEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setMsgEnabled(!user.isMsgEnabled());
+                    break;
                 case 15:
-                    if (user.isJoinMessageEnabled()) {
-                        user.setJoinMessageEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-                    user.setJoinMessageEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setJoinMessageEnabled(!user.isJoinMessageEnabled());
+                    break;
                 case 16:
-                    if (user.isQuitMessageEnabled()) {
-                        user.setQuitMessageEnabled(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
-                    }
-
-                    user.setQuitMessageEnabled(true);
-                    rpgcore.getChatManager().openChatPanel(player);
-                    return;
+                    user.setQuitMessageEnabled(!user.isQuitMessageEnabled());
+                    break;
                 case 22:
-                    if (user.isDmgHologramsVisable()) {
-                        user.setDmgHologramsVisable(false);
-                        rpgcore.getChatManager().openChatPanel(player);
-                        return;
+                    user.setDmgHologramsVisable(!user.isDmgHologramsVisable());
+                    break;
+                case 26:
+                    final User mainUser = rpgcore.getUserManager().find(uuid);
+                    if (mainUser.getRankUser().isHighStaff() && mainUser.isAdminCodeLogin()) {
+                        user.setDatabaseMessageEnabled(!user.isDatabaseMessageEnabled());
                     }
-
-                    user.setDmgHologramsVisable(true);
-                    rpgcore.getChatManager().openChatPanel(player);
+                    break;
+                default:
+                    return;
             }
+            rpgcore.getChatManager().openChatPanel(player);
         }
     }
 }

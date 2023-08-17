@@ -46,10 +46,10 @@ public class AsyncPlayerChatListener implements Listener {
             return;
         }
 
-        if (rpgcore.getUserManager().find(uuid).getLvl() < 10) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Potrzebujesz przynajmniej &c10 poziom &7zeby pisac na chacie!"));
-            return;
-        }
+//        if (rpgcore.getUserManager().find(uuid).getLvl() < 10) {
+//            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Potrzebujesz przynajmniej &c10 poziom &7zeby pisac na chacie!"));
+//            return;
+//        }
 
         if (!rpgcore.getChatManager().isChatEnabled() && !(user.getRankUser().isStaff() && user.isAdminCodeLogin())) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Chat jest aktualnie &cwylaczony&7!"));

@@ -1,5 +1,6 @@
 package rpg.rpgcore;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import net.minecraft.server.v1_8_R3.Item;
@@ -231,10 +232,7 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
 import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
 import rpg.rpgcore.npc.rybak.RybakNPC;
-import rpg.rpgcore.npc.rybak.events.PlayerFishListener;
-import rpg.rpgcore.npc.rybak.events.RybakEntityInteractListener;
-import rpg.rpgcore.npc.rybak.events.RybakInventoryClick;
-import rpg.rpgcore.npc.rybak.events.RybakInventoryCloseListener;
+import rpg.rpgcore.npc.rybak.events.*;
 import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
@@ -283,6 +281,7 @@ public final class RPGCORE extends JavaPlugin {
     private static DiscordBot discordBot;
     private static HolographicDisplaysAPI holographicDisplaysAPI;
     private static MythicMobs mythicMobs;
+    private static WorldGuardPlugin worldGuard;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -426,6 +425,9 @@ public final class RPGCORE extends JavaPlugin {
     public static MythicMobs getMythicMobs() {
         return mythicMobs;
     }
+    public static WorldGuardPlugin getWorldGuard() {
+        return worldGuard;
+    }
 
     public void onEnable() {
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
@@ -438,6 +440,7 @@ public final class RPGCORE extends JavaPlugin {
         instance = this;
         holographicDisplaysAPI = HolographicDisplaysAPI.get(Bukkit.getServer().getPluginManager().getPlugin("HolographicDisplays"));
         mythicMobs = MythicMobs.inst();
+        worldGuard = WorldGuardPlugin.inst();
         new PluginMessageReceiveListener(this);
         this.config.createConfig();
         this.initDatabase();
@@ -756,7 +759,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
-        this.getServer().getPluginManager().registerEvents(new RybakEntityInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new RybakInteractListener(this), this);
+
+        this.getServer().getPluginManager().registerEvents(new RybakRegionEnterListener(this), this);
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);

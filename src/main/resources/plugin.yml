@@ -4,6 +4,7 @@ main: rpg.rpgcore.RPGCORE
 softdepend:
   - MythicMobs
   - HolographicDisplays
+  - WorldGuard
 authors: [ MiresPL, ZwariowanyOrzel ]
 description: RPG-CORE
     

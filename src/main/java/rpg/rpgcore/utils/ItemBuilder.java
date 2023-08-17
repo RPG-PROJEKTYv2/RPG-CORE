@@ -113,6 +113,20 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addLoreLine(final String... lines) {
+        final ItemMeta meta = this.is.getItemMeta();
+        List<String> lore = meta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
+        for (final String line : lines) {
+            lore.add(Utils.format(line));
+        }
+        meta.setLore(lore);
+        this.is.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder setSkullOwner(String owner) {
         try {
             SkullMeta im = (SkullMeta) this.is.getItemMeta();

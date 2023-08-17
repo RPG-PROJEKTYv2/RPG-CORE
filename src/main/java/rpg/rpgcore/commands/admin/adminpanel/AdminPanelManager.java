@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.AkceItems;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -165,9 +164,9 @@ public class AdminPanelManager {
     }
     public void openRybakItemsGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lRybak &f- ADMINISTRACJA"));
-        gui.setItem(0, new ItemBuilder(RybakItems.getWedka(player.getName(), 1)).toItemStack().clone());
+        gui.setItem(0, new ItemBuilder(RybakItems.getStaraWedka(player)).toItemStack().clone());
         for (final RybakItems rank : RybakItems.values()) {
-            gui.setItem(gui.firstEmpty(), rank.getRybak());
+            gui.setItem(gui.firstEmpty(), rank.getItemStack());
         }
         gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
