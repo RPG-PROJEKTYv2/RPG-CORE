@@ -84,6 +84,10 @@ public class LowcaNPC {
         this.userMap.put(lowcaObject.getId(), lowcaObject);
     }
 
+    public void set(final UUID uuid, final LowcaObject lowcaObject) {
+        this.userMap.replace(uuid, lowcaObject);
+    }
+
     public ImmutableSet<LowcaObject> getLowcaObjects() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

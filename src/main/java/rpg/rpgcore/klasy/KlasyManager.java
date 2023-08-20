@@ -238,6 +238,10 @@ public class KlasyManager {
         klasyMap.put(klasa.getUuid(), klasa);
     }
 
+    public void set(final UUID uuid, final Klasa klasa) {
+        klasyMap.replace(uuid, klasa);
+    }
+
     public ImmutableSet<Klasa> getKlasy() {
         return ImmutableSet.copyOf(klasyMap.values());
     }

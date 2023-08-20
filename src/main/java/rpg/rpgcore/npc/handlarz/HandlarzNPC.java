@@ -90,7 +90,6 @@ public class  HandlarzNPC {
 
     public void openHandlarzItemShop(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&a&lHandlarz &8>> &6&lItem&2&lShop"));
-        final UUID uuid = player.getUniqueId();
 
         for (int i = 0; i < 54; i++) {
             if (i % 2 == 0) {
@@ -197,6 +196,10 @@ public class  HandlarzNPC {
 
     public void add(final HandlarzUser user) {
         userMap.put(user.getUuid(), user);
+    }
+
+    public void set(final UUID uuid, final HandlarzUser user) {
+        userMap.replace(uuid, user);
     }
 
     public ImmutableSet<HandlarzUser> getHandlarzUsers() {

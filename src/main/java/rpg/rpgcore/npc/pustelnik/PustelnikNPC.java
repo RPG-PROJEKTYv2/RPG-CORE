@@ -24,14 +24,6 @@ public class PustelnikNPC {
         this.userMap = rpgcore.getMongoManager().loadAllPustelnik();
     }
 
-    public PustelnikUser find(final UUID uuid) {
-        return this.userMap.get(uuid);
-    }
-
-    public void add(final PustelnikUser pustelnikUser) {
-        this.userMap.put(pustelnikUser.getUuid(), pustelnikUser);
-    }
-
     public void click(final Player player) {
         PustelnikUser user = this.find(player.getUniqueId());
         if (user == null) {
@@ -88,10 +80,17 @@ public class PustelnikNPC {
         player.openInventory(gui);
     }
 
+    public PustelnikUser find(final UUID uuid) {
+        return this.userMap.get(uuid);
+    }
 
+    public void add(final PustelnikUser pustelnikUser) {
+        this.userMap.put(pustelnikUser.getUuid(), pustelnikUser);
+    }
 
-
-
+    public void set(final UUID uuid, final PustelnikUser pustelnikUser) {
+        this.userMap.replace(uuid, pustelnikUser);
+    }
 
     public void save(final PustelnikUser pustelnikUser) {
         this.rpgcore.getServer().getScheduler().runTaskAsynchronously(this.rpgcore, () -> this.rpgcore.getMongoManager().saveDataPustelnik(pustelnikUser.getUuid(), pustelnikUser));

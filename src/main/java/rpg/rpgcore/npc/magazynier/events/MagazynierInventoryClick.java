@@ -1,6 +1,8 @@
 package rpg.rpgcore.npc.magazynier.events;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -121,6 +123,10 @@ public class MagazynierInventoryClick implements Listener {
 
         if (title.equals("Magazynier - Sklep")) {
             e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType().equals(Material.AIR)) return;
+
             final MagazynierUser user = rpgcore.getMagazynierNPC().find(uuid);
             final int price = Utils.getTagInt(item, "price");
             if (user.getPoints() < price) {

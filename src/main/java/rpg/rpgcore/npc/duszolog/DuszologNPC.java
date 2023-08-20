@@ -91,6 +91,10 @@ public class DuszologNPC {
         return this.userMap.get(uuid);
     }
 
+    public void set(final UUID uuid, final DuszologObject duszologObject) {
+        this.userMap.replace(uuid, duszologObject);
+    }
+
     public ImmutableSet<DuszologObject> getDuszologObject() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
-import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
@@ -22,8 +22,6 @@ import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
 import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
 import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class    MobDropHelper {

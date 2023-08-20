@@ -64,7 +64,8 @@ public class GornikInventoryClickListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
-            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) return;
+            if (item == null || item.getType() == Material.AIR || item.getType() == Material.STAINED_GLASS_PANE) return;
+            if (!item.hasItemMeta()) return;
             if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)) return;
 
             final GornikUser user = rpgcore.getGornikNPC().find(uuid);
@@ -110,15 +111,22 @@ public class GornikInventoryClickListener implements Listener {
                     player.sendMessage(Utils.format("&6&lGornika &8>> &cMusisz trzymac w rece &6Kilof Gornika&c!"));
                     return;
                 }
-//                if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
-//                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
-//                    return;
-//                }
-//                if (!Utils.getTagString(player.getItemInHand(), "owner-uuid").equals(player.getUniqueId().toString())) {
-//                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
-//                    return;
-//                }
-                if (Utils.getTagInt(player.getItemInHand(), "lvl") < Utils.getTagInt(item, "reqPickaxeLvl")) return;
+                if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+                    return;
+                }
+                if (!Utils.getTagString(player.getItemInHand(), "owner-uuid").equals(player.getUniqueId().toString())) {
+                    player.sendMessage(Utils.format("&6&lGornika &8>> &cTo nie jest twoj kilof&c!"));
+                    return;
+                }
+                final int reqLvl = Utils.getTagInt(item, "reqPickaxeLvl");
+
+                if (reqLvl == 0) {
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &cCos poszlo nie tak! Zglos sie do Administracji z tym bledem!"));
+                    return;
+                }
+
+                if (Utils.getTagInt(player.getItemInHand(), "lvl") < reqLvl) return;
                 user.setProgress(1);
                 return;
             }
@@ -173,51 +181,51 @@ public class GornikInventoryClickListener implements Listener {
             switch (slot) {
                 case 1:
                     if (!player.getInventory().containsAtLeast(GornikItems.I1.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return; //50_000
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I1_1.getItemStack().clone());
                     break;
                 case 2:
                     if (!player.getInventory().containsAtLeast(GornikItems.I2.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I2.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I2_1.getItemStack().clone());
                     break;
                 case 3:
                     if (!player.getInventory().containsAtLeast(GornikItems.I3.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I3.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I3_1.getItemStack().clone());
                     break;
                 case 4:
                     if (!player.getInventory().containsAtLeast(GornikItems.I4.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I4.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I4_1.getItemStack().clone());
                     break;
                 case 5:
                     if (!player.getInventory().containsAtLeast(GornikItems.I5.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I5.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I5_1.getItemStack().clone());
                     break;
                 case 6:
                     if (!player.getInventory().containsAtLeast(GornikItems.I6.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I6.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I6_1.getItemStack().clone());
                     break;
                 case 7:
                     if (!player.getInventory().containsAtLeast(GornikItems.I7.getItemStack(), 64)) return;
-                    if (user.getKasa() < 1) return;
+                    if (user.getKasa() < 50_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I7.getItemStack().clone()).setAmount(64).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000);
                     player.getInventory().addItem(GornikItems.I7_1.getItemStack().clone());
                     break;
                 case 10:
@@ -328,10 +336,10 @@ public class GornikInventoryClickListener implements Listener {
                     if (Utils.getTagInt(player.getItemInHand(), "lvl") < 10) return;
                     if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 5) ||
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 5)) return;
-                    if (user.getKasa() < 1) return; //10_000_000
+                    if (user.getKasa() < 10_000_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(5).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(5).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 10_000_000);
                     player.getItemInHand().setType(Material.IRON_PICKAXE);
                     break;
                 case 24:
@@ -344,12 +352,12 @@ public class GornikInventoryClickListener implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 10) ||
                             !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 5) ||
                             !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 5)) return;
-                    if (user.getKasa() < 1) return; //25_000_000
+                    if (user.getKasa() < 25_000_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(10).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(10).toItemStack(),
                             new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(5).toItemStack(),
                             new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(5).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 25_000_000);
                     player.getItemInHand().setType(Material.GOLD_PICKAXE);
                     break;
                 case 16:
@@ -364,14 +372,14 @@ public class GornikInventoryClickListener implements Listener {
                             !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 10) ||
                             !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 5) ||
                             !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 5)) return;
-                    if (user.getKasa() < 1) return; //50_000_000
+                    if (user.getKasa() < 50_000_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(20).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(20).toItemStack(),
                             new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(10).toItemStack(),
                             new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(10).toItemStack(),
                             new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(5).toItemStack(),
                             new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(5).toItemStack());
-                    user.setKasa(user.getKasa() - 1);
+                    user.setKasa(user.getKasa() - 50_000_000);
                     player.getItemInHand().setType(Material.DIAMOND_PICKAXE);
                     break;
             }

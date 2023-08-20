@@ -4,9 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.BACKUP.objects.Backup;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -21,18 +24,35 @@ public class BackupManager {
     }
 
 
-    public void openPlayerBackups(final Player player, final UUID target) {
+    public void openPlayerBackups(final Player player, final UUID target, final int page) {
         final List<Backup> backups = this.backupMap.get(target);
-        if (backups.size() == 0) {
+        if (backups.isEmpty()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cGracz &6" + this.rpgcore.getUserManager().find(target).getName() + " &cnie posiada zadnych backupow"));
             return;
         }
-        backups.sort(Comparator.comparing(Backup::getDateToCompare));
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lBackupy gracza &e&l" + this.rpgcore.getUserManager().find(target).getName()));
-        for (int i = 0; i < backups.size(); i++) {
-            final Backup backup = backups.get(i);
-            gui.setItem(i, new ItemBuilder(Material.CHEST).setName("&6" + backup.getDate()).setLore(Arrays.asList("&7Kliknij aby przywrocic")).toItemStack().clone());
+        backups.sort(Comparator.comparing(Backup::getDateToCompare).reversed());
+
+        final List<ItemStack> backupItems = new ArrayList<>();
+
+        for (final Backup backup : backups) backupItems.add(new ItemBuilder(Material.CHEST).setName("&6" + backup.getDate()).setLore(Arrays.asList(
+                "&7Poziom: &f" + backup.getUser().getLvl(),
+                "&7Exp: &f" + DoubleUtils.round((backup.getUser().getExp() / rpgcore.getLvlManager().getExpForLvl(backup.getUser().getLvl() + 1)) * 100, 2) + "%",
+                "&7Kliknij aby przywrocic")).addTagString("uuid", backup.getUuid().toString()).toItemStack().clone());
+
+        final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&6&lBackupy gracza &e&l" + this.rpgcore.getUserManager().find(target).getName() + " &6#" + page));
+
+
+        for (int i = 45; i < 54; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack().clone());
         }
+
+        if (PageUtils.isPageValid(backupItems, page - 1, 45)) gui.setItem(45, new ItemBuilder(Material.ARROW).setName("&aPoprzednia").addTagBoolean("valid", true).toItemStack().clone());
+        else gui.setItem(45, new ItemBuilder(Material.ARROW).setName("&cPoprzednia").addTagBoolean("valid", false).toItemStack().clone());
+
+        if (PageUtils.isPageValid(backupItems, page + 1, 45)) gui.setItem(53, new ItemBuilder(Material.ARROW).setName("&aNastepna").addTagBoolean("valid", true).toItemStack().clone());
+        else gui.setItem(53, new ItemBuilder(Material.ARROW).setName("&cNastepna").addTagBoolean("valid", false).toItemStack().clone());
+
+        for (ItemStack is : PageUtils.getPageItems(backupItems, page, 45)) gui.setItem(gui.firstEmpty(), is);
 
         player.openInventory(gui);
     }

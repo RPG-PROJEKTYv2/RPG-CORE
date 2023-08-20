@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.discord.EmbedUtil;
-import rpg.rpgcore.dodatki.DodatkiUser;
+import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.utils.Utils;
 
 import java.awt.*;

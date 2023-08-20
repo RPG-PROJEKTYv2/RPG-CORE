@@ -89,6 +89,10 @@ public class PrzyrodnikNPC {
         this.userMap.put(przyrodnikObject.getId(), przyrodnikObject);
     }
 
+    public void set(final UUID uuid, final PrzyrodnikObject przyrodnikObject) {
+        this.userMap.replace(uuid, przyrodnikObject);
+    }
+
     public ImmutableSet<PrzyrodnikObject> getPrzyrodnikObjects() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

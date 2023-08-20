@@ -289,6 +289,10 @@ public class MagazynierNPC {
         this.userMap.put(user.getUuid(), user);
     }
 
+    public void set(final UUID uuid, final MagazynierUser user) {
+        this.userMap.replace(uuid, user);
+    }
+
     public ImmutableSet<MagazynierUser> getUsers() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

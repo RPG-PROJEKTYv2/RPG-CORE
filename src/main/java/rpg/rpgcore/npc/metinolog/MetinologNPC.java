@@ -89,6 +89,10 @@ public class MetinologNPC {
         this.userMap.put(metinologObject.getID(), metinologObject);
     }
 
+    public void set(final UUID uuid, final MetinologObject metinologObject) {
+        this.userMap.replace(uuid, metinologObject);
+    }
+
     public MetinologObject find(final UUID uuid) {
         this.userMap.computeIfAbsent(uuid, k -> new MetinologObject(uuid));
         return this.userMap.get(uuid);

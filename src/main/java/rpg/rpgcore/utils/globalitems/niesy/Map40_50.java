@@ -5,11 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.chests.Items;
-import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
-import rpg.rpgcore.utils.ChanceHelper;
-import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.Utils;
 

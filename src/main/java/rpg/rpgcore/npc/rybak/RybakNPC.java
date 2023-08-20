@@ -493,6 +493,10 @@ public class RybakNPC {
         return this.usersMap.get(uuid);
     }
 
+    public void set(final UUID uuid, final RybakUser rybakUser) {
+        this.usersMap.replace(uuid, rybakUser);
+    }
+
     public ImmutableSet<RybakUser> getRybakObjects() {
         return ImmutableSet.copyOf(this.usersMap.values());
     }

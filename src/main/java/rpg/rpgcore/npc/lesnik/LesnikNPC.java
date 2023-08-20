@@ -74,6 +74,10 @@ public class LesnikNPC {
         userMap.put(lesnikObject.getId(), lesnikObject);
     }
 
+    public void set(final UUID uuid, final LesnikObject lesnikObject) {
+        userMap.replace(uuid, lesnikObject);
+    }
+
     public ImmutableSet<LesnikObject> getLesnikObjects() {
         return ImmutableSet.copyOf(userMap.values());
     }

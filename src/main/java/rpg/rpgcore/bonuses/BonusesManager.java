@@ -17,6 +17,10 @@ public class BonusesManager {
         this.userMap.put(bonuses.getId(), bonuses);
     }
 
+    public void set(final UUID uuid, final Bonuses bonuses) {
+        this.userMap.replace(uuid, bonuses);
+    }
+
     public Bonuses find(final UUID uuid) {
         userMap.computeIfAbsent(uuid, k -> new Bonuses(uuid));
         return this.userMap.get(uuid);

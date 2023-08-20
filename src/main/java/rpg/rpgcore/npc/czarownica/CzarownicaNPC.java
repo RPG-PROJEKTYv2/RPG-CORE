@@ -99,6 +99,10 @@ public class CzarownicaNPC {
         this.userMap.put(czarownicaUser.getUuid(), czarownicaUser);
     }
 
+    public void set(final UUID uuid, final CzarownicaUser czarownicaUser) {
+        this.userMap.replace(uuid, czarownicaUser);
+    }
+
     public ImmutableSet<CzarownicaUser> getCzarownicaUsers() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

@@ -6,19 +6,15 @@ import org.bson.Document;
 import rpg.rpgcore.BACKUP.objects.Backup;
 import rpg.rpgcore.RPGCORE;
 
-import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BackupMongoManager {
 
-    private final RPGCORE rpgcore;
     @Getter
     private final BackupMongoConnectionPoolManager pool;
 
     public BackupMongoManager(final RPGCORE rpgcore) {
         this.pool = new BackupMongoConnectionPoolManager();
-        this.rpgcore = rpgcore;
     }
 
     //dd3d637b-aff4-4fa5-8484-d120ed492d43 - Mires
@@ -43,18 +39,18 @@ public class BackupMongoManager {
 
    public void save(final Backup backup) {
         final MongoCollection<Document> collection = this.getPool().getCollection(backup.getUuid());
-       if (collection.estimatedDocumentCount() > 25) {
-           final List<Date> dates = collection.find().into(new ArrayList<>()).stream().map(document -> {
-               try {
-                   return backup.getFormat().parse(document.getString("_id"));
-               } catch (ParseException e) {
-                   throw new RuntimeException(e);
-               }
-           }).sorted().collect(Collectors.toList());
-           System.out.println(dates);
-           // ZWRACA ODWROTNIE CZYLI 14:30, 15:30, itd.
-           //TODO zrobic usuwanie najstarszego backupu
-       }
+//       if (collection.estimatedDocumentCount() > 25) {
+//           final List<Date> dates = collection.find().into(new ArrayList<>()).stream().map(document -> {
+//               try {
+//                   return backup.getFormat().parse(document.getString("_id"));
+//               } catch (ParseException e) {
+//                   throw new RuntimeException(e);
+//               }
+//           }).sorted().collect(Collectors.toList());
+//           System.out.println(dates);
+//           // ZWRACA ODWROTNIE CZYLI 14:30, 15:30, itd.
+//           //TODO zrobic usuwanie najstarszego backupu
+//       }
        collection.insertOne(backup.toDocument());
    }
 

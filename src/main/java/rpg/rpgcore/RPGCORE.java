@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rpg.rpgcore.BACKUP.BackupManager;
 import rpg.rpgcore.BACKUP.commands.BackupCommand;
 import rpg.rpgcore.BACKUP.database.BackupMongoManager;
+import rpg.rpgcore.BACKUP.events.BackupInventoryClickListener;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.armor.ArmorEffectTask;
@@ -31,7 +32,7 @@ import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznik
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyOdlamekInteractListener;
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyOdlamekInventoryClick;
 import rpg.rpgcore.bossy.events.*;
-import rpg.rpgcore.chat.ChatCommand;
+import rpg.rpgcore.chat.commands.ChatCommand;
 import rpg.rpgcore.chat.ChatManager;
 import rpg.rpgcore.chat.events.AsyncPlayerChatListener;
 import rpg.rpgcore.chat.events.ChatInventoryClickListener;
@@ -168,6 +169,11 @@ import rpg.rpgcore.listanpc.ListaNPCCommand;
 import rpg.rpgcore.listanpc.ListaNPCInventoryClick;
 import rpg.rpgcore.listanpc.ListaNPCManager;
 import rpg.rpgcore.listeners.*;
+import rpg.rpgcore.listeners.block.*;
+import rpg.rpgcore.listeners.custom.AkcesoriumPickUpListener;
+import rpg.rpgcore.listeners.custom.ItemSpawnListener;
+import rpg.rpgcore.listeners.custom.NiesyPickUpListener;
+import rpg.rpgcore.listeners.player.*;
 import rpg.rpgcore.lvl.LvlCommand;
 import rpg.rpgcore.lvl.LvlManager;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvlManager;
@@ -215,7 +221,7 @@ import rpg.rpgcore.npc.lesnik.events.LesnikItemInteractListener;
 import rpg.rpgcore.npc.lowca.events.LowcaInventoryClick;
 import rpg.rpgcore.npc.lowca.LowcaNPC;
 import rpg.rpgcore.npc.magazynier.MagazynierNPC;
-import rpg.rpgcore.npc.magazynier.MagazynyCommand;
+import rpg.rpgcore.npc.magazynier.commands.MagazynyCommand;
 import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClick;
 import rpg.rpgcore.npc.magazynier.events.MagazynierInventoryClose;
 import rpg.rpgcore.npc.medrzec.MedrzecNPC;
@@ -243,10 +249,10 @@ import rpg.rpgcore.osiagniecia.OsManager;
 import rpg.rpgcore.osiagniecia.OsiagnieciaCommand;
 import rpg.rpgcore.osiagniecia.events.OsInventoryClickListener;
 import rpg.rpgcore.party.PartyManager;
-import rpg.rpgcore.pets.PetCommand;
+import rpg.rpgcore.pets.commands.PetCommand;
 import rpg.rpgcore.pets.PetyManager;
-import rpg.rpgcore.pets.listeners.PetInteractListener;
-import rpg.rpgcore.pets.listeners.PetInventoryClickListener;
+import rpg.rpgcore.pets.events.PetInteractListener;
+import rpg.rpgcore.pets.events.PetInventoryClickListener;
 import rpg.rpgcore.playerInventory.PlayerOpenInventoryListener;
 import rpg.rpgcore.playerInventory.tasks.PlayerInventoryTask;
 import rpg.rpgcore.pomoc.POMOCInventoryClick;
@@ -532,6 +538,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
         this.mongo.onDisable();
+        this.backupMongo.onDisable();
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
         this.iceTowerManager.resetDungeon();
@@ -654,7 +661,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new NiesyPickUpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyOdlamekInventoryClick(), this);
         this.getServer().getPluginManager().registerEvents(new PrzekletyOdlamekInteractListener(), this);
-        this.getServer().getPluginManager().registerEvents(new AkcesoriumPickUpListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new AkcesoriumPickUpListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
@@ -871,6 +878,9 @@ public final class RPGCORE extends JavaPlugin {
 
         //VANISH
         this.getServer().getPluginManager().registerEvents(new VanishListener(this), this);
+
+        // BACKUP
+        this.getServer().getPluginManager().registerEvents(new BackupInventoryClickListener(this), this);
 
     }
 

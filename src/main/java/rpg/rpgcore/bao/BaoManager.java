@@ -379,6 +379,10 @@ public class BaoManager {
         return this.userMap.get(uuid);
     }
 
+    public void set(final UUID uuid, final BaoObject baoObject) {
+        this.userMap.replace(uuid, baoObject);
+    }
+
     public ImmutableSet<BaoObject> getBaoObjects() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

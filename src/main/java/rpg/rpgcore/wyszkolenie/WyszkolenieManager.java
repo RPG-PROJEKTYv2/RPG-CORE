@@ -204,6 +204,10 @@ public class WyszkolenieManager {
     public void add(final WyszkolenieUser wyszkolenieUser) {
         userMap.put(wyszkolenieUser.getUuid(), wyszkolenieUser);
     }
+
+    public void set(final UUID uuid, final WyszkolenieUser wyszkolenieUser) {
+        userMap.replace(uuid, wyszkolenieUser);
+    }
     public ImmutableSet<WyszkolenieUser> getWyszkolenieUsers() {
         return ImmutableSet.copyOf(userMap.values());
     }

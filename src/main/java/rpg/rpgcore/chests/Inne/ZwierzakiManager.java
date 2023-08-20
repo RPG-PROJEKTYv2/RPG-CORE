@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.ChatUser;
+import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.pets.enums.PetItems;
 import rpg.rpgcore.utils.RandomItems;
 import rpg.rpgcore.utils.Utils;

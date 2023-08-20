@@ -66,6 +66,10 @@ public class MedrzecNPC {
         this.userMap.put(medrzecUser.getUuid(), medrzecUser);
     }
 
+    public void set(final UUID uuid, final MedrzecUser medrzecUser) {
+        this.userMap.replace(uuid, medrzecUser);
+    }
+
     public ImmutableSet<MedrzecUser> getMedrzecUsers() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

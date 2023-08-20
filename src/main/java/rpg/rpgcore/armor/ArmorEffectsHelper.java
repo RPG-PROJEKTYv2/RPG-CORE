@@ -94,7 +94,7 @@ public class ArmorEffectsHelper {
             k = 600;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
-        final float walkSpeed =  Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
+        final float walkSpeed = Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
         player.setWalkSpeed(walkSpeed);
         //player.removePotionEffect(PotionEffectType.SPEED);
         //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) - 1));
@@ -117,9 +117,7 @@ public class ArmorEffectsHelper {
         if (k == 0) player.removePotionEffect(PotionEffectType.JUMP);
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.JUMP);
-            if (!player.getWorld().getName().equals("world")) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, k));
-            }
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, k));
         }
     }
 

@@ -10,6 +10,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
 import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
+import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -250,6 +251,10 @@ public class DodatkiManager {
 
     public void add(final DodatkiUser user) {
         this.userMap.put(user.getUuid(), user);
+    }
+
+    public void set(final UUID uuid, final DodatkiUser user) {
+        this.userMap.replace(uuid, user);
     }
 
     public ImmutableSet<DodatkiUser> getDodatkiUsers() {

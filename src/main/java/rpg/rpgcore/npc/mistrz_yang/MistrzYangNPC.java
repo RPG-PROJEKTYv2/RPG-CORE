@@ -82,6 +82,10 @@ public class MistrzYangNPC {
         this.userMap.put(user.getUuid(), user);
     }
 
+    public void set(final UUID uuid, final MistrzYangUser user) {
+        this.userMap.replace(uuid, user);
+    }
+
     public void save(final MistrzYangUser user) {
         RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMistrzYang(user.getUuid(), user));
     }

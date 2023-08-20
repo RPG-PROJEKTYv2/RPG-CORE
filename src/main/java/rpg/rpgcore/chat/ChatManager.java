@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.guilds.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
@@ -309,6 +310,10 @@ public class ChatManager {
     public ChatUser find(final UUID uuid) {
         chatUsers.computeIfAbsent(uuid, k -> new ChatUser(uuid));
         return this.chatUsers.get(uuid);
+    }
+
+    public void set(final UUID uuid, final ChatUser chatUser) {
+        this.chatUsers.replace(uuid, chatUser);
     }
 
     public ImmutableSet<ChatUser> getChatUsersObjects() {

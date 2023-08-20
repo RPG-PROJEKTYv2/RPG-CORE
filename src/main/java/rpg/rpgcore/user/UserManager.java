@@ -47,6 +47,10 @@ public class UserManager {
         usersUUIDMap.put(user.getId(), user);
     }
 
+    public void set(final UUID uuid, final User newUser) {
+        this.usersUUIDMap.replace(uuid, newUser);
+    }
+
     public void remove(final User user) {
         usersUUIDMap.remove(user.getId());
     }
@@ -57,6 +61,10 @@ public class UserManager {
 
     public WWWUser findWWWUser(final UUID uuid) {
         return wwwUserMap.get(uuid);
+    }
+
+    public void setWWWUser(final UUID uuid, final WWWUser newUser) {
+        this.wwwUserMap.replace(uuid, newUser);
     }
 
     public ImmutableSet<WWWUser> getWWWUsers() {

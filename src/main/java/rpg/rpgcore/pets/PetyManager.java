@@ -14,6 +14,9 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.pets.enums.PetLevels;
 import rpg.rpgcore.pets.enums.PetList;
+import rpg.rpgcore.pets.objects.Pet;
+import rpg.rpgcore.pets.objects.PetObject;
+import rpg.rpgcore.pets.objects.UserPets;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.PageUtils;
@@ -305,6 +308,14 @@ public class PetyManager {
 
     public void addToUserPets(final UserPets userPets) {
         allPets.put(userPets.getUuid(), userPets);
+    }
+
+    public void setActivePet(final UUID uuid, final PetObject petObject) {
+        activePet.replace(uuid, petObject);
+    }
+
+    public void setUserPets(final UUID uuid, final UserPets userPets) {
+        allPets.replace(uuid, userPets);
     }
 
     public ImmutableSet<PetObject> getAllActivePets() {

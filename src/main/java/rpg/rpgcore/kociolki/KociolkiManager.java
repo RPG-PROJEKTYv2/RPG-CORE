@@ -21,6 +21,10 @@ public class KociolkiManager {
         userMap.put(kociolkiUser.getUuid(), kociolkiUser);
     }
 
+    public void set(final UUID uuid, final KociolkiUser kociolkiUser) {
+        userMap.replace(uuid, kociolkiUser);
+    }
+
     public ImmutableSet<KociolkiUser> getKociolkiUsers() {
         return ImmutableSet.copyOf(userMap.values());
     }

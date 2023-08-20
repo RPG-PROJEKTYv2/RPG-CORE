@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.BlockIterator;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
@@ -79,7 +80,7 @@ public class PlayerFishListener implements Listener {
 
 
     private void checkPlayer(final Player player) {
-        final int check = new Random().nextInt(4) + 1;
+        final int check = ChanceHelper.getRandInt(1, 2); //new Random().nextInt(4) + 1;
         switch (check) {
             case 1:
                 rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lDOL", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&7Spojrz w &6dol&7, zeby &apomyslnie &7wyciagnac rybe", 5, 20, 5));
@@ -87,17 +88,17 @@ public class PlayerFishListener implements Listener {
             case 2:
                 rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lGORA", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&7Spojrz w &6gore&7, zeby &apomyslnie &7wyciagnac rybe", 5, 20, 5));
                 break;
-            case 3:
+            /*case 3:
                 rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lLEWO", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&7Spojrz w &6lewo&7, zeby &apomyslnie &7wyciagnac rybe", 5, 20, 5));
                 break;
             case 4:
                 rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&6&lPRAWO", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("&7Spojrz w &6prawo&7, zeby &apomyslnie &7wyciagnac rybe", 5, 20, 5));
-                break;
+                break;*/
         }
-        final float toCheckBefore = (check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
+        final float toCheckBefore = player.getLocation().getPitch(); //(check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            final float toCheckAfter = (check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
-            final float different = (check == 1 || check == 2 ? player.getLocation().getYaw() : player.getLocation().getPitch());
+            final float toCheckAfter = player.getLocation().getPitch(); //(check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
+            final float different = player.getLocation().getYaw(); //(check == 1 || check == 2 ? player.getLocation().getYaw() : player.getLocation().getPitch());
             if (rpgcore.getRybakNPC().isSameLocation(player.getUniqueId(), String.valueOf(check), toCheckAfter, different)) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
                 return;
@@ -123,9 +124,8 @@ public class PlayerFishListener implements Listener {
                     return;
                 }
                 RybakHelper.getDrop(player);
-                return;
             }
-            if (check == 3) {
+            /*if (check == 3) {
                 if (toCheckAfter <= -35 && !(different >= -50 && different <= 50)) {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                     return;
@@ -139,7 +139,7 @@ public class PlayerFishListener implements Listener {
                     return;
                 }
                 RybakHelper.getDrop(player);
-            }
+            }*/
         }, 40L);
     }
 

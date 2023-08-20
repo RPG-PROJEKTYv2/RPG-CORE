@@ -119,6 +119,10 @@ public class KolekcjonerNPC {
         return this.userMap.get(uuid);
     }
 
+    public void set(final UUID uuid, final KolekcjonerObject kolekcjonerObject) {
+        this.userMap.replace(uuid, kolekcjonerObject);
+    }
+
     public ImmutableSet<KolekcjonerObject> getKolekcjonerObject() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

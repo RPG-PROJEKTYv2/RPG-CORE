@@ -400,6 +400,10 @@ public class OsManager {
         this.userMap.put(osUser.getUuid(), osUser);
     }
 
+    public void set(final UUID uuid, final OsUser osUser) {
+        this.userMap.replace(uuid, osUser);
+    }
+
     public ImmutableSet<OsUser> getOsUsers() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

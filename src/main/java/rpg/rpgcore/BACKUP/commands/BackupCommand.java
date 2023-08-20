@@ -26,11 +26,18 @@ public class BackupCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("backup <nick> <option/?>"));
             return;
         }
+
+        if (args[0].equals(player.getName())) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie mozesz wykonac tej komendy na sobie!"));
+            return;
+        }
+
         final User target = rpgcore.getUserManager().find(args[0]);
         if (target == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono gracza o nicku &6" + args[0]));
             return;
         }
+
         switch (args[1]) {
             case "save":
                 final long time = System.currentTimeMillis();
@@ -43,7 +50,7 @@ public class BackupCommand extends CommandAPI {
                 });
                 return;
             case "open":
-                rpgcore.getBackupManager().openPlayerBackups(player, target.getId());
+                rpgcore.getBackupManager().openPlayerBackups(player, target.getId(), 1);
                 return;
             case "?":
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&6Backupy gracza &e" + target.getName()));
