@@ -107,6 +107,38 @@ public class Backup {
         this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
     }
 
+    public Backup(final UUID uuid, final String date) {
+        this.uuid = uuid;
+        this.date = date;
+        this.user = this.rpgcore.getUserManager().find(uuid);
+        this.bonuses = this.rpgcore.getBonusesManager().find(uuid);
+        this.os = this.rpgcore.getOsManager().find(uuid);
+        this.kolekcjoner = this.rpgcore.getKolekcjonerNPC().find(uuid);
+        this.bao = this.rpgcore.getBaoManager().find(uuid);
+        this.rybak = this.rpgcore.getRybakNPC().find(uuid);
+        this.dodatki = this.rpgcore.getDodatkiManager().find(uuid);
+        this.metinolog = this.rpgcore.getMetinologNPC().find(uuid);
+        this.klasa = this.rpgcore.getKlasyManager().find(uuid);
+        this.medrzec = this.rpgcore.getMedrzecNPC().find(uuid);
+        this.gornik = this.rpgcore.getGornikNPC().find(uuid);
+        this.duszolog = this.rpgcore.getDuszologNPC().find(uuid);
+        this.przyrodnik = this.rpgcore.getPrzyrodnikNPC().find(uuid);
+        this.chat = this.rpgcore.getChatManager().find(uuid);
+        this.magazynier = this.rpgcore.getMagazynierNPC().find(uuid);
+        this.lowca = this.rpgcore.getLowcaNPC().find(uuid);
+        this.lesnik = this.rpgcore.getLesnikNPC().find(uuid);
+        this.pet = this.rpgcore.getPetyManager().findActivePet(uuid);
+        this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid);
+        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
+        this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid);
+        this.kociolki = this.rpgcore.getKociolkiManager().find(uuid);
+        this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid);
+        this.wwwUser = this.rpgcore.getUserManager().findWWWUser(uuid);
+        this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid);
+        this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid);
+        this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
+    }
+
     public Backup(final String collectionName, final Document document) {
         this.uuid = UUID.fromString(collectionName);
         this.date = document.getString("_id");

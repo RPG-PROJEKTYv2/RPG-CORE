@@ -15,6 +15,7 @@ import rpg.rpgcore.BACKUP.BackupManager;
 import rpg.rpgcore.BACKUP.commands.BackupCommand;
 import rpg.rpgcore.BACKUP.database.BackupMongoManager;
 import rpg.rpgcore.BACKUP.events.BackupInventoryClickListener;
+import rpg.rpgcore.BACKUP.tasks.BackupTask;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.armor.ArmorEffectTask;
@@ -1077,6 +1078,7 @@ public final class RPGCORE extends JavaPlugin {
 
         new ArmorEffectTask(this);
         new GodVanishTask(this);
+        new BackupTask(this);
     }
 
     private void fixBuckets() {
