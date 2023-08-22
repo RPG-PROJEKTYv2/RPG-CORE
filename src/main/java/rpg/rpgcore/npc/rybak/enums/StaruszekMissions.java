@@ -25,7 +25,7 @@ public enum StaruszekMissions {
     M5(5, new ItemBuilder(Material.BOOK).setName("&7Misja #&c5").setLore(Arrays.asList(
             "&7Wylow &c32 &6Wegorze"
     )).toItemStack().clone(), 32, 0.5),
-    
+
     M6(6, new ItemBuilder(Material.BOOK).setName("&7Misja #&c6").setLore(Arrays.asList(
             "&7Przepal &c64 &6Karpie"
     )).toItemStack().clone(), 64, 0.5),

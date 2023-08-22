@@ -42,7 +42,6 @@ public class CiezkaSkrzyniaKowalaManager {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.kowal) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                item.getRewardItem().setAmount(item.getAmount());
                 if (item.getRewardItem().getType() == Material.MINECART) {
                     if (item.getRewardItem().getItemMeta().getDisplayName().contains("Energia Piekielnego Kowala")) {
                         Bukkit.getServer().broadcastMessage(" ");
@@ -53,8 +52,9 @@ public class CiezkaSkrzyniaKowalaManager {
                         return;
                     }
                 }
-                player.getInventory().addItem(item.getRewardItem());
+                item.getRewardItem().setAmount(item.getAmount());
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
+                player.getInventory().addItem(item.getRewardItem());
                 return;
             }
         }

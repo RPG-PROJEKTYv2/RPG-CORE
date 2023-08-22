@@ -33,10 +33,9 @@ import rpg.rpgcore.npc.przyrodnik.enums.PrzyrodnikMissions;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikUser;
 import rpg.rpgcore.npc.pustelnik.enums.PustelnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionKillBoss;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionKillMob;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionOpen;
-import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikUser;
+import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
+import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -741,10 +740,9 @@ public class UstawieniaKontaManager {
 //                "&7Postep: &e" + rybak.getProgress() + "&7/&e" + (rybakMission == null ? "0" : rybakMission.getReqAmount()) + "&7 (" + DoubleUtils.round(rybak.getProgress() / (double) (rybakMission == null ? 0 : rybakMission.getReqAmount()) * 100, 2) + "%)"
 //        )).addGlowing().toItemStack().clone());
 
-        final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser();
+       /* final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(uuid);
         final WyslannikMissionKillMob wyslannikMissionKillMob = WyslannikMissionKillMob.getByMission(wyslannik.getKillMobsMission());
         final WyslannikMissionKillBoss wyslannikMissionKillBoss = WyslannikMissionKillBoss.getByMission(wyslannik.getKillBossMission());
-        final WyslannikMissionOpen wyslannikMissionOpen = WyslannikMissionOpen.getByMission(wyslannik.getOpenChestMission());
         gui.setItem(30, new ItemBuilder(Material.BOOK).setName("&7Ustaw &c&lWyslannik, &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
                 "&7Kliknij, zeby ustawic postep misji/misje",
                 "&7podanego gracza u &c&lWyslannika&7.",
@@ -752,7 +750,7 @@ public class UstawieniaKontaManager {
                 "&f&lStatystyki",
                 "&7Misja (Moby): &e" + wyslannik.getKillMobsMission(),
                 "&7  - Wymagany Mob: &e" + (wyslannikMissionKillMob == null ? "Brak" : wyslannikMissionKillMob.getMobName()),
-                "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillMob == null ? "-1" : wyslannikMissionKillMob.getReqAmount()),
+                "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillMob == null ? "-1" : wyslannikMissionKillMob.getMobsAmount()),
                 "&7  - Nagroda (Item): &e" + (wyslannikMissionKillMob == null ? "Brak" : wyslannikMissionKillMob.getReward().getItemMeta().getDisplayName()) + " &7x &e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getReward().getAmount()),
                 "&7Postep: &e" + wyslannik.getKillMobsMissionProgress() + "&7/&e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getReqAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillMobsMissionProgress() / (double) (wyslannikMissionKillMob == null ? 0 : wyslannikMissionKillMob.getReqAmount()) * 100, 2) + "%)",
                 "",
@@ -761,14 +759,9 @@ public class UstawieniaKontaManager {
                 "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillBoss == null ? "-1" : wyslannikMissionKillBoss.getReqAmount()),
                 "&7  - Nagroda (Item): &e" + (wyslannikMissionKillBoss == null ? "Brak" : wyslannikMissionKillBoss.getReward().getItemMeta().getDisplayName()) + " &7x &e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getReward().getAmount()),
                 "&7Postep: &e" + wyslannik.getKillBossMissionProgress() + "&7/&e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getReqAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillBossMissionProgress() / (double) (wyslannikMissionKillBoss == null ? 0 : wyslannikMissionKillBoss.getReqAmount()) * 100, 2) + "%)",
-                "",
-                "&7Misja (Skrzynie): &e" + wyslannik.getOpenChestMission(),
-                "&7  - Wymagana Skrzynia: &e" + (wyslannikMissionOpen == null ? "Brak" : wyslannikMissionOpen.getChestName()),
-                "&7  - Wymagana Ilosc: &e" + (wyslannikMissionOpen == null ? "-1" : wyslannikMissionOpen.getReqAmount()),
-                "&7  - Nagroda (Item): &e" + (wyslannikMissionOpen == null ? "Brak" : wyslannikMissionOpen.getReward().getItemMeta().getDisplayName()) + " &7x &e" + (wyslannikMissionOpen == null ? "0" : wyslannikMissionOpen.getReward().getAmount()),
-                "&7Postep: &e" + wyslannik.getOpenChestMissionProgress() + "&7/&e" + (wyslannikMissionOpen == null ? "0" : wyslannikMissionOpen.getReqAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getOpenChestMissionProgress() / (double) (wyslannikMissionOpen == null ? 0 : wyslannikMissionOpen.getReqAmount()) * 100, 2) + "%)"
+                ""
         )).addGlowing().toItemStack().clone());
-
+*/
         final WyszkolenieUser wyszkolenie = rpgcore.getWyszkolenieManager().find(uuid);
         final DrzewkoWyszkoleniaUser drzewko = wyszkolenie.getDrzewkoWyszkoleniaUser();
         gui.setItem(31, new ItemBuilder(Material.BOOK).setName("&7Ustaw &3&lWyszkolenie &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
@@ -1330,7 +1323,7 @@ public class UstawieniaKontaManager {
 //        player.openInventory(gui);
     }
 
-    public void openWyslannik(final Player player, final UUID uuid) {
+   /* public void openWyslannik(final Player player, final UUID uuid) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &c&lWyslannik &4&l- &e&l" + uuid.toString()));
         final WyslannikUser user = rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser();
 
@@ -1374,7 +1367,7 @@ public class UstawieniaKontaManager {
         )).toItemStack().clone());
 
         player.openInventory(gui);
-    }
+    }*/
 
     public void openWyszkolenie(final Player player, final UUID uuid) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &3&lWyszkolenie &4&l- &e&l" + uuid.toString()));

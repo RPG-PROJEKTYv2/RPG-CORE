@@ -24,8 +24,6 @@ public class TeleporterNPC {
 
     private final ItemBuilder fillInventory = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15);
     private final ArrayList<String> lore = new ArrayList<>();
-    //private final ItemBuilder wybor1 = new ItemBuilder(Material.WATER_BUCKET);
-    //private final ItemBuilder wybor2 = new ItemBuilder(Material.LAVA_BUCKET);
     private final ItemBuilder expowisko1 = new ItemBuilder(Material.LEAVES);
     private final ItemBuilder expowisko2 = new ItemBuilder(Material.GRASS);
     private final ItemBuilder expowisko3 = new ItemBuilder(Material.VINE);
@@ -34,8 +32,6 @@ public class TeleporterNPC {
     private final ItemBuilder expowisko6 = new ItemBuilder(Material.ICE);
     private final ItemBuilder expowisko7 = new ItemBuilder(Material.BLAZE_POWDER);
     private final ItemBuilder expowisko8 = new ItemBuilder(Material.IRON_BARDING);
-    //(Material.SMOOTH_BRICK, 1, (short)2);
-    //SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()
     private final ItemBuilder expowisko9 = new ItemBuilder(Material.SAND);
     private final ItemBuilder expowisko10 = new ItemBuilder(Material.SMOOTH_BRICK);
     private final ItemBuilder expowisko11 = new ItemBuilder(Material.PRISMARINE_SHARD);
@@ -294,10 +290,10 @@ public class TeleporterNPC {
                 player.teleport(new Location(Bukkit.getWorld("20-30map"), 63, 75, 123, -43.8F, -0.1F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("20-30map"), 188, 75, 78, 56.6F, 0.2F));
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 184, 75, 81, 56.6F, 0.2F));
                 return;
             case 2:
-                player.teleport(new Location(Bukkit.getWorld("20-30map"), 159, 75, 173, 164.0F, 0.2F));
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 156, 75, 168, 164.0F, 0.2F));
         }
     }
 

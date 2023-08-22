@@ -31,6 +31,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_gornik;
     private final MongoCollection<Document> hellrpg_duszolog;
     private final MongoCollection<Document> hellrpg_przyrodnik;
+    private final MongoCollection<Document> hellrpg_wyslannik;
     private final MongoCollection<Document> hellrpg_bonuses;
     private final MongoCollection<Document> hellrpg_chatUsers;
     private final MongoCollection<Document> hellrpg_lowca;
@@ -38,7 +39,6 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_pety;
     private final MongoCollection<Document> hellrpg_userPets;
     private final MongoCollection<Document> hellrpg_oreLocations;
-    private final MongoCollection<Document> hellrpg_wyslannik;
     //private final MongoCollection<Document> hellrpg_przykladowyNPC; // TU TWORZYSZ ZMIENNA DO KOLEKCJI ZEBY MOC SIE DO NIEJ ODOWLAC !!!!
 
     private final MongoCollection<Document> hellrpg_PrzekletyCzarnoksieznikEffect;
@@ -139,9 +139,6 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_oreLocations")) {
             database.createCollection("hellrpg_oreLocations");
         }
-        if (!collections.contains("hellrpg_wyslannik")) {
-            database.createCollection("hellrpg_wyslannik");
-        }
         if (!collections.contains("hellrpg_kociolki")) {
             database.createCollection("hellrpg_kociolki");
         }
@@ -175,7 +172,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_rybak_armorStands")) {
             database.createCollection("hellrpg_rybak_armorStands");
         }
-
+        if (!collections.contains("hellrpg_wyslannik")) {
+            database.createCollection("hellrpg_wyslannik");
+        }
         if (!collections.contains("hellrpg_PrzekletyCzarnoksieznikEffect")) {
             database.createCollection("hellrpg_PrzekletyCzarnoksieznikEffect");
         }
@@ -208,7 +207,6 @@ public class MongoConnectionPoolManager {
         this.hellrpg_pety = database.getCollection("hellrpg_pety");
         this.hellrpg_userPets = database.getCollection("hellrpg_userPets");
         this.hellrpg_oreLocations = database.getCollection("hellrpg_oreLocations");
-        this.hellrpg_wyslannik = database.getCollection("hellrpg_wyslannik");
         this.hellrpg_kociolki = database.getCollection("hellrpg_kociolki");
         this.hellrpg_serwerWhiteList = database.getCollection("hellrpg_serwerWhiteList");
         this.hellrpg_artefaktyZaLvL = database.getCollection("hellrpg_artefaktyZaLvL");
@@ -221,6 +219,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_authUsers = database.getCollection("hellrpg_authUsers");
         this.hellrpg_bao_armorStands = database.getCollection("hellrpg_bao_armorStands");
         this.hellrpg_rybak_armorStands = database.getCollection("hellrpg_rybak_armorStands");
+        this.hellrpg_wyslannik = database.getCollection("hellrpg_wyslannik");
         this.hellrpg_PrzekletyCzarnoksieznikEffect = database.getCollection("hellrpg_PrzekletyCzarnoksieznikEffect");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
@@ -304,9 +303,6 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getOreLocations() {
         return this.hellrpg_oreLocations;
     }
-    public MongoCollection<Document> getWyslannik() {
-        return this.hellrpg_wyslannik;
-    }
     public MongoCollection<Document> getKociolki() {
         return this.hellrpg_kociolki;
     }
@@ -343,6 +339,7 @@ public class MongoConnectionPoolManager {
     public MongoCollection<Document> getRybakArmorStands() {
         return hellrpg_rybak_armorStands;
     }
+    public MongoCollection<Document> getWyslannik() { return hellrpg_wyslannik; }
     public MongoCollection<Document> getPrzekletyCzarnoksieznikEffect() { return hellrpg_PrzekletyCzarnoksieznikEffect; }
     // TU ROBISZ MOZWLIOSC ODWOLANIA SIE DO KOLEKCJI
     /*public MongoCollection<Document> getPrzykladowyNPC() {

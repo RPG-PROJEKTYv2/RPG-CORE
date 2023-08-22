@@ -26,7 +26,7 @@ public class PiekielnyRycerzManager {
         this.przekletyrycerz.add(new Items("6", 14.0, ItemHelper.createSword("&c&lMiecz Przekletego Rycerza", Material.DIAMOND_SWORD, 32, 22,false), 1));
         this.przekletyrycerz.add(new Items("7", 16.0, ItemHelper.createArmor("&c&lHelm Przekletego Rycerza", Material.DIAMOND_HELMET, 55, 12), 1));
         this.przekletyrycerz.add(new Items("8", 16.0, ItemHelper.createArmor("&c&lZbroja Przekletego Rycerza", Material.DIAMOND_CHESTPLATE, 57, 14), 1));
-        this.przekletyrycerz.add(new Items("9", 16.0, ItemHelper.createArmor("&c&lSpodnie Przekletego Rycerza", Material.DIAMOND_LEGGINGS, 60, 20), 1));
+        this.przekletyrycerz.add(new Items("9", 16.0, ItemHelper.createArmor("&c&lSpodnie Przekletego Rycerza", Material.DIAMOND_LEGGINGS, 60, 16), 1));
         this.przekletyrycerz.add(new Items("10", 16.0, ItemHelper.createArmor("&c&lButy Przekletego Rycerza", Material.DIAMOND_BOOTS, 55, 13), 1));
 
     }

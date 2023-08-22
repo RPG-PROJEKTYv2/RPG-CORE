@@ -45,6 +45,7 @@ public class LesnikInventoryClick implements Listener {
 
             if (lesnikObject.getUser().hasCooldown()) {
                 player.closeInventory();
+                player.sendMessage(Utils.format("&2&lLesnik &8>> &cMusisz odczekac jeszcze &6"+ Utils.durationToString(lesnikObject.getUser().getCooldown(), false)));
                 return;
             }
 

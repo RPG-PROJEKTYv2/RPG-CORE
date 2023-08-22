@@ -42,7 +42,8 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
-import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikObject;
+import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
 import rpg.rpgcore.pets.objects.UserPets;
@@ -111,7 +112,6 @@ public class MongoManager {
             this.addDataOs(rpgcore.getOsManager().find(uuid));
             this.addDataMagazynier(rpgcore.getMagazynierNPC().find(uuid));
             this.addDataLowca(rpgcore.getLowcaNPC().find(uuid));
-            this.addDataWyslannik(rpgcore.getWyslannikNPC().find(uuid));
             this.addDataLesnik(rpgcore.getLesnikNPC().find(uuid));
             this.addDataUserPets(rpgcore.getPetyManager().findUserPets(uuid));
             this.addDataActivePets(rpgcore.getPetyManager().findActivePet(uuid));
@@ -193,9 +193,6 @@ public class MongoManager {
             if (pool.getUserPets().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getUserPets().deleteOne(new Document("_id", uuid.toString()));
             }
-            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() != null) {
-                pool.getWyslannik().deleteOne(new Document("_id", uuid.toString()));
-            }
             if (pool.getHandlarz().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getHandlarz().deleteOne(new Document("_id", uuid.toString()));
             }
@@ -215,6 +212,9 @@ public class MongoManager {
                 pool.getMistrzYang().deleteOne(new Document("_id", uuid.toString()));
             }
             if (pool.getCzarownica().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getCzarownica().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getCzarownica().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
@@ -352,11 +352,6 @@ public class MongoManager {
                 this.addDataUserPets(user);
                 rpgcore.getPetyManager().addToUserPets(user);
             }
-            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
-                final WyslannikObject user = new WyslannikObject(uuid);
-                this.addDataWyslannik(user);
-                rpgcore.getWyslannikNPC().add(user);
-            }
             if (pool.getKociolki().find(new Document("_id", uuid.toString())).first() == null) {
                 final KociolkiUser user = new KociolkiUser(uuid);
                 this.addDataKociolki(user);
@@ -376,6 +371,11 @@ public class MongoManager {
                 final WWWUser user = new WWWUser(uuid);
                 this.addDataWWWUser(user);
                 rpgcore.getUserManager().addWWWUser(user);
+            }
+            if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() == null) {
+                final WyslannikUser wyslannikUser = new WyslannikUser(uuid);
+                this.addDataWyslannik(wyslannikUser);
+                rpgcore.getWyslannikNPC().add(wyslannikUser);
             }
             // TUTAJ ROBISZ ZABEZPIECZENIE JAKBY SIE COS WYJEBALO NA PLECY I NIE STWORZYLO USERA W BAZIE JAK GRACZ WBIL NA SERWER
             // WIEC JESLI NIE MA JEGO DOKUMENTU W KOLEKCJI TO GO TWORZY I DODAJE DO PAMIECI PODRECZNEJ SERWERA
@@ -507,10 +507,6 @@ public class MongoManager {
         this.addDataUserPets(userPets);
         rpgcore.getPetyManager().addToUserPets(userPets);
 
-        final WyslannikObject wyslannikObject = new WyslannikObject(uuid);
-        this.addDataWyslannik(wyslannikObject);
-        rpgcore.getWyslannikNPC().add(wyslannikObject);
-
         final KociolkiUser kociolkiUser = new KociolkiUser(uuid);
         this.addDataKociolki(kociolkiUser);
         rpgcore.getKociolkiManager().add(kociolkiUser);
@@ -546,6 +542,10 @@ public class MongoManager {
         final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser = new PrzekletyCzarnoksieznikUser(uuid);
         this.addDataPrzekletyCzarnoksieznikEffect(przekletyCzarnoksieznikUser);
         rpgcore.getPrzekletyCzarnoksieznikBossManager().add(przekletyCzarnoksieznikUser);
+
+        final WyslannikUser wyslannikUser = new WyslannikUser(uuid);
+        this.addDataWyslannik(wyslannikUser);
+        rpgcore.getWyslannikNPC().add(wyslannikUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -666,7 +666,6 @@ public class MongoManager {
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
             this.saveDataMagazynier(uuid, magazynierUser);
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
-            this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
 
             this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
@@ -682,6 +681,7 @@ public class MongoManager {
             this.saveDataMistrzYang(uuid, rpgcore.getMistrzYangNPC().find(uuid));
             this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
             this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
+            this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -1581,35 +1581,6 @@ public class MongoManager {
         }
     }
 
-
-
-    // WYSLANNIK
-    public Map<UUID, WyslannikObject> loadAllWyslannik() {
-        Map<UUID, WyslannikObject> userMap = new HashMap<>();
-        for (Document document : this.pool.getWyslannik().find()) {
-            final WyslannikObject wyslannikObject = new WyslannikObject(document);
-            userMap.put(wyslannikObject.getUuid(), wyslannikObject);
-        }
-        return userMap;
-    }
-
-    public void addDataWyslannik(final WyslannikObject wyslannikObject) {
-        if (this.pool.getWyslannik().find(new Document("_id", wyslannikObject.getUuid().toString())).first() != null) {
-            this.pool.getWyslannik().deleteOne(new Document("_id", wyslannikObject.getUuid().toString()));
-        }
-        this.pool.getWyslannik().insertOne(wyslannikObject.toDocument());
-    }
-
-    public void saveDataWyslannik(final UUID uuid, final WyslannikObject wyslannikObject) {
-        this.pool.getWyslannik().findOneAndReplace(new Document("_id", uuid.toString()), wyslannikObject.toDocument());
-    }
-
-    public void saveAllWyslannik() {
-        for (final WyslannikObject wyslannikObject : rpgcore.getWyslannikNPC().getWyslannikObjects()) {
-            this.saveDataWyslannik(wyslannikObject.getUuid(), wyslannikObject);
-        }
-    }
-
     // TARGI
     public Map<UUID, Targ> loadAllTarg() {
         Map<UUID, Targ> userMap = new HashMap<>();
@@ -1657,6 +1628,26 @@ public class MongoManager {
     public void saveAllPrzekletyCzarnoksieznikEffect() {
         for (final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser : rpgcore.getPrzekletyCzarnoksieznikBossManager().getPrzekletyCzarnoksieznikUser()) {
             this.saveDataPrzekletyCzarnoksieznikEffect(przekletyCzarnoksieznikUser.getUuid(), przekletyCzarnoksieznikUser);
+        }
+    }
+
+    public Map<UUID, WyslannikUser> loadAllWyslannik() {
+        Map<UUID, WyslannikUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getWyslannik().find()) {
+            final WyslannikUser wyslannikUser = new WyslannikUser(document);
+            userMap.put(wyslannikUser.getUuid(), wyslannikUser);
+        }
+        return userMap;
+    }
+    public void addDataWyslannik(final WyslannikUser wyslannikUser) {
+        this.pool.getWyslannik().insertOne(wyslannikUser.toDocument());
+    }
+    public void saveDataWyslannik(final UUID uuid, final WyslannikUser wyslannikUser) {
+        this.pool.getWyslannik().findOneAndReplace(new Document("_id", uuid.toString()), wyslannikUser.toDocument());
+    }
+    public void saveAllWyslannik() {
+        for (final WyslannikUser wyslannikUser : rpgcore.getWyslannikNPC().getWyslannikUser()) {
+            this.saveDataWyslannik(wyslannikUser.getUuid(), wyslannikUser);
         }
     }
     // PRZYKLADOWY NPC

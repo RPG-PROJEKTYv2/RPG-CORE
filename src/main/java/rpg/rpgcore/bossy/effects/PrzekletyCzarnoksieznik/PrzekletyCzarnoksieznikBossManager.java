@@ -43,6 +43,10 @@ public class PrzekletyCzarnoksieznikBossManager {
         bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + dmgMOB);
         bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + defMOB);
         player.getInventory().removeItem(new ItemBuilder(Bossy.I70_80_BONUS.getItemStack().clone()).setAmount(1).toItemStack());
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+            RPGCORE.getInstance().getMongoManager().saveDataPrzekletyCzarnoksieznikEffect(uuid, RPGCORE.getInstance().getPrzekletyCzarnoksieznikBossManager().find(uuid));
+            RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
+        });
     }
     public void openWyborGUI(final Player player) {
         UUID uuid = player.getUniqueId();

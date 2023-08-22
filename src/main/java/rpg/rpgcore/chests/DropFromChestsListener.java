@@ -10,11 +10,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
+import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
@@ -37,7 +40,9 @@ public class DropFromChestsListener implements Listener {
         }
 
 
-        if (player.getItemInHand().getType().equals(Material.CHEST) || player.getItemInHand().getType().equals(Material.ENDER_CHEST)) {
+        if (player.getItemInHand().getType().equals(Material.CHEST)
+                || player.getItemInHand().getType().equals(Material.ENDER_CHEST)
+                || player.getItemInHand().getType().equals(Material.JUKEBOX)) {
 
             final ItemStack playerItem = player.getItemInHand();
 
@@ -197,7 +202,7 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        final Items item = rpgcore.getWodzGoblinowManager().getDrawnItems(player);
+                        final Items item = rpgcore.getDowodcaRozbojnikow().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -230,9 +235,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 1) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         rpgcore.getNajemnikManager().getDrawnItems(player);
                         return;
@@ -270,8 +272,6 @@ public class DropFromChestsListener implements Listener {
                             default:
                                 break;
                         }
-
-
                         is.setAmount(item.getAmount());
                         player.getInventory().addItem(is);
                         return;
@@ -284,9 +284,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 2) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         final Items item = rpgcore.getGoblinManager().getDrawnItems(player);
                         if (item == null) {
@@ -306,9 +303,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 3) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         final Items item = rpgcore.getGorylManager().getDrawnItems(player);
                         if (item == null) {
@@ -365,9 +359,6 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 4) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
-                        }
                         final Items item = rpgcore.getZjawaManager().getDrawnItems(player);
                         if (item == null) {
                             return;
@@ -420,9 +411,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 5) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         final Items item = rpgcore.getStraznikSwiatyniManager().getDrawnItems(player);
                         if (item == null) {
@@ -478,9 +466,6 @@ public class DropFromChestsListener implements Listener {
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 6) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
-                        }
                         Items item = rpgcore.getMroznyWilkManager().getDrawnItems(player);
                         if (item == null) {
                             return;
@@ -499,9 +484,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 7) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         Items item = rpgcore.getZywiolakOgniaManager().getDrawnItems(player);
                         if (item == null) {
@@ -558,9 +540,6 @@ public class DropFromChestsListener implements Listener {
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-                        }
-                        if (rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMission() == 8) {
-                            rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().setOpenChestMissionProgress(rpgcore.getWyslannikNPC().find(player.getUniqueId()).getWyslannikUser().getOpenChestMissionProgress() + 1);
                         }
                         Items item = rpgcore.getMrocznaDuszaManager().getDrawnItems(player);
                         if (item == null) {
@@ -846,6 +825,41 @@ public class DropFromChestsListener implements Listener {
                                 break;
                             case HOPPER_MINECART:
                                 is = AkcesoriaPodsHelper.createKolczyki(10, 16, -50,55, "&b&lKolczyki Krola Lodu");
+                                break;
+                            default:
+                                break;
+                        }
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // TODO DUNGEONY
+                // TODO DUNGEONY
+                // DUNGEON 60-70
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        final Items item = rpgcore.getPiekielnyWladcaManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case MINECART:
+                                is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-25,-15),
+                                        ChanceHelper.getRandInt(27,41),
+                                        ChanceHelper.getRandInt(33,53),
+                                        ChanceHelper.getRandDouble(0.1,0.2),
+                                        ChanceHelper.getRandInt(-50,-35),
+                                        ChanceHelper.getRandInt(60,70), "&c&lEnergia Piekielnego Wladcy");
+                                break;
+                            case FIREBALL:
+                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(1,1),
+                                        ChanceHelper.getRandInt(10,16),
+                                        ChanceHelper.getRandInt(7,10),"&c&lMedalion Piekielnego Wladcy");
                                 break;
                             default:
                                 break;

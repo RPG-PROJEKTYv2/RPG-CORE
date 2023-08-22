@@ -25,7 +25,7 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikObject;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -1248,37 +1248,31 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
 //            return;
 //        }
 
-        if (title.contains("Misje » Wyslannik - ")) {
+        /*if (title.contains("Misje » Wyslannik - ")) {
             e.setCancelled(true);
 
             if (item == null) return;
-            final WyslannikObject wyslannik = rpgcore.getWyslannikNPC().find(this.getUUIDFromTitle(title));
+            final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(this.getUUIDFromTitle(title));
             final int value = this.getValueFromClick(e.getClick());
 
             switch (slot) {
                 case 0:
-                    wyslannik.getWyslannikUser().setKillMobsMission(wyslannik.getWyslannikUser().getKillMobsMission() + value);
+                    wyslannik.setKillMobsMission(wyslannik.getKillMobsMission() + value);
                     break;
                 case 1:
-                    wyslannik.getWyslannikUser().setKillMobsMissionProgress(wyslannik.getWyslannikUser().getKillMobsMissionProgress() + value);
+                    wyslannik.setKillMobsMissionProgress(wyslannik.getKillMobsMissionProgress() + value);
                     break;
                 case 3:
-                    wyslannik.getWyslannikUser().setKillBossMission(wyslannik.getWyslannikUser().getKillBossMission() + value);
+                    wyslannik.setKillBossMission(wyslannik.getKillBossMission() + value);
                     break;
                 case 5:
-                    wyslannik.getWyslannikUser().setKillBossMissionProgress(wyslannik.getWyslannikUser().getKillBossMissionProgress() + value);
-                    break;
-                case 7:
-                    wyslannik.getWyslannikUser().setOpenChestMission(wyslannik.getWyslannikUser().getOpenChestMission() + value);
-                    break;
-                case 8:
-                    wyslannik.getWyslannikUser().setOpenChestMissionProgress(wyslannik.getWyslannikUser().getOpenChestMissionProgress() + value);
+                    wyslannik.setKillBossMissionProgress(wyslannik.getKillBossMissionProgress() + value);
                     break;
             }
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataWyslannik(wyslannik.getUuid(), wyslannik));
             rpgcore.getUstawieniaKontaManager().openWyslannik(player, wyslannik.getUuid());
             return;
-        }
+        }*/
 
         if (title.contains("Misje » Wyszkolenie - ")) {
             e.setCancelled(true);

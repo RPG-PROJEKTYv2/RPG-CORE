@@ -24,6 +24,6 @@ public class LesnikUser {
     }
 
     public void giveCooldown() {
-        this.cooldown = System.currentTimeMillis() + 210_000;
+        this.cooldown = System.currentTimeMillis() + 300_000;
     }
 }

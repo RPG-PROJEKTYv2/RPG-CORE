@@ -114,6 +114,7 @@ public class AdminPanelManager {
         gui.setItem(12, new ItemBuilder(Material.BOOK).setName("&fPodreczniki wyszkolenia").addGlowing().toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.BUCKET).setName("&6Bossy & Klucze").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.DIAMOND).setName("&cInne").addGlowing().toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.JUKEBOX).setName("&6&lDungeony items").addGlowing().toItemStack().clone());
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
@@ -226,8 +227,10 @@ public class AdminPanelManager {
         player.openInventory(gui);
     }
     public void openDungeonyCaseGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&2&lSkrzynki &4&lDUNGEONY &f- ADMINISTRACJA"));
-        gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&c&lSKRZYNIA DUNGEONU PIERWSZEGO").addGlowing().toItemStack().clone());
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lDungeony &f- ADMINISTRACJA"));
+        for (final Dungeony dungeony : Dungeony.values()) {
+            gui.setItem(gui.firstEmpty(), dungeony.getItemStack());
+        }
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }

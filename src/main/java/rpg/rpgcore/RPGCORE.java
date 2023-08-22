@@ -43,7 +43,6 @@ import rpg.rpgcore.chat.mute.MuteManager;
 import rpg.rpgcore.chat.mute.TempMuteCommand;
 import rpg.rpgcore.chat.mute.UnMuteCommand;
 import rpg.rpgcore.chests.DropFromChestsListener;
-import rpg.rpgcore.chests.Dungeony.Dungeon60z70.OgnistyDuchManager;
 import rpg.rpgcore.chests.Dungeony.Dungeon60z70.PiekielnyWladcaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.KrolLoduManager;
@@ -244,8 +243,8 @@ import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
-import rpg.rpgcore.npc.oldwyslannik.WyslannikInventoryClickListener;
-import rpg.rpgcore.npc.oldwyslannik.WyslannikNPC;
+import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
+import rpg.rpgcore.npc.wyslannik.events.WyslannikInventoryClickListener;
 import rpg.rpgcore.osiagniecia.OsManager;
 import rpg.rpgcore.osiagniecia.OsiagnieciaCommand;
 import rpg.rpgcore.osiagniecia.events.OsInventoryClickListener;
@@ -378,7 +377,6 @@ public final class RPGCORE extends JavaPlugin {
     private KrolLoduManager krolLoduManager;
     private LodowySlugaManager lodowySlugaManager;
     // dung 60-70
-    private OgnistyDuchManager ognistyDuchManager;
     private PiekielnyWladcaManager piekielnyWladcaManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
@@ -515,19 +513,20 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllTarg();
         this.mongo.saveAllMedrzec();
         this.mongo.saveAllKolekcjoner();
+        this.mongo.saveAllPrzekletyCzarnoksieznikEffect();
         this.mongo.saveAllMetinolog();
         this.mongo.saveAllOs();
         this.mongo.saveAllPrzyrodnik();
         this.mongo.saveAllActivePets();
         this.mongo.saveAllDodatki();
         this.mongo.saveAllBonuses();
+        this.mongo.saveAllWyslannik();
         this.mongo.saveAllUserPets();
         this.mongo.saveAllChatUsers();
         this.mongo.saveAllRybak();
         this.mongo.saveAllMagazyny();
         this.mongo.saveAllLowca();
         this.mongo.saveAllLesnik();
-        this.mongo.saveAllWyslannik();
         this.mongo.saveAllKociolki();
         this.mongo.saveAllHandlarz();
         this.mongo.saveSerwerWhiteList(this.serwerWhiteListManager.getWhitelist());
@@ -762,6 +761,9 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new DuszologDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new DuszologInteractListener(), this);
 
+        // ...WYSLANNIK
+        this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
+
 
         // ...RYBAK
         this.getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
@@ -808,9 +810,6 @@ public final class RPGCORE extends JavaPlugin {
         // ...LESNIK
         this.getServer().getPluginManager().registerEvents(new LesnikInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new LesnikItemInteractListener(), this);
-
-        // ...WYSLANNIK
-        this.getServer().getPluginManager().registerEvents(new WyslannikInventoryClickListener(), this);
 
         // ...MEDRZEC
         this.getServer().getPluginManager().registerEvents(new MedrzecInventoryClickListener(this), this);
@@ -943,6 +942,7 @@ public final class RPGCORE extends JavaPlugin {
         this.duszologNPC = new DuszologNPC(this);
         this.teleporterNPC = new TeleporterNPC(this);
         this.rybakNPC = new RybakNPC(this);
+        this.wyslannikNPC = new WyslannikNPC(this);
         this.kolekcjonerNPC = new KolekcjonerNPC(this);
         this.handlarzNPC = new HandlarzNPC(this);
         this.kowalNPC = new KowalNPC(this);
@@ -950,7 +950,6 @@ public final class RPGCORE extends JavaPlugin {
         this.przyrodnikNPC = new PrzyrodnikNPC(this);
         this.lowcaNPC = new LowcaNPC(this);
         this.lesnikNPC = new LesnikNPC(this);
-        this.wyslannikNPC = new WyslannikNPC(this);
         this.medrzecNPC = new MedrzecNPC(this);
         //this.testNPC = new TestNPC(this); // TU INICJALIZUJESZ NPC
         this.pustelnikNPC = new PustelnikNPC(this);
@@ -1007,6 +1006,8 @@ public final class RPGCORE extends JavaPlugin {
         // ice tower
         this.krolLoduManager = new KrolLoduManager();
         this.lodowySlugaManager = new LodowySlugaManager();
+        // dungeon 60-70
+        this.piekielnyWladcaManager = new PiekielnyWladcaManager();
         // ================================ SKRZYNKI NPCTY & INNE ================================
         this.gornikChestManager = new GornikChestManager();
     }
@@ -1372,6 +1373,8 @@ public final class RPGCORE extends JavaPlugin {
     public LodowySlugaManager getLodowySlugaManager() {
         return lodowySlugaManager;
     }
+    // dungeon 60-70
+    public PiekielnyWladcaManager getPiekielnyWladcaManager() { return piekielnyWladcaManager;}
     // ================================ SKRZYNKI NPCTY & INNE ================================
     public GornikChestManager getGornikChestManager() {
         return gornikChestManager;
@@ -1412,6 +1415,8 @@ public final class RPGCORE extends JavaPlugin {
         return lesnikNPC;
     }
 
+    public WyslannikNPC getWyslannikNPC() { return wyslannikNPC; }
+
     public PrzekletyCzarnoksieznikBossManager getPrzekletyCzarnoksieznikBossManager() {
         return przekletyCzarnoksieznikBossManager;
     }
@@ -1430,10 +1435,6 @@ public final class RPGCORE extends JavaPlugin {
 
     public ZmiankiManager getZmiankiManager() {
         return zmiankiManager;
-    }
-
-    public WyslannikNPC getWyslannikNPC() {
-        return wyslannikNPC;
     }
 
     public IceTowerManager getIceTowerManager() {

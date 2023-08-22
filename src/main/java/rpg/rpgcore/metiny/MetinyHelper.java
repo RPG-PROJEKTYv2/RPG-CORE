@@ -155,7 +155,6 @@ public class MetinyHelper {
 
     public static void getDropMetin(int id, Player player, Entity entity) {
         final MetinologObject metinolog = RPGCORE.getInstance().getMetinologNPC().find(player.getUniqueId());
-        //MobDropHelper.addDropPlayer(player, "I183", 1, 100.0, true, true, entity);
         double kasaToAdd = 0;
         if ((id >= 1 && id <= 10) || (id >= 10001 && id <= 10010)) {
             kasaToAdd = 100;

@@ -17,10 +17,9 @@ import rpg.rpgcore.npc.lowca.objects.LowcaUser;
 import rpg.rpgcore.npc.magazynier.enums.MagazynierMissions;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologUser;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionKillBoss;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionKillMob;
-import rpg.rpgcore.npc.oldwyslannik.enums.WyslannikMissionOpen;
-import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikUser;
+import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
+import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -73,10 +72,9 @@ public class MisjeCommand extends CommandAPI {
         // PIERWSZY RZAD
         gui.setItem(0, new ItemBuilder(Material.HOPPER).setName("&c&lWyslannik").toItemStack());
 
-        final WyslannikUser wyslannikUser = rpgcore.getWyslannikNPC().find(targetUUID).getWyslannikUser();
-        gui.setItem(9, rpgcore.getWyslannikNPC().getMobKillsItem(wyslannikUser, WyslannikMissionKillMob.getByMission(wyslannikUser.getKillMobsMission())));
-        gui.setItem(18, rpgcore.getWyslannikNPC().getBossKillsItem(wyslannikUser, WyslannikMissionKillBoss.getByMission(wyslannikUser.getKillBossMission())));
-        gui.setItem(27, rpgcore.getWyslannikNPC().getChestOpenItem(wyslannikUser, WyslannikMissionOpen.getByMission(wyslannikUser.getOpenChestMission())));
+        final WyslannikUser wyslannikUser = rpgcore.getWyslannikNPC().find(targetUUID);
+        gui.setItem(9, rpgcore.getWyslannikNPC().getMobKillsGUI(wyslannikUser, WyslannikMissionKillMob.getByMission(wyslannikUser.getKillMobsMission())));
+        gui.setItem(18, rpgcore.getWyslannikNPC().getBossKillsGUI(wyslannikUser, WyslannikMissionKillBoss.getByMission(wyslannikUser.getKillBossMission())));
 
         gui.setItem(36, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
         gui.setItem(45, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName("").toItemStack());

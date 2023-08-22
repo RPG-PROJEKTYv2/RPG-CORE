@@ -1,11 +1,13 @@
 package rpg.rpgcore.commands.player.rozpiska;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -23,6 +25,7 @@ public class RozpiskaInventoryClick implements Listener {
         final Inventory gui = e.getClickedInventory();
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
+        final ItemStack item = e.getCurrentItem();
 
         if (e.getClickedInventory() == null || e.getInventory() == null) {
             return;
@@ -42,6 +45,9 @@ public class RozpiskaInventoryClick implements Listener {
             }
         }
         if (title.equals("Rozpiska - menu")) {
+            if (item.getType().equals(Material.STAINED_GLASS_PANE)) {
+                return;
+            }
             e.setCancelled(true);
             if (slot == 11) {
                 rpgcore.getRozpiskaManager().openFIRSTexp(player);
@@ -100,7 +106,9 @@ public class RozpiskaInventoryClick implements Listener {
             } else {
                 player.closeInventory();
                 player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
+                return;
             }
+            return;
         }
     }
             /*if (slot == 30) {
