@@ -616,7 +616,7 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Piekielny Wladca":
-                addDropPlayer(player, Dungeony.getItem("I_PRZEDSIONEK_BOSS", 1), 100, true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1), 100, true, true, entity);
                 rpgcore.getPrzedsionekManager().incrementCounter();
 
         }
