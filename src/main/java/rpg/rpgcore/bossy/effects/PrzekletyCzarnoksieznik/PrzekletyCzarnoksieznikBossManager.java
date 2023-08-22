@@ -20,7 +20,7 @@ public class PrzekletyCzarnoksieznikBossManager {
     private final RPGCORE rpgcore;
     private final Map<UUID, PrzekletyCzarnoksieznikUser> userMap;
 
-    public PrzekletyCzarnoksieznikBossManager(RPGCORE rpgcore) {
+    public PrzekletyCzarnoksieznikBossManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllPrzekletyCzarnoksieznikUser();
     }
@@ -43,9 +43,9 @@ public class PrzekletyCzarnoksieznikBossManager {
         bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + dmgMOB);
         bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + defMOB);
         player.getInventory().removeItem(new ItemBuilder(Bossy.I70_80_BONUS.getItemStack().clone()).setAmount(1).toItemStack());
-        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
-            RPGCORE.getInstance().getMongoManager().saveDataPrzekletyCzarnoksieznikEffect(uuid, RPGCORE.getInstance().getPrzekletyCzarnoksieznikBossManager().find(uuid));
-            RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+            rpgcore.getMongoManager().saveDataPrzekletyCzarnoksieznikEffect(uuid, this.find(uuid));
+            rpgcore.getMongoManager().saveDataBonuses(uuid, bonuses);
         });
     }
     public void openWyborGUI(final Player player) {

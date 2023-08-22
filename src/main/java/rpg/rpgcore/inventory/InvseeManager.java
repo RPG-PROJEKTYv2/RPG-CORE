@@ -74,12 +74,12 @@ public class InvseeManager {
 
         StringBuilder sb3 = new StringBuilder();
         for (ItemStack item : differenceRemovedArmor) {
-            sb3.append("- ").append("x ").append(item.getAmount()).append(" ").append("Type: `").append(item.getType().name()).append("`\nName: ").append(Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name())).append("\nLore: ").append(item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n").append("\n");
+            sb3.append("- ").append("x ").append(item.getAmount()).append(" ").append("Type: `").append(item.getType().name()).append("`\nName: ").append(Utils.removeColor(item.hasItemMeta() && item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name())).append("\nLore: ").append(item.hasItemMeta() && item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n").append("\n");
         }
 
         StringBuilder sb4 = new StringBuilder();
         for (ItemStack item : differenceAddedArmor) {
-            sb4.append("+ ").append("x ").append(item.getAmount()).append(" ").append("Type: `").append(item.getType().name()).append("`\nName: ").append(Utils.removeColor(item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name())).append("\nLore: ").append(item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n").append("\n");
+            sb4.append("+ ").append("x ").append(item.getAmount()).append(" ").append("Type: `").append(item.getType().name()).append("`\nName: ").append(Utils.removeColor(item.hasItemMeta() && item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name())).append("\nLore: ").append(item.hasItemMeta() && item.getItemMeta().hasLore() ? RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) : "Brak Lore\n").append("\n");
         }
 
         if (differenceAdded.isEmpty() && differenceRemoved.isEmpty() && differenceAddedArmor.isEmpty() && differenceRemovedArmor.isEmpty()) return;

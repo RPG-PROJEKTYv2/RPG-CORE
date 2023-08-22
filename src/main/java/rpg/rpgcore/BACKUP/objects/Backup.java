@@ -24,7 +24,7 @@ import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
-import rpg.rpgcore.npc.oldwyslannik.objects.WyslannikObject;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
 import rpg.rpgcore.pets.objects.UserPets;
@@ -64,7 +64,6 @@ public class Backup {
     private final LesnikObject lesnik;
     private final PetObject pet;
     private final UserPets userPets;
-    private final WyslannikObject wyslannik;
     private final HandlarzUser handlarz;
     private final KociolkiUser kociolki;
     private final WyszkolenieUser wyszkolenie;
@@ -72,6 +71,7 @@ public class Backup {
     private final PustelnikUser pustelnik;
     private final MistrzYangUser mistrzYang;
     private final CzarownicaUser czarownica;
+    private final WyslannikUser wyslannik;
 
 
 
@@ -97,7 +97,6 @@ public class Backup {
         this.lesnik = this.rpgcore.getLesnikNPC().find(uuid);
         this.pet = this.rpgcore.getPetyManager().findActivePet(uuid);
         this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid);
-        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
         this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid);
         this.kociolki = this.rpgcore.getKociolkiManager().find(uuid);
         this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid);
@@ -105,6 +104,7 @@ public class Backup {
         this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid);
         this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid);
         this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
+        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
     }
 
     public Backup(final UUID uuid, final String date) {
@@ -129,7 +129,6 @@ public class Backup {
         this.lesnik = this.rpgcore.getLesnikNPC().find(uuid);
         this.pet = this.rpgcore.getPetyManager().findActivePet(uuid);
         this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid);
-        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
         this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid);
         this.kociolki = this.rpgcore.getKociolkiManager().find(uuid);
         this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid);
@@ -137,6 +136,7 @@ public class Backup {
         this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid);
         this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid);
         this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
+        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
     }
 
     public Backup(final String collectionName, final Document document) {
@@ -179,8 +179,6 @@ public class Backup {
         else this.pet = new PetObject(this.uuid);
         if (document.containsKey("userPets")) this.userPets = new UserPets(document.get("userPets", Document.class));
         else this.userPets = new UserPets(this.uuid);
-        if (document.containsKey("wyslannik")) this.wyslannik = new WyslannikObject(document.get("wyslannik", Document.class));
-        else this.wyslannik = new WyslannikObject(this.uuid);
         if (document.containsKey("handlarz")) this.handlarz = new HandlarzUser(document.get("handlarz", Document.class));
         else this.handlarz = new HandlarzUser(this.uuid);
         if (document.containsKey("kociolki")) this.kociolki = new KociolkiUser(document.get("kociolki", Document.class));
@@ -195,6 +193,8 @@ public class Backup {
         else this.mistrzYang = new MistrzYangUser(this.uuid);
         if (document.containsKey("czarownica")) this.czarownica = new CzarownicaUser(document.get("czarownica", Document.class));
         else this.czarownica = new CzarownicaUser(this.uuid);
+        if (document.containsKey("wyslannik")) this.wyslannik = new WyslannikUser(document.get("wyslannik", Document.class));
+        else this.wyslannik = new WyslannikUser(this.uuid);
     }
 
     public Date getDateToCompare() {
@@ -231,7 +231,6 @@ public class Backup {
                 .append("lesnik", this.lesnik.toDocument())
                 .append("pet", this.pet.toDocument())
                 .append("userPets", this.userPets.toDocument())
-                .append("wyslannik", this.wyslannik.toDocument())
                 .append("handlarz", this.handlarz.toDocument())
                 .append("kociolki", this.kociolki.toDocument())
                 .append("wyszkolenie", this.wyszkolenie.toDocument())

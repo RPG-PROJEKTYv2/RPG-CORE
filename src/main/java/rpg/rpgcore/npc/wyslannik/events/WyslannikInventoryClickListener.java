@@ -3,6 +3,7 @@ package rpg.rpgcore.npc.wyslannik.events;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -34,6 +36,7 @@ public class WyslannikInventoryClickListener implements Listener {
 
         if (title.equals("Wyslannik")) {
             e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
 
             if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE) {
                 return;
@@ -48,7 +51,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     wyslannikUser.setKillMobsMission(wyslannikUser.getKillMobsMission() + 1);
                     wyslannikUser.setKillMobsMissionProgress(0);
                     wyslannikUser.setSredniDMG(wyslannikUser.getSredniDMG() + wyslannikMissionKillMob.getSredniDMG());
-                    bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + wyslannikUser.getSredniDMG());
+                    bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + DoubleUtils.round(wyslannikMissionKillMob.getSredniDMG(), 2));
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, RPGCORE.getInstance().getWyslannikNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);
@@ -67,7 +70,7 @@ public class WyslannikInventoryClickListener implements Listener {
                     wyslannikUser.setKillBossMission(wyslannikUser.getKillBossMission() + 1);
                     wyslannikUser.setKillBossMissionProgress(0);
                     wyslannikUser.setSredniDEF(wyslannikUser.getSredniDEF() + wyslannikMissionKillBoss.getSredniDEF());
-                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + wyslannikUser.getSredniDEF());
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + DoubleUtils.round(wyslannikMissionKillBoss.getSredniDEF(), 2));
                     RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
                         RPGCORE.getInstance().getMongoManager().saveDataWyslannik(uuid, RPGCORE.getInstance().getWyslannikNPC().find(uuid));
                         RPGCORE.getInstance().getMongoManager().saveDataBonuses(uuid, bonuses);

@@ -143,8 +143,9 @@ public class PlayerJoinListener implements Listener {
             }
         }
 
+
         try {
-            if (user.getInventoriesUser().getArmor() != null && user.getInventoriesUser().getInventory() != null && user.getInventoriesUser().getEnderchest() != null
+            if (user.getInventoriesUser() != null && user.getInventoriesUser().getArmor() != null && user.getInventoriesUser().getInventory() != null && user.getInventoriesUser().getEnderchest() != null
                     && !user.getInventoriesUser().getInventory().isEmpty() && !user.getInventoriesUser().getEnderchest().isEmpty() && !user.getInventoriesUser().getArmor().isEmpty()) {
                 player.getInventory().setArmorContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor()));
                 player.getInventory().setContents(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory()));
@@ -153,12 +154,20 @@ public class PlayerJoinListener implements Listener {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+
+        if (user.isFirstTime()) {
+            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
+            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0,false));
+            user.setFirstTime(false);
+        }
+
         rpgcore.getUserSaveManager().savePlayer(player, uuid);
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
         }
-
-
 
         final int playerLvl = user.getLvl();
         final double playerExp = user.getExp() / rpgcore.getLvlManager().getExpForLvl(playerLvl + 1);

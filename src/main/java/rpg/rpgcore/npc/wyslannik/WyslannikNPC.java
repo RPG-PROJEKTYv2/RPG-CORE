@@ -33,9 +33,9 @@ public class WyslannikNPC {
         final WyslannikMissionKillBoss missionKillBoss = WyslannikMissionKillBoss.getByMission(user.getKillBossMission());
         assert missionKillMob != null;
         assert missionKillBoss != null;
-        gui.setItem(0 ,getMobKillsGUI(user, missionKillMob));
-        gui.setItem(2,getStatusBonuses(user));
-        gui.setItem(4,getBossKillsGUI(user, missionKillBoss));
+        gui.setItem(0, getMobKillsGUI(user, missionKillMob));
+        gui.setItem(2, getStatusBonuses(user));
+        gui.setItem(4, getBossKillsGUI(user, missionKillBoss));
 
         player.openInventory(gui);
     }

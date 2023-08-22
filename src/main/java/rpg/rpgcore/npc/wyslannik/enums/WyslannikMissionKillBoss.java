@@ -33,7 +33,7 @@ public enum WyslannikMissionKillBoss {
 
     public static WyslannikMissionKillBoss getByMission(final int mission) {
         for (final WyslannikMissionKillBoss wyslannikMissionKillBoss : values()) {
-            return wyslannikMissionKillBoss;
+            if (wyslannikMissionKillBoss.getMission() == mission) return wyslannikMissionKillBoss;
         }
         return null;
     }

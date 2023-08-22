@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -108,29 +107,29 @@ public class DamageManager {
 
             dmg += Utils.getTagInt(weapon, "dmg");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
-            final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
-            final int attackerLvl = rpgcore.getUserManager().find(uuid).getLvl();
-            final int victimLvl = rpgcore.getUserManager().find(victim.getUniqueId()).getLvl();
-            switch (silnyLvl) {
-                case "mniejsze":
-                    if (victimLvl < attackerLvl) {
-                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
-                    }
-                    break;
-                case "rowne":
-                    if (victimLvl == attackerLvl) {
-                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
-                    }
-                    break;
-                case "wyzsze":
-                    if (victimLvl > attackerLvl) {
-                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
-                    }
-                    break;
-                default:
-                    break;
-            }
-            krytyk += Utils.getTagDouble(weapon, "krytyk");
+//            final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
+//            final int attackerLvl = rpgcore.getUserManager().find(uuid).getLvl();
+//            final int victimLvl = rpgcore.getUserManager().find(victim.getUniqueId()).getLvl();
+//            switch (silnyLvl) {
+//                case "mniejsze":
+//                    if (victimLvl < attackerLvl) {
+//                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+//                    }
+//                    break;
+//                case "rowne":
+//                    if (victimLvl == attackerLvl) {
+//                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+//                    }
+//                    break;
+//                case "wyzsze":
+//                    if (victimLvl > attackerLvl) {
+//                        mnoznik += Utils.getTagDouble(weapon, "silny-lvl-val");
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+            //krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
             dmg = 1;
         }
@@ -277,7 +276,7 @@ public class DamageManager {
             if (Utils.removeColor(victim.getCustomName()).contains(Utils.removeColor(Utils.getTagString(weapon, "silny-na-mob")))) {
                 mnoznik += Utils.getTagInt(weapon, "silny-na-val");
             }
-            krytyk += Utils.getTagDouble(weapon, "krytyk");
+            //krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
             dmg = 1;
         }
@@ -485,12 +484,7 @@ public class DamageManager {
     }
 
     public double calculatePrzebicie(final Player attacker) {
-        final UUID uuid = attacker.getUniqueId();
-        final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double przebicie = bonuses.getPrzebiciePancerza();
-
-
-        return DoubleUtils.round(przebicie, 2);
+        return DoubleUtils.round(rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getPrzebiciePancerza(), 2);
     }
 
     public int calculatePlayerThorns(final Player player) {
@@ -511,59 +505,34 @@ public class DamageManager {
     }
 
     public double calculatePlayerThornsDmg(final Player victim, final Entity attacker) {
-        if (attacker instanceof Creature) {
-            double thornsDmg = 0;
-            double mnoznik = 0.1;
-
-            thornsDmg += calculatePlayerThorns(victim);
-
-            if (thornsDmg > 15) {
-                mnoznik = 0.13;
-            }
-            if (thornsDmg > 25) {
-                mnoznik = 0.17;
-            }
-            if (thornsDmg > 45) {
-                mnoznik = 0.23;
-            }
-            if (thornsDmg > 80) {
-                mnoznik = 0.29;
-            }
-            if (thornsDmg > 140) {
-                mnoznik = 0.34;
-            }
-            if (thornsDmg > 185) {
-                mnoznik = 0.38;
-            }
-            if (thornsDmg > 199) {
-                mnoznik = 0.4;
-            }
+        final double thornsDmg = calculatePlayerThorns(victim);
+        double mnoznik = 0.1;
 
 
-            return DoubleUtils.round(mnoznik, 2);
+        if (thornsDmg > 15) {
+            mnoznik = 0.13;
         }
-        //TODO Do dokonczenia
-        if (attacker instanceof Player) {
-            final UUID uuid = victim.getUniqueId();
-            final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-            double thornsDmg = this.calculatePlayerThorns(victim);
-            double mnoznik = 100;
-
-            mnoznik += bonuses.getSrednieobrazenia();
-            mnoznik += bonuses.getSilnynaludzi();
-            mnoznik += bonuses.getMinussrednieobrazenia();
-            mnoznik += bonuses.getMinusobrazenianamoby();
-            thornsDmg += bonuses.getDodatkoweobrazenia();
-
-            // GILDIA
-            if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
-                final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
-                mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
-            }
-
-
+        if (thornsDmg > 25) {
+            mnoznik = 0.17;
         }
-        return 0;
+        if (thornsDmg > 45) {
+            mnoznik = 0.23;
+        }
+        if (thornsDmg > 80) {
+            mnoznik = 0.29;
+        }
+        if (thornsDmg > 140) {
+            mnoznik = 0.34;
+        }
+        if (thornsDmg > 185) {
+            mnoznik = 0.38;
+        }
+        if (thornsDmg > 199) {
+            mnoznik = 0.4;
+        }
+
+
+        return DoubleUtils.round(mnoznik, 2);
     }
 
     public double calculateEntityDamageToPlayer(final Entity entity, final Player victim) {

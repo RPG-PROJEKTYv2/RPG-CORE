@@ -41,6 +41,7 @@ public class User {
     private double krytyk;
     private long kitCooldown;
     private boolean tworca;
+    private boolean firstTime;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -65,6 +66,7 @@ public class User {
         this.krytyk = 0.0;
         this.kitCooldown = 0;
         this.tworca = false;
+        this.firstTime = true;
     }
 
     public User(final Document document) {
@@ -108,6 +110,7 @@ public class User {
         }
         this.kitCooldown = kitCooldown;
         this.tworca = document.getBoolean("tworca");
+        this.firstTime = (document.containsKey("firstTime") ? document.getBoolean("firstTime") : true);
     }
 
     public boolean isBanned() {
@@ -143,7 +146,8 @@ public class User {
                 .append("pierscienDoswiadczeniaTime", this.pierscienDoswiadczeniaTime)
                 .append("krytyk", this.krytyk)
                 .append("kitCooldown", this.kitCooldown)
-                .append("tworca", this.tworca);
+                .append("tworca", this.tworca)
+                .append("firstTime", this.firstTime);
     }
 
 

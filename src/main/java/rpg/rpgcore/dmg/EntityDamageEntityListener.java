@@ -194,13 +194,13 @@ public class EntityDamageEntityListener implements Listener {
                     }
 
                     final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 80), 2);
-                    victim.sendMessage("Redukcja - " + redukcja);
+                    //victim.sendMessage("Redukcja - " + redukcja);
 
                     final double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
-                    attacker.sendMessage("Final Damage - " + finalDmg);
+                    //attacker.sendMessage("Final Damage - " + finalDmg);
 
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
-                    attacker.sendMessage("Thorns Damage - " + finalThornsDamage);
+                    //attacker.sendMessage("Thorns Damage - " + finalThornsDamage);
 
 //                    victim.sendMessage("Redukcja - " + redukcja);
 //                    victim.sendMessage("Final Damage - " + finalDmg);

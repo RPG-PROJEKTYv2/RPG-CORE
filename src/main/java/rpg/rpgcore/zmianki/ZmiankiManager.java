@@ -36,58 +36,52 @@ public class ZmiankiManager {
 
     public ItemStack rollNewBonuses(final ItemStack is, final Player player) {
         final ItemMeta meta = is.getItemMeta();
-        if (meta.getLore().contains(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"))) {
+        if (meta.getLore().contains(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"))) {
             final List<String> lore = meta.getLore();
-            final int index = lore.indexOf(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
+            final int index = lore.indexOf(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
             lore.remove(index - 1);
-            lore.remove(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
+            lore.remove(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
             if (is.getType().toString().contains("_SWORD")) {
-                lore.remove(Utils.format("&7Dodatkowe Obrazenia: &f+" + Utils.getTagInt(is, "dodatkowe")));
-                lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(is, "silny-na-val") + "%"));
-                lore.remove(Utils.format("&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(is, "krytyk") + "%"));
-                lore.remove(Utils.format("&7Silny Na " + Utils.getTagString(is, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(is, "silny-lvl-val") + "%"));
-                lore.remove(Utils.format("&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(is, "przeszywka") + "%"));
+                lore.remove(Utils.format("&eDodatkowe Obrazenia: &f+" + Utils.getTagInt(is, "dodatkowe")));
+                lore.remove(Utils.format("&eSilny Na " + Utils.getTagString(is, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(is, "silny-na-val") + "%"));
             } else {
-                lore.remove(Utils.format("&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(is, "defMoby") + "%"));
-                lore.remove(Utils.format("&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(is, "szansaWzmKryt") + "%"));
-                lore.remove(Utils.format("&7Szczescie: &f+" + Utils.getTagInt(is, "szczescie")));
+                lore.remove(Utils.format("&eOdpornosc Na Potwory: &f+" + Utils.getTagDouble(is, "defMoby") + "%"));
+                lore.remove(Utils.format("&eSzansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(is, "szansaWzmKryt") + "%"));
+                lore.remove(Utils.format("&e7Szczescie: &f+" + Utils.getTagInt(is, "szczescie")));
             }
             lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
-            lore.remove(Utils.format("&8------------{&dMagiczne Zaczarowanie&8}------------"));
+            lore.remove(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
             meta.setLore(Utils.format(lore));
 
             is.setItemMeta(meta);
         }
-        ItemStack toReturn = null;
+        ItemStack toReturn;
         final int lvl = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getLvl();
-        int loreLvl = 0;
+        int loreLvl;
         if (is.getType().toString().contains("_SWORD")) {
             if (lvl < 80) {
                 toReturn = rollFirstBonus(is, 1, 50);
                 toReturn = rollSecondBonus(toReturn.clone(), 0.01, 10);
-                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
-                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
-                toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
+//                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
+//                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
+//                toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
                 loreLvl = 50;
             } else {
                 toReturn = rollFirstBonus(is, 1, 200);
                 toReturn = rollSecondBonus(toReturn.clone(), 0.01, 20);
-                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
-                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
-                toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
+//                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
+//                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
+//                toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
                 loreLvl = 80;
             }
 
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&8------------{&dMagiczne Zaczarowanie&8}------------",
-                    "&7Dodatkowe Obrazenia: &f+" + Utils.getTagInt(toReturn, "dodatkowe"),
-                    "&7Silny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
-                    "&7Szansa Na Cios Krytyczny: &f+" + Utils.getTagDouble(toReturn, "krytyk") + "%",
-                    "&7Silny Na " + Utils.getTagString(toReturn, "silny-lvl") + " &7poziomy: &f+" + Utils.getTagDouble(toReturn, "silny-lvl-val") + "%",
-                    "&7Przeszycie Bloku Ciosu: &f+" + Utils.getTagDouble(toReturn, "przeszywka") + "%",
+                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------",
+                    "&eDodatkowe Obrazenia: &f+" + Utils.getTagInt(toReturn, "dodatkowe"),
+                    "&eSilny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
                     "&cWymagany Poziom: &6" + loreLvl,
-                    "&8------------{&dMagiczne Zaczarowanie&8}------------"
+                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------"
             )).addTagInt("lvl", loreLvl).toItemStack().clone();
         } else {
             net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
@@ -100,12 +94,12 @@ public class ZmiankiManager {
 
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&8------------{&dMagiczne Zaczarowanie&8}------------",
+                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------",
                     "&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(toReturn, "defMoby") + "%",
                     "&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(toReturn, "szansaWzmKryt") + "%",
                     "&7Szczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
                     "&cWymagany Poziom: &645",
-                    "&8------------{&dMagiczne Zaczarowanie&8}------------"
+                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------"
             )).addTagInt("lvl", 45).toItemStack().clone();
         }
 
@@ -137,7 +131,7 @@ public class ZmiankiManager {
         return mobs.get(ChanceHelper.getRandInt(0, mobs.size() - 1));
     }
 
-    public final ItemStack rollThirdBonus(final ItemStack is, final double min, final double max) {
+    /*public final ItemStack rollThirdBonus(final ItemStack is, final double min, final double max) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setDouble("krytyk", ChanceHelper.getRandDouble(min, max));
@@ -169,5 +163,5 @@ public class ZmiankiManager {
 
         final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         return toReturn;
-    }
+    }*/
 }

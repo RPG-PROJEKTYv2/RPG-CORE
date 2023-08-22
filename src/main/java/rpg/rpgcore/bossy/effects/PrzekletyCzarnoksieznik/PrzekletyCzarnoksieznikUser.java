@@ -31,6 +31,6 @@ public class PrzekletyCzarnoksieznikUser {
     public Document toDocument() {
         return new Document("_id", uuid.toString())
                 .append("defMOB", defMOB)
-                .append("dmgMOB", dmgMOB) ;
+                .append("dmgMOB", dmgMOB);
     }
 }

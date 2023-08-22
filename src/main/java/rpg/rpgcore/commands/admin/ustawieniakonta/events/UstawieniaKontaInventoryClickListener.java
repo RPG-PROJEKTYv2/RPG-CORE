@@ -25,7 +25,6 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
-import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -546,7 +545,7 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     ustawieniaKontaManager.openRybakM(player, target);
                     return;
                 case 30:
-                    ustawieniaKontaManager.openWyslannik(player, target);
+                    //ustawieniaKontaManager.openWyslannik(player, target);
                     return;
                 case 31:
                     ustawieniaKontaManager.openWyszkolenie(player, target);

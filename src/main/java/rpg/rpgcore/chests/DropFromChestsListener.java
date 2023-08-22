@@ -132,8 +132,6 @@ public class DropFromChestsListener implements Listener {
                     }
                 }
 
-
-
                 // SKRZYNIA ZE ZWIERZAKAMI ZWYKLA
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(SkrzynkiOther.I_PETY1.getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {

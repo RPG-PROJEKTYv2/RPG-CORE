@@ -42,7 +42,6 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
-import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
@@ -216,6 +215,9 @@ public class MongoManager {
             }
             if (pool.getWyslannik().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getCzarownica().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getPrzekletyCzarnoksieznikEffect().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getPrzekletyCzarnoksieznikEffect().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
         }
@@ -1620,6 +1622,9 @@ public class MongoManager {
         return userMap;
     }
     public void addDataPrzekletyCzarnoksieznikEffect(final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser) {
+        if (this.pool.getPrzekletyCzarnoksieznikEffect().find(new Document("_id", przekletyCzarnoksieznikUser.getUuid().toString())).first() != null) {
+            this.pool.getPrzekletyCzarnoksieznikEffect().deleteOne(new Document("_id", przekletyCzarnoksieznikUser.getUuid().toString()));
+        }
         this.pool.getPrzekletyCzarnoksieznikEffect().insertOne(przekletyCzarnoksieznikUser.toDocument());
     }
     public void saveDataPrzekletyCzarnoksieznikEffect(final UUID uuid, final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser) {
@@ -1640,6 +1645,9 @@ public class MongoManager {
         return userMap;
     }
     public void addDataWyslannik(final WyslannikUser wyslannikUser) {
+        if (this.pool.getWyslannik().find(new Document("_id", wyslannikUser.getUuid().toString())).first() != null) {
+            this.pool.getWyslannik().deleteOne(new Document("_id", wyslannikUser.getUuid().toString()));
+        }
         this.pool.getWyslannik().insertOne(wyslannikUser.toDocument());
     }
     public void saveDataWyslannik(final UUID uuid, final WyslannikUser wyslannikUser) {

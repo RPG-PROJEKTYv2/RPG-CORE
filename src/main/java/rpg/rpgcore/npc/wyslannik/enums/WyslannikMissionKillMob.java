@@ -1,7 +1,7 @@
 package rpg.rpgcore.npc.wyslannik.enums;
 
 public enum WyslannikMissionKillMob {
-    M1(1, 2,300,"&6Rozbojnik"),
+    M1(1, 2,100,"&6Rozbojnik"),
     M2(2, 2,600, "&2Goblin"),
     M3(3,3,1_000,"&7Goryl"),
     M4(4, 3,1_300,"&8Zjawa"),
@@ -33,7 +33,7 @@ public enum WyslannikMissionKillMob {
 
     public static WyslannikMissionKillMob getByMission(final int mission) {
         for (final WyslannikMissionKillMob wyslannikMissionKillMob : values()) {
-            return wyslannikMissionKillMob;
+            if (wyslannikMissionKillMob.getMission() == mission) return wyslannikMissionKillMob;
         }
         return null;
     }

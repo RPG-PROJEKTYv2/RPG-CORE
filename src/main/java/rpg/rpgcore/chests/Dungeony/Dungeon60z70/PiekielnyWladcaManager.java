@@ -41,7 +41,6 @@ public class PiekielnyWladcaManager {
         for (Items item : this.piekielnyWladca) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
-                player.getInventory().addItem(item.getRewardItem());
                 return item;
             }
         }
