@@ -28,6 +28,9 @@ public class BackupMongoConnectionPoolManager {
     }
 
     public void firstJoin(final UUID uuid) {
+        if (this.database.listCollectionNames().into(new ArrayList<>()).contains(uuid.toString().replaceAll("-", "_"))) {
+            return;
+        }
         this.database.createCollection(uuid.toString().replaceAll("-", "_"));
     }
 

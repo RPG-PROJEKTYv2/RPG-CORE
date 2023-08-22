@@ -37,7 +37,7 @@ public class HandlarzInventoryClickListener implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final int slot = e.getSlot();
-        final ItemStack item = e.getCurrentItem();
+        ItemStack item = e.getCurrentItem();
 
         if (title.equals("Handlarz")) {
             e.setCancelled(true);
@@ -212,6 +212,8 @@ public class HandlarzInventoryClickListener implements Listener {
             if (item == null || item.getType() == Material.AIR) return;
 
             if (e.getClickedInventory() == player.getOpenInventory().getBottomInventory()) {
+
+                item = e.getClickedInventory().getItem(e.getSlot());
 
                 final HandlarzSellItems sellItem = HandlarzSellItems.checkIfSellItem(item.clone());
 

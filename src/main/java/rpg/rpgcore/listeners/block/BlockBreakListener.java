@@ -22,6 +22,7 @@ public class BlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(final BlockBreakEvent e) {
         final Player player = e.getPlayer();
+        e.setExpToDrop(0);
         if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             e.setCancelled(true);
             return;

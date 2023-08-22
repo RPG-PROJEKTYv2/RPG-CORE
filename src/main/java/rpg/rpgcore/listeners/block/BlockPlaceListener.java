@@ -21,15 +21,18 @@ public class BlockPlaceListener implements Listener {
 
         if (!rpgcore.getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()) {
             e.setCancelled(true);
+            e.setBuild(false);
             return;
         } else {
             if (!rpgcore.getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) {
                 e.setCancelled(true);
+                e.setBuild(false);
                 return;
             }
         }
         if (player.getGameMode() != GameMode.CREATIVE) {
             e.setCancelled(true);
+            e.setBuild(false);
         }
     }
 }

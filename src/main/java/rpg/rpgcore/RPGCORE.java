@@ -453,7 +453,7 @@ public final class RPGCORE extends JavaPlugin {
         this.initNPCS();
 
         this.mongo.loadAll();
-        //this.mongo.clearDatabase();
+
 
         this.getGuildManager().loadGuildLvlReq();
         this.autoMessage();
@@ -537,8 +537,12 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveDataBossy();
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
+
+        this.mongo.clearDatabase();
+
         this.mongo.onDisable();
         this.backupMongo.onDisable();
+
         this.spawn.setSpawn(null);
         EntityTypes.despawnAllEntities();
         this.iceTowerManager.resetDungeon();
