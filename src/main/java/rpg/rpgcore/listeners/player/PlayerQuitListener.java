@@ -39,8 +39,9 @@ public class PlayerQuitListener implements Listener {
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid));
 
+        final int taskId = rpgcore.getUserSaveManager().getTaskId(uuid);
 
-        rpgcore.getServer().getScheduler().cancelTask(rpgcore.getUserSaveManager().getTaskId(uuid));
+        if (taskId != -1) rpgcore.getServer().getScheduler().cancelTask(taskId);
         rpgcore.getUserSaveManager().removeFromTaskMap(uuid);
 
         rpgcore.getVanishManager().getVanishList().remove(uuid);

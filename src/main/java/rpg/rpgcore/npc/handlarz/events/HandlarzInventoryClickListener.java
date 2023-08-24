@@ -37,7 +37,7 @@ public class HandlarzInventoryClickListener implements Listener {
         final Player player = (Player) e.getWhoClicked();
         final UUID uuid = player.getUniqueId();
         final int slot = e.getSlot();
-        ItemStack item = e.getCurrentItem();
+        final ItemStack item = e.getCurrentItem();
 
         if (title.equals("Handlarz")) {
             e.setCancelled(true);
@@ -213,8 +213,6 @@ public class HandlarzInventoryClickListener implements Listener {
 
             if (e.getClickedInventory() == player.getOpenInventory().getBottomInventory()) {
 
-                item = e.getClickedInventory().getItem(e.getSlot());
-
                 final HandlarzSellItems sellItem = HandlarzSellItems.checkIfSellItem(item.clone());
 
                 if (sellItem == null) return;
@@ -225,7 +223,8 @@ public class HandlarzInventoryClickListener implements Listener {
                 }
 
                 rpgcore.getHandlarzNPC().addItem(player.getUniqueId(), item.clone(), sellItem.getPrice(item.clone()));
-                player.getInventory().removeItem(item.clone());
+                if (e.getClickedInventory().getItem(slot).getAmount() - 1 == 0) e.getClickedInventory().setItem(slot, null);
+                else e.getClickedInventory().getItem(slot).setAmount(e.getClickedInventory().getItem(slot).getAmount() - 1);
                 player.getOpenInventory().getTopInventory().setItem(player.getOpenInventory().getTopInventory().firstEmpty(), item.clone());
                 player.getOpenInventory().getTopInventory().setItem(49, rpgcore.getHandlarzNPC().getSprzedajItem(uuid));
                 return;
@@ -265,7 +264,7 @@ public class HandlarzInventoryClickListener implements Listener {
 
             rpgcore.getHandlarzNPC().removeItem(uuid, item.clone(), sellItem.getPrice(item.clone()));
             player.getInventory().addItem(item.clone());
-            player.getOpenInventory().getTopInventory().removeItem(item.clone());
+            player.getOpenInventory().getTopInventory().setItem(slot, null);
             player.getOpenInventory().getTopInventory().setItem(49, rpgcore.getHandlarzNPC().getSprzedajItem(uuid));
         }
     }

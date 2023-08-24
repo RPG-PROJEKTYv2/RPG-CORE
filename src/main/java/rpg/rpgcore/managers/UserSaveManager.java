@@ -32,6 +32,7 @@ public class UserSaveManager {
     }
 
     public int getTaskId(final UUID uuid) {
+        if (!taskMap.containsKey(uuid)) return -1;
         return taskMap.get(uuid);
     }
 

@@ -111,6 +111,7 @@ import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
 import rpg.rpgcore.commands.player.rangi.RangiInventoryClick;
+import rpg.rpgcore.commands.player.rangi.ZestawRangiCommand;
 import rpg.rpgcore.commands.player.rozpiska.RozpiskaCommand;
 import rpg.rpgcore.commands.player.rozpiska.RozpiskaInventoryClick;
 import rpg.rpgcore.commands.player.rozpiska.RozpiskaManager;
@@ -538,7 +539,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
 
-        this.mongo.clearDatabase();
+        //this.mongo.clearDatabase();
 
         this.mongo.onDisable();
         this.backupMongo.onDisable();
@@ -593,6 +594,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new PingCommand());
         CommandAPI.getCommand().register("HellRPGCore", new KontaktCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RangiCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ZestawRangiCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ListaNPCCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GuildCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new KoszCommand());

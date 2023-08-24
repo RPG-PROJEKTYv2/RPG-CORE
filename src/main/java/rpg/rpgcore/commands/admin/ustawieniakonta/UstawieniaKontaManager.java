@@ -15,8 +15,8 @@ import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
-import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
+import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.npc.lesnik.enums.LesnikMissions;
 import rpg.rpgcore.npc.lesnik.objects.LesnikUser;
 import rpg.rpgcore.npc.lowca.enums.LowcaMissions;
@@ -33,6 +33,9 @@ import rpg.rpgcore.npc.przyrodnik.enums.PrzyrodnikMissions;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikUser;
 import rpg.rpgcore.npc.pustelnik.enums.PustelnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
+import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
+import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
@@ -46,8 +49,10 @@ import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class UstawieniaKontaManager {
     private final RPGCORE rpgcore;
@@ -544,7 +549,7 @@ public class UstawieniaKontaManager {
                 "&7  - Silny Na Ludzi (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getSilnyNaLudzi()) + "%",
                 "&7  - Def Na Moby (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getDefNaMoby()) + "%",
                 "&7Postep: &e" + gornik.getProgress() + "&7/&e" + (gornikMission == null ? 0 : gornikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) gornik.getProgress() / (gornikMission == null ? 0 : gornikMission.getReqAmount())) * 100, 2) + "%&7)",
-                "&7Dodatkowy Czas (User): &a+" + (gornik.getMaxTimeLeft() / 1000)+ "s",
+                "&7Dodatkowy Czas (User): &a+" + (gornik.getMaxTimeLeft() / 1000) + "s",
                 "&7Silny Na Ludzi (User): &e+" + gornik.getSilnyNaLudzi() + "%",
                 "&7Def Na Moby (User): &e+" + gornik.getDefNaMoby() + "%",
                 "&7Darmowe Wejscie: &e" + (gornik.getFreePass() <= System.currentTimeMillis())
@@ -719,28 +724,23 @@ public class UstawieniaKontaManager {
                 "&7Postep: &e" + przyrodnik.getProgress() + "&7/&e" + (przyrodnikMission == null ? 0 : przyrodnikMission.getReqAmount()) + "&7 (" + DoubleUtils.round(przyrodnik.getProgress() / (double) (przyrodnikMission == null ? 0 : przyrodnikMission.getReqAmount()) * 100, 2) + "%)"
         )).addGlowing().toItemStack().clone());
 
-//        final RybakUser rybak = rpgcore.getRybakNPC().find(uuid).getRybakUser();
-//        final RybakMissions rybakMission = RybakMissions.getMission(rybak.getMission());
-//        gui.setItem(29, new ItemBuilder(Material.BOOK).setName("&7Ustaw &3&lRybak &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
-//                "&7Kliknij, zeby ustawic postep misji/misje",
-//                "&7podanego gracza u &3&lRybaka&7.",
-//                "",
-//                "&f&lStatystyki",
-//                "&7Misja: &e" + rybak.getMission(),
-//                "&7  - Wymagany Przedmiot: &e" + (rybakMission == null ? "Brak" : rybakMission.getMissionItem().getItemMeta().getDisplayName()),
-//                "&7  - Wymagana Ilosc: &e" + (rybakMission == null ? "-1" : rybakMission.getReqAmount()),
-//                "&7  - Blok Ciosu (Misja): &e+" + (rybakMission == null ? "0" : rybakMission.getBlok()) + "%",
-//                "&7  - Szansa Na Cios Krytyczny (Misja): &e+" + (rybakMission == null ? "0" : rybakMission.getKryt()) + "%",
-//                "&7  - Morskie Szczescie (Misja): &e+" + (rybakMission == null ? "0" : rybakMission.getMorskieSzczescie()),
-//                "&7  - Srednia Defensywa (Misja): &e+" + (rybakMission == null ? "0" : rybakMission.getSrDef()) + "%",
-//                "&7Blok Ciosu (User): &e+" + rybak.getBlok() + "%",
-//                "&7Szansa Na Cios Krytyczny (User): &e+" + rybak.getKryt() + "%",
-//                "&7Morskie Szczescie (User): &e+" + rybak.getMorskieSzczescie(),
-//                "&7Srednia Defensywa (User): &e+" + rybak.getSrDef() + "%",
-//                "&7Postep: &e" + rybak.getProgress() + "&7/&e" + (rybakMission == null ? "0" : rybakMission.getReqAmount()) + "&7 (" + DoubleUtils.round(rybak.getProgress() / (double) (rybakMission == null ? 0 : rybakMission.getReqAmount()) * 100, 2) + "%)"
-//        )).addGlowing().toItemStack().clone());
+        final RybakUser rybak = rpgcore.getRybakNPC().find(uuid);
+        final StaruszekUser staruszek = rybak.getStaruszekUser();
+        final StaruszekMissions staruszekMission = StaruszekMissions.getMissionById(staruszek.getMission());
+        gui.setItem(29, new ItemBuilder(Material.BOOK).setName("&7Ustaw &3&lRybak &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
+                "&7Kliknij, zeby ustawic postep misji/misje",
+                "&7podanego gracza u &3&lRybaka&7.",
+                "",
+                "&6&lStaruszek",
+                "&7Misja: &e" + staruszek.getMission(),
+                "&7  - Wymagany Przedmiot: &e" + (staruszekMission == null ? "Brak" : staruszekMission.getMissionItem(staruszek.getProgress()).getItemMeta().getDisplayName()),
+                "&7  - Wymagana Ilosc: &e" + (staruszekMission == null ? "-1" : staruszekMission.getReqAmount()),
+                "&7  - Srednia Defensywa (Misja): &e+" + (staruszekMission == null ? "0" : staruszekMission.getSrDef()) + "%",
+                "&7Srednia Defensywa (User): &e+" + staruszek.getSrDef() + "%",
+                "&7Postep: &e" + staruszek.getProgress() + "&7/&e" + (staruszekMission == null ? "0" : staruszekMission.getReqAmount()) + "&7 (" + DoubleUtils.round(staruszek.getProgress() / (double) (staruszekMission == null ? 0 : staruszekMission.getReqAmount()) * 100, 2) + "%)"
+        )).addGlowing().toItemStack().clone());
 
-       /* final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(uuid);
+        final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(uuid);
         final WyslannikMissionKillMob wyslannikMissionKillMob = WyslannikMissionKillMob.getByMission(wyslannik.getKillMobsMission());
         final WyslannikMissionKillBoss wyslannikMissionKillBoss = WyslannikMissionKillBoss.getByMission(wyslannik.getKillBossMission());
         gui.setItem(30, new ItemBuilder(Material.BOOK).setName("&7Ustaw &c&lWyslannik, &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
@@ -751,17 +751,17 @@ public class UstawieniaKontaManager {
                 "&7Misja (Moby): &e" + wyslannik.getKillMobsMission(),
                 "&7  - Wymagany Mob: &e" + (wyslannikMissionKillMob == null ? "Brak" : wyslannikMissionKillMob.getMobName()),
                 "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillMob == null ? "-1" : wyslannikMissionKillMob.getMobsAmount()),
-                "&7  - Nagroda (Item): &e" + (wyslannikMissionKillMob == null ? "Brak" : wyslannikMissionKillMob.getReward().getItemMeta().getDisplayName()) + " &7x &e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getReward().getAmount()),
-                "&7Postep: &e" + wyslannik.getKillMobsMissionProgress() + "&7/&e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getReqAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillMobsMissionProgress() / (double) (wyslannikMissionKillMob == null ? 0 : wyslannikMissionKillMob.getReqAmount()) * 100, 2) + "%)",
+                "&7  - Srednie Obrazenia (Misja): &e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getSredniDMG()) + "%",
+                "&7Postep: &e" + wyslannik.getKillMobsMissionProgress() + "&7/&e" + (wyslannikMissionKillMob == null ? "0" : wyslannikMissionKillMob.getMobsAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillMobsMissionProgress() / (double) (wyslannikMissionKillMob == null ? 0 : wyslannikMissionKillMob.getMobsAmount()) * 100, 2) + "%)",
                 "",
                 "&7Misja (Bossy): &e" + wyslannik.getKillBossMission(),
-                "&7  - Wymagany Boss: &e" + (wyslannikMissionKillBoss == null ? "Brak" : wyslannikMissionKillBoss.getMobName()),
-                "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillBoss == null ? "-1" : wyslannikMissionKillBoss.getReqAmount()),
-                "&7  - Nagroda (Item): &e" + (wyslannikMissionKillBoss == null ? "Brak" : wyslannikMissionKillBoss.getReward().getItemMeta().getDisplayName()) + " &7x &e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getReward().getAmount()),
-                "&7Postep: &e" + wyslannik.getKillBossMissionProgress() + "&7/&e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getReqAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillBossMissionProgress() / (double) (wyslannikMissionKillBoss == null ? 0 : wyslannikMissionKillBoss.getReqAmount()) * 100, 2) + "%)",
+                "&7  - Wymagany Boss: &e" + (wyslannikMissionKillBoss == null ? "Brak" : wyslannikMissionKillBoss.getBossName()),
+                "&7  - Wymagana Ilosc: &e" + (wyslannikMissionKillBoss == null ? "-1" : wyslannikMissionKillBoss.getBossAmount()),
+                "&7  - Srednia Defensywa (Misja): &e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getSredniDEF()) + "%",
+                "&7Postep: &e" + wyslannik.getKillBossMissionProgress() + "&7/&e" + (wyslannikMissionKillBoss == null ? "0" : wyslannikMissionKillBoss.getBossAmount()) + "&7 (" + DoubleUtils.round(wyslannik.getKillBossMissionProgress() / (double) (wyslannikMissionKillBoss == null ? 0 : wyslannikMissionKillBoss.getBossAmount()) * 100, 2) + "%)",
                 ""
         )).addGlowing().toItemStack().clone());
-*/
+
         final WyszkolenieUser wyszkolenie = rpgcore.getWyszkolenieManager().find(uuid);
         final DrzewkoWyszkoleniaUser drzewko = wyszkolenie.getDrzewkoWyszkoleniaUser();
         gui.setItem(31, new ItemBuilder(Material.BOOK).setName("&7Ustaw &3&lWyszkolenie &7gracza &6&l" + user.getName()).setLore(Arrays.asList(
@@ -1274,58 +1274,35 @@ public class UstawieniaKontaManager {
     }
 
     public void openRybakM(final Player player, final UUID uuid) {
-//        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &3&lRybak &4&l- &e&l" + uuid.toString()));
-//        final RybakUser user = rpgcore.getRybakNPC().find(uuid).getRybakUser();
-//
-//        gui.setItem(0, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getMission(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1."
-//        )).toItemStack().clone());
-//        gui.setItem(1, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getProgress(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1."
-//        )).toItemStack().clone());
-//        gui.setItem(2, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Blok Ciosu").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getBlok(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1.",
-//                "&6Shift + LMB &7- zeby dodac 10",
-//                "&6Shift + RMB &7- zeby odjac 10",
-//                "&6KEYBOARD &7- zeby dodac 0.1"
-//        )).toItemStack().clone());
-//        gui.setItem(6, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Szansa Na Cios Krytyczny").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getKryt(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1.",
-//                "&6Shift + LMB &7- zeby dodac 10",
-//                "&6Shift + RMB &7- zeby odjac 10",
-//                "&6KEYBOARD &7- zeby dodac 0.1"
-//        )).toItemStack().clone());
-//        gui.setItem(7, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Morskie Szczescie").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getMorskieSzczescie(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1.",
-//                "&6Shift + LMB &7- zeby dodac 10",
-//                "&6Shift + RMB &7- zeby odjac 10",
-//                "&6KEYBOARD &7- zeby dodac 0.1"
-//        )).toItemStack().clone());
-//        gui.setItem(8, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Sredni Def").setLore(Arrays.asList(
-//                "&7Aktualna: &e" + user.getSrDef(),
-//                "&6LMB &7- zeby dodac 1.",
-//                "&6RMB &7- zeby odjac 1.",
-//                "&6Shift + LMB &7- zeby dodac 10",
-//                "&6Shift + RMB &7- zeby odjac 10",
-//                "&6KEYBOARD &7- zeby dodac 0.1"
-//        )).toItemStack().clone());
-//
-//        player.openInventory(gui);
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&a&lMisje &8&l>> &3&lRybak &4&l- &e&l" + uuid.toString()));
+        final RybakUser rybak = rpgcore.getRybakNPC().find(uuid);
+        final StaruszekUser user = rybak.getStaruszekUser();
+
+        gui.setItem(1, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje").setLore(Arrays.asList(
+                "&7Aktualna: &e" + user.getMission(),
+                "&6LMB &7- zeby dodac 1.",
+                "&6RMB &7- zeby odjac 1."
+        )).toItemStack().clone());
+        gui.setItem(2, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep").setLore(Arrays.asList(
+                "&7Aktualna: &e" + user.getProgress(),
+                "&6LMB &7- zeby dodac 1.",
+                "&6RMB &7- zeby odjac 1."
+        )).toItemStack().clone());
+        gui.setItem(3, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Sredni Def").setLore(Arrays.asList(
+                "&7Aktualna: &e" + user.getSrDef(),
+                "&6LMB &7- zeby dodac 1.",
+                "&6RMB &7- zeby odjac 1.",
+                "&6Shift + LMB &7- zeby dodac 10",
+                "&6Shift + RMB &7- zeby odjac 10",
+                "&6KEYBOARD &7- zeby dodac 0.1"
+        )).toItemStack().clone());
+
+        player.openInventory(gui);
     }
 
-   /* public void openWyslannik(final Player player, final UUID uuid) {
+   public void openWyslannik(final Player player, final UUID uuid) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &c&lWyslannik &4&l- &e&l" + uuid.toString()));
-        final WyslannikUser user = rpgcore.getWyslannikNPC().find(uuid).getWyslannikUser();
+        final WyslannikUser user = rpgcore.getWyslannikNPC().find(uuid);
 
         gui.setItem(0, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje (Mob)").setLore(Arrays.asList(
                 "&7Aktualnie: &e" + user.getKillMobsMission(),
@@ -1345,7 +1322,7 @@ public class UstawieniaKontaManager {
                 "&6LMB &7- zeby dodac 1.",
                 "&6RMB &7- zeby odjac 1."
         )).toItemStack().clone());
-        gui.setItem(5, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep (Boss)").setLore(Arrays.asList(
+        gui.setItem(4, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep (Boss)").setLore(Arrays.asList(
                 "&7Aktualnie: &e" + user.getKillBossMissionProgress(),
                 "&6LMB &7- zeby dodac 1.",
                 "&6RMB &7- zeby odjac 1.",
@@ -1353,21 +1330,25 @@ public class UstawieniaKontaManager {
                 "&6Shift + RMB &7- zeby odjac 10"
         )).toItemStack().clone());
 
-        gui.setItem(7, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Misje (Skrzynie)").setLore(Arrays.asList(
-                "&7Aktualnie: &e" + user.getOpenChestMission(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1."
-        )).toItemStack().clone());
-        gui.setItem(8, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Postep (Skrzynie)").setLore(Arrays.asList(
-                "&7Aktualnie: &e" + user.getOpenChestMissionProgress(),
-                "&6LMB &7- zeby dodac 1.",
-                "&6RMB &7- zeby odjac 1.",
-                "&6Shift + LMB &7- zeby dodac 10",
-                "&6Shift + RMB &7- zeby odjac 10"
-        )).toItemStack().clone());
+       gui.setItem(6, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Sredni DMG").setLore(Arrays.asList(
+               "&7Aktualna: &e" + user.getSredniDMG(),
+               "&6LMB &7- zeby dodac 1.",
+               "&6RMB &7- zeby odjac 1.",
+               "&6Shift + LMB &7- zeby dodac 10",
+               "&6Shift + RMB &7- zeby odjac 10",
+               "&6KEYBOARD &7- zeby dodac 0.1"
+       )).toItemStack().clone());
+       gui.setItem(7, new ItemBuilder(Material.BOOK).setName("&6&lUstaw Sredni Def").setLore(Arrays.asList(
+               "&7Aktualna: &e" + user.getSredniDEF(),
+               "&6LMB &7- zeby dodac 1.",
+               "&6RMB &7- zeby odjac 1.",
+               "&6Shift + LMB &7- zeby dodac 10",
+               "&6Shift + RMB &7- zeby odjac 10",
+               "&6KEYBOARD &7- zeby dodac 0.1"
+       )).toItemStack().clone());
 
         player.openInventory(gui);
-    }*/
+    }
 
     public void openWyszkolenie(final Player player, final UUID uuid) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&a&lMisje &8&l>> &3&lWyszkolenie &4&l- &e&l" + uuid.toString()));

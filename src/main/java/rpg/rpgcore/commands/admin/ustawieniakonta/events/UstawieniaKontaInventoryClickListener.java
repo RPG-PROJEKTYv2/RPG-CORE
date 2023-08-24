@@ -25,6 +25,9 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
+import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
+import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -545,7 +548,7 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     ustawieniaKontaManager.openRybakM(player, target);
                     return;
                 case 30:
-                    //ustawieniaKontaManager.openWyslannik(player, target);
+                    ustawieniaKontaManager.openWyslannik(player, target);
                     return;
                 case 31:
                     ustawieniaKontaManager.openWyszkolenie(player, target);
@@ -1207,51 +1210,42 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
             return;
         }
 
-//        if (title.contains("Misje » Rybak - ")) {
-//            e.setCancelled(true);
-//
-//            if (item == null) return;
-//            final RybakObject rybak = rpgcore.getRybakNPC().find(this.getUUIDFromTitle(title));
-//            final Bonuses bonuses = rpgcore.getBonusesManager().find(rybak.getId());
-//            final double value = this.getValueFromClickKey(e.getClick());
-//
-//            switch (slot) {
-//                case 0:
-//                    rybak.getRybakUser().setMission(rybak.getRybakUser().getMission() + (int) value);
-//                    break;
-//                case 1:
-//                    rybak.getRybakUser().setProgress(rybak.getRybakUser().getProgress() + (int) value);
-//                    break;
-//                case 2:
-//                    rybak.getRybakUser().setBlok(rybak.getRybakUser().getBlok() + value);
-//                    bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + value);
-//                    break;
-//                case 6:
-//                    rybak.getRybakUser().setKryt(rybak.getRybakUser().getKryt() + value);
-//                    bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + value);
-//                    break;
-//                case 7:
-//                    rybak.getRybakUser().setMorskieSzczescie(rybak.getRybakUser().getMorskieSzczescie() + value);
-//                    break;
-//                case 8:
-//                    rybak.getRybakUser().setSrDef(rybak.getRybakUser().getSrDef() + value);
-//                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
-//                    break;
-//            }
-//
-//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-//                rpgcore.getMongoManager().saveDataRybak(rybak.getId(), rybak);
-//                rpgcore.getMongoManager().saveDataBonuses(rybak.getId(), bonuses);
-//            });
-//            rpgcore.getUstawieniaKontaManager().openRybakM(player, rybak.getId());
-//            return;
-//        }
+        if (title.contains("Misje » Rybak - ")) {
+            e.setCancelled(true);
 
-        /*if (title.contains("Misje » Wyslannik - ")) {
+            if (item == null) return;
+            final RybakUser rybak = rpgcore.getRybakNPC().find(this.getUUIDFromTitle(title));
+            final StaruszekUser staruszek = rybak.getStaruszekUser();
+            final Bonuses bonuses = rpgcore.getBonusesManager().find(rybak.getUuid());
+            final double value = this.getValueFromClickKey(e.getClick());
+
+            switch (slot) {
+                case 1:
+                    staruszek.setMission(staruszek.getMission() + (int) value);
+                    break;
+                case 2:
+                    staruszek.setProgress(staruszek.getProgress() + (int) value);
+                    break;
+                case 3:
+                    staruszek.setSrDef(staruszek.getSrDef() + value);
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
+                    break;
+            }
+
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataRybak(rybak.getUuid(), rybak);
+                rpgcore.getMongoManager().saveDataBonuses(rybak.getUuid(), bonuses);
+            });
+            rpgcore.getUstawieniaKontaManager().openRybakM(player, rybak.getUuid());
+            return;
+        }
+
+        if (title.contains("Misje » Wyslannik - ")) {
             e.setCancelled(true);
 
             if (item == null) return;
             final WyslannikUser wyslannik = rpgcore.getWyslannikNPC().find(this.getUUIDFromTitle(title));
+            final Bonuses bonuses = rpgcore.getBonusesManager().find(wyslannik.getUuid());
             final int value = this.getValueFromClick(e.getClick());
 
             switch (slot) {
@@ -1264,14 +1258,25 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                 case 3:
                     wyslannik.setKillBossMission(wyslannik.getKillBossMission() + value);
                     break;
-                case 5:
+                case 4:
                     wyslannik.setKillBossMissionProgress(wyslannik.getKillBossMissionProgress() + value);
                     break;
+                case 6:
+                    wyslannik.setSredniDMG(wyslannik.getSredniDMG() + value);
+                    bonuses.getBonusesUser().setSrednieobrazenia(bonuses.getBonusesUser().getSrednieobrazenia() + value);
+                    break;
+                case 7:
+                    wyslannik.setSredniDEF(wyslannik.getSredniDEF() + value);
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
+                    break;
             }
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataWyslannik(wyslannik.getUuid(), wyslannik));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataWyslannik(wyslannik.getUuid(), wyslannik);
+                rpgcore.getMongoManager().saveDataBonuses(wyslannik.getUuid(), bonuses);
+            });
             rpgcore.getUstawieniaKontaManager().openWyslannik(player, wyslannik.getUuid());
             return;
-        }*/
+        }
 
         if (title.contains("Misje » Wyszkolenie - ")) {
             e.setCancelled(true);

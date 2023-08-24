@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.armor.ArmorEffectsHelper;
@@ -141,6 +142,12 @@ public class PlayerJoinListener implements Listener {
                     online.sendMessage(Utils.format("&8[&a+&8] &7" + playerName + " &8(" + Bukkit.getOnlinePlayers().size() + "/1000)"));
                 }
             }
+        }
+
+        if (user.getInventoriesUser() != null) {
+            if (user.getInventoriesUser().getArmor() != null) player.getInventory().setArmorContents(new ItemStack[]{new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)});
+            if (user.getInventoriesUser().getInventory() != null) player.getInventory().clear();
+            if (user.getInventoriesUser().getEnderchest() != null) player.getEnderChest().clear();
         }
 
 

@@ -41,7 +41,9 @@ public class SerwerWhiteListCommand extends CommandAPI {
                         (RPGCORE.getInstance().getSerwerWhiteListManager().getWhitelist().isEnabled() ? "&a&lWlaczona" : "&c&lWylaczona") + "&7!"));
                 sender.sendMessage(Utils.format(Utils.SERVERNAME + "&7Graczy na whitelist: &a" + RPGCORE.getInstance().getSerwerWhiteListManager().getWhitelist().getWhitelisted().size()));
                 for (final UUID uuid : RPGCORE.getInstance().getSerwerWhiteListManager().getWhitelist().getWhitelisted()) {
-                    sender.sendMessage(Utils.format("  &8- &6" + RPGCORE.getInstance().getUserManager().find(uuid).getName()));
+                    final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+                    if (user == null) continue;
+                    sender.sendMessage(Utils.format("  &8- &6" + user.getName()));
                 }
                 return;
             }

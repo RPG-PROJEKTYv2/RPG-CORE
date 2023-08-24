@@ -220,6 +220,7 @@ public class MongoManager {
                 pool.getPrzekletyCzarnoksieznikEffect().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
+            rpgcore.getBackupMongoManager().getPool().getDatabase().getCollection(uuid.toString().replace("-", "_")).drop();
         }
         for (Document doc : toRemove) {
             pool.getGracze().deleteOne(doc);

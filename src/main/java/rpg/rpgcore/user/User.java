@@ -9,6 +9,7 @@ import rpg.rpgcore.ranks.RankUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
@@ -119,6 +120,18 @@ public class User {
 
     public boolean isMuted() {
         return !(muteInfo.equalsIgnoreCase("false"));
+    }
+
+    public void giveKitCooldown() {
+        this.kitCooldown = System.currentTimeMillis() + 86_400_000L;
+    }
+
+    public boolean hasKitCooldown() {
+        return this.kitCooldown > System.currentTimeMillis();
+    }
+
+    public String getKitCooldown() {
+        return Utils.durationToString(this.kitCooldown - System.currentTimeMillis(), false);
     }
 
     public Document toDocument() {
