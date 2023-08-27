@@ -24,7 +24,7 @@ import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
 import java.util.UUID;
 
-public class    MobDropHelper {
+public class MobDropHelper {
 
     public static void addDropPlayer(Player player, ItemStack is, double chance, boolean message, boolean pickup, Entity entity) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
@@ -32,14 +32,16 @@ public class    MobDropHelper {
             if (ChanceHelper.getChance(chance)) {
                 player.getInventory().addItem(is);
                 if (message) {
-                    if (user.isItemDropEnabled()) player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
+                    if (user.isItemDropEnabled())
+                        player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
                 }
             }
         } else {
             if (ChanceHelper.getChance(chance)) {
                 entity.getWorld().dropItem(entity.getLocation(), is);
                 if (message) {
-                    if (user.isItemDropEnabled()) player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
+                    if (user.isItemDropEnabled())
+                        player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
                 }
             }
         }
@@ -70,7 +72,7 @@ public class    MobDropHelper {
             szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
         }
 
-        final double akceDropChance50lvl= getDropChance(szczescie, 0.1);
+        final double akceDropChance50lvl = getDropChance(szczescie, 0.1);
         final double akceDropChance50plus = getDropChance(szczescie, 0.05);
         final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
         final double niesDropChance50plus = getDropChance(szczescie, 0.03);
@@ -325,7 +327,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false ,entity);
+                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
@@ -610,7 +612,7 @@ public class    MobDropHelper {
                 break;
             // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
             case "Ognisty Duch Lvl. 69":
-                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false ,entity);
+                addDropPlayer(player, AkceItems.A7.getItemStack(), getDropChance(szczescie, 0.06), true, false, entity);
                 if (rpgcore.getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_1 || rpgcore.getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_3) {
                     rpgcore.getPrzedsionekManager().incrementCounter();
                 }
@@ -618,7 +620,40 @@ public class    MobDropHelper {
             case "[BOSS] Piekielny Wladca":
                 addDropPlayer(player, Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1), 100, true, true, entity);
                 rpgcore.getPrzedsionekManager().incrementCounter();
-
+                break;
+                // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            case "Zapomniany Wojownik Lvl. 75":
+                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
+                if (rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_1) {
+                    rpgcore.getKoloseumManager().incrementCounter();
+                }
+                break;
+            case "Zapomniany Wojownik Lvl. 79":
+                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.06), true, false, entity);
+                if (rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_5) {
+                    rpgcore.getKoloseumManager().incrementCounter();
+                }
+                break;
+            case "[MiniBOSS] Wyznawca Ateny":
+            case "[MiniBOSS] Wyznawca Posejdona":
+            case "[MiniBOSS] Wyznawca Zeusa":
+            case "[MiniBOSS] Wyznawca Hadesa":
+                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.07), true, false, entity);
+                if (ChanceHelper.getChance(getDropChance(szczescie, 5))) {
+                    player.getInventory().addItem(Dungeony.I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM.getItemStack());
+                    Bukkit.getServer().broadcastMessage(" ");
+                    Bukkit.getServer().broadcastMessage("&6&lKoloseum &8>> &7Gracz &f" + player.getName() + " &7znalazl &eSakiewke ze Zlotym Proszkiem&7!");
+                    Bukkit.getServer().broadcastMessage(" ");
+                }
+                if (rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_2 || rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_4 ||
+                        rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_6) {
+                    rpgcore.getKoloseumManager().incrementCounter();
+                }
+                break;
+            case "[BOSS] Czempion Areny":
+                addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
+                rpgcore.getPrzedsionekManager().incrementCounter();
+                break;
         }
 
         final double kasa = rpgcore.getLvlManager().getKasa(entityName, uuid);

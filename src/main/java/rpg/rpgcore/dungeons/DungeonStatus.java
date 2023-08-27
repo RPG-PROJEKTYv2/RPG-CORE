@@ -16,6 +16,9 @@ public enum DungeonStatus {
     ETAP_2("2"),
     ETAP_3("3"),
     ETAP_4("4"),
+    ETAP_5("5"),
+    ETAP_6("6"),
+    ETAP_7("7"),
     BOSS("BOSS"),
     ONGOING(""),
     FINISHED("");

@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public abstract class CommandAPI extends Command {
     private RankType rankLevel;
@@ -46,8 +47,14 @@ public abstract class CommandAPI extends Command {
             "artefakty", "craft", "rozpiska", "crafting", "listanpc", "lnpc", "npc", "poziom", "level",
             "showcaseitem", "profil", "staty", "hs", "stats", "hellsy", "statystyki", "coins", "online", "k",
             "misje", "list", "lista", "gracze", "onlinelist", "listagraczy", "craftingi", "rangi", "vip", "elita",
-            "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower", "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb"
+            "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower",
+            "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb",
+            "zestawrangi", "kod", "kodtworcy"
     );
+
+    public void setAliases(final String... aliases) {
+        this.setAliases(Arrays.stream(aliases).collect(Collectors.toList()));
+    }
 
 
     public CommandAPI(final String name) {

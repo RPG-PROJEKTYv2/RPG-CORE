@@ -11,7 +11,10 @@ import java.util.Arrays;
 public enum Dungeony {
 
     I_KLUCZ_PIEKIELNY_PRZEDSIONEK("I_KLUCZ_PIEKIELNY_PRZEDSIONEK", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&c&lKlucz do Piekielnego Przedsionka").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lPiekielnego Przedsionka&7!")).hideFlag().toItemStack().clone()),
-    I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Piekielnego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
+    I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Piekielnego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I_KLUCZ_KOLOSEUM("I_KLUCZ_KOLOSEUM", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&6&lKlucz do Koloseum").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &6&lKoloseum&7!")).hideFlag().toItemStack().clone()),
+    I_KOLOSEUM_SKRZYNKA("I_KOLOSEUM_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Czempiona").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
+    I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM("I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM", new ItemBuilder(Material.EXP_BOTTLE).setName("&eSakiewka ze Zlotym Proszkiem").setLore(Arrays.asList("&fDzieki niej uda ci sie wzmocnic podstawowe akcesorium")).toItemStack().clone());
 
 
     private final ItemStack itemStack;
@@ -52,6 +55,6 @@ public enum Dungeony {
     }
 
     public ItemStack getItemStack() {
-        return itemStack;
+        return itemStack.clone();
     }
 }

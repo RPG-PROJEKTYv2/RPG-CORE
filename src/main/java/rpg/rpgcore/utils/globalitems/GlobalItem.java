@@ -17,7 +17,7 @@ public enum GlobalItem {
     I_FRAGMENT_BONA("I_FRAGMENT_BONA", new ItemBuilder(Material.BOWL).setName("&3&lFragment Tajemniczego Bona").setLore(Arrays.asList("", "&7Wartosc nie do opisania...")).toItemStack().clone()),
     I_FRAGMENT_STALI("I_FRAGMENT_STALI", new ItemBuilder(Material.PRISMARINE_CRYSTALS).setName("&8&lFragment Stali Kowala").toItemStack().clone()),
     I_METAL("I_METAL", new ItemBuilder(Material.IRON_INGOT).setName("&7&lStal Kowalska").setLore(Arrays.asList("&dMagiczny &8przedmiot uzywany do wykucia", "&8najlepszych ostrzy, jakie widzial ten swiat.", "&8Nie tylko &achroni &8twoj przedmiot przed &cspaleniem", "&8ale daje ci szanse na &apewne", "&8ulepszenie twojego przedmiotu")).addGlowing().toItemStack().clone()),
-    I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR, 1).setName("&fLza Aniola").setLore(Arrays.asList("&8Lza uroniona przez &fAniola&8.", "&8Jest tak czysta ze uzycie", "&8jej w polaczeniu z twoim przedmiotem", "&8w &6Kowadle &8sprawi, ze bedziesz mogl", "&8jeszcze raz ulepszyc swoj przedmiot")).addGlowing().toItemStack().clone()),
+    I_OCZYSZCZENIE("I_OCZYSZCZENIE", new ItemBuilder(Material.GHAST_TEAR).setName("&fLza Aniola").setLore(Arrays.asList("&8Lza uroniona przez &fAniola&8.", "&8Jest tak czysta ze uzycie", "&8jej w polaczeniu z twoim przedmiotem", "&8w &6Kowadle &8sprawi, ze bedziesz mogl", "&8jeszcze raz ulepszyc swoj przedmiot")).addGlowing().toItemStack().clone()),
     I10("I10", new ItemBuilder(Material.BOOK).setName("&a&lPodrecznik Kowala").setLore(Arrays.asList("&8Pradawny podrecznik wiedzy o kowalstwie.", "&8Uzycie go u &4Kowala &8sprawia, ze", "&achroni &8on twoj przedmiot przed spaleniem", "&8podczas ulepszania")).addGlowing().toItemStack().clone()),
     I_CZASTKA_MAGII("I_CZASTKA_MAGII", new ItemBuilder(Material.BLAZE_POWDER).setName("&d&lCzastka Magii").toItemStack().clone()),
     I_KAMIENBAO("I_KAMIENBAO", new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu").setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic &cwszystkie &8bonusy w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
@@ -166,6 +166,6 @@ public enum GlobalItem {
     }
 
     public ItemStack getItemStack() {
-        return itemStack;
+        return itemStack.clone();
     }
 }

@@ -43,6 +43,7 @@ public class User {
     private long kitCooldown;
     private boolean tworca;
     private boolean firstTime;
+    private int serverJoins;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -68,6 +69,7 @@ public class User {
         this.kitCooldown = 0;
         this.tworca = false;
         this.firstTime = true;
+        this.serverJoins = 0;
     }
 
     public User(final Document document) {
@@ -112,6 +114,7 @@ public class User {
         this.kitCooldown = kitCooldown;
         this.tworca = document.getBoolean("tworca");
         this.firstTime = (document.containsKey("firstTime") ? document.getBoolean("firstTime") : true);
+        this.serverJoins = (document.containsKey("serverJoins") ? document.getInteger("serverJoins") : 0);
     }
 
     public boolean isBanned() {
@@ -132,6 +135,10 @@ public class User {
 
     public String getKitCooldown() {
         return Utils.durationToString(this.kitCooldown - System.currentTimeMillis(), false);
+    }
+
+    public void incrementServerJoins() {
+        this.serverJoins++;
     }
 
     public Document toDocument() {
@@ -160,7 +167,8 @@ public class User {
                 .append("krytyk", this.krytyk)
                 .append("kitCooldown", this.kitCooldown)
                 .append("tworca", this.tworca)
-                .append("firstTime", this.firstTime);
+                .append("firstTime", this.firstTime)
+                .append("serverJoins", this.serverJoins);
     }
 
 

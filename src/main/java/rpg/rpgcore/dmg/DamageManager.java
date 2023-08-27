@@ -232,7 +232,8 @@ public class DamageManager {
             }
         }
 
-        final double finalDmg = DoubleUtils.round(dmg, 2);
+        double finalDmg = DoubleUtils.round(dmg, 2);
+        if (finalDmg < 0) finalDmg = 0;
 
         if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
             attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
@@ -378,7 +379,8 @@ public class DamageManager {
             }
         }
 
-        final double finalDmg = DoubleUtils.round(dmg, 2);
+        double finalDmg = DoubleUtils.round(dmg, 2);
+        if (finalDmg < 0) finalDmg = 0;
 
         if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
             attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));

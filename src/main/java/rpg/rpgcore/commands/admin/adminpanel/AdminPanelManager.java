@@ -134,6 +134,15 @@ public class AdminPanelManager {
         gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
         player.openInventory(gui);
     }
+
+    public void openDungeonItems(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lDungeony &f- ADMINISTRACJA"));
+        for (final Dungeony dungeons : Dungeony.values()) {
+            gui.setItem(gui.firstEmpty(), dungeons.getItemStack());
+        }
+        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        player.openInventory(gui);
+    }
     public void openPrzedmiotySpecjalneInne(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&c&lInne &f- ADMINISTRACJA"));
         gui.setItem(0, Przepustki.getItem("I1", 1));

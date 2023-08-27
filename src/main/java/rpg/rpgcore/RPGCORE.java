@@ -102,6 +102,8 @@ import rpg.rpgcore.commands.player.craftingi.CraftingiInventoryClickListener;
 import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
 import rpg.rpgcore.commands.player.enderchest.EnderChestCommand;
 import rpg.rpgcore.commands.player.enderchest.EnderChestInventoryCloseListener;
+import rpg.rpgcore.commands.player.kod_tworcy.KodCommand;
+import rpg.rpgcore.commands.player.kod_tworcy.KodTworcyManager;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
@@ -141,6 +143,10 @@ import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczono
 import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.dungeons.maps.icetower.events.IceTowerListener;
 import rpg.rpgcore.dungeons.maps.icetower.tasks.IceTowerTask;
+import rpg.rpgcore.dungeons.maps.koloseum.KoloseumManager;
+import rpg.rpgcore.dungeons.maps.koloseum.events.KoloseumInteractListener;
+import rpg.rpgcore.dungeons.maps.koloseum.events.KoloseumPortalEntryListener;
+import rpg.rpgcore.dungeons.maps.koloseum.tasks.KoloseumTask;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.PrzedsionekManager;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekInteractListener;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekPortalEntryListener;
@@ -379,6 +385,7 @@ public final class RPGCORE extends JavaPlugin {
     private LodowySlugaManager lodowySlugaManager;
     // dung 60-70
     private PiekielnyWladcaManager piekielnyWladcaManager;
+    private KoloseumManager koloseumManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
 
@@ -412,6 +419,7 @@ public final class RPGCORE extends JavaPlugin {
     private OreManager oreManager;
     private KlasyManager klasyManager;
     private BackupManager backupManager;
+    private KodTworcyManager kodTworcyManager;
 
 
     private int i = 1;
@@ -647,6 +655,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new DropCommand());
         CommandAPI.getCommand().register("HellRPGCore", new GornikZaplacCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BackupCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new KodCommand(this));
     }
 
     private void initEvents() {
@@ -942,6 +951,7 @@ public final class RPGCORE extends JavaPlugin {
         this.oreManager = new OreManager(this);
         this.klasyManager = new KlasyManager(this);
         this.backupManager = new BackupManager(this);
+        this.kodTworcyManager = new KodTworcyManager(this);
     }
 
     private void initNPCS() {
@@ -1026,6 +1036,11 @@ public final class RPGCORE extends JavaPlugin {
         this.przedsionekManager = new PrzedsionekManager(this);
         this.getServer().getPluginManager().registerEvents(new PiekielnyPrzedsionekInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PiekielnyPrzedsionekPortalEntryListener(this), this);
+
+        // KOLOSEUM
+        this.koloseumManager = new KoloseumManager(this);
+        this.getServer().getPluginManager().registerEvents(new KoloseumInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new KoloseumPortalEntryListener(this), this);
     }
 
     private void initCustomDungeons() {
@@ -1077,6 +1092,8 @@ public final class RPGCORE extends JavaPlugin {
         new PlayerInventoryTask(this);
         // ... PIEKIELNY PRZEDSIONEK
         new PiekielnyPrzedsionekTask(this);
+        // .. KOLOSEUM
+        new KoloseumTask(this);
         // ... ICE TOWER
         new IceTowerTask(this);
 
@@ -1532,5 +1549,13 @@ public final class RPGCORE extends JavaPlugin {
     }
     public BackupManager getBackupManager() {
         return backupManager;
+    }
+
+    public KodTworcyManager getKodTworcyManager() {
+        return this.kodTworcyManager;
+    }
+
+    public KoloseumManager getKoloseumManager() {
+        return koloseumManager;
     }
 }

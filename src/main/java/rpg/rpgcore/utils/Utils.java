@@ -7,9 +7,13 @@ import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -871,6 +875,35 @@ public class Utils {
         } else {
             return null;
         }
+    }
+
+    public static int fly(final Entity entity) {
+        return RPGCORE.getInstance().getServer().getScheduler().scheduleAsyncRepeatingTask(RPGCORE.getInstance(), () -> {
+            final Location location = entity.getLocation().clone();
+            double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0)*8) / 20;
+            location.add(0, delta, 0);
+            entity.teleport(location);
+        }, 0L, 1L);
+    }
+    public static int flyAndTarget(final Entity entity, final LivingEntity target) {
+        return RPGCORE.getInstance().getServer().getScheduler().scheduleAsyncRepeatingTask(RPGCORE.getInstance(), () -> {
+            ((Creature) entity).setTarget(target);
+            final Location location = entity.getLocation().clone();
+            double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0)*8) / 20;
+            location.add(0, delta, 0);
+            System.out.println(location.getY());
+            //entity.teleport(location);
+        }, 0L, 1L);
+    }
+
+    public static int flyAndSpin(final Entity entity) {
+        return RPGCORE.getInstance().getServer().getScheduler().scheduleAsyncRepeatingTask(RPGCORE.getInstance(), () -> {
+            final Location location = entity.getLocation().clone();
+            location.setYaw(location.getYaw() + 10);
+            double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0)*8) / 20;
+            location.add(0, delta, 0);
+            entity.teleport(location);
+        }, 0L, 1L);
     }
 
 }

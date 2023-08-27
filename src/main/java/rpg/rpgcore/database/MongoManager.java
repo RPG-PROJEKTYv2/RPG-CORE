@@ -58,6 +58,7 @@ import rpg.rpgcore.wyszkolenie.objects.WyszkolenieUser;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class MongoManager {
 
@@ -1953,6 +1954,20 @@ public class MongoManager {
         for (final CzarownicaUser czarownicaUser : rpgcore.getCzarownicaNPC().getCzarownicaUsers()) {
             this.saveDataCzarownica(czarownicaUser.getUuid(), czarownicaUser);
         }
+    }
+
+    public Map<UUID, List<UUID>> loadAllTworcy() {
+        Map<UUID, List<UUID>> userMap = new HashMap<>();
+        final Document document = this.pool.getTworcy().find(new Document("_id", "tworcy")).first();
+        if (document == null) {
+            this.pool.getTworcy().insertOne(new Document("_id", "tworcy"));
+            return userMap;
+        }
+        for (final String key : document.keySet()) {
+            if (key.equals("_id")) continue;
+            userMap.put(UUID.fromString(key), document.getList(key, String.class).stream().map(UUID::fromString).collect(Collectors.toList()));
+        }
+        return userMap;
     }
 
 

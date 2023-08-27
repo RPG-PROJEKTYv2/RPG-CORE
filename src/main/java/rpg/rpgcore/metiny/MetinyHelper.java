@@ -6,7 +6,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.commands.player.rozpiska.RozpiskaManager;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
@@ -64,13 +63,16 @@ public class MetinyHelper {
 
     public static void respAllMetins() {
         for (World w : Bukkit.getWorlds()) {
-            if (w.getName().equals("zamekNieskonczonosci") && w.getPlayers().size() != 0) {
+            if (w.getName().equals("zamekNieskonczonosci") && !w.getPlayers().isEmpty()) {
                 continue;
             }
-            if (w.getName().equals("DemonTower") && w.getPlayers().size() != 0) {
+            if (w.getName().equals("DemonTower") && !w.getPlayers().isEmpty()) {
                 continue;
             }
-            if (w.getName().equals("Dungeon60-70") && w.getPlayers().size() != 0) {
+            if (w.getName().equals("Dungeon60-70") && !w.getPlayers().isEmpty()) {
+                continue;
+            }
+            if (w.getName().equals("Dungeon70-80") && !w.getPlayers().isEmpty()) {
                 continue;
             }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
@@ -295,6 +297,11 @@ public class MetinyHelper {
         if (id >= 30_000 && id <= 30_011) {
             kasaToAdd = 1_500;
             RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
+        }
+        // ---------------------------------------- KOLOSEUM ----------------------------------------
+        if (id >= 40_000 && id <= 40_005) {
+            kasaToAdd = 3_000;
+            RPGCORE.getInstance().getKoloseumManager().incrementCounter();
         }
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
