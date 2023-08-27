@@ -28,7 +28,7 @@ public enum Bossy {
     I5_2("I5_2", new ItemBuilder(Material.HOPPER).setName("&6Rog Naszych Przodkow").setLore(Arrays.asList("&7W polaczeniu z &aKlejnotami &7umozliwia przywolanie smoka")).hideFlag().toItemStack().clone()),
 
     // Itemy bonusow bossow
-    I70_80_BONUS("I70_80_BONUS", new ItemBuilder(Material.COAL, 1, (short) 1).setName("&5&lPrzeklety Odlamek").setLore(Arrays.asList(" ", "&7Kliknij... przeklete zawiera mroczne zaklecie")).toItemStack().clone());
+    I70_80_BONUS("I70_80_BONUS", new ItemBuilder(Material.COAL, 1, (short) 1).setName("&5&lPrzeklety Odlamek").setLore(Arrays.asList(" ", "&7Kliknij zawiera mroczne bonusy &5&lPrzekletego Czarnoksieznika...")).toItemStack().clone());
 
 
     private final ItemStack itemStack;

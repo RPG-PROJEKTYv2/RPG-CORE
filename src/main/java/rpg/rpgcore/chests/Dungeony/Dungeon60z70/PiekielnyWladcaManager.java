@@ -21,11 +21,11 @@ public class PiekielnyWladcaManager {
     private final Set<Items> piekielnyWladca = Sets.newConcurrentHashSet();
 
     public PiekielnyWladcaManager() {
-        this.piekielnyWladca.add(new Items("1", 1.0, new ItemBuilder(Material.MINECART).setName("&c&lEnergia Piekielnego Wladcy").toItemStack(),1 ));
-        this.piekielnyWladca.add(new Items("2", 2.0, new ItemBuilder(Material.FIREBALL).setName("&c&lMedalion Piekielnego Wladcy").toItemStack(),1 ));
-        this.piekielnyWladca.add(new Items("3", 4.0 , GlobalItem.I_KAMIENBAO.getItemStack(), ChanceHelper.getRandInt(1,2)));
-        this.piekielnyWladca.add(new Items("4", 6.0, GlobalItem.I10.getItemStack(), ChanceHelper.getRandInt(1,2)));
-        this.piekielnyWladca.add(new Items("5", 8.0, LesnikItems.POTION.getItem(), ChanceHelper.getRandInt(1,5)));
+        this.piekielnyWladca.add(new Items("1", 6.0, new ItemBuilder(Material.MINECART).setName("&c&lEnergia Piekielnego Wladcy").toItemStack(),1 ));
+        this.piekielnyWladca.add(new Items("2", 6.2, new ItemBuilder(Material.FIREBALL).setName("&c&lMedalion Piekielnego Wladcy").toItemStack(),1 ));
+        this.piekielnyWladca.add(new Items("3", 7.0 , GlobalItem.I_KAMIENBAO.getItemStack(), ChanceHelper.getRandInt(1,2)));
+        this.piekielnyWladca.add(new Items("4", 8.5, GlobalItem.I10.getItemStack(), ChanceHelper.getRandInt(1,2)));
+        this.piekielnyWladca.add(new Items("5", 10.0, LesnikItems.POTION.getItem(), ChanceHelper.getRandInt(1,5)));
         this.piekielnyWladca.add(new Items("6", 14.0, ItemHelper.createSword("&c&lMiecz Piekielnego Wladcy", Material.DIAMOND_SWORD, 35, 23, false), 1));
         this.piekielnyWladca.add(new Items("7", 16.0, ItemHelper.createArmor("&c&lHelm Piekielnego Wladcy", Material.DIAMOND_HELMET, 57, 13), 1));
         this.piekielnyWladca.add(new Items("8", 16.0, ItemHelper.createArmor("&c&lZbroja Piekielnego Wladcy", Material.DIAMOND_CHESTPLATE, 58, 15), 1));
@@ -40,7 +40,7 @@ public class PiekielnyWladcaManager {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.piekielnyWladca) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }
         }

@@ -91,6 +91,7 @@ public class DropFromChestsListener implements Listener {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
                         }
                         rpgcore.getCiezkaSkrzyniaKowalaManager().getDrawnItems(player);
+
                         return;
                     }
                 }
@@ -855,9 +856,9 @@ public class DropFromChestsListener implements Listener {
                                         ChanceHelper.getRandInt(60,70), "&c&lEnergia Piekielnego Wladcy");
                                 break;
                             case FIREBALL:
-                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(1,1),
-                                        ChanceHelper.getRandInt(10,16),
-                                        ChanceHelper.getRandInt(7,10),"&c&lMedalion Piekielnego Wladcy");
+                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(10,16),
+                                        ChanceHelper.getRandInt(7,10),
+                                        ChanceHelper.getRandInt(60,70),"&c&lMedalion Piekielnego Wladcy");
                                 break;
                             default:
                                 break;

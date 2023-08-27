@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map30_40 {
-    I30_40_1("30-40-1", 10, ItemHelper.createArmor("&c&lPrzeklety Helm", Material.GOLD_HELMET, 23, 5)),
-    I30_40_2("30-40-2", 10, ItemHelper.createArmor("&c&lPrzekleta Zbroja", Material.GOLD_CHESTPLATE, 21, 5)),
-    I30_40_3("30-40-3", 10, ItemHelper.createArmor("&c&lPrzeklete Spodnie", Material.GOLD_LEGGINGS, 20, 5)),
-    I30_40_4("30-40-4", 10, ItemHelper.createArmor("&c&lPrzeklete Trepy", Material.GOLD_BOOTS, 20, 5)),
-    I30_40_5("30-40-5", 10, ItemHelper.createSword("&c&lPrzekleta Kosa", Material.GOLD_SWORD, 18, 8, true));
+    I30_40_1("30-40-1", 14.0, ItemHelper.createArmor("&c&lPrzeklety Helm", Material.GOLD_HELMET, 23, 5)),
+    I30_40_2("30-40-2", 14.0, ItemHelper.createArmor("&c&lPrzekleta Zbroja", Material.GOLD_CHESTPLATE, 21, 5)),
+    I30_40_3("30-40-3", 14.0, ItemHelper.createArmor("&c&lPrzeklete Spodnie", Material.GOLD_LEGGINGS, 20, 5)),
+    I30_40_4("30-40-4", 14.0, ItemHelper.createArmor("&c&lPrzeklete Trepy", Material.GOLD_BOOTS, 20, 5)),
+    I30_40_5("30-40-5", 12.0, ItemHelper.createSword("&c&lPrzekleta Kosa", Material.GOLD_SWORD, 18, 8, true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;

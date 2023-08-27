@@ -9,14 +9,23 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
 
 public enum OsMoby {
-    M1(1, 0, 300, AkcesoriaPodsHelper.createTarcza(8, 3, 2, 9, "&dTarcza Pogromcy Potworow").clone()),
-    M2(2, 1, 1_000, GlobalItem.getItem("I5", 8).clone()),
-    M3(3, 2, 3_000, ItemHelper.createSword("&dMiecz Pogromcy Potworow", Material.GOLD_SWORD, 22, 5, false).clone()),
+    // tajemnicze x5
+    M1(1, 0, 500, AkcesoriaPodsHelper.createTarcza(8, 3, 2, 9, "&dTarcza Pogromcy Potworow").clone()),
+    // pozlacany x2
+    M2(2, 1, 1_200, GlobalItem.getItem("I5", 8).clone()),
+    // miecz lowcy
+    M3(3, 2, 3_500, ItemHelper.createSword("&dMiecz Pogromcy Potworow", Material.GOLD_SWORD, 22, 5, false).clone()),
+    // ciezka kowala x8
     M4(4, 3, 10_000, GlobalItem.getItem("I6", 3).clone()),
+    // zmianki miecz x6
     M5(5, 4, 25_000, GlobalItem.getItem("I_OCZYSZCZENIE", 1).clone()),
+    // hells x15
     M6(6, 5, 75_000, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l10 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    // vip 3d
     M7(7, 6, 200_000, GlobalItem.getItem("I52", 3).clone()),
+    // pozlacany x12
     M8(8, 7, 750_000, ItemShop.IS12.getItems().get(0).clone()),
+    // elita 7d
     M9(9, 8, 2_000_000, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone());
 
     private final int mission;

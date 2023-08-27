@@ -59,7 +59,7 @@ public enum GlobalItem {
 
     // ZNISZCZONE RUBINOWE SERCE (MEDRZEC ITEM)
     ZNISZCZONE_RUBINOWE_SERCE("ZNISZCZONE_RUBINOWE_SERCE", new ItemBuilder(Material.REDSTONE).setName("&cZniszczone Rubinowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
-    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
+    ZNISZCZONE_SZAFIROWE_SERCE("ZNISZCZONE_SZAFIROWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 4).setName("&bZniszczone Szafirowe Serce").setLore(Arrays.asList("&8&oChyba Medrzec tego potrzebuje")).toItemStack().clone()),
     RUBINOWE_SERCE("RUBINOWE_SERCE", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&c&lRubinowe Serce").setLore(Arrays.asList(
             "&8Wykute przez Medrca wedlug pradawnej receptury",
             "&8Po uzyciu spowoduje, ze staniesz sie silniejszy",
@@ -76,7 +76,7 @@ public enum GlobalItem {
     SAKWA("SAKWA", new ItemBuilder(Material.FLOWER_POT_ITEM).setName("&8✦&eSakiewka&8✦").toItemStack().clone()),
     RUDA_MITHRYLU("RUDA_MITHRYLU", new ItemBuilder(Material.PRISMARINE).setName("&2Ruda Mithrylu").setLore(Arrays.asList(
             "&8Bardzo rzadka ruda...",
-            "&8Ciekawe skad wziela sie u potworw",
+            "&8Ciekawe skad wziela sie u potworow",
             "",
             "&8&oKomus na pewno sie to przyda..."
     )).toItemStack().clone()),

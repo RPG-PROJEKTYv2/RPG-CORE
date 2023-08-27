@@ -51,9 +51,10 @@ public class CiezkaSkrzyniaKowalaManager {
                         player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-33, -25), ChanceHelper.getRandInt(27, 61), ChanceHelper.getRandInt(33, 68), ChanceHelper.getRandDouble(0.1, 0.4), ChanceHelper.getRandInt(-50, -45), ChanceHelper.getRandInt(60, 75), "&4&lEnergia Piekielnego Kowala"));
                         return;
                     }
+                    return;
                 }
                 item.getRewardItem().setAmount(item.getAmount());
-                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getRewardItem().getAmount()) + " " + item.getRewardItem().getItemMeta().getDisplayName());
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }

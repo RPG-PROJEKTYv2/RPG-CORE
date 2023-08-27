@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map60_70 {
-    I60_70_1("60-70-1", 12, ItemHelper.createArmor("&4&lOgnisty Kask", Material.DIAMOND_HELMET, 50, 13)),
-    I60_70_2("60-70-2", 12, ItemHelper.createArmor("&4&lOgnista Kurtka", Material.DIAMOND_CHESTPLATE, 53, 13)),
-    I60_70_3("60-70-3", 12, ItemHelper.createArmor("&4&lOgniste Spodnie", Material.DIAMOND_LEGGINGS, 52, 13)),
-    I60_70_4("60-70-4", 12, ItemHelper.createArmor("&4&lOgniste Buty", Material.DIAMOND_BOOTS, 55, 13)),
-    I60_70_5("60-70-5", 12, ItemHelper.createSword("&4&lOgnista Szpada", Material.DIAMOND_SWORD, 38, 19,true));
+    I60_70_1("60-70-1", 14.0, ItemHelper.createArmor("&4&lOgnisty Kask", Material.DIAMOND_HELMET, 50, 13)),
+    I60_70_2("60-70-2", 14.0, ItemHelper.createArmor("&4&lOgnista Kurtka", Material.DIAMOND_CHESTPLATE, 53, 13)),
+    I60_70_3("60-70-3", 14.0, ItemHelper.createArmor("&4&lOgniste Spodnie", Material.DIAMOND_LEGGINGS, 52, 13)),
+    I60_70_4("60-70-4", 14.0, ItemHelper.createArmor("&4&lOgniste Buty", Material.DIAMOND_BOOTS, 55, 13)),
+    I60_70_5("60-70-5", 12.0, ItemHelper.createSword("&4&lOgnista Szpada", Material.DIAMOND_SWORD, 38, 19,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;

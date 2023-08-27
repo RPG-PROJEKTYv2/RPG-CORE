@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map120_130 {
-    I120_130_1("120-130-1", 12, ItemHelper.createArmor("&6&lStarozytny Kaszkiet", Material.DIAMOND_HELMET, 92, 15)),
-    I120_130_2("120-130-2", 12, ItemHelper.createArmor("&6&lStarozytna Zbroja", Material.DIAMOND_CHESTPLATE, 95, 15)),
-    I120_130_3("120-130-3", 12, ItemHelper.createArmor("&6&lStarozytne Spodnie", Material.DIAMOND_LEGGINGS, 95, 15)),
-    I120_130_4("120-130-4", 12, ItemHelper.createArmor("&6&lStarozytne Sandaly", Material.DIAMOND_BOOTS, 90, 15)),
-    I120_130_5("120-130-5", 12, ItemHelper.createSword("&6&lStarozytna Wlocznia", Material.DIAMOND_SWORD, 92, 48,true));
+    I120_130_1("120-130-1", 14.0, ItemHelper.createArmor("&6&lStarozytny Kaszkiet", Material.DIAMOND_HELMET, 92, 20)),
+    I120_130_2("120-130-2", 14.0, ItemHelper.createArmor("&6&lStarozytna Zbroja", Material.DIAMOND_CHESTPLATE, 100, 20)),
+    I120_130_3("120-130-3", 14.0, ItemHelper.createArmor("&6&lStarozytne Spodnie", Material.DIAMOND_LEGGINGS, 99, 20)),
+    I120_130_4("120-130-4", 14.0, ItemHelper.createArmor("&6&lStarozytne Sandaly", Material.DIAMOND_BOOTS, 95, 20)),
+    I120_130_5("120-130-5", 12.0, ItemHelper.createSword("&6&lStarozytna Wlocznia", Material.DIAMOND_SWORD, 92, 48,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;

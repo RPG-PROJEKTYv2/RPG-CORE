@@ -66,7 +66,7 @@ public class AdminPanelManager {
         gui.setItem(14, new ItemBuilder(Material.MILK_BUCKET).setName("&fLowca").addGlowing().toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.BUCKET).setName("&fLesnik").addGlowing().toItemStack().clone());
 
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -75,7 +75,7 @@ public class AdminPanelManager {
         for (final PrzyrodnikItems przyrodnikItems : PrzyrodnikItems.values()) {
             gui.setItem(gui.firstEmpty(), przyrodnikItems.getItemStack());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openMetinologGUI(final Player player) {
@@ -83,7 +83,7 @@ public class AdminPanelManager {
         for (final MetinologItems metinologItems : MetinologItems.values()) {
             gui.setItem(gui.firstEmpty(), metinologItems.getItemStack());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openLowcaGUI(final Player player) {
@@ -91,7 +91,7 @@ public class AdminPanelManager {
         for (final LowcaItems lowcaItems : LowcaItems.values()) {
             gui.setItem(gui.firstEmpty(), lowcaItems.getItem());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openLesnikGUI(final Player player) {
@@ -99,7 +99,7 @@ public class AdminPanelManager {
         for (final LesnikItems lesnikItems : LesnikItems.values()) {
             gui.setItem(gui.firstEmpty(), lesnikItems.getItem());
         }
-        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(8, Utils.powrot());
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGui(final Player player) {
@@ -115,7 +115,7 @@ public class AdminPanelManager {
         gui.setItem(13, new ItemBuilder(Material.BUCKET).setName("&6Bossy & Klucze").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.DIAMOND).setName("&cInne").addGlowing().toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.JUKEBOX).setName("&6&lDungeony items").addGlowing().toItemStack().clone());
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGuiPodreczniki(final Player player) {
@@ -123,7 +123,7 @@ public class AdminPanelManager {
         for (final WyszkolenieItems wyszkolenieItems : WyszkolenieItems.values()) {
             gui.setItem(gui.firstEmpty(), wyszkolenieItems.getItem());
         }
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGuiBossyKlucze(final Player player) {
@@ -131,7 +131,7 @@ public class AdminPanelManager {
         for (final Bossy bossy : Bossy.values()) {
             gui.setItem(gui.firstEmpty(), bossy.getItemStack());
         }
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
 
@@ -169,7 +169,7 @@ public class AdminPanelManager {
         gui.setItem(19, GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack());
         gui.setItem(20, GlobalItem.SZAFIROWE_SERCE.getItemStack());
         gui.setItem(21, GlobalItem.RUBINOWE_SERCE.getItemStack());
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openRybakItemsGUI(final Player player) {
@@ -178,7 +178,7 @@ public class AdminPanelManager {
         for (final RybakItems rank : RybakItems.values()) {
             gui.setItem(gui.firstEmpty(), rank.getItemStack());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openAllCaseGUI(final Player player) {
@@ -197,7 +197,7 @@ public class AdminPanelManager {
         gui.setItem(14, new ItemBuilder(Material.FURNACE).setName("&c&lSkrzynki &f- DUNGEONY").addGlowing().toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.DIAMOND).setName("&c&lSkrzynki &f- INNE").addGlowing().toItemStack().clone());
 
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
 
         player.openInventory(gui);
     }
@@ -214,7 +214,7 @@ public class AdminPanelManager {
         gui.setItem(8, Skrzynki.getItem("I16",1));
 
 
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openBossyCaseGUI(final Player player) {
@@ -232,7 +232,7 @@ public class AdminPanelManager {
         gui.setItem(10, Skrzynki.getItem("I21",1));
         gui.setItem(11, Skrzynki.getItem("I23",1));
         gui.setItem(12, Skrzynki.getItem("I25",1));
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openDungeonyCaseGUI(final Player player) {
@@ -240,7 +240,7 @@ public class AdminPanelManager {
         for (final Dungeony dungeony : Dungeony.values()) {
             gui.setItem(gui.firstEmpty(), dungeony.getItemStack());
         }
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openInneCaseGUI(final Player player) {
@@ -248,7 +248,7 @@ public class AdminPanelManager {
         for (final SkrzynkiOther skrzynkiOther : SkrzynkiOther.values()) {
             gui.setItem(gui.firstEmpty(), skrzynkiOther.getItemStack());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
 
@@ -267,7 +267,7 @@ public class AdminPanelManager {
         for (final BonType bonType : BonType.values()) {
             gui.setItem(gui.firstEmpty(), bonType.getBon());
         }
-        gui.setItem(26, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openItemShopGUI(final Player player) {
@@ -310,7 +310,7 @@ public class AdminPanelManager {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&b&lNIES &8&l& &6&lAKCE &f- ADMINISTRACJA"));
         gui.setItem(3, new ItemBuilder(Material.DIAMOND_BLOCK).setName("&b&lNIESAMOWITE PRZEDMIOTY").toItemStack().clone());
         gui.setItem(5, new ItemBuilder(Material.IRON_BLOCK).setName("&6&lAKCESORIUM").toItemStack().clone());
-        gui.setItem(8, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(8, Utils.powrot());
         player.openInventory(gui);
     }
     public void openAkcesoriumGUI(final Player player) {
@@ -318,7 +318,7 @@ public class AdminPanelManager {
         for (final AkceItems akceItems : AkceItems.values()) {
             gui.setItem(gui.firstEmpty(), akceItems.getAkceItems());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openNiesamowiteGUI(final Player player) {
@@ -326,7 +326,7 @@ public class AdminPanelManager {
         for (final NiesyItems niesyItems : NiesyItems.values()) {
             gui.setItem(gui.firstEmpty(), niesyItems.getNiesy());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").addGlowing().toItemStack().clone());
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
 

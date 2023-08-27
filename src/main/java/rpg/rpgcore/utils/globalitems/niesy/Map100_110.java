@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map100_110 {
-    I100_110_1("100-110-1", 12, ItemHelper.createArmor("&b&lPodwodny Czepek", Material.DIAMOND_HELMET, 75, 15)),
-    I100_110_2("100-110-2", 12, ItemHelper.createArmor("&b&lPodwodna Kamizelka", Material.DIAMOND_CHESTPLATE, 78, 15)),
-    I100_110_3("100-110-3", 12, ItemHelper.createArmor("&b&lPodwodne Gacie", Material.DIAMOND_LEGGINGS, 77, 15)),
-    I100_110_4("100-110-4", 12, ItemHelper.createArmor("&b&lPodwodne Pletwy", Material.DIAMOND_BOOTS, 71, 15)),
-    I100_110_5("100-110-5", 12, ItemHelper.createSword("&b&lPodwodny Sztylet", Material.DIAMOND_SWORD, 67, 33,true));
+    I100_110_1("100-110-1", 14.0, ItemHelper.createArmor("&b&lPodwodny Czepek", Material.DIAMOND_HELMET, 75, 15)),
+    I100_110_2("100-110-2", 14.0, ItemHelper.createArmor("&b&lPodwodna Kamizelka", Material.DIAMOND_CHESTPLATE, 78, 15)),
+    I100_110_3("100-110-3", 14.0, ItemHelper.createArmor("&b&lPodwodne Gacie", Material.DIAMOND_LEGGINGS, 77, 15)),
+    I100_110_4("100-110-4", 14.0, ItemHelper.createArmor("&b&lPodwodne Pletwy", Material.DIAMOND_BOOTS, 71, 15)),
+    I100_110_5("100-110-5", 12.0, ItemHelper.createSword("&b&lPodwodny Sztylet", Material.DIAMOND_SWORD, 67, 33,true));
 
     private final String name;
     private final double dropChance;

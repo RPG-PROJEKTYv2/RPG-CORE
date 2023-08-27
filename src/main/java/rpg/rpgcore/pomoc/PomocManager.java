@@ -61,8 +61,8 @@ public class PomocManager {
         gui.setItem(29, itemGUI.setName("&e/live").addGlowing().toItemStack().clone());
         gui.setItem(30, itemGUI.setName("&e/osiagniecia, /os").addGlowing().toItemStack().clone());
         gui.setItem(31, itemGUI.setName("&e/kontakt").addGlowing().toItemStack().clone());
-
-
+        gui.setItem(32, itemGUI.setName("&e/hp").addGlowing().toItemStack().clone());
+        gui.setItem(33, itemGUI.setName("&e@gracz -> oznaczanie gracza na czacie").addGlowing().toItemStack().clone());
         gui.setItem(35, Utils.powrot());
         player.openInventory(gui);
     }

@@ -23,10 +23,10 @@ public class StarozytnySmoczyCesarzManager {
         this.starozytnycesarz.add(new Items("4", 8.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lPierscien Smoczego Cesarza").toItemStack(), 1));
         this.starozytnycesarz.add(new Items("5", 9.0, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lTarcza Smoczego Cesarza").toItemStack(), 1));
         this.starozytnycesarz.add(new Items("6", 14.0, ItemHelper.createSword("&5&lMiecz Smoczego Cesarza", Material.DIAMOND_SWORD, 80, 50, false), 1));
-        this.starozytnycesarz.add(new Items("7", 16.0, ItemHelper.createArmor("&5&lHelm Smoczego Cesarza", Material.DIAMOND_HELMET, 95, 20), 1));
-        this.starozytnycesarz.add(new Items("8", 16.0, ItemHelper.createArmor("&5&lZbroja Smoczego Cesarza", Material.DIAMOND_CHESTPLATE, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("9", 16.0, ItemHelper.createArmor("&5&lSpodnie Smoczego Cesarza", Material.DIAMOND_LEGGINGS, 99, 20), 1));
-        this.starozytnycesarz.add(new Items("10", 16.0, ItemHelper.createArmor("&5&lButy Smoczego Cesarza", Material.DIAMOND_BOOTS, 95, 20), 1));
+        this.starozytnycesarz.add(new Items("7", 16.0, ItemHelper.createArmor("&5&lHelm Smoczego Cesarza", Material.DIAMOND_HELMET, 90, 15), 1));
+        this.starozytnycesarz.add(new Items("8", 16.0, ItemHelper.createArmor("&5&lZbroja Smoczego Cesarza", Material.DIAMOND_CHESTPLATE, 99, 15), 1));
+        this.starozytnycesarz.add(new Items("9", 16.0, ItemHelper.createArmor("&5&lSpodnie Smoczego Cesarza", Material.DIAMOND_LEGGINGS, 97, 15), 1));
+        this.starozytnycesarz.add(new Items("10", 16.0, ItemHelper.createArmor("&5&lButy Smoczego Cesarza", Material.DIAMOND_BOOTS, 92, 15), 1));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -2,12 +2,12 @@ package rpg.rpgcore.npc.wyslannik.enums;
 
 public enum WyslannikMissionKillBoss {
     M1(1, 2,3,"&8[&4&lBOSS&8] &c&lDowodca Rozbojnikow"),
-    M2(2, 2,5,"&8[&4&lBOSS&8] &a&lWodz Goblinow"),
-    M3(3, 3,6,"&8[&4&lBOSS&8] &f&lKrol Goryli"),
-    M4(4, 3,6,"&8[&4&lBOSS&8] &7&lPrzekleta Dusza"),
-    M5(5, 3,6,"&8[&4&lBOSS&8] &e&lTryton"),
-    M6(6, 4,8,"&8[&4&lBOSS&8] &bKrol Lodu"),
-    M7(7, 4,5,"&8[&4&lBOSS&8] &c&lPiekielny Rycerz"),
+    M2(2, 2,3,"&8[&4&lBOSS&8] &a&lWodz Goblinow"),
+    M3(3, 3,3,"&8[&4&lBOSS&8] &f&lKrol Goryli"),
+    M4(4, 3,3,"&8[&4&lBOSS&8] &7&lPrzekleta Dusza"),
+    M5(5, 3,3,"&8[&4&lBOSS&8] &e&lTryton"),
+    M6(6, 4,3,"&8[&4&lBOSS&8] &bKrol Lodu"),
+    M7(7, 4,3,"&8[&4&lBOSS&8] &c&lPiekielny Rycerz"),
     M8(8, 5,3,"&8[&4&lBOSS&8] &5&lPrzeklety Czarnoksieznik");
     private final int mission;
     private final int sredniDEF;

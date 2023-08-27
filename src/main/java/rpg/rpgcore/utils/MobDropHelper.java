@@ -24,7 +24,7 @@ import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
 import java.util.UUID;
 
-public class MobDropHelper {
+public class    MobDropHelper {
 
     public static void addDropPlayer(Player player, ItemStack is, double chance, boolean message, boolean pickup, Entity entity) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
@@ -41,8 +41,7 @@ public class MobDropHelper {
                 entity.getWorld().dropItem(entity.getLocation(), is);
                 if (message) {
                     if (user.isItemDropEnabled())
-                        player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
-                }
+                        player.sendMessage(Utils.format(("&8[ &7DROP &8] &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));       }
             }
         }
     }
@@ -72,7 +71,7 @@ public class MobDropHelper {
             szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
         }
 
-        final double akceDropChance50lvl = getDropChance(szczescie, 0.1);
+        final double akceDropChance50lvl= getDropChance(szczescie, 0.1);
         final double akceDropChance50plus = getDropChance(szczescie, 0.05);
         final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
         final double niesDropChance50plus = getDropChance(szczescie, 0.03);
@@ -327,7 +326,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false, entity);
+                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false ,entity);
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
@@ -621,7 +620,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1), 100, true, true, entity);
                 rpgcore.getPrzedsionekManager().incrementCounter();
                 break;
-                // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
             case "Zapomniany Wojownik Lvl. 75":
                 addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
                 if (rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_1) {

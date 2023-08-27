@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map20_30 {
-    I20_30_1("20-30-1", 10, ItemHelper.createArmor("&6&lTropikalny Kask", Material.CHAINMAIL_HELMET, 15, 4)),
-    I20_30_2("20-30-2", 10, ItemHelper.createArmor("&6&lTropikalna Zbroja", Material.CHAINMAIL_CHESTPLATE, 15, 4)),
-    I20_30_3("20-30-3", 10, ItemHelper.createArmor("&6&lTropikalne Spodnie", Material.CHAINMAIL_LEGGINGS, 14, 4)),
-    I20_30_4("20-30-4", 10, ItemHelper.createArmor("&6&lTropikalne Sandaly", Material.CHAINMAIL_BOOTS, 14, 3)),
-    I20_30_5("20-30-5", 10, ItemHelper.createSword("&6&lTropikalny Miecz", Material.STONE_SWORD, 12, 5,true));
+    I20_30_1("20-30-1", 14.0, ItemHelper.createArmor("&6&lTropikalny Kask", Material.CHAINMAIL_HELMET, 15, 4)),
+    I20_30_2("20-30-2", 14.0, ItemHelper.createArmor("&6&lTropikalna Zbroja", Material.CHAINMAIL_CHESTPLATE, 15, 4)),
+    I20_30_3("20-30-3", 14.0, ItemHelper.createArmor("&6&lTropikalne Spodnie", Material.CHAINMAIL_LEGGINGS, 14, 4)),
+    I20_30_4("20-30-4", 14.0, ItemHelper.createArmor("&6&lTropikalne Sandaly", Material.CHAINMAIL_BOOTS, 14, 3)),
+    I20_30_5("20-30-5", 12.0, ItemHelper.createSword("&6&lTropikalny Miecz", Material.STONE_SWORD, 12, 5,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;

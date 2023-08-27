@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map90_100 {
-    I90_100_1("90-100-1", 12, ItemHelper.createArmor("&9&lSkradziony Helm", Material.DIAMOND_HELMET, 67, 15)),
-    I90_100_2("90-100-2", 12, ItemHelper.createArmor("&9&lSkradziona Kamizelka", Material.DIAMOND_CHESTPLATE, 70, 15)),
-    I90_100_3("90-100-3", 12, ItemHelper.createArmor("&9&lSkradzione Spodnie", Material.DIAMOND_LEGGINGS, 68, 15)),
-    I90_100_4("90-100-4", 12, ItemHelper.createArmor("&9&lSkradzione Trzewiki", Material.DIAMOND_BOOTS, 63, 15)),
-    I90_100_5("90-100-5", 12, ItemHelper.createSword("&9&lSkradziony Miecz", Material.DIAMOND_SWORD, 58, 30,true));
+    I90_100_1("90-100-1", 14.0, ItemHelper.createArmor("&9&lSkradziony Helm", Material.DIAMOND_HELMET, 67, 15)),
+    I90_100_2("90-100-2", 14.0, ItemHelper.createArmor("&9&lSkradziona Kamizelka", Material.DIAMOND_CHESTPLATE, 70, 15)),
+    I90_100_3("90-100-3", 14.0, ItemHelper.createArmor("&9&lSkradzione Spodnie", Material.DIAMOND_LEGGINGS, 68, 15)),
+    I90_100_4("90-100-4", 14.0, ItemHelper.createArmor("&9&lSkradzione Trzewiki", Material.DIAMOND_BOOTS, 63, 15)),
+    I90_100_5("90-100-5", 12.0, ItemHelper.createSword("&9&lSkradziony Miecz", Material.DIAMOND_SWORD, 58, 30,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;

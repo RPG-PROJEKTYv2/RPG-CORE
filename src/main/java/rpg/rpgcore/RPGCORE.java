@@ -109,6 +109,8 @@ import rpg.rpgcore.commands.player.kosz.KoszInventoryClick;
 import rpg.rpgcore.commands.player.kosz.KoszInventoryClose;
 import rpg.rpgcore.commands.player.misje.MisjeCommand;
 import rpg.rpgcore.commands.player.misje.MisjeInventoryClickListener;
+import rpg.rpgcore.commands.player.mobshp.MobsHpCommand;
+import rpg.rpgcore.commands.player.mobshp.MobsHpInventoryClickListener;
 import rpg.rpgcore.commands.player.profile.ProfileCommand;
 import rpg.rpgcore.commands.player.profile.ProfileInventoryClickListener;
 import rpg.rpgcore.commands.player.rangi.RangiCommand;
@@ -563,6 +565,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initGlobalCommands() {
         CommandAPI.getCommand().register("HellRPGCore", new TeleportCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new MobsHpCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TeleportHereCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new SpawnCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BanCommand(this));
@@ -679,6 +682,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new AkcesoriumPickUpListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new MobsHpInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);

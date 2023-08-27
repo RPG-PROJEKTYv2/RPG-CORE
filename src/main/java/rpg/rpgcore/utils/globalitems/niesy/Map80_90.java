@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map80_90 {
-    I80_90_1("80-90-1", 12, ItemHelper.createArmor("&e&lSloneczny Kapelusz", Material.DIAMOND_HELMET, 60, 14)),
-    I80_90_2("80-90-2", 12, ItemHelper.createArmor("&e&lSloneczna Zbroja", Material.DIAMOND_CHESTPLATE, 63, 14)),
-    I80_90_3("80-90-3", 12, ItemHelper.createArmor("&e&lSloneczne Spodenki", Material.DIAMOND_LEGGINGS, 62, 14)),
-    I80_90_4("80-90-4", 12, ItemHelper.createArmor("&e&lSloneczne Klapki", Material.DIAMOND_BOOTS, 59, 14)),
-    I80_90_5("80-90-5", 12, ItemHelper.createSword("&e&lSloneczna Szabla", Material.DIAMOND_SWORD, 52, 23,true));
+    I80_90_1("80-90-1", 14.0, ItemHelper.createArmor("&e&lSloneczny Kapelusz", Material.DIAMOND_HELMET, 60, 14)),
+    I80_90_2("80-90-2", 14.0, ItemHelper.createArmor("&e&lSloneczna Zbroja", Material.DIAMOND_CHESTPLATE, 63, 14)),
+    I80_90_3("80-90-3", 14.0, ItemHelper.createArmor("&e&lSloneczne Spodenki", Material.DIAMOND_LEGGINGS, 62, 14)),
+    I80_90_4("80-90-4", 14.0, ItemHelper.createArmor("&e&lSloneczne Klapki", Material.DIAMOND_BOOTS, 59, 14)),
+    I80_90_5("80-90-5", 12.0, ItemHelper.createSword("&e&lSloneczna Szabla", Material.DIAMOND_SWORD, 52, 23,true));
     private final String name;
     private final double dropChance;
     private final ItemStack item;
