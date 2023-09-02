@@ -25,15 +25,10 @@ public class TajemniczaManager {
 
     public TajemniczaManager() {
         // set I
-        this.tajemnicza.add(new Items("1", 10.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lI&8&l]", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("2", 10.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lI&8&l]", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("3", 10.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lI&8&l]", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("4", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lI&8&l]", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
-        // set II
-        this.tajemnicza.add(new Items("5", 8.0, ItemHelper.createArmor("&3Tajemniczy Helm &8&l[&f&lII&8&l]", Material.DIAMOND_HELMET, ChanceHelper.getRandInt(7, 20), ChanceHelper.getRandInt(2, 4)), 1));
-        this.tajemnicza.add(new Items("6", 8.0, ItemHelper.createArmor("&3Tajemnicza Klata &8&l[&f&lII&8&l]", Material.DIAMOND_CHESTPLATE, ChanceHelper.getRandInt(8, 22), ChanceHelper.getRandInt(2, 5)), 1));
-        this.tajemnicza.add(new Items("7", 8.0, ItemHelper.createArmor("&3Tajemnicze Spodnie &8&l[&f&lII&8&l]", Material.DIAMOND_LEGGINGS, ChanceHelper.getRandInt(7, 18), ChanceHelper.getRandInt(2, 4)), 1));
-        this.tajemnicza.add(new Items("8", 8.0, ItemHelper.createArmor("&3Tajemnicze Buty &8&l[&f&lII&8&l]", Material.DIAMOND_BOOTS, ChanceHelper.getRandInt(6, 17), ChanceHelper.getRandInt(2, 7)), 1));
+        this.tajemnicza.add(new Items("1", 10.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("2", 10.0, ItemHelper.createArmor("&3Tajemnicza Klata", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("3", 10.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("4", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
         // fragment stali
         this.tajemnicza.add(new Items("9", 7.0, GlobalItem.getItem("I_FRAGMENT_STALI", 2), 2));
         this.tajemnicza.add(new Items("10", 7.0, LesnikItems.POTION.getItem(), 1));

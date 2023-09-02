@@ -4,16 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.metiny.MetinyHelper;
@@ -88,11 +83,6 @@ public class KoloseumManager {
         this.setDungeonStatus(DungeonStatus.ENDED);
         this.clearEntities(true);
         for (final int metinId : this.getMetinIds()) MetinyHelper.despawnMetin(metinId);
-        for (final int taskId : this.getTaskIds()) {
-            if (taskId == -1) continue;
-            this.rpgcore.getServer().getScheduler().cancelTask(taskId);
-        }
-        if (this.getTargetStand() != null) this.getTargetStand().remove();
         Bukkit.getServer().broadcastMessage(Utils.format("&6&lKoloseum &8>> &7Dungeon zostal zresetowany!"));
     }
 
@@ -177,14 +167,13 @@ public class KoloseumManager {
     }
 
     public void closeMapGate() {
-        this.mapGateLocations.forEach(location -> location.getBlock().setType(Material.IRON_FENCE));
+        this.mapGateLocations.forEach(location -> location.getBlock().setType(Material.COBBLE_WALL));
     }
-
-
 
 
     @Getter
     private int counter = 0;
+
     public void incrementCounter() {
         counter++;
     }
@@ -217,14 +206,30 @@ public class KoloseumManager {
             new Location(dungeon, 173.5, 68, 162.5)
     );
 
+    @Getter
+    @Setter
+    private int taskId = -1;
+    private int maxMobs = 240;
+
     private void spawnMobs(final int mobType) {
-        for (final Location loc : mobsSpawnLocations) {
-            for (int i = 0; i < 60; i++) {
-                final double addedX = ChanceHelper.getRandDouble(-0.5, 0.5);
-                final double addedZ = ChanceHelper.getRandDouble(-0.5, 0.5);
-                RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MOB" + mobType, loc.clone().add(addedX, 0, addedZ));
+
+        if (maxMobs != 240) maxMobs = 240;
+
+        int task = rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(rpgcore, () -> {
+            if (maxMobs == 0) {
+                rpgcore.getServer().getScheduler().cancelTask(this.getTaskId());
+                return;
             }
-        }
+            for (final Location loc : mobsSpawnLocations) {
+                for (int i = 0; i < 20; i++) {
+                    final double addedX = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    final double addedZ = ChanceHelper.getRandDouble(-0.5, 0.5);
+                    RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MOB" + mobType, loc.clone().add(addedX, 0, addedZ));
+                    maxMobs--;
+                }
+            }
+        }, 20L, 450L);
+        this.setTaskId(task);
     }
 
     private void backPlayers() {
@@ -305,37 +310,16 @@ public class KoloseumManager {
     }
 
     @Getter
-    private final int[] taskIds = new int[5];
-    @Getter
     private final Entity[] entities = new Entity[5];
     @Getter
     private final int[] metinIds = new int[]{40_000, 40_001, 40_002, 40_003, 40_004, 40_005};
-    @Getter
-    private ArmorStand targetStand;
 
     private void spawnEntities() {
-        targetStand = (ArmorStand) dungeon.spawnEntity(new Location(dungeon, 159.5, 73.5, 162.5), EntityType.ARMOR_STAND);
-        targetStand.setGravity(false);
-        targetStand.setMarker(true);
-        targetStand.setVisible(false);
-        targetStand.setArms(false);
-        targetStand.setBasePlate(false);
-        targetStand.setSmall(true);
-        entities[0] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-1", new Location(dungeon, 140.5, 78.5, 162.5)).getEntity().getBukkitEntity();
-        entities[1] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-2", new Location(dungeon, 147.5, 78.5, 150.5)).getEntity().getBukkitEntity();
-        entities[2] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-3", new Location(dungeon, 171.5, 78.5, 150.5)).getEntity().getBukkitEntity();
-        entities[3] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-4", new Location(dungeon, 178.5, 78.5, 162.5)).getEntity().getBukkitEntity();
-        entities[4] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-BOSS", new Location(dungeon, 159.5, 78.5, 180.5)).getEntity().getBukkitEntity();
-
-
-        // TODO Sprawdzic task id czy dobrze zwraca
-        // TODO Sprawdzic o chuj chdodzi z tym lataniem bo nie dziala
-        // TODO Sprawdzic czemu nie anuluje taska
-
-        for (final Entity entity : entities) {
-            ((CraftZombie) entity).getHandle().goalSelector.a(0, new PathfinderGoalFloat(((CraftZombie) entity).getHandle()));
-            taskIds[0] = Utils.flyAndTarget(entity, targetStand);
-        }
+        entities[0] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-1", new Location(dungeon, 140.5, 79.5, 162.5)).getEntity().getBukkitEntity();
+        entities[1] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-2", new Location(dungeon, 147.5, 79.5, 150.5)).getEntity().getBukkitEntity();
+        entities[2] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-3", new Location(dungeon, 171.5, 79.5, 150.5)).getEntity().getBukkitEntity();
+        entities[3] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-MINIBOSS-4", new Location(dungeon, 178.5, 79.5, 162.5)).getEntity().getBukkitEntity();
+        entities[4] = RPGCORE.getMythicMobs().getMobManager().spawnMob("KOLOSEUM-BOSS", new Location(dungeon, 159.5, 79.5, 180.5)).getEntity().getBukkitEntity();
     }
 
     private void spawnMetins(int amount) {
@@ -343,11 +327,9 @@ public class KoloseumManager {
     }
 
     private void getBossDown(final int bossId, final String bossName) {
-        Entity boss = entities[bossId];
-        this.rpgcore.getServer().getScheduler().cancelTask(taskIds[bossId]);
-        taskIds[bossId] = -1;
-
+        final Entity boss = entities[bossId];
         boss.remove();
+
         RPGCORE.getMythicMobs().getMobManager().spawnMob(bossName, new Location(dungeon, 159.5, 68, 205.5, 180F, 0));
     }
 
@@ -358,37 +340,44 @@ public class KoloseumManager {
         this.sendMessage(1);
         this.spawnMobs(1);
     }
+
     public void startPhase2() {
         this.updatePhase(2);
         this.sendMessage(2);
         this.getBossDown(0, "KOLOSEUM-MINIBOSS-1");
     }
+
     public void startPhase3() {
         this.updatePhase(3);
         this.sendMessage(3);
         this.spawnMetins(4);
     }
+
     public void startPhase4() {
         this.updatePhase(4);
         this.sendMessage(4);
         this.getBossDown(1, "KOLOSEUM-MINIBOSS-2");
     }
+
     public void startPhase5() {
         this.updatePhase(5);
         this.sendMessage(5);
         this.spawnMobs(2);
     }
+
     public void startPhase6() {
         this.updatePhase(6);
         this.sendMessage(6);
         this.getBossDown(2, "KOLOSEUM-MINIBOSS-3");
         this.getBossDown(3, "KOLOSEUM-MINIBOSS-4");
     }
+
     public void startPhase7() {
         this.updatePhase(7);
         this.sendMessage(7);
         this.spawnMetins(6);
     }
+
     public void startPhase8() {
         this.updatePhase(8);
         this.sendMessage(8);
@@ -404,7 +393,6 @@ public class KoloseumManager {
         this.dungeonStatus = DungeonStatus.RESETTING;
         this.resetDungeon();
     }
-
 
 
 }

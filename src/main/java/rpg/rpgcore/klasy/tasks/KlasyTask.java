@@ -34,18 +34,6 @@ public class KlasyTask implements Runnable{
                     continue;
                 }
             }
-            if (klasa.getPodKlasa() == KlasySide.NINJA) {
-                if (rpgcore.getKlasyManager().getNinjaRMB().asMap().containsKey(player.getUniqueId())) {
-                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                        final float speed = player.getWalkSpeed();
-                        player.setWalkSpeed(Math.min(speed + 0.15F, 1.0F));
-                        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                            player.setWalkSpeed(speed);
-                        }, 200L);
-                    }, 1L);
-                }
-                continue;
-            }
             if (klasa.getPodKlasa() == KlasySide.SKRYTOBOJCA) {
                 if (player.getHealth() < player.getMaxHealth() * 0.3) {
                     if (klasa.hasLeftClickCooldown()) continue;

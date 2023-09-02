@@ -11,7 +11,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
@@ -41,46 +40,6 @@ public class PlayerJoinListener implements Listener {
         this.rpgcore = rpgcore;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onJoinWhiteList(final PlayerLoginEvent e) {
-        if (!e.getPlayer().isWhitelisted() && Bukkit.hasWhitelist()) {
-            String msg = Utils.getWhiteListMessage().replace("@p", e.getPlayer().getName());
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(msg), 1L);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(final PlayerLoginEvent e) {
-        if (!rpgcore.getUserManager().isUser(e.getPlayer().getUniqueId())) {
-            if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString())), 1L);
-                return;
-            }
-            final Player player = e.getPlayer();
-            final UUID uuid = player.getUniqueId();
-            player.getOpenInventory().getTopInventory().clear();
-
-            player.getInventory().clear();
-            player.getInventory().setArmorContents(null);
-            player.getEnderChest().clear();
-
-            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
-            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0,false));
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
-                rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
-            });
-
-            player.setLevel(1);
-            player.setExp(0);
-            player.teleport(rpgcore.getSpawnManager().getSpawn());
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 20L);
-        }
-    }
-
     private final World world = Bukkit.getWorld("1-10map");
     private final List<Location> spawnLocations1_10 = Arrays.asList(
             new Location(world, -68.5, 76, -296.5),
@@ -94,7 +53,6 @@ public class PlayerJoinListener implements Listener {
     );
 
 
-
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoinListener(final PlayerJoinEvent e) {
 
@@ -102,33 +60,50 @@ public class PlayerJoinListener implements Listener {
         final UUID uuid = player.getUniqueId();
         final String playerName = player.getName();
 
+        e.setJoinMessage(null);
+
         if (!rpgcore.getUserManager().isUser(uuid)) {
-            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cCos poszl nie tak! :(\n&4Jak najszybciej skontaktuj sie z administacja z ss'em tej wiadomosci\n&4&lKod Bledu: (#999NULL001)"));
+            if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString())), 1L);
+                return;
+            }
+            player.getOpenInventory().getTopInventory().clear();
+
+            player.getInventory().clear();
+            player.getInventory().setArmorContents(new ItemStack[4]);
+            player.getEnderChest().clear();
+
+            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0));
+            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
+            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0, false));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
+                rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
+            });
+
+            player.setLevel(1);
+            player.setExp(0);
+            player.teleport(rpgcore.getSpawnManager().getSpawn());
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 10L);
             return;
         }
 
         player.getOpenInventory().getTopInventory().clear();
         player.setWalkSpeed(0.2F);
 
-        e.setJoinMessage(null);
-
 
         final User user = rpgcore.getUserManager().find(uuid);
 
         user.incrementServerJoins();
 
-        if (user.isTworca() && !rpgcore.getKodTworcyManager().isTworca(user.getId())) rpgcore.getKodTworcyManager().addTworca(user.getId());
+        if (user.isTworca() && !rpgcore.getKodTworcyManager().isTworca(user.getId()))
+            rpgcore.getKodTworcyManager().addTworca(user.getId());
 
-        if (user.getRankUser().isHighStaff()) {
-            if (!player.hasPermission("mv.bypass.gamemode.*")) {
-                player.addAttachment(rpgcore, "mv.bypass.gamemode.*", true);
-            }
-        } else {
-            if (player.hasPermission("mv.bypass.gamemode.*")) {
-                player.removeAttachment(player.addAttachment(rpgcore, "mv.bypass.gamemode.*", false));
-            }
+        if (player.hasPermission("mv.bypass.gamemode.*")) {
+            player.removeAttachment(player.addAttachment(rpgcore, "mv.bypass.gamemode.*", false));
         }
-
 
 
         if (user.getLvl() <= 5) {
@@ -149,7 +124,8 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (user.getInventoriesUser() != null) {
-            if (user.getInventoriesUser().getArmor() != null) player.getInventory().setArmorContents(new ItemStack[]{new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)});
+            if (user.getInventoriesUser().getArmor() != null)
+                player.getInventory().setArmorContents(new ItemStack[]{new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)});
             if (user.getInventoriesUser().getInventory() != null) player.getInventory().clear();
             if (user.getInventoriesUser().getEnderchest() != null) player.getEnderChest().clear();
         }
@@ -164,15 +140,6 @@ public class PlayerJoinListener implements Listener {
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }
-
-        if (user.isFirstTime()) {
-            player.getInventory().addItem(ItemHelper.createArmor("&8Helm Poczatkujacego", Material.LEATHER_HELMET, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 1, 0));
-            player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
-            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0,false));
-            user.setFirstTime(false);
         }
 
         rpgcore.getUserSaveManager().savePlayer(player, uuid);

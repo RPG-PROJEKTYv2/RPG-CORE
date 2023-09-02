@@ -12,7 +12,7 @@ import java.util.Date;
 public class BackupTask implements Runnable {
 
     public BackupTask(RPGCORE rpgcore) {
-        rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(rpgcore, this, 0L, 36_000L);
+        rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(rpgcore, this, 0L, 432_000L);
     }
 
     @Override

@@ -91,10 +91,15 @@ public class ArmorEffectsHelper {
             k = 300;
         }
         if (value > 249) {
-            k = 600;
+            k = 450;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
-        final float walkSpeed = Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
+
+        if (RPGCORE.getInstance().getKlasyManager().getNinjaRMB().asMap().containsKey(player.getUniqueId())) {
+            k += 150;
+        }
+        float walkSpeed = Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
+        if (player.getActivePotionEffects().stream().anyMatch(potion -> potion.getType() == PotionEffectType.SLOW && potion.getAmplifier() == 8)) walkSpeed = 0F;
         player.setWalkSpeed(walkSpeed);
         //player.removePotionEffect(PotionEffectType.SPEED);
         //player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, (int) Math.floor((bonuses.getBonusesUser().getSzybkosc() + k) / 100.0) - 1));

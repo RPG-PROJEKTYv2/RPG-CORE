@@ -189,7 +189,7 @@ public class DrzewkoWyszkoleniaUser {
         private final int reqLvl = 75;
         private final String reqItem = "I4";
         private final int maxUpgradeLvl = 5;
-        private final int perLvl = 1;
+        private final int perLvl = 100;
         private boolean unlocked;
         private int upgradeLvl;
         private int dodatkowyDmg;

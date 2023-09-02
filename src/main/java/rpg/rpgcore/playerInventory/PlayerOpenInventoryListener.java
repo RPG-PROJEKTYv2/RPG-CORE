@@ -3,6 +3,7 @@ package rpg.rpgcore.playerInventory;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,6 +26,9 @@ public class PlayerOpenInventoryListener implements Listener {
     public void onItemClick(final PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
         if (!RPGCORE.getInstance().getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin()) {
+            e.setCancelled(true);
+            e.setUseItemInHand(Event.Result.DENY);
+            e.setUseInteractedBlock(Event.Result.DENY);
             e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
         }
     }

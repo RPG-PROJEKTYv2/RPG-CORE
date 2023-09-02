@@ -40,24 +40,24 @@ public class NMSManager {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(this.makeSubTitle(subtitle, fadeInOut, last, fadeInOut));
     }
 
-    public void sendMobInfo(final Player player, final LivingEntity entity) {
+    public void sendMobInfo(final Player player, final LivingEntity entity, final double dmg) {
         if (entity instanceof Creature) {
             if (BossBarUtil.hasBar(player.getUniqueId())) {
                 BossBarUtil.updateBar(player, Utils.format(
                         entity.getCustomName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth(), 2) +
+                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
                                 "&7/&c" +
                                 DoubleUtils.round(entity.getMaxHealth(), 0)
-                ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+                ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             } else {
                 BossBarUtil.setBar(player, Utils.format(
                         entity.getCustomName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth(), 2) +
+                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
                                 "&7/&c" +
                                 DoubleUtils.round(entity.getMaxHealth(), 0)
-                ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+                ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             }
         }
         if (entity instanceof Player) {
@@ -65,18 +65,18 @@ public class NMSManager {
                 BossBarUtil.updateBar(player, Utils.format(
                         entity.getName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth(), 2) +
+                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
                                 "&7/&c" +
                                 DoubleUtils.round(entity.getMaxHealth(), 0)
-                ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+                ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             } else {
                 BossBarUtil.setBar(player, Utils.format(
                         entity.getName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth(), 2) +
+                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
                                 "&7/&c" +
                                 DoubleUtils.round(entity.getMaxHealth(), 0)
-                ), (float) (entity.getHealth() / entity.getMaxHealth()) * 100);
+                ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             }
         }
         RPGCORE.getInstance().getCooldownManager().giveBossBarCooldown(player.getUniqueId());

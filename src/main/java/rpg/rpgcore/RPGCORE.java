@@ -146,6 +146,7 @@ import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.dungeons.maps.icetower.events.IceTowerListener;
 import rpg.rpgcore.dungeons.maps.icetower.tasks.IceTowerTask;
 import rpg.rpgcore.dungeons.maps.koloseum.KoloseumManager;
+import rpg.rpgcore.dungeons.maps.koloseum.events.KoloseumEntityDamageListener;
 import rpg.rpgcore.dungeons.maps.koloseum.events.KoloseumInteractListener;
 import rpg.rpgcore.dungeons.maps.koloseum.events.KoloseumPortalEntryListener;
 import rpg.rpgcore.dungeons.maps.koloseum.tasks.KoloseumTask;
@@ -549,7 +550,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
 
-        //this.mongo.clearDatabase();
+        this.mongo.clearDatabase();
 
         this.mongo.onDisable();
         this.backupMongo.onDisable();
@@ -1045,6 +1046,7 @@ public final class RPGCORE extends JavaPlugin {
         this.koloseumManager = new KoloseumManager(this);
         this.getServer().getPluginManager().registerEvents(new KoloseumInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KoloseumPortalEntryListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new KoloseumEntityDamageListener(), this);
     }
 
     private void initCustomDungeons() {

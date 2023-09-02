@@ -91,9 +91,9 @@ public class    MobDropHelper {
         // SKRZYNIA KOWALA
         addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
         // TAJEMNICZA SKRZYNIA
-        addDropPlayer(player, SkrzynkiOther.getItem("I4", 1), getDropChance(szczescie, 0.55), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I4", 1), getDropChance(szczescie, 0.35), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
-        addDropPlayer(player, SkrzynkiOther.getItem("I5", 1), getDropChance(szczescie, 1.2), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I5", 1), getDropChance(szczescie, 1.05), true, true, entity);
         // SKRZYNIA ZE ZWIERZAKAMI
         //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
 
@@ -362,6 +362,7 @@ public class    MobDropHelper {
             case "Mroczna Dusza Lvl. 78":
                 addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
                 // AKCESORIUM
+                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.001), true, true, entity);
                 addDropPlayer(player, AkceItems.A8.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("70-80", 1), getDropChance(szczescie, 1.5), true, true, entity);
@@ -637,11 +638,11 @@ public class    MobDropHelper {
             case "[MiniBOSS] Wyznawca Posejdona":
             case "[MiniBOSS] Wyznawca Zeusa":
             case "[MiniBOSS] Wyznawca Hadesa":
-                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.07), true, false, entity);
-                if (ChanceHelper.getChance(getDropChance(szczescie, 5))) {
+                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 2), true, false, entity);
+                if (ChanceHelper.getChance(getDropChance(szczescie, 7.5))) {
                     player.getInventory().addItem(Dungeony.I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM.getItemStack());
                     Bukkit.getServer().broadcastMessage(" ");
-                    Bukkit.getServer().broadcastMessage("&6&lKoloseum &8>> &7Gracz &f" + player.getName() + " &7znalazl &eSakiewke ze Zlotym Proszkiem&7!");
+                    Bukkit.getServer().broadcastMessage(Utils.format("&6&lKoloseum &8>> &7Gracz &f" + player.getName() + " &7znalazl &eSakiewke ze Zlotym Proszkiem&7!"));
                     Bukkit.getServer().broadcastMessage(" ");
                 }
                 if (rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_2 || rpgcore.getKoloseumManager().getDungeonStatus() == DungeonStatus.ETAP_4 ||
@@ -651,7 +652,7 @@ public class    MobDropHelper {
                 break;
             case "[BOSS] Czempion Areny":
                 addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
-                rpgcore.getPrzedsionekManager().incrementCounter();
+                rpgcore.getKoloseumManager().incrementCounter();
                 break;
         }
 
