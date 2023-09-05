@@ -7,6 +7,7 @@ import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -871,5 +872,14 @@ public class Utils {
         } else {
             return null;
         }
+    }
+
+    public static String locatinoToString(final Location location) {
+        return location.getWorld().getName() + ":" + location.getX() + ":" + location.getY() + ":" + location.getZ();
+    }
+
+    public static Location locationFromString(final String string) {
+        final String[] split = string.split(":");
+        return new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
     }
 }

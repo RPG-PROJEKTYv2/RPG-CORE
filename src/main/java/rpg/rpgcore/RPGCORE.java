@@ -154,6 +154,8 @@ import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.PrzedsionekManager;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekInteractListener;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekPortalEntryListener;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.tasks.PiekielnyPrzedsionekTask;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.TajemniczePiaskiManager;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.events.TajemniczePiaskiInteractListener;
 import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.HsCommand;
 import rpg.rpgcore.economy.KasaCommand;
@@ -423,6 +425,7 @@ public final class RPGCORE extends JavaPlugin {
     private KlasyManager klasyManager;
     private BackupManager backupManager;
     private KodTworcyManager kodTworcyManager;
+    private TajemniczePiaskiManager tajemniczePiaskiManager;
 
 
     private int i = 1;
@@ -791,7 +794,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
         this.getServer().getPluginManager().registerEvents(new RybakInteractListener(this), this);
 
-        this.getServer().getPluginManager().registerEvents(new RybakRegionEnterListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new RybakRegionEnterListener(), this);
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);
@@ -1047,6 +1050,11 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new KoloseumInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KoloseumPortalEntryListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KoloseumEntityDamageListener(), this);
+
+        // TAJEMNICZE PIASKI
+        this.tajemniczePiaskiManager = new TajemniczePiaskiManager(this);
+        this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiInteractListener(this), this);
+
     }
 
     private void initCustomDungeons() {
@@ -1563,5 +1571,8 @@ public final class RPGCORE extends JavaPlugin {
 
     public KoloseumManager getKoloseumManager() {
         return koloseumManager;
+    }
+    public TajemniczePiaskiManager getTajemniczePiaskiManager() {
+        return tajemniczePiaskiManager;
     }
 }

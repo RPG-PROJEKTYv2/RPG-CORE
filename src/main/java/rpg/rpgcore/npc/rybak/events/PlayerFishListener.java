@@ -60,7 +60,8 @@ public class PlayerFishListener implements Listener {
         
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             e.getCaught().remove();
-            this.checkPlayer(player);
+            rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
+            //this.checkPlayer(player);
         }
     }
 
@@ -143,6 +144,15 @@ public class PlayerFishListener implements Listener {
         }, 40L);
     }
 
+
+//    private org.bukkit.util.Vector getVector(Location owner, Entity entity) {
+//        double d0 = owner.getX() - entity.getLocation().getX();
+//        double d1 = owner.getY() - entity.getLocation().getY();
+//        double d2 = owner.getZ() - entity.getLocation().getZ();
+//        return new org.bukkit.util.Vector(d0 * 0.1D, d1 * 0.1D + Math.sqrt(Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2)) * 0.08D, d2 * 0.1D);
+//    }
+
+
 }
 
 
@@ -210,11 +220,4 @@ public class PlayerFishListener implements Listener {
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
-
-    private Vector getVector(Location owner, Entity entity) {
-        double d0 = owner.getX() - entity.getLocation().getX();
-        double d1 = owner.getY() - entity.getLocation().getY();
-        double d2 = owner.getZ() - entity.getLocation().getZ();
-        return new Vector(d0 * 0.1D, d1 * 0.1D + Math.sqrt(Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2)) * 0.08D, d2 * 0.1D);
     }*/

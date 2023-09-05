@@ -134,7 +134,7 @@ public class GornikBlockBreakListener implements Listener {
                     break;
             }
             final ItemStack reward = info.getReward().clone();
-            double chestDropChance = 0.5;
+            double chestDropChance = 100; //0.5
             double doubleDrop = 2.0;
             if (user.isPickaxeAbilityActive()) doubleDrop += 25.0;
             for (final ItemStack armor : player.getInventory().getArmorContents()) {

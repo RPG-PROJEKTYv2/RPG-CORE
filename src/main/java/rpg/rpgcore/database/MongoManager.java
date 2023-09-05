@@ -13,6 +13,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
@@ -1968,6 +1969,26 @@ public class MongoManager {
             userMap.put(UUID.fromString(key), document.getList(key, String.class).stream().map(UUID::fromString).collect(Collectors.toList()));
         }
         return userMap;
+    }
+
+    public Map<Location, RdzenPiaszczystychWydm> loadAllRdzeniePiaszczystychWydm() {
+        final Map<Location, RdzenPiaszczystychWydm> rdzenie = new HashMap<>();
+        final Document document = this.pool.getDungeons().find(new Document("_id", "dungeon80-90")).first();
+        if (document == null) return rdzenie;
+        for (final String key : document.keySet()) {
+            if (key.equals("_id")) continue;
+            final Document rdzenDocument = document.get(key, Document.class);
+            final RdzenPiaszczystychWydm rdzen = new RdzenPiaszczystychWydm(rdzenDocument);
+            rdzenie.put(Utils.locationFromString(rdzenDocument.getString("hologramLocation")), rdzen);
+        }
+        return rdzenie;
+    }
+
+    public void addDataDungeons(final Document document) {
+        if (this.pool.getDungeons().find(new Document("_id", document.getString("_id"))).first() != null) {
+            this.pool.getDungeons().deleteOne(new Document("_id", document.getString("_id")));
+        }
+        this.pool.getDungeons().insertOne(document);
     }
 
 

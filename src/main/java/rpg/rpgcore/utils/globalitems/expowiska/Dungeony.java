@@ -14,7 +14,9 @@ public enum Dungeony {
     I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Piekielnego Wladcy").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     I_KLUCZ_KOLOSEUM("I_KLUCZ_KOLOSEUM", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&6&lKlucz do Koloseum").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &6&lKoloseum&7!")).hideFlag().toItemStack().clone()),
     I_KOLOSEUM_SKRZYNKA("I_KOLOSEUM_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Czempiona").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
-    I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM("I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM", new ItemBuilder(Material.EXP_BOTTLE).setName("&eSakiewka ze Zlotym Proszkiem").setLore(Arrays.asList("&fDzieki niej uda ci sie wzmocnic podstawowe akcesorium")).toItemStack().clone());
+    I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM("I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM", new ItemBuilder(Material.EXP_BOTTLE).setName("&eSakiewka ze Zlotym Proszkiem").setLore(Arrays.asList("&fDzieki niej uda ci sie wzmocnic podstawowe akcesorium")).toItemStack().clone()),
+    I_KLUCZ_TAJEMNICZE_PIASKI("I_KLUCZ_TAJEMNICZE_PIASKI", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&e&lKlucz Do Tajemniczych Piaskow").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &e&lTajemniczych Piaskow&7!")).hideFlag().toItemStack().clone()),
+    I_TAJEMNICZE_PIASKI_SKRZYNKA("I_TAJEMNICZE_PIASKI_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Cesarza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
 
 
     private final ItemStack itemStack;
