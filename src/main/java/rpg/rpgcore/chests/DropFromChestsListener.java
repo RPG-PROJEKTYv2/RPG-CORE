@@ -43,7 +43,7 @@ public class DropFromChestsListener implements Listener {
         if (player.getItemInHand().getType().equals(Material.CHEST)
                 || player.getItemInHand().getType().equals(Material.ENDER_CHEST)
                 || player.getItemInHand().getType().equals(Material.JUKEBOX)
-                || player.getItemInHand().getType().equals(Material.FLOWER_POT)) {
+                || player.getItemInHand().getType().equals(Material.FLOWER_POT_ITEM)) {
 
             final ItemStack playerItem = player.getItemInHand();
 
@@ -877,6 +877,105 @@ public class DropFromChestsListener implements Listener {
                                 is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(10,16),
                                         ChanceHelper.getRandInt(7,10),
                                         ChanceHelper.getRandInt(60,70),"&c&lMedalion Piekielnego Wladcy");
+                                break;
+                            default:
+                                break;
+                        }
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // DUNGEON 70-80
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_KOLOSEUM_SKRZYNKA").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Dungeony.getItem("I_KOLOSEUM_SKRZYNKA", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        final Items item = rpgcore.getCzempionArenyManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case MINECART:
+                                is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-30,-21),
+                                        ChanceHelper.getRandInt(33,46),
+                                        ChanceHelper.getRandInt(38,58),
+                                        ChanceHelper.getRandDouble(0.1,0.3),
+                                        ChanceHelper.getRandInt(-55,-40),
+                                        ChanceHelper.getRandInt(70,80), "&6&lEnergia Czempiona Areny");
+                                break;
+                            case FIREBALL:
+                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(13,21),
+                                        ChanceHelper.getRandInt(11,15),
+                                        ChanceHelper.getRandInt(70,80),"&6&lMedalion Czempiona Areny");
+                                break;
+                            default:
+                                break;
+                        }
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Dungeon 80-90
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_TAJEMNICZE_PIASKI_SKRZYNKA").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Dungeony.getItem("I_TAJEMNICZE_PIASKI_SKRZYNKA", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        final Items item = rpgcore.getCzempionArenyManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case MINECART:
+                                is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-36,-28),
+                                        ChanceHelper.getRandInt(40,55),
+                                        ChanceHelper.getRandInt(45,63),
+                                        ChanceHelper.getRandDouble(0.2,0.4),
+                                        ChanceHelper.getRandInt(-60,-45),
+                                        ChanceHelper.getRandInt(80,90), "&4&lEnergia Cesarza Pustyni");
+                                break;
+                            case FIREBALL:
+                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(16,24),
+                                        ChanceHelper.getRandInt(14,20),
+                                        ChanceHelper.getRandInt(80,90),"&4&lMedalion Cesarza Pustyni");
+                                break;
+                            default:
+                                break;
+                        }
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+                // Dungeon 90-100
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_DEMONICZNE_SALE_SKRZYNKA").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Dungeony.getItem("I_DEMONICZNE_SALE_SKRZYNKA", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+                        final Items item = rpgcore.getCzempionArenyManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+                        ItemStack is = item.getRewardItem();
+
+                        switch (is.getType()) {
+                            case MINECART:
+                                is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-45,-33),
+                                        ChanceHelper.getRandInt(50,61),
+                                        ChanceHelper.getRandInt(47,68),
+                                        ChanceHelper.getRandDouble(0.3,0.5),
+                                        ChanceHelper.getRandInt(-60,-45),
+                                        ChanceHelper.getRandInt(80,90), "&4&lEnergia Demona Ciemnosci");
+                                break;
+                            case FIREBALL:
+                                is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(19,27),
+                                        ChanceHelper.getRandInt(19,30),
+                                        ChanceHelper.getRandInt(90,100),"&4&lMedalion Demona Ciemnosci");
                                 break;
                             default:
                                 break;

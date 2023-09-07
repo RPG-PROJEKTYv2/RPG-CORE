@@ -52,8 +52,32 @@ public class EntityDamageEntityListener implements Listener {
             "Dungeon120-130");
 
     private final List<String> blockedEntiies = Arrays.asList(
-      ""
-    );
+            "Zaginiony Wladca",
+            "Gornik",
+            "Kowal",
+            "Pomocnik Gornika",
+            "Pustelnik",
+            "Mistrz Yang",
+            "TELEPORTER",
+            "Handlarz",
+            "Wloczykij",
+            "Przyrodnik",
+            "Magazynier",
+            "Wyslannik",
+            "Metinolog",
+            "Lesnik",
+            "Lowca",
+            "Medrzec",
+            "Dungeony",
+            "Czarownica",
+            "Kolekcjoner",
+            "Dowodca Strazy",
+            "Mistyczny Kowal",
+            "Rzemieslnik",
+            "Staruszek",
+            "Przyjaciel",
+            "Wygnany Kowal"
+            );
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(final EntityDamageByEntityEvent e) {

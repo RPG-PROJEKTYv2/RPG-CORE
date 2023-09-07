@@ -43,6 +43,8 @@ public class MobsHpCommand extends CommandAPI {
                 "&bMrozny Wilk: &c720 &7/ &c780 &7/ &c860",
                 "&6Zywiolak Ognia: &c4000 &7/ &c5000 &7/ &c6500",
                 "&fMroczna Dusza: &c11500 &7/ &c14500 &7/ &c19000",
+                "&6Pustynny Ptasznik: &c31000 &7/ &c38000 &7/ &c50000",
+                "&5Podziemna Lowczyni: &c85000 &7/ &c110000 &7/ &c145000",
                 ""
                 )).toItemStack().clone());
 
@@ -50,6 +52,9 @@ public class MobsHpCommand extends CommandAPI {
                 "",
                 "&bLodowy Sluga: &c1400",
                 "&cOgnisty Duch: &c8000",
+                "&eZapomniany Wojownik: &c16000 &7/ &c20000",
+                "&7Truposz: &c40000 &7/ &c50000",
+                "&cDemoniczy Lowca: &c245000",
                 ""
         )).toItemStack().clone());
         player.openInventory(gui);

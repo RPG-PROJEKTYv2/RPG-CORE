@@ -55,11 +55,11 @@ public class RzemieslnikManager {
         lore.add("");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1));
-        prefix = (item >= 2 ? "&3&m" : "&3");
-        lore.add("  &8- " + prefix + "&8&lFragment Stali Kowalskiej &8x2 (" + item + "/2)");
+        prefix = (item >= 2 ? "&8&l&m" : "&8&l");
+        lore.add("  &8- " + prefix + "Fragment Stali Kowalskiej &8x2 (" + item + "/2)");
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I10", 1));
-        prefix = (item >= 1 ? "&3&m" : "&a");
-        lore.add(" &8- " + prefix + "&a&lPodrecznik Kowala &8x1 (" + item + "/1");
+        prefix = (item >= 1 ? "&a&l&m" : "&a&l");
+        lore.add("  &8- " + prefix + "Podrecznik Kowala &8x1 (" + item + "/1)");
         prefix = (kasa >= 1_500_000 ? "&a&m" : "&c");
         lore.add("  &8- " + prefix + "1 500 000 $");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");

@@ -197,11 +197,17 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
         if (title.equals("Podreczniki - ADMINISTRACJA") || title.equals("Bossy & Klucze - ADMINISTRACJA")
-                || title.equals("Inne - ADMINISTRACJA") || title.equals("Dungeony - ADMINISTRACJA")) {
+                || title.equals("Inne - ADMINISTRACJA")) {
             if (slot == 26) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openPrzedmiotySpecjalneGui(player);
                 return;
+            }
+        }
+        if (title.equals("Dungeony - ADMINISTRACJA")) {
+            if (slot == 26) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
             }
         }
         if (title.equals("Przedmioty S - ADMINISTRACJA")) {

@@ -49,34 +49,34 @@ public class ZestawRangiCommand extends CommandAPI {
             case VIP:
                 if (ChanceHelper.getChance(10)) {
                     player.getInventory().addItem(GlobalItem.I52.getItemStack());
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x1 &e&lPierscien Doswiadczenia &6&l25% &6&l30 MINUT"));
+                    player.sendMessage(Utils.format("&e&lVIP &8&l>> &fOtrzymales x1 &e&lPierscien Doswiadczenia &6&l25% &6&l30 MINUT"));
                     break;
                 }
                 if (ChanceHelper.getChance(12)) {
                     final int amountPOTION = ChanceHelper.getRandInt(1,2);
                     player.getInventory().addItem(LesnikItems.getByItem("Potion", amountPOTION));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountPOTION + " &2Wywar z Kory"));
+                    player.sendMessage(Utils.format("&e&lVIP &8&l>> &fOtrzymales x" + amountPOTION + " &2Wywar z Kory"));
                     break;
 
                 }
                 if (ChanceHelper.getChance(45)) {
                     final int amoutZMIANKA = ChanceHelper.getRandInt(1,3);
                     player.getInventory().addItem(GlobalItem.getItem("I50", amoutZMIANKA));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amoutZMIANKA + " &9&lMagiczne Zaczarowanie"));
+                    player.sendMessage(Utils.format("&e&lVIP &8&l>> &fOtrzymales x" + amoutZMIANKA + " &9&lMagiczne Zaczarowanie"));
                     break;
 
                 }
                 if (ChanceHelper.getChance(55)) {
                     final int amountTAJEMNICZA = ChanceHelper.getRandInt(1,5);
                     player.getInventory().addItem(SkrzynkiOther.getItem("I4", amountTAJEMNICZA));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountTAJEMNICZA + " &3Tajemnicza Skrzynia"));
+                    player.sendMessage(Utils.format("&e&lVIP &8&l>> &fOtrzymales x" + amountTAJEMNICZA + " &3Tajemnicza Skrzynia"));
                     break;
 
                 }
                 if (ChanceHelper.getChance(100)) {
                     final int amountPOZLACANY = ChanceHelper.getRandInt(1,3);
                     player.getInventory().addItem(SkrzynkiOther.getItem("I1", amountPOZLACANY));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountPOZLACANY + " &e&lPozlacany Skarb"));
+                    player.sendMessage(Utils.format("&e&lVIP &8&l>> &fOtrzymales x" + amountPOZLACANY + " &e&lPozlacany Skarb"));
                     break;
                 }
             case TWORCA:
@@ -113,31 +113,31 @@ public class ZestawRangiCommand extends CommandAPI {
             case ELITA:
                 if (ChanceHelper.getChance(10)) {
                     player.getInventory().addItem(GlobalItem.I55.getItemStack());
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x1 &e&lPierscien Doswiadczenia &6&l50% &6&l60 MINUT"));
+                    player.sendMessage(Utils.format("&5&LELITA &8&l>> &fOtrzymales x1 &e&lPierscien Doswiadczenia &6&l50% &6&l60 MINUT"));
                     break;
                 }
                 if (ChanceHelper.getChance(12)) {
                     final int amountPOTION = ChanceHelper.getRandInt(1,3);
                     player.getInventory().addItem(LesnikItems.getByItem("Potion", amountPOTION));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountPOTION + " &2Wywar z Kory"));
+                    player.sendMessage(Utils.format("&5&LELITA &8&l>> &fOtrzymales x" + amountPOTION + " &2Wywar z Kory"));
                     break;
                 }
                 if (ChanceHelper.getChance(45)) {
                     final int amoutZMIANKA = ChanceHelper.getRandInt(1,5);
                     player.getInventory().addItem(GlobalItem.getItem("I50", amoutZMIANKA));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amoutZMIANKA + " &9&lMagiczne Zaczarowanie"));
+                    player.sendMessage(Utils.format("&5&LELITA &8&l>> &fOtrzymales x" + amoutZMIANKA + " &9&lMagiczne Zaczarowanie"));
                     break;
                 }
                 if (ChanceHelper.getChance(55)) {
                     final int amountTAJEMNICZA = ChanceHelper.getRandInt(1,12);
                     player.getInventory().addItem(SkrzynkiOther.getItem("I4", amountTAJEMNICZA));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountTAJEMNICZA + " &3Tajemnicza Skrzynia"));
+                    player.sendMessage(Utils.format("&5&LELITA &8&l>> &fOtrzymales x" + amountTAJEMNICZA + " &3Tajemnicza Skrzynia"));
                     break;
                 }
                 if (ChanceHelper.getChance(100)) {
                     final int amountPOZLACANY = ChanceHelper.getRandInt(1,5);
                     player.getInventory().addItem(SkrzynkiOther.getItem("I1", amountPOZLACANY));
-                    player.sendMessage(Utils.format("&9&lTWORCA &8&l>> &fOtrzymales x" + amountPOZLACANY + " &e&lPozlacany Skarb"));
+                    player.sendMessage(Utils.format("&5&LELITA &8&l>> &fOtrzymales x" + amountPOZLACANY + " &e&lPozlacany Skarb"));
                     break;
                 }
                 break;

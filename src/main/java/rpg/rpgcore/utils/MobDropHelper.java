@@ -292,7 +292,7 @@ public class    MobDropHelper {
             case "Mrozny Wilk Lvl. 55":
             case "Mrozny Wilk Lvl. 56":
                 // zmianki
-                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.30), true, false, entity);
+                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.35), true, false, entity);
                 addDropPlayer(player, Skrzynki.getItem("I12", 1), chestDropChance50lvl, true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
@@ -362,13 +362,17 @@ public class    MobDropHelper {
             case "Mroczna Dusza Lvl. 71":
             case "Mroczna Dusza Lvl. 75":
             case "Mroczna Dusza Lvl. 78":
+                // bao
+                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.02), true, false, entity);
                 // przedmiot do wzm mieczy [wygnany kowal]
                 addDropPlayer(player, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack(), getDropChance(szczescie, 0.15), true, true ,entity);
                 addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.001), true, true, entity);
+                addDropPlayer(player, Bossy.I2.getItemStack(),  getDropChance(szczescie, 0.15),true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.003), true, true, entity);
                 addDropPlayer(player, AkceItems.A8.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
+                addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, Ulepszacze.getItem("70-80", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.04), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I12.getItem().clone(), getDropChance(szczescie, 0.05), true, true, entity);
@@ -398,6 +402,7 @@ public class    MobDropHelper {
             case "Pustynny Ptasznik Lvl. 84":
             case "Pustynny Ptasznik Lvl. 87":
             case "Pustynny Ptasznik Lvl. 89":
+                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.001),true,true,entity);
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A9.getItemStack(), akceDropChance50lvl, true, false, entity);
@@ -437,6 +442,7 @@ public class    MobDropHelper {
                 // przepa do krakenow
                 addDropPlayer(player, Przepustki.I1.getItemStack().clone(), getDropChance(szczescie, 0.15), true, true, entity);
                 // AKCESORIUM
+                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.001) ,true,true,entity);
                 addDropPlayer(player, AkceItems.A10.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("90-100", 1), getDropChance(szczescie, 1.35), true, true, entity);
@@ -622,7 +628,7 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Piekielny Wladca":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 12), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 45), true, true, entity);
                 addDropPlayer(player, Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1), 100, true, true, entity);
                 rpgcore.getPrzedsionekManager().incrementCounter();
                 break;
@@ -643,7 +649,7 @@ public class    MobDropHelper {
             case "[MiniBOSS] Wyznawca Posejdona":
             case "[MiniBOSS] Wyznawca Zeusa":
             case "[MiniBOSS] Wyznawca Hadesa":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,3)), getDropChance(szczescie, 12), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,3)), getDropChance(szczescie, 30), true, true, entity);
                 addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 2), true, false, entity);
                 if (ChanceHelper.getChance(getDropChance(szczescie, 7.5))) {
                     player.getInventory().addItem(Dungeony.I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM.getItemStack());
@@ -657,7 +663,7 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Czempion Areny":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 12), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 45), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getKoloseumManager().incrementCounter();
                 break;

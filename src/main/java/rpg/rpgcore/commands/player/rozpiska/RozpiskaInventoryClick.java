@@ -102,15 +102,38 @@ public class RozpiskaInventoryClick implements Listener {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
                     rpgcore.getRozpiskaManager().openSEVENTHexp(player);
                     return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
-            } else {
-                player.closeInventory();
-                player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
-                return;
             }
-            return;
-        }
-    }
+            if (slot == 30) {
+                if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
+                    rpgcore.getRozpiskaManager().openEIGHTHexp(player);
+                    return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
+                }
+            }
+            if (slot == 31) {
+                if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
+                    rpgcore.getRozpiskaManager().openNINTHexp(player);
+                    return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
+                }
+            }
+            if (slot == 32) {
+                if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
+                    rpgcore.getRozpiskaManager().openTENTHexp(player);
+                    return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
+                }
+            }
             /*if (slot == 30) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 }
@@ -142,4 +165,6 @@ public class RozpiskaInventoryClick implements Listener {
                 return;
             }*/
 
+        }
+    }
 }

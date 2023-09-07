@@ -24,10 +24,10 @@ public class PrzekletyCzarnoksieznikManager {
         this.przekletyczarnoksieznik.add(new Items("4", 8.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&5&lPierscien Przekletego Czarnoksieznika").toItemStack(),1 ));
         this.przekletyczarnoksieznik.add(new Items("5", 9.0, new ItemBuilder(Material.ITEM_FRAME).setName("&5&lTarcza Przekletego Czarnoksieznika").toItemStack(),1 ));
         this.przekletyczarnoksieznik.add(new Items("6", 14.0, ItemHelper.createSword("&5&lMiecz Przekletego Czarnoksieznika", Material.DIAMOND_SWORD, 38, 23,false), 1));
-        this.przekletyczarnoksieznik.add(new Items("7", 16.0, ItemHelper.createArmor("&5&lHelm Przekletego Czarnoksieznika", Material.DIAMOND_HELMET, 59, 14), 1));
-        this.przekletyczarnoksieznik.add(new Items("8", 16.0, ItemHelper.createArmor("&5&lZbroja Przekletego Czarnoksieznika", Material.DIAMOND_CHESTPLATE, 60, 20), 1));
-        this.przekletyczarnoksieznik.add(new Items("9", 16.0, ItemHelper.createArmor("&5&lSpodnie Przekletego Czarnoksieznika", Material.DIAMOND_LEGGINGS, 60, 20), 1));
-        this.przekletyczarnoksieznik.add(new Items("10", 16.0, ItemHelper.createArmor("&5&lButy Przekletego Czarnoksieznika", Material.DIAMOND_BOOTS, 58, 13), 1));
+        this.przekletyczarnoksieznik.add(new Items("7", 16.0, ItemHelper.createArmor("&5&lHelm Przekletego Czarnoksieznika", Material.DIAMOND_HELMET, 59, 13), 1));
+        this.przekletyczarnoksieznik.add(new Items("8", 16.0, ItemHelper.createArmor("&5&lZbroja Przekletego Czarnoksieznika", Material.DIAMOND_CHESTPLATE, 60, 15), 1));
+        this.przekletyczarnoksieznik.add(new Items("9", 16.0, ItemHelper.createArmor("&5&lSpodnie Przekletego Czarnoksieznika", Material.DIAMOND_LEGGINGS, 60, 17), 1));
+        this.przekletyczarnoksieznik.add(new Items("10", 16.0, ItemHelper.createArmor("&5&lButy Przekletego Czarnoksieznika", Material.DIAMOND_BOOTS, 58, 14), 1));
     }
 
     public Items getDrawnItems(final Player player) {

@@ -129,35 +129,6 @@ public class RozpiskaManager {
         ramkaGUI.setItem(44, Utils.powrot());
         return ramkaGUI;
     }
-    // TODO MOBKA
-    // skrzynka mob
-    // skrzynka surowce
-    // skrzynka tajemnicza
-    // wartosciowy kufer
-    // skrzynia kowala
-
-    // nies
-
-    // ulepszacz
-    // przyrodnik
-    // zywica
-    // fragment stali
-    // rubinowe serce
-
-    // sakwa JAKO TA CZASTKA DO CRAFTOWANIA MIECZA
-    // czastka magii
-    // przepustka
-
-    // przywolanie bossa
-
-    // TODO BOSSA
-    // skrzynka boss
-    // lowca glowka
-    //
-
-    // TODO METINA
-    // odlamek metina w #metinolog % jest
-    // bony metinow jako RARE &kSSSS item... w #metin helper % jest
     public void openFIRSTexp(final Player player) {
         final Inventory openFIRSTgui = this.ramkaGUI("&cExpowisko &8* &f(&a1-10&f)");
         final UUID uuid = player.getUniqueId();
@@ -166,10 +137,10 @@ public class RozpiskaManager {
 
         openFIRSTgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Rozbojnik").setLore(Arrays.asList("",
                 "&6Skrzynia Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
@@ -177,8 +148,8 @@ public class RozpiskaManager {
                 "",
                 "&8Szata Rozbojnika: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
                 "&6Zardzewialy Lej: &f" + MobDropHelper.getDropChance(szczescie, 2.8) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -205,10 +176,10 @@ public class RozpiskaManager {
 
         openSECONDgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&2Goblin").setLore(Arrays.asList("",
                 "&fSkrzynia Goblina: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
@@ -216,8 +187,8 @@ public class RozpiskaManager {
                 "",
                 "&aOko Goblina: &f" + MobDropHelper.getDropChance(szczescie, 2.0) + "%",
                 "&3Ucho Goblina: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -244,10 +215,10 @@ public class RozpiskaManager {
 
         openTHIRDgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&7Goryl").setLore(Arrays.asList("",
                 "&7Skrzynia Goryla: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
@@ -255,8 +226,8 @@ public class RozpiskaManager {
                 "",
                 "&fSkora Goryla: &f" + MobDropHelper.getDropChance(szczescie, 1.6) + "%",
                 "&7Zab Goryla: &f" + MobDropHelper.getDropChance(szczescie,  2.1) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -283,10 +254,10 @@ public class RozpiskaManager {
 
         openFOURTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&8Zjawa").setLore(Arrays.asList("",
                 "&8Skrzynia Zjawy: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
@@ -294,8 +265,8 @@ public class RozpiskaManager {
                 "",
                 "&7Zlamana Kosc: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
                 "&8Prochy Zjawy: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -321,11 +292,11 @@ public class RozpiskaManager {
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
         openFIFHTgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&3Straznik Swiatyni").setLore(Arrays.asList("",
-                "&3Skrzynia Straznika Swiatyni: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&3Skrzynia Straznika Swiatyni: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
@@ -333,8 +304,8 @@ public class RozpiskaManager {
                 "",
                 "&bLza Oceanu: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
                 "&1Akwamaryn: &f" + MobDropHelper.getDropChance(szczescie,  2.3) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -360,23 +331,23 @@ public class RozpiskaManager {
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
         openSIXTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&bMrozny Wilk").setLore(Arrays.asList("",
-                "&bSkrzynia Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&bSkrzynia Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.08) + "%",
                 "",
                 "&7Wilcze Futro: &f" + MobDropHelper.getDropChance(szczescie, 2.5) + "%",
                 "&bKiel Mroznego Wilka: &f" + MobDropHelper.getDropChance(szczescie,  2.2) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
 
                 "&cPodrecznik Potegi: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 "&ePodrecznik Talentu I: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
 
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -403,11 +374,11 @@ public class RozpiskaManager {
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
         openSEVENTHgui.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Zywiolak Ognia").setLore(Arrays.asList("",
-                "&6Skrzynia Zywiolaka Ognia: &f" + MobDropHelper.getDropChance(szczescie, 2.7) + "%",
-                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 2) + "%",
-                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
-                "&f&lSkrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
-                "&6&lWartosciowy Kufer: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&6Skrzynia Zywiolaka Ognia: &f" + MobDropHelper.getDropChance(szczescie, 0.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "",
                 "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
                 "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
@@ -415,12 +386,12 @@ public class RozpiskaManager {
                 "",
                 "&cOgnisty Pyl: &f" + MobDropHelper.getDropChance(szczescie, 1.5) + "%",
                 "&cRdzen Zywiolaka: &f" + MobDropHelper.getDropChance(szczescie,  1.7) + "%",
-                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 1.0) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
                 "&c&lKlucz do Piekielnego Przedsionka: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
                 "&2Ruda Mithrylu: &f" + MobDropHelper.getDropChance(szczescie, 0.09) + "%",
                 "&dPodrecznik Silnego Ciala: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
                 "&6Podrecznik Wojownika I: &f" + MobDropHelper.getDropChance(szczescie, 0.055) + "%",
-                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.025) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
                 "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
                 ""
         )).addGlowing().toItemStack().clone());
@@ -430,7 +401,7 @@ public class RozpiskaManager {
                 ""
         )).addGlowing().toItemStack().clone());
         openSEVENTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&6&lMetin Zywiolu").setLore(Arrays.asList("",
-                "&4Odlamek Kamienia Metin 60-70: &f35%",
+                "&4Odlamek Kamienia Metin 60-70: &f30%",
                 "",
                 "&aUkryty Przedmiot: &f0.01%",
                 "&6Ukryty Przedmiot: &f0.005%",
@@ -439,5 +410,137 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         player.openInventory(openSEVENTHgui);
     }
+    public void openEIGHTHexp(final Player player) {
+        final Inventory openEIGHTHexp = this.ramkaGUI("&cExpowisko &8* &f(&a70-80&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
+        openEIGHTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&fMroczna Dusza").setLore(Arrays.asList("",
+                "&fSkrzynia Mrocznej Duszy: &f" + MobDropHelper.getDropChance(szczescie, 0.7) + "%",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "",
+                "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&cPrzeklete Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.15) + "%",
+                "",
+                "&5Trujaca Roslina: &f" + MobDropHelper.getDropChance(szczescie, 1.5) + "%",
+                "&9Odlamek Kosci Czarnego Szkieleta: &f" + MobDropHelper.getDropChance(szczescie,0.9) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&6&lKlucz Do Koloseum: &f" + MobDropHelper.getDropChance(szczescie, 0.003) + "%",
+                "&2Ruda Mithrylu: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
+                "&1Podrecznik Barbarzyncy: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&aPodrecznik Sily: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
+                "&8Odlamek Zakletej Duszy: &f" + MobDropHelper.getDropChance(szczescie, 0.15) + "%",
+                "&9&lMagiczne Zaczarowanie: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "&d&lCzastka Magii: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openEIGHTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&5&lPrzeklety Czarnoksieznik").setLore(Arrays.asList("",
+                "&3&lSkrzynia &5&lPrzeklety Czarnoksieznik: &f100%",
+                "&4Trofeum Bossa 70-80: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&5&lPrzeklety Odlamek: &f" + MobDropHelper.getDropChance(szczescie, 25) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openEIGHTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&5&lMetin Mroku").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 70-80: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openEIGHTHexp);
+    }
+    public void openNINTHexp(final Player player) {
+        final Inventory openNINTHexp = this.ramkaGUI("&cExpowisko &8* &f(&a80-90&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openNINTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&6Pustynny Ptasznik").setLore(Arrays.asList("",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "",
+                "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&6Zwoj Swiatlosci: &f" + MobDropHelper.getDropChance(szczescie, 0.15) + "%",
+                "",
+                "&6Jad Ptasznika: &f" + MobDropHelper.getDropChance(szczescie, 1.4) + "%",
+                "&aToksyczny Zab Ptasznika: &f" + MobDropHelper.getDropChance(szczescie,0.66) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&e&lKlucz Do Tajemniczych Piaskow: &f" + MobDropHelper.getDropChance(szczescie, 0.001) + "%",
+                "&7Podrecznik Niszczyciela Tarcz: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&bPodrecznik Wojownika II: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
+                "&d&lCzastka Magii: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openNINTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&e&lMityczny Pajak").setLore(Arrays.asList("",
+                "&3&lSkrzynia &e&lMitycznego Pajaka: &f100%",
+                "&4Trofeum Bossa 80-90: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&2Ruda Mithrylu: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openNINTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&e&lMetin Slonca").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 80-90: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openNINTHexp);
+    }
+    public void openTENTHexp(final Player player) {
+        final Inventory openTENTHexp = this.ramkaGUI("&cExpowisko &8* &f(&a90-100&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openTENTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&5Podziemna Lowczyni").setLore(Arrays.asList("",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.05) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "",
+                "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
+                "&4&lWywolanie &5&lPodziemnego Rozpruwacza: &f" + MobDropHelper.getDropChance(szczescie, 0.0015) + "%",
+                "",
+                "&9Mroczny Material: &f" + MobDropHelper.getDropChance(szczescie, 1.35) + "%",
+                "&eZatruta Strzala: &f" + MobDropHelper.getDropChance(szczescie,0.24) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "&4&lKlucz Do Demoniczej Sali: &f" + MobDropHelper.getDropChance(szczescie, 0.001) + "%",
+                "&6Podrecznik Pogromcy Potworow: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
+                "&6Podrecznik Bloku &f" + MobDropHelper.getDropChance(szczescie, 0.035) + "%",
+                "&8&lFragment Magicznej Stali: &f" + MobDropHelper.getDropChance(szczescie, 0.04) + "%",
+                "&d&lCzastka Magii: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "&eWejsciowka do &bSwiatyni: &f" + MobDropHelper.getDropChance(szczescie, 0.15) + "%",
+                "" + (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTENTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&5&lPodziemny Rozpruwacz").setLore(Arrays.asList("",
+                "&3&lSkrzynia &5&lPodziemnego Rozpruwacza: &f100%",
+                "&4Trofeum Bossa 90-100: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTENTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&d&lMetin Podziemi").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 90-100: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.01%",
+                "&6Ukryty Przedmiot: &f0.005%",
+                "&cUkryty Przedmiot: &f0.002%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        player.openInventory(openTENTHexp);
+    }
 }

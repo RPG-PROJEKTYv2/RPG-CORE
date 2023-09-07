@@ -22,7 +22,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b50 punktow",
-            "&8- &6x2 &f&lSkrzynia Kowala")).addTagInt("mission", 2).toItemStack(), 450, 50, SkrzynkiOther.getItem("I2", 2)),
+            "&8- &6x2 &7&lCiezka Skrzynia Kowala")).addTagInt("mission", 2).toItemStack(), 450, 50, SkrzynkiOther.getItem("I2", 2)),
     M3(3, new ItemBuilder(Material.BOOK).setName("&c&lPogromca Bossow").setLore(Arrays.asList(
             "&7Zabij &e10 &8&l[&4&lBOSS&8&l] &7&lPrzekleta Dusza &8(Mapa 30-40)",
             "",
@@ -46,7 +46,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b80 punktow",
-            "&8- &6&lWartsciowy Kufer"
+            "&8- &e&lPozlacany Skarb"
     )).addTagInt("mission", 6).toItemStack(), 50, 80, SkrzynkiOther.getItem("I1", 1)),
     M7(7, new ItemBuilder(Material.BOOK).setName("&c&lPierwszy Milion Trzeba Ukrasc").setLore(Arrays.asList(
             "&7Zarob &e1 000 000&2$ &8(moby, metiny, kupiec)",
@@ -71,7 +71,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b10 punktow",
-            "&8- &f&lSkrzynia Kowala"
+            "&8- &7&lCiezka Skrzynia Kowala"
     )).addTagInt("mission", 10).toItemStack(), 3, 10, SkrzynkiOther.getItem("I2", 1)),
     M11(11, new ItemBuilder(Material.BOOK).setName("&c&lZabojca").setLore(Arrays.asList(
             "&7Zabij &e10 &7graczy",
@@ -84,7 +84,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b30 punktow",
-            "&8- &6&lWartosciowy Kufer"
+            "&8- &e&lPozlacany Skarb"
     )).addTagInt("mission", 12).toItemStack(), 10_000, 30, SkrzynkiOther.getItem("I1", 1));
     private final int id;
     private final ItemStack missionItem;
