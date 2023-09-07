@@ -76,6 +76,12 @@ public class MetinyHelper {
             if (w.getName().equals("Dungeon70-80") && !w.getPlayers().isEmpty()) {
                 continue;
             }
+            if (w.getName().equals("Dungeon80-90") && !w.getPlayers().isEmpty()) {
+                continue;
+            }
+            if (w.getName().equals("Dungeon90-100") && !w.getPlayers().isEmpty()) {
+                continue;
+            }
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
                     if (RPGCORE.getInstance().getMetinyManager().isMetin(e.getLocation())) {
@@ -304,6 +310,11 @@ public class MetinyHelper {
         if (id >= 40_000 && id <= 40_005) {
             kasaToAdd = 6_000;
             RPGCORE.getInstance().getKoloseumManager().incrementCounter();
+        }
+        // ---------------------------------------- TAJEMNICZE PIASKI ----------------------------------------
+        if (id >= 50_000 && id <= 50_005) {
+            kasaToAdd = 10_000;
+            RPGCORE.getInstance().getTajemniczePiaskiManager().incrementCounter();
         }
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");

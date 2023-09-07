@@ -661,6 +661,33 @@ public class    MobDropHelper {
                 addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getKoloseumManager().incrementCounter();
                 break;
+        // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            case "Truposz Lvl. 85":
+                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
+                if (rpgcore.getTajemniczePiaskiManager().getDungeonStatus() == DungeonStatus.ETAP_1) {
+                    rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                }
+                break;
+            case "Truposz Lvl. 89":
+                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 0.06), true, false, entity);
+                if (rpgcore.getTajemniczePiaskiManager().getDungeonStatus() == DungeonStatus.ETAP_5) {
+                    rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                }
+                rpgcore.getTajemniczePiaskiManager().getRdzenieLocation().values().forEach(rdzen -> {
+                    if (rdzen.getEntityId().contains("" + entity.getEntityId())) rdzen.getEntityId().remove("" + entity.getEntityId());
+                });
+                break;
+            case "[MiniBOSS] Pustynny Tarczownik":
+            case "[MiniBOSS] Pustynny Przyzywacz":
+                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 2), true, false, entity);
+                if (rpgcore.getTajemniczePiaskiManager().getDungeonStatus() == DungeonStatus.ETAP_3) {
+                    rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                }
+                break;
+            case "[BOSS] Cesarz Pustyni":
+                addDropPlayer(player, Dungeony.I_TAJEMNICZE_PIASKI_SKRZYNKA.getItemStack(), 100, true, true, entity);
+                rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                break;
         }
 
         final double kasa = rpgcore.getLvlManager().getKasa(entityName, uuid);

@@ -47,7 +47,6 @@ import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
 import rpg.rpgcore.pets.objects.UserPets;
-import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.server.ServerUser;
 import rpg.rpgcore.spawn.SpawnManager;
@@ -119,19 +118,10 @@ public class MongoManager {
 
         }
     }
-
-    //dd3d637b-aff4-4fa5-8484-d120ed492d43 - Mires
-    //c166a38d-6ddf-47cb-8aed-2b05fb502051 - Chytryy
-    //672d510e-083b-39f8-9681-4d8bc892586d - Orzel
-
-    //4d335d52-df9f-479c-8d0a-57de4a4cb2fe - Fabi
-
     public void clearDatabase() {
         final List<Document> toRemove = new ArrayList<>();
         for (final Document doc : this.pool.getGracze().find()) {
             final UUID uuid = UUID.fromString(doc.getString("_id"));
-            if (uuid.toString().equals("dd3d637b-aff4-4fa5-8484-d120ed492d43") || uuid.toString().equals("c166a38d-6ddf-47cb-8aed-2b05fb502051") ||
-                    uuid.toString().equals("672d510e-083b-39f8-9681-4d8bc892586d") || uuid.toString().equals("4d335d52-df9f-479c-8d0a-57de4a4cb2fe")) continue;
             if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
             }
@@ -423,24 +413,13 @@ public class MongoManager {
         }
     }
 
-    public void changeAuthUserRank(final UUID uuid, final String rankName) {
-        final Document user = this.pool.getAuthUsers().find(new Document("_id", uuid.toString())).first();
-        assert user != null;
-        final RankTypePlayer rankTypePlayer = RankTypePlayer.valueOf(rankName.toUpperCase());
-        final RankType rankType = RankType.valueOf(user.getString("rankType").toUpperCase());
-        if (rankType.getPriority() > rankTypePlayer.getPriority()) return;
-        user.remove("rankType");
-        user.append("rankType", rankName);
-        this.pool.getAuthUsers().findOneAndReplace(new Document("_id", uuid.toString()), user);
-    }
 
-
-    public void createPlayer(final Player player, final UUID uuid, final String nick) {
+    public void createPlayer(final Player player, final UUID uuid, final String nick, final ItemStack[] inventory, final ItemStack[] armor, final ItemStack[] enderchest) {
 
         final User user = new User(uuid, nick);
-        user.getInventoriesUser().setInventory(Utils.itemStackArrayToBase64(player.getInventory().getContents()));
-        user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(player.getInventory().getArmorContents()));
-        user.getInventoriesUser().setEnderchest(Utils.itemStackArrayToBase64(player.getEnderChest().getContents()));
+        user.getInventoriesUser().setInventory(Utils.itemStackArrayToBase64(inventory));
+        user.getInventoriesUser().setArmor(Utils.itemStackArrayToBase64(armor));
+        user.getInventoriesUser().setEnderchest(Utils.itemStackArrayToBase64(enderchest));
         this.addDataUser(user);
         rpgcore.getUserManager().add(user);
 

@@ -9,6 +9,7 @@ public class WeatherChangeListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onWeatherChange(final WeatherChangeEvent e) {
         e.setCancelled(true);
+        e.getWorld().setStorm(false);
         e.getWorld().setWeatherDuration(0);
         e.getWorld().setThundering(false);
         e.getWorld().setThunderDuration(0);

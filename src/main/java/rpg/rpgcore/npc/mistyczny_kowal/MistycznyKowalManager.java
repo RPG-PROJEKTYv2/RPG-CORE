@@ -22,24 +22,21 @@ public class MistycznyKowalManager {
             if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).toItemStack());
             else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 11).toItemStack());
         }
-        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowy Sztylet").setLore(Arrays.asList(
+        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
-                "&7Obrazenia na potwory: &c15",
                 "",
-                "&3Silny Na Ludzi: &f+XX%",
-                "&3Silny Na Potwory: &f-XX%",
+                "&3Silny Na Ludzi: &f+1-60%",
                 "",
                 "&cWymagany Poziom: &665"
         )).toItemStack());
 
         gui.setItem(13, new ItemBuilder(Material.WORKBENCH).setName("&eWytworz &9&lMithrylowy Miecz").setLore(this.getLore(player)).addGlowing().toItemStack().clone());
 
-        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
+        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowy Sztylet").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
                 "&7Obrazenia na potwory: &c15",
                 "",
-                "&3Silny Na Potwory: &f+XX%",
-                "&3Silny Na Ludzi: &f-XX%",
+                "&3Silny Na Potwory: &f+1-60%",
                 "",
                 "&cWymagany Poziom: &665"
         )).toItemStack());
@@ -99,7 +96,7 @@ public class MistycznyKowalManager {
         prefix = (itemCount >= 16 ? "&7&m" : "&7");
         lore.add("  &8- " + prefix + "Proch&8 x16 (" + itemCount + "/16)");
         prefix = (kasa >= 10_000_000 ? "&a&m" : "&c");
-        lore.add("  &8- " + prefix + "10 000 000 $");
+        lore.add("  &8- " + prefix + "&610 000 000 &2$");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
 
         return lore;
@@ -118,7 +115,7 @@ public class MistycznyKowalManager {
 
         int randomPercent = 1;
 
-        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 5))) {
+        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 7))) {
             randomPercent = ChanceHelper.getRandInt(55, 60);
         } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 25))) {
             randomPercent = ChanceHelper.getRandInt(45, 54);

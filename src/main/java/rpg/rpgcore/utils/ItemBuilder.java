@@ -188,6 +188,12 @@ public class ItemBuilder {
     public ItemBuilder addTagInt(final String tag, final int val) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
         NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        if (tagCompound.hasKey(tag)) {
+            int old = tagCompound.getInt(tag);
+            if (old > val) {
+                return this;
+            }
+        }
         tagCompound.setInt(tag, val);
         nmsStack.setTag(tagCompound);
         this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
@@ -215,6 +221,12 @@ public class ItemBuilder {
     public ItemBuilder addTagDouble(final String tag, final double val) {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(this.is);
         NBTTagCompound tagCompound = nmsStack.hasTag() ? nmsStack.getTag() : new NBTTagCompound();
+        if (tagCompound.hasKey(tag)) {
+            double old = tagCompound.getDouble(tag);
+            if (old > val) {
+                return this;
+            }
+        }
         tagCompound.setDouble(tag, val);
         nmsStack.setTag(tagCompound);
         this.is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));

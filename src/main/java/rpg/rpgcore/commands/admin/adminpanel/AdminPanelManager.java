@@ -164,6 +164,7 @@ public class AdminPanelManager {
         gui.setItem(13, GlobalItem.I_KSIEGAMAGII.getItemStack());
 
         gui.setItem(15, GlobalItem.RUDA_MITHRYLU.getItemStack());
+        gui.setItem(16, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack());
 
         gui.setItem(18, GlobalItem.ZNISZCZONE_RUBINOWE_SERCE.getItemStack());
         gui.setItem(19, GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack());

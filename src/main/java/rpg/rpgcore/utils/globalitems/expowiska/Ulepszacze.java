@@ -59,6 +59,6 @@ public enum Ulepszacze {
     }
 
     public ItemStack getItem() {
-        return itemStack;
+        return itemStack.clone();
     }
 }

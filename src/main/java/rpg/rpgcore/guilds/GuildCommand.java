@@ -39,7 +39,7 @@ public class GuildCommand extends CommandAPI {
 
         String tag = rpgcore.getGuildManager().getGuildTag(uuid);
 
-        if (args.length == 1){
+        if (args.length == 1) {
 
             if (args[0].equals("zaloz")) {
                 player.sendMessage(Utils.poprawneUzycie("klan zaloz <tag> <opis>"));
@@ -91,6 +91,10 @@ public class GuildCommand extends CommandAPI {
             }
 
             if (args[0].equalsIgnoreCase("usunzastepce")) {
+                if (!rpgcore.getGuildManager().find(tag).getOwner().equals(player.getUniqueId())) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zaloozycielem tego klanu!"));
+                    return;
+                }
                 rpgcore.getGuildManager().setGuildCoOwner(tag, "");
                 player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie usunieto zastepce klanu"));
                 return;
@@ -376,6 +380,7 @@ public class GuildCommand extends CommandAPI {
             }
         }
     }
+
     private void updateGuild(final String tag) {
         final List<UUID> members = new ArrayList<>(20);
         for (final UUID uuid1 : rpgcore.getGuildManager().getGuildMembers(tag)) {

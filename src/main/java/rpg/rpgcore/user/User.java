@@ -134,7 +134,7 @@ public class User {
     }
 
     public String getKitCooldown() {
-        return Utils.durationToString(this.kitCooldown - System.currentTimeMillis(), false);
+        return Utils.durationToString(this.kitCooldown - System.currentTimeMillis(), true);
     }
 
     public void incrementServerJoins() {

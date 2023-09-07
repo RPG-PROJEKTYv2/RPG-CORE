@@ -97,9 +97,10 @@ public class DamageManager {
 
             switch (type) {
                 case "ks":
+                    attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko potwory!"));
                     return 0;
                 case "tyra":
-                    mnoznik += Utils.getTagInt(weapon, "ludzie");
+                    mnoznik += Utils.getTagInt(weapon, "ludzieProcentTYRA");
                     break;
                 default:
                     break;
@@ -263,9 +264,10 @@ public class DamageManager {
 
             switch (type) {
                 case "tyra":
+                    attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko graczy!"));
                     return 0;
                 case "ks":
-                    mnoznik += Utils.getTagInt(weapon, "moby");
+                    mnoznik += Utils.getTagInt(weapon, "mobyProcentKS");
                     break;
                 default:
                     break;

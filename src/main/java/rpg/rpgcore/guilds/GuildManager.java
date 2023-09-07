@@ -89,11 +89,12 @@ public class GuildManager {
     }
 
     public void showInfo(final String tag, final Player player) {
-        final Guild guild = this.find(tag).getGuild();
-        if (guild == null) {
+        final GuildObject obj = this.find(tag);
+        if (obj == null) {
             player.sendMessage(Utils.format("&cKlan o podanym tagie nie istnieje!"));
             return;
         }
+        final Guild guild = this.find(tag).getGuild();
         if (rpgcore.getUserManager().find(guild.getOwner()) == null) {
             player.sendMessage(Utils.format("&cCos poszlo nie tak :<!"));
             return;
@@ -261,7 +262,7 @@ public class GuildManager {
                 lore.add("&7Ostatnio widziany: &c" + this.getLastSeenDateInString(tag, uuid));
             }
 
-            if (!this.getGuildCoOwner(tag).isEmpty() && (this.getGuildOwner(tag).equals(player.getUniqueId()) || this.getGuildCoOwner(tag).equals(player.getUniqueId().toString()))) {
+            if (this.getGuildOwner(tag).equals(player.getUniqueId()) || (!this.getGuildCoOwner(tag).isEmpty() && this.getGuildCoOwner(tag).equals(player.getUniqueId().toString()))) {
                 lore.add(" ");
                 lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }

@@ -60,8 +60,8 @@ public class PlayerFishListener implements Listener {
         
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             e.getCaught().remove();
-            rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
-            //this.checkPlayer(player);
+            //rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
+            this.checkPlayer(player);
         }
     }
 

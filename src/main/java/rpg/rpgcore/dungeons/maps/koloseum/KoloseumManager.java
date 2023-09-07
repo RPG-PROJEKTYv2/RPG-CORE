@@ -167,7 +167,7 @@ public class KoloseumManager {
     }
 
     public void closeMapGate() {
-        this.mapGateLocations.forEach(location -> location.getBlock().setType(Material.COBBLE_WALL));
+        this.mapGateLocations.forEach(location -> location.getBlock().setType(Material.IRON_FENCE));
     }
 
 

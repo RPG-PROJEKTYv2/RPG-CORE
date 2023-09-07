@@ -141,21 +141,18 @@ public enum GlobalItem {
             is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&3Silny Na Potwory: &f+" + percent + "%",
-                    "&3Silny Na Ludzi: &f-" + (percent * 2) + "%",
                     "",
                     "&cWymagany Poziom: &665"
-            )).addTagInt("moby", percent).addTagString("type", "ks").addTagInt("lvl", 65);
+            )).addTagInt("mobyProcentKS", percent).addTagString("type", "ks").addTagInt("lvl", 65);
             return is.toItemStack().clone();
         } else {
-            is = new ItemBuilder(ItemHelper.createSword("&9&lMithrylowe Ostrze", Material.DIAMOND_SWORD, 35, 15, true));
-            is.setLoreCrafting(is.toItemStack().clone().getItemMeta().getLore(), Arrays.asList(
-                    " ",
+            return new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
+                    "&7Obrazenia: &c35",
+                    "",
                     "&3Silny Na Ludzi: &f+" + percent + "%",
-                    "&3Silny Na Potwory: &f-" + (percent * 2) + "%",
                     "",
                     "&cWymagany Poziom: &665"
-            )).addTagInt("ludzie", percent).addTagString("type", "tyra").addTagInt("lvl", 65);
-            return is.toItemStack().clone();
+            )).hideFlag().addTagInt("dmg", 35).addGlowing().addTagInt("ludzieProcentTYRA", percent).addTagInt("lvl", 65).addTagString("type", "tyra").toItemStack().clone();
         }
     }
 

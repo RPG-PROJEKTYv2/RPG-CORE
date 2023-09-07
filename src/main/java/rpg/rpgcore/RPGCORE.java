@@ -70,7 +70,6 @@ import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.chests.Npc.GornikChestManager;
 import rpg.rpgcore.commands.admin.*;
-import rpg.rpgcore.commands.admin.ACcommand.ACCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelManager;
@@ -157,7 +156,10 @@ import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsione
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.events.PiekielnyPrzedsionekPortalEntryListener;
 import rpg.rpgcore.dungeons.maps.piekielnyPrzedsionek.tasks.PiekielnyPrzedsionekTask;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.TajemniczePiaskiManager;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.events.TajemniczePiaskiEntityDamageListener;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.events.TajemniczePiaskiInteractListener;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.events.TajemniczePiaskiPortalEntryListener;
+import rpg.rpgcore.dungeons.maps.tajemniczePiaski.tasks.TajemniczePiaskiTask;
 import rpg.rpgcore.economy.EconomyPlayerInteract;
 import rpg.rpgcore.economy.HsCommand;
 import rpg.rpgcore.economy.KasaCommand;
@@ -257,6 +259,8 @@ import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
+import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalInventoryClickListener;
+import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalManager;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.npc.wyslannik.events.WyslannikInventoryClickListener;
 import rpg.rpgcore.osiagniecia.OsManager;
@@ -436,6 +440,7 @@ public final class RPGCORE extends JavaPlugin {
     private BackupManager backupManager;
     private KodTworcyManager kodTworcyManager;
     private TajemniczePiaskiManager tajemniczePiaskiManager;
+    private WygnanyKowalManager wygnanyKowalManager;
 
 
     private int i = 1;
@@ -563,7 +568,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
 
-        this.mongo.clearDatabase();
+        //this.mongo.clearDatabase();
 
         this.mongo.onDisable();
         this.backupMongo.onDisable();
@@ -697,7 +702,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new MobsHpInventoryClickListener(), this);
-        this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
+        //this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new BAOEntityInteract(this), this);
@@ -915,6 +920,9 @@ public final class RPGCORE extends JavaPlugin {
         // BACKUP
         this.getServer().getPluginManager().registerEvents(new BackupInventoryClickListener(this), this);
 
+
+        // WYGNANY KOWAL
+        this.getServer().getPluginManager().registerEvents(new WygnanyKowalInventoryClickListener(), this);
     }
 
     private void initDatabase() {
@@ -992,6 +1000,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mistycznyKowalManager = new MistycznyKowalManager();
         this.gornikNPC = new GornikNPC(this);
         this.rzemieslnikManager = new RzemieslnikManager();
+        this.wygnanyKowalManager = new WygnanyKowalManager();
     }
 
     private void initChests() {
@@ -1069,6 +1078,8 @@ public final class RPGCORE extends JavaPlugin {
         // TAJEMNICZE PIASKI
         this.tajemniczePiaskiManager = new TajemniczePiaskiManager(this);
         this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiPortalEntryListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiEntityDamageListener(), this);
 
     }
 
@@ -1123,6 +1134,8 @@ public final class RPGCORE extends JavaPlugin {
         new PiekielnyPrzedsionekTask(this);
         // .. KOLOSEUM
         new KoloseumTask(this);
+        // ... TAJEMNICZE PIASKI
+        new TajemniczePiaskiTask(this);
         // ... ICE TOWER
         new IceTowerTask(this);
 
@@ -1132,6 +1145,7 @@ public final class RPGCORE extends JavaPlugin {
         new ArmorEffectTask(this);
         new GodVanishTask(this);
         new BackupTask(this);
+        new WeatherTask(this);
     }
 
     private void fixBuckets() {
@@ -1594,5 +1608,8 @@ public final class RPGCORE extends JavaPlugin {
     }
     public TajemniczePiaskiManager getTajemniczePiaskiManager() {
         return tajemniczePiaskiManager;
+    }
+    public WygnanyKowalManager getWygnanyKowalManager() {
+        return wygnanyKowalManager;
     }
 }

@@ -175,7 +175,9 @@ public class KowalNPC {
         final net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemToUpgrade);
         final NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         compound.setInt("dmg", sharp + 4);
-        compound.setInt("moby", obrazeniaMoby + 1);
+        if (!itemToUpgrade.getItemMeta().getDisplayName().contains("Mithrylowe Ostrze")) {
+            compound.setInt("moby", obrazeniaMoby + 1);
+        }
         nmsStack.setTag(compound);
 
         final ItemStack toGive = CraftItemStack.asBukkitCopy(nmsStack);
@@ -184,7 +186,9 @@ public class KowalNPC {
         final List<String> lore = meta.getLore();
 
         lore.set(0, Utils.format("&7Obrazenia: &c" + (sharp + 4)));
-        lore.set(1, Utils.format("&7Obrazenia na potwory: &c" + (obrazeniaMoby + 1)));
+        if (!itemToUpgrade.getItemMeta().getDisplayName().contains("Mithrylowe Ostrze")) {
+            lore.set(1, Utils.format("&7Obrazenia na potwory: &c" + (obrazeniaMoby + 1)));
+        }
 
         meta.setLore(lore);
         toGive.setItemMeta(meta);

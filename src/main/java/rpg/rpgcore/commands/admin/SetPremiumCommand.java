@@ -61,10 +61,7 @@ public class SetPremiumCommand extends CommandAPI {
             }
 
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aZmieniono rangę gracza &6" + args[0] + " &ana &6Player&7!"));
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().saveDataUser(user.getId(), user);
-                rpgcore.getMongoManager().changeAuthUserRank(user.getId(), user.getRankPlayerUser().getRankType().getName());
-            });
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
 
 
             if (Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline()) {
@@ -125,10 +122,7 @@ public class SetPremiumCommand extends CommandAPI {
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
 
 
-            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().saveDataUser(user.getId(), user);
-                rpgcore.getMongoManager().changeAuthUserRank(user.getId(), user.getRankPlayerUser().getRankType().getName());
-            });
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
             return;
         }
 
@@ -201,9 +195,6 @@ public class SetPremiumCommand extends CommandAPI {
                             "**Nadane Przez**: " + sender.getName(), Color.GREEN));
         }
 
-        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-            rpgcore.getMongoManager().saveDataUser(user.getId(), user);
-            rpgcore.getMongoManager().changeAuthUserRank(user.getId(), user.getRankPlayerUser().getRankType().getName());
-        });
+        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
     }
 }

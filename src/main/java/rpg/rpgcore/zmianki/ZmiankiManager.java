@@ -36,11 +36,11 @@ public class ZmiankiManager {
 
     public ItemStack rollNewBonuses(final ItemStack is, final Player player) {
         final ItemMeta meta = is.getItemMeta();
-        if (meta.getLore().contains(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"))) {
+        if (meta.getLore().contains(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"))) {
             final List<String> lore = meta.getLore();
-            final int index = lore.indexOf(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
+            final int index = lore.indexOf(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
             lore.remove(index - 1);
-            lore.remove(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
+            lore.remove(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
             if (is.getType().toString().contains("_SWORD")) {
                 lore.remove(Utils.format("&eDodatkowe Obrazenia: &f+" + Utils.getTagInt(is, "dodatkowe")));
                 lore.remove(Utils.format("&eSilny Na " + Utils.getTagString(is, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(is, "silny-na-val") + "%"));
@@ -50,7 +50,7 @@ public class ZmiankiManager {
                 lore.remove(Utils.format("&e7Szczescie: &f+" + Utils.getTagInt(is, "szczescie")));
             }
             lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
-            lore.remove(Utils.format("&8------------{&9&lMagiczne Zaczarowanie&8}------------"));
+            lore.remove(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
             meta.setLore(Utils.format(lore));
 
             is.setItemMeta(meta);
@@ -77,11 +77,11 @@ public class ZmiankiManager {
 
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------",
+                    "&8--------{&9&lMagiczne Zaczarowanie&8}--------",
                     "&eDodatkowe Obrazenia: &f+" + Utils.getTagInt(toReturn, "dodatkowe"),
                     "&eSilny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
                     "&cWymagany Poziom: &6" + loreLvl,
-                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------"
+                    "&8--------{&9&lMagiczne Zaczarowanie&8}--------"
             )).addTagInt("lvl", loreLvl).toItemStack().clone();
         } else {
             net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
@@ -94,12 +94,12 @@ public class ZmiankiManager {
 
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
-                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------",
+                    "&8--------{&9&lMagiczne Zaczarowanie&8}--------",
                     "&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(toReturn, "defMoby") + "%",
                     "&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(toReturn, "szansaWzmKryt") + "%",
                     "&7Szczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
                     "&cWymagany Poziom: &645",
-                    "&8------------{&9&lMagiczne Zaczarowanie&8}------------"
+                    "&8--------{&9&lMagiczne Zaczarowanie&8}--------"
             )).addTagInt("lvl", 45).toItemStack().clone();
         }
 
@@ -112,8 +112,7 @@ public class ZmiankiManager {
         NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
         tag.setInt("dodatkowe", ChanceHelper.getRandInt(min, max));
 
-        final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
-        return toReturn;
+        return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
     public final ItemStack rollSecondBonus(final ItemStack is, final double min, final double max) {
@@ -122,8 +121,7 @@ public class ZmiankiManager {
         tag.setString("silny-na-mob", getRandomMob());
         tag.setDouble("silny-na-val", ChanceHelper.getRandDouble(min, max));
 
-        final ItemStack toReturn = CraftItemStack.asBukkitCopy(nmsStack);
-        return toReturn;
+        return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
     private String getRandomMob() {

@@ -23,7 +23,7 @@ public class PlayerInteractEntityListener implements Listener {
         this.rpgcore = rpgcore;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteractEntity(PlayerInteractAtEntityEvent e) {
 
         final Player player = e.getPlayer();
@@ -263,6 +263,11 @@ public class PlayerInteractEntityListener implements Listener {
                     rpgcore.getZamekNieskonczonosciManager().openWladcaGUI(player);
                     return;
                 }
+                return;
+            }
+            // ...WYGNANY KOWAL
+            if (entityName.contains("Wygnany Kowal")) {
+                rpgcore.getWygnanyKowalManager().click(player);
                 return;
             }
 

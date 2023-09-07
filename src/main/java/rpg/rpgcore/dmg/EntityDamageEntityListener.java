@@ -51,6 +51,10 @@ public class EntityDamageEntityListener implements Listener {
             "Dungeon110-120",
             "Dungeon120-130");
 
+    private final List<String> blockedEntiies = Arrays.asList(
+      ""
+    );
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(final EntityDamageByEntityEvent e) {
         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
@@ -62,6 +66,11 @@ public class EntityDamageEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
+
+        if (e.getEntity().getCustomName() != null && this.blockedEntiies.contains(Utils.removeColor(e.getEntity().getCustomName()))) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
             if (e.getDamager() instanceof Fireball) {

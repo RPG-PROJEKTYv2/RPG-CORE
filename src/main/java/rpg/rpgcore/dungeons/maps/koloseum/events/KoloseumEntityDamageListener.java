@@ -23,9 +23,9 @@ public class KoloseumEntityDamageListener implements Listener {
         if (e.getDamager() instanceof Player) {
             final String name = Utils.removeColor(e.getEntity().getName());
             if (name.equals("[BOSS] Czempion Areny") || name.equals("[MiniBOSS] Wyznawca Ateny") || name.equals("[MiniBOSS] Wyznawca Posejdona") || name.equals("[MiniBOSS] Wyznawca Zeusa") || name.equals("[MiniBOSS] Wyznawca Hadesa")) {
-                if (ChanceHelper.getChance(25)) {
+                if (ChanceHelper.getChance(10)) {
                     e.getEntity().teleport(e.getDamager());
-                    e.getDamager().sendMessage(Utils.format(e.getEntity() + " &dteleportowal sie do Ciebie!"));
+                    e.getDamager().sendMessage(Utils.format(e.getEntity().getCustomName() + " &dteleportowal sie do Ciebie!"));
                 }
             }
             return;

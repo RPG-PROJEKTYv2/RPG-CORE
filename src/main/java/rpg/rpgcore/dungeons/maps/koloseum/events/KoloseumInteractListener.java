@@ -23,7 +23,7 @@ public class KoloseumInteractListener implements Listener {
     public void onClick(final PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) return;
         if (!e.getPlayer().getWorld().equals(rpgcore.getKoloseumManager().getMap())) return;
-        if (e.getClickedBlock() == null || !e.getClickedBlock().getType().equals(Material.COBBLE_WALL)) return;
+        if (e.getClickedBlock() == null || !e.getClickedBlock().getType().equals(Material.IRON_FENCE)) return;
         if (rpgcore.getDisabledManager().getDisabled().getDisabledDungeons().contains("Koloseum")) {
             e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&cTen Dungeon zostal wylaczony przez administracje!"));
             return;

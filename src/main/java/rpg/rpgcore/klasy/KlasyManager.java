@@ -231,6 +231,7 @@ public class KlasyManager {
 
 
     public Klasa find(final UUID uuid) {
+        if (!klasyMap.containsKey(uuid)) this.add(new Klasa(uuid));
         return klasyMap.get(uuid);
     }
 

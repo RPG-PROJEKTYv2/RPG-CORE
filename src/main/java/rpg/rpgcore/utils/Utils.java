@@ -121,9 +121,7 @@ public class Utils {
                 "\n&7Za:&c " + reason +
                 "\n&7Wygasa:&c " + banExpiry +
                 "\n&7Nadany:&c " + dateOfBan +
-                "\n&7Przez:&c " + senderName +
-                "\n\n&8&lJezeli uwazasz ze to blad, skontaktuj sie" +
-                "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl");
+                "\n&7Przez:&c " + senderName);
     }
 
     public static String kick(final String namePlayerToBan, final String senderName, final String reason) {
@@ -777,6 +775,10 @@ public class Utils {
         } else {
             tagCompound = nmsStack.getTag();
         }
+        if (tagCompound.hasKey(tag)) {
+            double old = tagCompound.getDouble(tag);
+            if (old > value) return;
+        }
         tagCompound.setDouble(tag, DoubleUtils.round(value, 2));
         nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
@@ -790,6 +792,10 @@ public class Utils {
             nmsStack.setTag(tagCompound);
         } else {
             tagCompound = nmsStack.getTag();
+        }
+        if (tagCompound.hasKey(tag)) {
+            int old = tagCompound.getInt(tag);
+            if (old > value) return;
         }
         tagCompound.setInt(tag, value);
         nmsStack.setTag(tagCompound);

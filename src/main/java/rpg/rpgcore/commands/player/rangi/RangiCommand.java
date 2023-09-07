@@ -74,8 +74,8 @@ public class RangiCommand extends CommandAPI {
         gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(
                 " ",
                 "&7Wszystkie rangi mozesz zakupic u &a&lHandlarza",
-                "&7za walute serwerowa '&4&lHell&6&lS'y&7' ktora zakupisz",
-                "&7na stronie serwera: &ewww.hellrpg.pl",
+                "&7za walute serwerowa '&4&lHell&6&lS'y&7' ktore zakupisz",
+                "&7na naszym discordzie: &edc.hellrpg.pl",
                 " ",
                 "&7Sprawdz swoj pozostaly czas rangi: &e/ranktime"
         )).addGlowing().toItemStack().clone());

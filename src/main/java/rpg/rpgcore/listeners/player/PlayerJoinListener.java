@@ -64,7 +64,12 @@ public class PlayerJoinListener implements Listener {
 
         if (!rpgcore.getUserManager().isUser(uuid)) {
             if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
-                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&c&lCos poszlo nie tak! :(\n&\n&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString())), 1L);
+                e.getPlayer().kickPlayer(Utils.format(
+                        Utils.CLEANSERVERNAME + "\n" +
+                                "&c&lCos poszlo nie tak! :(\n\n" +
+                                "&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n" +
+                                "&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n" +
+                                "&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString()));
                 return;
             }
             player.getOpenInventory().getTopInventory().clear();
@@ -79,14 +84,14 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 1, 0));
             player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 0, false));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
-                rpgcore.getMongoManager().createPlayer(player, uuid, player.getName());
+                rpgcore.getMongoManager().createPlayer(player, uuid, player.getName(), player.getInventory().getContents(), player.getInventory().getArmorContents(), player.getEnderChest().getContents());
                 rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);
             });
 
             player.setLevel(1);
             player.setExp(0);
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 10L);
+            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
             return;
         }
 
@@ -207,16 +212,18 @@ public class PlayerJoinListener implements Listener {
 
             final String[] banInfo = rpgcore.getUserManager().find(uuid).getBanInfo().split(";");
 
-            try {
-                final Date teraz = new Date();
-                final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
+            if (!banInfo[2].equals("Pernamentny")) {
+                try {
+                    final Date teraz = new Date();
+                    final Date dataWygasnieciaBana = Utils.dateFormat.parse(banInfo[2]);
 
-                if (teraz.after(dataWygasnieciaBana)) {
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
-                    return;
+                    if (teraz.after(dataWygasnieciaBana)) {
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(e.getUniqueId()));
+                        return;
+                    }
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
                 }
-            } catch (ParseException ex) {
-                ex.printStackTrace();
             }
 
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));

@@ -71,6 +71,7 @@ public class PrzekletyCzarnoksieznikBossManager {
     }
 
     public PrzekletyCzarnoksieznikUser find(final UUID uuid) {
+        if (!userMap.containsKey(uuid)) add(new PrzekletyCzarnoksieznikUser(uuid));
         return userMap.get(uuid);
     }
     public void add(final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser) {

@@ -30,6 +30,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> rdzenCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -144,7 +145,7 @@ public class CooldownManager {
     }
 
     public void givePlayerMetinyCooldown(final UUID uuid) {
-        this.metinyCooldown.put(uuid, System.currentTimeMillis() + 10L);
+        this.metinyCooldown.put(uuid, System.currentTimeMillis() + 500L);
     }
 
     public long getPlayerMetinyCooldown(final UUID uuid) {
@@ -255,5 +256,13 @@ public class CooldownManager {
 
     public String getPlayerPickaxeAbilityCooldown(final UUID uuid) {
         return Utils.durationToString(this.pickaxeAbility.asMap().get(uuid), false);
+    }
+
+    public void givePlayerTajemniczePiaskiRdzenCooldown(final UUID uuid) {
+        this.rdzenCooldown.put(uuid, System.currentTimeMillis() + 500L);
+    }
+
+    public boolean hasPlayerTajemniczePiaskiCooldown(final UUID uuid) {
+        return this.rdzenCooldown.asMap().containsKey(uuid);
     }
 }
