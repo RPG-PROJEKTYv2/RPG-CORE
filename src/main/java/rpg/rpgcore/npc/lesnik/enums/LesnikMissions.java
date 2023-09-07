@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public enum LesnikMissions {
 
-    M1(1, 5, 90, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 5),
-    M2(2, 15, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 5),
+    M1(1, 5, 90, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 1, 1, 1),
+    M2(2, 15, 85, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 3, 1, 3),
     M3(3, 35, 80, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 4),
     M4(4, 60, 75, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 4, 1, 4),
     M5(5, 100, 70, Objects.requireNonNull(LesnikItems.getByName("I1")).getItem(), 5, 1, 3),

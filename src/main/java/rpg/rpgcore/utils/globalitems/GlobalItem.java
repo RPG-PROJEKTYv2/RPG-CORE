@@ -32,6 +32,8 @@ public enum GlobalItem {
     I17("I17", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
 
+    I_ODLAMEK_ZAKLETEJ_DUSZY("I_ODLAMEK_ZAKLETEJ_DUSZY", new ItemBuilder(Material.COAL).setName("&8Odlamek Zakletej Duszy").setLore(Arrays.asList("", "&7Przedmiot ten potrzebny jest &3Wygnanemu Kowalowi&7!")).hideFlag().toItemStack().clone()),
+
     // Zmianki
     I50("I50", new ItemBuilder(Material.INK_SACK, 1, (short) 13).setName("&9&lMagiczne Zaczarowanie").setLore(Arrays.asList("&7Pozwala nadac bonusy twojego miecza i ekwipunku...")).toItemStack().clone()),
 

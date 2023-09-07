@@ -79,7 +79,6 @@ public class GuildManager {
         player.sendMessage(Utils.format("&6/klan pvp &8- &7zmienia status pvp w klanie"));
         player.sendMessage(Utils.format("&6/klan usunzastepce &8- &7usuwa zastepce klanu"));
         player.sendMessage(Utils.format("&6/klan dolacz <TAG> &8- &7dolacza do podanego klanu, jesli masz zaproszenie"));
-        player.sendMessage(Utils.format("&6/klan wplac <ilosc> &8- &7wplaca do skarbca klanowego podana ilosc"));
         player.sendMessage(Utils.format("&6/klan opusc &8- &7opuszcza klan"));
         player.sendMessage(Utils.format("&6/klan panel &8- &7otwiera panel klanowy"));
         player.sendMessage(Utils.format("&6/klan info <TAG> &8- &7wyswietla informacje o podanym klanie"));

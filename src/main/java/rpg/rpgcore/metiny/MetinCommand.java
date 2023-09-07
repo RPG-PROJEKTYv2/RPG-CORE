@@ -1,5 +1,6 @@
 package rpg.rpgcore.metiny;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -139,6 +140,7 @@ public class MetinCommand extends CommandAPI {
         }
         if (args.length == 1) {
             if (args[0].equals("spawnall")) {
+                Bukkit.getServer().broadcastMessage(Utils.format("&b&lMetiny zostaly zresetowane!"));
                 MetinyHelper.respAllMetins();
                 return;
             }

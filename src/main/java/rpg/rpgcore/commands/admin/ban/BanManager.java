@@ -55,7 +55,7 @@ public class BanManager {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfPlayerToBan, banSender, String.valueOf(reason), banExpiry));
         } else {
             Bukkit.getPlayer(banSender).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfPlayerToBan + " &7Wygasa: &c" + banExpiry + " &7Powod:&c" + String.valueOf(reason)));
-        }
+        }   
 
         final String banInfo = banSender + ";" + reason + ";" + banExpiry + ";" + dateOfBan;
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().banPlayer(uuidPlayerToBan, banInfo));

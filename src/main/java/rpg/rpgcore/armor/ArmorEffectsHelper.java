@@ -73,25 +73,25 @@ public class ArmorEffectsHelper {
     public static void addEffectBoots(Player player, int value) {
         int k = 0;
         if (value > 19) {
-            k = 50;
-        }
-        if (value > 39) {
             k = 75;
         }
-        if (value > 69) {
+        if (value > 39) {
             k = 100;
         }
-        if (value > 99) {
+        if (value > 69) {
             k = 150;
         }
-        if (value > 149) {
+        if (value > 99) {
             k = 200;
         }
-        if (value > 199) {
+        if (value > 149) {
             k = 300;
         }
-        if (value > 249) {
+        if (value > 199) {
             k = 450;
+        }
+        if (value > 249) {
+            k = 600;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
 

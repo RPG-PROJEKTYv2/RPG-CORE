@@ -287,13 +287,13 @@ public class TeleporterNPC {
     public void teleportExp3(final Player player) {
         switch (new Random().nextInt(3)) {
             case 0:
-                player.teleport(new Location(Bukkit.getWorld("20-30map"), 63, 75, 123, -43.8F, -0.1F));
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 62.146, 75, 132.175, -169.5F, 0.1F));
                 return;
             case 1:
-                player.teleport(new Location(Bukkit.getWorld("20-30map"), 184, 75, 81, 56.6F, 0.2F));
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 166.707, 75, 58.443, -24.1F, -0.6F));
                 return;
             case 2:
-                player.teleport(new Location(Bukkit.getWorld("20-30map"), 156, 75, 168, 164.0F, 0.2F));
+                player.teleport(new Location(Bukkit.getWorld("20-30map"), 172.943, 75, 198.131, 100.8F, -0.9F));
         }
     }
 

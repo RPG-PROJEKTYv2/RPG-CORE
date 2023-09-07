@@ -21,21 +21,15 @@ public class CiezkaSkrzyniaKowalaManager {
     private final Set<Items> kowal = Sets.newConcurrentHashSet();
 
     public CiezkaSkrzyniaKowalaManager() {
-        // fragmenty stali
-        this.kowal.add(new Items("1", 12.5, GlobalItem.getItem("I_FRAGMENT_STALI",2 ),2));
-        this.kowal.add(new Items("2", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",3 ),3));
-        // podreczniki
-        this.kowal.add(new Items("3", 12.0, GlobalItem.getItem("I10", 1), 1));
-        this.kowal.add(new Items("4", 10.0, GlobalItem.getItem("I10", 1), 2));
-        // oczyszczenie
+        this.kowal.add(new Items("1", 0.35, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
+        this.kowal.add(new Items("2", 4.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
+        this.kowal.add(new Items("3", 8.0, GlobalItem.getItem("I_METAL", 1), 1));
+        this.kowal.add(new Items("4", 8.5, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
         this.kowal.add(new Items("5", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
-        this.kowal.add(new Items("6", 8.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),2));
-        // stal
-        this.kowal.add(new Items("7", 6.0, GlobalItem.getItem("I_METAL", 1), 1));
-        // kamien bao
-        this.kowal.add(new Items("8", 4.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
-        // ENERGIA RARE
-        this.kowal.add(new Items("9", 0.35, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
+        this.kowal.add(new Items("6", 10.0, GlobalItem.getItem("I10", 1), 2));
+        this.kowal.add(new Items("7", 12.0, GlobalItem.getItem("I10", 1), 1));
+        this.kowal.add(new Items("8", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",1),3));
+        this.kowal.add(new Items("9", 12.5, GlobalItem.getItem("I_FRAGMENT_STALI",1),2));
     }
 
     public void getDrawnItems(final Player player) {

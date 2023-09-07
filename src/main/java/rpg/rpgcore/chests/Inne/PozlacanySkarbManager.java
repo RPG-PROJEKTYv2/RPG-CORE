@@ -7,6 +7,7 @@ import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 
 import java.util.Set;
@@ -19,28 +20,17 @@ public class PozlacanySkarbManager {
 
 
     public PozlacanySkarbManager() {
-        // fragment stali i magii
-        this.pozlacanyskarb.add(new Items("1", 14.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
-        this.pozlacanyskarb.add(new Items("2", 12.0, GlobalItem.getItem("I_CZASTKA_MAGII", 2), 2));
-        // zmianki
-        this.pozlacanyskarb.add(new Items("3", 11.0, GlobalItem.getItem("I50", 1), 1));
-        this.pozlacanyskarb.add(new Items("4", 11.0, GlobalItem.getItem("I50", 2), 2));
-        // bao kamyk
-        // bao ksiega
-        this.pozlacanyskarb.add(new Items("5", 9.5, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
-        this.pozlacanyskarb.add(new Items("6", 8.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
-        // podrecznik
-        // lza
-        // metal
-        this.pozlacanyskarb.add(new Items("7", 8.0, GlobalItem.getItem("I10", 1), 1));
-        this.pozlacanyskarb.add(new Items("8", 7.5, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
-        // pota do lesnika
-
-        this.pozlacanyskarb.add(new Items("9", 7.0, LesnikItems.getByItem("POTION", 1), 1));
-
-        this.pozlacanyskarb.add(new Items("10", 5.5, GlobalItem.getItem("I_METAL", 1), 1));
-        // fragment bona
-        this.pozlacanyskarb.add(new Items("11", 0.4, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
+        this.pozlacanyskarb.add(new Items("1", 0.4, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
+        this.pozlacanyskarb.add(new Items("2", 2.5, SkrzynkiOther.getItem("I1", 1),2));
+        this.pozlacanyskarb.add(new Items("3", 7.0, LesnikItems.getByItem("POTION", 1), 1));
+        this.pozlacanyskarb.add(new Items("4", 8.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
+        this.pozlacanyskarb.add(new Items("5", 9.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
+        this.pozlacanyskarb.add(new Items("6", 11.0, GlobalItem.getItem("I_METAL", 1), 1));
+        this.pozlacanyskarb.add(new Items("7", 13.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
+        this.pozlacanyskarb.add(new Items("8", 13.0, GlobalItem.getItem("I10", 1), 1));
+        this.pozlacanyskarb.add(new Items("9", 13.5, GlobalItem.getItem("I50", 1), 2));
+        this.pozlacanyskarb.add(new Items("10", 15.5, GlobalItem.getItem("I_CZASTKA_MAGII", 2), 2));
+        this.pozlacanyskarb.add(new Items("11", 16.5, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 2));
     }
 
 

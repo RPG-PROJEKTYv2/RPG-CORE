@@ -11,6 +11,7 @@ import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 
@@ -282,7 +283,8 @@ public class MetinyHelper {
         }
         // ---------------------------------------- ICE TOWER ----------------------------------------
         if (id >= 20000 && id <= 20007) {
-            kasaToAdd = 650;
+            kasaToAdd = 1000;
+            MobDropHelper.addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), 0.06, true, true, entity);
             if (metinolog.getMetinologUser().getPostepGive() == 6) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("ILodowej-Wiezy", 1), 25, true, true, entity);
             }
@@ -295,12 +297,12 @@ public class MetinyHelper {
         }
         // ---------------------------------------- PIEKIELNY PRZEDSIONEK ----------------------------------------
         if (id >= 30_000 && id <= 30_011) {
-            kasaToAdd = 1_500;
+            kasaToAdd = 3_000;
             RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
         }
         // ---------------------------------------- KOLOSEUM ----------------------------------------
         if (id >= 40_000 && id <= 40_005) {
-            kasaToAdd = 3_000;
+            kasaToAdd = 6_000;
             RPGCORE.getInstance().getKoloseumManager().incrementCounter();
         }
 

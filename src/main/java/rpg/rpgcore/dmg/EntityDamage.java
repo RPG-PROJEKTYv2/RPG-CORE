@@ -48,16 +48,35 @@ public enum EntityDamage {
     MAP_70_80_3("Mroczna Dusza Lvl. 78", 100.0),
     MAP_70_80_BOSS("[BOSS] Przeklety Czarnoksieznik", 160.0),
 
-    MAP_80_90_1("Pustynny Ptasznik Lvl. 84", 2200),
-    MAP_80_90_2("Pustynny Ptasznik Lvl. 87", 2800),
-    MAP_80_90_3("Pustynny Ptasznik Lvl. 89", 3100),
-    MAP_80_90_BOSS("[BOSS] Mityczny Pajak", 5095),
+    KOLOSEUM_MOB1("Zapomniany Wojownik Lvl. 75", 120.0),
+    KOLOSEUM_MOB2("Zapomniany Wojownik Lvl. 79", 125.0),
+    KOLOSEUM_MINIBOSS1("[MiniBOSS] Wyznawca Ateny", 140.0),
+    KOLOSEUM_MINIBOSS2("[MiniBOSS] Wyznawca Posejdona", 145.0),
+    KOLOSEUM_MINIBOSS3("[MiniBOSS] Wyznawca Zeusa", 150.0),
+    KOLOSEUM_MINIBOSS4("[MiniBOSS] Wyznawca Hadesa", 155.0),
+    KOLOSEUM_BOSS("[BOSS] Czempion Areny", 240.0),
 
-    MAP_90_100_1("Podziemna Lowczyni Lvl. 92", 5500),
-    MAP_90_100_2("Podziemna Lowczyni Lvl. 95", 6600),
-    MAP_90_100_3("Podziemna Lowczyni Lvl. 98", 7150),
-    MAP_90_100_BOSS("[BOSS] Podziemny Rozpruwacz", 10710),
+    MAP_80_90_1("Pustynny Ptasznik Lvl. 84", 140.0),
+    MAP_80_90_2("Pustynny Ptasznik Lvl. 87", 150.0),
+    MAP_80_90_3("Pustynny Ptasznik Lvl. 89", 160.0),
+    MAP_80_90_BOSS("[BOSS] Mityczny Pajak", 300.0),
 
+    TAJEMNICZE_PIASKI_MOB1("Truposz Lvl. 85", 200.0),
+    TAJEMNICZE_PIASKI_MOB2("Truposz Lvl. 89", 220.0),
+    TAJEMNICZE_PIASKI_MINIBOSS1("[MiniBOSS] Pustynny Tarczownik", 280.0),
+    TAJEMNICZE_PIASKI_MINIBOSS2("[MiniBOSS] Pustynny Przyzywacz", 300.0),
+    TAJEMNICZE_PIASKI_BOSS("[BOSS] Cesarz Pustyni", 400.0),
+
+    MAP_90_100_1("Podziemna Lowczyni Lvl. 92", 800.0),
+    MAP_90_100_2("Podziemna Lowczyni Lvl. 95", 850.0),
+    MAP_90_100_3("Podziemna Lowczyni Lvl. 98", 900.0),
+    MAP_90_100_BOSS("[BOSS] Podziemny Rozpruwacz", 1600.0),
+
+    DEMONICZNE_SALE_MOB1("Demoniczy Lowca Lvl. 95", 1000.0),
+    DEMONICZNE_SALE_MINIBOSS1("[MiniBOSS] Elitarny Sluga", 1600.0),
+    DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 2200.0),
+
+    // DO TAD SKONCZONE POWYZEJ NIE !
     MAP_100_110_1("Podwodny Straznik Lvl. 104", 10300),
     MAP_100_110_2("Podwodny Straznik Lvl. 106", 12700),
     MAP_100_110_3("Podwodny Straznik Lvl. 109", 14200),

@@ -46,6 +46,7 @@ import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Dungeony.Dungeon60z70.PiekielnyWladcaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.KrolLoduManager;
+import rpg.rpgcore.chests.Dungeony.Inne.SakiewkaUlepszaczyManager;
 import rpg.rpgcore.chests.Expowisko1.DowodcaRozbojnikow;
 import rpg.rpgcore.chests.Expowisko1.RozbojnikManager;
 import rpg.rpgcore.chests.Expowisko10.PodziemnyRozpruwaczManager;
@@ -69,6 +70,7 @@ import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.chests.Npc.GornikChestManager;
 import rpg.rpgcore.commands.admin.*;
+import rpg.rpgcore.commands.admin.ACcommand.ACCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelManager;
@@ -388,9 +390,17 @@ public final class RPGCORE extends JavaPlugin {
     // ice tower
     private KrolLoduManager krolLoduManager;
     private LodowySlugaManager lodowySlugaManager;
+    // inne od dunga
+    private SakiewkaUlepszaczyManager sakiewkaUlepszaczyManager;
     // dung 60-70
     private PiekielnyWladcaManager piekielnyWladcaManager;
     private KoloseumManager koloseumManager;
+    // dung 70-80
+
+    // dung 80-90
+
+    // dung 90-100
+
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
 
@@ -1030,8 +1040,13 @@ public final class RPGCORE extends JavaPlugin {
         // ice tower
         this.krolLoduManager = new KrolLoduManager();
         this.lodowySlugaManager = new LodowySlugaManager();
+        // inne od dunga
+        this.sakiewkaUlepszaczyManager = new SakiewkaUlepszaczyManager();
         // dungeon 60-70
         this.piekielnyWladcaManager = new PiekielnyWladcaManager();
+        // dungeon 70-80
+        // dungeon 80-90
+        // dungeon 90-100
         // ================================ SKRZYNKI NPCTY & INNE ================================
         this.gornikChestManager = new GornikChestManager();
     }
@@ -1410,8 +1425,13 @@ public final class RPGCORE extends JavaPlugin {
     public LodowySlugaManager getLodowySlugaManager() {
         return lodowySlugaManager;
     }
+    // inne od dunga
+    public SakiewkaUlepszaczyManager getSakiewkaUlepszaczyManager() { return sakiewkaUlepszaczyManager; }
     // dungeon 60-70
     public PiekielnyWladcaManager getPiekielnyWladcaManager() { return piekielnyWladcaManager;}
+    // dungeon 70-80
+    // dungeon 80-90
+    // dungeon 90-100
     // ================================ SKRZYNKI NPCTY & INNE ================================
     public GornikChestManager getGornikChestManager() {
         return gornikChestManager;

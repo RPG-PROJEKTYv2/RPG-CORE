@@ -42,7 +42,8 @@ public class DropFromChestsListener implements Listener {
 
         if (player.getItemInHand().getType().equals(Material.CHEST)
                 || player.getItemInHand().getType().equals(Material.ENDER_CHEST)
-                || player.getItemInHand().getType().equals(Material.JUKEBOX)) {
+                || player.getItemInHand().getType().equals(Material.JUKEBOX)
+                || player.getItemInHand().getType().equals(Material.FLOWER_POT)) {
 
             final ItemStack playerItem = player.getItemInHand();
 
@@ -835,6 +836,23 @@ public class DropFromChestsListener implements Listener {
                 }
                 // TODO DUNGEONY
                 // TODO DUNGEONY
+
+                // SAKIEWKA Z ULEPSZCZAMI
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_SAKIEWKA_ULEPSZACZY").getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", 1));
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+
+                        rpgcore.getSakiewkaUlepszaczyManager().getDrawnItems(player);
+                        return;
+                    }
+                }
+
+
+
+
+
+
                 // DUNGEON 60-70
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {

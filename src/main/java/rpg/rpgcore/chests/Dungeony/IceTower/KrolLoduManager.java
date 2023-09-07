@@ -32,7 +32,7 @@ public class KrolLoduManager {
         this.mroznywladca.add(new Items("16", 4.0, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lKolczyki Krola Lodu").toItemStack(),1 ));
         this.mroznywladca.add(new Items("17", 6.0, GlobalItem.I10.getItemStack().clone(), 1));
         this.mroznywladca.add(new Items("18", 9.0, ItemHelper.createSword("&b&lLodowy Sztylet", Material.DIAMOND_SWORD, 26, 16, false), 1));
-        this.mroznywladca.add(new Items("19", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 1), 1));
+        this.mroznywladca.add(new Items("19", 10.0, GlobalItem.getItem("I_FRAGMENT_STALI", 2), 1));
 
     }
 
