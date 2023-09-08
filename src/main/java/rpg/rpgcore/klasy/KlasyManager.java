@@ -141,7 +141,9 @@ public class KlasyManager {
         final Klasa klasa = this.find(player.getUniqueId());
         gui.setItem(12, new ItemBuilder(Material.NETHER_STAR).setName("&fNinja").setLore(Arrays.asList(
                 "            &b&lUMIEJETNOSCI",
-                " &4&lWKROTCE &8- &4&lWKROTCE",
+                " &7&lZaslona Dymna &8- &7Naklada na wszystkich graczy w zasiegu",
+                "                       &58 &7kratek efekt &8slepoty &7i &8spowolnienia",
+                "                       &7na &e10 sekund &8(cooldown 3 min)",
                 "                   ",
                 " &fJe-stem Szybki &8- &7Zyskujesz &f+25% predkosci ruchu &7na",
                 "                  &e10 sekund &7dodatkowo zadajesz &c+5% obrazen",

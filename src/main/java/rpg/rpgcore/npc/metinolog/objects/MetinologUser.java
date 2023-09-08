@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MetinologUser {
+public class MetinologUser implements Cloneable {
 
     private int postepKill;
     private int postepMisjiKill;
@@ -25,5 +25,14 @@ public class MetinologUser {
         this.srOdpo = srOdpo;
         this.dodatkowedmg = dodatkowedmg;
         this.dmgMetiny = dmgMetiny;
+    }
+
+    @Override
+    public MetinologUser clone() {
+        try {
+            return (MetinologUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

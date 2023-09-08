@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class MedrzecUser {
+public class MedrzecUser implements Cloneable {
     private final UUID uuid;
     private int bonus;
 
@@ -30,5 +30,14 @@ public class MedrzecUser {
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())
                 .append("bonus", this.bonus);
+    }
+
+    @Override
+    public MedrzecUser clone() {
+        try {
+            return (MedrzecUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

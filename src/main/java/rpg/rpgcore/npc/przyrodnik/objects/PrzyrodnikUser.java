@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PrzyrodnikUser {
+public class PrzyrodnikUser implements Cloneable {
     private int mission, progress;
     private double dmg, def;
 
@@ -14,5 +14,14 @@ public class PrzyrodnikUser {
         this.progress = progress;
         this.dmg = dmg;
         this.def = def;
+    }
+
+    @Override
+    public PrzyrodnikUser clone() {
+        try {
+            return (PrzyrodnikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

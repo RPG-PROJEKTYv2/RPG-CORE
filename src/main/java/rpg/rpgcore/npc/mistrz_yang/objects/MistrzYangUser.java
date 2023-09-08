@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class MistrzYangUser {
+public class MistrzYangUser implements Cloneable {
     private final UUID uuid;
     private int missionId;
     private int reqAmount;
@@ -43,5 +43,14 @@ public class MistrzYangUser {
                 .append("missionId", this.missionId)
                 .append("reqAmount", this.reqAmount)
                 .append("progress", this.progress);
+    }
+
+    @Override
+    public MistrzYangUser clone() {
+        try {
+            return (MistrzYangUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

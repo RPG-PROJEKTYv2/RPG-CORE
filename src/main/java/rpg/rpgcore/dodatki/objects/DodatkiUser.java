@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class DodatkiUser {
+public class DodatkiUser implements Cloneable {
     private final UUID uuid;
-    private final AkcesoriaPodstUser akcesoriaPodstawowe;
-    private final AkcesoriaDodatUser akcesoriaDodatkowe;
-    private final BonyUser bony;
+    private AkcesoriaPodstUser akcesoriaPodstawowe;
+    private AkcesoriaDodatUser akcesoriaDodatkowe;
+    private BonyUser bony;
 
     public DodatkiUser(final UUID uuid) {
         this.uuid = uuid;
@@ -36,5 +36,18 @@ public class DodatkiUser {
                 .append("akcesoriaPodstawowe", this.akcesoriaPodstawowe.toDocument())
                 .append("akcesoriaDodatkowe", this.akcesoriaDodatkowe.toDocument())
                 .append("bony", this.bony.toDocument());
+    }
+
+    @Override
+    public DodatkiUser clone() {
+        try {
+            final DodatkiUser clone = (DodatkiUser) super.clone();
+            clone.akcesoriaPodstawowe = this.akcesoriaPodstawowe.clone();
+            clone.akcesoriaDodatkowe = this.akcesoriaDodatkowe.clone();
+            clone.bony = this.bony.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

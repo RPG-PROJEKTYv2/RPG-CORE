@@ -74,7 +74,7 @@ public class ZmiankiInventoryClickListener implements Listener {
 
                 player.getInventory().addItem(RPGCORE.getInstance().getZmiankiManager().rollNewBonuses(clickedInventory.getItem(13), player));
                 clickedInventory.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
-                player.closeInventory();
+                RPGCORE.getInstance().getZmiankiManager().openGUI(player, false);
             }
         }
     }

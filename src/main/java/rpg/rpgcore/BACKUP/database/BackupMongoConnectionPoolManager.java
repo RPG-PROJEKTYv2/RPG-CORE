@@ -28,18 +28,18 @@ public class BackupMongoConnectionPoolManager {
     }
 
     public void firstJoin(final UUID uuid) {
-        if (this.database.listCollectionNames().into(new ArrayList<>()).contains(uuid.toString().replaceAll("-", "_"))) {
+        if (this.database.listCollectionNames().into(new ArrayList<>()).contains("hellrpg_" + uuid.toString().replaceAll("-", "_"))) {
             return;
         }
-        this.database.createCollection(uuid.toString().replaceAll("-", "_"));
+        this.database.createCollection("hellrpg_" + uuid.toString().replaceAll("-", "_"));
     }
 
     public MongoCollection<Document> getCollection(final UUID uuid) {
-        if (!this.database.listCollectionNames().into(new ArrayList<>()).contains(uuid.toString().replaceAll("-", "_"))) {
-            this.database.createCollection(uuid.toString().replaceAll("-", "_"));
-            return this.database.getCollection(uuid.toString().replaceAll("-", "_"));
+        if (!this.database.listCollectionNames().into(new ArrayList<>()).contains("hellrpg_" + uuid.toString().replaceAll("-", "_"))) {
+            this.database.createCollection("hellrpg_" + uuid.toString().replaceAll("-", "_"));
+            return this.database.getCollection("hellrpg_" + uuid.toString().replaceAll("-", "_"));
         }
-        return this.database.getCollection(uuid.toString().replaceAll("-", "_"));
+        return this.database.getCollection("hellrpg_" + uuid.toString().replaceAll("-", "_"));
     }
 
 

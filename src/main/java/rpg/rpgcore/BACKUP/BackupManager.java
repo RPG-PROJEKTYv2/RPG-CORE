@@ -26,7 +26,7 @@ public class BackupManager {
 
     public void openPlayerBackups(final Player player, final UUID target, final int page) {
         final List<Backup> backups = this.backupMap.get(target);
-        if (backups.isEmpty()) {
+        if (backups == null || backups.isEmpty()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cGracz &6" + this.rpgcore.getUserManager().find(target).getName() + " &cnie posiada zadnych backupow"));
             return;
         }

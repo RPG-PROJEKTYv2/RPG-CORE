@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class BonyUser {
+public class BonyUser implements Cloneable {
     private final UUID uuid;
     private ItemStack dmg5, dmg10, dmg15, def5, def10, def15, kryt5, kryt10, kryt15, wzmkryt10, blok20, przeszywka20, predkosc25, predkosc50, hp10, hp20, hp35, dmgMetiny;
 
@@ -79,5 +79,14 @@ public class BonyUser {
                 .append("hp20", Utils.serializeItem(this.hp20))
                 .append("hp35", Utils.serializeItem(this.hp35))
                 .append("dmgMetiny", Utils.serializeItem(this.dmgMetiny));
+    }
+
+    @Override
+    public BonyUser clone() {
+        try {
+            return (BonyUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

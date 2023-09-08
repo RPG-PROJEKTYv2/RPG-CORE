@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class BaoObject {
+public class BaoObject implements Cloneable {
     private final UUID uuid;
-    private final BaoUser baoUser;
+    private BaoUser baoUser;
 
 
     public BaoObject(final UUID uuid) {
@@ -40,5 +40,16 @@ public class BaoObject {
                 .append("value4", baoUser.getValue4())
                 .append("bonus5", baoUser.getBonus5())
                 .append("value5", baoUser.getValue5());
+    }
+
+    @Override
+    public BaoObject clone() {
+        try {
+            final BaoObject clone = (BaoObject) super.clone();
+            clone.baoUser = baoUser.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

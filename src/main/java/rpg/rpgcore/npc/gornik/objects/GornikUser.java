@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class GornikUser {
+public class GornikUser implements Cloneable {
     private final UUID uuid;
     private int mission, progress;
     private double silnyNaLudzi, defNaMoby;
@@ -65,5 +65,14 @@ public class GornikUser {
                 .append("maxTimeLeft", maxTimeLeft)
                 .append("freePass", freePass)
                 .append("pickaxeAbility", pickaxeAbility);
+    }
+
+    @Override
+    public GornikUser clone() {
+        try {
+            return (GornikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

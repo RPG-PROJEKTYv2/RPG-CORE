@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LesnikUser {
+public class LesnikUser implements Cloneable {
     private int mission, progress;
     private double przeszycie, wzmKryta, defNaLudzi;
     private long cooldown;
@@ -25,5 +25,14 @@ public class LesnikUser {
 
     public void giveCooldown() {
         this.cooldown = System.currentTimeMillis() + 600_000;
+    }
+
+    @Override
+    public LesnikUser clone() {
+        try {
+            return (LesnikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

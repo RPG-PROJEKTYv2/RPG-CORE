@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class RybakUser {
+public class RybakUser implements Cloneable {
     private final UUID uuid;
-    private final StaruszekUser staruszekUser;
+    private StaruszekUser staruszekUser;
     private double podwojnyDrop;
     private int lvlWedki, expWedki, wylowioneRyby;
     private final List<Integer> clickedArmorStands;
@@ -55,5 +55,16 @@ public class RybakUser {
                 .append("wylowioneRyby", this.wylowioneRyby)
                 .append("clickedArmorStands", this.clickedArmorStands)
                 .append("dialog", this.dialog);
+    }
+
+    @Override
+    public RybakUser clone() {
+        try {
+            final RybakUser rybakUser = (RybakUser) super.clone();
+            rybakUser.setStaruszekUser(this.staruszekUser.clone());
+            return rybakUser;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

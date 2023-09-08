@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class AkcesoriaDodatUser {
+public class AkcesoriaDodatUser implements Cloneable {
     private final UUID uuid;
     private ItemStack szarfa, pas, medalion, energia;
 
@@ -37,5 +37,14 @@ public class AkcesoriaDodatUser {
                 .append("pas", Utils.serializeItem(this.pas))
                 .append("medalion", Utils.serializeItem(this.medalion))
                 .append("energia", Utils.serializeItem(this.energia));
+    }
+
+    @Override
+    public AkcesoriaDodatUser clone() {
+        try {
+            return (AkcesoriaDodatUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

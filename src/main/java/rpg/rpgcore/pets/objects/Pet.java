@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Pet {
+public class Pet implements Cloneable{
     private ItemStack item;
     private String name;
     private int lvl;
@@ -69,6 +69,15 @@ public class Pet {
         } else {
             this.value1 = Utils.addBonuses(uuid, item.getItemMeta().getLore().get(1));
             this.value2 = Utils.addBonuses(uuid, item.getItemMeta().getLore().get(2));
+        }
+    }
+
+    @Override
+    public Pet clone() {
+        try {
+            return (Pet) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
         }
     }
 }

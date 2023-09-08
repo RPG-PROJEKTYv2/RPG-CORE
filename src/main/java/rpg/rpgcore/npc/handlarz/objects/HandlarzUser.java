@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class HandlarzUser {
+public class HandlarzUser implements Cloneable {
     private final UUID uuid;
     private int sprzedane;
     private boolean black_market;
@@ -72,5 +72,14 @@ public class HandlarzUser {
                 .append("black_item5", this.black_item5)
                 .append("black_item6", this.black_item6)
                 .append("nextReset", this.nextReset);
+    }
+
+    @Override
+    public HandlarzUser clone() {
+        try {
+            return (HandlarzUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

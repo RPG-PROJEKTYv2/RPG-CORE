@@ -12,12 +12,17 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ZmiankiManager {
-    public void openGUI(final Player player) {
+    public void openGUI(final Player player, final boolean force) {
+        if (!player.getInventory().containsAtLeast(GlobalItem.I50.getItemStack().clone(), 1) && !force) {
+            player.closeInventory();
+            return;
+        }
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lZmiana Bonusow"));
 
 

@@ -92,7 +92,7 @@ public class GuildCommand extends CommandAPI {
 
             if (args[0].equalsIgnoreCase("usunzastepce")) {
                 if (!rpgcore.getGuildManager().find(tag).getOwner().equals(player.getUniqueId())) {
-                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zaloozycielem tego klanu!"));
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem tego klanu!"));
                     return;
                 }
                 rpgcore.getGuildManager().setGuildCoOwner(tag, "");

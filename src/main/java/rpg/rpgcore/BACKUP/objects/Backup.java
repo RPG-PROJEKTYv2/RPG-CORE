@@ -6,10 +6,12 @@ import org.bson.Document;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
 import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.kociolki.KociolkiUser;
+import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.duszolog.objects.DuszologObject;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
@@ -39,7 +41,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Backup {
+public class Backup implements Cloneable {
     private final RPGCORE rpgcore = RPGCORE.getInstance();
     private final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private final UUID uuid;
@@ -72,71 +74,77 @@ public class Backup {
     private final MistrzYangUser mistrzYang;
     private final CzarownicaUser czarownica;
     private final WyslannikUser wyslannik;
+    private final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznik;
+    private final Targ targ;
 
 
 
     public Backup(final UUID uuid) {
         this.uuid = uuid;
         this.date = format.format(new Date());
-        this.user = this.rpgcore.getUserManager().find(uuid);
-        this.bonuses = this.rpgcore.getBonusesManager().find(uuid);
-        this.os = this.rpgcore.getOsManager().find(uuid);
-        this.kolekcjoner = this.rpgcore.getKolekcjonerNPC().find(uuid);
-        this.bao = this.rpgcore.getBaoManager().find(uuid);
-        this.rybak = this.rpgcore.getRybakNPC().find(uuid);
-        this.dodatki = this.rpgcore.getDodatkiManager().find(uuid);
-        this.metinolog = this.rpgcore.getMetinologNPC().find(uuid);
-        this.klasa = this.rpgcore.getKlasyManager().find(uuid);
-        this.medrzec = this.rpgcore.getMedrzecNPC().find(uuid);
-        this.gornik = this.rpgcore.getGornikNPC().find(uuid);
-        this.duszolog = this.rpgcore.getDuszologNPC().find(uuid);
-        this.przyrodnik = this.rpgcore.getPrzyrodnikNPC().find(uuid);
-        this.chat = this.rpgcore.getChatManager().find(uuid);
-        this.magazynier = this.rpgcore.getMagazynierNPC().find(uuid);
-        this.lowca = this.rpgcore.getLowcaNPC().find(uuid);
-        this.lesnik = this.rpgcore.getLesnikNPC().find(uuid);
-        this.pet = this.rpgcore.getPetyManager().findActivePet(uuid);
-        this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid);
-        this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid);
-        this.kociolki = this.rpgcore.getKociolkiManager().find(uuid);
-        this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid);
-        this.wwwUser = this.rpgcore.getUserManager().findWWWUser(uuid);
-        this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid);
-        this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid);
-        this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
-        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
+        this.user = this.rpgcore.getUserManager().find(uuid).clone();
+        this.bonuses = this.rpgcore.getBonusesManager().find(uuid).clone();
+        this.os = this.rpgcore.getOsManager().find(uuid).clone();
+        this.kolekcjoner = this.rpgcore.getKolekcjonerNPC().find(uuid).clone();
+        this.bao = this.rpgcore.getBaoManager().find(uuid).clone();
+        this.rybak = this.rpgcore.getRybakNPC().find(uuid).clone();
+        this.dodatki = this.rpgcore.getDodatkiManager().find(uuid).clone();
+        this.metinolog = this.rpgcore.getMetinologNPC().find(uuid).clone();
+        this.klasa = this.rpgcore.getKlasyManager().find(uuid).clone();
+        this.medrzec = this.rpgcore.getMedrzecNPC().find(uuid).clone();
+        this.gornik = this.rpgcore.getGornikNPC().find(uuid).clone();
+        this.duszolog = this.rpgcore.getDuszologNPC().find(uuid).clone();
+        this.przyrodnik = this.rpgcore.getPrzyrodnikNPC().find(uuid).clone();
+        this.chat = this.rpgcore.getChatManager().find(uuid).clone();
+        this.magazynier = this.rpgcore.getMagazynierNPC().find(uuid).clone();
+        this.lowca = this.rpgcore.getLowcaNPC().find(uuid).clone();
+        this.lesnik = this.rpgcore.getLesnikNPC().find(uuid).clone();
+        this.pet = this.rpgcore.getPetyManager().findActivePet(uuid).clone();
+        this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid).clone();
+        this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid).clone();
+        this.kociolki = this.rpgcore.getKociolkiManager().find(uuid).clone();
+        this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid).clone();
+        this.wwwUser = this.rpgcore.getUserManager().findWWWUser(uuid).clone();
+        this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid).clone();
+        this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid).clone();
+        this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid).clone();
+        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid).clone();
+        this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
+        this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
     }
 
     public Backup(final UUID uuid, final String date) {
         this.uuid = uuid;
         this.date = date;
-        this.user = this.rpgcore.getUserManager().find(uuid);
-        this.bonuses = this.rpgcore.getBonusesManager().find(uuid);
-        this.os = this.rpgcore.getOsManager().find(uuid);
-        this.kolekcjoner = this.rpgcore.getKolekcjonerNPC().find(uuid);
-        this.bao = this.rpgcore.getBaoManager().find(uuid);
-        this.rybak = this.rpgcore.getRybakNPC().find(uuid);
-        this.dodatki = this.rpgcore.getDodatkiManager().find(uuid);
-        this.metinolog = this.rpgcore.getMetinologNPC().find(uuid);
-        this.klasa = this.rpgcore.getKlasyManager().find(uuid);
-        this.medrzec = this.rpgcore.getMedrzecNPC().find(uuid);
-        this.gornik = this.rpgcore.getGornikNPC().find(uuid);
-        this.duszolog = this.rpgcore.getDuszologNPC().find(uuid);
-        this.przyrodnik = this.rpgcore.getPrzyrodnikNPC().find(uuid);
-        this.chat = this.rpgcore.getChatManager().find(uuid);
-        this.magazynier = this.rpgcore.getMagazynierNPC().find(uuid);
-        this.lowca = this.rpgcore.getLowcaNPC().find(uuid);
-        this.lesnik = this.rpgcore.getLesnikNPC().find(uuid);
-        this.pet = this.rpgcore.getPetyManager().findActivePet(uuid);
-        this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid);
-        this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid);
-        this.kociolki = this.rpgcore.getKociolkiManager().find(uuid);
-        this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid);
-        this.wwwUser = this.rpgcore.getUserManager().findWWWUser(uuid);
-        this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid);
-        this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid);
-        this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid);
-        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid);
+        this.user = this.rpgcore.getUserManager().find(uuid).clone();
+        this.bonuses = this.rpgcore.getBonusesManager().find(uuid).clone();
+        this.os = this.rpgcore.getOsManager().find(uuid).clone();
+        this.kolekcjoner = this.rpgcore.getKolekcjonerNPC().find(uuid).clone();
+        this.bao = this.rpgcore.getBaoManager().find(uuid).clone();
+        this.rybak = this.rpgcore.getRybakNPC().find(uuid).clone();
+        this.dodatki = this.rpgcore.getDodatkiManager().find(uuid).clone();
+        this.metinolog = this.rpgcore.getMetinologNPC().find(uuid).clone();
+        this.klasa = this.rpgcore.getKlasyManager().find(uuid).clone();
+        this.medrzec = this.rpgcore.getMedrzecNPC().find(uuid).clone();
+        this.gornik = this.rpgcore.getGornikNPC().find(uuid).clone();
+        this.duszolog = this.rpgcore.getDuszologNPC().find(uuid).clone();
+        this.przyrodnik = this.rpgcore.getPrzyrodnikNPC().find(uuid).clone();
+        this.chat = this.rpgcore.getChatManager().find(uuid).clone();
+        this.magazynier = this.rpgcore.getMagazynierNPC().find(uuid).clone();
+        this.lowca = this.rpgcore.getLowcaNPC().find(uuid).clone();
+        this.lesnik = this.rpgcore.getLesnikNPC().find(uuid).clone();
+        this.pet = this.rpgcore.getPetyManager().findActivePet(uuid).clone();
+        this.userPets = this.rpgcore.getPetyManager().findUserPets(uuid).clone();
+        this.handlarz = this.rpgcore.getHandlarzNPC().find(uuid).clone();
+        this.kociolki = this.rpgcore.getKociolkiManager().find(uuid).clone();
+        this.wyszkolenie = this.rpgcore.getWyszkolenieManager().find(uuid).clone();
+        this.wwwUser = this.rpgcore.getUserManager().findWWWUser(uuid).clone();
+        this.pustelnik = this.rpgcore.getPustelnikNPC().find(uuid).clone();
+        this.mistrzYang = this.rpgcore.getMistrzYangNPC().find(uuid).clone();
+        this.czarownica = this.rpgcore.getCzarownicaNPC().find(uuid).clone();
+        this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid).clone();
+        this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
+        this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
     }
 
     public Backup(final String collectionName, final Document document) {
@@ -195,6 +203,10 @@ public class Backup {
         else this.czarownica = new CzarownicaUser(this.uuid);
         if (document.containsKey("wyslannik")) this.wyslannik = new WyslannikUser(document.get("wyslannik", Document.class));
         else this.wyslannik = new WyslannikUser(this.uuid);
+        if (document.containsKey("przekletyCzarnoksieznik")) this.przekletyCzarnoksieznik = new PrzekletyCzarnoksieznikUser(document.get("przekletyCzarnoksieznik", Document.class));
+        else this.przekletyCzarnoksieznik = new PrzekletyCzarnoksieznikUser(this.uuid);
+        if (document.containsKey("targ")) this.targ = new Targ(document.get("targ", Document.class));
+        else this.targ = new Targ(this.uuid);
     }
 
     public Date getDateToCompare() {
@@ -237,6 +249,22 @@ public class Backup {
                 .append("wwwUser", this.wwwUser.toDocument())
                 .append("pustelnik", this.pustelnik.toDocument())
                 .append("mistrzYang", this.mistrzYang.toDocument())
-                .append("czarownica", this.czarownica.toDocument());
+                .append("czarownica", this.czarownica.toDocument())
+                .append("wyslannik", this.wyslannik.toDocument())
+                .append("przekletyCzarnoksieznik", this.przekletyCzarnoksieznik.toDocument())
+                .append("targ", this.targ.toDocument());
+    }
+
+    public boolean equals(final Backup backup) {
+        return this.uuid.equals(backup.getUuid()) && this.date.equals(backup.getDate());
+    }
+
+    @Override
+    public Backup clone() {
+        try {
+            return (Backup) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

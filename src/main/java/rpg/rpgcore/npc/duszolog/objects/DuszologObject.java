@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class DuszologObject {
+public class DuszologObject implements Cloneable {
     private final UUID uuid;
-    private final DuszologUser duszologUser;
+    private DuszologUser duszologUser;
 
     public DuszologObject(final UUID uuid) {
         this.uuid = uuid;
@@ -28,5 +28,16 @@ public class DuszologObject {
 
     public Document toDocument() {
         return new Document("_id", this.uuid.toString()).append("mission", this.getDuszologUser().getMission()).append("progress", this.getDuszologUser().getProgress()).append("value1", this.getDuszologUser().getValue1()).append("value2", this.getDuszologUser().getValue2());
+    }
+
+    @Override
+    public DuszologObject clone() {
+        try {
+            final DuszologObject duszologObject = (DuszologObject) super.clone();
+            duszologObject.duszologUser = this.duszologUser.clone();
+            return duszologObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

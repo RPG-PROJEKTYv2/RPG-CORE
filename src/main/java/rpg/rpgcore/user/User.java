@@ -11,18 +11,20 @@ import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
 @Setter
-public class User {
+public class User implements Cloneable {
     private final UUID id;
     private String name;
     private String banInfo;
     private String muteInfo;
     private String punishmentHistory;
-    private final RankUser rankUser;
-    private final RankPlayerUser rankPlayerUser;
+    private RankUser rankUser;
+    private RankPlayerUser rankPlayerUser;
     private int lvl;
     private double exp;
     private double kasa;
@@ -36,7 +38,7 @@ public class User {
     private boolean adminCodeLogin;
     private String hellCode;
     private boolean hellCodeLogin;
-    private final InventoriesUser inventoriesUser;
+    private InventoriesUser inventoriesUser;
     private int pierscienDoswiadczenia;
     private long pierscienDoswiadczeniaTime;
     private double krytyk;
@@ -44,6 +46,7 @@ public class User {
     private boolean tworca;
     private boolean firstTime;
     private int serverJoins;
+    private Map<String, Integer> mobMap;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -70,6 +73,7 @@ public class User {
         this.tworca = false;
         this.firstTime = true;
         this.serverJoins = 0;
+        this.mobMap = new HashMap<>();
     }
 
     public User(final Document document) {
@@ -115,6 +119,14 @@ public class User {
         this.tworca = document.getBoolean("tworca");
         this.firstTime = (document.containsKey("firstTime") ? document.getBoolean("firstTime") : true);
         this.serverJoins = (document.containsKey("serverJoins") ? document.getInteger("serverJoins") : 0);
+        this.mobMap = new HashMap<>();
+        final Document mobMapD = (document.containsKey("mobMap") ? (Document) document.get("mobMap") : new Document());
+        if (!mobMapD.isEmpty()) {
+            for (final String key : mobMapD.keySet()) {
+                if (key.equals("_id")) continue;
+                this.mobMap.put(key, mobMapD.getInteger(key));
+            }
+        }
     }
 
     public boolean isBanned() {
@@ -141,7 +153,19 @@ public class User {
         this.serverJoins++;
     }
 
+    public void incrementMobKill(final String mobName) {
+        if (this.mobMap.containsKey(mobName)) {
+            this.mobMap.put(mobName, this.mobMap.get(mobName) + 1);
+        } else {
+            this.mobMap.put(mobName, 1);
+        }
+    }
+
     public Document toDocument() {
+        final Document mobMapD = new Document("_id", "mobMap");
+        for (final String key : this.mobMap.keySet()) {
+            mobMapD.append(key, this.mobMap.get(key));
+        }
         return new Document().append("_id", this.id.toString())
                 .append("name", this.name)
                 .append("banInfo", this.banInfo)
@@ -168,8 +192,21 @@ public class User {
                 .append("kitCooldown", this.kitCooldown)
                 .append("tworca", this.tworca)
                 .append("firstTime", this.firstTime)
-                .append("serverJoins", this.serverJoins);
+                .append("serverJoins", this.serverJoins)
+                .append("mobMap", mobMapD);
     }
 
 
+    @Override
+    public User clone() {
+        try {
+            final User user = (User) super.clone();
+            user.setRankUser(this.rankUser.clone());
+            user.setRankPlayerUser(this.rankPlayerUser.clone());
+            user.setInventoriesUser(this.inventoriesUser.clone());
+            return user;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

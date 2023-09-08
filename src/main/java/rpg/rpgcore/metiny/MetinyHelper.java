@@ -140,6 +140,9 @@ public class MetinyHelper {
                 player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);
                 player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
                 RPGCORE.getInstance().getNmsManager().sendActionBar(player, metiny.getMetins().getName() + ": &f&l0&8&l/&f&l" + metiny.getMetins().getMaxhealth());
+                if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 5) {
+                    RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+                }
                 if (RPGCORE.getInstance().getZamekNieskonczonosciManager().destroyed == 2) { //ZMIENIC NA 4
                     RPGCORE.getInstance().getZamekNieskonczonosciManager().spawnMiniBoses();
                     return;
@@ -148,9 +151,6 @@ public class MetinyHelper {
             }
 
             getDropMetin(id, player, entity);
-            if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 5) {
-                RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
-            }
             entity.remove();
             metiny.getMetins().setHealth(0);
             player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 3);

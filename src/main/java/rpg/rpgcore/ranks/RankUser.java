@@ -2,7 +2,7 @@ package rpg.rpgcore.ranks;
 
 import rpg.rpgcore.ranks.types.RankType;
 
-public class RankUser {
+public class RankUser implements Cloneable {
     private RankType rankType;
 
     public RankUser(RankType rankType) {
@@ -27,5 +27,14 @@ public class RankUser {
 
     public boolean isHighStaff() {
         return hasRank(RankType.ADMIN);
+    }
+
+    @Override
+    public RankUser clone() {
+        try {
+            return (RankUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

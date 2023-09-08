@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class KolekcjonerUser {
+public class KolekcjonerUser implements Cloneable {
     private int mission;
     private List<Boolean> missionProgress;
     private int szczescie;
@@ -24,5 +24,14 @@ public class KolekcjonerUser {
 
     public void resetMissionProgress() {
         this.missionProgress = Arrays.asList(false, false, false, false, false);
+    }
+
+    @Override
+    public KolekcjonerUser clone() {
+        try {
+            return (KolekcjonerUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -91,10 +91,7 @@ public class EntityDamageEntityListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
 
-        if (e.getEntity().getCustomName() != null && this.blockedEntiies.contains(Utils.removeColor(e.getEntity().getCustomName()))) {
-            e.setCancelled(true);
-            return;
-        }
+        if (e.isCancelled()) return;
 
         if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
             if (e.getDamager() instanceof Fireball) {
@@ -144,13 +141,11 @@ public class EntityDamageEntityListener implements Listener {
 
         if (e.getEntityType() == EntityType.ARMOR_STAND) return;
 
-        final String entityName = Utils.removeColor(e.getEntity().getName());
-        if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Kupiec") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
-                entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") || entityName.equalsIgnoreCase("ItemShop") ||
-                entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("Duszolog") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||
-                entityName.equalsIgnoreCase("Kowal") || entityName.equalsIgnoreCase("Trener") || entityName.equalsIgnoreCase("Medyk") || entityName.equalsIgnoreCase("Gornik") ||
-                entityName.equalsIgnoreCase("Lesnik") || entityName.equalsIgnoreCase("Zmianki") || entityName.equalsIgnoreCase("Wyslannik") || entityName.equalsIgnoreCase("Zaginiony Wladca") ||
-                entityName.equalsIgnoreCase("czarownica") || entityName.equalsIgnoreCase("Bremu")|| entityName.equalsIgnoreCase("Rzemieslnik")) {
+        if (e.getEntity().getName() != null && this.blockedEntiies.contains(Utils.removeColor(e.getEntity().getName()))) {
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getEntity().getCustomName() != null && this.blockedEntiies.contains(Utils.removeColor(e.getEntity().getCustomName()))) {
             e.setCancelled(true);
             return;
         }

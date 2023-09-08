@@ -64,12 +64,12 @@ public class PlayerJoinListener implements Listener {
 
         if (!rpgcore.getUserManager().isUser(uuid)) {
             if (rpgcore.getUserManager().isUserName(e.getPlayer().getName())) {
-                e.getPlayer().kickPlayer(Utils.format(
+                rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getPlayer().kickPlayer(Utils.format(
                         Utils.CLEANSERVERNAME + "\n" +
                                 "&c&lCos poszlo nie tak! :(\n\n" +
                                 "&8Skontaktuj Sie z &4Administracja &8z ss'em tego bledu.\n" +
                                 "&8(&c&lKod Bledu: #USER_ALREADY_IN_DB&8)\n" +
-                                "&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString()));
+                                "&8UUID: " + rpgcore.getUserManager().find(e.getPlayer().getName()).getId().toString())), 1L);
                 return;
             }
             player.getOpenInventory().getTopInventory().clear();
@@ -91,7 +91,7 @@ public class PlayerJoinListener implements Listener {
             player.setLevel(1);
             player.setExp(0);
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje"));
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
             return;
         }
 

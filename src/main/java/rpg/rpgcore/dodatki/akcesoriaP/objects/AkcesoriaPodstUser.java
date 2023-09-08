@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class AkcesoriaPodstUser {
+public class AkcesoriaPodstUser implements Cloneable {
     private final UUID uuid;
     private ItemStack tarcza, naszyjnik, kolczyki, pierscien, diadem;
 
@@ -40,5 +40,14 @@ public class AkcesoriaPodstUser {
                 .append("kolczyki", Utils.serializeItem(this.kolczyki))
                 .append("pierscien", Utils.serializeItem(this.pierscien))
                 .append("diadem", Utils.serializeItem(this.diadem));
+    }
+
+    @Override
+    public AkcesoriaPodstUser clone() {
+        try {
+            return (AkcesoriaPodstUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

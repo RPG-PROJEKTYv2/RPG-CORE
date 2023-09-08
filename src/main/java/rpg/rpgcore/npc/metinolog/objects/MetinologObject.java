@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class MetinologObject {
+public class MetinologObject implements Cloneable {
     private final UUID uuid;
-    private final MetinologUser metinologObject;
+    private MetinologUser metinologObject;
 
     public MetinologObject(final UUID uuid) {
         this.uuid = uuid;
@@ -44,5 +44,16 @@ public class MetinologObject {
                 .append("srOdpo", this.getMetinologUser().getSrOdpo())
                 .append("dodatkowedmg", this.getMetinologUser().getDodatkowedmg())
                 .append("dmgMetiny", this.getMetinologUser().getDodatkowedmg());
+    }
+
+    @Override
+    public MetinologObject clone() {
+        try {
+            final MetinologObject metinologObject = (MetinologObject) super.clone();
+            metinologObject.metinologObject = this.metinologObject.clone();
+            return metinologObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

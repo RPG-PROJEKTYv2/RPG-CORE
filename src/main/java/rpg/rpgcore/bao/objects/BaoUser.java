@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BaoUser {
+public class BaoUser implements Cloneable {
     private String bonus1, bonus2, bonus3, bonus4, bonus5;
     private int value1, value2, value3, value4, value5;
 
@@ -20,5 +20,14 @@ public class BaoUser {
         this.value4 = value4;
         this.bonus5 = bonus5;
         this.value5 = value5;
+    }
+
+    @Override
+    public BaoUser clone() {
+        try {
+            return (BaoUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

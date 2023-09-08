@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class LowcaObject {
+public class LowcaObject implements Cloneable {
     private final UUID uuid;
-    private final LowcaUser lowcaUser;
+    private LowcaUser lowcaUser;
 
     public LowcaObject(final UUID uuid) {
         this.uuid = uuid;
@@ -35,4 +35,14 @@ public class LowcaObject {
                 .append("dodatkoweDmg", this.lowcaUser.getDodatkoweDmg());
     }
 
+    @Override
+    public LowcaObject clone() {
+        try {
+            final LowcaObject lowcaObject = (LowcaObject) super.clone();
+            lowcaObject.lowcaUser = this.lowcaUser.clone();
+            return lowcaObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

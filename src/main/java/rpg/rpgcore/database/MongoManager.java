@@ -680,6 +680,137 @@ public class MongoManager {
         }
     }
 
+    public void savePlayer(final UUID uuid) {
+        try {
+            final long start = System.currentTimeMillis();
+            final User user = rpgcore.getUserManager().find(uuid);
+
+
+
+            if (!user.getRankPlayerUser().getRankType().equals(RankTypePlayer.GRACZ)) {
+                if (user.getRankPlayerUser().getTime() != -1) {
+                    if (user.getRankPlayerUser().getTime() <= System.currentTimeMillis()) {
+                        user.getRankPlayerUser().setRank(RankTypePlayer.GRACZ);
+                        user.getRankPlayerUser().setTime(0L);
+                        if (user.isTworca()) {
+                            user.getRankPlayerUser().setRank(RankTypePlayer.TWORCA);
+                            user.getRankPlayerUser().setTime(-1L);
+                        }
+                    }
+                }
+            }
+            if (user.getPierscienDoswiadczeniaTime() <= System.currentTimeMillis() && user.getPierscienDoswiadczenia() != 0) {
+                final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(user.getId());
+                bonuses.getBonusesUser().setDodatkowyExp(bonuses.getBonusesUser().getDodatkowyExp() - user.getPierscienDoswiadczenia());
+                user.setPierscienDoswiadczenia(0);
+                user.setPierscienDoswiadczeniaTime(0L);
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
+                    RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user);
+                    RPGCORE.getInstance().getMongoManager().saveDataBonuses(user.getId(), bonuses);
+                });
+            }
+
+            final WWWUser wwwUser = rpgcore.getUserManager().findWWWUser(uuid);
+            wwwUser.setArmorJSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getArmor())));
+            wwwUser.setInventoryJSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getInventory())));
+            wwwUser.setEnderchestJSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(user.getInventoriesUser().getEnderchest())));
+
+            final DodatkiUser dodatkiUser = rpgcore.getDodatkiManager().find(uuid);
+            final BonyUser bonyUser = dodatkiUser.getBony();
+            final AkcesoriaPodstUser akcesoriaPodstUser = dodatkiUser.getAkcesoriaPodstawowe();
+            final AkcesoriaDodatUser akcesoriaDodatUser = dodatkiUser.getAkcesoriaDodatkowe();
+
+            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+                    bonyUser.getDmg5(),
+                    bonyUser.getDmg10(),
+                    bonyUser.getDmg15(),
+                    bonyUser.getDef5(),
+                    bonyUser.getDef10(),
+                    bonyUser.getDef15(),
+                    bonyUser.getKryt5(),
+                    bonyUser.getKryt10(),
+                    bonyUser.getKryt15(),
+                    bonyUser.getWzmkryt10(),
+                    bonyUser.getBlok20(),
+                    bonyUser.getPrzeszywka20(),
+                    bonyUser.getPredkosc25(),
+                    bonyUser.getPredkosc50(),
+                    bonyUser.getHp10(),
+                    bonyUser.getHp20(),
+                    bonyUser.getHp35(),
+                    bonyUser.getDmgMetiny()
+            )));
+
+            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+                    akcesoriaPodstUser.getTarcza(),
+                    akcesoriaPodstUser.getNaszyjnik(),
+                    akcesoriaPodstUser.getKolczyki(),
+                    akcesoriaPodstUser.getPierscien(),
+                    akcesoriaPodstUser.getDiadem()
+            )));
+
+            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+                    akcesoriaDodatUser.getSzarfa(),
+                    akcesoriaDodatUser.getPas(),
+                    akcesoriaDodatUser.getMedalion(),
+                    akcesoriaDodatUser.getEnergia()
+            )));
+
+            wwwUser.setUserPetyJSON(Utils.itemStackArrayToJSON(rpgcore.getPetyManager().findUserPets(uuid).getPety()));
+            wwwUser.setActivePet(Utils.itemStackToJSON(rpgcore.getPetyManager().findActivePet(uuid).getPet().getItem()));
+
+            final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(uuid);
+            wwwUser.setMagazyn1JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn1())));
+            wwwUser.setMagazyn2JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn2())));
+            wwwUser.setMagazyn3JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn3())));
+            wwwUser.setMagazyn4JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn4())));
+            wwwUser.setMagazyn5JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn5())));
+
+
+            this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
+            this.saveDataDodatki(uuid, dodatkiUser);
+            this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
+            this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
+            this.saveDataKlasy(uuid, rpgcore.getKlasyManager().find(uuid));
+            this.saveDataDuszolog(uuid, rpgcore.getDuszologNPC().find(uuid));
+            this.saveDataKolekcjoner(uuid, rpgcore.getKolekcjonerNPC().find(uuid));
+            this.saveDataMedrzec(uuid, rpgcore.getMedrzecNPC().find(uuid));
+            this.saveDataMetinolog(uuid, rpgcore.getMetinologNPC().find(uuid));
+            this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
+            this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
+            this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
+            this.saveDataMagazynier(uuid, magazynierUser);
+            this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
+            this.saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
+
+            this.saveDataLesnik(uuid, rpgcore.getLesnikNPC().find(uuid));
+            this.saveDataUserPets(uuid, rpgcore.getPetyManager().findUserPets(uuid));
+            this.saveDataActivePets(uuid, rpgcore.getPetyManager().findActivePet(uuid));
+            this.saveDataGornik(uuid, rpgcore.getGornikNPC().find(uuid));
+            this.saveDataChatUsers(uuid, rpgcore.getChatManager().find(uuid));
+            this.saveDataTarg(uuid, rpgcore.getNewTargManager().find(uuid));
+            this.saveDataHandlarz(uuid, rpgcore.getHandlarzNPC().find(uuid));
+            this.saveDataWyszkolenie(uuid, rpgcore.getWyszkolenieManager().find(uuid));
+            this.saveDataWWWUser(uuid, rpgcore.getUserManager().findWWWUser(uuid));
+            this.saveDataPustelnik(uuid, rpgcore.getPustelnikNPC().find(uuid));
+            this.saveDataMistrzYang(uuid, rpgcore.getMistrzYangNPC().find(uuid));
+            this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
+            this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
+            this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
+            // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
+            // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
+            //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
+
+
+            Utils.sendToHighStaff("&aPomyslnie zapisano gracza: &6" + rpgcore.getUserManager().find(uuid).getName() + " &a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
+            System.out.println("[HellRPGCore] Pomyslnie zapisano gracza: " + rpgcore.getUserManager().find(uuid).getName() + " a w czasie: &6" + (System.currentTimeMillis() - start) + "ms");
+        } catch (final Exception e) {
+            Utils.sendToHighStaff("&cWystapil blad podczas zapisu gracza: &6" + rpgcore.getUserManager().find(uuid).getName());
+            System.out.println("[HellRPGCore] Wystapil blad podczas zapisu gracza: " + rpgcore.getUserManager().find(uuid).getName());
+            e.printStackTrace();
+        }
+    }
+
     public Map<Location, Metiny> loadMetins() {
         Map<Location, Metiny> metiny = new ConcurrentHashMap<>();
         for (Document document : pool.getMetiny().find()) {

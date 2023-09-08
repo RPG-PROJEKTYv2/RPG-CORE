@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class KociolkiUser {
+public class KociolkiUser implements Cloneable {
     private final UUID uuid;
     private int eliksirPotegiTime, eliksirObroncyTime, talizmanPogromcyTime, talizmanObroncyTime, talizmanZabojcyTime, egzekutorTime;
     private boolean eliksirPotegi, eliksirObroncy, talizmanPogromcy, talizmanObroncy, talizmanZabojcy, egzekutor;
@@ -59,5 +59,14 @@ public class KociolkiUser {
                 .append("talizmanObroncyTime", talizmanObroncyTime)
                 .append("talizmanZabojcyTime", talizmanZabojcyTime)
                 .append("egzekutorTime", egzekutorTime);
+    }
+
+    @Override
+    public KociolkiUser clone() {
+        try {
+            return (KociolkiUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class WyslannikUser {
+public class WyslannikUser implements Cloneable {
     private final UUID uuid;
     private int killMobsMission;
     private int killMobsMissionProgress;
@@ -45,5 +45,15 @@ public class WyslannikUser {
                 .append("killBossMissionProgress", this.getKillBossMissionProgress())
                 .append("sredniDMG", this.getSredniDMG())
                 .append("sredniDEF", this.getSredniDEF());
+    }
+
+    @Override
+    public WyslannikUser clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (WyslannikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

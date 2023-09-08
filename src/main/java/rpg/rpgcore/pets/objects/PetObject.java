@@ -5,9 +5,9 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
 
-public class PetObject {
+public class PetObject implements Cloneable {
     private final UUID uuid;
-    private final Pet pet;
+    private Pet pet;
 
     public PetObject(final UUID uuid) {
         this.uuid = uuid;
@@ -45,5 +45,16 @@ public class PetObject {
                 .append("value3", pet.getValue3())
                 .append("value4", pet.getValue4())
                 .append("ultimateAbility", pet.getUltimateAbility());
+    }
+
+    @Override
+    public PetObject clone() {
+        try {
+            final PetObject petObject = (PetObject) super.clone();
+            petObject.pet = pet.clone();
+            return petObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class ChatUser {
+public class ChatUser implements Cloneable {
     private UUID uuid;
     private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled;
     private List<UUID> ignoredPlayers;
@@ -55,5 +55,14 @@ public class ChatUser {
                 .append("quitMessageEnabled", quitMessageEnabled)
                 .append("dmgHologramsVisable", dmgHologramsVisable)
                 .append("databaseMessageEnabled", databaseMessageEnabled);
+    }
+
+    @Override
+    public ChatUser clone() {
+        try {
+            return (ChatUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

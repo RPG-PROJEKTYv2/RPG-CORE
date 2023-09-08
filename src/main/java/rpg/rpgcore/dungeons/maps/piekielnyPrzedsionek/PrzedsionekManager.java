@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.metiny.MetinyHelper;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -286,6 +287,12 @@ public class PrzedsionekManager {
     public void endDungeon() {
         for (Player player : dungeonWorld.getPlayers()) {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
+            final MagazynierUser user = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+            if (user == null) continue;
+            if (user.getMissions().getSelectedMission() == 4) {
+                user.getMissions().setProgress(user.getMissions().getProgress() + 1);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), user));
+            }
         }
         final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) rpgcore.getPrzedsionekManager().getDungeonHologram().getLines().get(3)).getText())).replace("Przechodzi: ", "");
         Bukkit.getServer().broadcastMessage(Utils.format("&4&lPiekielny Przedsionek &8>> &cGrupa gracza &4" + playerName + " &cukonczyla dungeon!"));

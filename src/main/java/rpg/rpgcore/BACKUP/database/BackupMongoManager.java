@@ -4,7 +4,6 @@ import com.mongodb.client.MongoCollection;
 import lombok.Getter;
 import org.bson.Document;
 import rpg.rpgcore.BACKUP.objects.Backup;
-import rpg.rpgcore.RPGCORE;
 
 import java.util.*;
 
@@ -13,7 +12,7 @@ public class BackupMongoManager {
     @Getter
     private final BackupMongoConnectionPoolManager pool;
 
-    public BackupMongoManager(final RPGCORE rpgcore) {
+    public BackupMongoManager() {
         this.pool = new BackupMongoConnectionPoolManager();
     }
 
@@ -29,10 +28,10 @@ public class BackupMongoManager {
             final MongoCollection<Document> collection = this.getPool().getDatabase().getCollection(name);
             final List<Backup> backupList = new ArrayList<>();
             for (final Document document : collection.find()) {
-                final Backup backup = new Backup(name.replaceAll("_", "-"), document);
+                final Backup backup = new Backup(name.replace("hellrpg_", "").replaceAll("_", "-"), document);
                 backupList.add(backup);
             }
-            backups.put(UUID.fromString(name.replaceAll("_", "-")), backupList);
+            backups.put(UUID.fromString(name.replace("hellrpg_", "").replaceAll("_", "-")), backupList);
         }
         return backups;
    }

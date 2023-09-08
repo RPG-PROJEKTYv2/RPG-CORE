@@ -6,7 +6,7 @@ import org.bson.Document;
 
 @Getter
 @Setter
-public class MagazynierMissions {
+public class MagazynierMissions implements Cloneable {
     private int mission1, mission2, mission3, mission4, mission5;
     private boolean mission1done, mission2done, mission3done, mission4done, mission5done;
     private int selectedMission;
@@ -61,5 +61,14 @@ public class MagazynierMissions {
                 .append("mission3done", this.mission3done)
                 .append("mission4done", this.mission4done)
                 .append("mission5done", this.mission5done);
+    }
+
+    @Override
+    public MagazynierMissions clone() {
+        try {
+            return (MagazynierMissions) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class PrzekletyCzarnoksieznikUser {
+public class PrzekletyCzarnoksieznikUser implements Cloneable {
     private final UUID uuid;
     private int defMOB;
     private int dmgMOB;
@@ -32,5 +32,14 @@ public class PrzekletyCzarnoksieznikUser {
         return new Document("_id", uuid.toString())
                 .append("defMOB", defMOB)
                 .append("dmgMOB", dmgMOB);
+    }
+
+    @Override
+    public PrzekletyCzarnoksieznikUser clone() {
+        try {
+            return (PrzekletyCzarnoksieznikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

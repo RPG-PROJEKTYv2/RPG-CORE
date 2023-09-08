@@ -2,7 +2,7 @@ package rpg.rpgcore.ranks;
 
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 
-public class RankPlayerUser {
+public class RankPlayerUser implements Cloneable {
     private RankTypePlayer rankType;
     private long time;
 
@@ -29,5 +29,14 @@ public class RankPlayerUser {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    @Override
+    public RankPlayerUser clone() {
+        try {
+            return (RankPlayerUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -137,7 +137,9 @@ public class KlasyInventoryClickListener implements Listener {
                 case 12:
                     klasa.setPodKlasa(KlasySide.NINJA);
                     player.getInventory().addItem(new ItemBuilder(Material.DOUBLE_PLANT).setName("&4&lZABOJCA &8- &fNINJA").setLore(Arrays.asList(
-                            "&6Umiejetnosc &4&lWKROTCE &e&lLMB",
+                            "&6Umiejetnosc &7&lZaslona Dymna &e&lLMB",
+                            "&7Naklada na wszystkich graczy w zasiegu jej dzialania",
+                            "&7efekt &8slepoty &7i &8spowolnienia &7na &e10 sekund &8(cooldown 3 min)",
                             "",
                             "&6Umiejetnosc &fJe-stem Szybki &e&lRMB",
                             "&7Zyskujesz &f+25% predkosci ruchu &7na &e10 sekund",

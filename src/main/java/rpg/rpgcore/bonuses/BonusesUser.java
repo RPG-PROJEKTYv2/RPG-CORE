@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BonusesUser {
+public class BonusesUser implements Cloneable {
     private int dodatkowehp, dodatkowezlotehp, dodatkoweobrazenia, truedamage, szczescie, szybkosc, dmgMetiny;
     private double srednieobrazenia, silnynaludzi, silnynapotwory, sredniadefensywa, defnaludzi, defnamoby, szansanakryta, szansanawzmocnieniekryta, blokciosu,
             przeszyciebloku, szansanakrwawienie, minussrednieobrazenia, minussredniadefensywa, minusdefnaludzi, minusdefnamoby, minusobrazenianaludzi, minusobrazenianamoby,
@@ -45,5 +45,14 @@ public class BonusesUser {
         this.wampiryzm = wampiryzm;
         this.wzmocnienieKryta = wzmocnienieKryta;
         this.dmgMetiny = dmgMetiny;
+    }
+
+    @Override
+    public BonusesUser clone() {
+        try {
+            return (BonusesUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class Bonuses {
+public class Bonuses implements Cloneable {
     private final UUID uuid;
-    private final BonusesUser bonusesUser;
+    private BonusesUser bonusesUser;
 
     public Bonuses(final UUID uuid) {
         this.uuid = uuid;
@@ -67,5 +67,16 @@ public class Bonuses {
                 .append("wampiryzm", this.bonusesUser.getWampiryzm())
                 .append("wzmocnienieKryta", this.bonusesUser.getWzmocnienieKryta())
                 .append("dmgMetiny", this.bonusesUser.getDmgMetiny());
+    }
+
+    @Override
+    public Bonuses clone() {
+        try {
+            final Bonuses bonuses = (Bonuses) super.clone();
+            bonuses.bonusesUser = this.bonusesUser.clone();
+            return bonuses;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

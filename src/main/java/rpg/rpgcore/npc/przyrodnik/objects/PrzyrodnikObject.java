@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class PrzyrodnikObject {
+public class PrzyrodnikObject implements Cloneable {
     private final UUID uuid;
-    private final PrzyrodnikUser user;
+    private PrzyrodnikUser user;
 
     public PrzyrodnikObject(final UUID uuid) {
         this.uuid = uuid;
@@ -32,5 +32,16 @@ public class PrzyrodnikObject {
                 .append("progress", this.user.getProgress())
                 .append("dmg", this.user.getDmg())
                 .append("def", this.user.getDef());
+    }
+
+    @Override
+    public PrzyrodnikObject clone() {
+        try {
+            final PrzyrodnikObject przyrodnikObject = (PrzyrodnikObject) super.clone();
+            przyrodnikObject.user = this.user.clone();
+            return przyrodnikObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

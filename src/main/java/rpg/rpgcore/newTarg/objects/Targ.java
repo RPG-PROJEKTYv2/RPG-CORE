@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class Targ {
+public class Targ implements Cloneable {
     private final UUID uuid;
     private final List<ItemStack> itemList;
 
@@ -46,5 +46,14 @@ public class Targ {
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())
                 .append("itemList", this.itemList.stream().map(Utils::serializeItem).collect(Collectors.toList()));
+    }
+
+    @Override
+    public Targ clone() {
+        try {
+            return (Targ) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

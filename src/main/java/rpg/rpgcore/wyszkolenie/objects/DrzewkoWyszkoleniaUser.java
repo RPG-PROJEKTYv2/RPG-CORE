@@ -5,24 +5,24 @@ import lombok.Setter;
 import org.bson.Document;
 
 @Getter
-public class DrzewkoWyszkoleniaUser {
-    private final D1 d1;
-    private final D2 d2;
-    private final DL1 dl1;
-    private final DL2 dl2;
-    private final DL3 dl3;
-    private final DL4 dl4;
-    private final DL5 dl5;
-    private final DL6 dl6;
-    private final DP1 dp1;
-    private final DP2 dp2;
-    private final DP3 dp3;
-    private final DP4 dp4;
-    private final DP5 dp5;
-    private final DP6 dp6;
-    private final DG1 dg1;
-    private final DG2 dg2;
-    private final DG3 dg3;
+public class DrzewkoWyszkoleniaUser implements Cloneable {
+    private D1 d1;
+    private D2 d2;
+    private DL1 dl1;
+    private DL2 dl2;
+    private DL3 dl3;
+    private DL4 dl4;
+    private DL5 dl5;
+    private DL6 dl6;
+    private DP1 dp1;
+    private DP2 dp2;
+    private DP3 dp3;
+    private DP4 dp4;
+    private DP5 dp5;
+    private DP6 dp6;
+    private DG1 dg1;
+    private DG2 dg2;
+    private DG3 dg3;
 
     public DrzewkoWyszkoleniaUser() {
         this.d1 = new D1();
@@ -85,10 +85,38 @@ public class DrzewkoWyszkoleniaUser {
                 .append("dg3", this.dg3.toDocument());
     }
 
+    @Override
+    public DrzewkoWyszkoleniaUser clone() {
+        try {
+            DrzewkoWyszkoleniaUser clone = (DrzewkoWyszkoleniaUser) super.clone();
+            clone.d1 = this.d1.clone();
+            clone.d2 = this.d2.clone();
+            clone.dl1 = this.dl1.clone();
+            clone.dl2 = this.dl2.clone();
+            clone.dl3 = this.dl3.clone();
+            clone.dl4 = this.dl4.clone();
+            clone.dl5 = this.dl5.clone();
+            clone.dl6 = this.dl6.clone();
+            clone.dp1 = this.dp1.clone();
+            clone.dp2 = this.dp2.clone();
+            clone.dp3 = this.dp3.clone();
+            clone.dp4 = this.dp4.clone();
+            clone.dp5 = this.dp5.clone();
+            clone.dp6 = this.dp6.clone();
+            clone.dg1 = this.dg1.clone();
+            clone.dg2 = this.dg2.clone();
+            clone.dg3 = this.dg3.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
 
     @Getter
     @Setter
-    public static class D1 {
+    public static class D1 implements Cloneable {
         private final String name = "&6Niewzruszona Potega";
         private final int reqLvl = 50;
         private final String reqItem = "I1";
@@ -116,11 +144,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("srDmg", this.srDmg);
         }
+
+        @Override
+        public D1 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (D1) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class D2 {
+    public static class D2 implements Cloneable {
         private final String name = "&6Ukryty Talent";
         private final int reqLvl = 55;
         private final String reqItem = "I2";
@@ -148,11 +186,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("szczescie", this.szczescie);
         }
+
+        @Override
+        public D2 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (D2) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP1 {
+    public static class DP1 implements Cloneable {
         private final String name = "&6Silne Cialo";
         private final int reqLvl = 60;
         private final String reqItem = "I3";
@@ -180,11 +228,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("hp", this.hp);
         }
+
+        @Override
+        public DP1 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP1) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP2 {
+    public static class DP2 implements Cloneable {
         private final String name = "&6Wyzwalajaca Sila";
         private final int reqLvl = 75;
         private final String reqItem = "I4";
@@ -212,11 +270,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("dodatkowyDmg", this.dodatkowyDmg);
         }
+
+        @Override
+        public DP2 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP2) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP3 {
+    public static class DP3 implements Cloneable {
         private final String name = "&6Pogromca Potworow";
         private final int reqLvl = 90;
         private final String reqItem = "I5";
@@ -244,11 +312,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("silnyNaMoby", this.silnyNaMoby);
         }
+
+        @Override
+        public DP3 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP3) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP4 {
+    public static class DP4 implements Cloneable {
         private final String name = "&6Niewzruszona Stal";
         private final int reqLvl = 105;
         private final String reqItem = "I6";
@@ -276,11 +354,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("odpornoscNaGraczy", this.odpornoscNaGraczy);
         }
+
+        @Override
+        public DP4 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP4) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP5 {
+    public static class DP5 implements Cloneable {
         private final String name = "&6Szlachecki Talent";
         private final int reqLvl = 115;
         private final String reqItem = "I7";
@@ -308,11 +396,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("szczescie", this.szczescie);
         }
+
+        @Override
+        public DP5 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP5) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DP6 {
+    public static class DP6 implements Cloneable {
         private final String name = "&6Szlachecka Defensywa";
         private final int reqLvl = 125;
         private final String reqItem = "I8";
@@ -340,11 +438,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("srDef", this.srDef);
         }
+
+        @Override
+        public DP6 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DP6) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DG1 {
+    public static class DG1 implements Cloneable {
         private final String name = "&6Niepokonany Wojownik";
         private final int reqLvl = 65;
         private final String reqItem = "I9";
@@ -372,11 +480,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("odpornoscNaMoby", this.odpornoscNaMoby);
         }
+
+        @Override
+        public DG1 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DG1) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DG2 {
+    public static class DG2 implements Cloneable {
         private final String name = "&6Niszczyciel Tarcz";
         private final int reqLvl = 80;
         private final String reqItem = "I10";
@@ -404,11 +522,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("przeszywka", this.przeszywka);
         }
+
+        @Override
+        public DG2 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DG2) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DG3 {
+    public static class DG3 implements Cloneable {
         private final String name = "&6Szlachecki Blok";
         private final int reqLvl = 95;
         private final String reqItem = "I11";
@@ -436,11 +564,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("blok", this.blok);
         }
+
+        @Override
+        public DG3 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DG3) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL1 {
+    public static class DL1 implements Cloneable {
         private final String name = "&6Barbarzynca";
         private final int reqLvl = 70;
         private final String reqItem = "I12";
@@ -468,11 +606,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("krytyk", this.krytyk);
         }
+
+        @Override
+        public DL1 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL1) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL2 {
+    public static class DL2 implements Cloneable {
         private final String name = "&6Stalowy Wojownik";
         private final int reqLvl = 85;
         private final String reqItem = "I13";
@@ -500,11 +648,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("srDef", this.srDef);
         }
+
+        @Override
+        public DL2 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL2) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL3 {
+    public static class DL3 implements Cloneable {
         private final String name = "&6Zabójcze Ostrze";
         private final int reqLvl = 100;
         private final String reqItem = "I14";
@@ -532,11 +690,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("silnyNaLudzi", this.silnyNaLudzi);
         }
+
+        @Override
+        public DL3 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL3) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL4 {
+    public static class DL4 implements Cloneable {
         private final String name = "&6Niezniszczalny Mur";
         private final int reqLvl = 110;
         private final String reqItem = "I15";
@@ -564,11 +732,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("blok", this.blok);
         }
+
+        @Override
+        public DL4 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL4) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL5 {
+    public static class DL5 implements Cloneable {
         private final String name = "&6Szlacheckie Zdrowie";
         private final int reqLvl = 120;
         private final String reqItem = "I16";
@@ -596,11 +774,21 @@ public class DrzewkoWyszkoleniaUser {
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("hp", this.hp);
         }
+
+        @Override
+        public DL5 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL5) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
     @Getter
     @Setter
-    public static class DL6 {
+    public static class DL6 implements Cloneable {
         private final String name = "&6Szlacheckie Obrazenia";
         private final int reqLvl = 130;
         private final String reqItem = "I17";
@@ -627,6 +815,16 @@ public class DrzewkoWyszkoleniaUser {
                     .append("unlocked", this.unlocked)
                     .append("upgradeLvl", this.upgradeLvl)
                     .append("srDmg", this.srDmg);
+        }
+
+        @Override
+        public DL6 clone() {
+            try {
+                // TODO: copy mutable state here, so the clone can't change the internals of the original
+                return (DL6) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
         }
     }
 }

@@ -262,7 +262,7 @@ public class GuildManager {
                 lore.add("&7Ostatnio widziany: &c" + this.getLastSeenDateInString(tag, uuid));
             }
 
-            if (this.getGuildOwner(tag).equals(player.getUniqueId()) || (!this.getGuildCoOwner(tag).isEmpty() && this.getGuildCoOwner(tag).equals(player.getUniqueId().toString()))) {
+            if (!uuid.equals(player.getUniqueId()) && (this.getGuildOwner(tag).equals(player.getUniqueId()) || (!this.getGuildCoOwner(tag).isEmpty() && this.getGuildCoOwner(tag).equals(player.getUniqueId().toString())))) {
                 lore.add(" ");
                 lore.add("&8&o(Kliknij, zeby wyrzucic tego gracza z klanu)");
             }

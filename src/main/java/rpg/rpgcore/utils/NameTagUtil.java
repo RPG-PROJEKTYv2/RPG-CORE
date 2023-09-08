@@ -38,7 +38,7 @@ public class NameTagUtil {
             NameTagUtil.changePlayerName(p, RPGCORE.getInstance().getUserManager().find(p.getUniqueId()).getRankUser().getRankType().getPrefix(), action);
         } else {
             if (RPGCORE.getInstance().getGuildManager().hasGuild(p.getUniqueId())) {
-                NameTagUtil.changePlayerName(p, "&8[&3" + RPGCORE.getInstance().getGuildManager().getGuildTag(p.getUniqueId()) + "&8] ", action);
+                NameTagUtil.changePlayerName(p, "&8[&3" + RPGCORE.getInstance().getGuildManager().getGuildTag(p.getUniqueId()) + "&8] &7", action);
             } else {
                 NameTagUtil.changePlayerName(p, "&7", action);
             }

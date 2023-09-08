@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class WWWUser {
+public class WWWUser implements Cloneable {
     private final UUID uuid;
     private String inventoryJSON;
     private String armorJSON;
@@ -71,5 +71,14 @@ public class WWWUser {
                         .append("magazyn4JSON", this.magazyn4JSON)
                         .append("magazyn5JSON", this.magazyn5JSON)
                 );
+    }
+
+    @Override
+    public WWWUser clone() {
+        try {
+            return (WWWUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

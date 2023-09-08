@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LowcaUser {
+public class LowcaUser implements Cloneable {
     private int mission;
     private int progress;
     private int szczescie, szybkosc, dodatkoweDmg;
@@ -16,5 +16,14 @@ public class LowcaUser {
         this.szczescie = szczescie;
         this.szybkosc = szybkosc;
         this.dodatkoweDmg = dodatkoweDmg;
+    }
+
+    @Override
+    public LowcaUser clone() {
+        try {
+            return (LowcaUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

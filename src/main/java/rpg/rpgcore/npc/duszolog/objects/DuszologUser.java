@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DuszologUser {
+public class DuszologUser implements Cloneable {
     private int mission, progress;
     private double value1, value2;
 
@@ -14,5 +14,14 @@ public class DuszologUser {
         this.progress = progress;
         this.value1 = value1;
         this.value2 = value2;
+    }
+
+    @Override
+    public DuszologUser clone() {
+        try {
+            return (DuszologUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

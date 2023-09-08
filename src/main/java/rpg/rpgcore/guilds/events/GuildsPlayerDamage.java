@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
 
@@ -19,7 +20,7 @@ public class GuildsPlayerDamage implements Listener {
         this.rpgcore = rpgcore;
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void guildPlayerDamage(final EntityDamageByEntityEvent e) {
 
         final Entity entity = e.getEntity();
@@ -39,6 +40,7 @@ public class GuildsPlayerDamage implements Listener {
                     if (!rpgcore.getGuildManager().getGuildPvPStatus(tagPlayer)) {
                         damagerPlayer.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&7PvP w twoim klanie jest &cwylaczone&7!"));
                         e.setCancelled(true);
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     }
                 }
             }

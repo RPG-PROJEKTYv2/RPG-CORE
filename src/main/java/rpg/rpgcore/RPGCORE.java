@@ -930,7 +930,7 @@ public final class RPGCORE extends JavaPlugin {
 
     private void initDatabase() {
         this.mongo = new MongoManager(this);
-        this.backupMongo = new BackupMongoManager(this);
+        this.backupMongo = new BackupMongoManager();
     }
 
     private void initManagers() {

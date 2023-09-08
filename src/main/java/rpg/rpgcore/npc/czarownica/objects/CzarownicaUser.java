@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CzarownicaUser {
+public class CzarownicaUser implements Cloneable {
     private final UUID uuid;
     private int mission;
     private LinkedHashMap<ItemStack, Integer> progressMap;
@@ -60,5 +60,14 @@ public class CzarownicaUser {
         }
         document.append("progressMap", progressMap);
         return document;
+    }
+
+    @Override
+    public CzarownicaUser clone() {
+        try {
+            return (CzarownicaUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

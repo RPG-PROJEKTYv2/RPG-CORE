@@ -16,6 +16,6 @@ public class ZmiankiItemInteractListener implements Listener {
         if (!e.getItem().isSimilar(GlobalItem.I50.getItemStack())) return;
         e.setCancelled(true);
         e.setUseItemInHand(org.bukkit.event.Event.Result.DENY);
-        RPGCORE.getInstance().getZmiankiManager().openGUI(e.getPlayer());
+        RPGCORE.getInstance().getZmiankiManager().openGUI(e.getPlayer(), true);
     }
 }

@@ -5,9 +5,9 @@ import org.bson.Document;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class KolekcjonerObject {
+public class KolekcjonerObject implements Cloneable {
     private final UUID uuid;
-    private final KolekcjonerUser kolekcjonerUser;
+    private KolekcjonerUser kolekcjonerUser;
 
     public KolekcjonerObject(final UUID uuid) {
         this.uuid = uuid;
@@ -38,5 +38,16 @@ public class KolekcjonerObject {
                 .append("szczescie", this.getKolekcjonerUser().getSzczescie())
                 .append("silnyNaLudzi", this.getKolekcjonerUser().getSilnyNaLudzi())
                 .append("defNaLudzi", this.getKolekcjonerUser().getDefNaLudzi());
+    }
+
+    @Override
+    public KolekcjonerObject clone() {
+        try {
+            final KolekcjonerObject kolekcjonerObject = (KolekcjonerObject) super.clone();
+            kolekcjonerObject.kolekcjonerUser = this.kolekcjonerUser.clone();
+            return kolekcjonerObject;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

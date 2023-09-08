@@ -183,11 +183,11 @@ public class  HandlarzNPC {
         if (!this.userItemMap.containsKey(uuid)) {
             this.userItemMap.put(uuid, ArrayListMultimap.create());
         }
-        this.userItemMap.get(uuid).put(item.clone(), price * item.getAmount());
+        this.userItemMap.get(uuid).put(item.clone(), DoubleUtils.round(price * item.getAmount(), 2));
     }
 
     public void removeItem(final UUID uuid, final ItemStack item, final double price) {
-        this.userItemMap.get(uuid).remove(item.clone(), price * item.getAmount());
+        this.userItemMap.get(uuid).remove(item.clone(), DoubleUtils.round(price * item.getAmount(),2));
     }
 
     public HandlarzUser find(final UUID uuid) {

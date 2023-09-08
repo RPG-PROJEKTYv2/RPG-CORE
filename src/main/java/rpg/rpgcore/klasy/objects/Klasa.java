@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Klasa {
+public class Klasa implements Cloneable {
     private final UUID uuid;
     private KlasyMain mainKlasa;
     private KlasySide podKlasa;
@@ -67,5 +67,14 @@ public class Klasa {
                 .append("cdLMB", cdLMB)
                 .append("cdRMB", cdRMB);
 
+    }
+
+    @Override
+    public Klasa clone() {
+        try {
+            return (Klasa) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

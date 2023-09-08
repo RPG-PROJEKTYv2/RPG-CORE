@@ -10,11 +10,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class WyszkolenieUser {
+public class WyszkolenieUser implements Cloneable {
     private final UUID uuid;
     private int punkty, totalPoints, srDmg, srDef, kryt, szczescie, blok, hp;
     private long resetCooldown;
-    private final DrzewkoWyszkoleniaUser drzewkoWyszkoleniaUser;
+    private DrzewkoWyszkoleniaUser drzewkoWyszkoleniaUser;
 
     public WyszkolenieUser(final UUID uuid) {
         this.uuid = uuid;
@@ -97,4 +97,15 @@ public class WyszkolenieUser {
                 .append("drzewkoWyszkolenia", this.drzewkoWyszkoleniaUser.toDocument());
     }
 
+    @Override
+    public WyszkolenieUser clone() {
+        try {
+            final WyszkolenieUser wyszkolenieUser = (WyszkolenieUser) super.clone();
+            wyszkolenieUser.setDrzewkoWyszkoleniaUser(this.drzewkoWyszkoleniaUser.clone());
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return wyszkolenieUser;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

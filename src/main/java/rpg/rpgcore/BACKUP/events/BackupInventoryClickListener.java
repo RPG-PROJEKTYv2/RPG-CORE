@@ -79,7 +79,7 @@ public class BackupInventoryClickListener implements Listener {
 
             final Player target = Bukkit.getPlayer(user.getId());
 
-            if (target != null) player.kickPlayer(Utils.kickMessage("CONSOLE", "Przywrocenia Backupu!"));
+            if (target != null) target.kickPlayer(Utils.kickMessage("CONSOLE", "Przywracanie Backupu!"));
 
             final UUID targetUUID = user.getId();
             
@@ -104,7 +104,7 @@ public class BackupInventoryClickListener implements Listener {
                 rpgcore.getLesnikNPC().set(targetUUID, backup.getLesnik());
                 rpgcore.getPetyManager().setActivePet(targetUUID, backup.getPet());
                 rpgcore.getPetyManager().setUserPets(targetUUID, backup.getUserPets());
-                //rpgcore.getWyslannikNPC().set(targetUUID, backup.getWyslannik());
+                rpgcore.getWyslannikNPC().set(targetUUID, backup.getWyslannik());
                 rpgcore.getHandlarzNPC().set(targetUUID, backup.getHandlarz());
                 rpgcore.getKociolkiManager().set(targetUUID, backup.getKociolki());
                 rpgcore.getWyszkolenieManager().set(targetUUID, backup.getWyszkolenie());
@@ -112,6 +112,7 @@ public class BackupInventoryClickListener implements Listener {
                 rpgcore.getPustelnikNPC().set(targetUUID, backup.getPustelnik());
                 rpgcore.getMistrzYangNPC().set(targetUUID, backup.getMistrzYang());
                 rpgcore.getCzarownicaNPC().set(targetUUID, backup.getCzarownica());
+                rpgcore.getMongoManager().savePlayer(targetUUID);
                 player.sendMessage(Utils.format("&6&lBACKUP &8>> &aPrzywrocono backup &6" + backup.getDate() + " &agracza &6" + targetNick + "&aw czasie &6" + (System.currentTimeMillis() - start) + "ms &a!"));
             });
 

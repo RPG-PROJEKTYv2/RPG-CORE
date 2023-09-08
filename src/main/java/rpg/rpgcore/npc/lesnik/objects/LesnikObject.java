@@ -4,9 +4,9 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-public class LesnikObject {
+public class LesnikObject implements Cloneable {
     private final UUID uuid;
-    private final LesnikUser user;
+    private LesnikUser user;
 
     public LesnikObject(UUID uuid) {
         this.uuid = uuid;
@@ -40,5 +40,16 @@ public class LesnikObject {
                 .append("wzmKryta", user.getWzmKryta())
                 .append("defNaLudzi", user.getDefNaLudzi())
                 .append("cooldown", user.getCooldown());
+    }
+
+    @Override
+    public LesnikObject clone() {
+        try {
+            final LesnikObject clone = (LesnikObject) super.clone();
+            clone.user = this.user.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -67,7 +67,8 @@ public class KlasyInteractListener implements Listener {
         if (e.getItem() == null) return;
         final ItemStack item = e.getItem();
         if (item.getType() != Material.DOUBLE_PLANT) return;
-        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || item.getItemMeta().getDisplayName().contains("Zywica") || item.getItemMeta().getDisplayName().contains("Czek")) return;
+        if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || item.getItemMeta().getDisplayName().contains("Zywica") || item.getItemMeta().getDisplayName().contains("Czek"))
+            return;
         final Klasa klasa = rpgcore.getKlasyManager().find(e.getPlayer().getUniqueId());
         if (klasa.getMainKlasa() == KlasyMain.NIE_WYBRANO) {
             e.getPlayer().sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz wybrac klase!"));
@@ -77,7 +78,8 @@ public class KlasyInteractListener implements Listener {
             e.getPlayer().sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz wybrac podklase!"));
             return;
         }
-        if (!Utils.removeColor(item.getItemMeta().getDisplayName()).equalsIgnoreCase(klasa.getMainKlasa().getName() + " - " + klasa.getPodKlasa().getName())) return;
+        if (!Utils.removeColor(item.getItemMeta().getDisplayName()).equalsIgnoreCase(klasa.getMainKlasa().getName() + " - " + klasa.getPodKlasa().getName()))
+            return;
         e.setCancelled(true);
         e.setUseItemInHand(Event.Result.DENY);
         e.setUseInteractedBlock(Event.Result.DENY);
@@ -128,7 +130,19 @@ public class KlasyInteractListener implements Listener {
                 switch (klasa.getPodKlasa()) {
                     case NINJA:
                         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-                            player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cTa umiejetnosc jest jeszcze niedostepna"));
+                            if (klasa.hasLeftClickCooldown()) {
+                                player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz odczekac jeszcze &c" + Utils.durationToString(klasa.getCdLMB(), false) + "&7!"));
+                                return;
+                            }
+                            klasa.setCdRMB(System.currentTimeMillis() + 180_000L);
+                            final PotionEffect blind = new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, true, true);
+                            final PotionEffect slow = new PotionEffect(PotionEffectType.SLOW, 200, 5, true, true);
+                            for (final Player target : player.getNearbyEntities(8, 8, 8).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {
+                                target.addPotionEffect(blind);
+                                target.addPotionEffect(slow);
+                                target.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cZostales trafiony efektem &7&lZaslony Dymnej &cgracza &6" + player.getName() + "&c!"));
+                            }
+                            player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie uzyles/-as &7&lZaslony Dymnej&a!"));
                             return;
                         }
                         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -160,7 +174,8 @@ public class KlasyInteractListener implements Listener {
                                 targetHealth.add(target.getHealth() * 0.1);
                             }
                             double toAdd = 0;
-                            if (targetHealth.size() > 0) for (int i = 0; i < 3; i++) toAdd += targetHealth.get(ChanceHelper.getRandInt(0, targetHealth.size() - 1));
+                            if (!targetHealth.isEmpty()) for (int i = 0; i < 3; i++)
+                                toAdd += targetHealth.get(ChanceHelper.getRandInt(0, targetHealth.size() - 1));
 
                             player.setHealth(Math.min(player.getHealth() + toAdd, player.getMaxHealth()));
                             player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie uzyles/-as &eBurza Ostrzy&a!"));

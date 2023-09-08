@@ -13,7 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.npc.handlarz.enums.HandlarzSellItems;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.ItemShop;
@@ -232,7 +234,7 @@ public class HandlarzInventoryClickListener implements Listener {
 
             if (slot == 49) {
 
-                if (rpgcore.getHandlarzNPC().getUserItemMap(uuid).size() == 0) {
+                if (rpgcore.getHandlarzNPC().getUserItemMap(uuid).isEmpty()) {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&6&lHandlarz &8>> &7Nie posiadasz zadnych przedmiotow do sprzedazy!"));
                     return;
@@ -248,13 +250,23 @@ public class HandlarzInventoryClickListener implements Listener {
 
                 user.setKasa(user.getKasa() + price);
                 final Multimap<ItemStack, Double> itemMap = rpgcore.getHandlarzNPC().getUserItemMap(uuid);
+                final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(uuid);
+                if (magazynierUser.getMissions().getSelectedMission() == 6) {
+                    magazynierUser.getMissions().setProgress(magazynierUser.getMissions().getProgress() + itemMap.entries().stream().mapToInt(entry -> entry.getKey().getAmount()).sum());
+                }
+                else if (magazynierUser.getMissions().getSelectedMission() == 7) {
+                    magazynierUser.getMissions().setProgress(DoubleUtils.round(magazynierUser.getMissions().getProgress() + price, 2));
+                }
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> RPGCORE.getDiscordBot().sendChannelMessage("handlarz-logs", EmbedUtil.createHandlarzcSellLog(player, itemMap, kasa, user.getKasa())));
 
                 rpgcore.getHandlarzNPC().removeUserItemMap(uuid);
                 player.closeInventory();
 
 
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, user));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataUser(uuid, user);
+                    rpgcore.getMongoManager().saveDataMagazynier(uuid, magazynierUser);
+                });
                 return;
             }
 

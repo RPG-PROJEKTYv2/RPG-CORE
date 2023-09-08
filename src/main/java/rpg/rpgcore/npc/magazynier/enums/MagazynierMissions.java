@@ -11,7 +11,7 @@ import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 import java.util.Arrays;
 
 public enum MagazynierMissions {
-    M1(1, new ItemBuilder(Material.BOOK).setName("&c&lMistrz Polowow &8&4&lWKROTCE&8)").setLore(Arrays.asList(
+    M1(1, new ItemBuilder(Material.BOOK).setName("&c&lMistrz Polowow").setLore(Arrays.asList(
             "&7Wykonaj &e200 &7udanych polowow!",
             "",
             "&f&lNAGRODA",
@@ -28,8 +28,8 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b75 punktow")).addTagInt("mission", 3).toItemStack(), 10, 75, null),
-    M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb &8&4&lWKROTCE&8)").setLore(Arrays.asList(
-            "&7Ukoncz &e3 &7dungeony &8(&4&SOON&8)",
+    M4(4, new ItemBuilder(Material.BOOK).setName("&c&lSpecjalista od Katakumb").setLore(Arrays.asList(
+            "&7Ukoncz &e3 &7dungeony",
             "",
             "&f&lNAGRODA",
             "&8- &b150 punktow",
@@ -42,14 +42,14 @@ public enum MagazynierMissions {
             "&8- &b50 punktow"
     )).addTagInt("mission", 5).toItemStack(), 100, 50, null),
     M6(6, new ItemBuilder(Material.BOOK).setName("&c&lHandlowiec").setLore(Arrays.asList(
-            "&7Sprzedaj &e50 &7przedmiotow u &a&lKupca",
+            "&7Sprzedaj &e50 &7przedmiotow u &a&lHandlarza",
             "",
             "&f&lNAGRODA",
             "&8- &b80 punktow",
             "&8- &e&lPozlacany Skarb"
     )).addTagInt("mission", 6).toItemStack(), 50, 80, SkrzynkiOther.getItem("I1", 1)),
     M7(7, new ItemBuilder(Material.BOOK).setName("&c&lPierwszy Milion Trzeba Ukrasc").setLore(Arrays.asList(
-            "&7Zarob &e1 000 000&2$ &8(moby, metiny, kupiec)",
+            "&7Zarob &e1 000 000&2$ &8(moby, metiny, handlarz)",
             "",
             "&f&lNAGRODA",
             "&8- &b100 punktow"
@@ -66,7 +66,7 @@ public enum MagazynierMissions {
             "&f&lNAGRODA",
             "&8- &b20 punktow"
     )).addTagInt("mission", 9).toItemStack(), 10_800_000, 20, null),
-    M10(10, new ItemBuilder(Material.BOOK).setName("&c&lPrawdziwy Demon").setLore(Arrays.asList(
+    M10(10, new ItemBuilder(Material.BOOK).setName("&c&lPrawdziwy Lodowy Sluga").setLore(Arrays.asList(
             "&7Ukoncz &e3 &7lodowe wieze",
             "",
             "&f&lNAGRODA",

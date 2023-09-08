@@ -698,8 +698,9 @@ public class    MobDropHelper {
 
         final double kasa = rpgcore.getLvlManager().getKasa(entityName, uuid);
         rpgcore.getUserManager().find(uuid).setKasa(rpgcore.getUserManager().find(uuid).getKasa() + kasa);
+        rpgcore.getUserManager().find(uuid).incrementMobKill(entityName);
         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
-            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + kasa);
+            rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(DoubleUtils.round(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + kasa, 2));
         } else if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 12) {
             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
         }

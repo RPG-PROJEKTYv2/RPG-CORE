@@ -16,6 +16,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
 import rpg.rpgcore.metiny.MetinyHelper;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -362,6 +363,12 @@ public class TajemniczePiaskiManager {
     public void endDungeon() {
         for (Player player : dungeon.getPlayers()) {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
+            final MagazynierUser user = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+            if (user == null) continue;
+            if (user.getMissions().getSelectedMission() == 4) {
+                user.getMissions().setProgress(user.getMissions().getProgress() + 1);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), user));
+            }
         }
         final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) hologram.getLines().get(3)).getText())).replace("Przechodzi: ", "");
         Bukkit.getServer().broadcastMessage(Utils.format("&e&lTajemnicze Piaski &8>> &7Grupa gracza &f" + playerName + " &7ukonczyla dungeon!"));

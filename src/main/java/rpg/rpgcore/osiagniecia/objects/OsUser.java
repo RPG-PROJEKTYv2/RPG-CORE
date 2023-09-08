@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class OsUser {
+public class OsUser implements Cloneable {
     private final UUID uuid;
     private int gracze, moby, metiny, skrzynki, niesy, ulepszenia, drwal, rybak, gornik, czas, krysztaly, dungeony;
     private int graczeProgress, mobyProgress, metinyProgress, skrzynkiProgress, niesyProgress, ulepszeniaProgress, drwalProgress, rybakProgress, gornikProgress, krysztalyProgress, dungeonyProgress;
@@ -102,5 +102,14 @@ public class OsUser {
                 .append("czasProgress", this.czasProgress)
                 .append("krysztalyProgress", this.krysztalyProgress)
                 .append("dungeonyProgress", this.dungeonyProgress);
+    }
+
+    @Override
+    public OsUser clone() {
+        try {
+            return (OsUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

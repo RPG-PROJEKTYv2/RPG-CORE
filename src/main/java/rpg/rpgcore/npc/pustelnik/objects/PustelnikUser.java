@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class PustelnikUser {
+public class PustelnikUser implements Cloneable {
     private final UUID uuid;
     private int missionId;
     private int progress;
@@ -34,5 +34,14 @@ public class PustelnikUser {
         return new Document("_id", this.uuid.toString())
                 .append("missionId", this.missionId)
                 .append("progress", this.progress);
+    }
+
+    @Override
+    public PustelnikUser clone() {
+        try {
+            return (PustelnikUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

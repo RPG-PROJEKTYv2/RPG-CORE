@@ -88,6 +88,10 @@ public class WyslannikNPC {
         return this.userMap.get(uuid);
     }
 
+    public void set(final UUID uuid, final WyslannikUser wyslannikUser) {
+        this.userMap.replace(uuid, wyslannikUser);
+    }
+
     public void add(final WyslannikUser wyslannikObject) {
         this.userMap.put(wyslannikObject.getUuid(), wyslannikObject);
     }

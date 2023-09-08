@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class UserPets {
+public class UserPets implements Cloneable {
     private final UUID uuid;
     private List<ItemStack> pety;
     private String inventoryName;
@@ -53,5 +53,15 @@ public class UserPets {
     public Document toDocument() {
         return new Document("_id", uuid.toString())
                 .append("pety", Utils.itemStackArrayToBase64(pety.toArray(new ItemStack[0])));
+    }
+
+    @Override
+    public UserPets clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (UserPets) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class MagazynierUser {
+public class MagazynierUser implements Cloneable {
     private final UUID uuid;
     private int points;
     private String magazyn1, magazyn2, magazyn3, magazyn4, magazyn5;
@@ -81,4 +81,14 @@ public class MagazynierUser {
                 .append("resetTime", this.resetTime);
     }
 
+    @Override
+    public MagazynierUser clone() {
+        try {
+            final MagazynierUser clone = (MagazynierUser) super.clone();
+            clone.setMissions(this.missions.clone());
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
