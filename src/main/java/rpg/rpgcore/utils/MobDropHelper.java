@@ -75,7 +75,7 @@ public class    MobDropHelper {
         final double akceDropChance50plus = getDropChance(szczescie, 0.07);
         final double niesDropChance50lvl = getDropChance(szczescie, 0.06);
         final double niesDropChance50plus = getDropChance(szczescie, 0.04);
-        final double chestDropChance50lvl = getDropChance(szczescie, 1);
+        final double chestDropChance50lvl = getDropChance(szczescie, 1.2);
         final double chestDropChance50plus = getDropChance(szczescie, 0.7);
 
 
@@ -93,7 +93,7 @@ public class    MobDropHelper {
         // TAJEMNICZA SKRZYNIA
         addDropPlayer(player, SkrzynkiOther.getItem("I4", 1), getDropChance(szczescie, 0.35), true, true, entity);
         // SKRZYNIA Z SUROWCAMI
-        addDropPlayer(player, SkrzynkiOther.getItem("I5", 1), getDropChance(szczescie, 1.05), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I5", 1), getDropChance(szczescie, 1.0), true, true, entity);
         // SKRZYNIA ZE ZWIERZAKAMI
         //addDropPlayer(player, GlobalItem.getItem("I3", 1), getDropChance(szczescie, 0.001), true, true, entity);
 
@@ -132,9 +132,9 @@ public class    MobDropHelper {
             case "Rozbojnik Lvl. 5":
             case "Rozbojnik Lvl. 7":
                 // SKRZYNKA MOBA
-                addDropPlayer(player, Skrzynki.getItem("I2", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I2", 1), getDropChance(szczescie, 1.6), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A1.getItemStack(), akceDropChance50lvl, true, false, entity);
+                addDropPlayer(player, AkceItems.A1.getItemStack(), getDropChance(szczescie, 0.4), true, false, entity);
                 // NIESAMOWITY PRZEDMIOT
                 addDropPlayer(player, NiesyItems.N1.getItemStack(), niesDropChance50lvl, true, false, entity);
                 // Ulepszacze

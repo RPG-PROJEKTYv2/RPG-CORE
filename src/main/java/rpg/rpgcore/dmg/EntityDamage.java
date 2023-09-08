@@ -3,8 +3,8 @@ package rpg.rpgcore.dmg;
 public enum EntityDamage {
     MAP_1_10_1("Rozbojnik Lvl. 3", 1.3),
     MAP_1_10_2("Rozbojnik Lvl. 5", 1.6),
-    MAP_1_10_3("Rozbojnik Lvl. 7", 2),
-    MAP_1_10_BOSS("[BOSS] Dowodca Rozbojnikow", 2.99),
+    MAP_1_10_3("Rozbojnik Lvl. 7", 2.0),
+    MAP_1_10_BOSS("[BOSS] Dowodca Rozbojnikow", 3.2),
 
     MAP_10_20_1("Goblin Lvl. 14", 2.6),
     MAP_10_20_2("Goblin Lvl. 16", 3.2),
