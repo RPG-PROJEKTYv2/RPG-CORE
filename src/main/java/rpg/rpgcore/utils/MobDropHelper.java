@@ -71,10 +71,10 @@ public class    MobDropHelper {
             szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
         }
 
-        final double akceDropChance50lvl= getDropChance(szczescie, 0.1);
-        final double akceDropChance50plus = getDropChance(szczescie, 0.05);
-        final double niesDropChance50lvl = getDropChance(szczescie, 0.05);
-        final double niesDropChance50plus = getDropChance(szczescie, 0.03);
+        final double akceDropChance50lvl= getDropChance(szczescie, 0.2);
+        final double akceDropChance50plus = getDropChance(szczescie, 0.07);
+        final double niesDropChance50lvl = getDropChance(szczescie, 0.06);
+        final double niesDropChance50plus = getDropChance(szczescie, 0.04);
         final double chestDropChance50lvl = getDropChance(szczescie, 1);
         final double chestDropChance50plus = getDropChance(szczescie, 0.7);
 

@@ -19,8 +19,7 @@ public enum Akce40_50 {
     I40_50_1("40-50-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lPradawna Tarcza").toItemStack()),
     I40_50_2("40-50-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lPradawny Pierscien").toItemStack()),
     I40_50_3("40-50-3", 11, new ItemBuilder(Material.WATCH).setName("&b&lPradawny Diadem").toItemStack()),
-    I40_50_4("40-50-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lPradawny Naszyjnik").toItemStack()),
-    I40_50_5("40-50-5", 9, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lPradawne Kolczyki").toItemStack());
+    I40_50_4("40-50-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lPradawny Naszyjnik").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;

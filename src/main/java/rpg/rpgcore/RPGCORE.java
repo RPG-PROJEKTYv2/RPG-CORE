@@ -46,7 +46,7 @@ import rpg.rpgcore.chests.DropFromChestsListener;
 import rpg.rpgcore.chests.Dungeony.Dungeon60z70.PiekielnyWladcaManager;
 import rpg.rpgcore.chests.Dungeony.Dungeon70z80.CzempionArenyManager;
 import rpg.rpgcore.chests.Dungeony.Dungeon80z90.CesarzPustyniManager;
-import rpg.rpgcore.chests.Dungeony.Dungeon90z100.ElitarnySlugaManager;
+import rpg.rpgcore.chests.Dungeony.Dungeon90z100.DemonCiemnosciManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.LodowySlugaManager;
 import rpg.rpgcore.chests.Dungeony.IceTower.KrolLoduManager;
 import rpg.rpgcore.chests.Dungeony.Inne.SakiewkaUlepszaczyManager;
@@ -407,7 +407,7 @@ public final class RPGCORE extends JavaPlugin {
     // dung 80-90
     private CesarzPustyniManager cesarzPustyniManager;
     // dung 90-100
-    private ElitarnySlugaManager elitarnySlugaManager;
+    private DemonCiemnosciManager demonCiemnosciManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
 
@@ -1061,7 +1061,7 @@ public final class RPGCORE extends JavaPlugin {
         // dungeon 80-90
         this.cesarzPustyniManager = new CesarzPustyniManager();
         // dungeon 90-100
-        this.elitarnySlugaManager = new ElitarnySlugaManager();
+        this.demonCiemnosciManager = new DemonCiemnosciManager();
         // ================================ SKRZYNKI NPCTY & INNE ================================
         this.gornikChestManager = new GornikChestManager();
     }
@@ -1454,7 +1454,7 @@ public final class RPGCORE extends JavaPlugin {
     // dungeon 80-90
     public CesarzPustyniManager getCesarzPustyniManager() { return cesarzPustyniManager; }
     // dungeon 90-100
-    public ElitarnySlugaManager getElitarnySlugaManager() { return elitarnySlugaManager; }
+    public DemonCiemnosciManager getDemonCiemnosciManager() { return demonCiemnosciManager; }
     // ================================ SKRZYNKI NPCTY & INNE ================================
     public GornikChestManager getGornikChestManager() {
         return gornikChestManager;

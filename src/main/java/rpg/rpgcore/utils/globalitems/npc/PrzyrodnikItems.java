@@ -16,7 +16,7 @@ public enum PrzyrodnikItems {
     I5("50-60", new ItemBuilder(Material.FEATHER).setName("&bKiel Mroznego Wilka").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I6("60-70", new ItemBuilder(Material.REDSTONE).setName("&cRdzen Zywiolaka").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I7("70-80", new ItemBuilder(Material.FLINT).setName("&9Odlamek Kosci Czarnego Szkieleta").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
-    I8("80-90", new ItemBuilder(Material.SUGAR, 1, (short) 10).setName("&aToksyczny Zab Ptasznika").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
+    I8("80-90", new ItemBuilder(Material.SUGAR).setName("&aToksyczny Zab Ptasznika").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I9("90-100", new ItemBuilder(Material.ARROW).setName("&eZatruta Strzala").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I10("100-110", new ItemBuilder(Material.PRISMARINE_SHARD).setName("&bLuska Straznika").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),
     I11("110-120", new ItemBuilder(Material.INK_SACK, 1, (short)12).setName("&fMrozna Pieczec").setLore(Arrays.asList("&8&oChyba Przyrodnik tego potrzebuje...")).toItemStack().clone()),

@@ -18,10 +18,10 @@ public class ZywiolakOgniaManager {
 
     public ZywiolakOgniaManager() {
         this.zywiolak.add(new Items("1", 16.0, ItemHelper.createSword("&4Miecz Zywiolaka Ognia", Material.IRON_SWORD, 26, 15,false), 1));
-        this.zywiolak.add(new Items("2", 18.0, ItemHelper.createArmor("&4Helm Zywiolaka Ognia", Material.IRON_HELMET, 29, 5), 1));
+        this.zywiolak.add(new Items("2", 18.0, ItemHelper.createArmor("&4Helm Zywiolaka Ognia", Material.DIAMOND_CHESTPLATE, 29, 5), 1));
         this.zywiolak.add(new Items("3", 18.0, ItemHelper.createArmor("&4Zbroja Zywiolaka Ognia", Material.IRON_CHESTPLATE, 34, 7), 1));
         this.zywiolak.add(new Items("4", 18.0, ItemHelper.createArmor("&4Spodnie Zywiolaka Ognia", Material.IRON_LEGGINGS, 32, 6), 1));
-        this.zywiolak.add(new Items("5", 18.0, ItemHelper.createArmor("&4Buty Zywiolaka Ognia", Material.IRON_BOOTS, 31, 5), 1));
+        this.zywiolak.add(new Items("5", 18.0, ItemHelper.createArmor("&4Buty Zywiolaka Ognia", Material.DIAMOND_BOOTS, 31, 5), 1));
     }
 
     public Items getDrawnItems(final Player player) {

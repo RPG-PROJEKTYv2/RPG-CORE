@@ -174,12 +174,12 @@ public class AdminPanelManager {
         player.openInventory(gui);
     }
     public void openRybakItemsGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lRybak &f- ADMINISTRACJA"));
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lRybak &f- ADMINISTRACJA"));
         gui.setItem(0, new ItemBuilder(RybakItems.getStaraWedka(player)).toItemStack().clone());
         for (final RybakItems rank : RybakItems.values()) {
             gui.setItem(gui.firstEmpty(), rank.getItemStack());
         }
-        gui.setItem(17, Utils.powrot());
+        gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }
     public void openAllCaseGUI(final Player player) {

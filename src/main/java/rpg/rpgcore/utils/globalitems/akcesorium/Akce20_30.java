@@ -16,10 +16,10 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Akce20_30 {
-    I20_30_1("20-30-1", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&6&lTropikalny Naszyjnik").toItemStack()),
-    I20_30_2("20-30-2", 10, new ItemBuilder(Material.WATCH).setName("&6&lTropikalny Diadem").toItemStack()),
-    I20_30_3("20-30-3", 10, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lTropikalna Tarcza").toItemStack()),
-    I20_30_4("20-30-4", 10, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&6&lTropikalny Pierscien").toItemStack());
+    I20_30_3("20-30-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&6&lTropikalna Tarcza").toItemStack()),
+    I20_30_4("20-30-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&6&lTropikalny Pierscien").toItemStack()),
+    I20_30_2("20-30-3", 11, new ItemBuilder(Material.WATCH).setName("&6&lTropikalny Diadem").toItemStack()),
+    I20_30_1("20-30-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&6&lTropikalny Naszyjnik").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;

@@ -924,7 +924,7 @@ public class DropFromChestsListener implements Listener {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Dungeony.getItem("I_TAJEMNICZE_PIASKI_SKRZYNKA", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
-                        final Items item = rpgcore.getCzempionArenyManager().getDrawnItems(player);
+                        final Items item = rpgcore.getCesarzPustyniManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }
@@ -957,7 +957,7 @@ public class DropFromChestsListener implements Listener {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Dungeony.getItem("I_DEMONICZNE_SALE_SKRZYNKA", 1));
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
-                        final Items item = rpgcore.getCzempionArenyManager().getDrawnItems(player);
+                        final Items item = rpgcore.getDemonCiemnosciManager().getDrawnItems(player);
                         if (item == null) {
                             return;
                         }

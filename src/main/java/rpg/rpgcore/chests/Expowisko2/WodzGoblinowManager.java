@@ -18,15 +18,15 @@ public class WodzGoblinowManager {
     private final Set<Items> wodzgoblin = Sets.newConcurrentHashSet();
 
     public WodzGoblinowManager() {
-        this.wodzgoblin.add(new Items("1", 6.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lNaszyjnik Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("2", 7.0, new ItemBuilder(Material.WATCH).setName("&a&lDiadem Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("3", 8.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lPierscien Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("4", 9.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lTarcza Wodza Goblinow").toItemStack(),1 ));
-        this.wodzgoblin.add(new Items("5", 14.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
-        this.wodzgoblin.add(new Items("6", 16.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 2), 1));
-        this.wodzgoblin.add(new Items("7", 16.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 10, 2), 1));
-        this.wodzgoblin.add(new Items("8", 16.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 8, 2), 1));
-        this.wodzgoblin.add(new Items("9", 16.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 6, 2), 1));
+        this.wodzgoblin.add(new Items("1", 8.0, new ItemBuilder(Material.STORAGE_MINECART).setName("&a&lNaszyjnik Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("2", 9.0, new ItemBuilder(Material.WATCH).setName("&a&lDiadem Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("3", 10.0, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&a&lPierscien Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("4", 11.0, new ItemBuilder(Material.ITEM_FRAME).setName("&a&lTarcza Wodza Goblinow").toItemStack(),1 ));
+        this.wodzgoblin.add(new Items("5", 15.0, ItemHelper.createSword("&a&lMiecz Wodza Goblinow", Material.STONE_SWORD, 5, 3, false), 1));
+        this.wodzgoblin.add(new Items("6", 17.0, ItemHelper.createArmor("&a&lHelm Wodza Goblinow", Material.LEATHER_HELMET, 9, 2), 1));
+        this.wodzgoblin.add(new Items("7", 17.0, ItemHelper.createArmor("&a&lZbroja Wodza Goblinow", Material.LEATHER_CHESTPLATE, 10, 2), 1));
+        this.wodzgoblin.add(new Items("8", 17.0, ItemHelper.createArmor("&a&lSpodnie Wodza Goblinow", Material.LEATHER_LEGGINGS, 8, 2), 1));
+        this.wodzgoblin.add(new Items("9", 17.0, ItemHelper.createArmor("&a&lButy Wodza Goblinow", Material.LEATHER_BOOTS, 6, 2), 1));
 
     }
 
