@@ -124,7 +124,7 @@ public class User implements Cloneable {
         if (!mobMapD.isEmpty()) {
             for (final String key : mobMapD.keySet()) {
                 if (key.equals("_id")) continue;
-                this.mobMap.put(key, mobMapD.getInteger(key));
+                this.mobMap.put(key.replaceAll("_", " ").replaceAll("Lvl", "Lvl."), mobMapD.getInteger(key));
             }
         }
     }
@@ -164,7 +164,7 @@ public class User implements Cloneable {
     public Document toDocument() {
         final Document mobMapD = new Document("_id", "mobMap");
         for (final String key : this.mobMap.keySet()) {
-            mobMapD.append(key, this.mobMap.get(key));
+            mobMapD.append(key.replaceAll(" ", "_").replaceAll("Lvl\\.", "Lvl"), this.mobMap.get(key));
         }
         return new Document().append("_id", this.id.toString())
                 .append("name", this.name)

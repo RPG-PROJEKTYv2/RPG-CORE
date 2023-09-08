@@ -165,7 +165,7 @@ public class  HandlarzNPC {
     }
 
     private double getItemsValue(final UUID uuid) {
-        return DoubleUtils.round(this.userItemMap.getOrDefault(uuid, ArrayListMultimap.create()).entries().stream().mapToDouble(entry -> entry.getValue() * entry.getKey().getAmount()).sum(), 2);
+        return DoubleUtils.round(this.userItemMap.getOrDefault(uuid, ArrayListMultimap.create()).entries().stream().mapToDouble(Map.Entry::getValue).sum(), 2);
     }
 
     public Multimap<ItemStack, Double> getUserItemMap(final UUID uuid) {

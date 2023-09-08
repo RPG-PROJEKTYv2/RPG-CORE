@@ -73,8 +73,6 @@ public class RybakInteractListener implements Listener {
 
         final Material type = (as.getItemInHand() == null || as.getItemInHand().getType().equals(Material.AIR) ? as.getHelmet().getType() : as.getItemInHand().getType());
 
-        player.sendMessage(type.toString());
-
         switch (type) {
             case WOOD:
                 player.getInventory().addItem(RybakItems.I1.getItemStack().clone());

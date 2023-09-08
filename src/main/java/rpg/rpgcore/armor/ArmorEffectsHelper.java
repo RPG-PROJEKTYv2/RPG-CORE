@@ -73,32 +73,32 @@ public class ArmorEffectsHelper {
     public static void addEffectBoots(Player player, int value) {
         int k = 0;
         if (value > 19) {
-            k = 75;
-        }
-        if (value > 39) {
             k = 100;
         }
-        if (value > 69) {
-            k = 150;
-        }
-        if (value > 99) {
+        if (value > 39) {
             k = 200;
         }
-        if (value > 149) {
+        if (value > 69) {
             k = 300;
         }
-        if (value > 199) {
+        if (value > 99) {
             k = 450;
         }
-        if (value > 249) {
+        if (value > 149) {
             k = 600;
+        }
+        if (value > 199) {
+            k = 750;
+        }
+        if (value > 249) {
+            k = 900;
         }
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
 
-        if (RPGCORE.getInstance().getKlasyManager().getNinjaRMB().asMap().containsKey(player.getUniqueId())) {
-            k += 150;
-        }
         float walkSpeed = Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
+        if (RPGCORE.getInstance().getKlasyManager().getNinjaRMB().asMap().containsKey(player.getUniqueId())) {
+            walkSpeed = Math.min(walkSpeed * 1.15F, 1.0F);
+        }
         if (player.getActivePotionEffects().stream().anyMatch(potion -> potion.getType() == PotionEffectType.SLOW && potion.getAmplifier() == 8)) walkSpeed = 0F;
         player.setWalkSpeed(walkSpeed);
         //player.removePotionEffect(PotionEffectType.SPEED);

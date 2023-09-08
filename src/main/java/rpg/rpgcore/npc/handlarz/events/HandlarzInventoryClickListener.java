@@ -225,9 +225,8 @@ public class HandlarzInventoryClickListener implements Listener {
                 }
 
                 rpgcore.getHandlarzNPC().addItem(player.getUniqueId(), item.clone(), sellItem.getPrice(item.clone()));
-                if (e.getClickedInventory().getItem(slot).getAmount() - 1 == 0) e.getClickedInventory().setItem(slot, null);
-                else e.getClickedInventory().getItem(slot).setAmount(e.getClickedInventory().getItem(slot).getAmount() - 1);
                 player.getOpenInventory().getTopInventory().setItem(player.getOpenInventory().getTopInventory().firstEmpty(), item.clone());
+                e.getClickedInventory().setItem(slot, null);
                 player.getOpenInventory().getTopInventory().setItem(49, rpgcore.getHandlarzNPC().getSprzedajItem(uuid));
                 return;
             }

@@ -474,6 +474,35 @@ public enum HandlarzSellItems {
                 mnoznik = 600;
             }
             dodatek += moby * mnoznik;
+            if (Utils.getTagString(item, "type").equals("ks")) {
+                int mobyProcentKS = Utils.getTagInt(item, "mobyProcentKS");
+                if (mobyProcentKS > 10) {
+                    mnoznik = 50;
+                }
+                if (mobyProcentKS > 20) {
+                    mnoznik = 100;
+                }
+                if (mobyProcentKS > 30) {
+                    mnoznik = 200;
+                }
+                // ...
+
+                dodatek += mobyProcentKS * mnoznik;
+            } else if (Utils.getTagString(item, "type").equals("tyra")) {
+                int ludzieProcentTYRA = Utils.getTagInt(item, "ludzieProcentTYRA");
+                if (ludzieProcentTYRA > 10) {
+                    mnoznik = 50;
+                }
+                if (ludzieProcentTYRA > 20) {
+                    mnoznik = 100;
+                }
+                if (ludzieProcentTYRA > 30) {
+                    mnoznik = 200;
+                }
+                // ...
+
+                dodatek += ludzieProcentTYRA * mnoznik;
+            }
         } else if (item.getType().toString().contains("_HELMET") || item.getType().toString().contains("_CHESTPLATE") || item.getType().toString().contains("_LEGGINGS") || item.getType().toString().contains("_BOOTS")) {
             final int prot = Utils.getTagInt(item, "prot");
             int mnoznik = 0;

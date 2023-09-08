@@ -134,7 +134,11 @@ public class KlasyInteractListener implements Listener {
                                 player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Musisz odczekac jeszcze &c" + Utils.durationToString(klasa.getCdLMB(), false) + "&7!"));
                                 return;
                             }
-                            klasa.setCdRMB(System.currentTimeMillis() + 180_000L);
+                            klasa.setCdLMB(System.currentTimeMillis() + 180_000L);
+                            if (!allowedPvP.contains(player.getLocation().getWorld().getName())) {
+                                player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cNie mozesz uzyc tej umiejetnosci w tym miejscu!"));
+                                return;
+                            }
                             final PotionEffect blind = new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, true, true);
                             final PotionEffect slow = new PotionEffect(PotionEffectType.SLOW, 200, 5, true, true);
                             for (final Player target : player.getNearbyEntities(8, 8, 8).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {

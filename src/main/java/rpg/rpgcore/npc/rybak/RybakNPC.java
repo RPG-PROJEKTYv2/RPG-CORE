@@ -121,12 +121,14 @@ public class RybakNPC {
                 player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e2 &fPodartych Masztow"));
             }, 520L);
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Przynies mi te rzeczy i bedziemy gotowi do drogi")), 560L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Znajdziesz je w tym jeziorku za mna")), 580L);
             return;
         }
         player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Zeby naprawic swoja lodke potrzebuje:"));
         player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e5 &6Zpruchnialych Desek"));
         player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e3 Podstawy Masztu"));
         player.sendMessage(Utils.format("&3&lWloczykij &8>> &8- &e2 &fPodartych Masztow"));
+        player.sendMessage(Utils.format("&3&lWloczykij &8>> &7Znajdziesz je w tym jeziorku za mna"));
     }
 
     // ========================================= STARUSZEK - WYSPA 1 ========================================= //

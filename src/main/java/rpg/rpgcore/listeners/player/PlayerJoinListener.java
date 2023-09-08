@@ -91,7 +91,7 @@ public class PlayerJoinListener implements Listener {
             player.setLevel(1);
             player.setExp(0);
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 1L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&aPomyslnie stworzono twoje konto!\n&aWejdz Jeszcze Raz i daj sie wciagnac w emocjonujaca rywalizacje")), 10L);
             return;
         }
 
