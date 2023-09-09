@@ -38,14 +38,14 @@ public class RzemieslnikInventoryClickListener implements Listener {
             if (slot != 12 && slot != 14) { return; }
 
             if (slot == 12) {
-                if (!(player.getInventory().containsAtLeast(GlobalItem.I_FRAGMENT_BONA.getItemStack(), 5) &&
-                        user.getKasa() >= 100_000_000)) {
+                if (!(player.getInventory().containsAtLeast(GlobalItem.I_FRAGMENT_BONA.getItemStack(), 3) &&
+                        user.getKasa() >= 300_000_000)) {
                     player.sendMessage(Utils.format("&f&lRzemieslnik &8>> &7Chyba zapomniales itemow..."));
                     player.closeInventory();
                     return;
                 }
-                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_FRAGMENT_BONA.getItemStack().clone()).setAmount(5).toItemStack());
-                user.setKasa(DoubleUtils.round(user.getKasa() - 100_000_000, 2));
+                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_FRAGMENT_BONA.getItemStack().clone()).setAmount(3).toItemStack());
+                user.setKasa(DoubleUtils.round(user.getKasa() - 300_000_000, 2));
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
                 final int liczba = ChanceHelper.getRandInt(1, 3);
                 if (liczba == 1) {
@@ -60,15 +60,15 @@ public class RzemieslnikInventoryClickListener implements Listener {
                 }
             }
             if (slot == 14) {
-                if (!(player.getInventory().containsAtLeast(GlobalItem.I_FRAGMENT_STALI.getItemStack(), 2) &&
-                        user.getKasa() >= 1_500_000 && player.getInventory().containsAtLeast(GlobalItem.I10.getItemStack(), 1))) {
+                if (!(player.getInventory().containsAtLeast(GlobalItem.I_FRAGMENT_STALI.getItemStack(), 4) &&
+                        user.getKasa() >= 3_000_000 && player.getInventory().containsAtLeast(GlobalItem.I10.getItemStack(), 1))) {
                     player.sendMessage(Utils.format("&f&lRzemieslnik &8>> &7Chyba zapomniales itemow..."));
                     player.closeInventory();
                     return;
                 }
-                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_FRAGMENT_STALI.getItemStack().clone()).setAmount(2).toItemStack());
+                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_FRAGMENT_STALI.getItemStack().clone()).setAmount(4).toItemStack());
                 player.getInventory().removeItem(new ItemBuilder(GlobalItem.I10.getItemStack().clone()).setAmount(1).toItemStack());
-                user.setKasa(DoubleUtils.round(user.getKasa() - 1_500_000, 2));
+                user.setKasa(DoubleUtils.round(user.getKasa() - 3_000_000, 2));
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
                 player.sendMessage(Utils.format("&f&lRzemieslnik &8>> &eWytworzyles &7&lStal Kowalska&e!"));
                 player.getInventory().addItem(GlobalItem.I_METAL.getItemStack());

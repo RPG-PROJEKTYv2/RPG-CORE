@@ -38,10 +38,10 @@ public class RzemieslnikManager {
         lore.add("");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I_FRAGMENT_BONA",1));
-        prefix = (item >= 5 ? "&3&m" : "&3");
-        lore.add("  &8- " + prefix + "&3&lFragment Tajemniczego Bona &8x5 (" + item + "/5)");
-        prefix = (kasa >= 100_000_000 ? "&a&m" : "&c");
-        lore.add("  &8- " + prefix + "100 000 000 $");
+        prefix = (item >= 3 ? "&3&m" : "&3");
+        lore.add("  &8- " + prefix + "&3&lFragment Tajemniczego Bona &8x3 (" + item + "/3)");
+        prefix = (kasa >= 300_000_000 ? "&a&m" : "&c");
+        lore.add("  &8- " + prefix + "300 000 000 $");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         return lore;
     }
@@ -55,13 +55,13 @@ public class RzemieslnikManager {
         lore.add("");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I_FRAGMENT_STALI", 1));
-        prefix = (item >= 2 ? "&8&l&m" : "&8&l");
-        lore.add("  &8- " + prefix + "Fragment Stali Kowalskiej &8x2 (" + item + "/2)");
+        prefix = (item >= 4 ? "&8&l&m" : "&8&l");
+        lore.add("  &8- " + prefix + "Fragment Stali Kowalskiej &8x4 (" + item + "/4)");
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I10", 1));
         prefix = (item >= 1 ? "&a&l&m" : "&a&l");
         lore.add("  &8- " + prefix + "Podrecznik Kowala &8x1 (" + item + "/1)");
-        prefix = (kasa >= 1_500_000 ? "&a&m" : "&c");
-        lore.add("  &8- " + prefix + "1 500 000 $");
+        prefix = (kasa >= 3_000_000 ? "&a&m" : "&c");
+        lore.add("  &8- " + prefix + "3 000 000 $");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         return lore;
     }

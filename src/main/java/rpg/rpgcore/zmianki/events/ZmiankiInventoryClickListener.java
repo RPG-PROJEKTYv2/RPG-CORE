@@ -47,7 +47,7 @@ public class ZmiankiInventoryClickListener implements Listener {
         if (title.equals("Zmiana Bonusow")) {
             e.setCancelled(true);
 
-            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) {
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.REDSTONE_TORCH_ON) {
                 return;
             }
 

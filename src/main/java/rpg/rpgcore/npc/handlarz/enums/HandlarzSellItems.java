@@ -215,7 +215,7 @@ public enum HandlarzSellItems {
     // NIES 10-20
     I175("Zielony Beret", Material.LEATHER_HELMET, 3000.0),
     I176("Zielony Kubrak", Material.LEATHER_CHESTPLATE,3000.0),
-    I177("Zielone Spodnie ", Material.LEATHER_LEGGINGS,  3000.0),
+    I177("Zielone Spodnie", Material.LEATHER_LEGGINGS,  3000.0),
     I178("Zielone Buty", Material.LEATHER_BOOTS, 3000.0),
     I179("Zielona Maczeta", Material.STONE_SWORD, 10000.0),
     // NIES 20-30
@@ -249,11 +249,11 @@ public enum HandlarzSellItems {
     I203("Ogniste Buty", Material.DIAMOND_BOOTS, 600_000),
     I204("Ognista Szpada", Material.DIAMOND_SWORD, 800_000),
     // NIES 70-80
-    I205("&7&lMglisty Helm", Material.DIAMOND_HELMET, 800_000),
-    I206("&7&lMglista Wiatrowka", Material.DIAMOND_CHESTPLATE,800_000),
-    I207("&7&lMgliste Galoty", Material.DIAMOND_LEGGINGS,  800_000),
-    I208("&7&lMgliste Buty", Material.DIAMOND_BOOTS, 800_000),
-    I209("&7&lMglisty Noz", Material.DIAMOND_SWORD, 1_000_000),
+    I205("Mglisty Helm", Material.DIAMOND_HELMET, 800_000),
+    I206("Mglista Wiatrowka", Material.DIAMOND_CHESTPLATE,800_000),
+    I207("Mgliste Galoty", Material.DIAMOND_LEGGINGS,  800_000),
+    I208("Mgliste Buty", Material.DIAMOND_BOOTS, 800_000),
+    I209("Mglisty Noz", Material.DIAMOND_SWORD, 1_000_000),
     // NIES 80-90
     I210("Sloneczny Kapelusz", Material.DIAMOND_HELMET, 1_000_000),
     I211("Sloneczna Zbroja", Material.DIAMOND_CHESTPLATE,1_000_000),

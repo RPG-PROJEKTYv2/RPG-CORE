@@ -56,7 +56,6 @@ public class KowalInventoryClickListener implements Listener {
 
             if (item.getType().equals(Material.REDSTONE_TORCH_ON)) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + " &cDalsze etapy &b&lIce Tower &cbeda dostepne w pozniejszym terminie"));
-                rpgcore.getKowalNPC().resetUpgradeList();
                 return;
             }
 

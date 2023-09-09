@@ -29,6 +29,22 @@ public class ZmiankiManager {
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName(" ").toItemStack());
         }
+        gui.setItem(11, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&4&lInformacje").setLore(Arrays.asList(
+                "",
+                "&f&lBonusy Miecz &8(&e50lvl.&8):",
+                "&eDodatkowe Obrazenia: &c1 - 50",
+                "&eSilny na XXX: &c0.01% - 10%",
+                "",
+                "&f&lBonusy Miecz &8(&e80lvl.&8):",
+                "&eDodatkowe Obrazenia: &c1 - 200",
+                "&eSilny na XXX: &c0.01% - 20%",
+                "",
+                "&f&lBonusy Zbroja &8(&e50lvl.&8):",
+                "&eOdpornosc Na Potwory: &c1% - 10%",
+                "&eSzansa Na Wzmocnienie Ciosu Krytycznego: &c0.1% - 2.5%",
+                "&eSzczescie: 1 - 5",
+                ""
+        )).toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
         gui.setItem(14, new ItemBuilder(Material.ANVIL).setName("&6&lZmien Bonusy").setLore(Arrays.asList(
                 "&c&lUWAGA!!!",

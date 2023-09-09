@@ -26,10 +26,12 @@ public class LesnikItemInteractListener implements Listener {
         final LesnikObject object = RPGCORE.getInstance().getLesnikNPC().find(e.getPlayer().getUniqueId());
         if (object == null) return;
         if (!object.getUser().hasCooldown()) {
+            e.setCancelled(true);
             e.getPlayer().sendMessage(Utils.format("&2&lLesnik &8>> &7Chyba Ci sie cos pomylilo... przeciez mozesz oddac mi juz przedmiot!"));
             return;
         }
 
+        e.setCancelled(true);
         e.getPlayer().getInventory().removeItem(new ItemBuilder(LesnikItems.POTION.getItem()).setAmount(1).toItemStack().clone());
         object.getUser().setCooldown(0L);
         e.getPlayer().sendMessage(Utils.format("&2&lLesnik &8>> &aSlyszalem ze masz cos dla mnie!"));
