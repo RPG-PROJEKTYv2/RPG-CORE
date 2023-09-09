@@ -33,6 +33,7 @@ public class MobsHpCommand extends CommandAPI {
 
     private void openHP(Player player) {
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lHP &7potworow"));
+        gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.INK_SACK, 1,(short)1).setName("&cExpowisko").setLore(Arrays.asList(
                 "",
                 "&6Rozbojnik: &c15 &7/ &c18 &7/ &c24",
@@ -47,7 +48,7 @@ public class MobsHpCommand extends CommandAPI {
                 "&5Podziemna Lowczyni: &c85000 &7/ &c110000 &7/ &c145000",
                 ""
                 )).toItemStack().clone());
-
+        gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.INK_SACK, 1,(short)6).setName("&cMapy Specjalne").setLore(Arrays.asList(
                 "",
                 "&bLodowy Sluga: &c1400",
@@ -57,6 +58,7 @@ public class MobsHpCommand extends CommandAPI {
                 "&cDemoniczy Lowca: &c245000",
                 ""
         )).toItemStack().clone());
+        gui.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         player.openInventory(gui);
     }
 }
