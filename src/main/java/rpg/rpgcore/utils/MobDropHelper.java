@@ -72,7 +72,7 @@ public class    MobDropHelper {
         }
 
         final double akceDropChance50lvl= getDropChance(szczescie, 0.2);
-        final double akceDropChance50plus = getDropChance(szczescie, 0.07);
+        final double akceDropChance50plus = getDropChance(szczescie, 0.08);
         final double niesDropChance50lvl = getDropChance(szczescie, 0.06);
         final double niesDropChance50plus = getDropChance(szczescie, 0.04);
         final double chestDropChance50lvl = getDropChance(szczescie, 1.2);
@@ -89,7 +89,7 @@ public class    MobDropHelper {
         // POZLACANY SKARB
         addDropPlayer(player, SkrzynkiOther.getItem("I1", 1), getDropChance(szczescie, 0.02), true, true, entity);
         // SKRZYNIA KOWALA
-        addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+        addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.03), true, true, entity);
         // TAJEMNICZA SKRZYNIA
         addDropPlayer(player, SkrzynkiOther.getItem("I4", 1), getDropChance(szczescie, 0.35), true, true, entity);
         // SKRZYNIA Z SUROWCAMI

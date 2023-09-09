@@ -291,8 +291,8 @@ public class MetinyHelper {
         }
         // ---------------------------------------- ICE TOWER ----------------------------------------
         if (id >= 20000 && id <= 20007) {
-            kasaToAdd = 1000;
-            MobDropHelper.addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), 0.06, true, true, entity);
+            kasaToAdd = 10000;
+            MobDropHelper.addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), 0.5, true, true, entity);
             if (metinolog.getMetinologUser().getPostepGive() == 6) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("ILodowej-Wiezy", 1), 25, true, true, entity);
             }

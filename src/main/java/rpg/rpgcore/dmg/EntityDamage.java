@@ -35,12 +35,12 @@ public enum EntityDamage {
     MAP_DT_3("Lodowy Sluga Lvl. 59", 14.3),
     MAP_DT_BOSS("[BOSS] Krol Lodu", 21),
 
-    MAP_60_70_1("Zywiolak Ognia Lvl. 64", 18.6),
-    MAP_60_70_2("Zywiolak Ognia Lvl. 66", 20.8),
-    MAP_60_70_3("Zywiolak Ognia Lvl. 68", 23.1),
-    MAP_60_70_BOSS("[BOSS] Piekiely Rycerz", 29.8),
+    MAP_60_70_1("Zywiolak Ognia Lvl. 64", 14.6),
+    MAP_60_70_2("Zywiolak Ognia Lvl. 66", 16.8),
+    MAP_60_70_3("Zywiolak Ognia Lvl. 68", 19.7),
+    MAP_60_70_BOSS("[BOSS] Piekielny Rycerz", 26.0),
 
-    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 26.7),
+    PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 20.7),
     PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 37.3),
 
     MAP_70_80_1("Mroczna Dusza Lvl. 71", 85.5),

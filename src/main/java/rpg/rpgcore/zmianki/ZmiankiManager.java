@@ -57,7 +57,7 @@ public class ZmiankiManager {
             } else {
                 lore.remove(Utils.format("&eOdpornosc Na Potwory: &f+" + Utils.getTagDouble(is, "defMoby") + "%"));
                 lore.remove(Utils.format("&eSzansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(is, "szansaWzmKryt") + "%"));
-                lore.remove(Utils.format("&e7Szczescie: &f+" + Utils.getTagInt(is, "szczescie")));
+                lore.remove(Utils.format("&eSzczescie: &f+" + Utils.getTagInt(is, "szczescie")));
             }
             lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
             lore.remove(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
@@ -105,9 +105,9 @@ public class ZmiankiManager {
             toReturn = new ItemBuilder(toReturn.clone()).setLoreCrafting(toReturn.clone().getItemMeta().getLore(), Arrays.asList(
                     " ",
                     "&8--------{&9&lMagiczne Zaczarowanie&8}--------",
-                    "&7Odpornosc Na Potwory: &f+" + Utils.getTagDouble(toReturn, "defMoby") + "%",
-                    "&7Szansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(toReturn, "szansaWzmKryt") + "%",
-                    "&7Szczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
+                    "&eOdpornosc Na Potwory: &f+" + Utils.getTagDouble(toReturn, "defMoby") + "%",
+                    "&eSzansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(toReturn, "szansaWzmKryt") + "%",
+                    "&eSzczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
                     "&cWymagany Poziom: &645",
                     "&8--------{&9&lMagiczne Zaczarowanie&8}--------"
             )).addTagInt("lvl", 45).toItemStack().clone();

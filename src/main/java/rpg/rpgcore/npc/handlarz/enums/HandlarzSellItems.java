@@ -202,7 +202,7 @@ public enum HandlarzSellItems {
 
     // TAJEMNICZA CHEST
     I166("Tajemniczy Helm", Material.IRON_HELMET, 3500.0),
-    I167("Tajemnicza Zbroja", Material.IRON_CHESTPLATE, 5500.0),
+    I167("Tajemnicza Klata", Material.IRON_CHESTPLATE, 5500.0),
     I168("Tajemnicze Spodnie", Material.IRON_LEGGINGS, 4500.0),
     I169("Tajemnicze Buty", Material.IRON_BOOTS, 3500.0),
 
