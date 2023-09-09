@@ -257,15 +257,19 @@ import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
 import rpg.rpgcore.npc.pustelnik.events.PustelnikInventoryClickListener;
 import rpg.rpgcore.npc.rybak.RybakNPC;
+import rpg.rpgcore.npc.rybak.command.WedkaCommand;
 import rpg.rpgcore.npc.rybak.events.*;
 import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalInventoryClickListener;
-import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalManager;
+import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalNPC;
 import rpg.rpgcore.npc.wyslannik.WyslannikNPC;
 import rpg.rpgcore.npc.wyslannik.events.WyslannikInventoryClickListener;
+import rpg.rpgcore.npc.zlotnik.ZlotnikNPC;
+import rpg.rpgcore.npc.zlotnik.events.ZlotnikInventoryClickListener;
+import rpg.rpgcore.npc.zlotnik.events.ZlotnikInventoryCloseListener;
 import rpg.rpgcore.osiagniecia.OsManager;
 import rpg.rpgcore.osiagniecia.OsiagnieciaCommand;
 import rpg.rpgcore.osiagniecia.events.OsInventoryClickListener;
@@ -443,7 +447,8 @@ public final class RPGCORE extends JavaPlugin {
     private BackupManager backupManager;
     private KodTworcyManager kodTworcyManager;
     private TajemniczePiaskiManager tajemniczePiaskiManager;
-    private WygnanyKowalManager wygnanyKowalManager;
+    private WygnanyKowalNPC wygnanyKowalNPC;
+    private ZlotnikNPC zlotnikNPC;
 
 
     private int i = 1;
@@ -681,6 +686,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GornikZaplacCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BackupCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new KodCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new WedkaCommand());
     }
 
     private void initEvents() {
@@ -926,6 +932,10 @@ public final class RPGCORE extends JavaPlugin {
 
         // WYGNANY KOWAL
         this.getServer().getPluginManager().registerEvents(new WygnanyKowalInventoryClickListener(), this);
+
+        // ZLOTNIK
+        this.getServer().getPluginManager().registerEvents(new ZlotnikInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ZlotnikInventoryCloseListener(), this);
     }
 
     private void initDatabase() {
@@ -1003,7 +1013,8 @@ public final class RPGCORE extends JavaPlugin {
         this.mistycznyKowalManager = new MistycznyKowalManager();
         this.gornikNPC = new GornikNPC(this);
         this.rzemieslnikManager = new RzemieslnikManager();
-        this.wygnanyKowalManager = new WygnanyKowalManager();
+        this.wygnanyKowalNPC = new WygnanyKowalNPC();
+        this.zlotnikNPC = new ZlotnikNPC();
     }
 
     private void initChests() {
@@ -1618,7 +1629,10 @@ public final class RPGCORE extends JavaPlugin {
     public TajemniczePiaskiManager getTajemniczePiaskiManager() {
         return tajemniczePiaskiManager;
     }
-    public WygnanyKowalManager getWygnanyKowalManager() {
-        return wygnanyKowalManager;
+    public WygnanyKowalNPC getWygnanyKowalNPC() {
+        return wygnanyKowalNPC;
+    }
+    public ZlotnikNPC getZlotnikNPC() {
+        return zlotnikNPC;
     }
 }

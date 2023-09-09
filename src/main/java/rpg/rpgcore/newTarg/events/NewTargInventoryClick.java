@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +45,15 @@ public class NewTargInventoryClick implements Listener {
         final String clickedInventoryTitle = clickedInventory.getTitle();
         final ItemStack clickedItem = e.getCurrentItem();
         final int clickedSlot = e.getSlot();
+
+        if ((player.getOpenInventory().getTopInventory().getTitle().contains("Targi #") || player.getOpenInventory().getTopInventory().getTitle().contains("Targ gracza")) && e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (e.isShiftClick()) {
+                e.setCancelled(true);
+                return;
+            }
+            e.setCancelled(true);
+            return;
+        }
 
         if (Utils.removeColor(clickedInventoryTitle).contains("Targi #")) {
             e.setCancelled(true);
@@ -275,7 +285,6 @@ public class NewTargInventoryClick implements Listener {
 
             if (player.getName().equals(targetName)) {
                 final Targ targ = rpgcore.getNewTargManager().find(targetUUID);
-                player.sendMessage(targ.getItemList().toString());
                 if (!targ.getItemList().contains(clickedItem)) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));
                     return;
@@ -351,6 +360,8 @@ public class NewTargInventoryClick implements Listener {
     }
 
     private double getItemPrice(final ItemStack is) {
+        if (!is.hasItemMeta()) return 0.0;
+        if (!is.getItemMeta().hasLore()) return 0.0;
         for (String s : is.getItemMeta().getLore()) {
             if (s.contains("Cena: ")) {
                 return DoubleUtils.round(Double.parseDouble(Utils.removeColor(s).replace("Cena: ", "").replace(" ", "").replace("$", "").trim()), 2);
@@ -361,7 +372,6 @@ public class NewTargInventoryClick implements Listener {
 
     private void finalizeTradeTarg(final Player player, final UUID targetUUID, final String targetName, final double kasaGracza, final double itemCena, final ItemStack clickedItem) {
         final Targ targetTarg = rpgcore.getNewTargManager().find(targetUUID);
-        player.sendMessage(targetTarg.getItemList().toString());
         if (!targetTarg.getItemList().contains(clickedItem)) {
             player.closeInventory();
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cWyglada na to, ze ten przedmiot nie jest juz dostepny!"));

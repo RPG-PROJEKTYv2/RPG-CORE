@@ -122,6 +122,8 @@ public class MongoManager {
         final List<Document> toRemove = new ArrayList<>();
         for (final Document doc : this.pool.getGracze().find()) {
             final UUID uuid = UUID.fromString(doc.getString("_id"));
+            if (uuid.toString().equals("b3efaecc-53f1-46b6-846c-5e455a267b8b") || uuid.toString().equals("d4d989aa-2377-4048-a9d9-10d703de9f93")
+                    || uuid.toString().equals("2eea1b3b-838c-4d5c-bd3e-a2b9b63653de")) continue;
             if (pool.getBonuses().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getBonuses().deleteOne(new Document("_id", uuid.toString()));
             }

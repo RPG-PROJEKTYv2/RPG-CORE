@@ -86,7 +86,7 @@ public class KlasyInventoryClickListener implements Listener {
                 rpgcore.getKlasyManager().openGUI(player);
                 return;
             }
-            if (rpgcore.getUserManager().find(uuid).getLvl() < 1) return; //50
+            if (rpgcore.getUserManager().find(uuid).getLvl() < 50) return;
             final Klasa klasa = rpgcore.getKlasyManager().find(uuid);
             if (klasa.getMainKlasa() != KlasyMain.WOJOWNIK) return;
             if (klasa.getPodKlasa() != KlasySide.NIE_WYBRANO) return;
@@ -129,7 +129,7 @@ public class KlasyInventoryClickListener implements Listener {
                 rpgcore.getKlasyManager().openGUI(player);
                 return;
             }
-            if (rpgcore.getUserManager().find(uuid).getLvl() < 1) return;
+            if (rpgcore.getUserManager().find(uuid).getLvl() < 50) return;
             final Klasa klasa = rpgcore.getKlasyManager().find(uuid);
             if (klasa.getMainKlasa() != KlasyMain.ZABOJCA) return;
             if (klasa.getPodKlasa() != KlasySide.NIE_WYBRANO) return;
@@ -177,7 +177,7 @@ public class KlasyInventoryClickListener implements Listener {
                 rpgcore.getKlasyManager().openGUI(player);
                 return;
             }
-            if (rpgcore.getUserManager().find(uuid).getLvl() < 1) return;
+            if (rpgcore.getUserManager().find(uuid).getLvl() < 50) return;
             final Klasa klasa = rpgcore.getKlasyManager().find(uuid);
             if (klasa.getMainKlasa() != KlasyMain.CZARODZIEJ) return;
             if (klasa.getPodKlasa() != KlasySide.NIE_WYBRANO) return;

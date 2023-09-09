@@ -15,6 +15,8 @@ import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MetinyHelper {
@@ -319,9 +321,14 @@ public class MetinyHelper {
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();
+        final List<Entity> mobs = new ArrayList<>();
         for (int i = 0; i < mobsToSpawn; i++) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm mobs spawn " + worldName.replace("map", "") + "-MOB1 1" +  " " + worldName + "," + DoubleUtils.round(entity.getLocation().getX() + ChanceHelper.getRandDouble(-0.2, 0.2), 2) + "," + DoubleUtils.round(entity.getLocation().getY() + 0.5, 2) + "," + DoubleUtils.round(entity.getLocation().getZ() + ChanceHelper.getRandDouble(-0.2, 0.2), 2));
+            final Entity mob = RPGCORE.getMythicMobs().getMobManager().spawnMob(worldName.replace("map", "") + "-MOB1", entity.getLocation().clone().add(ChanceHelper.getRandDouble(-0.2, 0.2), 0.5, ChanceHelper.getRandDouble(-0.2, 0.2))).getEntity().getBukkitEntity();
+            mobs.add(mob);
         }
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> mobs.forEach(entity1 -> {
+            if (entity1 != null && !entity1.isDead()) entity1.remove();
+        }), 20 * 150);
         double mnozik = 1;
         final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();
         if (rank == RankTypePlayer.VIP) mnozik = 1.25;

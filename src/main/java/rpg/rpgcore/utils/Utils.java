@@ -766,7 +766,7 @@ public class Utils {
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
-    public static void setTagDouble(final ItemStack is, final String tag, final double value){
+    public static void setTagDouble(final ItemStack is, final String tag, final double value, final boolean force){
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         NBTTagCompound tagCompound;
         if (!nmsStack.hasTag()) {
@@ -775,7 +775,7 @@ public class Utils {
         } else {
             tagCompound = nmsStack.getTag();
         }
-        if (tagCompound.hasKey(tag)) {
+        if (tagCompound.hasKey(tag) && !force) {
             double old = tagCompound.getDouble(tag);
             if (old > value) return;
         }
@@ -784,7 +784,7 @@ public class Utils {
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
-    public static void setTagInt(final ItemStack is, final String tag, final int value){
+    public static void setTagInt(final ItemStack is, final String tag, final int value, final boolean force){
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         NBTTagCompound tagCompound;
         if (!nmsStack.hasTag()) {
@@ -793,7 +793,7 @@ public class Utils {
         } else {
             tagCompound = nmsStack.getTag();
         }
-        if (tagCompound.hasKey(tag)) {
+        if (tagCompound.hasKey(tag) && !force) {
             int old = tagCompound.getInt(tag);
             if (old > value) return;
         }

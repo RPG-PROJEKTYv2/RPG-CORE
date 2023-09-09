@@ -175,7 +175,7 @@ public class AdminPanelManager {
     }
     public void openRybakItemsGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lRybak &f- ADMINISTRACJA"));
-        gui.setItem(0, new ItemBuilder(RybakItems.getStaraWedka(player)).toItemStack().clone());
+        gui.setItem(0, new ItemBuilder(RybakItems.getStaraWedka(player.getName())).toItemStack().clone());
         for (final RybakItems rank : RybakItems.values()) {
             gui.setItem(gui.firstEmpty(), rank.getItemStack());
         }

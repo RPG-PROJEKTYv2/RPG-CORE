@@ -219,7 +219,8 @@ public class AsyncPlayerChatListener implements Listener {
             "testanimation",
             "test",
             "drop",
-            "backup"
+            "backup",
+            "wedka"
     );
 
     @EventHandler

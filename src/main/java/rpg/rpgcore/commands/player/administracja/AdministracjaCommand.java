@@ -42,7 +42,7 @@ public class AdministracjaCommand extends CommandAPI {
         )).toItemStack());
         gui.setItem(1, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&4&lHeadAdmin").setSkullOwner("ZwariowanyOrzel").setLore(Arrays.asList(
                 "&7Prefix rangi: &4&lHA",
-                "&7Nick: &cZwarioywnyOrzel",
+                "&7Nick: &cZwariowanyOrzel",
                 "&7Online: " + (Bukkit.getPlayer("ZwariowanyOrzel") != null ? "&aOnline" : "&cOffline")
         )).toItemStack());
         gui.setItem(2, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&4&lHeadAdmin").setSkullOwner("Chytryy").setLore(Arrays.asList(

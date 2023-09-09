@@ -13,8 +13,6 @@ import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class PlayerInteractEntityListener implements Listener {
@@ -269,7 +267,12 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // ...WYGNANY KOWAL
             if (entityName.contains("Wygnany Kowal")) {
-                rpgcore.getWygnanyKowalManager().click(player);
+                rpgcore.getWygnanyKowalNPC().click(player);
+                return;
+            }
+            // ...ZLOTNIK
+            if (entityName.equalsIgnoreCase("Zlotnik")) {
+                rpgcore.getZlotnikNPC().click(player);
                 return;
             }
 
@@ -284,7 +287,7 @@ public class PlayerInteractEntityListener implements Listener {
                         entityName.equalsIgnoreCase("Pustelnik") || entityName.equalsIgnoreCase("Wloczykij") ||
                         entityName.equalsIgnoreCase("Mistrz Yang") || entityName.equalsIgnoreCase("Dowodca Strazy")
                         || entityName.equalsIgnoreCase("Mistyczny Kowal") ||entityName.equalsIgnoreCase("Przyjaciel") ||
-                        entityName.equalsIgnoreCase("Staruszek") ||entityName.equalsIgnoreCase("Wygnany Kowal")) {
+                        entityName.equalsIgnoreCase("Staruszek") ||entityName.equalsIgnoreCase("Wygnany Kowal") || entityName.equalsIgnoreCase("Zlotnik")) {
                     e.setCancelled(true);
                     return;
                 }

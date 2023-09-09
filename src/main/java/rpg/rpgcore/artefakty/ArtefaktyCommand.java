@@ -16,7 +16,6 @@ import rpg.rpgcore.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class ArtefaktyCommand extends CommandAPI {
     public ArtefaktyCommand() {
@@ -161,7 +160,7 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&4&lBONUS",
                 "",
                 "&7Sposob Zdobycia: &cOsiagnij 50 poziom",
-                "&7Ilosc do zdobycia: &c5 sztuk",
+                "&7Ilosc do zdobycia: &c4 sztuk",
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom50Names.get(0) + " &8(&c15%&8)",
                 "&62." + " &6" + poziom50Names.get(1) + " &8(&c10%&8)",
@@ -173,7 +172,7 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&4&lBONUS",
                 "",
                 "&7Sposob Zdobycia: &cOsiagnij 60 poziom",
-                "&7Ilosc do zdobycia: &c5 sztuk",
+                "&7Ilosc do zdobycia: &c4 sztuk",
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom60Names.get(0) + " &8(&215%&8)",
                 "&62." + " &6" + poziom60Names.get(1) + " &8(&210%&8)",
@@ -185,7 +184,7 @@ public class ArtefaktyCommand extends CommandAPI {
                 "&4&lBONUS",
                 "",
                 "&7Sposob Zdobycia: &cOsiagnij 70 poziom",
-                "&7Ilosc do zdobycia: &c5 sztuk",
+                "&7Ilosc do zdobycia: &c4 sztuk",
                 "&7Zdobyte przez:",
                 "&41." + " &4" + poziom70Names.get(0) + " &8(&515%&8)",
                 "&62." + " &6" + poziom70Names.get(1) + " &8(&510%&8)",

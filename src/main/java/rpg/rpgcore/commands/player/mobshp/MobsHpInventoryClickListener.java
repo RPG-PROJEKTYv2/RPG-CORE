@@ -1,5 +1,6 @@
 package rpg.rpgcore.commands.player.mobshp;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,8 +20,9 @@ public class MobsHpInventoryClickListener implements Listener {
         final Inventory clickedInventory = e.getClickedInventory();
         final String clickedInventoryTitle = clickedInventory.getTitle();
 
-        if (Utils.removeColor(clickedInventoryTitle).equals("HP potworów")) {
+        if (Utils.removeColor(clickedInventoryTitle).equals("HP potworow")) {
             e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
         }
     }
 }

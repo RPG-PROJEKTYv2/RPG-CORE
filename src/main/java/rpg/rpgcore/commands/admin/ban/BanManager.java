@@ -50,9 +50,9 @@ public class BanManager {
 
         if (playerToBan != null) {
             playerToBan.kickPlayer(Utils.banMessage(banSender, reason, banExpiry, dateOfBan) +
-                    "\n\n&a&lUWAZASZ ZE TO BLAD? &c&lNIE WYLACZAJ TEGO OKNA!!!" +
+                    Utils.format("\n\n&a&lUWAZASZ ZE TO BLAD? &c&lNIE WYLACZAJ TEGO OKNA!!!" +
                     "\n&8&lZrob screanshoota tej wiadomosci i skontaktuj sie" +
-                    "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl");
+                    "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl"));
         }
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfPlayerToBan, banSender, String.valueOf(reason), banExpiry));
@@ -115,9 +115,9 @@ public class BanManager {
 
         if (playerToTempBan != null) {
             playerToTempBan.kickPlayer(Utils.banMessage(adminName, reason, Utils.dateFormat.format(tempBanExpireDate), Utils.dateFormat.format(tempBanDate)) +
-                    "\n\n&a&lUWAZASZ ZE TO BLAD? &c&lNIE WYLACZAJ TEGO OKNA!!!" +
+                    Utils.format("\n\n&a&lUWAZASZ ZE TO BLAD? &c&lNIE WYLACZAJ TEGO OKNA!!!" +
                     "\n&8&lZrob screanshoota tej wiadomosci i skontaktuj sie" +
-                    "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl");
+                    "\n&8&lz &4&lAdministracja &8&lserwera lub napisz ticket na dc &6&ldc.hellrpg.pl"));
         }
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfThePlayerToTempBan, adminName, String.valueOf(reason), Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate)));

@@ -93,7 +93,7 @@ public class GornikNPC {
     public void onClick(final Player player) {
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
 
-        if (user.getLvl() < 40) {
+        if (user.getLvl() < 60) {
             player.sendMessage(Utils.format("&6&lGornik &8>> &7Osiagnij &e&l60 &7poziom... Moze wtedy bedziesz godny rozmowy ze mna"));
             return;
         }
@@ -122,7 +122,7 @@ public class GornikNPC {
         } else {
             player.sendMessage(Utils.format("&6&lGornik &8>> &7Hola hola, tym razem to ty placisz!"));
             final TextComponent message = new TextComponent(Utils.format("&a&l[Kliknij, aby zaplacic!]"));
-            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Koszt: &e1&2$"))})); //250 000
+            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(Utils.format("&7Koszt: &e250 000&2$"))})); //250 000
             message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/gornikzaplac"));
             this.addToPayList(player.getUniqueId());
             player.spigot().sendMessage(message);
@@ -175,8 +175,8 @@ public class GornikNPC {
 
         gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player).clone()).setLoreCrafting(GornikItems.getKilof(player).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(1) + "&2$" //50_000_000
-        )).addTagInt("price", 1).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$" //50_000_000
+        )).addTagInt("price", 50_000_000).toItemStack().clone());
 
         gui.setItem(8, Utils.powrot().clone());
         player.openInventory(gui);
@@ -349,7 +349,7 @@ public class GornikNPC {
     public void updateExp(final ItemStack item, final int exp) {
         final int itemExp = Utils.getTagInt(item, "exp");
         final int reqExp = Utils.getTagInt(item, "reqExp");
-        Utils.setTagInt(item, "exp", itemExp + exp);
+        Utils.setTagInt(item, "exp", itemExp + exp, true);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
         if (Utils.getTagInt(item, "lvl") == 31) {
@@ -367,9 +367,9 @@ public class GornikNPC {
     public void updateLvl(final ItemStack item) {
         final int lvl = Utils.getTagInt(item, "lvl");
         final int reqExp = GornikLevels.getByLvl(lvl + 1).getReqExp();
-        Utils.setTagInt(item, "lvl", lvl + 1);
-        Utils.setTagInt(item, "exp", 0);
-        Utils.setTagInt(item, "reqExp", reqExp);
+        Utils.setTagInt(item, "lvl", lvl + 1, true);
+        Utils.setTagInt(item, "exp", 0, true);
+        Utils.setTagInt(item, "reqExp", reqExp, true);
         final ItemMeta meta = item.getItemMeta();
         final List<String> lore = meta.getLore();
         switch (lvl + 1) {

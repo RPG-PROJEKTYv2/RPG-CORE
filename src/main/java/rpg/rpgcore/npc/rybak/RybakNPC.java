@@ -136,12 +136,12 @@ public class RybakNPC {
     private final Set<Items> wyspa1Drops = new HashSet<>();
 
     private void initWyspa1Drops() {
-        this.wyspa1Drops.add(new Items("1", 60, RybakItems.I6.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("2", 40, RybakItems.I7.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("3", 35, RybakItems.I8.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("4", 25, RybakItems.I14.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("5", 20, RybakItems.I9.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("6", 15, RybakItems.I10.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("1", 70, RybakItems.I6.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("2", 55, RybakItems.I7.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("3", 45, RybakItems.I8.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("4", 35, RybakItems.I14.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("5", 30, RybakItems.I9.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("6", 20, RybakItems.I10.getItemStack(), 1));
     }
 
     public ItemStack getWyspa1Drop(final Player player) {
@@ -174,7 +174,7 @@ public class RybakNPC {
             this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Chodza sluchy, ze w &2&lDzikiej Dzungli &7grasuja &3podwodne stworzenia", 200L);
             this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Jednak zanim tam trafisz, potrzebuje twojej pomocy.", 240L);
             this.sendDelayedMessage(player, "&6&lStaruszek &8>> &7Wez ta &6Stara Wedke &7i bierz sie do roboty", 240L);
-            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.getInventory().addItem(RybakItems.getStaraWedka(player)), 280L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.getInventory().addItem(RybakItems.getStaraWedka(player.getName())), 280L);
             staruszekUser.setReceivedRod(true);
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(player.getUniqueId(), this.find(player.getUniqueId())));
             return;
@@ -210,12 +210,12 @@ public class RybakNPC {
 
         for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
 
-        gui.setItem(1, this.addPrice(RybakItems.I6.getItemStack(), 100));
-        gui.setItem(2, this.addPrice(RybakItems.I7.getItemStack(), 250));
-        gui.setItem(3, this.addPrice(RybakItems.I8.getItemStack(), 550));
-        gui.setItem(5, this.addPrice(RybakItems.I9.getItemStack(), 850));
-        gui.setItem(6, this.addPrice(RybakItems.I10.getItemStack(), 1250));
-        gui.setItem(7, this.addPrice(RybakItems.I14.getItemStack(), 550));
+        gui.setItem(1, this.addPrice(RybakItems.I6.getItemStack(), 800));
+        gui.setItem(2, this.addPrice(RybakItems.I7.getItemStack(), 1150));
+        gui.setItem(3, this.addPrice(RybakItems.I8.getItemStack(), 1350));
+        gui.setItem(5, this.addPrice(RybakItems.I9.getItemStack(), 1650));
+        gui.setItem(6, this.addPrice(RybakItems.I10.getItemStack(), 3750));
+        gui.setItem(7, this.addPrice(RybakItems.I14.getItemStack(), 1650));
 
         player.openInventory(gui);
     }

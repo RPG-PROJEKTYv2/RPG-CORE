@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.enums.WedkaExp;
+import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.ChanceHelper;
@@ -65,7 +66,7 @@ public class RybakHelper {
 
 
     private static int addRewardWyspa1(final Player player, final boolean doubleDrop) {
-        final ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa1Drop(player);
+        final ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa1Drop(player).clone();
         final StaruszekUser user = RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getStaruszekUser();
 
         final int mission = user.getMission();
@@ -79,7 +80,7 @@ public class RybakHelper {
 
         switch (Utils.removeColor(reward.getItemMeta().getDisplayName())) {
             case "Karp":
-                exp = 1 * reward.getAmount();
+                exp = reward.getAmount();
                 if (mission == 1 || mission == 15 || mission == 26)
                     user.setProgress(user.getProgress() + reward.getAmount());
                 break;
@@ -127,7 +128,7 @@ public class RybakHelper {
     }
 
 
-    private static void increaseExp(final ItemStack wedka, final int exp) {
+    public static void increaseExp(final ItemStack wedka, final int exp) {
         if (wedka == null || !wedka.getType().equals(Material.FISHING_ROD)) {
             return;
         }
@@ -138,8 +139,12 @@ public class RybakHelper {
         currentExp += exp;
         udanePolowy++;
         final int reqExp = Utils.getTagInt(wedka, "reqExp");
-        Utils.setTagInt(wedka, "exp", currentExp);
-        Utils.setTagInt(wedka, "udanePolowy", udanePolowy);
+        Utils.setTagInt(wedka, "exp", currentExp, true);
+        Utils.setTagInt(wedka, "udanePolowy", udanePolowy, true);
+
+        final RybakUser user = RPGCORE.getInstance().getRybakNPC().find(RPGCORE.getInstance().getUserManager().find(Utils.getTagString(wedka, "owner")).getId());
+        user.setWylowioneRyby(udanePolowy);
+        user.setExpWedki(currentExp);
 
         final ItemMeta meta = wedka.getItemMeta();
         final List<String> lore = meta.getLore();
@@ -165,7 +170,7 @@ public class RybakHelper {
         }
     }
 
-    private static void increaseLvl(final ItemStack wedka) {
+    public static void increaseLvl(final ItemStack wedka) {
         if (wedka == null || !wedka.getType().equals(Material.FISHING_ROD)) {
             return;
         }
@@ -174,10 +179,15 @@ public class RybakHelper {
         final WedkaExp stats = WedkaExp.getWedkaExp(lvl + 1);
         final double doubleDrop = Utils.getTagDouble(wedka, "doubleDrop");
 
-        Utils.setTagInt(wedka, "lvl", lvl);
-        Utils.setTagDouble(wedka, "exp", 0);
-        Utils.setTagDouble(wedka, "reqExp", stats.getExp());
-        Utils.setTagDouble(wedka, "doubleDrop", doubleDrop + stats.getDropx2());
+        final RybakUser user = RPGCORE.getInstance().getRybakNPC().find(RPGCORE.getInstance().getUserManager().find(Utils.getTagString(wedka, "owner")).getId());
+        user.setLvlWedki(lvl);
+        user.setExpWedki(0);
+        user.setPodwojnyDrop(doubleDrop + stats.getDropx2());
+
+        Utils.setTagInt(wedka, "lvl", lvl, true);
+        Utils.setTagDouble(wedka, "exp", 0, true);
+        Utils.setTagDouble(wedka, "reqExp", stats.getExp(), true);
+        Utils.setTagDouble(wedka, "doubleDrop", doubleDrop + stats.getDropx2(), true);
 
 
         final ItemMeta meta = wedka.getItemMeta();

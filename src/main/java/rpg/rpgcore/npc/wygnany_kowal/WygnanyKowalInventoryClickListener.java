@@ -103,7 +103,7 @@ public class WygnanyKowalInventoryClickListener implements Listener {
             );
             user.setKasa(DoubleUtils.round(user.getKasa() - 250_000_000, 2));
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
-            RPGCORE.getInstance().getWygnanyKowalManager().upgradeSword(player.getItemInHand());
+            RPGCORE.getInstance().getWygnanyKowalNPC().upgradeSword(player.getItemInHand());
             Bukkit.getServer().broadcastMessage(Utils.format("&3&lWygnany Kowal &8>> &7&lGracz &6&l" + player.getName() + " &7&lwzmocnil swoj miecz!"));
         }
     }

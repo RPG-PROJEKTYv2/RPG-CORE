@@ -3,10 +3,10 @@ package rpg.rpgcore.lvl.enums.mobs;
 import rpg.rpgcore.utils.DoubleUtils;
 
 public enum Dungeons {
-    ICE_TOWER_MOB1("Lodowy Sluga Lvl. 57", 1_350, 100, 50, 60),
-    ICE_TOWER_MOB2("Lodowy Sluga Lvl. 58", 1_850, 110, 50, 60),
-    ICE_TOWER_MOB3("Lodowy Sluga Lvl. 59", 2_300, 120, 50, 60),
-    ICE_TOWER_BOSS("[BOSS] Krol Lodu", 60_000, 50_000, 50, 60),
+    ICE_TOWER_MOB1("Lodowy Sluga Lvl. 57", 950, 100, 50, 60),
+    ICE_TOWER_MOB2("Lodowy Sluga Lvl. 58", 1_250, 110, 50, 60),
+    ICE_TOWER_MOB3("Lodowy Sluga Lvl. 59", 1_578, 120, 50, 60),
+    ICE_TOWER_BOSS("[BOSS] Krol Lodu", 17_000, 50_000, 50, 60),
     // 60-70
     PIEKIELNY_PRZEDSIONEK_MOB("Ognisty Duch Lvl. 69", 7_366.3, 125, 60, 70),
     PIEKIELNY_PRZEDSIONEK_BOSS("[BOSS] Piekielny Wladca", 500_500.0, 600_000, 60, 70),

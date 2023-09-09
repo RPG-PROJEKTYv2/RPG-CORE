@@ -30,7 +30,12 @@ public class ZmiankiManager {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 8).setName(" ").toItemStack());
         }
         gui.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());
-        gui.setItem(14, new ItemBuilder(Material.ANVIL).setName("&6&lZmien Bonusy").toItemStack());
+        gui.setItem(14, new ItemBuilder(Material.ANVIL).setName("&6&lZmien Bonusy").setLore(Arrays.asList(
+                "&c&lUWAGA!!!",
+                "&7Przedmiot ten zyska nowy wymagany poziom.",
+                "&7Nowy wymagany poziom to: &6" + (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getLvl() >= 80 ? "80" : "50"),
+                "&c&lUWAGA!!!"
+                )).toItemStack());
 
         player.openInventory(gui);
     }

@@ -41,11 +41,11 @@ public class GornikZaplacCommand extends CommandAPI {
         }
 
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
-        if (user.getKasa() < 1) { //250_000
+        if (user.getKasa() < 250_000) {
             player.sendMessage(Utils.format("&6&lGornik &8» &cNie stac Cie, zeby zaplacic za te podroz!"));
             return;
         }
-        user.setKasa(user.getKasa() - 1);
+        user.setKasa(user.getKasa() - 250_000);
         final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
         boolean isFullGornikArmor = true;
         long bonusTime = 0;

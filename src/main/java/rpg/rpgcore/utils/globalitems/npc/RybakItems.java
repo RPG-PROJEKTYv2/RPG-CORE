@@ -2,7 +2,6 @@ package rpg.rpgcore.utils.globalitems.npc;
 
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 
@@ -54,7 +53,7 @@ public enum RybakItems {
         return itemStack.clone();
     }
 
-    public static ItemStack getStaraWedka(final Player player) {
+    public static ItemStack getStaraWedka(final String name) {
         return new ItemBuilder(Material.FISHING_ROD).setName("&6Stara Wedka").setLore(Arrays.asList(
                 "&7Poziom: &f1",
                 "&7Exp: &f0&7/&f20",
@@ -63,8 +62,8 @@ public enum RybakItems {
                 "&f&lBONUSY",
                 "&7Szansa Na Podwojenie Polowu: &f0%",
                 "",
-                "&7Wlasnosc: &6" + player.getName()
+                "&7Wlasnosc: &6" + name
         )).addTagInt("lvl", 1).addTagInt("exp", 0).addTagInt("reqExp", 20).addTagInt("udanePolowy", 0).addTagDouble("doubleDrop", 0)
-                .addTagString("owner", player.getName()).toItemStack().clone();
+                .addTagString("owner", name).toItemStack().clone();
     }
 }

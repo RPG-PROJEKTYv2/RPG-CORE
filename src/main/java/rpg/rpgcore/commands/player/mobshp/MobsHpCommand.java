@@ -32,7 +32,7 @@ public class MobsHpCommand extends CommandAPI {
     }
 
     private void openHP(Player player) {
-        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lHP &7potworów"));
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lHP &7potworow"));
         gui.setItem(1, new ItemBuilder(Material.INK_SACK, 1,(short)1).setName("&cExpowisko").setLore(Arrays.asList(
                 "",
                 "&6Rozbojnik: &c15 &7/ &c18 &7/ &c24",

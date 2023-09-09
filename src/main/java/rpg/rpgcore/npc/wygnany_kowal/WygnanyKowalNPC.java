@@ -17,7 +17,7 @@ import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
 import java.util.Arrays;
 import java.util.List;
 
-public class WygnanyKowalManager {
+public class WygnanyKowalNPC {
     public void click(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&3&lWygnany Kowal"));
         final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
@@ -89,7 +89,10 @@ public class WygnanyKowalManager {
                 "&7- " + Bossy.I60_70.getItemStack().getItemMeta().getDisplayName() +
                         "&8 x4 " + (player.getInventory().containsAtLeast(Bossy.I60_70.getItemStack(), 4) ? "&8&m" : "&8") + "(" + Utils.getPlayerInventoryItemCount(player, Bossy.I60_70.getItemStack()) + "/4)",
 
-                "&7- " + (user.getKasa() >= 250_000_000 ? "&6&m" : "&6") + "250 000 000&2$"
+                "&7- " + (user.getKasa() >= 250_000_000 ? "&6&m" : "&6") + "250 000 000&2$",
+                "",
+                "",
+                "&c&lPRZEDMIOT TEN OTRZYMA NOWY WYMAGANY POZIOM: &6&l75"
         )).toItemStack().clone());
 
         player.openInventory(gui);
@@ -103,16 +106,16 @@ public class WygnanyKowalManager {
             int moby = Utils.getTagInt(sword, "moby");
             int dmg = Utils.getTagInt(sword, "dmg");
             mobyP += 20;
-            Utils.setTagInt(sword, "mobyProcentKS", mobyP);
+            Utils.setTagInt(sword, "mobyProcentKS", mobyP, true);
             if (moby + 15 <= 2500) {
                 moby += 15;
-                Utils.setTagInt(sword, "moby", moby);
+                Utils.setTagInt(sword, "moby", moby, true);
             }
             if (dmg + 50 <= 2500) {
                 dmg += 50;
-                Utils.setTagInt(sword, "dmg", dmg);
+                Utils.setTagInt(sword, "dmg", dmg, true);
             }
-            Utils.setTagInt(sword, "lvl", 75);
+            Utils.setTagInt(sword, "lvl", 75, false);
 
 
             final ItemMeta meta = sword.getItemMeta();
@@ -129,12 +132,12 @@ public class WygnanyKowalManager {
         int ludzieP = Utils.getTagInt(sword, "ludzieProcentTYRA");
         int dmg = Utils.getTagInt(sword, "dmg");
         ludzieP += 20;
-        Utils.setTagInt(sword, "ludzieProcentTYRA", ludzieP);
+        Utils.setTagInt(sword, "ludzieProcentTYRA", ludzieP, true);
         if (dmg + 50 <= 2500) {
             dmg += 50;
-            Utils.setTagInt(sword, "dmg", dmg);
+            Utils.setTagInt(sword, "dmg", dmg, true);
         }
-        Utils.setTagInt(sword, "lvl", 75);
+        Utils.setTagInt(sword, "lvl", 75, false);
 
         final ItemMeta meta = sword.getItemMeta();
         meta.setDisplayName(Utils.format("&8&lWzmocnione &9&lMithrylowe Ostrze"));
