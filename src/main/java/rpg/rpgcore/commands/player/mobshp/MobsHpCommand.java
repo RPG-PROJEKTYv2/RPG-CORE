@@ -36,13 +36,13 @@ public class MobsHpCommand extends CommandAPI {
         gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.INK_SACK, 1,(short)1).setName("&cExpowisko").setLore(Arrays.asList(
                 "",
-                "&6Rozbojnik: &c15 &7/ &c18 &7/ &c24",
+                "&6Rozbojnik: &c22 &7/ &c27 &7/ &c33",
                 "&2Goblin: &c40 &7/ &c55 &7/ &c70 ",
                 "&7Goryl: &c75 &7/ &c85 &7/ &c100",
                 "&8Zjawa: &c100 &7/ &c150 &7/ &c210",
                 "&3Straznik Swiatyni: &c300 &7/ &c360 &7/ &c500",
                 "&bMrozny Wilk: &c720 &7/ &c780 &7/ &c860",
-                "&6Zywiolak Ognia: &c4000 &7/ &c5000 &7/ &c6500",
+                "&6Zywiolak Ognia: &c1800 &7/ &c2600 &7/ &c3800",
                 "&fMroczna Dusza: &c11500 &7/ &c14500 &7/ &c19000",
                 "&6Pustynny Ptasznik: &c31000 &7/ &c38000 &7/ &c50000",
                 "&5Podziemna Lowczyni: &c85000 &7/ &c110000 &7/ &c145000",
