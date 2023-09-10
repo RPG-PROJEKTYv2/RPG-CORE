@@ -359,10 +359,21 @@ public class NewTargManager {
         }
 
         gui.setItem(31, goBack.setName("&cPowrot").toItemStack());
-
+        int i = 0;
+        final List<ItemStack> toRemove = new ArrayList<>();
         for (ItemStack is : targ.getItemList()) {
+            if (i >= 27) {
+                toRemove.add(is);
+                continue;
+            }
+            i++;
             gui.setItem(gui.firstEmpty(), is);
         }
+
+        for (ItemStack is : toRemove) {
+            targ.getItemList().remove(is);
+        }
+
         return gui;
     }
 

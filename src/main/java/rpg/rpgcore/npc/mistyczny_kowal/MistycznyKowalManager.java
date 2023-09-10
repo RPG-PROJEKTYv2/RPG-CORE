@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.mistyczny_kowal.enums.SwordType;
 import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
@@ -22,24 +23,24 @@ public class MistycznyKowalManager {
             if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).toItemStack());
             else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 11).toItemStack());
         }
-        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowe Ostrze").setLore(Arrays.asList(
+        gui.setItem(11, new ItemBuilder(Material.DIAMOND_SWORD).setName("&eWytworz &9&lMithrylowe Ostrze").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
                 "",
                 "&3Silny Na Ludzi: &f+1-60%",
                 "",
                 "&cWymagany Poziom: &665"
-        )).toItemStack());
+        )).addTagString("type", "tyra").toItemStack());
 
-        gui.setItem(13, new ItemBuilder(Material.WORKBENCH).setName("&eWytworz &9&lMithrylowy Miecz").setLore(this.getLore(player)).addGlowing().toItemStack().clone());
+        gui.setItem(13, new ItemBuilder(Material.WORKBENCH).setName("&ePrzedmioty do wytworzenia &9&lMithrylowego Miecza").setLore(this.getLore(player)).addGlowing().toItemStack().clone());
 
-        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&9&lMithrylowy Sztylet").setLore(Arrays.asList(
+        gui.setItem(15, new ItemBuilder(Material.DIAMOND_SWORD).setName("&eWytworz &9&lMithrylowy Sztylet").setLore(Arrays.asList(
                 "&7Obrazenia: &c35",
                 "&7Obrazenia na potwory: &c15",
                 "",
                 "&3Silny Na Potwory: &f+1-60%",
                 "",
                 "&cWymagany Poziom: &665"
-        )).toItemStack());
+        )).addTagString("type", "ks").toItemStack());
 
         player.openInventory(gui);
     }
@@ -102,9 +103,8 @@ public class MistycznyKowalManager {
         return lore;
     }
 
-    public void getRandomMiecz(final Player player) {
+    public void getRandomMiecz(final Player player, final SwordType swordType) {
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
-        final SwordType swordType = (ChanceHelper.getChance(50) ? SwordType.KS : SwordType.TYRA);
 
         /*
             60-55% - 5%

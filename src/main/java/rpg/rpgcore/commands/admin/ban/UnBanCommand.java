@@ -26,7 +26,7 @@ public class UnBanCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         if (args.length < 1) {
-            sender.sendMessage(Utils.poprawneUzycie("unban [gracz]"));
+            sender.sendMessage(Utils.poprawneUzycie("unban <gracz> [-s]"));
             return;
         }
         final String senderName = sender.getName();
@@ -61,7 +61,7 @@ public class UnBanCommand extends CommandAPI {
 
         if (args.length == 2) {
             if (sender instanceof Player && !(rpgcore.getUserManager().isUser(((Player) sender).getUniqueId()) && rpgcore.getUserManager().find(((Player) sender).getUniqueId()).getRankUser().isHighStaff())) {
-                sender.sendMessage(Utils.poprawneUzycie("unban [gracz]"));
+                sender.sendMessage(Utils.poprawneUzycie("unban <gracz> [-s]"));
                 return;
             }
             if (!rpgcore.getUserManager().isUserName(args[0])) {

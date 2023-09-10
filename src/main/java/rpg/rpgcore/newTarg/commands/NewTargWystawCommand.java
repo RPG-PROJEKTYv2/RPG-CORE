@@ -44,6 +44,10 @@ public class NewTargWystawCommand extends CommandAPI {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przedmiot &cmusi &7posiadac nazwe"));
             return;
         }
+        if (rpgcore.getNewTargManager().find(player.getUniqueId()).getItemList().size() == 27) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz wystawic wiecej niz &c27 &7przedmiotow"));
+            return;
+        }
         if (args[0].contains("k")) {
             int kIndex = args[0].indexOf('k');
             double beforeK = Double.parseDouble(args[0].substring(0, kIndex));

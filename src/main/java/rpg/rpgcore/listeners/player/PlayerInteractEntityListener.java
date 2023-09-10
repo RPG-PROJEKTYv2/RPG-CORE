@@ -156,10 +156,6 @@ public class PlayerInteractEntityListener implements Listener {
             final String entityName = Utils.removeColor(e.getRightClicked().getName());
             if (e.getRightClicked().getLocation().getWorld().getName().equals("60-70map")) {
                 if (entityName.equalsIgnoreCase("Mistyczny Kowal")) {
-                    if (user.getLvl() < 65) {
-                        player.sendMessage(Utils.format("&7&l&kMistyczny Kowal&8 >> &c..."));
-                        return;
-                    }
                     rpgcore.getMistycznyKowalManager().openGUI(player);
                     return;
                 }
@@ -275,6 +271,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getZlotnikNPC().click(player);
                 return;
             }
+            // ...MROZNY STROZ
+            if (entityName.contains("Mrozny Stroz")) {
+                rpgcore.getMroznyStrozNPC().click(player);
+                return;
+            }
 
             // TRADE
             if (player.isSneaking()) {
@@ -287,7 +288,7 @@ public class PlayerInteractEntityListener implements Listener {
                         entityName.equalsIgnoreCase("Pustelnik") || entityName.equalsIgnoreCase("Wloczykij") ||
                         entityName.equalsIgnoreCase("Mistrz Yang") || entityName.equalsIgnoreCase("Dowodca Strazy")
                         || entityName.equalsIgnoreCase("Mistyczny Kowal") ||entityName.equalsIgnoreCase("Przyjaciel") ||
-                        entityName.equalsIgnoreCase("Staruszek") ||entityName.equalsIgnoreCase("Wygnany Kowal") || entityName.equalsIgnoreCase("Zlotnik")) {
+                        entityName.equalsIgnoreCase("Staruszek") ||entityName.equalsIgnoreCase("Wygnany Kowal") || entityName.equalsIgnoreCase("Zlotnik") || entityName.equalsIgnoreCase("Mrozny Stroz")) {
                     e.setCancelled(true);
                     return;
                 }

@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.lesnik.events;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,11 +28,15 @@ public class LesnikItemInteractListener implements Listener {
         if (object == null) return;
         if (!object.getUser().hasCooldown()) {
             e.setCancelled(true);
+            e.setUseItemInHand(Event.Result.DENY);
+            e.setUseInteractedBlock(Event.Result.DENY);
             e.getPlayer().sendMessage(Utils.format("&2&lLesnik &8>> &7Chyba Ci sie cos pomylilo... przeciez mozesz oddac mi juz przedmiot!"));
             return;
         }
 
         e.setCancelled(true);
+        e.setUseItemInHand(Event.Result.DENY);
+        e.setUseInteractedBlock(Event.Result.DENY);
         e.getPlayer().getInventory().removeItem(new ItemBuilder(LesnikItems.POTION.getItem()).setAmount(1).toItemStack().clone());
         object.getUser().setCooldown(0L);
         e.getPlayer().sendMessage(Utils.format("&2&lLesnik &8>> &aSlyszalem ze masz cos dla mnie!"));

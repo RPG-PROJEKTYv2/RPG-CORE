@@ -39,7 +39,7 @@ public class ZmiankiManager {
                 "&eDodatkowe Obrazenia: &c1 - 200",
                 "&eSilny na XXX: &c0.01% - 20%",
                 "",
-                "&f&lBonusy Zbroja &8(&e50lvl.&8):",
+                "&f&lBonusy Zbroja &8(&e45lvl.&8):",
                 "&eOdpornosc Na Potwory: &c1% - 10%",
                 "&eSzansa Na Wzmocnienie Ciosu Krytycznego: &c0.1% - 2.5%",
                 "&eSzczescie: 1 - 5",
@@ -65,6 +65,7 @@ public class ZmiankiManager {
         if (meta.getLore().contains(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"))) {
             final List<String> lore = meta.getLore();
             final int index = lore.indexOf(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
+            final int reqLvl = lore.stream().filter(s -> s.contains("Wymagany Poziom:") && lore.indexOf(s) > index).map(s -> s.replace(Utils.format("&cWymagany Poziom: &6"), "")).mapToInt(Integer::parseInt).findFirst().orElse(0);
             lore.remove(index - 1);
             lore.remove(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
             if (is.getType().toString().contains("_SWORD")) {
@@ -75,7 +76,7 @@ public class ZmiankiManager {
                 lore.remove(Utils.format("&eSzansa Na Wzmocnienie Ciosu Krytycznego: &f+" + Utils.getTagDouble(is, "szansaWzmKryt") + "%"));
                 lore.remove(Utils.format("&eSzczescie: &f+" + Utils.getTagInt(is, "szczescie")));
             }
-            lore.remove(Utils.format("&cWymagany Poziom: &6" + Utils.getTagInt(is, "lvl")));
+            lore.remove(Utils.format("&cWymagany Poziom: &6" + reqLvl));
             lore.remove(Utils.format("&8--------{&9&lMagiczne Zaczarowanie&8}--------"));
             meta.setLore(Utils.format(lore));
 

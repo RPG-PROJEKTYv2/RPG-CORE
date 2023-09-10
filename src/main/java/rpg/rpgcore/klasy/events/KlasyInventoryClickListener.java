@@ -41,6 +41,20 @@ public class KlasyInventoryClickListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
             final Klasa klasa = rpgcore.getKlasyManager().find(uuid);
+            if (slot == 40) {
+                if (!klasa.isFirstReset()) {
+                    klasa.setMainKlasa(KlasyMain.NIE_WYBRANO);
+                    klasa.setPodKlasa(KlasySide.NIE_WYBRANO);
+                    klasa.setCdLMB(0L);
+                    klasa.setCdRMB(0L);
+                    klasa.setUpgrade(0);
+                    klasa.setBonus1(0);
+                    klasa.setBonus2(0);
+                    klasa.save();
+                    player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie zresetowales/-as swoja klase!"));
+                }
+                return;
+            }
             if (e.getClick().equals(ClickType.LEFT)) {
                 if (!klasa.getMainKlasa().equals(KlasyMain.NIE_WYBRANO)) return;
                 switch (slot) {

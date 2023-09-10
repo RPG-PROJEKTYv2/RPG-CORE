@@ -99,7 +99,7 @@ public class KlasyManager {
                 "&7Kliknij &ePPM &7aby zobaczyc podklasy"
         )).hideFlag().addFlag(ItemFlag.HIDE_POTION_EFFECTS).toItemStack());
         gui.setItem(40, new ItemBuilder(Material.TORCH).setName("&7Reset klasy &8&l(&6INFORMACJA&8&l)").setLore(Arrays.asList(
-                "&7Pierwszy &breset &7jest na nasz koszt.",
+                "&7Pierwszy &breset &7jest na nasz koszt. &8(kliknij w ten item)",
                 "&7Do kolejnych potrzebujesz:",
                 "&8- &fZmiana Klasy &7x&e1",
                 "&8- &65 000 000&2$"

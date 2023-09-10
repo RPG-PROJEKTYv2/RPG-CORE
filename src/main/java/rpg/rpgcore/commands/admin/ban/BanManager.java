@@ -38,6 +38,7 @@ public class BanManager {
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.unBanBroadcast(nameOfPlayerToBan, senderName));
         }
+        Utils.sendToHighStaff(Utils.format(Utils.BANPREFIX + "&8&l[-s] &aPomyslnie odblokowano gracza &6" + nameOfPlayerToBan + "&a! &8&l(" + senderName + ")"));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().unBanPlayer(uuidToUnBan));
     }
 
@@ -122,7 +123,8 @@ public class BanManager {
         if (!(silent)) {
             Bukkit.getServer().broadcastMessage(Utils.banBroadcast(nameOfThePlayerToTempBan, adminName, String.valueOf(reason), Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate)));
         } else {
-            Bukkit.getPlayer(adminName).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfThePlayerToTempBan + " &7Wygasa: &c" + Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate) + " &7Powod: &c" + String.valueOf(reason)));
+            if (adminName.equals("CONSOLE")) System.out.println(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfThePlayerToTempBan + " &7Wygasa: &c" + Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate) + " &7Powod: &c" + reason));
+            else Bukkit.getPlayer(adminName).sendMessage(Utils.format(Utils.SERVERNAME + " &8&l[&c-s&8&l] &7Zbanowales gracza: &c" + nameOfThePlayerToTempBan + " &7Wygasa: &c" + Utils.convertDatesToTimeLeft(tempBanDate, tempBanExpireDate) + " &7Powod: &c" + reason));
         }
 
         final String tempBanInfo = adminName + ";" + reason + ";" + Utils.dateFormat.format(tempBanExpireDate) + ";" + Utils.dateFormat.format(tempBanDate);

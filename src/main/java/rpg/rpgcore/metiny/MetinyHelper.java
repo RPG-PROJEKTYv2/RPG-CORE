@@ -292,12 +292,15 @@ public class MetinyHelper {
         // ---------------------------------------- ICE TOWER ----------------------------------------
         if (id >= 20000 && id <= 20007) {
             kasaToAdd = 10000;
-            MobDropHelper.addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), 0.5, true, true, entity);
+            MobDropHelper.addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), 0.75, true, true, entity);
             if (metinolog.getMetinologUser().getPostepGive() == 6) {
-                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("ILodowej-Wiezy", 1), 25, true, true, entity);
+                MobDropHelper.addDropPlayer(player, MetinologItems.getItem("ILodowej-Wiezy", 1), 35, true, true, entity);
             }
             if (metinolog.getMetinologUser().getPostepKill() == 6) {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
+            }
+            if (RPGCORE.getInstance().getMroznyStrozNPC().find(player.getUniqueId()).getMission() == 6 || RPGCORE.getInstance().getMroznyStrozNPC().find(player.getUniqueId()).getMission() == 7) {
+                RPGCORE.getInstance().getMroznyStrozNPC().find(player.getUniqueId()).setProgress(RPGCORE.getInstance().getMroznyStrozNPC().find(player.getUniqueId()).getProgress() + 1);
             }
             if (RPGCORE.getInstance().getIceTowerManager().getStatus() == DungeonStatus.ETAP_3) {
                 RPGCORE.getInstance().getIceTowerManager().incrementCount();

@@ -67,32 +67,39 @@ public class ProfileCommand extends CommandAPI {
         final BonusesUser user = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser();
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + player.getName()));
 
+        int szczescie = 0;
+
         for (int i = 0; i < 54; i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         }
 
         if (player.getInventory().getHelmet() != null) {
             gui.setItem(11, player.getInventory().getHelmet().clone());
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
         if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
             gui.setItem(19, player.getItemInHand().clone());
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(19, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Przedmiotu").toItemStack());
         }
         if (player.getInventory().getChestplate() != null) {
             gui.setItem(20, player.getInventory().getChestplate().clone());
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
         if (player.getInventory().getLeggings() != null) {
             gui.setItem(29, player.getInventory().getLeggings().clone());
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
         if (player.getInventory().getBoots() != null) {
             gui.setItem(38, player.getInventory().getBoots().clone());
+            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
@@ -129,10 +136,12 @@ public class ProfileCommand extends CommandAPI {
                 "&7Zmniejszona Defensywa Przeciwko Potworom: &f" + user.getMinusdefnamoby() + "%"
         )).addGlowing().toItemStack().clone());
 
+
+
         gui.setItem(33, new ItemBuilder(Material.ENCHANTMENT_TABLE).setName("&dStatystyki Magiczne/Inne").setLore(Arrays.asList(
                 "&7True DMG: &f" + user.getTruedamage(),
                 "&7Szansa Na Krwawienie: &f" + user.getSzansanakrwawienie() + "%",
-                "&7Szczescie: &f" + user.getSzczescie(),
+                "&7Szczescie: &f" + (user.getSzczescie() + szczescie),
                 "&7Szansa Na Spowolnienie: &f" + user.getSpowolnienie() + "%",
                 "&7Szansa Na Oslepienie: &f" + user.getOslepienie() + "%",
                 "&7Dodatkowy EXP: &f" + user.getDodatkowyExp() + "%",

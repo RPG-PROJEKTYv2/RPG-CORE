@@ -57,6 +57,7 @@ public class MongoConnectionPoolManager {
     private final MongoCollection<Document> hellrpg_rybak_armorStands;
     private final MongoCollection<Document> hellrpg_tworcy;
     private final MongoCollection<Document> hellrpg_dungeons;
+    private final MongoCollection<Document> hellrpg_mroznyStroz;
 
 
     public MongoConnectionPoolManager() {
@@ -186,6 +187,9 @@ public class MongoConnectionPoolManager {
         if (!collections.contains("hellrpg_dungeons")) {
             database.createCollection("hellrpg_dungeons");
         }
+        if (!collections.contains("hellrpg_mroznyStroz")) {
+            database.createCollection("hellrpg_mroznyStroz");
+        }
         // TU TWORZYSZ KOLEKCJE JESLI JEJ NIE MA W BAZIE DANYCH (TAKA SZUFLADA NA UZYTKOWNIKOW)
         /*if (!collections.contains("hellrpg_przykladowyNPC")) {
             database.createCollection("hellrpg_przykladowyNPC");
@@ -231,6 +235,7 @@ public class MongoConnectionPoolManager {
         this.hellrpg_PrzekletyCzarnoksieznikEffect = database.getCollection("hellrpg_PrzekletyCzarnoksieznikEffect");
         this.hellrpg_tworcy = database.getCollection("hellrpg_tworcy");
         this.hellrpg_dungeons = database.getCollection("hellrpg_dungeons");
+        this.hellrpg_mroznyStroz = database.getCollection("hellrpg_mroznyStroz");
         // TU PRZYPISUJESZ KOLEKCJE DO ZMIENNEJ
         //this.hellrpg_przykladowyNPC = database.getCollection("hellrpg_przykladowyNPC");
         System.out.println(" ");
@@ -360,6 +365,9 @@ public class MongoConnectionPoolManager {
     }
     public MongoCollection<Document> getDungeons() {
         return hellrpg_dungeons;
+    }
+    public MongoCollection<Document> getMroznyStroz() {
+        return hellrpg_mroznyStroz;
     }
 
     public void closePool() {

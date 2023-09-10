@@ -251,7 +251,10 @@ import rpg.rpgcore.npc.metinolog.MetinologNPC;
 import rpg.rpgcore.npc.mistrz_yang.MistrzYangNPC;
 import rpg.rpgcore.npc.mistrz_yang.events.MistrzYangInventoryClickListener;
 import rpg.rpgcore.npc.mistyczny_kowal.MistycznyKowalManager;
+import rpg.rpgcore.npc.mistyczny_kowal.commands.SwordCommand;
 import rpg.rpgcore.npc.mistyczny_kowal.events.MistycznyKowalInventoryClickListener;
+import rpg.rpgcore.npc.mrozny_stroz.MroznyStrozNPC;
+import rpg.rpgcore.npc.mrozny_stroz.events.MroznyStrozInventoryClickListener;
 import rpg.rpgcore.npc.przyrodnik.events.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
@@ -449,6 +452,7 @@ public final class RPGCORE extends JavaPlugin {
     private TajemniczePiaskiManager tajemniczePiaskiManager;
     private WygnanyKowalNPC wygnanyKowalNPC;
     private ZlotnikNPC zlotnikNPC;
+    private MroznyStrozNPC mroznyStrozNPC;
 
 
     private int i = 1;
@@ -575,6 +579,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveDataBossy();
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
+        this.mongo.saveAllMroznyStroz();
 
         //this.mongo.clearDatabase();
 
@@ -687,6 +692,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new BackupCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new KodCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new WedkaCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new SwordCommand());
     }
 
     private void initEvents() {
@@ -936,6 +942,9 @@ public final class RPGCORE extends JavaPlugin {
         // ZLOTNIK
         this.getServer().getPluginManager().registerEvents(new ZlotnikInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new ZlotnikInventoryCloseListener(), this);
+
+        // MROZNY STROZ
+        this.getServer().getPluginManager().registerEvents(new MroznyStrozInventoryClickListener(), this);
     }
 
     private void initDatabase() {
@@ -1015,6 +1024,7 @@ public final class RPGCORE extends JavaPlugin {
         this.rzemieslnikManager = new RzemieslnikManager();
         this.wygnanyKowalNPC = new WygnanyKowalNPC();
         this.zlotnikNPC = new ZlotnikNPC();
+        this.mroznyStrozNPC = new MroznyStrozNPC(this);
     }
 
     private void initChests() {
@@ -1634,5 +1644,8 @@ public final class RPGCORE extends JavaPlugin {
     }
     public ZlotnikNPC getZlotnikNPC() {
         return zlotnikNPC;
+    }
+    public MroznyStrozNPC getMroznyStrozNPC() {
+        return mroznyStrozNPC;
     }
 }

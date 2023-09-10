@@ -43,7 +43,7 @@ public class MetinologObject implements Cloneable {
                 .append("przeszywka", this.getMetinologUser().getPrzeszycie())
                 .append("srOdpo", this.getMetinologUser().getSrOdpo())
                 .append("dodatkowedmg", this.getMetinologUser().getDodatkowedmg())
-                .append("dmgMetiny", this.getMetinologUser().getDodatkowedmg());
+                .append("dmgMetiny", this.getMetinologUser().getDmgMetiny());
     }
 
     @Override

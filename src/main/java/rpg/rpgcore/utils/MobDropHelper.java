@@ -329,11 +329,11 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A7.getItemStack(), akceDropChance50plus, true, false ,entity);
+                addDropPlayer(player, AkceItems.A7.getItemStack(), getDropChance(szczescie, 0.09), true, false ,entity);
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.1), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.25), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I3.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I9.getItem().clone(), getDropChance(szczescie, 0.055), true, true, entity);
                 if (przyrodnikMission.getNumber() == 6) {
@@ -351,7 +351,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
                 rpgcore.getBossyManager().reset70_80();
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.08), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 5), true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
                     addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);
                 }
@@ -375,7 +375,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, Ulepszacze.getItem("70-80", 1), getDropChance(szczescie, 1.5), true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.04), true, true, entity);
+                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.4), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I12.getItem().clone(), getDropChance(szczescie, 0.05), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I4.getItem().clone(), getDropChance(szczescie, 0.045), true, true, entity);
                 if (przyrodnikMission.getNumber() == 7) {
@@ -581,8 +581,11 @@ public class    MobDropHelper {
             case "Lodowy Sluga Lvl. 57":
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
-                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), getDropChance(szczescie, 0.55), true, true, entity);
                 addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                if (rpgcore.getMroznyStrozNPC().find(uuid).getMission() == 5) {
+                    rpgcore.getMroznyStrozNPC().find(uuid).setProgress(rpgcore.getMroznyStrozNPC().find(uuid).getProgress() + 1);
+                }
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_1) {
                     rpgcore.getIceTowerManager().incrementCount();
@@ -591,8 +594,11 @@ public class    MobDropHelper {
             case "Lodowy Sluga Lvl. 58":
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
-                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), getDropChance(szczescie, 0.55), true, true, entity);
                 addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                if (rpgcore.getMroznyStrozNPC().find(uuid).getMission() == 5) {
+                    rpgcore.getMroznyStrozNPC().find(uuid).setProgress(rpgcore.getMroznyStrozNPC().find(uuid).getProgress() + 1);
+                }
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_2) {
                     rpgcore.getIceTowerManager().incrementCount();
@@ -601,8 +607,11 @@ public class    MobDropHelper {
             case "Lodowy Sluga Lvl. 59":
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
-                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I_LODOWY_CHEST", 1), getDropChance(szczescie, 0.55), true, true, entity);
                 addDropPlayer(player, SkrzynkiOther.getItem("I2", 1), getDropChance(szczescie, 0.05), true, true, entity);
+                if (rpgcore.getMroznyStrozNPC().find(uuid).getMission() == 5) {
+                    rpgcore.getMroznyStrozNPC().find(uuid).setProgress(rpgcore.getMroznyStrozNPC().find(uuid).getProgress() + 1);
+                }
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.ETAP_4) {
                     rpgcore.getIceTowerManager().incrementCount();
@@ -615,6 +624,9 @@ public class    MobDropHelper {
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 6) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+                }
+                if (rpgcore.getMroznyStrozNPC().find(uuid).getMission() == 2 || rpgcore.getMroznyStrozNPC().find(uuid).getMission() == 4) {
+                    rpgcore.getMroznyStrozNPC().find(uuid).setProgress(rpgcore.getMroznyStrozNPC().find(uuid).getProgress() + 1);
                 }
                 if (!player.getWorld().getName().equals("DemonTower")) break;
                 if (rpgcore.getIceTowerManager().getStatus() == DungeonStatus.BOSS) {

@@ -23,6 +23,7 @@ import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
+import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
@@ -76,6 +77,7 @@ public class Backup implements Cloneable {
     private final WyslannikUser wyslannik;
     private final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznik;
     private final Targ targ;
+    private final MroznyStrozUser mroznyStroz;
 
 
 
@@ -111,6 +113,7 @@ public class Backup implements Cloneable {
         this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid).clone();
         this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
         this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
+        this.mroznyStroz = this.rpgcore.getMroznyStrozNPC().find(uuid).clone();
     }
 
     public Backup(final UUID uuid, final String date) {
@@ -145,6 +148,7 @@ public class Backup implements Cloneable {
         this.wyslannik = this.rpgcore.getWyslannikNPC().find(uuid).clone();
         this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
         this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
+        this.mroznyStroz = this.rpgcore.getMroznyStrozNPC().find(uuid).clone();
     }
 
     public Backup(final String collectionName, final Document document) {
@@ -207,6 +211,8 @@ public class Backup implements Cloneable {
         else this.przekletyCzarnoksieznik = new PrzekletyCzarnoksieznikUser(this.uuid);
         if (document.containsKey("targ")) this.targ = new Targ(document.get("targ", Document.class));
         else this.targ = new Targ(this.uuid);
+        if (document.containsKey("mroznyStroz")) this.mroznyStroz = new MroznyStrozUser(document.get("mroznyStroz", Document.class));
+        else this.mroznyStroz = new MroznyStrozUser(this.uuid);
     }
 
     public Date getDateToCompare() {
@@ -252,7 +258,8 @@ public class Backup implements Cloneable {
                 .append("czarownica", this.czarownica.toDocument())
                 .append("wyslannik", this.wyslannik.toDocument())
                 .append("przekletyCzarnoksieznik", this.przekletyCzarnoksieznik.toDocument())
-                .append("targ", this.targ.toDocument());
+                .append("targ", this.targ.toDocument()
+                .append("mroznyStroz", this.mroznyStroz.toDocument()));
     }
 
     public boolean equals(final Backup backup) {

@@ -18,6 +18,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
+import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -290,7 +291,7 @@ public class IceTowerManager {
         this.updateEtap();
         for (Player player : dungeonWorld.getPlayers()) {
             player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
-            player.sendMessage(Utils.format("&fUkonczo aktualny etap!"));
+            player.sendMessage(Utils.format("&fUkonczono aktualny etap!"));
             player.sendMessage(Utils.format("&fNastepny rozpocznie sie za &c15 &fsekund!"));
             player.sendMessage(Utils.format("&3&m================&b&l Ice Tower &3&m================"));
         }
@@ -477,6 +478,20 @@ public class IceTowerManager {
             if (magazynier.getMissions().getSelectedMission() == 10) {
                 magazynier.getMissions().setProgress(magazynier.getMissions().getProgress() + 1);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(magazynier.getUuid(), magazynier));
+            }
+            final MroznyStrozUser mroznyStrozUser = rpgcore.getMroznyStrozNPC().find(player.getUniqueId());
+            if (mroznyStrozUser == null) {
+                Utils.sendToHighStaff("&8===========================");
+                Utils.sendToHighStaff("   &6Gracz: &c" + player.getName());
+                Utils.sendToHighStaff("   &6UUID: &c" + player.getUniqueId().toString());
+                Utils.sendToHighStaff("   &6Błąd: &cBrak Mroznego Stroza (DT)");
+                Utils.sendToHighStaff("&8===========================");
+                player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cCos poszlo nie tak!\n&c&lJak najszybciej zglos sie do administracji!!!\n&8Blad: &cBrak Mroznego Stroza!\n&8UUID: " + player.getUniqueId().toString()));
+                continue;
+            }
+            if (mroznyStrozUser.getMission() == 1 || mroznyStrozUser.getMission() == 3 || mroznyStrozUser.getMission() ==8) {
+                mroznyStrozUser.setProgress(mroznyStrozUser.getProgress() + 1);
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMroznyStroz(mroznyStrozUser.getUuid(), mroznyStrozUser));
             }
         }
 

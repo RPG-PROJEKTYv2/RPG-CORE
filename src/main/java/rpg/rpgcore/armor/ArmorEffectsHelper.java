@@ -36,7 +36,7 @@ public class ArmorEffectsHelper {
         if (prot > 199) {
             k1 = 17;
         }
-        if (prot > 200) {
+        if (prot > 220) {
             k1 = 20;
         }
         if (prot > 249) {

@@ -77,7 +77,8 @@ public class EntityDamageEntityListener implements Listener {
             "Staruszek",
             "Przyjaciel",
             "Wygnany Kowal",
-            "Zlotnik"
+            "Zlotnik",
+            "Mrozny Stroz"
             );
 
     @EventHandler(priority = EventPriority.LOWEST)

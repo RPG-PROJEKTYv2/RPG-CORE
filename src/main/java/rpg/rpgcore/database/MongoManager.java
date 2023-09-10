@@ -40,6 +40,7 @@ import rpg.rpgcore.npc.lowca.objects.LowcaObject;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
+import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
@@ -212,6 +213,9 @@ public class MongoManager {
             }
             if (pool.getPrzekletyCzarnoksieznikEffect().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getPrzekletyCzarnoksieznikEffect().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getMroznyStroz().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getMroznyStroz().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
             rpgcore.getBackupMongoManager().getPool().getDatabase().getCollection(uuid.toString().replace("-", "_")).drop();
@@ -407,6 +411,11 @@ public class MongoManager {
                 addDataTarg(user);
                 rpgcore.getNewTargManager().add(user);
             }
+            if (pool.getMroznyStroz().find(new Document("_id", uuid.toString())).first() == null) {
+                final MroznyStrozUser user = new MroznyStrozUser(uuid);
+                addDataMroznyStroz(user);
+                rpgcore.getMroznyStrozNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -532,6 +541,10 @@ public class MongoManager {
         final WyslannikUser wyslannikUser = new WyslannikUser(uuid);
         this.addDataWyslannik(wyslannikUser);
         rpgcore.getWyslannikNPC().add(wyslannikUser);
+
+        final MroznyStrozUser mroznyStrozUser = new MroznyStrozUser(uuid);
+        this.addDataMroznyStroz(mroznyStrozUser);
+        rpgcore.getMroznyStrozNPC().add(mroznyStrozUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -668,6 +681,7 @@ public class MongoManager {
             this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
             this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
+            this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -799,6 +813,7 @@ public class MongoManager {
             this.saveDataCzarownica(uuid, rpgcore.getCzarownicaNPC().find(uuid));
             this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
+            this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -2101,6 +2116,32 @@ public class MongoManager {
             this.pool.getDungeons().deleteOne(new Document("_id", document.getString("_id")));
         }
         this.pool.getDungeons().insertOne(document);
+    }
+
+    public Map<UUID, MroznyStrozUser> loadAllMroznyStroz() {
+        Map<UUID, MroznyStrozUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getMroznyStroz().find()) {
+            final MroznyStrozUser mroznyStrozUser = new MroznyStrozUser(document);
+            userMap.put(mroznyStrozUser.getUuid(), mroznyStrozUser);
+        }
+        return userMap;
+    }
+
+    public void addDataMroznyStroz(final MroznyStrozUser mroznyStrozUser) {
+        if (this.pool.getMroznyStroz().find(new Document("_id", mroznyStrozUser.getUuid().toString())).first() != null) {
+            this.pool.getMroznyStroz().deleteOne(new Document("_id", mroznyStrozUser.getUuid().toString()));
+        }
+        this.pool.getMroznyStroz().insertOne(mroznyStrozUser.toDocument());
+    }
+
+    public void saveDataMroznyStroz(final UUID uuid, final MroznyStrozUser mroznyStrozUser) {
+        this.pool.getMroznyStroz().findOneAndReplace(new Document("_id", uuid.toString()), mroznyStrozUser.toDocument());
+    }
+
+    public void saveAllMroznyStroz() {
+        for (final MroznyStrozUser mroznyStrozUser : rpgcore.getMroznyStrozNPC().getMroznyStrozUsers()) {
+            this.saveDataMroznyStroz(mroznyStrozUser.getUuid(), mroznyStrozUser);
+        }
     }
 
 

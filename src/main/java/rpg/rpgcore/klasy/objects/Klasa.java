@@ -18,6 +18,7 @@ public class Klasa implements Cloneable {
     private double bonus1, bonus2;
     private int upgrade, ksiegaProgress;
     private long cdLMB, cdRMB;
+    private boolean firstReset;
 
 
     public Klasa(final UUID uuid) {
@@ -30,6 +31,7 @@ public class Klasa implements Cloneable {
         this.ksiegaProgress = 0;
         this.cdLMB = 0L;
         this.cdRMB = 0L;
+        this.firstReset = false;
     }
 
     public Klasa(final Document document) {
@@ -42,6 +44,7 @@ public class Klasa implements Cloneable {
         this.ksiegaProgress = document.getInteger("ksiegaProgress");
         this.cdLMB = document.getLong("cdLMB");
         this.cdRMB = document.getLong("cdRMB");
+        this.firstReset = (document.containsKey("firstReset") ? document.getBoolean("firstReset") : false);
     }
 
     public boolean hasLeftClickCooldown() {
@@ -65,7 +68,8 @@ public class Klasa implements Cloneable {
                 .append("upgrade", upgrade)
                 .append("ksiegaProgress", ksiegaProgress)
                 .append("cdLMB", cdLMB)
-                .append("cdRMB", cdRMB);
+                .append("cdRMB", cdRMB)
+                .append("firstReset", firstReset);
 
     }
 

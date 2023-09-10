@@ -66,20 +66,25 @@ public class MagazynierInventoryClick implements Listener {
                 return;
             }
 
-            if (e.getCurrentItem().getItemMeta().getLore().contains(Utils.format("&a&lWykonano!"))) return;
+            if (e.getCurrentItem().getItemMeta().getLore().stream().anyMatch(s -> s.contains("Wykonano!"))) return;
 
             if (user.getMissions().getSelectedMission() == Utils.getTagInt(item, "mission")) {
                 switch (slot) {
                     case 0:
                         if (user.getMissions().isMission1done()) return;
+                        break;
                     case 1:
                         if (user.getMissions().isMission2done()) return;
+                        break;
                     case 2:
                         if (user.getMissions().isMission3done()) return;
+                        break;
                     case 3:
                         if (user.getMissions().isMission4done()) return;
+                        break;
                     case 4:
                         if (user.getMissions().isMission5done()) return;
+                        break;
                 }
                 final MagazynierMissions mission = MagazynierMissions.getMissionById(user.getMissions().getSelectedMission());
                 assert mission != null;
