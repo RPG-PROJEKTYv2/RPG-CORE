@@ -22,14 +22,14 @@ public class CiezkaSkrzyniaKowalaManager {
 
     public CiezkaSkrzyniaKowalaManager() {
         this.kowal.add(new Items("1", 0.32, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
-        this.kowal.add(new Items("2", 4.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
-        this.kowal.add(new Items("3", 8.0, GlobalItem.getItem("I_METAL", 1), 1));
-        this.kowal.add(new Items("4", 10.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),1));
-        this.kowal.add(new Items("5", 10.0, GlobalItem.getItem("I10", 2), 1));
-        this.kowal.add(new Items("6", 12.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
-        this.kowal.add(new Items("7", 12.0, GlobalItem.getItem("I10", 1), 1));
-        this.kowal.add(new Items("8", 12.0, GlobalItem.getItem("I_FRAGMENT_STALI",3),1));
-        this.kowal.add(new Items("9", 12.5, GlobalItem.getItem("I_FRAGMENT_STALI",2),1));
+        this.kowal.add(new Items("2", 3.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
+        this.kowal.add(new Items("3", 5.0, GlobalItem.getItem("I_METAL", 1), 1));
+        this.kowal.add(new Items("4", 7.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),1));
+        this.kowal.add(new Items("5", 8.0, GlobalItem.getItem("I10", 2), 1));
+        this.kowal.add(new Items("6", 9.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
+        this.kowal.add(new Items("8", 9.0, GlobalItem.getItem("I_FRAGMENT_STALI",3),1));
+        this.kowal.add(new Items("7", 11.0, GlobalItem.getItem("I10", 1), 1));
+        this.kowal.add(new Items("9", 13.5, GlobalItem.getItem("I_FRAGMENT_STALI",2),1));
     }
 
     public void getDrawnItems(final Player player) {

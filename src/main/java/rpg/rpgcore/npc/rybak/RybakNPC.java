@@ -212,12 +212,12 @@ public class RybakNPC {
 
         for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
 
-        gui.setItem(1, this.addPrice(RybakItems.I6.getItemStack(), 800));
-        gui.setItem(2, this.addPrice(RybakItems.I7.getItemStack(), 1150));
-        gui.setItem(3, this.addPrice(RybakItems.I8.getItemStack(), 1350));
-        gui.setItem(5, this.addPrice(RybakItems.I9.getItemStack(), 1650));
-        gui.setItem(6, this.addPrice(RybakItems.I10.getItemStack(), 3750));
-        gui.setItem(7, this.addPrice(RybakItems.I14.getItemStack(), 1650));
+        gui.setItem(1, this.addPrice(RybakItems.I6.getItemStack(), 1500));
+        gui.setItem(2, this.addPrice(RybakItems.I7.getItemStack(), 1750));
+        gui.setItem(3, this.addPrice(RybakItems.I8.getItemStack(), 2050));
+        gui.setItem(5, this.addPrice(RybakItems.I9.getItemStack(), 2550));
+        gui.setItem(6, this.addPrice(RybakItems.I10.getItemStack(), 5550));
+        gui.setItem(7, this.addPrice(RybakItems.I14.getItemStack(), 2550));
 
         player.openInventory(gui);
     }

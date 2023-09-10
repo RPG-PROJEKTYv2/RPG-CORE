@@ -23,7 +23,7 @@ public class PiekielnyPrzedsionekInteractListener implements Listener {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) return;
         if (!e.getPlayer().getWorld().equals(rpgcore.getPrzedsionekManager().getGateWorld())) return;
         if (e.getClickedBlock() == null || !e.getClickedBlock().getType().equals(Material.NETHER_FENCE)) return;
-        if (rpgcore.getDisabledManager().getDisabled().getDisabledDungeons().contains("Piekielny Przedsionek")) {
+        if (rpgcore.getDisabledManager().getDisabled().getDisabledDungeons().contains("Piekielny Przedsionek") && !rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().isHighStaff()) {
             e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&cTen Dungeon zostal wylaczony przez administracje!"));
             return;
         }

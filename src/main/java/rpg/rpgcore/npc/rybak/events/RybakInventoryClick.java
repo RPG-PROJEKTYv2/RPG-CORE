@@ -222,7 +222,7 @@ public class RybakInventoryClick implements Listener {
 
         if (title.equals("Rybak » Anty-AFK")) {
             e.setCancelled(true);
-            if (item != null && item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
+            if (item != null && item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS) && item.getItemMeta().getDisplayName().equals(Utils.format("&a&lAnty-AFK"))) {
                 rpgcore.getRybakNPC().getPassed().add(uuid);
                 rpgcore.getRybakNPC().resetFishingCount(uuid);
                 rpgcore.getRybakNPC().resetFailedAttempt(uuid);

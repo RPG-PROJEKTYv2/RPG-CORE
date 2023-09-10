@@ -309,7 +309,7 @@ public class MetinyHelper {
         // ---------------------------------------- PIEKIELNY PRZEDSIONEK ----------------------------------------
         if (id >= 30_000 && id <= 30_011) {
             kasaToAdd = 3_000;
-            RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
+            if (RPGCORE.getInstance().getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_2) RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
         }
         // ---------------------------------------- KOLOSEUM ----------------------------------------
         if (id >= 40_000 && id <= 40_005) {

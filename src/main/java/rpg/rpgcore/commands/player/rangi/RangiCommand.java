@@ -51,7 +51,7 @@ public class RangiCommand extends CommandAPI {
                 "&7* Prefix: &8[&bLvl. &fX&8] &9&lTworca &7" + player.getName() + "&f: wiadomosc",
                 "&7* &eDodatkowy exp: &c+25%",
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
-                "&7* &eZwiekszony % na drop z mobow: &c+25%",
+                "&7* &eZwiekszone Szczescie: &c+25%",
                 "&7* &eDostep do /live",
                 "&7* &eDostep do /zestawrangi",
                 "&7* &eDostep do /ec",

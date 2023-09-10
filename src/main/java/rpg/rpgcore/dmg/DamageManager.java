@@ -87,9 +87,10 @@ public class DamageManager {
         double mnoznik = 100;
         double krytyk = 0;
         double wzmKryt = 0;
-        double wzmKrytDmg = 150;
+        double wzmKrytDmg = 0;
 
         double drugiMnoznik = 100;
+        double tyra = 100;
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
@@ -100,7 +101,7 @@ public class DamageManager {
                     attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko potwory!"));
                     return 0;
                 case "tyra":
-                    mnoznik += Utils.getTagInt(weapon, "ludzieProcentTYRA");
+                    tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA");
                     break;
                 default:
                     break;
@@ -224,12 +225,13 @@ public class DamageManager {
         }
 
         dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
+        dmg = dmg * (tyra / 100);
         krytyk /= 4;
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
+            dmg = dmg * (1.5 + (wzmKrytDmg / 100));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
+                dmg = dmg * (1.5 + (wzmKrytDmg / 100));
             }
         }
 
@@ -256,6 +258,7 @@ public class DamageManager {
         double wzmKrytDmg = 0;
 
         double drugiMnoznik = 100;
+        double ks = 100;
 
         // MIECZ DMG
         if (weapon != null && weapon.getType() != Material.AIR && String.valueOf(weapon.getType()).contains("SWORD")) {
@@ -267,7 +270,7 @@ public class DamageManager {
                     attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko graczy!"));
                     return 0;
                 case "ks":
-                    mnoznik += Utils.getTagInt(weapon, "mobyProcentKS");
+                    ks += Utils.getTagInt(weapon, "mobyProcentKS");
                     break;
                 default:
                     break;
@@ -277,7 +280,7 @@ public class DamageManager {
             dmg += Utils.getTagInt(weapon, "moby");
             dmg += Utils.getTagInt(weapon, "dodatkowe");
             if (Utils.removeColor(victim.getCustomName()).contains(Utils.removeColor(Utils.getTagString(weapon, "silny-na-mob")))) {
-                mnoznik += Utils.getTagInt(weapon, "silny-na-val");
+                drugiMnoznik += Utils.getTagInt(weapon, "silny-na-val");
             }
             //krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
@@ -372,12 +375,13 @@ public class DamageManager {
         }
 
         dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
+        dmg = dmg * (ks / 100);
         krytyk /= 4;
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
+            dmg = dmg * (1.5 + (wzmKrytDmg / 100));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + (1.5 * (wzmKrytDmg / 100)));
+                dmg = dmg * (1.5 + (wzmKrytDmg / 100));
             }
         }
 
@@ -464,7 +468,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = (def * 2) * Math.pow((mnoznik / 100), 2) * 0.5 * (drugiMnoznik / 100) * (energia / 100);
+        def = (def * 2) * Math.pow((mnoznik / 100), 2) * (drugiMnoznik / 100) * (energia / 100);
 
         return DoubleUtils.round(def, 3);
     }

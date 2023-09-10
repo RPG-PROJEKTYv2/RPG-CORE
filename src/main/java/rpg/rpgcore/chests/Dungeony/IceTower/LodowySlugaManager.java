@@ -18,11 +18,11 @@ public class LodowySlugaManager {
     private final Set<Items> lodowysluga = Sets.newConcurrentHashSet();
 
     public LodowySlugaManager() {
-        this.lodowysluga.add(new Items("1", 2.0 , GlobalItem.I_METAL.getItemStack().clone(), 2));
-        this.lodowysluga.add(new Items("2", 3.0 , GlobalItem.I_METAL.getItemStack().clone(), 1));
-        this.lodowysluga.add(new Items("3", 3.5 , GlobalItem.I10.getItemStack().clone(), 3));
-        this.lodowysluga.add(new Items("4", 5.0 , GlobalItem.I10.getItemStack().clone(), 2));
-        this.lodowysluga.add(new Items("5", 7.0 , GlobalItem.I10.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("1", 1.5, GlobalItem.I_METAL.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("2", 2.5 , GlobalItem.I_METAL.getItemStack().clone(), 1));
+        this.lodowysluga.add(new Items("3", 2.7 , GlobalItem.I10.getItemStack().clone(), 3));
+        this.lodowysluga.add(new Items("4", 3.5 , GlobalItem.I10.getItemStack().clone(), 2));
+        this.lodowysluga.add(new Items("5", 5.0 , GlobalItem.I10.getItemStack().clone(), 1));
         this.lodowysluga.add(new Items("6", 14.0, ItemHelper.createSword("&bMiecz Lodowego Slugi", Material.IRON_SWORD, 20, 18,false), 1));
         this.lodowysluga.add(new Items("7", 16.0 , ItemHelper.createArmor("&bHelm Lodowego Slugi", Material.IRON_HELMET, 30, 6), 1));
         this.lodowysluga.add(new Items("8", 16.0 , ItemHelper.createArmor("&bZbroja Lodowego Slugi", Material.IRON_CHESTPLATE, 33, 6), 1));

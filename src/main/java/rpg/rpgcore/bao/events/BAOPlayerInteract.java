@@ -40,8 +40,8 @@ public class BAOPlayerInteract implements Listener {
             return;
         }
         e.setCancelled(true);
-        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 80) {
-            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c80 &7poziom, zeby uzywac &4&lKsiegi Magii"));
+        if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 70) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c70 &7poziom, zeby uzywac &4&lKsiegi Magii"));
             return;
         }
         if (rpgcore.getBaoManager().isNotRolled(uuid)) {
