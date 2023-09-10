@@ -325,7 +325,7 @@ public class    MobDropHelper {
             case "Zywiolak Ognia Lvl. 64":
             case "Zywiolak Ognia Lvl. 66":
             case "Zywiolak Ognia Lvl. 68":
-                addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.01), true, false, entity);
+                addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.015), true, false, entity);
                 addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
                 addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
@@ -364,7 +364,7 @@ public class    MobDropHelper {
             case "Mroczna Dusza Lvl. 75":
             case "Mroczna Dusza Lvl. 78":
                 // bao
-                addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.02), true, false, entity);
+                addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.025), true, false, entity);
                 // przedmiot do wzm mieczy [wygnany kowal]
                 addDropPlayer(player, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack(), getDropChance(szczescie, 0.15), true, true ,entity);
                 addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);

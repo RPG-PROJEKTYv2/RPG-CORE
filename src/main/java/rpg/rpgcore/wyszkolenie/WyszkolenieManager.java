@@ -66,7 +66,7 @@ public class WyszkolenieManager {
         gui.setItem(40, new ItemBuilder(Material.BEACON).setName("&e&lDrzewko Rozwoju").setLore((user.isMaxed() ? Arrays.asList("") : Arrays.asList("", "&c&lZablokowano"))).addGlowing().toItemStack().clone());
 
 
-        gui.setItem(53, new ItemBuilder(Material.WORKBENCH).setName("&4Reset Wyszkolenia").setLore(Arrays.asList("&7Kliknij aby zresetowac postep swojego wyszkolenie", " ", "&7Cooldown: " + (user.hasCooldown() ? "&c" + Utils.durationToString(user.getResetCooldown(), false) : "&aGotowe"), " ", "&7Koszt:", "   &8- &61 000 000 &2$", " ", "&7Resetujac otrzymasz &5" + (user.getTotalPoints() - user.getPunkty()) + " punktow wyszkolenia", "&7oraz cooldown na kolejny reset", "&7w wysokosci &c1 godziny!")).toItemStack().clone());
+        gui.setItem(53, new ItemBuilder(Material.WORKBENCH).setName("&4Reset Wyszkolenia").setLore(Arrays.asList("&7Kliknij aby zresetowac postep swojego wyszkolenie", " ", "&7Cooldown: " + (user.hasCooldown() ? "&c" + Utils.durationToString(user.getResetCooldown(), false) : "&aGotowe"), " ", "&7Koszt:", "   &8- &610 000 000 &2$", " ", "&7Resetujac otrzymasz &5" + (user.getTotalPoints() - user.getPunkty()) + " punktow wyszkolenia", "&7oraz cooldown na kolejny reset", "&7w wysokosci &c1 godziny!")).toItemStack().clone());
         player.openInventory(gui);
     }
 

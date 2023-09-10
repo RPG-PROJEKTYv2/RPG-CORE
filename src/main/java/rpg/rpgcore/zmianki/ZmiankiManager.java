@@ -42,7 +42,7 @@ public class ZmiankiManager {
                 "&f&lBonusy Zbroja &8(&e45lvl.&8):",
                 "&eOdpornosc Na Potwory: &c1% - 10%",
                 "&eSzansa Na Wzmocnienie Ciosu Krytycznego: &c0.1% - 2.5%",
-                "&eSzczescie: 1 - 5",
+                "&eSzczescie: &c1 - 5",
                 ""
         )).toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.IRON_FENCE).setName("&cMiejsce na Miecz/Zbroje").toItemStack());

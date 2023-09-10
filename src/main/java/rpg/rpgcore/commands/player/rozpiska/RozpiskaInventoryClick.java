@@ -45,9 +45,6 @@ public class RozpiskaInventoryClick implements Listener {
             }
         }
         if (title.equals("Rozpiska - menu")) {
-            if (item.getType().equals(Material.STAINED_GLASS_PANE)) {
-                return;
-            }
             e.setCancelled(true);
             if (slot == 11) {
                 rpgcore.getRozpiskaManager().openFIRSTexp(player);

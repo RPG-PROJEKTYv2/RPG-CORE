@@ -225,11 +225,11 @@ public enum HandlarzSellItems {
     I183("Tropikalne Sandaly", Material.CHAINMAIL_BOOTS, 100_000),
     I184("Tropikalny Miecz", Material.STONE_SWORD, 200_000),
     // NIES 30-40
-    I185("Przeklety Helm Mrocznej Duszy", Material.GOLD_HELMET, 200_000),
-    I186("Przekleta Zbroja Mrocznej Duszy", Material.GOLD_CHESTPLATE,200_000),
-    I187("Przeklete Spodnie Mrocznej Duszy", Material.GOLD_LEGGINGS,  200_000),
-    I188("Przeklete Trepy Mrocznej Duszy", Material.GOLD_BOOTS, 200_000),
-    I189("Przekleta Kosa Mrocznej Duszy", Material.GOLD_SWORD, 300_000),
+    I185("Przeklety Helm", Material.GOLD_HELMET, 200_000),
+    I186("Przekleta Zbroja", Material.GOLD_CHESTPLATE,200_000),
+    I187("Przeklete Spodnie", Material.GOLD_LEGGINGS,  200_000),
+    I188("Przeklete Trepy", Material.GOLD_BOOTS, 200_000),
+    I189("Przekleta Kosa", Material.GOLD_SWORD, 300_000),
     // NIES 40-50
     I190("Pradawny Helm", Material.IRON_HELMET, 300_000),
     I191("Pradawny Kaftan", Material.IRON_CHESTPLATE,300_000),
@@ -291,10 +291,10 @@ public enum HandlarzSellItems {
     I245("Tropikalny Pierscien", Material.EXPLOSIVE_MINECART, 5000.0),
     I246("Tropikalna Tarcza", Material.ITEM_FRAME, 5000.0),
     // AKCESORIUM 30-40
-    I247("Przeklety Naszyjnik", Material.STORAGE_MINECART, 30.000),
-    I248("Przeklety Diadem", Material.WATCH, 1200.0),
-    I249("Przeklety Pierscien", Material.EXPLOSIVE_MINECART, 1200.0),
-    I250("Przekleta Tarcza", Material.ITEM_FRAME, 1200.0),
+    I247("Przeklety Naszyjnik", Material.STORAGE_MINECART, 100_000),
+    I248("Przeklety Diadem", Material.WATCH, 100_000),
+    I249("Przeklety Pierscien", Material.EXPLOSIVE_MINECART, 100_000),
+    I250("Przekleta Tarcza", Material.ITEM_FRAME, 100_000),
     // AKCESORIUM 40-50
     I251("Pradawny Naszyjnik", Material.STORAGE_MINECART, 200_000),
     I252("Pradawny Diadem", Material.WATCH, 200_000),

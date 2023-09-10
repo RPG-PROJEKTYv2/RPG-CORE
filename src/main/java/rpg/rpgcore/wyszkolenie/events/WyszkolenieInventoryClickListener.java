@@ -98,11 +98,11 @@ public class WyszkolenieInventoryClickListener implements Listener {
                 case 53:
                     if (user.hasCooldown()) return;
                     final User serverUser = rpgcore.getUserManager().find(uuid);
-                    if (serverUser.getKasa() < 1_000_000) {
+                    if (serverUser.getKasa() < 10_000_000) {
                         player.sendMessage(Utils.format("&3&lWyszkolenie &8>> &cNie posiadasz wystarczajacej ilosci pieniedzy zeby to zrobic."));
                         return;
                     }
-                    serverUser.setKasa(serverUser.getKasa() - 1_000_000);
+                    serverUser.setKasa(serverUser.getKasa() - 10_000_000);
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(uuid, serverUser));
                     player.setMaxHealth(player.getMaxHealth() - (user.getHp() * 2));
                     user.reset(bonuses);
