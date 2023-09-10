@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.armor.ArmorEffectsHelper;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.pets.objects.Pet;
@@ -165,6 +166,23 @@ public class PlayerJoinListener implements Listener {
         player.setFoodLevel(20);
 
         NameTagUtil.setPlayerNameTag(player, "updatePrefix");
+
+        final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
+        int dmg = 0;
+        if (!rpgcore.getDodatkiManager().find(uuid).getBony().getDmgMetiny().getType().equals(Material.AIR)) {
+            switch (Utils.removeColor(rpgcore.getDodatkiManager().find(uuid).getBony().getDmgMetiny().getItemMeta().getDisplayName())) {
+                case "Bon Zwiekszonych Obrazen W Kamienie Metin +2":
+                    dmg = 2;
+                    break;
+                case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
+                    dmg = 3;
+                    break;
+                case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
+                    dmg = 5;
+                    break;
+            }
+        }
+        bonuses.getBonusesUser().setDmgMetiny(rpgcore.getMetinologNPC().find(uuid).getMetinologUser().getDmgMetiny() + dmg);
 
 
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));

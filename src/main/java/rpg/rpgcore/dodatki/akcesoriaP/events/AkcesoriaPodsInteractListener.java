@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -73,6 +74,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (eventItem.getType() == Material.ITEM_FRAME) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaPodstawowe().getTarcza().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona tarcze!"));
@@ -111,6 +114,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (eventItem.getType() == Material.STORAGE_MINECART) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaPodstawowe().getNaszyjnik().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony naszyjnik!"));
@@ -148,6 +153,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (eventItem.getType() == Material.HOPPER_MINECART) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaPodstawowe().getKolczyki().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozone kolczyki!"));
@@ -185,6 +192,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (eventItem.getType() == Material.EXPLOSIVE_MINECART) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaPodstawowe().getPierscien().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony pierscien!"));
@@ -222,6 +231,8 @@ public class AkcesoriaPodsInteractListener implements Listener {
 
         if (eventItem.getType() == Material.WATCH) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (eventItem.hasItemMeta() && eventItem.getItemMeta().hasDisplayName() && eventItem.getItemMeta().getDisplayName().contains("Zardzewialy Pierscien"))
                 return;

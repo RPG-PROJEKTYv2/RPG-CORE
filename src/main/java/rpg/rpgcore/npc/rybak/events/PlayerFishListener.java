@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.rybak.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -61,7 +62,7 @@ public class PlayerFishListener implements Listener {
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             e.getCaught().remove();
             //rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
-            this.checkPlayer(player);
+            this.checkPlayer(player, e);
         }
     }
 
@@ -80,7 +81,7 @@ public class PlayerFishListener implements Listener {
 
 
 
-    private void checkPlayer(final Player player) {
+    private void checkPlayer(final Player player, final PlayerFishEvent e) {
         final int check = ChanceHelper.getRandInt(1, 2); //new Random().nextInt(4) + 1;
         switch (check) {
             case 1:
@@ -101,7 +102,22 @@ public class PlayerFishListener implements Listener {
             final float toCheckAfter = player.getLocation().getPitch(); //(check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
             final float different = player.getLocation().getYaw(); //(check == 1 || check == 2 ? player.getLocation().getYaw() : player.getLocation().getPitch());
             if (rpgcore.getRybakNPC().isSameLocation(player.getUniqueId(), String.valueOf(check), toCheckAfter, different)) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
+                if (rpgcore.getRybakNPC().getAntiAfk(player.getUniqueId()) == 3) {
+                    player.teleport(new Location(Bukkit.getWorld("Rybak"), 10.5, 147, -93.5, 135F, 31F));
+
+                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+                        if (!player.getLocation().equals(new Location(Bukkit.getWorld("Rybak"), 10.5, 147, -93.5, 135F, 31F))) return;
+                        if (e.getHook() == null) return;
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
+                    }, 100L);
+
+                }
+                rpgcore.getRybakNPC().addAntiAfk(player.getUniqueId());
+                player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+                return;
+            } else rpgcore.getRybakNPC().resetAntiAfk(player.getUniqueId());
+            if (player.getLocation().getY() < 150) {
+                player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                 return;
             }
             rpgcore.getRybakNPC().addLocation(player.getUniqueId(), String.valueOf(check), toCheckAfter, different);

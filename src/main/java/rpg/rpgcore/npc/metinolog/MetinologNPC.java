@@ -24,21 +24,26 @@ public class MetinologNPC {
     private final Map<UUID, MetinologObject> userMap;
     public MetinologNPC(final RPGCORE rpgcore) {
         this.userMap = rpgcore.getMongoManager().loadAllMetinolog();
+        this.userMap.values().forEach(metinologObject -> {
+            int dmgMetiny = 0;
+            for (int i = 1; i < 13; i++) {
+                if (metinologObject.getMetinologUser().getPostepKill() >= i && metinologObject.getMetinologUser().getPostepGive() >= i) {
+                    dmgMetiny++;
+                } else {
+                    break;
+                }
+            }
+            if (metinologObject.getMetinologUser().getDmgMetiny() != dmgMetiny) {
+                if (RPGCORE.getInstance().getBonusesManager().find(metinologObject.getID()).getBonusesUser().getDmgMetiny() != dmgMetiny)
+                    RPGCORE.getInstance().getBonusesManager().find(metinologObject.getID()).getBonusesUser().setDmgMetiny(dmgMetiny);
+                metinologObject.getMetinologUser().setDmgMetiny(dmgMetiny);
+            }
+        });
     }
 
     public void openMetinologGUI(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lMetinolog"));
         final MetinologUser ms = this.find(player.getUniqueId()).getMetinologUser();
-        int dmgMetiny = 0;
-        for (int i = 1; i < 13; i++) {
-            if (ms.getPostepKill() >= i && ms.getPostepGive() >= i) {
-                dmgMetiny++;
-            } else {
-                break;
-            }
-        }
-
-        if (ms.getDmgMetiny() != dmgMetiny) ms.setDmgMetiny(dmgMetiny);
 
         for (int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 15).setName(" ").toItemStack());

@@ -347,13 +347,13 @@ public class MetinyHelper {
         RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).setMetinyProgress(RPGCORE.getInstance().getOsManager().find(player.getUniqueId()).getMetinyProgress() + 1);
         player.sendMessage(Utils.format("&2+ &a" + DoubleUtils.round((kasaToAdd * mnozik), 2) + "&2$"));
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
-        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.002))) {
+        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.001))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_5.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lZAGINIONYCH &bprzedmiotow!"));
-        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.005))) {
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.003))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_3.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
-        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.01))) {
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.075))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_2.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
         }

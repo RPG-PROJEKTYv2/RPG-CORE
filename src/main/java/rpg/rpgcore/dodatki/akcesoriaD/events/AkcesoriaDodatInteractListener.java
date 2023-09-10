@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -73,6 +74,8 @@ public class AkcesoriaDodatInteractListener implements Listener {
 
         if (eventItem.getType() == Material.LADDER) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(org.bukkit.event.Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaDodatkowe().getSzarfa().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona szarfe!"));
@@ -108,6 +111,8 @@ public class AkcesoriaDodatInteractListener implements Listener {
 
         if (eventItem.getType() == Material.LEASH) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaDodatkowe().getPas().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony pas!"));
@@ -143,6 +148,8 @@ public class AkcesoriaDodatInteractListener implements Listener {
 
         if (eventItem.getType() == Material.FIREBALL) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaDodatkowe().getMedalion().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozony medalion!"));
@@ -179,6 +186,8 @@ public class AkcesoriaDodatInteractListener implements Listener {
 
         if (eventItem.getType() == Material.MINECART) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (!user.getAkcesoriaDodatkowe().getEnergia().getType().equals(Material.AIR)) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cMasz juz zalozona energie!"));

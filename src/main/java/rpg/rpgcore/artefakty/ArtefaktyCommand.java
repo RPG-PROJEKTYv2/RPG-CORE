@@ -235,7 +235,7 @@ public class ArtefaktyCommand extends CommandAPI {
 
         gui.setItem(28, new ItemBuilder(Artefakty.A4.getItem().clone()).setLoreCrafting(Artefakty.A4.getItem().clone().getItemMeta().getLore(), Arrays.asList(
                 "",
-                "&7Sposob Zdobycia: &cUkoncz Kampanie Rybaka",
+                "&7Sposob Zdobycia: &cUkoncz Kampanie &6&lStaruszka",
                 "&7Ilosc do zdobycia: &c4 sztuki",
                 "&7Zdobyte przez:",
                 "&41." + " &4" + rybakNames.get(0),

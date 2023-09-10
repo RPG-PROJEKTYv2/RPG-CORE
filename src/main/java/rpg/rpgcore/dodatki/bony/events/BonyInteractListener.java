@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -59,6 +60,8 @@ public class BonyInteractListener implements Listener {
             return;
         }
         e.setCancelled(true);
+        e.setUseInteractedBlock(org.bukkit.event.Event.Result.DENY);
+        e.setUseItemInHand(Event.Result.DENY);
 
         switch (Utils.removeColor(eventItem.getItemMeta().getDisplayName())) {
             case "Bon Srednich Obrazen 5%":
@@ -223,7 +226,7 @@ public class BonyInteractListener implements Listener {
                     return;
                 }
                 user.getBony().setDmgMetiny(eventItem.clone());
-                bonuses.getBonusesUser().setDmgMetiny(2);
+                bonuses.getBonusesUser().setDmgMetiny(bonuses.getBonusesUser().getDmgMetiny() + 2);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +2!"));
                 break;
             case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
@@ -232,7 +235,7 @@ public class BonyInteractListener implements Listener {
                     return;
                 }
                 user.getBony().setDmgMetiny(eventItem.clone());
-                bonuses.getBonusesUser().setDmgMetiny(3);
+                bonuses.getBonusesUser().setDmgMetiny(bonuses.getBonusesUser().getDmgMetiny() + 3);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +3!"));
                 break;
             case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
@@ -241,7 +244,7 @@ public class BonyInteractListener implements Listener {
                     return;
                 }
                 user.getBony().setDmgMetiny(eventItem.clone());
-                bonuses.getBonusesUser().setDmgMetiny(5);
+                bonuses.getBonusesUser().setDmgMetiny(bonuses.getBonusesUser().getDmgMetiny() + 5);
                 player.sendMessage(Utils.format("&8[&a✔&8] &aZalozyles Bon Zwiekszonych Obrazen W Kamienie Metin +5!"));
                 break;
             default:

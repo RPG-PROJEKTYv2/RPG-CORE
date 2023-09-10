@@ -41,6 +41,8 @@ public class RybakNPC {
     private final Map<UUID, Integer> taskMap = new HashMap<>();
     private final Map<UUID, Map<String, Float>> locationMapYaw = new HashMap<>();
     private final Map<UUID, Map<String, Float>> locationMapPitch = new HashMap<>();
+    @Getter
+    private final Map<UUID, Integer> antiFishMap = new HashMap<>();
     private final List<UUID> passed = new ArrayList<>();
 
     public RybakNPC(final RPGCORE rpgcore) {
@@ -136,20 +138,20 @@ public class RybakNPC {
     private final Set<Items> wyspa1Drops = new HashSet<>();
 
     private void initWyspa1Drops() {
-        this.wyspa1Drops.add(new Items("1", 70, RybakItems.I6.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("1", 65, RybakItems.I6.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("2", 55, RybakItems.I7.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("3", 45, RybakItems.I8.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("4", 35, RybakItems.I14.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("5", 30, RybakItems.I9.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("6", 20, RybakItems.I10.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("5", 32.5, RybakItems.I9.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("6", 25, RybakItems.I10.getItemStack(), 1));
     }
 
     public ItemStack getWyspa1Drop(final Player player) {
         final StaruszekUser user = this.find(player.getUniqueId()).getStaruszekUser();
         final Set<Items> playerDrop = new HashSet<>(this.wyspa1Drops);
-        if (user.getMission() == 11) playerDrop.add(new Items("7", 15, RybakItems.I11.getItemStack(), 1));
-        if (user.getMission() == 12) playerDrop.add(new Items("7", 15, RybakItems.I12.getItemStack(), 1));
-        if (user.getMission() == 13) playerDrop.add(new Items("7", 15, RybakItems.I13.getItemStack(), 1));
+        if (user.getMission() == 11) playerDrop.add(new Items("7", 25, RybakItems.I11.getItemStack(), 1));
+        if (user.getMission() == 12) playerDrop.add(new Items("7", 25, RybakItems.I12.getItemStack(), 1));
+        if (user.getMission() == 13) playerDrop.add(new Items("7", 25, RybakItems.I13.getItemStack(), 1));
 
         ItemStack reward = this.drop(playerDrop);
 
@@ -473,6 +475,7 @@ public class RybakNPC {
     public void addLocation(final UUID uuid, final String type, final float yaw, final float pitch) {
         if (!this.locationMapYaw.containsKey(uuid)) this.locationMapYaw.put(uuid, new HashMap<>());
         if (!this.locationMapPitch.containsKey(uuid)) this.locationMapPitch.put(uuid, new HashMap<>());
+
         this.locationMapYaw.get(uuid).put(type, yaw);
         this.locationMapPitch.get(uuid).put(type, pitch);
     }
@@ -482,6 +485,26 @@ public class RybakNPC {
         if (!this.locationMapYaw.get(uuid).containsKey(type) || !this.locationMapPitch.get(uuid).containsKey(type))
             return false;
         return this.locationMapYaw.get(uuid).get(type) == yaw && this.locationMapPitch.get(uuid).get(type) == pitch;
+    }
+
+    public int getAntiAfk(final UUID uuid) {
+        if (!this.antiFishMap.containsKey(uuid)) {
+            this.antiFishMap.put(uuid, 0);
+            return 0;
+        }
+        return this.antiFishMap.get(uuid);
+    }
+
+    public void resetAntiAfk(final UUID uuid) {
+        this.antiFishMap.replace(uuid, 0);
+    }
+
+    public void addAntiAfk(final UUID uuid) {
+        if (!this.antiFishMap.containsKey(uuid)) {
+            this.antiFishMap.put(uuid, 1);
+            return;
+        }
+        this.antiFishMap.replace(uuid, this.antiFishMap.get(uuid) + 1);
     }
 
 
