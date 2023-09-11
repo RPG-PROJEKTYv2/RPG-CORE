@@ -72,6 +72,7 @@ import rpg.rpgcore.chests.Expowisko8.PrzekletyCzarnoksieznikManager;
 import rpg.rpgcore.chests.Expowisko9.MitycznyPajakManager;
 import rpg.rpgcore.chests.Inne.*;
 import rpg.rpgcore.chests.Npc.GornikChestManager;
+import rpg.rpgcore.chests.Npc.RybakChestManager;
 import rpg.rpgcore.commands.admin.*;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelCommand;
 import rpg.rpgcore.commands.admin.adminpanel.AdminPanelInventoryClick;
@@ -417,7 +418,7 @@ public final class RPGCORE extends JavaPlugin {
     private DemonCiemnosciManager demonCiemnosciManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
     private GornikChestManager gornikChestManager;
-
+    private RybakChestManager rybakChestManager;
 
     // cos innego...
     private DungeonsManager dungeonsManager;
@@ -1085,6 +1086,7 @@ public final class RPGCORE extends JavaPlugin {
         this.demonCiemnosciManager = new DemonCiemnosciManager();
         // ================================ SKRZYNKI NPCTY & INNE ================================
         this.gornikChestManager = new GornikChestManager();
+        this.rybakChestManager = new RybakChestManager();
     }
 
     public void initOwnDungeons() {
@@ -1480,6 +1482,7 @@ public final class RPGCORE extends JavaPlugin {
     public GornikChestManager getGornikChestManager() {
         return gornikChestManager;
     }
+    public RybakChestManager getRybakChestManager() { return rybakChestManager; }
 
     public PrzyrodnikNPC getPrzyrodnikNPC() {
         return przyrodnikNPC;
