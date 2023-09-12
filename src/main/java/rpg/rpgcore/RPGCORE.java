@@ -1,5 +1,12 @@
 package rpg.rpgcore;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
@@ -317,6 +324,7 @@ public final class RPGCORE extends JavaPlugin {
     private static HolographicDisplaysAPI holographicDisplaysAPI;
     private static MythicMobs mythicMobs;
     private static WorldGuardPlugin worldGuard;
+    private static ProtocolManager protocolManager;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -477,6 +485,10 @@ public final class RPGCORE extends JavaPlugin {
         return worldGuard;
     }
 
+    public static ProtocolManager getProtocolManager() {
+        return protocolManager;
+    }
+
     public void onEnable() {
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
             getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
@@ -489,6 +501,7 @@ public final class RPGCORE extends JavaPlugin {
         holographicDisplaysAPI = HolographicDisplaysAPI.get(Bukkit.getServer().getPluginManager().getPlugin("HolographicDisplays"));
         mythicMobs = MythicMobs.inst();
         worldGuard = WorldGuardPlugin.inst();
+        protocolManager = ProtocolLibrary.getProtocolManager();
         new PluginMessageReceiveListener(this);
         this.config.createConfig();
         this.initDatabase();
@@ -507,6 +520,9 @@ public final class RPGCORE extends JavaPlugin {
         this.initCustomDungeons();
         this.initBosses();
         this.initTasks();
+
+        this.initTabCompletePacketListener();
+
         //this.initPacketListeners();
         // BACKUP
         //this.mongo.tempUpdate();
@@ -1212,6 +1228,25 @@ public final class RPGCORE extends JavaPlugin {
 
     private void saveGuilds() {
         this.getServer().getScheduler().runTaskAsynchronously(this, () -> this.getMongoManager().saveAllGuilds());
+    }
+
+    private void initTabCompletePacketListener() {
+        protocolManager.addPacketListener(new PacketAdapter(
+                this,
+                ListenerPriority.HIGHEST,
+                PacketType.Play.Client.TAB_COMPLETE
+        ) {
+            @Override
+            public void onPacketReceiving(PacketEvent e) {
+                PacketContainer packet = e.getPacket();
+                String message = packet.getStrings().read(0);
+                if (message.startsWith("/?")) {
+                    if (!getUserManager().find(e.getPlayer().getUniqueId()).getRankUser().isHighStaff()) {
+                        e.setCancelled(true);
+                    }
+                }
+            }
+        });
     }
 
 

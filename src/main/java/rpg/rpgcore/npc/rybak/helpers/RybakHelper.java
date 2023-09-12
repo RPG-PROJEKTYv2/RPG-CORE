@@ -138,30 +138,29 @@ public class RybakHelper {
 
         final int lvl = Utils.getTagInt(wedka, "lvl");
 
-        if (wedka.getItemMeta().getDisplayName().contains("Stara Wedka") && lvl == 25) {
-            return;
-        }
-
         int udanePolowy = Utils.getTagInt(wedka, "udanePolowy");
-        int currentExp = Utils.getTagInt(wedka, "exp");
-        currentExp += exp;
         udanePolowy++;
-        final int reqExp = Utils.getTagInt(wedka, "reqExp");
-        Utils.setTagInt(wedka, "exp", currentExp, true);
         Utils.setTagInt(wedka, "udanePolowy", udanePolowy, true);
-
-        final RybakUser user = RPGCORE.getInstance().getRybakNPC().find(RPGCORE.getInstance().getUserManager().find(Utils.getTagString(wedka, "owner")).getId());
-        user.setWylowioneRyby(udanePolowy);
-        user.setExpWedki(currentExp);
-
         final ItemMeta meta = wedka.getItemMeta();
         final List<String> lore = meta.getLore();
         lore.set(2, "&7Udane Polowy: &f" + udanePolowy);
-        if (lvl == 75) {
-            lore.set(1, "&7Exp: &f" + currentExp + "&7/&4&lMAX");
-        } else {
-            lore.set(1, "&7Exp: &f" + currentExp + "&7/&f" + reqExp);
+        int currentExp = Utils.getTagInt(wedka, "exp");
+        final int reqExp = Utils.getTagInt(wedka, "reqExp");
+        if (!(wedka.getItemMeta().getDisplayName().contains("Stara Wedka") && lvl == 25)) {
+            currentExp += exp;
+            Utils.setTagInt(wedka, "exp", currentExp, true);
+
+            final RybakUser user = RPGCORE.getInstance().getRybakNPC().find(RPGCORE.getInstance().getUserManager().find(Utils.getTagString(wedka, "owner")).getId());
+            user.setWylowioneRyby(udanePolowy);
+            user.setExpWedki(currentExp);
+
+            if (lvl == 75) {
+                lore.set(1, "&7Exp: &f" + currentExp + "&7/&4&lMAX");
+            } else {
+                lore.set(1, "&7Exp: &f" + currentExp + "&7/&f" + reqExp);
+            }
         }
+
         meta.setLore(Utils.format(lore));
 
         wedka.setItemMeta(meta);

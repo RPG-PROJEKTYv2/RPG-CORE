@@ -143,15 +143,16 @@ public class RybakNPC {
         this.wyspa1Drops.add(new Items("4", 40, RybakItems.I14.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("3", 40, RybakItems.I8.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("5", 32.5, RybakItems.I9.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("6", 25, RybakItems.I10.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("6", 20, RybakItems.I10.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("7", 1, RybakItems.I5.getItemStack(), 1));
     }
 
     public ItemStack getWyspa1Drop(final Player player) {
         final StaruszekUser user = this.find(player.getUniqueId()).getStaruszekUser();
         final Set<Items> playerDrop = new HashSet<>(this.wyspa1Drops);
-        if (user.getMission() == 11) playerDrop.add(new Items("7", 25, RybakItems.I11.getItemStack(), 1));
-        if (user.getMission() == 12) playerDrop.add(new Items("7", 25, RybakItems.I12.getItemStack(), 1));
-        if (user.getMission() == 13) playerDrop.add(new Items("7", 25, RybakItems.I13.getItemStack(), 1));
+        if (user.getMission() == 11) playerDrop.add(new Items("8", 25, RybakItems.I11.getItemStack(), 1));
+        if (user.getMission() == 12) playerDrop.add(new Items("8", 25, RybakItems.I12.getItemStack(), 1));
+        if (user.getMission() == 13) playerDrop.add(new Items("8", 25, RybakItems.I13.getItemStack(), 1));
 
         ItemStack reward = this.drop(playerDrop);
 

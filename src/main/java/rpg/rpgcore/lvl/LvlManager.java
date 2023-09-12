@@ -1,5 +1,8 @@
 package rpg.rpgcore.lvl;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import lombok.Getter;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +22,7 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class LvlManager {
 
@@ -28,6 +32,7 @@ public class LvlManager {
         this.rpgcore = rpgcore;
     }
 
+    private final Cache<UUID, Long> updatedLvlCahce = CacheBuilder.newBuilder().expireAfterWrite(5L, TimeUnit.SECONDS).build();
 
 
     public double getExpForLvl(final int lvl) {
@@ -134,8 +139,21 @@ public class LvlManager {
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8] &7(&6+ " + dodatkowyExp + "%&7) &f+" + String.format("%.2f", expDoDodaniaL) + " exp &8(&e" + String.format("%.2f", (aktualnyExpGraczaL / expNaNextLvlGracza) * 100) + "%&8) &8| &2+ " + Utils.spaceNumber(String.format("%.2f", kasa)) + "$ &8&8[&6EXP&8]"));
     }
 
+
+    public boolean isInCache(final UUID uuid) {
+        return this.updatedLvlCahce.asMap().containsKey(uuid);
+    }
+
+    public void addToCache(final UUID uuid) {
+        this.updatedLvlCahce.put(uuid, System.currentTimeMillis() + 5000L);
+    }
+
     public void updateLVL(final Player killer) {
         final UUID killerUUID = killer.getUniqueId();
+        if (this.isInCache(killerUUID)) {
+            return;
+        }
+        this.addToCache(killerUUID);
         final User user = rpgcore.getUserManager().find(killerUUID);
         int aktualnyLvlGracza = user.getLvl();
         int nextLvlGracza = aktualnyLvlGracza + 1;

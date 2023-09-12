@@ -244,12 +244,13 @@ public class AsyncPlayerChatListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onTabComplete(final PlayerChatTabCompleteEvent e) {
         if (e.getChatMessage().contains("/")) {
             final User user = this.rpgcore.getUserManager().find(e.getPlayer().getUniqueId());
-            if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
+            if (!user.getRankUser().isHighStaff()) {
                 e.getTabCompletions().clear();
+                return;
             }
         }
     }
