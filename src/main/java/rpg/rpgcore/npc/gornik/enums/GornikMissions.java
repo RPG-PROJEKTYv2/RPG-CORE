@@ -121,43 +121,43 @@ public enum GornikMissions {
             " &2+12% defensywa na potwory"
     )).toItemStack().clone(), 20, 0,12,100_000),
     M22(22, new ItemBuilder(Material.BOOK).setName("&7Misja &c22").setLore(Arrays.asList(
-            "&7Znajdz &c25 &aZakopanych Skrzyn",
+            "&7Znajdz &c20 &aZakopanych Skrzyn",
             "&f&lNagroda:",
             " &a+1m 40s &7czasu kopalni",
             " &c+8% silny na ludzi"
-    )).toItemStack().clone(), 25, 8,0,100_000),
+    )).toItemStack().clone(), 20, 8,0,100_000),
     M23(23, new ItemBuilder(Material.BOOK).setName("&7Misja &c23").setLore(Arrays.asList(
             "&7Znajdz &c48 &7Skrzyn Gornika",
             "&f&lNagroda:",
             " &a+1m 40s &7czasu kopalni"
     )).toItemStack().clone(), 48, 0,0,100_000),
-    M24(24, new ItemBuilder(Material.BOOK).setName("&7Misja &c24").setLore(Arrays.asList(
+    M28(24, new ItemBuilder(Material.BOOK).setName("&7Misja &c24").setLore(Arrays.asList(
+            "&7Osiagnij &c30 &7poziom &6Kilofu Gornika",
+            "&f&lNagroda:",
+            " &a+6m &7czasu kopalni"
+    )).addTagInt("reqPickaxeLvl", 30).toItemStack().clone(), 1, 0,0,120_000),
+    M24(25, new ItemBuilder(Material.BOOK).setName("&7Misja &c25").setLore(Arrays.asList(
             "&7Otworz &c96 &7Skrzyn Gornika",
             "&f&lNagroda:",
             " &2+5% defensywa na potwory"
     )).toItemStack().clone(), 96, 0,5,0),
-    M25(25, new ItemBuilder(Material.BOOK).setName("&7Misja &c25").setLore(Arrays.asList(
+    M25(26, new ItemBuilder(Material.BOOK).setName("&7Misja &c26").setLore(Arrays.asList(
             "&7Wykop &c1024 &cRudy Rubinu",
             "&f&lNagroda:",
             " &a+2m &7czasu kopalni"
-    )).toItemStack().clone(), 1_024, 0,0,120_000),
-    M26(26, new ItemBuilder(Material.BOOK).setName("&7Misja &c26").setLore(Arrays.asList(
-            "&7Znajdz &c32 &aZakopane Skrzynie",
-            "&f&lNagroda:",
-            " &a+2m &7czasu kopalni",
-            " &c+4% silny na ludzi"
-    )).toItemStack().clone(), 32, 4,0,120_000),
+    )).toItemStack().clone(), 1_024, 0,0,360_000),
     M27(27, new ItemBuilder(Material.BOOK).setName("&7Misja &c27").setLore(Arrays.asList(
             "&7Otrzymaj &c25 &7razy efekt &eHaste I &7po wydobyciu rudy",
             "&f&lNagroda:",
             " &c+2% silny na ludzi",
             " &2+2% defensywa na potwory"
-    )).toItemStack().clone(), 25, 2,2,0),
-    M28(28, new ItemBuilder(Material.BOOK).setName("&7Misja &c28").setLore(Arrays.asList(
-            "&7Osiagnij &c30 &7poziom &6Kilofu Gornika",
+    )).toItemStack().clone(), 25, 4,0,120_000),
+    M26(28, new ItemBuilder(Material.BOOK).setName("&7Misja &c28").setLore(Arrays.asList(
+            "&7Znajdz &c28 &aZakopane Skrzynie",
             "&f&lNagroda:",
-            " &a+6m &7czasu kopalni"
-    )).addTagInt("reqPickaxeLvl", 30).toItemStack().clone(), 1, 0,0,360_000),
+            " &a+2m &7czasu kopalni",
+            " &c+4% silny na ludzi"
+    )).toItemStack().clone(), 28, 2,2,0),
     M99(99, null, 0,0,0,0);
 
 
