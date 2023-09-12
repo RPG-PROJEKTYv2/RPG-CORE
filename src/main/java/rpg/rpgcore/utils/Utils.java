@@ -113,7 +113,7 @@ public class Utils {
                 "\n&7Za: &c" + reason +
                 "\n\n&8Jezeli chcesz zglosic skarge na administratora, ktory wyrzucil Cie z" +
                 " serwera\n" +
-                "&8zglos sie na przykladowyts3.pl lub przykladowydc z ss tego kicka!"));
+                "&8zglos sie na &6dc.hellrpg.pl&8 z ss tego kicka!"));
     }
 
     public static String banMessage(final String senderName, final String reason, final String banExpiry, final String dateOfBan) {

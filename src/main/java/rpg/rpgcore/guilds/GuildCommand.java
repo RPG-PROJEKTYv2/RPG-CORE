@@ -173,8 +173,8 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
-                if (user.getKasa() < 25000000) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wystarczajacej ilosci pieniedzy, zeby dolaczyc do klau &8(25.000.000$)"));
+                if (user.getKasa() < 10_000_000) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wystarczajacej ilosci pieniedzy, zeby dolaczyc do klau &8(10.000.000$)"));
                     return;
                 }
 
@@ -195,7 +195,7 @@ public class GuildCommand extends CommandAPI {
                         player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cKlan jest juz pelny"));
                         return;
                     }
-                    user.setKasa(user.getKasa() - 25000000);
+                    user.setKasa(user.getKasa() - 10_000_000);
                     rpgcore.getGuildManager().acceptInvite(tag, uuid, player);
                     rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + player.getName() + " &awlasnie dolaczyl do klanu &6" + tag));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {

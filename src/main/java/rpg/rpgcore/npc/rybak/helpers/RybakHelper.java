@@ -106,15 +106,18 @@ public class RybakHelper {
                 break;
             case "Zniszczony But":
                 exp = 3 * reward.getAmount();
-                if (mission == 11) user.setProgress(user.getProgress() + reward.getAmount());
+                reward.setAmount(1);
+                if (mission == 11) user.setProgress(user.getProgress() + 1);
                 break;
             case "Glina":
                 exp = 3 * reward.getAmount();
-                if (mission == 12) user.setProgress(user.getProgress() + reward.getAmount());
+                reward.setAmount(1);
+                if (mission == 12) user.setProgress(user.getProgress() + 1);
                 break;
             case "Zylka":
                 exp = 3 * reward.getAmount();
-                if (mission == 13) user.setProgress(user.getProgress() + reward.getAmount());
+                reward.setAmount(1);
+                if (mission == 13) user.setProgress(user.getProgress() + 1);
                 break;
             case "Wilgotny Wegiel":
                 exp = 2 * reward.getAmount();
@@ -134,6 +137,11 @@ public class RybakHelper {
         }
 
         final int lvl = Utils.getTagInt(wedka, "lvl");
+
+        if (wedka.getItemMeta().getDisplayName().contains("Stara Wedka") && lvl == 25) {
+            return;
+        }
+
         int udanePolowy = Utils.getTagInt(wedka, "udanePolowy");
         int currentExp = Utils.getTagInt(wedka, "exp");
         currentExp += exp;

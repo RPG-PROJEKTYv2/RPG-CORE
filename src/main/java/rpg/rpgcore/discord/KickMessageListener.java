@@ -28,7 +28,7 @@ public class KickMessageListener extends ListenerAdapter {
         final String displayText = message.getContentDisplay();
         final Channel channel = e.getChannel();
 
-        if (!channel.getName().contains("ticket-") || !Objects.requireNonNull(((TextChannel) channel).getParentCategoryId()).equals("1105464211414462574"))
+        if (!channel.getName().contains("Kick-") || !Objects.requireNonNull(((TextChannel) channel).getParentCategoryId()).equals("1105464211414462574"))
             return;
         if (!displayText.startsWith("!") || !displayText.contains("!kick")) return;
 

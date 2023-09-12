@@ -936,8 +936,8 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     gornik.setMaxTimeLeft(gornik.getMaxTimeLeft() + (int) value * 1000L);
                     break;
                 case 3:
-                    gornik.setSilnyNaLudzi(gornik.getSilnyNaLudzi() + value);
-                    bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + value);
+                    gornik.setSilnyNaMoby(gornik.getSilnyNaMoby() + value);
+                    bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + value);
                     break;
                 case 4:
                     gornik.setDefNaMoby(gornik.getDefNaMoby() + value);

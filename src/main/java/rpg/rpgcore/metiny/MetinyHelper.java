@@ -339,6 +339,11 @@ public class MetinyHelper {
         if (rank == RankTypePlayer.ELITA) mnozik = 1.5;
 
         RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).setKasa(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getKasa() + DoubleUtils.round((kasaToAdd * mnozik), 2));
+        if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 5) {
+            RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
+        }
+
         if (RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 7) {
             RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + DoubleUtils.round((kasaToAdd * mnozik), 2));
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(player.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(player.getUniqueId())));
@@ -353,7 +358,7 @@ public class MetinyHelper {
         } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.003))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_3.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
-        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.075))) {
+        } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 0.0075))) {
             MobDropHelper.addDropPlayer(player, BonType.DMG_METINY_2.getBon().clone(), 100, true, true, entity);
             Bukkit.broadcastMessage(Utils.format("&b&lKamienie Metin &3>> &bGracz &3" + player.getName() + " &bznalazl jeden z &3&lRZADKICH &bprzedmiotow!"));
         }

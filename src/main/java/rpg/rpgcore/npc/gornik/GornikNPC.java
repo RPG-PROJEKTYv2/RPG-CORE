@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
@@ -44,6 +45,12 @@ public class GornikNPC {
     public GornikNPC(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllGornik();
+//        this.userMap.values().forEach(user -> {
+//            final Bonuses bonuses = rpgcore.getBonusesManager().find(user.getUuid());
+//            bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() - user.getSilnyNaMoby());
+//            bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + user.getSilnyNaMoby());
+//            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataBonuses(user.getUuid(), bonuses));
+//        });
         this.initChestRewards();
     }
 
@@ -171,12 +178,41 @@ public class GornikNPC {
     public void openSklep(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lGornik &8>> &a&lSklep Gorniczy"));
 
-        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName("").toItemStack());
 
         gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player).clone()).setLoreCrafting(GornikItems.getKilof(player).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$" //50_000_000
+                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$"
         )).addTagInt("price", 50_000_000).toItemStack().clone());
+
+        gui.setItem(1, new ItemBuilder(GornikItems.I1.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(20_750) + "&2$"
+        )).addTagInt("price", 20_750).toItemStack().clone());
+        gui.setItem(2, new ItemBuilder(GornikItems.I2.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(22_750) + "&2$"
+        )).addTagInt("price", 22_750).toItemStack().clone());
+        gui.setItem(3, new ItemBuilder(GornikItems.I3.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(26_985) + "&2$"
+        )).addTagInt("price", 26_985).toItemStack().clone());
+        gui.setItem(4, new ItemBuilder(GornikItems.I4.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(28_000) + "&2$"
+        )).addTagInt("price", 28_000).toItemStack().clone());
+        gui.setItem(5, new ItemBuilder(GornikItems.I5.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(31_250) + "&2$"
+        )).addTagInt("price", 31_250).toItemStack().clone());
+        gui.setItem(6, new ItemBuilder(GornikItems.I6.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(35_750) + "&2$"
+        )).addTagInt("price", 35_750).toItemStack().clone());
+        gui.setItem(7, new ItemBuilder(GornikItems.I7.getItemStack().clone()).setLore(Arrays.asList(
+                " ",
+                "&7Cena: &e" + Utils.spaceNumber(38_500) + "&2$"
+        )).addTagInt("price", 38_500).toItemStack().clone());
+
 
         gui.setItem(8, Utils.powrot().clone());
         player.openInventory(gui);

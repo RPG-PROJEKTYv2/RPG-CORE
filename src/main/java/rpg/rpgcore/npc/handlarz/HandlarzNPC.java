@@ -103,17 +103,17 @@ public class  HandlarzNPC {
         gui.setItem(10, addPrice(ItemShop.IS9.getItems().get(0).clone(), 50));
         gui.setItem(11, addPrice(ItemShop.IS10.getItems().get(0).clone(), 100));
         gui.setItem(12, addPrice(ItemShop.IS11.getItems().get(0).clone(), 150));
-        gui.setItem(13, addPrice(ItemShop.IS22.getItems().get(0).clone(), 280));
+        gui.setItem(13, addPrice(ItemShop.IS22.getItems().get(0).clone(), 250));
 
         // PELERYNKI
-        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0).clone(), 750));
-        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0).clone(), 1350));
+        gui.setItem(15, addPrice(ItemShop.IS19.getItems().get(0).clone(), 600));
+        gui.setItem(16, addPrice(ItemShop.IS20.getItems().get(0).clone(), 1200));
 
         // ELITA
         gui.setItem(19, addPrice(ItemShop.IS12.getItems().get(0).clone(), 80));
         gui.setItem(20, addPrice(ItemShop.IS13.getItems().get(0).clone(), 150));
         gui.setItem(21, addPrice(ItemShop.IS14.getItems().get(0).clone(), 280));
-        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0).clone(), 480));
+        gui.setItem(22, addPrice(ItemShop.IS15.getItems().get(0).clone(), 450));
 
         // PDKI
         gui.setItem(37, addPrice(GlobalItem.getItem("I52", 1), 25).clone());

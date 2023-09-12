@@ -34,10 +34,10 @@ public class TajemniczaManager {
         this.tajemnicza.add(new Items("8", 7.0, GlobalItem.getItem("I_FRAGMENT_STALI", 2), 2));
         this.tajemnicza.add(new Items("9", 7.0, LesnikItems.POTION.getItem(), 1));
         // set I
-        this.tajemnicza.add(new Items("10", 10.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("11", 10.0, ItemHelper.createArmor("&3Tajemnicza Klata", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("12", 10.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)), 1));
-        this.tajemnicza.add(new Items("13", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)), 1));
+        this.tajemnicza.add(new Items("10", 10.0, ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, 1, 1), 1));
+        this.tajemnicza.add(new Items("11", 10.0, ItemHelper.createArmor("&3Tajemnicza Klata", Material.IRON_CHESTPLATE, 1, 1), 1));
+        this.tajemnicza.add(new Items("12", 10.0, ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, 1, 1), 1));
+        this.tajemnicza.add(new Items("13", 10.0, ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, 1, 1), 1));
     }
 
 
@@ -46,8 +46,16 @@ public class TajemniczaManager {
         for (Items item : this.tajemnicza) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 item.getRewardItem().setAmount(item.getAmount());
-                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
-                return item;
+                final Items clone = item.clone();
+
+                if (clone.getRewardItem().getType().equals(Material.IRON_HELMET)) clone.setRewardItem(ItemHelper.createArmor("&3Tajemniczy Helm", Material.IRON_HELMET, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)));
+                else if (clone.getRewardItem().getType().equals(Material.IRON_CHESTPLATE)) clone.setRewardItem(ItemHelper.createArmor("&3Tajemnicza Klata", Material.IRON_CHESTPLATE, ChanceHelper.getRandInt(4, 7), ChanceHelper.getRandInt(1, 2)));
+                else if (clone.getRewardItem().getType().equals(Material.IRON_LEGGINGS)) clone.setRewardItem(ItemHelper.createArmor("&3Tajemnicze Spodnie", Material.IRON_LEGGINGS, ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(1, 2)));
+                else if (clone.getRewardItem().getType().equals(Material.IRON_BOOTS)) clone.setRewardItem(ItemHelper.createArmor("&3Tajemnicze Buty", Material.IRON_BOOTS, ChanceHelper.getRandInt(3, 5), ChanceHelper.getRandInt(1, 2)));
+
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + clone.getAmount() + " " + clone.getRewardItem().getItemMeta().getDisplayName()));
+
+                return clone;
             }
         }
         if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));

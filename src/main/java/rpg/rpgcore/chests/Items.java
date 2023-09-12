@@ -1,13 +1,17 @@
 package rpg.rpgcore.chests;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
-public class Items {
+@Getter
+@Setter
+public class Items implements Cloneable {
 
     private final String name;
     private final double chance;
-    private final ItemStack rewardItem;
-    private final int amount;
+    private ItemStack rewardItem;
+    private int amount;
 
     public Items(String name, double chance, ItemStack rewardItem, int amount) {
         this.name = name;
@@ -16,19 +20,17 @@ public class Items {
         this.amount = amount;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public double getChance() {
-        return this.chance;
-    }
 
     public ItemStack getRewardItem() {
         return this.rewardItem.clone();
     }
 
-    public int getAmount() {
-        return amount;
+    @Override
+    public Items clone() {
+        try {
+            return (Items) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

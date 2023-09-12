@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PelerynkiInteractListener implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInteract(final PlayerInteractEvent e) {
 
         final ItemStack eventItem = e.getItem();
@@ -100,6 +100,7 @@ public class PelerynkiInteractListener implements Listener {
             final int range = Utils.getTagInt(item, "range");
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
+                    if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
                     final Creature creature = (Creature) entity;
                     if (creature.getName().contains("BOSS")) continue;
                     creature.teleport(player);
@@ -111,14 +112,21 @@ public class PelerynkiInteractListener implements Listener {
             final int range = Utils.getTagInt(item, "range");
 
             if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldownAfk(uuid)) return;
-            for (Entity entity : player.getNearbyEntities(range, range, range)) {
+            for (Entity entity : player.getNearbyEntities((double) range / 2, (double) range / 2, (double) range / 2)) {
                 if (entity instanceof Creature) {
+                    /*if (RPGCORE.getMythicMobs().getAPIHelper().isMythicMob(entity)) {
+                        player.sendMessage("jest");
+                        final AbstractPlayer aPlayer = BukkitAdapter.adapt(player);
+                        RPGCORE.getMythicMobs().getAPIHelper().getMythicMobInstance(entity).setTarget(aPlayer);
+                        player.sendMessage(RPGCORE.getMythicMobs().getAPIHelper().getMythicMobInstance(entity).getNewTarget().asPlayer().getName());
+                    */
+                    if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
                     final Creature creature = (Creature) entity;
                     creature.setTarget(player);
                 }
             }
-            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownAfk(uuid);
         }
-
+        RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownAfk(uuid);
     }
+
 }

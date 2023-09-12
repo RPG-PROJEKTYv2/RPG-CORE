@@ -12,7 +12,7 @@ import java.util.UUID;
 public class GornikUser implements Cloneable {
     private final UUID uuid;
     private int mission, progress;
-    private double silnyNaLudzi, defNaMoby;
+    private double silnyNaMoby, defNaMoby;
     private long timeLeft, maxTimeLeft;
     private long freePass, pickaxeAbility;
 
@@ -20,7 +20,7 @@ public class GornikUser implements Cloneable {
         this.uuid = uuid;
         this.mission = 1;
         this.progress = 0;
-        this.silnyNaLudzi = 0;
+        this.silnyNaMoby = 0;
         this.defNaMoby = 0;
         this.timeLeft = 0;
         this.maxTimeLeft = 15 * 60 * 1000;
@@ -32,12 +32,28 @@ public class GornikUser implements Cloneable {
         this.uuid = UUID.fromString(document.getString("_id"));
         this.mission = document.getInteger("mission");
         this.progress = document.getInteger("progress");
-        this.silnyNaLudzi = document.getDouble("silnyNaLudzi");
+        this.silnyNaMoby = (document.containsKey("silnyNaLudzi") ? document.getDouble("silnyNaLudzi") : (document.containsKey("silnyNaMoby") ? document.getDouble("silnyNaMoby") : 0));
         this.defNaMoby = document.getDouble("defNaMoby");
-        this.timeLeft = document.getLong("timeLeft");
-        this.maxTimeLeft = document.getLong("maxTimeLeft");
-        this.freePass = document.getLong("freePass");
-        this.pickaxeAbility = document.getLong("pickaxeAbility");
+        try {
+            this.timeLeft = document.getLong("timeLeft");
+        } catch (ClassCastException e) {
+            this.timeLeft = Long.parseLong(document.getInteger("timeLeft").toString());
+        }
+        try {
+            this.maxTimeLeft = document.getLong("maxTimeLeft");
+        } catch (ClassCastException e) {
+            this.maxTimeLeft = Long.parseLong(document.getInteger("maxTimeLeft").toString());
+        }
+        try {
+            this.freePass = document.getLong("freePass");
+        } catch (ClassCastException e) {
+            this.freePass = Long.parseLong(document.getInteger("freePass").toString());
+        }
+        try {
+            this.pickaxeAbility = document.getLong("pickaxeAbility");
+        } catch (ClassCastException e) {
+            this.pickaxeAbility = Long.parseLong(document.getInteger("pickaxeAbility").toString());
+        }
     }
 
     public void save() {
@@ -59,7 +75,7 @@ public class GornikUser implements Cloneable {
         return new Document("_id", uuid.toString())
                 .append("mission", mission)
                 .append("progress", progress)
-                .append("silnyNaLudzi", silnyNaLudzi)
+                .append("silnyNaMoby", silnyNaMoby)
                 .append("defNaMoby", defNaMoby)
                 .append("timeLeft", timeLeft)
                 .append("maxTimeLeft", maxTimeLeft)

@@ -15,12 +15,14 @@ import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Dungeony;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 import rpg.rpgcore.utils.globalitems.npc.GornikItems;
+import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 
 public class DropFromChestsListener implements Listener {
@@ -838,6 +840,24 @@ public class DropFromChestsListener implements Listener {
                 // TODO DUNGEONY
 
                 // SAKIEWKA Z ULEPSZCZAMI
+                if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(RybakItems.I5.getItemStack().getItemMeta().getDisplayName()))) {
+                    if (!player.getCanPickupItems()) {
+                        player.getInventory().removeItem(new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(1).toItemStack().clone());
+                        osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
+
+                        final Items item = rpgcore.getRybakChestManager().getDrawnItems(player);
+                        if (item == null) {
+                            return;
+                        }
+
+                        ItemStack is = item.getRewardItem();
+                        is.setAmount(item.getAmount());
+                        player.getInventory().addItem(is);
+                        return;
+                    }
+                }
+
+                // KUFER RYBACKI
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(Dungeony.getByName("I_SAKIEWKA_ULEPSZACZY").getItemStack().getItemMeta().getDisplayName()))) {
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", 1));

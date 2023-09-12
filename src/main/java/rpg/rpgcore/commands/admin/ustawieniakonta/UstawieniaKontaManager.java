@@ -550,7 +550,7 @@ public class UstawieniaKontaManager {
                 "&7  - Def Na Moby (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getDefNaMoby()) + "%",
                 "&7Postep: &e" + gornik.getProgress() + "&7/&e" + (gornikMission == null ? 0 : gornikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) gornik.getProgress() / (gornikMission == null ? 0 : gornikMission.getReqAmount())) * 100, 2) + "%&7)",
                 "&7Dodatkowy Czas (User): &a+" + (gornik.getMaxTimeLeft() / 1000) + "s",
-                "&7Silny Na Ludzi (User): &e+" + gornik.getSilnyNaLudzi() + "%",
+                "&7Silny Na Potwory (User): &e+" + gornik.getSilnyNaMoby() + "%",
                 "&7Def Na Moby (User): &e+" + gornik.getDefNaMoby() + "%",
                 "&7Darmowe Wejscie: &e" + (gornik.getFreePass() <= System.currentTimeMillis())
         )).addGlowing().toItemStack().clone());
@@ -992,7 +992,7 @@ public class UstawieniaKontaManager {
                 "&6Shift + RMB &7- zeby odjac 10"
         )).toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.SIGN).setName("&6&lUstaw Silny Na Ludzi").setLore(Arrays.asList(
-                "&7Aktualna: &e" + user.getSilnyNaLudzi(),
+                "&7Aktualna: &e" + user.getSilnyNaMoby(),
                 "&6LMB &7- zeby dodac 1.",
                 "&6RMB &7- zeby odjac 1.",
                 "&6Shift + LMB &7- zeby dodac 10",

@@ -23,10 +23,10 @@ public class CzempionArenyManager {
     public CzempionArenyManager() {
         this.czempionAreny.add(new Items("1", 7.0, new ItemBuilder(Material.MINECART).setName("&6&lEnergia Czempiona Areny").toItemStack(),1 ));
         this.czempionAreny.add(new Items("2", 7.5, new ItemBuilder(Material.FIREBALL).setName("&6&lMedalion Czempiona Areny").toItemStack(),1 ));
-        this.czempionAreny.add(new Items("3", 8.0 , GlobalItem.I_KAMIENBAO.getItemStack(), ChanceHelper.getRandInt(1,3)));
-        this.czempionAreny.add(new Items("4", 9.5, GlobalItem.I10.getItemStack(), ChanceHelper.getRandInt(1,3)));
-        this.czempionAreny.add(new Items("5", 10.0, GlobalItem.I_OCZYSZCZENIE.getItemStack(), ChanceHelper.getRandInt(1,3)));
-        this.czempionAreny.add(new Items("6", 11.0, LesnikItems.POTION.getItem(), ChanceHelper.getRandInt(1,5)));
+        this.czempionAreny.add(new Items("3", 8.0 , GlobalItem.I_KAMIENBAO.getItemStack(), 1));
+        this.czempionAreny.add(new Items("4", 9.5, GlobalItem.I10.getItemStack(), 1));
+        this.czempionAreny.add(new Items("5", 10.0, GlobalItem.I_OCZYSZCZENIE.getItemStack(), 1));
+        this.czempionAreny.add(new Items("6", 11.0, LesnikItems.POTION.getItem(), 1));
         this.czempionAreny.add(new Items("7", 12.0, ItemHelper.createSword("&6&lMiecz Czempiona Areny", Material.DIAMOND_SWORD, 42, 26, false), 1));
         this.czempionAreny.add(new Items("8", 14.0, ItemHelper.createArmor("&6&lHelm Czempiona Areny", Material.DIAMOND_HELMET, 62, 15), 1));
         this.czempionAreny.add(new Items("9", 14.0, ItemHelper.createArmor("&6&lZbroja Czempiona Areny", Material.DIAMOND_CHESTPLATE, 63, 19), 1));
@@ -39,8 +39,17 @@ public class CzempionArenyManager {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.czempionAreny) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
-                return item;
+                final Items clone = item.clone();
+
+                if (clone.getRewardItem().isSimilar(GlobalItem.I10.getItemStack())) clone.setAmount(ChanceHelper.getRandInt(1,3));
+                else if (clone.getRewardItem().isSimilar(GlobalItem.I_KAMIENBAO.getItemStack())) clone.setAmount(ChanceHelper.getRandInt(1,3));
+                else if (clone.getRewardItem().isSimilar(GlobalItem.I_OCZYSZCZENIE.getItemStack())) clone.setAmount(ChanceHelper.getRandInt(1,3));
+                else if (clone.getRewardItem().isSimilar(GlobalItem.I_OCZYSZCZENIE.getItemStack())) clone.setAmount(ChanceHelper.getRandInt(1,3));
+                else if (clone.getRewardItem().isSimilar(LesnikItems.POTION.getItem())) clone.setAmount(ChanceHelper.getRandInt(1,5));
+
+                if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + clone.getAmount() + " " + clone.getRewardItem().getItemMeta().getDisplayName()));
+
+                return clone;
             }
         }
         if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&7Skrzynia okazala sie byc pusta..."));

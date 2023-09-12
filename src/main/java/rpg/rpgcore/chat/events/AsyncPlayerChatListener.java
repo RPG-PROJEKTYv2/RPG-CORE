@@ -230,16 +230,17 @@ public class AsyncPlayerChatListener implements Listener {
         final String command = message.split(" ")[0].replace("/", "");
         final User user = this.rpgcore.getUserManager().find(player.getUniqueId());
         final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(message.split(" ")[0]);
+        if (topic == null) {
+            event.setCancelled(true);
+            player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
+            return;
+        }
         if (!user.getRankUser().isHighStaff() || (user.getRankUser().isHighStaff() && !user.isAdminCodeLogin())) {
             if (!ownCommandsPlayer.contains(command.toLowerCase()) && !ownCommandsAdmin.contains(command.toLowerCase())) {
                 event.setCancelled(true);
                 player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
                 return;
             }
-        }
-        if (topic == null) {
-            event.setCancelled(true);
-            player.sendMessage(Utils.format("&8[&4!&8] &cKomenda nie istnieje lub nie masz do niej uprawnien!"));
         }
     }
 

@@ -124,8 +124,8 @@ public enum HandlarzSellItems {
 
 
     // 60-70 MOB
-    I87("Helm Zywiolaka Ognia", Material.IRON_HELMET, 70000),
-    I88("Zbroja Zywiolaka Ognia", Material.DIAMOND_CHESTPLATE,70000),
+    I87("Helm Zywiolaka Ognia", Material.DIAMOND_HELMET, 70000),
+    I88("Zbroja Zywiolaka Ognia", Material.IRON_CHESTPLATE,70000),
     I89("Spodnie Zywiolaka Ognia", Material.IRON_LEGGINGS,  70000),
     I90("Buty Zywiolaka Ognia", Material.DIAMOND_BOOTS, 70000),
     I91("Miecz Zywiolaka Ognia", Material.IRON_SWORD, 70000),

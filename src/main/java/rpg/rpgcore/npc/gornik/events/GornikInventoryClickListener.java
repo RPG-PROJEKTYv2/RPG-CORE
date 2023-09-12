@@ -16,6 +16,7 @@ import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
@@ -76,9 +77,9 @@ public class GornikInventoryClickListener implements Listener {
                 user.setProgress(0);
                 user.setMission(user.getMission() + 1);
                 user.setDefNaMoby(user.getDefNaMoby() + mission.getDefNaMoby());
-                user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
+                user.setSilnyNaMoby(user.getSilnyNaMoby() + mission.getSilnyNaLudzi());
                 user.setMaxTimeLeft(user.getMaxTimeLeft() + mission.getBonusTime());
-                bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + mission.getSilnyNaLudzi());
+                bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + mission.getSilnyNaLudzi());
                 bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + mission.getDefNaMoby());
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataGornik(uuid, user);
@@ -144,9 +145,9 @@ public class GornikInventoryClickListener implements Listener {
 
             final User user = rpgcore.getUserManager().find(uuid);
 
+            final int price = Utils.getTagInt(item, "price");
             switch (slot) {
                 case 0:
-                    final int price = Utils.getTagInt(item, "price");
                     if (user.getKasa() < price) {
                         player.sendMessage(Utils.format("&6&lGornik &8>> &7Czy ty chcesz mnie oszukac?"));
                         player.sendMessage(Utils.format("&6&lGornik &8>> &cBrakuje Ci jeszcze &e" + (price - user.getKasa()) + "&2$ &7aby kupic ten przedmiot!"));
@@ -158,6 +159,76 @@ public class GornikInventoryClickListener implements Listener {
                     player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj, oby Ci dobrze sluzyl!"));
                     player.getInventory().addItem(GornikItems.getKilof(player).clone());
                     player.closeInventory();
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 1:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I1.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 2:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I2.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I2.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 3:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I3.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I3.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 4:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I4.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I4.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 5:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I5.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I5.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 6:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I6.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I6.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
+                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    break;
+                case 7:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I7.getItemStack(), 1)) {
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                        return;
+                    }
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I7.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
                     break;
                 case 8:
