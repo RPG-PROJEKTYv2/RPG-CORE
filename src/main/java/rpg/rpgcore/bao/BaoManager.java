@@ -56,11 +56,15 @@ public class BaoManager {
         if (!ksiega) {
             gui.setItem(10, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus1() + ": &c" + user.getValue1() + "%").toItemStack().clone());
             gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus2() + ": &c" + user.getValue2() + "%").toItemStack().clone());
-            gui.setItem(12, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
-            if (user.getBonus4().equalsIgnoreCase("dodatkowe obrazenia")) {
-                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " DMG").toItemStack().clone());
+            if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + " DMG").toItemStack().clone());
             } else {
-                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + " %").toItemStack().clone());
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
+            }
+            if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
+                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4()).toItemStack().clone());
+            } else {
+                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + "%").toItemStack().clone());
             }
             if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
                 gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus5() + ": &c" + user.getValue5() + " HP").toItemStack().clone());
