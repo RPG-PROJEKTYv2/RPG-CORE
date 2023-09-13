@@ -644,7 +644,7 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         switch (is.getType()) {
                             case STORAGE_MINECART:
-                                is = AkcesoriaPodsHelper.createNaszyjnik(1300, 23, 19, 95,"&6&lNaszyjnik Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createNaszyjnik(1100, 23, 19, 95,"&6&lNaszyjnik Podziemnego Rozpruwacza");
                                 break;
                             case WATCH:
                                 is = AkcesoriaPodsHelper.createDiadem(22, 28, 5, 95, "&6&lDiadem Podziemnego Rozpruwacza");

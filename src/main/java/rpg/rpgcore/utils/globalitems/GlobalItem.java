@@ -22,6 +22,9 @@ public enum GlobalItem {
     I_CZASTKA_MAGII("I_CZASTKA_MAGII", new ItemBuilder(Material.BLAZE_POWDER).setName("&d&lCzastka Magii").toItemStack().clone()),
     I_KAMIENBAO("I_KAMIENBAO", new ItemBuilder(Material.COAL, 1, (short) 1).setName("&3&lKamien Zaczarowania Stolu").setLore(Arrays.asList("&8Ten magiczny kamien pozwala Ci", "&8zmienic &cwszystkie &8bonusy w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
     I_KSIEGAMAGII("I_KSIEGAMAGII", new ItemBuilder(Material.ENCHANTED_BOOK).setName("&5&lKsiega Magii").setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic &cjeden &8bonus w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
+    I_MROCZNA_KSIEGA_STOLU_MAGII("I_MROCZNA_KSIEGA_STOLU_MAGII", new ItemBuilder(Material.BOOK).setName("&4&lMroczna &5&lKsiega Stolu Magii").setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic &ctyp &8bonusu w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
+    I_MAGICZNE_ZACZAROWANIE_STOLU("I_MAGICZNE_ZACZAROWANIE_STOLU", new ItemBuilder(Material.BOOK).setName("&4&lZaczarowanie &5&lStolu Magii").setLore(Arrays.asList("&8To magiczne zaczarowanie pozwoli Ci", "&8zmienic &cwartosc &8bonusu w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
+
     I11("I11", new ItemBuilder(Material.GOLD_NUGGET).setName("&4&lH&6&lS &4&lvalue").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
     // MATERIALY
     I12("I12", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),

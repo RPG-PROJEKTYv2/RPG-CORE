@@ -52,7 +52,7 @@ public enum Akce90_100 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(540, 1800),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(540, 1500),
                             ChanceHelper.getRandInt(20, 28), ChanceHelper.getRandInt(15, 23), ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Naszyjnik"));
                     return;
                 }
