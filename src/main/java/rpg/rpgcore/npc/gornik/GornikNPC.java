@@ -190,28 +190,28 @@ public class GornikNPC {
         )).addTagInt("price", 20_750).toItemStack().clone());
         gui.setItem(2, new ItemBuilder(GornikItems.I2.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(22_750) + "&2$"
-        )).addTagInt("price", 22_750).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(25_750) + "&2$"
+        )).addTagInt("price", 25_750).toItemStack().clone());
         gui.setItem(3, new ItemBuilder(GornikItems.I3.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(26_985) + "&2$"
-        )).addTagInt("price", 26_985).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(35_985) + "&2$"
+        )).addTagInt("price", 35_985).toItemStack().clone());
         gui.setItem(4, new ItemBuilder(GornikItems.I4.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(28_000) + "&2$"
-        )).addTagInt("price", 28_000).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(45_100) + "&2$"
+        )).addTagInt("price", 45_100).toItemStack().clone());
         gui.setItem(5, new ItemBuilder(GornikItems.I5.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(31_250) + "&2$"
-        )).addTagInt("price", 31_250).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(55_250) + "&2$"
+        )).addTagInt("price", 55_250).toItemStack().clone());
         gui.setItem(6, new ItemBuilder(GornikItems.I6.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(35_750) + "&2$"
-        )).addTagInt("price", 35_750).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(70_750) + "&2$"
+        )).addTagInt("price", 70_750).toItemStack().clone());
         gui.setItem(7, new ItemBuilder(GornikItems.I7.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(38_500) + "&2$"
-        )).addTagInt("price", 38_500).toItemStack().clone());
+                "&7Cena: &e" + Utils.spaceNumber(90_500) + "&2$"
+        )).addTagInt("price", 90_500).toItemStack().clone());
 
 
         gui.setItem(8, Utils.powrot().clone());
@@ -231,32 +231,32 @@ public class GornikNPC {
         gui.setItem(2, new ItemBuilder(Material.IRON_ORE).setName("&7Ruda Zelaza &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &7Ruda Zelaza &7x64",
-                "&8- &650 000&2$"
+                "&8- &655 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(3, new ItemBuilder(Material.GOLD_ORE).setName("&eRuda Topazu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &eRuda Topazu &7x64",
-                "&8- &650 000&2$"
+                "&8- &660 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(4, new ItemBuilder(Material.LAPIS_ORE).setName("&1Ruda Tanzanitu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &1Ruda Tanzanitu &7x64",
-                "&8- &650 000&2$"
+                "&8- &665 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(5, new ItemBuilder(Material.EMERALD_ORE).setName("&aRuda Jadeitu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &aRuda Jadeitu &7x64",
-                "&8- &650 000&2$"
+                "&8- &670 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(6, new ItemBuilder(Material.DIAMOND_ORE).setName("&bRuda Diamentu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &bRuda Diamentu &7x64",
-                "&8- &650 000&2$"
+                "&8- &675 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(7, new ItemBuilder(Material.REDSTONE_ORE).setName("&cRuda Rubinu &8&l(x64)").setLore(Arrays.asList(
                 "&7Potrzebne przedmioty:",
                 "&8- &cRuda Rubinu &7x64",
-                "&8- &650 000&2$"
+                "&8- &680 000&2$"
         )).hideFlag().toItemStack());
 
         // SET GORNICZY
