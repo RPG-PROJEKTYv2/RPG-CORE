@@ -403,7 +403,7 @@ public class    MobDropHelper {
             case "Pustynny Ptasznik Lvl. 84":
             case "Pustynny Ptasznik Lvl. 87":
             case "Pustynny Ptasznik Lvl. 89":
-                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.001),true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.005),true,true,entity);
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A9.getItemStack(), akceDropChance50lvl, true, false, entity);
