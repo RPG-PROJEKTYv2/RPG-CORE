@@ -181,7 +181,7 @@ public class DamageManager {
             mnoznik += 5;
         }
 
-        if (!victim.canSee(attacker)) {
+        if (!victim.canSee(attacker) && !rpgcore.getVanishManager().isVanished(attacker.getUniqueId())) {
             mnoznik += 5;
             for (Player rest : Bukkit.getOnlinePlayers()) rest.showPlayer(attacker);
             rpgcore.getKlasyManager().getUsedSkrytoPassive().remove(attacker.getUniqueId());

@@ -23,8 +23,8 @@ public class PozlacanySkarbManager {
         this.pozlacanyskarb.add(new Items("1", 0.4, GlobalItem.getItem("I_FRAGMENT_BONA", 1), 1));
         this.pozlacanyskarb.add(new Items("2", 2.5, SkrzynkiOther.getItem("I1", 1),2));
         this.pozlacanyskarb.add(new Items("3", 7.0, LesnikItems.getByItem("POTION", 1), 1));
-        this.pozlacanyskarb.add(new Items("4", 8.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
-        this.pozlacanyskarb.add(new Items("5", 9.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
+        this.pozlacanyskarb.add(new Items("4", 9.0, GlobalItem.getItem("I_KAMIENBAO", 1), 1));
+        this.pozlacanyskarb.add(new Items("5", 10.0, GlobalItem.getItem("I_KSIEGAMAGII", 1), 1));
         this.pozlacanyskarb.add(new Items("6", 11.0, GlobalItem.getItem("I_METAL", 1), 1));
         this.pozlacanyskarb.add(new Items("7", 13.0, GlobalItem.getItem("I_OCZYSZCZENIE", 1),1));
         this.pozlacanyskarb.add(new Items("8", 13.0, GlobalItem.getItem("I10", 1), 1));

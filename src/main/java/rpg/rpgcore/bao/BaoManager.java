@@ -28,6 +28,10 @@ public class BaoManager {
     public BaoManager(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllBao();
+        userMap.values().forEach(obj -> {
+            if (obj.getBaoUser().getBonus2().equals("Srednia defensywa przeciwko ludziom")) obj.getBaoUser().setBonus2("Odpornosc przeciwko Ludziom");
+            if (obj.getBaoUser().getBonus2().equals("Srednia defensywa przeciwko potworom")) obj.getBaoUser().setBonus2("Odpornosc przeciwko Potworom");
+        });
         this.removeEntities();
         this.baoArmorStands = rpgcore.getMongoManager().loadAllBaoArmorStands();
     }
@@ -57,14 +61,14 @@ public class BaoManager {
             gui.setItem(10, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus1() + ": &c" + user.getValue1() + "%").toItemStack().clone());
             gui.setItem(11, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus2() + ": &c" + user.getValue2() + "%").toItemStack().clone());
             if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
-                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + " DMG").toItemStack().clone());
+                gui.setItem(12, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + " DMG").toItemStack().clone());
             } else {
-                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
+                gui.setItem(12, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus3() + ": &c" + user.getValue3() + "%").toItemStack().clone());
             }
             if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
-                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4()).toItemStack().clone());
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4()).toItemStack().clone());
             } else {
-                gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + "%").toItemStack().clone());
+                gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus4() + ": &c" + user.getValue4() + "%").toItemStack().clone());
             }
             if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
                 gui.setItem(14, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&6" + user.getBonus5() + ": &c" + user.getValue5() + " HP").toItemStack().clone());
@@ -84,8 +88,8 @@ public class BaoManager {
                     "&8-&6Silny Na Potwory: &c50%",
                     "&8Bonus 2:",
                     "&8-&6Srednia defensywa: &c40%",
-                    "&8-&6Srednia defensywa przeciwko Ludziom: &c50%",
-                    "&8-&6Srednia defensywa przeciwko Potworom: &c50%",
+                    "&8-&6Odpornosc przeciwko Ludziom: &c50%",
+                    "&8-&6Odpornosc przeciwko Potworom: &c50%",
                     "&8Bonus 3:",
                     "&8-&6Szansa Na Cios Krytyczny: &c50%",
                     "&8-&6Szansa Na Wzmocnienie Ciosu Krytycznego: &c30%",
@@ -202,12 +206,12 @@ public class BaoManager {
                 bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + user.getValue2());
                 break;
             case 2:
-                user.setBonus2("Srednia defensywa przeciwko ludziom");
+                user.setBonus2("Odpornosc przeciwko Ludziom");
                 user.setValue2(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() + user.getValue2());
                 break;
             case 3:
-                user.setBonus2("Srednia defensywa przeciwko potworom");
+                user.setBonus2("Odpornosc przeciwko Potworom");
                 user.setValue2(random.nextInt(50) + 1);
                 bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + user.getValue2());
                 break;

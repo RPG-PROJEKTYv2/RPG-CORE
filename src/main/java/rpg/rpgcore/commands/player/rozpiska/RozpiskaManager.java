@@ -397,7 +397,7 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         openSEVENTHgui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&c&lPiekielny Rycerz").setLore(Arrays.asList("",
                 "&3&lSkrzynia &c&lPiekielnego Rycerza: &f100%",
-                "&4Trofeum Bossa 60-70: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&4Trofeum Bossa 60-70: &f" + MobDropHelper.getDropChance(szczescie, 20) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
         openSEVENTHgui.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&6&lMetin Zywiolu").setLore(Arrays.asList("",
@@ -443,7 +443,7 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         openEIGHTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&5&lPrzeklety Czarnoksieznik").setLore(Arrays.asList("",
                 "&3&lSkrzynia &5&lPrzeklety Czarnoksieznik: &f100%",
-                "&4Trofeum Bossa 70-80: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&4Trofeum Bossa 70-80: &f" + MobDropHelper.getDropChance(szczescie, 20) + "%",
                 "&5&lPrzeklety Odlamek: &f" + MobDropHelper.getDropChance(szczescie, 25) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
@@ -486,7 +486,7 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         openNINTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&e&lMityczny Pajak").setLore(Arrays.asList("",
                 "&3&lSkrzynia &e&lMitycznego Pajaka: &f100%",
-                "&4Trofeum Bossa 80-90: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&4Trofeum Bossa 80-90: &f" + MobDropHelper.getDropChance(szczescie, 20) + "%",
                 "&2Ruda Mithrylu: &f" + MobDropHelper.getDropChance(szczescie, 0.06) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
@@ -530,7 +530,7 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         openTENTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&5&lPodziemny Rozpruwacz").setLore(Arrays.asList("",
                 "&3&lSkrzynia &5&lPodziemnego Rozpruwacza: &f100%",
-                "&4Trofeum Bossa 90-100: &f" + MobDropHelper.getDropChance(szczescie, 15) + "%",
+                "&4Trofeum Bossa 90-100: &f" + MobDropHelper.getDropChance(szczescie, 20) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
         openTENTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&d&lMetin Podziemi").setLore(Arrays.asList("",

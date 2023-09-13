@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -26,6 +27,7 @@ public class  HandlarzNPC {
     private final Map<UUID, HandlarzUser> userMap;
 
     private final Map<UUID, Multimap<ItemStack, Double>> userItemMap = new HashMap<>();
+    private final Map<UUID, Location> locationMap = new HashMap<>();
 
     public HandlarzNPC(RPGCORE rpgcore) {
         this.userMap = rpgcore.getMongoManager().loadAllHandlarz();
@@ -200,6 +202,14 @@ public class  HandlarzNPC {
 
     public void set(final UUID uuid, final HandlarzUser user) {
         userMap.replace(uuid, user);
+    }
+
+    public void addLocation(final UUID uuid, final Location location) {
+        locationMap.put(uuid, location);
+    }
+
+    public Location getLocation(final UUID uuid) {
+        return locationMap.get(uuid);
     }
 
     public ImmutableSet<HandlarzUser> getHandlarzUsers() {

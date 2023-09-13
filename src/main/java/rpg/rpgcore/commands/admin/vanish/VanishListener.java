@@ -20,7 +20,7 @@ public class VanishListener implements Listener {
     public void onWorldChange(final PlayerChangedWorldEvent e) {
         final Player p = e.getPlayer();
         final UUID uuid = p.getUniqueId();
-        if (!rpgcore.getVanishManager().isVisible(uuid)) return;
+        if (!rpgcore.getVanishManager().isVanished(uuid)) return;
         p.sendMessage("channged the world, hiding again!");
         rpgcore.getVanishManager().hidePlayer(p);
     }

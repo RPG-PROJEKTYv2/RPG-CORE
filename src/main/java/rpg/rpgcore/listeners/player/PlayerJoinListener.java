@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.armor.ArmorEffectsHelper;
@@ -25,6 +26,7 @@ import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.ItemShop;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -146,6 +148,36 @@ public class PlayerJoinListener implements Listener {
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        }
+
+        for (final ItemStack item : player.getInventory().getContents()) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
+                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("45 sekund") || s.contains("1 minuta"))) continue;
+                if (Utils.getTagString(item, "type").equals("exp")) {
+                    final ItemMeta meta = item.getItemMeta();
+                    final List<String> lore = Arrays.asList(
+                            "&7Tryb: &aExpienie",
+                            (item.getItemMeta().getDisplayName().contains("+") ? "&7Cooldown: &c45 sekund" : "&7Cooldown: &c1 minuta"),
+                            "&7Zasieg Dzialania: &c" + Utils.getTagInt(item, "range") + " blokow",
+                            "",
+                            "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
+                            "&7Zmienia tryb na &aExpienie &7lub &cAFK",
+                            "",
+                            "&6Umiejetnosc: Uzycie przedmiotu &e&lRMB",
+                            "&7Teleportuje wszystkie moby w zasiegu jej",
+                            "&7dzialania do twojej lokalizacji"
+                    );
+                    meta.setLore(Utils.format(lore));
+                    item.setItemMeta(meta);
+                    player.sendMessage(Utils.format(" "));
+                    player.sendMessage(Utils.format("&cJeden z przedmiotow w twoim ekwipunku zostal zaktualizowany"));
+                    player.sendMessage(Utils.format("&cprzez administracje serwera!"));
+                    player.sendMessage(Utils.format("&cZaktualizowany przedmiot to:"));
+                    player.sendMessage(Utils.format("&8- " + item.getItemMeta().getDisplayName()));
+                    player.sendMessage(Utils.format(" "));
+                }
+            }
         }
 
         rpgcore.getUserSaveManager().savePlayer(player, uuid);

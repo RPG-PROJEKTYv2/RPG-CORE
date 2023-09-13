@@ -16,7 +16,7 @@ public class GodVanishTask implements Runnable {
     public void run() {
         for (final Player p : rpgcore.getServer().getOnlinePlayers()) {
             final boolean god = rpgcore.getGodManager().containsPlayer(p.getUniqueId());
-            final boolean vanish = rpgcore.getVanishManager().isVisible(p.getUniqueId());
+            final boolean vanish = rpgcore.getVanishManager().isVanished(p.getUniqueId());
             if (god && vanish) {
                 rpgcore.getNmsManager().sendActionBar(p, "&3&lVanish &8| &d&lGOD");
             } else if (god) {

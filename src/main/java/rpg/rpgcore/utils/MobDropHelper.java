@@ -315,7 +315,7 @@ public class    MobDropHelper {
                 rpgcore.getBossyManager().decrementBoss60_70count();
                 addDropPlayer(player, Skrzynki.getItem("I13", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 7) {
-                    addDropPlayer(player, LowcaItems.getItem("60-70", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("60-70", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 7) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -353,7 +353,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 5), true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 8) {
-                    addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("70-80", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 8) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -376,8 +376,8 @@ public class    MobDropHelper {
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, Ulepszacze.getItem("70-80", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.4), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I12.getItem().clone(), getDropChance(szczescie, 0.05), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I4.getItem().clone(), getDropChance(szczescie, 0.045), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I12.getItem().clone(), getDropChance(szczescie, 0.045), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I4.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
                 if (przyrodnikMission.getNumber() == 7) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("70-80"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }
@@ -393,7 +393,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
                 addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.06), true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
-                    addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 9) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -410,8 +410,8 @@ public class    MobDropHelper {
                 addDropPlayer(player, Ulepszacze.getItem("80-90", 1), getDropChance(szczescie, 1.4), true, true, entity);
                 addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I10.getItem().clone(), getDropChance(szczescie, 0.045), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I13.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I10.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I13.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
                 if (przyrodnikMission.getNumber() == 8) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("80-90"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
                 }
@@ -430,7 +430,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I19", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 10) {
-                    addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 10) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -448,8 +448,8 @@ public class    MobDropHelper {
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("90-100", 1), getDropChance(szczescie, 1.35), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I5.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I11.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I5.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I11.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
                 if (ChanceHelper.getChance(getDropChance(szczescie, 0.0015))) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,366.5,80,235.5");
                     Bukkit.broadcastMessage(" ");
@@ -471,7 +471,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
-                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 11) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -490,8 +490,8 @@ public class    MobDropHelper {
                 addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("100-110", 1), getDropChance(szczescie, 2.0), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I14.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
-                addDropPlayer(player, WyszkolenieItems.I6.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I14.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
+                addDropPlayer(player, WyszkolenieItems.I6.getItem().clone(), getDropChance(szczescie, 0.025), true, true, entity);
                 final BossyUser bossyUser = RPGCORE.getInstance().getBossyManager().getBossyUser();
                 bossyUser.incrementMobsCount100_110();
                 if (bossyUser.getMobsCount100_110() == 10_000) {
@@ -511,7 +511,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &1&lKrysztalowy Wladca &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I23", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 12) {
-                    addDropPlayer(player, LowcaItems.getItem("110-120", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("110-120", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 12) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -547,7 +547,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lStarozytny Smoczy Cesarz &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I25", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 13) {
-                    addDropPlayer(player, LowcaItems.getItem("120-130", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("120-130", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 13) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);

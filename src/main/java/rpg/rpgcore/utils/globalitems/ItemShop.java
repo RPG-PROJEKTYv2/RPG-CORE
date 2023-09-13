@@ -84,7 +84,7 @@ public enum ItemShop {
     )).addGlowing().addTagString("rank", "Elita").addTagString("time", "30d").toItemStack().clone())),
     IS19("PELERYNKA", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora").setLore(Arrays.asList(
             "&7Tryb: &aExpienie",
-            "&7Cooldown: &c30 sekund",
+            "&7Cooldown: &c1 minuta",
             "",
             "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
             "&7Zmienia tryb na &aExpienie &7lub &cAFK",
@@ -94,7 +94,7 @@ public enum ItemShop {
     )).addTagString("type", "exp").addTagInt("range", 30).addGlowing().toItemStack().clone())),
     IS20("PELERYNKA+", Arrays.asList(new ItemBuilder(Material.LEATHER).setName("&4&lPrzekleta &8&lSmocza Skora&b&l+").setLore(Arrays.asList(
             "&7Tryb: &aExpienie",
-            "&7Cooldown: &c30 sekund",
+            "&7Cooldown: &c45 sekund",
             "",
             "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
             "&7Zmienia tryb na &aExpienie &7lub &cAFK",

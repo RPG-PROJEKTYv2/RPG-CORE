@@ -63,6 +63,6 @@ public enum Map20_30 {
                 return;
             }
         }
-        if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
+        getDrop(player, szczescie);
     }
 }

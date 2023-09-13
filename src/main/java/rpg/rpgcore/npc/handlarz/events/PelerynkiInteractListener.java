@@ -67,7 +67,7 @@ public class PelerynkiInteractListener implements Listener {
             final ItemMeta meta = itemStack.getItemMeta();
             final List<String> lore = Arrays.asList(
                     "&7Tryb: &aExpienie",
-                    "&7Cooldown: &c30 sekund",
+                    (itemStack.getItemMeta().getDisplayName().contains("+") ? "&7Cooldown: &c45 sekund" : "&7Cooldown: &c1 minuta"),
                     "&7Zasieg Dzialania: &c" + Utils.getTagInt(itemStack, "range") + " blokow",
                     "",
                     "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
@@ -88,15 +88,40 @@ public class PelerynkiInteractListener implements Listener {
         final String type = Utils.getTagString(item, "type");
         final UUID uuid = player.getUniqueId();
         if (type.equals("exp")) {
-            if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldownExp(uuid)) {
-                player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + RPGCORE.getInstance().getCooldownManager().getPelerynkaCooldownExp(uuid)));
-                return;
+            if (item.getItemMeta().getDisplayName().contains("+")) {
+                if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaPCooldownExp(uuid)) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + RPGCORE.getInstance().getCooldownManager().getPelerynkaPCooldownExp(uuid)));
+                    return;
+                }
+                if (!player.getWorld().getName().contains("map")) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego tutaj uzyc!"));
+                    RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+                    return;
+                }
+
+                if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
+                    RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+                    return;
+                }
+            } else {
+                if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldownExp(uuid)) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + RPGCORE.getInstance().getCooldownManager().getPelerynkaCooldownExp(uuid)));
+                    return;
+                }
+                if (!player.getWorld().getName().contains("map")) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego tutaj uzyc!"));
+                    RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
+                    return;
+                }
+
+                if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
+                    RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
+                    return;
+                }
             }
-            if (!player.getWorld().getName().contains("map")) {
-                player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego tutaj uzyc!"));
-                RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
-                return;
-            }
+
             final int range = Utils.getTagInt(item, "range");
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
@@ -106,8 +131,10 @@ public class PelerynkiInteractListener implements Listener {
                     creature.teleport(player);
                 }
             }
-            RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
+            if (item.getItemMeta().getDisplayName().contains("+")) RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+            else RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
             player.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie uzyto " + item.getItemMeta().getDisplayName() + "&a!"));
+            RPGCORE.getInstance().getHandlarzNPC().addLocation(player.getUniqueId(), player.getLocation());
         } else {
             final int range = Utils.getTagInt(item, "range");
 

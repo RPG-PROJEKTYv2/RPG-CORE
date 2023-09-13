@@ -32,7 +32,7 @@ public class VanishCommand extends CommandAPI {
 
         if (args.length == 0) {
 
-            if (!(rpgcore.getVanishManager().isVisible(uuid))) {
+            if (!(rpgcore.getVanishManager().isVanished(uuid))) {
                 rpgcore.getVanishManager().hidePlayer(p);
                 return;
             }
@@ -54,7 +54,7 @@ public class VanishCommand extends CommandAPI {
 
             final UUID targetUUID = target.getUniqueId();
 
-            if (!(rpgcore.getVanishManager().isVisible(targetUUID))) {
+            if (!(rpgcore.getVanishManager().isVanished(targetUUID))) {
                 rpgcore.getVanishManager().hidePlayer(p, target);
                 return;
             }

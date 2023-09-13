@@ -921,7 +921,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-30,-21),
                                         ChanceHelper.getRandInt(33,46),
-                                        ChanceHelper.getRandInt(38,58),
+                                        ChanceHelper.getRandInt(32,56),
                                         ChanceHelper.getRandDouble(0.1,0.3),
                                         ChanceHelper.getRandInt(-55,-40),
                                         ChanceHelper.getRandInt(70,80), "&6&lEnergia Czempiona Areny");
@@ -954,7 +954,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-36,-28),
                                         ChanceHelper.getRandInt(40,55),
-                                        ChanceHelper.getRandInt(45,63),
+                                        ChanceHelper.getRandInt(38,56),
                                         ChanceHelper.getRandDouble(0.2,0.4),
                                         ChanceHelper.getRandInt(-60,-45),
                                         ChanceHelper.getRandInt(80,90), "&4&lEnergia Cesarza Pustyni");
@@ -987,7 +987,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-45,-33),
                                         ChanceHelper.getRandInt(50,61),
-                                        ChanceHelper.getRandInt(47,68),
+                                        ChanceHelper.getRandInt(40,65),
                                         ChanceHelper.getRandDouble(0.3,0.5),
                                         ChanceHelper.getRandInt(-60,-45),
                                         ChanceHelper.getRandInt(80,90), "&4&lEnergia Demona Ciemnosci");

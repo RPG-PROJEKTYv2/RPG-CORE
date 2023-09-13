@@ -21,7 +21,7 @@ public class VanishManager {
         return vanishList;
     }
 
-    public boolean isVisible(final UUID uuid) {
+    public boolean isVanished(final UUID uuid) {
         return vanishList.contains(uuid);
     }
 

@@ -9,19 +9,20 @@ import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.expowiska.Skrzynki;
 import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
+import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.*;
 
 public enum CzarownicaMissions {
     M1(1, 64, Arrays.asList(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(2).toItemStack(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
-    M2(2, 320, Arrays.asList(GlobalItem.getCheck(12_000_000))),
-    M3(3, 768, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
+    M2(2, 96, Arrays.asList(GlobalItem.getCheck(12_000_000))),
+    M3(3, 320, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M4(4, 16, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M5(5, 10_000, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(2).toItemStack())),
-    M6(6, 192, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
+    M6(6, 96, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M7(7, 15, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M8(8, 256, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
-    M9(9, 256, Arrays.asList(new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa&5 Magiczna Receptura &f&kaa").setLore(Arrays.asList(
+    M9(9, 32, Arrays.asList(new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa&5 Magiczna Receptura &f&kaa").setLore(Arrays.asList(
             "&7Receptura ta umozliwi Ci wytwarzanie",
             "&5&lKsiega Magii"
     )).toItemStack().clone()));
@@ -68,7 +69,7 @@ public enum CzarownicaMissions {
                 itemList.add(mission3Item);
                 break;
             case 4:
-                itemList.add(Skrzynki.I2.getItemStack());
+                itemList.add(Skrzynki.I7.getItemStack());
                 break;
             case 5:
                 itemList.add(mission5Item);
@@ -77,16 +78,11 @@ public enum CzarownicaMissions {
                 itemList.add(mission7Item);
                 break;
             case 8:
-//                itemList.add(RybakItems.I1.getItemStack());
-//                itemList.add(RybakItems.I2.getItemStack());
-//                itemList.add(RybakItems.I3.getItemStack());
-//                itemList.add(RybakItems.I4.getItemStack());
-//                itemList.add(RybakItems.I5.getItemStack());
-//                itemList.add(RybakItems.I6.getItemStack());
-//                itemList.add(RybakItems.I7.getItemStack());
-//                itemList.add(RybakItems.I8.getItemStack());
-//                itemList.add(RybakItems.I9.getItemStack());
-//                itemList.add(RybakItems.I10.getItemStack());
+                itemList.add(RybakItems.I6.getItemStack());
+                itemList.add(RybakItems.I7.getItemStack());
+                itemList.add(RybakItems.I8.getItemStack());
+                itemList.add(RybakItems.I9.getItemStack());
+                itemList.add(RybakItems.I10.getItemStack());
                 break;
             case 9:
                 itemList.add(Skrzynki.I2.getItemStack());
@@ -171,7 +167,7 @@ public enum CzarownicaMissions {
                 }
                 break;
             case 3:
-                lore.add("&7Przynies mi &f12 &7stackow dowolnych skrzyn");
+                lore.add("&7Przynies mi &f6 &7stackow dowolnych skrzyn");
                 lore.add("&7Postep:");
                 progress = user.getProgressMap().get(mission3Item);
 

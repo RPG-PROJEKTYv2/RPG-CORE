@@ -60,35 +60,10 @@ public enum Map50_60 {
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&2+ &f&l" + item.getRewardItem().getItemMeta().getDisplayName()));
-                if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(80, 120),
-                            ChanceHelper.getRandInt(13, 19), ChanceHelper.getRandInt(10, 16), ChanceHelper.getRandInt(50, 60), "&f&lSniezny Naszyjnik"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(20, 22),
-                            ChanceHelper.getRandInt(20, 28), ChanceHelper.getRandInt(3, 6), ChanceHelper.getRandInt(50, 60), "&f&lSniezny Diadem"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(25, 33),
-                            ChanceHelper.getRandInt(18, 29), ChanceHelper.getRandInt(8, 13), ChanceHelper.getRandInt(50, 60), "&f&lSniezna Tarcza"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(12, 14),
-                            ChanceHelper.getRandInt(16, 18), ChanceHelper.getRandInt(-60, -50), ChanceHelper.getRandInt(50, 60), "&f&lSniezne Kolczyki"));
-                    return;
-                }
-                if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(15, 19), ChanceHelper.getRandInt(15, 20), ChanceHelper.getRandInt(45, 65),
-                            ChanceHelper.getRandInt(50, 60), "&f&lSniezny Pierscien"));
-                    return;
-                }
                 player.getInventory().addItem(item.getRewardItem());
                 return;
             }
         }
-        if (user.isNiesDropEnabled()) player.sendMessage(Utils.format("&cNiestety niesamowity przedmiot okazal sie byc uszkodzony!"));
+        getDrop(player, szczescie);
     }
 }

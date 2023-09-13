@@ -27,7 +27,8 @@ public class CooldownManager {
     private final Cache<UUID, Long> serce70_80Cooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> bossBarCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> pelerynkaCooldownAfk = CacheBuilder.newBuilder().expireAfterWrite(100, TimeUnit.MILLISECONDS).build();
-    private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> pelerynkaCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
+    private final Cache<UUID, Long> pelerynkaPCooldownExp = CacheBuilder.newBuilder().expireAfterWrite(45, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> rdzenCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
@@ -191,7 +192,7 @@ public class CooldownManager {
         return this.pelerynkaCooldownAfk.asMap().containsKey(uuid);
     }
     public void givePelerynkaCooldownExp(final UUID uuid) {
-        this.pelerynkaCooldownExp.put(uuid, System.currentTimeMillis() + 30_000L);
+        this.pelerynkaCooldownExp.put(uuid, System.currentTimeMillis() + 60_000L);
     }
 
     public boolean hasPelerynkaCooldownExp(final UUID uuid) {
@@ -201,6 +202,20 @@ public class CooldownManager {
     public String getPelerynkaCooldownExp(final UUID uuid) {
         return Utils.durationToString(this.pelerynkaCooldownExp.asMap().get(uuid), false);
     }
+
+    public void givePelerynkaPCooldownExp(final UUID uuid) {
+        this.pelerynkaPCooldownExp.put(uuid, System.currentTimeMillis() + 45_000L);
+    }
+
+    public boolean hasPelerynkaPCooldownExp(final UUID uuid) {
+        return this.pelerynkaPCooldownExp.asMap().containsKey(uuid);
+    }
+
+    public String getPelerynkaPCooldownExp(final UUID uuid) {
+        return Utils.durationToString(this.pelerynkaPCooldownExp.asMap().get(uuid), false);
+    }
+
+
 
     public void givePlayerOdlamkiCooldown(final UUID uuid) {
         this.odlamkiCooldown.put(uuid, System.currentTimeMillis() + 300L);

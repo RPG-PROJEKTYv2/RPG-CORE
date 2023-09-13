@@ -11,6 +11,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.ranks.types.RankType;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -104,6 +105,11 @@ public class ProfileCommand extends CommandAPI {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
 
+        final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankPlayerUser().getRankType();
+        if (rank == RankTypePlayer.VIP) szczescie += 25;
+        if (rank == RankTypePlayer.TWORCA) szczescie += 35;
+        if (rank == RankTypePlayer.ELITA) szczescie += 50;
+
         gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisje").setLore(Arrays.asList("&8Kliknij, aby zobaczyc postep oraz aktualne misje")).toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&6&l" + player.getName()).setSkullOwner(player.getName()).toItemStack());
         /*if (RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem() != null) {
@@ -177,28 +183,40 @@ public class ProfileCommand extends CommandAPI {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
         }
 
+        int szczescie = 0;
+
         final ItemStack[] armor = Utils.itemStackArrayFromBase64(RPGCORE.getInstance().getUserManager().find(targetUUID).getInventoriesUser().getArmor());
 
         if (armor[3] != null && armor[3].getType() != Material.AIR) {
             gui.setItem(11, armor[3].clone());
+            szczescie += Utils.getTagInt(armor[3], "szczescie");
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
         if (armor[2] != null && armor[2].getType() != Material.AIR) {
             gui.setItem(20, armor[2].clone());
+            szczescie += Utils.getTagInt(armor[2], "szczescie");
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
         if (armor[1] != null && armor[1].getType() != Material.AIR) {
             gui.setItem(29, armor[1].clone());
+            szczescie += Utils.getTagInt(armor[1], "szczescie");
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
         if (armor[0] != null && armor[0].getType() != Material.AIR) {
             gui.setItem(38, armor[0].clone());
+            szczescie += Utils.getTagInt(armor[0], "szczescie");
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
+
+        final RankTypePlayer rank = RPGCORE.getInstance().getUserManager().find(targetUUID).getRankPlayerUser().getRankType();
+        if (rank == RankTypePlayer.VIP) szczescie += 25;
+        if (rank == RankTypePlayer.TWORCA) szczescie += 35;
+        if (rank == RankTypePlayer.ELITA) szczescie += 50;
+
         gui.setItem(13, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&c&lMisje").setLore(Arrays.asList("&8Kliknij, aby zobaczyc postep oraz aktualne misje")).toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&6&l" + targetName).setSkullOwner(targetName).toItemStack());
         /*if (RPGCORE.getInstance().getPetyManager().findActivePet(player.getUniqueId()).getPet().getItem() != null) {
