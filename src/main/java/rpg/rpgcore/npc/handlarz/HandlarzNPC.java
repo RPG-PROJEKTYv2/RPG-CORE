@@ -211,6 +211,9 @@ public class  HandlarzNPC {
     public Location getLocation(final UUID uuid) {
         return locationMap.get(uuid);
     }
+    public boolean hasLocation(final UUID uuid) {
+        return locationMap.containsKey(uuid);
+    }
 
     public ImmutableSet<HandlarzUser> getHandlarzUsers() {
         return ImmutableSet.copyOf(userMap.values());

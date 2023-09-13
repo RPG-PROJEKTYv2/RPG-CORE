@@ -98,11 +98,12 @@ public class PelerynkiInteractListener implements Listener {
                     RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
                     return;
                 }
-
-                if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
-                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
-                    RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
-                    return;
+                if (RPGCORE.getInstance().getHandlarzNPC().hasLocation(player.getUniqueId())) {
+                    if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
+                        player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
+                        RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+                        return;
+                    }
                 }
             } else {
                 if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldownExp(uuid)) {
