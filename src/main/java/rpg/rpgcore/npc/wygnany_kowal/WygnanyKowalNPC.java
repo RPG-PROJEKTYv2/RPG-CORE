@@ -115,7 +115,7 @@ public class WygnanyKowalNPC {
                 dmg += 50;
                 Utils.setTagInt(sword, "dmg", dmg, true);
             }
-            Utils.setTagInt(sword, "lvl", 75, false);
+            Utils.setTagInt(sword, "lvl", 85, false);
 
 
             final ItemMeta meta = sword.getItemMeta();
@@ -124,7 +124,7 @@ public class WygnanyKowalNPC {
             lore.set(0, "&7Obrazenia: &c" + dmg);
             lore.set(1, "&7Obrazenia na potwory: &c" + moby);
             lore.set(3, "&3Silny Na Potwory: &f+" + mobyP + "%");
-            lore.set(5, "&cWymagany Poziom: &675");
+            lore.set(5, "&cWymagany Poziom: &685");
             meta.setLore(Utils.format(lore));
             sword.setItemMeta(meta);
             return;
@@ -137,14 +137,14 @@ public class WygnanyKowalNPC {
             dmg += 50;
             Utils.setTagInt(sword, "dmg", dmg, true);
         }
-        Utils.setTagInt(sword, "lvl", 75, false);
+        Utils.setTagInt(sword, "lvl", 85, false);
 
         final ItemMeta meta = sword.getItemMeta();
         meta.setDisplayName(Utils.format("&8&lWzmocnione &9&lMithrylowe Ostrze"));
         final List<String> lore = sword.getItemMeta().getLore();
         lore.set(0, "&7Obrazenia: &c" + dmg);
         lore.set(2, "&3Silny Na Ludzi: &f+" + ludzieP + "%");
-        lore.set(4, "&cWymagany Poziom: &675");
+        lore.set(4, "&cWymagany Poziom: &685");
         meta.setLore(Utils.format(lore));
         sword.setItemMeta(meta);
 

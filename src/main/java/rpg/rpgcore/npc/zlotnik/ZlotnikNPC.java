@@ -101,7 +101,7 @@ public class ZlotnikNPC {
                         "&7Szansa na Blok: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "blok") + 15, 0) + "%",
                         "&7Dodatkowe Serca: &c+" + (int) DoubleUtils.round(Utils.getTagInt(akce, "hp") + 10, 0),
                         " ",
-                        (Utils.getTagInt(akce, "lvl") > 85 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
+                        (Utils.getTagInt(akce, "lvl") > 90 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
                 )).toItemStack().clone();
             case HOPPER_MINECART:
                 return new ItemBuilder(akce.clone()).setName("&6&lWzmocnione " + akce.getItemMeta().getDisplayName()).setLore(Arrays.asList(
@@ -110,7 +110,7 @@ public class ZlotnikNPC {
                         "&7Odpornosc na Ludzi: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "odpo") + 10, 0) + "%",
                         "&7Zmniejszona Szybkosc Ruchu: &c" + (int) DoubleUtils.round(Utils.getTagInt(akce, "mspeed") - (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "mspeed") * 4) / 100), 0), 0),
                         " ",
-                        (Utils.getTagInt(akce, "lvl") > 85 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
+                        (Utils.getTagInt(akce, "lvl") > 90 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
                 )).toItemStack().clone();
             case STORAGE_MINECART:
                 return new ItemBuilder(akce.clone()).setName("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()).setLore(Arrays.asList(
@@ -119,7 +119,7 @@ public class ZlotnikNPC {
                         "&7Szansa na Cios Krytyczny: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "kryt") + 20, 0) + "%",
                         "&7Zwiekszone Obrazenia: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "srdmg") + 20, 0) + "%",
                         " ",
-                        (Utils.getTagInt(akce, "lvl") > 85 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
+                        (Utils.getTagInt(akce, "lvl") > 90 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
                 )).toItemStack().clone();
             case EXPLOSIVE_MINECART:
                 return new ItemBuilder(akce.clone()).setName("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()).setLore(Arrays.asList(
@@ -128,7 +128,7 @@ public class ZlotnikNPC {
                         "&7Wzmocnienie Ciosu Krytycznego: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "wkryt") + 10, 0) + "%",
                         "&7Zwiekszona Szybkosc Ruchu: &c+" + (int) DoubleUtils.round(Utils.getTagInt(akce, "speed") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "speed") * 5) / 100), 0), 0),
                         " ",
-                        (Utils.getTagInt(akce, "lvl") > 85 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
+                        (Utils.getTagInt(akce, "lvl") > 90 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
                 )).toItemStack().clone();
                 case WATCH:
                     return new ItemBuilder(akce.clone()).setName("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()).setLore(Arrays.asList(
@@ -137,7 +137,7 @@ public class ZlotnikNPC {
                             "&7Silny przeciwko potworom: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "potwory") + 10, 0) + "%",
                             "&7Dodatkowy EXP: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "exp") + 5, 0) + "%",
                             " ",
-                            (Utils.getTagInt(akce, "lvl") > 85 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
+                            (Utils.getTagInt(akce, "lvl") > 90 ? "&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl") : "&cWymagany poziom: &685")
                     )).toItemStack().clone();
             default:
                 return new ItemBuilder(Material.BARRIER).setName("&cCos poszlo nie tak :<").toItemStack().clone();
@@ -156,11 +156,11 @@ public class ZlotnikNPC {
                 lore.add(Utils.format("&7Szansa na Blok: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "blok") + 15, 0) + "%"));
                 lore.add(Utils.format("&7Dodatkowe Serca: &c+" + (int) DoubleUtils.round(Utils.getTagInt(akce, "hp") + 10, 0)));
                 lore.add(Utils.format(" "));
-                if (Utils.getTagInt(akce, "lvl") > 85) {
+                if (Utils.getTagInt(akce, "lvl") > 90) {
                     lore.add(Utils.format("&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl")));
                 } else {
-                    lore.add(Utils.format("&cWymagany poziom: &685"));
-                    Utils.setTagInt(akce, "lvl", 85, false);
+                    lore.add(Utils.format("&cWymagany poziom: &690"));
+                    Utils.setTagInt(akce, "lvl", 90, false);
                 }
                 Utils.setTagDouble(akce, "def", Utils.getTagDouble(akce, "def") + 15, true);
                 Utils.setTagDouble(akce, "blok", Utils.getTagDouble(akce, "blok") + 15, true);
@@ -177,11 +177,11 @@ public class ZlotnikNPC {
                 lore.add(Utils.format("&7Odpornosc na Ludzi: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "odpo") + 10, 0) + "%"));
                 lore.add(Utils.format("&7Zmniejszona Szybkosc Ruchu: &c" + (int) DoubleUtils.round(Utils.getTagInt(akce, "mspeed") - (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "mspeed") * 4) / 100), 0), 0)));
                 lore.add(Utils.format(" "));
-                if (Utils.getTagInt(akce, "lvl") > 85) {
+                if (Utils.getTagInt(akce, "lvl") > 90) {
                     lore.add(Utils.format("&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl")));
                 } else {
-                    lore.add(Utils.format("&cWymagany poziom: &685"));
-                    Utils.setTagInt(akce, "lvl", 85, false);
+                    lore.add(Utils.format("&cWymagany poziom: &690"));
+                    Utils.setTagInt(akce, "lvl", 90, false);
                 }
                 Utils.setTagDouble(akce, "ludzie", Utils.getTagDouble(akce, "ludzie") + 10, true);
                 Utils.setTagDouble(akce, "odpo", Utils.getTagDouble(akce, "odpo") + 10, true);
@@ -197,11 +197,11 @@ public class ZlotnikNPC {
                 lore.add(Utils.format("&7Szansa na Cios Krytyczny: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "kryt") + 20, 0) + "%"));
                 lore.add(Utils.format("&7Zwiekszone Obrazenia: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "srdmg") + 20, 0) + "%"));
                 lore.add(Utils.format(" "));
-                if (Utils.getTagInt(akce, "lvl") > 85) {
+                if (Utils.getTagInt(akce, "lvl") > 90) {
                     lore.add(Utils.format("&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl")));
                 } else {
-                    lore.add(Utils.format("&cWymagany poziom: &685"));
-                    Utils.setTagInt(akce, "lvl", 85, false);
+                    lore.add(Utils.format("&cWymagany poziom: &690"));
+                    Utils.setTagInt(akce, "lvl", 90, false);
                 }
                 Utils.setTagInt(akce, "ddmg", Utils.getTagInt(akce, "ddmg") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "ddmg") * 20) / 100), 0), true);
                 Utils.setTagDouble(akce, "kryt", Utils.getTagDouble(akce, "kryt") + 20, true);
@@ -217,11 +217,11 @@ public class ZlotnikNPC {
                 lore.add(Utils.format("&7Wzmocnienie Ciosu Krytycznego: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "wkryt") + 10, 0) + "%"));
                 lore.add(Utils.format("&7Zwiekszona Szybkosc Ruchu: &c+" + (int) DoubleUtils.round(Utils.getTagInt(akce, "speed") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "speed") * 5) / 100), 0), 0)));
                 lore.add(Utils.format(" "));
-                if (Utils.getTagInt(akce, "lvl") > 85) {
+                if (Utils.getTagInt(akce, "lvl") > 90) {
                     lore.add(Utils.format("&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl")));
                 } else {
-                    lore.add(Utils.format("&cWymagany poziom: &685"));
-                    Utils.setTagInt(akce, "lvl", 85, false);
+                    lore.add(Utils.format("&cWymagany poziom: &690"));
+                    Utils.setTagInt(akce, "lvl", 90, false);
                 }
                 Utils.setTagDouble(akce, "przebicie", Utils.getTagDouble(akce, "przebicie") + 10, true);
                 Utils.setTagDouble(akce, "wkryt", Utils.getTagDouble(akce, "wkryt") + 10, true);
@@ -237,11 +237,11 @@ public class ZlotnikNPC {
                 lore.add(Utils.format("&7Silny przeciwko potworom: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "potwory") + 10, 0) + "%"));
                 lore.add(Utils.format("&7Dodatkowy EXP: &c" + (int) DoubleUtils.round(Utils.getTagDouble(akce, "exp") + 5, 0) + "%"));
                 lore.add(Utils.format(" "));
-                if (Utils.getTagInt(akce, "lvl") > 85) {
+                if (Utils.getTagInt(akce, "lvl") > 90) {
                     lore.add(Utils.format("&cWymagany poziom: &6" + Utils.getTagInt(akce, "lvl")));
                 } else {
-                    lore.add(Utils.format("&cWymagany poziom: &685"));
-                    Utils.setTagInt(akce, "lvl", 85, false);
+                    lore.add(Utils.format("&cWymagany poziom: &690"));
+                    Utils.setTagInt(akce, "lvl", 90, false);
                 }
                 Utils.setTagDouble(akce, "srdmg", Utils.getTagDouble(akce, "srdmg") + 10, true);
                 Utils.setTagDouble(akce, "potwory", Utils.getTagDouble(akce, "potwory") + 10, true);

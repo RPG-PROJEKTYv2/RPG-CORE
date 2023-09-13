@@ -144,7 +144,7 @@ public class RybakNPC {
         this.wyspa1Drops.add(new Items("3", 40, RybakItems.I8.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("5", 32.5, RybakItems.I9.getItemStack(), 1));
         this.wyspa1Drops.add(new Items("6", 20, RybakItems.I10.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("7", 1, RybakItems.I5.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("7", 20, RybakItems.I5.getItemStack(), 1));
     }
 
     public ItemStack getWyspa1Drop(final Player player) {
@@ -154,11 +154,7 @@ public class RybakNPC {
         if (user.getMission() == 12) playerDrop.add(new Items("8", 25, RybakItems.I12.getItemStack(), 1));
         if (user.getMission() == 13) playerDrop.add(new Items("8", 25, RybakItems.I13.getItemStack(), 1));
 
-        ItemStack reward = this.drop(playerDrop);
-
-        while (reward == null) reward = this.drop(playerDrop);
-
-        return reward;
+        return this.drop(playerDrop);
     }
 
     private void sendDelayedMessage(final Player player, final String message, final long time) {

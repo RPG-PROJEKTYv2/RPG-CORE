@@ -99,10 +99,12 @@ public class PelerynkiInteractListener implements Listener {
                     return;
                 }
                 if (RPGCORE.getInstance().getHandlarzNPC().hasLocation(player.getUniqueId())) {
-                    if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
-                        player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
-                        RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
-                        return;
+                    if (player.getLocation().getWorld().equals(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId()).getWorld())) {
+                        if (player.getLocation().distance(RPGCORE.getInstance().getHandlarzNPC().getLocation(player.getUniqueId())) <= 0.5) {
+                            player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego uzywac do stania AFK!"));
+                            RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+                            return;
+                        }
                     }
                 }
             } else {
@@ -132,7 +134,8 @@ public class PelerynkiInteractListener implements Listener {
                     creature.teleport(player);
                 }
             }
-            if (item.getItemMeta().getDisplayName().contains("+")) RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
+            if (item.getItemMeta().getDisplayName().contains("+"))
+                RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
             else RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
             player.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie uzyto " + item.getItemMeta().getDisplayName() + "&a!"));
             RPGCORE.getInstance().getHandlarzNPC().addLocation(player.getUniqueId(), player.getLocation());
@@ -140,15 +143,10 @@ public class PelerynkiInteractListener implements Listener {
             final int range = Utils.getTagInt(item, "range");
 
             if (RPGCORE.getInstance().getCooldownManager().hasPelerynkaCooldownAfk(uuid)) return;
-            for (Entity entity : player.getNearbyEntities((double) range / 2, (double) range / 2, (double) range / 2)) {
+            for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
-                    /*if (RPGCORE.getMythicMobs().getAPIHelper().isMythicMob(entity)) {
-                        player.sendMessage("jest");
-                        final AbstractPlayer aPlayer = BukkitAdapter.adapt(player);
-                        RPGCORE.getMythicMobs().getAPIHelper().getMythicMobInstance(entity).setTarget(aPlayer);
-                        player.sendMessage(RPGCORE.getMythicMobs().getAPIHelper().getMythicMobInstance(entity).getNewTarget().asPlayer().getName());
-                    */
                     if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
+                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MINIBOSS]")) return;
                     final Creature creature = (Creature) entity;
                     creature.setTarget(player);
                 }

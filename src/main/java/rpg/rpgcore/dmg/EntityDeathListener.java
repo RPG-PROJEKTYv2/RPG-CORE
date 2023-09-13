@@ -89,7 +89,7 @@ public class EntityDeathListener implements Listener {
         final User killerUser = rpgcore.getUserManager().find(killer.getUniqueId());
         final PustelnikUser pustelnikUser = rpgcore.getPustelnikNPC().find(killer.getUniqueId());
         if (pustelnikUser.getMissionId() == 3) {
-            if (victimUser.getLvl() >= killerUser.getLvl()) {
+            if (Math.abs(victimUser.getLvl() - killerUser.getLvl()) <= 10) {
                 pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
                 rpgcore.getPustelnikNPC().save(pustelnikUser);
             }

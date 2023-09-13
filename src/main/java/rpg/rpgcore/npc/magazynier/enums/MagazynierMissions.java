@@ -22,7 +22,7 @@ public enum MagazynierMissions {
             "",
             "&f&lNAGRODA",
             "&8- &b50 punktow",
-            "&8- &6x2 &7&lCiezka Skrzynia Kowala")).addTagInt("mission", 2).toItemStack(), 450, 50, SkrzynkiOther.getItem("I2", 2)),
+            "&8- &6x2 &7&lCiezka Skrzynia Kowala")).addTagInt("mission", 2).toItemStack(), 450, 50, new ItemBuilder(SkrzynkiOther.I2.getItemStack().clone()).setAmount(2).toItemStack().clone()),
     M3(3, new ItemBuilder(Material.BOOK).setName("&c&lPogromca Bossow").setLore(Arrays.asList(
             "&7Zabij &e10 &8&l[&4&lBOSS&8&l] &7&lPrzekleta Dusza &8(Mapa 30-40)",
             "",

@@ -28,16 +28,23 @@ public class InventoryCommand extends CommandAPI {
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
-        if (args.length < 1) {
-            player.sendMessage(Utils.poprawneUzycie("inventory <gracz>"));
+        if (args.length < 2) {
+            player.sendMessage(Utils.poprawneUzycie("inventory <armor/normal> <gracz>"));
             return;
         }
-        if (!RPGCORE.getInstance().getUserManager().isUserName(args[0])) {
+        if (!RPGCORE.getInstance().getUserManager().isUserName(args[1])) {
             player.sendMessage(Utils.NIEMATAKIEGOGRACZA);
             return;
         }
-        this.openPlayerGUI(player, args[0]);
-        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto ekwipunek gracza &6" + args[0]));
+        if (args[0].equalsIgnoreCase("armor")) this.openPlayerGUI(player, args[1]);
+        else {
+            if (Bukkit.getPlayer(args[1]) == null) {
+                this.openPlayerGUI(player, args[1]);
+            } else {
+                player.openInventory(Bukkit.getPlayer(args[1]).getInventory());
+            }
+        }
+        player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie otwarto ekwipunek gracza &6" + args[1]));
     }
 
     private void openPlayerGUI(final Player player, final String target) {

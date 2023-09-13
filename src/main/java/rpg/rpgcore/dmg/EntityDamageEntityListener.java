@@ -421,6 +421,13 @@ public class EntityDamageEntityListener implements Listener {
                         ((Monster) victim).setTarget(attacker);
                     }
                 }
+
+                if (Math.max(attacker.getLocation().getY(), victim.getLocation().getY()) - Math.min(attacker.getLocation().getY(), victim.getLocation().getY()) >= 1.5) {
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                    attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz atakowac mobow z wysokosci!"));
+                }
+
+
                 if (rpgcore.getKlasyManager().getMagRMB().contains(attacker.getUniqueId())) {
                     final Location loc = victim.getLocation();
                     final List<LivingEntity> list = victim.getNearbyEntities(8, 8, 8).stream().filter(entity -> !(entity instanceof Player) && entity instanceof Creature).map(entity -> (LivingEntity) entity).collect(Collectors.toList());

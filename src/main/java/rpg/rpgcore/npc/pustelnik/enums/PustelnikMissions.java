@@ -22,7 +22,7 @@ public enum PustelnikMissions {
             " "
     )).toItemStack().clone(), 2, 20.0),
     M3(3, new ItemBuilder(Material.BOOK).setName("&e&lCzempion Areny").setLore(Arrays.asList(
-            "&7Zabij &e5 &7graczy z wyzszym lub rownym poziomem",
+            "&7Zabij &e5 &7graczy z nizszym, rownym badz wyzszym poziomem &8(w zakresie 10 lvli)",
             " "
     )).toItemStack().clone(), 5, 15.0),
     M4(4, new ItemBuilder(Material.BOOK).setName("&e&lDoswiadczenie Trzeba Zdobyc").setLore(Arrays.asList(

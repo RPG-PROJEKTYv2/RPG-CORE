@@ -56,8 +56,7 @@ public class RybakHelper {
                 break;
         }
 
-
-        increaseExp(player.getItemInHand(), exp);
+        if (exp != 0) increaseExp(player.getItemInHand(), exp);
 
        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
 
@@ -67,6 +66,10 @@ public class RybakHelper {
 
     private static int addRewardWyspa1(final Player player, final boolean doubleDrop) {
         final ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa1Drop(player).clone();
+        if (reward == null) {
+            player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
+            return 0;
+        }
         final StaruszekUser user = RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getStaruszekUser();
 
         final int mission = user.getMission();
@@ -135,6 +138,8 @@ public class RybakHelper {
         if (wedka == null || !wedka.getType().equals(Material.FISHING_ROD)) {
             return;
         }
+
+        if (wedka.getItemMeta().hasEnchant(Enchantment.LUCK)) wedka.removeEnchantment(Enchantment.LUCK);
 
         final int lvl = Utils.getTagInt(wedka, "lvl");
 
@@ -218,8 +223,8 @@ public class RybakHelper {
         if (lvl <= 50 && lvl % 10 == 0) {
             wedka.addEnchantment(Enchantment.LURE, lvl / 10);
         }
-        if (lvl % 25 == 0) {
+        /*if (lvl % 25 == 0) {
             wedka.addEnchantment(Enchantment.LUCK, lvl / 25);
-        }
+        }*/
     }
 }
