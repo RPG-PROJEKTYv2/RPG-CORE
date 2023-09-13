@@ -121,7 +121,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
                 // LOWCA
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 1) {
-                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 40), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("1-10", 1), getDropChance(szczescie, 35), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 1) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -164,7 +164,7 @@ public class    MobDropHelper {
                 rpgcore.getBossyManager().decrementBoss10_20count();
                 addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
-                    addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 35), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("10-20", 1), getDropChance(szczescie, 30), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 2) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -227,7 +227,7 @@ public class    MobDropHelper {
                 rpgcore.getBossyManager().decrementBoss30_40count();
                 addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
-                    addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("30-40", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 3) {
                     rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);
@@ -261,7 +261,7 @@ public class    MobDropHelper {
                 rpgcore.getBossyManager().decrementBoss40_50count();
                 addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
-                    addDropPlayer(player, LowcaItems.getItem("40-50", 1), getDropChance(szczescie, 15), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("40-50", 1), getDropChance(szczescie, 20), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 5) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -347,7 +347,7 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 8 -----------------------------------------
             // BOSS
             case "[BOSS] Przeklety Czarnoksieznik":
-                addDropPlayer(player, Bossy.I70_80_BONUS.getItemStack().clone(), getDropChance(szczescie, 25), true, true, entity);
+                addDropPlayer(player, Bossy.I70_80_BONUS.getItemStack().clone(), getDropChance(szczescie, 20), true, true, entity);
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPrzeklety Czarnoksieznik &fzostal zabity przez: &e" + player.getName()));
                 rpgcore.getBossyManager().reset70_80();
                 addDropPlayer(player, Skrzynki.getItem("I15", 1), 100, true, true, entity);

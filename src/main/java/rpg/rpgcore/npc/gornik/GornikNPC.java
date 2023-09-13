@@ -314,15 +314,15 @@ public class GornikNPC {
                 " ",
                 "&7Potrzebne przedmioty:",
                 "&8- &eRuda Topazu &8&l(x64) &7x4",
-                "&8- &1Ruda Tanzanitu &8&l(x64) &7x4",
-                "&8- &bRuda Diamentu &8&l(x64) &7x4",
-                "&8- &cRuda Rubinu &8&l(x64) &7x4",
-                "&8- &65 000 000&2$"
+                "&8- &1Ruda Tanzanitu &8&l(x64) &7x3",
+                "&8- &bRuda Diamentu &8&l(x64) &7x2",
+                "&8- &cRuda Rubinu &8&l(x64) &7x2",
+                "&8- &64 000 000&2$"
         )).toItemStack());
         gui.setItem(22, new ItemBuilder(GlobalItem.I_METAL.getItemStack().clone()).setLoreCrafting(GlobalItem.I_METAL.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &8Ruda Wegla &8&l(x64) &7x4",
+                "&8- &8Ruda Wegla &8&l(x64) &7x3",
                 "&8- &7Ruda Zelaza &8&l(x64) &7x2",
                 "&8- &aRuda Jadeitu &8&l(x64) &7x1",
                 "&8- &61 000 000&2$"

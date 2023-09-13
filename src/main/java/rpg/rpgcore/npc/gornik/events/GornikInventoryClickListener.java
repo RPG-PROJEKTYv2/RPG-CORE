@@ -377,23 +377,23 @@ public class GornikInventoryClickListener implements Listener {
                     break;
                 case 13:
                     if (!player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 4) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 4) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 4) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 4)) return;
-                    if (user.getKasa() < 5_000_000) return;
+                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 3) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 2) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 2)) return;
+                    if (user.getKasa() < 4_000_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(4).toItemStack(),
-                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(4).toItemStack(),
-                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(4).toItemStack(),
-                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(4).toItemStack());
-                    user.setKasa(user.getKasa() - 5_000_000);
+                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(3).toItemStack(),
+                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(2).toItemStack(),
+                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(2).toItemStack());
+                    user.setKasa(user.getKasa() - 4_000_000);
                     player.getInventory().addItem(GlobalItem.I_KAMIENBAO.getItemStack().clone());
                     break;
                 case 22:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 4) ||
+                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 3) ||
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 2) ||
                             !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 1)) return;
                     if (user.getKasa() < 1_000_000) return;
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(4).toItemStack(),
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(3).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(2).toItemStack(),
                             new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(1).toItemStack());
                     user.setKasa(user.getKasa() - 1_000_000);

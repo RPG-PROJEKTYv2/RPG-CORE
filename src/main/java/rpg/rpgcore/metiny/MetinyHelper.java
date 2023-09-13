@@ -308,17 +308,17 @@ public class MetinyHelper {
         }
         // ---------------------------------------- PIEKIELNY PRZEDSIONEK ----------------------------------------
         if (id >= 30_000 && id <= 30_011) {
-            kasaToAdd = 3_000;
+            kasaToAdd = 6_000;
             if (RPGCORE.getInstance().getPrzedsionekManager().getDungeonStatus() == DungeonStatus.ETAP_2) RPGCORE.getInstance().getPrzedsionekManager().incrementCounter();
         }
         // ---------------------------------------- KOLOSEUM ----------------------------------------
         if (id >= 40_000 && id <= 40_005) {
-            kasaToAdd = 6_000;
+            kasaToAdd = 10_000;
             RPGCORE.getInstance().getKoloseumManager().incrementCounter();
         }
         // ---------------------------------------- TAJEMNICZE PIASKI ----------------------------------------
         if (id >= 50_000 && id <= 50_005) {
-            kasaToAdd = 10_000;
+            kasaToAdd = 16_000;
             RPGCORE.getInstance().getTajemniczePiaskiManager().incrementCounter();
         }
 
