@@ -370,7 +370,7 @@ public class    MobDropHelper {
                 addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, Bossy.I2.getItemStack(),  getDropChance(szczescie, 0.2),true,true,entity);
-                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.01), true, true, entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.005), true, true, entity);
                 addDropPlayer(player, AkceItems.A8.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
@@ -403,7 +403,7 @@ public class    MobDropHelper {
             case "Pustynny Ptasznik Lvl. 84":
             case "Pustynny Ptasznik Lvl. 87":
             case "Pustynny Ptasznik Lvl. 89":
-                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.005),true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.0035),true,true,entity);
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A9.getItemStack(), akceDropChance50lvl, true, false, entity);
@@ -443,8 +443,8 @@ public class    MobDropHelper {
                 // przepa do krakenow
                 addDropPlayer(player, Przepustki.I1.getItemStack().clone(), getDropChance(szczescie, 0.15), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.001) ,true,true,entity);
-                addDropPlayer(player, AkceItems.A10.getItemStack(), akceDropChance50lvl, true, false, entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.0025) ,true,true,entity);
+                addDropPlayer(player, AkceItems.A10.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("90-100", 1), getDropChance(szczescie, 1.35), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
@@ -471,7 +471,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
-                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 20), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 25), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 11) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);

@@ -54,17 +54,6 @@ public class RybakNPC {
         this.initWyspa1Drops();
     }
 
-    private ItemStack drop(final Set<Items> playerDrop) {
-        for (Items item : playerDrop) {
-            if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                final ItemStack reward = item.getRewardItem();
-                reward.setAmount(item.getAmount());
-                return reward;
-            }
-        }
-        return null;
-    }
-
 
     // ========================================= SPAWN ========================================= //
 
@@ -138,23 +127,35 @@ public class RybakNPC {
     private final Set<Items> wyspa1Drops = new HashSet<>();
 
     private void initWyspa1Drops() {
-        this.wyspa1Drops.add(new Items("1", 65, RybakItems.I6.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("2", 55, RybakItems.I7.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("4", 40, RybakItems.I14.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("3", 40, RybakItems.I8.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("5", 32.5, RybakItems.I9.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("6", 20, RybakItems.I10.getItemStack(), 1));
-        this.wyspa1Drops.add(new Items("7", 20, RybakItems.I5.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("1", 3, RybakItems.I5.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("2", 8.5, RybakItems.I10.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("3", 11, RybakItems.I14.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("4", 15.5, RybakItems.I9.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("6", 27.5, RybakItems.I8.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("7", 37.5, RybakItems.I7.getItemStack(), 1));
+        this.wyspa1Drops.add(new Items("8", 65, RybakItems.I6.getItemStack(), 1));
     }
 
     public ItemStack getWyspa1Drop(final Player player) {
         final StaruszekUser user = this.find(player.getUniqueId()).getStaruszekUser();
-        final Set<Items> playerDrop = new HashSet<>(this.wyspa1Drops);
-        if (user.getMission() == 11) playerDrop.add(new Items("8", 25, RybakItems.I11.getItemStack(), 1));
-        if (user.getMission() == 12) playerDrop.add(new Items("8", 25, RybakItems.I12.getItemStack(), 1));
-        if (user.getMission() == 13) playerDrop.add(new Items("8", 25, RybakItems.I13.getItemStack(), 1));
+        Set<Items> playerDrop = new HashSet<>(this.wyspa1Drops);
+        if (user.getMission() == 11) playerDrop.add(new Items("5", 20, RybakItems.I11.getItemStack(), 1));
+        if (user.getMission() == 12) playerDrop.add(new Items("5", 20, RybakItems.I12.getItemStack(), 1));
+        if (user.getMission() == 13) playerDrop.add(new Items("5", 20, RybakItems.I13.getItemStack(), 1));
 
-        return this.drop(playerDrop);
+        List<Items> toSort = new ArrayList<>(playerDrop);
+
+        toSort = toSort.stream().sorted(Comparator.comparingInt(name -> Integer.parseInt(name.getName()))).collect(Collectors.toList());
+
+        playerDrop = ImmutableSet.copyOf(toSort);
+        for (Items item : playerDrop) {
+            if (ChanceHelper.getChance(item.getChance())) {
+                final ItemStack reward = item.getRewardItem();
+                reward.setAmount(item.getAmount());
+                return reward.clone();
+            }
+        }
+        return null;
     }
 
     private void sendDelayedMessage(final Player player, final String message, final long time) {

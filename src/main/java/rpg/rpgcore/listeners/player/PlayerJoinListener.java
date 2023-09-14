@@ -178,6 +178,20 @@ public class PlayerJoinListener implements Listener {
                     player.sendMessage(Utils.format(" "));
                 }
             }
+            if (item.getItemMeta().getDisplayName().contains("Bifrost")) {
+                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains(Utils.format("&7Czas Odnowienia: &e30 sec")))) continue;
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(1, Utils.format("&7Czas Odnowienia: &e30 sec"));
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+                player.sendMessage(Utils.format(" "));
+                player.sendMessage(Utils.format("&cJeden z przedmiotow w twoim ekwipunku zostal zaktualizowany"));
+                player.sendMessage(Utils.format("&cprzez administracje serwera!"));
+                player.sendMessage(Utils.format("&cZaktualizowany przedmiot to:"));
+                player.sendMessage(Utils.format("&8- " + item.getItemMeta().getDisplayName()));
+                player.sendMessage(Utils.format(" "));
+            }
         }
 
         rpgcore.getUserSaveManager().savePlayer(player, uuid);

@@ -1,6 +1,7 @@
 package rpg.rpgcore.npc.rybak.helpers;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -58,14 +59,14 @@ public class RybakHelper {
 
         if (exp != 0) increaseExp(player.getItemInHand(), exp);
 
-       RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
+        RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataOs(player.getUniqueId(), osUser));
 
 
     }
 
 
     private static int addRewardWyspa1(final Player player, final boolean doubleDrop) {
-        final ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa1Drop(player).clone();
+        final ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa1Drop(player);
         if (reward == null) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
             return 0;
@@ -108,28 +109,32 @@ public class RybakHelper {
                     user.setProgress(user.getProgress() + reward.getAmount());
                 break;
             case "Zniszczony But":
-                exp = 3 * reward.getAmount();
                 reward.setAmount(1);
+                exp = 3 * reward.getAmount();
                 if (mission == 11) user.setProgress(user.getProgress() + 1);
                 break;
             case "Glina":
-                exp = 3 * reward.getAmount();
                 reward.setAmount(1);
+                exp = 3 * reward.getAmount();
                 if (mission == 12) user.setProgress(user.getProgress() + 1);
                 break;
             case "Zylka":
-                exp = 3 * reward.getAmount();
                 reward.setAmount(1);
+                exp = 3 * reward.getAmount();
                 if (mission == 13) user.setProgress(user.getProgress() + 1);
                 break;
             case "Wilgotny Wegiel":
                 exp = 2 * reward.getAmount();
                 if (mission == 14) user.setProgress(user.getProgress() + reward.getAmount());
                 break;
+            case "Kufer Rybacki":
+                reward.setAmount(1);
+                exp = 25 * reward.getAmount();
+                break;
 
         }
         player.getInventory().addItem(reward.clone());
-        RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&3Pomyslnie wylowiono: " + reward.getItemMeta().getDisplayName() + "&3! &a+" + exp + " EXP" + (doubleDrop ? " &6&l(x2)" : ""));
+        RPGCORE.getInstance().getNmsManager().sendActionBar(player, "&3Pomyslnie wylowiono: " + reward.getItemMeta().getDisplayName() + "&3! &a+" + exp + " EXP" + (reward.getAmount() == 2 ? " &6&l(x2)" : ""));
         return exp;
     }
 
@@ -146,15 +151,15 @@ public class RybakHelper {
         int udanePolowy = Utils.getTagInt(wedka, "udanePolowy");
         udanePolowy++;
         Utils.setTagInt(wedka, "udanePolowy", udanePolowy, true);
-        final ItemMeta meta = wedka.getItemMeta();
+        ItemMeta meta = wedka.getItemMeta();
         final List<String> lore = meta.getLore();
         lore.set(2, "&7Udane Polowy: &f" + udanePolowy);
         int currentExp = Utils.getTagInt(wedka, "exp");
         final int reqExp = Utils.getTagInt(wedka, "reqExp");
-        if (!(wedka.getItemMeta().getDisplayName().contains("Stara Wedka") && lvl == 25)) {
+        if (wedka.getItemMeta().getDisplayName().contains("Stara Wedka") && lvl != 25) {
             currentExp += exp;
             Utils.setTagInt(wedka, "exp", currentExp, true);
-
+            meta = wedka.getItemMeta();
             final RybakUser user = RPGCORE.getInstance().getRybakNPC().find(RPGCORE.getInstance().getUserManager().find(Utils.getTagString(wedka, "owner")).getId());
             user.setWylowioneRyby(udanePolowy);
             user.setExpWedki(currentExp);

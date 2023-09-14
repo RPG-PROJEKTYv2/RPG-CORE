@@ -92,7 +92,7 @@ public class WygnanyKowalNPC {
                 "&7- " + (user.getKasa() >= 250_000_000 ? "&6&m" : "&6") + "250 000 000&2$",
                 "",
                 "",
-                "&c&lPRZEDMIOT TEN OTRZYMA NOWY WYMAGANY POZIOM: &6&l75"
+                "&c&lPRZEDMIOT TEN OTRZYMA NOWY WYMAGANY POZIOM: &6&l85"
         )).toItemStack().clone());
 
         player.openInventory(gui);

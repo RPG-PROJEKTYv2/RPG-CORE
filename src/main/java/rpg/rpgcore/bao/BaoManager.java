@@ -330,10 +330,10 @@ public class BaoManager {
                     case "Srednia defensywa":
                         bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() - bao.getBaoUser().getValue2());
                         break;
-                    case "Srednia defensywa przeciwko ludziom":
+                    case "Odpornosc przeciwko Ludziom":
                         bonuses.getBonusesUser().setDefnaludzi(bonuses.getBonusesUser().getDefnaludzi() - bao.getBaoUser().getValue2());
                         break;
-                    case "Srednia defensywa przeciwko potworom":
+                    case "Odpornosc przeciwko Potworom":
                         bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() - bao.getBaoUser().getValue2());
                         break;
                 }

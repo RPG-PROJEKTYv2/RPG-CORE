@@ -159,7 +159,7 @@ public class LvlManager {
         int nextLvlGracza = aktualnyLvlGracza + 1;
         final double kasaZaLvl = Levels.getByLevel(nextLvlGracza).getKasa();
 
-        if (aktualnyLvlGracza <= 50) {
+        if (aktualnyLvlGracza < 50) {
             if (nextLvlGracza == 2) {
                 rpgcore.getWyszkolenieManager().find(killerUUID).setPunkty(2);
                 rpgcore.getWyszkolenieManager().find(killerUUID).setTotalPoints(2);
@@ -175,7 +175,7 @@ public class LvlManager {
         killer.sendMessage(Utils.format("&2+ &a" + Utils.spaceNumber(kasaZaLvl) + "&2$"));
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
-        if (nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) {
+        if ((nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) || nextLvlGracza > 60) {
             rpgcore.getServer().broadcastMessage(" ");
             rpgcore.getServer().broadcastMessage(Utils.format(Utils.LVLPREFIX + "&fGracz &3" + killer.getName() + " &fosiagnal &3" + nextLvlGracza + " &fpoziom. Gratulacje!"));
             rpgcore.getServer().broadcastMessage(" ");

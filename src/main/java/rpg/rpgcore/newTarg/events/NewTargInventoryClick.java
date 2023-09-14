@@ -58,6 +58,7 @@ public class NewTargInventoryClick implements Listener {
         if (Utils.removeColor(clickedInventoryTitle).contains("Targi #")) {
             e.setCancelled(true);
 
+
             if (clickedSlot == 50) {
                 player.closeInventory();
                 return;

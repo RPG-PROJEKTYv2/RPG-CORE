@@ -221,20 +221,20 @@ public class NewTargManager {
 
         final List<ItemStack> finalAllItems = this.sortList(allItems, sort);
 
-        if (PageUtils.isPageValid(finalAllItems, page - 1, 38)) {
+        if (PageUtils.isPageValid(finalAllItems, page - 1, 35)) {
             gui.setItem(47, goLeft.setName("&aPoprzednia").toItemStack());
         } else {
             gui.setItem(47, goLeft.setName("&cPoprzednia").toItemStack());
         }
 
 
-        if (PageUtils.isPageValid(finalAllItems, page + 1, 38)) {
+        if (PageUtils.isPageValid(finalAllItems, page + 1, 35)) {
             gui.setItem(53, goRight.setName("&aNastepna").toItemStack());
         } else {
             gui.setItem(53, goRight.setName("&cNastepna").toItemStack());
         }
 
-        for (ItemStack is : PageUtils.getPageItems(finalAllItems, page, 38)) {
+        for (ItemStack is : PageUtils.getPageItems(finalAllItems, page, 35)) {
             gui.setItem(gui.firstEmpty(), is);
         }
 

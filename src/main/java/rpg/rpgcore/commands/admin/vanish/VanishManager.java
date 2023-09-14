@@ -3,6 +3,7 @@ package rpg.rpgcore.commands.admin.vanish;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.ArrayList;
@@ -26,16 +27,20 @@ public class VanishManager {
     }
 
     public void showPlayer(final Player target) {
+        TabManager.addPlayer(target);
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             restOfTheServer.showPlayer(target);
+            TabManager.update(restOfTheServer.getUniqueId());
         }
         this.vanishList.remove(target.getUniqueId());
         target.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha"));
     }
 
     public void showPlayer(final Player sender, final Player target) {
+        TabManager.addPlayer(target);
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             restOfTheServer.showPlayer(target);
+            TabManager.update(restOfTheServer.getUniqueId());
         }
         this.vanishList.remove(target.getUniqueId());
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cWylaczono &7vanisha dla gracza: " + target.getName()));
@@ -43,6 +48,7 @@ public class VanishManager {
     }
 
     public void hidePlayer(final Player target) {
+        TabManager.removePlayer(target);
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             if (rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).isAdminCodeLogin()) {
                 continue;
@@ -56,6 +62,7 @@ public class VanishManager {
     }
 
     public void hidePlayer(final Player sender, final Player target) {
+        TabManager.removePlayer(target);
         for (Player restOfTheServer : Bukkit.getOnlinePlayers()) {
             if (rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).getRankUser().isHighStaff() && rpgcore.getUserManager().find(restOfTheServer.getUniqueId()).isAdminCodeLogin()) {
                 continue;

@@ -177,7 +177,7 @@ public class DropFromChestsListener implements Listener {
                     final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
                     if (!player.getCanPickupItems()) {
                         player.getInventory().removeItem(GornikItems.getItem("Skrzynia_Gornika", 1));
-                        if (gornikUser.getMission() == 10 || gornikUser.getMission() == 24) gornikUser.setProgress(gornikUser.getProgress() + 1);
+                        if (gornikUser.getMission() == 10 || gornikUser.getMission() == 25) gornikUser.setProgress(gornikUser.getProgress() + 1);
                         osUser.setSkrzynkiProgress(osUser.getSkrzynkiProgress() + 1);
                         if (rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getSelectedMission() == 2) {
                             rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().setProgress(rpgcore.getMagazynierNPC().find(player.getUniqueId()).getMissions().getProgress() + 1);

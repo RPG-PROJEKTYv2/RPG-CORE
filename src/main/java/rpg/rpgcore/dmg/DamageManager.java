@@ -213,8 +213,8 @@ public class DamageManager {
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
         if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
-            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-            mnoznik += dmgEnergia;
+            dmgEnergia -= Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
+            mnoznik += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
         }
 
         // GILDIA
@@ -370,8 +370,9 @@ public class DamageManager {
         final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
         double dmgEnergia = 100;
         if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
-            dmgEnergia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-            mnoznik += dmgEnergia;
+            dmgEnergia -= Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
+            mnoznik += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
+
         }
 
         dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
@@ -418,7 +419,7 @@ public class DamageManager {
 
         if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus2().equals("Srednia defensywa przeciwko potworom")) {
+            if (!bao.getBonus2().equals("Odpornosc przeciwko Potworom")) {
                 drugiMnoznik += bao.getValue2();
                 mnoznik -= bao.getValue2();
             }
@@ -585,7 +586,7 @@ public class DamageManager {
 
         if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
             final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus2().equals("Srednia defensywa przeciwko ludziom")) {
+            if (!bao.getBonus2().equals("Odpornosc przeciwko Ludziom")) {
                 drugiMnoznik += bao.getValue2();
                 mnoznikProcenty -= bao.getValue2();
             }

@@ -193,7 +193,7 @@ public class TabManager {
                     tab.set(player, 3, 1, "&6Topka Klanow");
                     final Map<String, Integer> topki2 = new HashMap<>();
                     for (String s : rpgcore.getGuildManager().getListOfGuilds()) {
-                        topki2.put(s, rpgcore.getGuildManager().getGuildPoints(s));
+                        topki2.put(s, rpgcore.getGuildManager().getGuildLvl(s));
                     }
                     sortedDesc = topki2.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
                     sortedDesc.forEach(e -> afterSort.add(e.getKey()));
@@ -208,13 +208,13 @@ public class TabManager {
                     for (int i = 2; i < 18; i++) {
                         if (!afterSort.get(i - 2).equals("Brak Klanu")) {
                             if (i - 1 == 1) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else if (i - 1 == 2 || i - 1 == 3) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else if (i - 1 == 4 || i - 1 == 5) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildPoints(afterSort.get(i - 2)) + " pkt");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             }
                         } else {
                             if (i - 1 == 1) {
@@ -234,7 +234,7 @@ public class TabManager {
 
             tab.set(player,
                     "\n&7Witamy na Serwerze &cHellRPG.pl\n",
-                    "\n&7Aktualnie graczy: &c" + Bukkit.getOnlinePlayers().size() +
+                    "\n&7Aktualnie graczy: &c" + (Bukkit.getOnlinePlayers().size() - rpgcore.getVanishManager().getVanishList().size()) +
                             "\n&7Twoj Ping: &c" + ((CraftPlayer) player).getHandle().ping + " &7ms" +
                             "\n&7Discord: &cdc.HellRPG.pl               &7Sklep: &cHellRPG.pl               &7Facebook: &cfb.HellRPG.pl\n");
         }

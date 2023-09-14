@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public enum Artefakty {
     A1("Bifrost", new ItemBuilder(Material.COMPASS).setName("&b&lBifrost").setLore(Arrays.asList(
-            "&7Czas Odnowienia: &e1 min",
+            "&7Czas Odnowienia: &e30 sec",
             "",
             "&8Zapomniany artefakt, dzieki ktoremu mozesz",
             "&8podrozowac po swiecie.",
