@@ -47,6 +47,7 @@ public class User implements Cloneable {
     private boolean firstTime;
     private int serverJoins;
     private Map<String, Integer> mobMap;
+    private UUID lastMsgUUID;
 
     public User(final UUID id, final String name) {
         this.id = id;

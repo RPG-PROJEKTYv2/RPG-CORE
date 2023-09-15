@@ -232,9 +232,9 @@ public class TeleporterNPC {
             brakdostepu.setLore(lore);
             gui.setItem(40, brakdostepu.toItemStack());
         }
-        if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
+        /*if (rpgcore.getGuildManager().hasGuild(player.getUniqueId())) {
             gui.setItem(53, new ItemBuilder(Material.NETHER_BRICK).setName("&4&lKapliczka").setLore(Arrays.asList("Dodac ladowanie z obiektu, ile ma hp, jaka gildia aktualnie ja posiada, stan poszczegolnych wiez (fake graczy)")).addGlowing().toItemStack());
-        }
+        }*/
         player.openInventory(gui);
     }
 

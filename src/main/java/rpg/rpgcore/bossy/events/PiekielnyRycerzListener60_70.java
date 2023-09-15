@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,6 +12,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.BossyManager;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -37,6 +39,13 @@ public class PiekielnyRycerzListener60_70 implements Listener {
 
         if (user.getLvl() < 60) {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cPosiadasz zbyt niski poziom, zeby wykonacz ta czynnosc!"));
+            return;
+        }
+
+        if (RestartManager.restart.isRestarting()) {
+            e.setCancelled(true);
+            e.setUseItemInHand(Event.Result.DENY);
+            player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
             return;
         }
 

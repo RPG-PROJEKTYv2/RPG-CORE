@@ -202,7 +202,7 @@ public class EntityDamageEntityListener implements Listener {
                         attacker.sendMessage(Utils.format("&aGracz " + victim.getName() + " przebil twoj pancerz!"));
                     }
 
-                    double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim), 2);
+                    double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(victim, attacker), 2);
                     double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
                     if (rpgcore.getKociolkiManager().find(victim.getUniqueId()).isEgzekutor()) {
@@ -228,7 +228,7 @@ public class EntityDamageEntityListener implements Listener {
                         wartoscDefa *= 0.5;
                     }
 
-                    final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 80), 2);
+                    final double redukcja = wartoscDefa / (wartoscDefa + 40);
                     //victim.sendMessage("Redukcja - " + redukcja);
 
                     final double finalDmg = DoubleUtils.round((1 - redukcja) * playerDamage, 2);
@@ -252,7 +252,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
                     return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
-                    final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager(), e.getEntity());
+                    final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
                     final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity()), 2);
                     final double finalDmg = DoubleUtils.round(playerDamage * mnoznik, 2);
 
@@ -386,7 +386,8 @@ public class EntityDamageEntityListener implements Listener {
 //                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
 //                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
 
-                final double redukcja = DoubleUtils.round(wartoscDefa / (wartoscDefa + 40), 2);
+                final double redukcja = wartoscDefa / (wartoscDefa + 40);
+
 
 //                victim.sendMessage("Redukcja - " + redukcja);
 

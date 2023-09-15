@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
@@ -210,6 +211,10 @@ public class PlayerInteractEntityListener implements Listener {
 
             // GORNIK
             if (entityName.equalsIgnoreCase("Gornik")) {
+                if (RestartManager.restart.isRestarting()) {
+                    player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                    return;
+                }
                 if (playerRightClicked.getLocation().getWorld().getName().equals("world")) {
                     rpgcore.getGornikNPC().onClick(player);
                     return;
@@ -279,6 +284,13 @@ public class PlayerInteractEntityListener implements Listener {
 
             // TRADE
             if (player.isSneaking()) {
+
+                if (RestartManager.restart.isRestarting()) {
+                    e.setCancelled(true);
+                    player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                    return;
+                }
+
                 if (entityName.equalsIgnoreCase("Magazynier") || entityName.equalsIgnoreCase("Handlarz") || entityName.equalsIgnoreCase("Metinolog") || entityName.equalsIgnoreCase("Przyrodnik") ||
                         entityName.equalsIgnoreCase("Kolekcjoner") || entityName.equalsIgnoreCase("Lowca") || entityName.equalsIgnoreCase("Dungeony") ||
                         entityName.equalsIgnoreCase("Pomocnik Gornika") || entityName.equalsIgnoreCase("TELEPORTER") || entityName.equalsIgnoreCase("Rybak") ||

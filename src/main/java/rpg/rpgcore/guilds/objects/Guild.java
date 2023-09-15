@@ -1,4 +1,4 @@
-package rpg.rpgcore.guilds;
+package rpg.rpgcore.guilds.objects;
 
 import lombok.Getter;
 import lombok.Setter;

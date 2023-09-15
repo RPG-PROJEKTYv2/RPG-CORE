@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.utils.Utils;
 
 public class IceTowerListener implements Listener {
@@ -50,6 +51,11 @@ public class IceTowerListener implements Listener {
             }
             Player player = e.getPlayer();
             if (player.getWorld().getName().equals("50-60map")) {
+                if (RestartManager.restart.isRestarting()) {
+                    e.setCancelled(true);
+                    player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                    return;
+                }
                 if (e.getClickedBlock().getType().equals(Material.LAPIS_BLOCK) && RPGCORE.getInstance().getIceTowerManager().getKamienLocations().contains(e.getClickedBlock().getLocation())) {
                     if (RPGCORE.getInstance().getIceTowerManager().getHp() > 0) {
                         RPGCORE.getInstance().getIceTowerManager().damageKamien(player);

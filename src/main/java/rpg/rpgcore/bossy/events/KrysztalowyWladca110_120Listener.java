@@ -13,6 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -66,6 +67,12 @@ public class KrysztalowyWladca110_120Listener implements Listener {
                 this.bossyUser.save();
                 return;
             }
+            return;
+        }
+
+        if (RestartManager.restart.isRestarting()) {
+            e.setCancelled(true);
+            player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
             return;
         }
 

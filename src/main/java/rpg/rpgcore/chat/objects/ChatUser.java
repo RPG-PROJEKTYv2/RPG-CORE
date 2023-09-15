@@ -12,7 +12,8 @@ import java.util.UUID;
 @Setter
 public class ChatUser implements Cloneable {
     private UUID uuid;
-    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled;
+    private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled,
+    boss1_10;
     private List<UUID> ignoredPlayers;
 
     public ChatUser(UUID uuid) {
@@ -27,6 +28,7 @@ public class ChatUser implements Cloneable {
         this.quitMessageEnabled = true;
         this.dmgHologramsVisable = true;
         this.databaseMessageEnabled = true;
+        this.boss1_10 = true;
     }
 
     public ChatUser(Document document) {
@@ -41,6 +43,7 @@ public class ChatUser implements Cloneable {
         this.quitMessageEnabled = document.getBoolean("quitMessageEnabled");
         this.dmgHologramsVisable = document.getBoolean("dmgHologramsVisable");
         this.databaseMessageEnabled = (document.containsKey("databaseMessageEnabled") ? document.getBoolean("databaseMessageEnabled") : true);
+        this.boss1_10 = (document.containsKey("boss1_10") ? document.getBoolean("boss1_10") : true);
     }
 
     public Document toDocument() {
@@ -54,7 +57,8 @@ public class ChatUser implements Cloneable {
                 .append("joinMessageEnabled", joinMessageEnabled)
                 .append("quitMessageEnabled", quitMessageEnabled)
                 .append("dmgHologramsVisable", dmgHologramsVisable)
-                .append("databaseMessageEnabled", databaseMessageEnabled);
+                .append("databaseMessageEnabled", databaseMessageEnabled)
+                .append("boss1_10", boss1_10);
     }
 
     @Override

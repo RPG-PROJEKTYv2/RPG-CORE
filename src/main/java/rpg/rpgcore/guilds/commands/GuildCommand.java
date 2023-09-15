@@ -1,4 +1,4 @@
-package rpg.rpgcore.guilds;
+package rpg.rpgcore.guilds.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -241,6 +241,7 @@ public class GuildCommand extends CommandAPI {
 
                 if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToKick)) {
                     rpgcore.getGuildManager().removePlayerFromGuild(tag, uuidToKick);
+                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
                     return;
                 } else {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToKick).getName() + " &cnie jest czlonkiem twojego klanu"));

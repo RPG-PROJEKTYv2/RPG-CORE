@@ -83,6 +83,7 @@ public class KoloseumManager {
         this.resetCounter();
         this.setDungeonStatus(DungeonStatus.ENDED);
         this.clearEntities(true);
+        this.getDungeon().getPlayers().forEach(p -> p.teleport(rpgcore.getSpawnManager().getSpawn()));
         for (final int metinId : this.getMetinIds()) MetinyHelper.despawnMetin(metinId);
         Bukkit.getServer().broadcastMessage(Utils.format("&6&lKoloseum &8>> &7Dungeon zostal zresetowany!"));
     }

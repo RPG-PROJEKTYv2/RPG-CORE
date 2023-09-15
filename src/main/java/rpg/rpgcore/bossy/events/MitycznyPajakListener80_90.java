@@ -11,6 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -34,6 +35,12 @@ public class MitycznyPajakListener80_90 implements Listener {
 
         e.setCancelled(true);
         e.setUseItemInHand(Event.Result.DENY);
+
+        if (RestartManager.restart.isRestarting()) {
+            player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+            return;
+        }
+
         player.getInventory().removeItem(new ItemBuilder(item.clone()).setAmount(1).toItemStack().clone());
         Bukkit.broadcastMessage(" ");
         Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &fGracz &6" + player.getName() + " &fprzywolal &e&lMitycznego Pajaka&f!"));

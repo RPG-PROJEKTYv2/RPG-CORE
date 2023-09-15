@@ -27,7 +27,7 @@ import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
 import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
-import rpg.rpgcore.guilds.GuildObject;
+import rpg.rpgcore.guilds.objects.GuildObject;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
 import rpg.rpgcore.managers.disabled.Disabled;

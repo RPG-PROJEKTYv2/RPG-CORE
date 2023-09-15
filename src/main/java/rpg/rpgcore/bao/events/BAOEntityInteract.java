@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -61,9 +62,14 @@ public class BAOEntityInteract implements Listener {
 //        player.sendMessage("Custom Name - " + Utils.format(as.getCustomName()));
 
 
+        e.setCancelled(true);
+        if (RestartManager.restart.isRestarting()) {
+            player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+            return;
+        }
+
         if (!rpgcore.getBaoManager().checkIfClickedEntityIsInList(e.getRightClicked().getLocation())) return;
 
-        e.setCancelled(true);
         if (rpgcore.getUserManager().find(uuid).getLvl() < 70) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c70 &7poziom, zeby uzywac &6STOLU MAGII"));
             return;

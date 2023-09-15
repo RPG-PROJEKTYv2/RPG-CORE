@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.guilds.GuildObject;
+import rpg.rpgcore.guilds.objects.GuildObject;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;

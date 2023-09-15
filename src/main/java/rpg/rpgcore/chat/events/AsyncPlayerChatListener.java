@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.guilds.Guild;
+import rpg.rpgcore.guilds.objects.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -181,7 +181,7 @@ public class AsyncPlayerChatListener implements Listener {
             "misje", "list", "lista", "gracze", "onlinelist", "listagraczy", "craftingi", "rangi", "vip", "elita",
             "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower",
             "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb",
-            "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob"
+            "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob", "gc", "kc"
     );
     final List<String> ownCommandsAdmin = Arrays.asList(
             "adminpanel", "paneladmin",

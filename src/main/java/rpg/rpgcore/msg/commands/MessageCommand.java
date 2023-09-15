@@ -76,11 +76,5 @@ public class MessageCommand extends CommandAPI {
         }
 
         rpgcore.getMsgManager().sendMessages(player, target, Utils.removeColor(String.valueOf(message)));
-        if (rpgcore.getMsgManager().isInMessageMapAsKey(playerUUID)) {
-            rpgcore.getMsgManager().updateMessageMap(playerUUID, targetUUID);
-            return;
-        }
-
-        rpgcore.getMsgManager().putInMessageMap(playerUUID, targetUUID);
     }
 }

@@ -25,9 +25,10 @@ import java.util.stream.Collectors;
 @Setter
 public class MSGManager {
 
-    private final HashMap<UUID, UUID> messageMap = new HashMap<>();
-
     public void sendMessages(final Player sender, final Player target, String message) {
+
+        RPGCORE.getInstance().getUserManager().find(sender.getUniqueId()).setLastMsgUUID(target.getUniqueId());
+        RPGCORE.getInstance().getUserManager().find(target.getUniqueId()).setLastMsgUUID(sender.getUniqueId());
 
         final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&e" + sender.getName() + " &8-> &6" + target.getName() + "&8]:"));
         final TextComponent targetPrefixComponent = new TextComponent(Utils.format("&8[&6" + sender.getName() + " &8-> &e" + target.getName() + "&8]:"));
@@ -81,30 +82,4 @@ public class MSGManager {
                             "**Wiadomość:** " + Utils.removeColor(message), Color.decode("#fab216")));
         });
     }
-
-
-    public HashMap<UUID, UUID> getMessageMap() {
-        return messageMap;
-    }
-
-    public UUID getTargetUUID(final UUID sender) {
-        return this.messageMap.get(sender);
-    }
-
-    public void putInMessageMap(final UUID sender, final UUID target) {
-        this.messageMap.put(sender, target);
-    }
-
-    public void updateMessageMap(final UUID sender, final UUID target) {
-        this.messageMap.replace(sender, target);
-    }
-
-    public boolean isInMessageMapAsKey(final UUID uuid) {
-        return this.messageMap.containsKey(uuid);
-    }
-
-    public boolean isInMessageMapAsValue(final UUID uuid) {
-        return this.messageMap.containsValue(uuid);
-    }
-
 }

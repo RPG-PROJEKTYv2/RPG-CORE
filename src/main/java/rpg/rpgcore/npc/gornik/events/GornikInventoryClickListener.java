@@ -103,7 +103,7 @@ public class GornikInventoryClickListener implements Listener {
                 return;
             }
 
-            if (user.getMission() == 5 || user.getMission() == 15 || user.getMission() == 18 || user.getMission() == 28) {
+            if (user.getMission() == 5 || user.getMission() == 15 || user.getMission() == 18 || user.getMission() == 24) {
                 if (player.getItemInHand() == null) {
                     player.sendMessage(Utils.format("&6&lGornika &8>> &cMusisz trzymac w rece &6Kilof Gornika&c!"));
                     return;

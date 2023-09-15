@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.BossyManager;
 import rpg.rpgcore.bossy.enums.Stage70_80;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
@@ -53,6 +55,13 @@ public class PrzekletyCzarnoksieznikListener implements Listener {
 
         final ItemStack item = e.getItem();
         if (item == null || item.getType() != Material.MAGMA_CREAM || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Przeklete Serce")) return;
+        if (RestartManager.restart.isRestarting()) {
+            e.setCancelled(true);
+            e.setUseItemInHand(Event.Result.DENY);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+            return;
+        }
         if (!bossyManager.canBeSpawned70_80()) {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz tego zrobic!"));
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cPrawdopodobnie boss pojawil sie juz gdzies na mapie!"));

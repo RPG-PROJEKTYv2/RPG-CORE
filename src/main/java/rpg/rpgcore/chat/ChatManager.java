@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chat.objects.ChatUser;
-import rpg.rpgcore.guilds.Guild;
+import rpg.rpgcore.guilds.objects.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;

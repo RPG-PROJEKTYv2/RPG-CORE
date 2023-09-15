@@ -39,9 +39,9 @@ public class KopalniaTask implements Runnable{
                 if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.IRON_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.225))  ores = Ores.O2;
                 if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.GOLD_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.185))  ores = Ores.O3;
                 if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.LAPIS_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.125))  ores = Ores.O4;
-                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.EMERALD_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.095))  ores = Ores.O5;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.EMERALD_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.094))  ores = Ores.O5;
                 if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.DIAMOND_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.05))  ores = Ores.O6;
-                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.REDSTONE_ORE) || ore1.getType().equals(Material.GLOWING_REDSTONE_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.02))  ores = Ores.O7;
+                if (rpgcore.getOreManager().getOreMap().values().stream().filter(ore1 -> ore1.getType().equals(Material.REDSTONE_ORE) || ore1.getType().equals(Material.GLOWING_REDSTONE_ORE)).count() < Math.ceil(rpgcore.getOreManager().getOreMap().values().size() * 0.03))  ores = Ores.O7;
                 rpgcore.getOreManager().setOre(ore, ores);
             }
         });

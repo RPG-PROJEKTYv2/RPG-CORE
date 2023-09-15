@@ -1,6 +1,8 @@
 name: RPG-CORE
 version: '${project.version}'
 main: rpg.rpgcore.RPGCORE
+depend:
+  - goxy
 softdepend:
   - MythicMobs
   - HolographicDisplays

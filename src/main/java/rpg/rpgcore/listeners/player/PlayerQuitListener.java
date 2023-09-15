@@ -45,7 +45,6 @@ public class PlayerQuitListener implements Listener {
         rpgcore.getUserSaveManager().removeFromTaskMap(uuid);
 
         rpgcore.getVanishManager().getVanishList().remove(uuid);
-        rpgcore.getMsgManager().getMessageMap().remove(uuid);
 
 
         if (rpgcore.getGuildManager().hasGuild(uuid)) {

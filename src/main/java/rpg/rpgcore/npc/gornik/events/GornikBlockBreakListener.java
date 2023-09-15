@@ -103,10 +103,8 @@ public class GornikBlockBreakListener implements Listener {
                     if (user.getMission() == 17) user.setProgress(user.getProgress() + 1);
                     break;
                 case REDSTONE_ORE:
-                    if (user.getMission() == 25) user.setProgress(user.getProgress() + 1);
-                    break;
                 case GLOWING_REDSTONE_ORE:
-                    if (user.getMission() == 25) user.setProgress(user.getProgress() + 1);
+                    if (user.getMission() == 26) user.setProgress(user.getProgress() + 1);
                     break;
             }
 
@@ -156,7 +154,7 @@ public class GornikBlockBreakListener implements Listener {
             player.getInventory().addItem(reward.clone());
             rpgcore.getGornikNPC().updateExp(player.getItemInHand(), info.getExp());
             if (ChanceHelper.getChance(MobDropHelper.getDropChance(player.getUniqueId(), chestDropChance))) {
-                if (user.getMission() == 6 || user.getMission() == 12 || user.getMission() == 22 || user.getMission() == 26) user.setProgress(user.getProgress() + 1);
+                if (user.getMission() == 6 || user.getMission() == 12 || user.getMission() == 22 || user.getMission() == 28) user.setProgress(user.getProgress() + 1);
                 rpgcore.getGornikNPC().getChestLocations().add(location);
                 final Block block = location.getBlock();
                 block.setType(Material.CHEST);

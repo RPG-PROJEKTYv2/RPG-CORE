@@ -40,7 +40,7 @@ public class WyslannikNPC {
         player.openInventory(gui);
     }
     public ItemStack getMobKillsGUI(final WyslannikUser user, final WyslannikMissionKillMob wyslannikMissionKillMob) {
-        if (user.getKillMobsMission() == 10) {
+        if (user.getKillMobsMission() == 11) {
             return new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
                     "&7Ukonczyles/-as juz wszystkie mozliwe",
                     "&7misje w tej kategorii."
@@ -57,7 +57,7 @@ public class WyslannikNPC {
         }
     }
     public ItemStack getBossKillsGUI(final WyslannikUser user, final WyslannikMissionKillBoss wyslannikMissionKillBoss) {
-        if (user.getKillBossMission() == 10) {
+        if (user.getKillBossMission() == 11) {
             return new ItemBuilder(Material.BARRIER).setName("&a&lWykonane!").setLore(Arrays.asList(
                     "&7Ukonczyles/-as juz wszystkie mozliwe",
                     "&7misje w tej kategorii."

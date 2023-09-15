@@ -168,13 +168,13 @@ public class TabManager {
                         if (!afterSort.get(i - 2).equals("Brak")) {
                             final User user1 = rpgcore.getUserManager().find(afterSort.get(i - 2));
                             if (i - 1 == 1) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &3" + user1.getLvl() + " lvl");
                             } else if (i - 1 == 2 || i - 1 == 3) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &3" + user1.getLvl() + " lvl");
                             } else if (i - 1 == 4 || i - 1 == 5) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &3" + user1.getLvl() + " lvl");
                             } else {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + user1.getLvl() + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &3" + user1.getLvl() + " lvl");
                             }
                         } else {
                             if (i - 1 == 1) {
@@ -208,13 +208,13 @@ public class TabManager {
                     for (int i = 2; i < 18; i++) {
                         if (!afterSort.get(i - 2).equals("Brak Klanu")) {
                             if (i - 1 == 1) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &4" + afterSort.get(i - 2) + " &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else if (i - 1 == 2 || i - 1 == 3) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &6" + afterSort.get(i - 2) + " &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else if (i - 1 == 4 || i - 1 == 5) {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &e" + afterSort.get(i - 2) + " &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             } else {
-                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &7 &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
+                                tab.set(player, 3, i, "&7" + (i - 1) + ". &7" + afterSort.get(i - 2) + " &3" + rpgcore.getGuildManager().getGuildLvl(afterSort.get(i - 2)) + " lvl");
                             }
                         } else {
                             if (i - 1 == 1) {

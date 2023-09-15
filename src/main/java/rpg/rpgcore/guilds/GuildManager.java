@@ -12,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.guilds.objects.Guild;
+import rpg.rpgcore.guilds.objects.GuildObject;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -162,7 +164,6 @@ public class GuildManager {
         }
 
         final Player player = Bukkit.getPlayer(uuid);
-        rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + player.getName() + " &czostal wyrzucony z klanu &6" + tag));
         if (player.isOnline()) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataGuild(guildObject.getTag(), guildObject);
@@ -443,7 +444,7 @@ public class GuildManager {
         for (final UUID uuid : this.getGuildMembers(tag)) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
                 final Player player = Bukkit.getPlayer(uuid);
-                player.sendMessage(Utils.format("&8[&4KlanChat&8] " + prefix + sender.getName() + ">> " + messagePrefix + message));
+                player.sendMessage(Utils.format("&8[&6"+ tag +"&8] " + prefix + sender.getName() + " &8>> " + messagePrefix + message));
             }
         }
     }

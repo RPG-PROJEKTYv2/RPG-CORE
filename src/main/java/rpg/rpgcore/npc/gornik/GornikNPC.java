@@ -432,7 +432,7 @@ public class GornikNPC {
             lore.set(0, Utils.format("&7Poziom: &e" + (lvl + 1)));
             lore.set(1, Utils.format("&7Exp: &60&7/&6" + Utils.spaceNumber(reqExp)));
         }
-        meta.setLore(lore);
+        meta.setLore(Utils.format(lore));
         item.setItemMeta(meta);
     }
 

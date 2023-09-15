@@ -172,7 +172,7 @@ public class DropFromChestsListener implements Listener {
                         return;
                     }
                 }
-                // TODO SKRZYNIA GORNIKA
+                // SKRZYNIA GORNIKA
                 if (playerItem.getItemMeta().getDisplayName().equals(Utils.format(GornikItems.I8.getItemStack().getItemMeta().getDisplayName()))) {
                     final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
                     if (!player.getCanPickupItems()) {

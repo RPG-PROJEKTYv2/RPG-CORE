@@ -3,6 +3,7 @@ package rpg.rpgcore.npc.handlarz.events;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,6 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.klasy.enums.KlasyMain;
 import rpg.rpgcore.klasy.enums.KlasySide;
 import rpg.rpgcore.klasy.objects.Klasa;
@@ -42,6 +44,14 @@ public class HandlarzInteractListener implements Listener {
         if (eventItem.getType() == Material.BOOK && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Voucher na range")) {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
 
+            if (RestartManager.restart.isRestarting()) {
+                e.setCancelled(true);
+                e.setUseInteractedBlock(Event.Result.DENY);
+                e.setUseItemInHand(Event.Result.DENY);
+                player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                return;
+            }
+
             if (user.getRankPlayerUser().getRankType().getPriority() > Objects.requireNonNull(RankTypePlayer.getByName(Utils.getTagString(eventItem, "rank"))).getPriority()) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cUzyj tego voucher, kiedy czas twojej rangi dobiegnie konca."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cCzas swojej rangi mozesz sprawdzic pod /ranktime."));
@@ -58,6 +68,14 @@ public class HandlarzInteractListener implements Listener {
         }
         if (eventItem.getType() == Material.GHAST_TEAR && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Pierscien Doswiadczenia")) {
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+
+            if (RestartManager.restart.isRestarting()) {
+                e.setCancelled(true);
+                e.setUseItemInHand(Event.Result.DENY);
+                e.setUseInteractedBlock(Event.Result.DENY);
+                player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                return;
+            }
 
             if (user.getPierscienDoswiadczenia() != 0) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPosiadasz juz aktywowany pierscien doswiadczenia."));
@@ -80,6 +98,14 @@ public class HandlarzInteractListener implements Listener {
         if (eventItem.getType() == Material.PAPER && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).contains("Reset Klasy")) {
             final Klasa klasa = RPGCORE.getInstance().getKlasyManager().find(uuid);
             final User user = RPGCORE.getInstance().getUserManager().find(uuid);
+
+            if (RestartManager.restart.isRestarting()) {
+                e.setCancelled(true);
+                e.setUseInteractedBlock(Event.Result.DENY);
+                e.setUseItemInHand(Event.Result.DENY);
+                player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                return;
+            }
 
             if (klasa.getMainKlasa() == KlasyMain.NIE_WYBRANO) {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wybranej klasy."));

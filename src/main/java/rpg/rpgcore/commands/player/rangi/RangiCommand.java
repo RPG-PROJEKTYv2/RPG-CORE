@@ -72,7 +72,8 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+50%",
                 "&7* &eZwiekszone Szczescie: &c+50",
                 "&7* &eDostep do /enderchest",
-                "&7* &eDostep do /zestawrangi"
+                "&7* &eDostep do /zestawrangi",
+                "&7* &eDostep do /magazyn"
         )).addGlowing().toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(
                 " ",

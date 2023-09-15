@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -28,6 +29,13 @@ public class TajemniczePiaskiInteractListener implements Listener {
         if (player.getLocation().getWorld().equals(rpgcore.getTajemniczePiaskiManager().getMap())) {
             if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) return;
             if (e.getClickedBlock() == null || !e.getClickedBlock().getType().equals(Material.IRON_FENCE)) return;
+            e.setCancelled(true);
+            e.setUseInteractedBlock(PlayerInteractEvent.Result.DENY);
+            e.setUseItemInHand(PlayerInteractEvent.Result.DENY);
+            if (RestartManager.restart.isRestarting()) {
+                player.sendMessage(Utils.format("&8&l[&4&lRESTART&8&l] &cNie mozesz tego zrobic, poniewaz aktualnie trwa restart serwera!"));
+                return;
+            }
             if (rpgcore.getDisabledManager().getDisabled().getDisabledDungeons().contains("Tajemnicze Piaski")) {
                 e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&cTen Dungeon zostal wylaczony przez administracje!"));
                 return;
@@ -37,9 +45,6 @@ public class TajemniczePiaskiInteractListener implements Listener {
                 e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&cTen dungeon jest aktualnie zajety!"));
                 return;
             }
-            e.setCancelled(true);
-            e.setUseInteractedBlock(PlayerInteractEvent.Result.DENY);
-            e.setUseItemInHand(PlayerInteractEvent.Result.DENY);
             e.getPlayer().getInventory().removeItem(new ItemBuilder(Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack()).setAmount(1).toItemStack());
             rpgcore.getTajemniczePiaskiManager().startDungeon(e.getPlayer());
             return;

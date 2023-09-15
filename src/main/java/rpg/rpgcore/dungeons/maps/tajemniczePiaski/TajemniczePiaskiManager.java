@@ -61,7 +61,7 @@ public class TajemniczePiaskiManager {
             }
         });
         this.rdzenieLocation = rpgcore.getMongoManager().loadAllRdzeniePiaszczystychWydm();
-        this.rdzenieLocation.put(
+        /*this.rdzenieLocation.put(
                 new Location(dungeon, -108.5, 67.5, 98.5),
                 new RdzenPiaszczystychWydm(new Location(dungeon, -108.5, 67.5, 98.5), -104, 65, 99, -113, 79, 106));
         this.rdzenieLocation.put(
@@ -81,7 +81,7 @@ public class TajemniczePiaskiManager {
                 new RdzenPiaszczystychWydm(new Location(dungeon, -171.5, 67.5, 136.5), -173, 66, 133, -181, 80, 140));
         this.rdzenieLocation.put(
                 new Location(dungeon, -138.5, 68.5, 199.5),
-                new RdzenPiaszczystychWydm(new Location(dungeon, -138.5, 68.5, 199.5), -135, 67, 201, -143, 81, 208));
+                new RdzenPiaszczystychWydm(new Location(dungeon, -138.5, 68.5, 199.5), -135, 67, 201, -143, 81, 208));*/
         rpgcore.getMongoManager().addDataDungeons(this.toDocument());
         this.resetDungeon();
     }
@@ -116,6 +116,7 @@ public class TajemniczePiaskiManager {
         this.setDungeonStatus(DungeonStatus.ENDED);
         this.clearEntities(true);
         this.respawnRdzenie();
+        this.getDungeon().getPlayers().forEach(p -> p.teleport(rpgcore.getSpawnManager().getSpawn()));
         //for (final int metinId : this.getMetinIds()) MetinyHelper.despawnMetin(metinId);
         Bukkit.getServer().broadcastMessage(Utils.format("&e&lTajemnicze Piaski &8>> &7Dungeon zostal zresetowany!"));
     }

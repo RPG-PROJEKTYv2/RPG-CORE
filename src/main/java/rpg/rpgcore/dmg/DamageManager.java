@@ -479,8 +479,9 @@ public class DamageManager {
         final UUID attackerUUID = attacker.getUniqueId();
         final BonusesUser victimBonuses = rpgcore.getBonusesManager().find(victimUUID).getBonusesUser();
         final BonusesUser attackerBonuses = rpgcore.getBonusesManager().find(attackerUUID).getBonusesUser();
-        double victimBlok = victimBonuses.getBlokciosu();
-        double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku();
+        // TODO DO ZMIANY PO DODANIU NPC OD PRZESZYWKI
+        double victimBlok = victimBonuses.getBlokciosu() * 0.8;
+        double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku() * 1.25;
         attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR && String.valueOf(attacker.getItemInHand().getType()).contains("SWORD")) {
             attackerPrzeszywka += Utils.getTagInt(attacker.getItemInHand(), "przeszywka");
@@ -513,31 +514,31 @@ public class DamageManager {
         return thorns;
     }
 
-    public double calculatePlayerThornsDmg(final Player victim, final Entity attacker) {
+    public double calculatePlayerThornsDmg(final Player victim) {
         final double thornsDmg = calculatePlayerThorns(victim);
         double mnoznik = 0.1;
 
 
         if (thornsDmg > 15) {
-            mnoznik = 0.13;
+            mnoznik = 0.15;
         }
         if (thornsDmg > 25) {
-            mnoznik = 0.17;
+            mnoznik = 0.19;
         }
         if (thornsDmg > 45) {
-            mnoznik = 0.23;
+            mnoznik = 0.25;
         }
         if (thornsDmg > 80) {
-            mnoznik = 0.29;
+            mnoznik = 0.33;
         }
         if (thornsDmg > 140) {
-            mnoznik = 0.34;
+            mnoznik = 0.37;
         }
         if (thornsDmg > 185) {
-            mnoznik = 0.38;
+            mnoznik = 0.42;
         }
         if (thornsDmg > 199) {
-            mnoznik = 0.4;
+            mnoznik = 0.5;
         }
 
 

@@ -106,6 +106,7 @@ public class PrzedsionekManager {
         dungeonStatus = DungeonStatus.ENDED;
         this.resetHologram();
         this.resetCounter();
+        this.getDungeonWorld().getPlayers().forEach(p -> p.teleport(rpgcore.getSpawnManager().getSpawn()));
         Bukkit.getServer().broadcastMessage(Utils.format("&4&lPiekielny Przedsionek &8>> &cDungeon zostal zresetowany!"));
     }
 

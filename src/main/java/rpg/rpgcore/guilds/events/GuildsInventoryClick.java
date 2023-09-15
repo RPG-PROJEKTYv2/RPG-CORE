@@ -89,6 +89,7 @@ public class GuildsInventoryClick implements Listener {
                 if (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty()) {
                     if (rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid)) {
                         rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
+                        rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(targetUUID).getName() + " &czostal wyrzucony z klanu &6" + tag));
                         player.closeInventory();
                         return;
                     }
@@ -96,6 +97,7 @@ public class GuildsInventoryClick implements Listener {
             }
 
             rpgcore.getGuildManager().removePlayerFromGuild(tag, targetUUID);
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(targetUUID).getName() + " &czostal wyrzucony z klanu &6" + tag));
             player.closeInventory();
             return;
         }
