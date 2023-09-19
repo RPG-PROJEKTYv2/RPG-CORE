@@ -8,8 +8,10 @@ import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -50,6 +52,7 @@ public class CzarownicaNPC {
 
     public void openCraftingi(final Player player) {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&5&lCzarownica &8- &eCrafting"));
+        final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
         for (int i = 0; i < gui.getSize(); i++) {
             if (i % 2 == 0) {
                 gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
@@ -57,10 +60,67 @@ public class CzarownicaNPC {
                 gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").toItemStack());
             }
         }
-        gui.setItem(4, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&5&kaa &fWytworz &5Magiczna Ksiege &5&kaa").setLore(Arrays.asList(
-                "&fOrzeł dodaj lore",
-                "&fi ogarnijcie co do craftingu z chytrym"
-        )).toItemStack());
+        gui.setItem(3, new ItemBuilder(GlobalItem.I_KSIEGAMAGII.getItemStack().clone()).setLoreCrafting(GlobalItem.I_KSIEGAMAGII.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
+                "&f&lWymagane Przedmioty:",
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I_KAMIENBAO.getItemStack(), 2) ? "&3&l&m" : "&3&l") +
+                        "Kamien Zaczarowania Stolu&8 x2 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I_KAMIENBAO.getItemStack()) + "/2)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I_CZASTKA_MAGII.getItemStack(), 2) ? "&d&l&m" : "&d&l") +
+                        "Czastka Magii&8 x2 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I_CZASTKA_MAGII.getItemStack()) + "/2)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I12.getItemStack(), 16) ? "&e&m" : "&e") +
+                        "Zloto&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I12.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I13.getItemStack(), 16) ? "&b&m" : "&b") +
+                        "Brylant&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I13.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I14.getItemStack(), 16) ? "&a&m" : "&a") +
+                        "Szmaragd&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I14.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I15.getItemStack(), 16) ? "&c&m" : "&c") +
+                        "Pyl&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I15.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I16.getItemStack(), 16) ? "&7&m" : "&7") +
+                        "Kamien&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I16.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I17.getItemStack(), 16) ? "&8&m" : "&8") +
+                        "Stal&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I17.getItemStack()) + "/16)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I18.getItemStack(), 16) ? "&7&m" : "&7") +
+                        "Proch&8 x16 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I18.getItemStack()) + "/16)",
+                "&7- " + (user.getKasa() >= 5_000_000 ? "&6&m" : "&6") + "5 000 000&2$"
+        )).toItemStack().clone());
+
+        gui.setItem(5, new ItemBuilder(GlobalItem.I_KSIEGAMAGII_PLUS.getItemStack().clone()).setLoreCrafting(GlobalItem.I_KSIEGAMAGII_PLUS.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
+                "&f&lWymagane Przedmioty:",
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I_KSIEGAMAGII.getItemStack(), 1) ? "&5&l&m" : "&5&l") +
+                        "Ksiega Magii&8 x1 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I_KSIEGAMAGII.getItemStack()) + "/1)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I_CZASTKA_MAGII.getItemStack(), 3) ? "&d&l&m" : "&d&l") +
+                        "Czastka Magii&8 x3 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I_CZASTKA_MAGII.getItemStack()) + "/3)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I12.getItemStack(), 8) ? "&e&m" : "&e") +
+                        "Zloto&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I12.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I13.getItemStack(), 8) ? "&b&m" : "&b") +
+                        "Brylant&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I13.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I14.getItemStack(), 8) ? "&a&m" : "&a") +
+                        "Szmaragd&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I14.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I15.getItemStack(), 8) ? "&c&m" : "&c") +
+                        "Pyl&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I15.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I16.getItemStack(), 8) ? "&7&m" : "&7") +
+                        "Kamien&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I16.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I17.getItemStack(), 8) ? "&8&m" : "&8") +
+                        "Stal&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I17.getItemStack()) + "/8)",
+
+                "&7- " + (player.getInventory().containsAtLeast(GlobalItem.I18.getItemStack(), 8) ? "&7&m" : "&7") +
+                        "Proch&8 x8 (" + Utils.getPlayerInventoryItemCount(player, GlobalItem.I18.getItemStack()) + "/8)",
+                "&7- " + (user.getKasa() >= 10_000_000 ? "&6&m" : "&6") + "10 000 000&2$"
+        )).toItemStack().clone());
 
         player.openInventory(gui);
     }

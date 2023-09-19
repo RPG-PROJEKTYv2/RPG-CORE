@@ -403,12 +403,12 @@ public class    MobDropHelper {
             case "Pustynny Ptasznik Lvl. 84":
             case "Pustynny Ptasznik Lvl. 87":
             case "Pustynny Ptasznik Lvl. 89":
-                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.0035),true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.005),true,true,entity);
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A9.getItemStack(), akceDropChance50lvl, true, false, entity);
+                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, akceDropChance50lvl), true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("80-90", 1), getDropChance(szczescie, 1.4), true, true, entity);
-                addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
+                addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I10.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I13.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);

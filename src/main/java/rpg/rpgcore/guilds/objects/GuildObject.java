@@ -1,5 +1,6 @@
 package rpg.rpgcore.guilds.objects;
 
+import lombok.Setter;
 import org.bson.Document;
 
 import java.util.*;
@@ -7,7 +8,9 @@ import java.util.*;
 public class GuildObject {
     private final String tag;
     private String description;
-    private final UUID owner;
+
+    @Setter
+    private UUID owner;
     private final Guild guild;
 
     public GuildObject(final String tag, final String description, final UUID owner) {

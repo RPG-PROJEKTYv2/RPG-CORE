@@ -18,7 +18,7 @@ public class UserSaveManager {
     private final ConcurrentMap<UUID, Integer> taskMap = new ConcurrentHashMap<>();
 
     public void savePlayer(final Player player, final UUID uuid) {
-        final int task = rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(rpgcore, () -> rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid)), 100L, 6000L);
+        final int task = rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(rpgcore, () -> rpgcore.getMongoManager().savePlayer(player, uuid), 100L, 6000L);
         this.addToTaskMap(uuid, task);
     }
 

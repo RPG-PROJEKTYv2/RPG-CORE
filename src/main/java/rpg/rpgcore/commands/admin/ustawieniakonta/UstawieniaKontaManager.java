@@ -546,7 +546,7 @@ public class UstawieniaKontaManager {
                 "&f&lStatystyki",
                 "&7Misja: &e" + gornik.getMission() + "&7/&e28 &7(&e" + DoubleUtils.round(((double) gornik.getMission() / 28) * 100, 2) + "%&7)",
                 "&7  - Dodatkowy Czas: &a+" + (gornikMission == null ? "0" : (gornikMission.getBonusTime() / 1000)) + "s",
-                "&7  - Silny Na Ludzi (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getSilnyNaLudzi()) + "%",
+                "&7  - Silny Na Ludzi (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getSilnyNaPotwory()) + "%",
                 "&7  - Def Na Moby (Misja): &e+" + (gornikMission == null ? "0" : gornikMission.getDefNaMoby()) + "%",
                 "&7Postep: &e" + gornik.getProgress() + "&7/&e" + (gornikMission == null ? 0 : gornikMission.getReqAmount()) + "&7(&e" + DoubleUtils.round(((double) gornik.getProgress() / (gornikMission == null ? 0 : gornikMission.getReqAmount())) * 100, 2) + "%&7)",
                 "&7Dodatkowy Czas (User): &a+" + (gornik.getMaxTimeLeft() / 1000) + "s",

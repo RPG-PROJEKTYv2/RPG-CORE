@@ -43,6 +43,16 @@ public class ArtefaktyInteractListener implements Listener {
         if (eventItem.getType() == Material.COMPASS && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Bifrost")) {
             e.setCancelled(true);
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
+                if (eventItem.getItemMeta().getLore().stream().anyMatch(s -> s.contains("1 min"))) {
+                    if (rpgcore.getCooldownManager().hasBiFrost2Cooldown(uuid)) {
+                        player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + rpgcore.getCooldownManager().getBiFrost2Cooldown(uuid)));
+                        return;
+                    }
+                    rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
+                    rpgcore.getCooldownManager().givePlayerBiFrost2Cooldown(uuid);
+                    player.sendMessage(Utils.format("&4&lArtefakty &8>> &aPomyslnie uzyto &b&lBifrostu"));
+                    return;
+                }
                 if (rpgcore.getCooldownManager().hasBiFrostCooldown(uuid)) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + rpgcore.getCooldownManager().getBiFrostCooldown(uuid)));
                     return;

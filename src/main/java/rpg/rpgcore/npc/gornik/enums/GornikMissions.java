@@ -33,7 +33,7 @@ public enum GornikMissions {
             "&7Osiagnij &c5 &7poziom &6Kilofu Gornika",
             "&f&lNagroda:",
             " &a+2m 30s &7czasu kopalni",
-            " &c+5% silny na ludzi"
+            " &c+5% silny na potwory"
     )).addTagInt("reqPickaxeLvl", 5).toItemStack().clone(), 1, 5,0,150_000),
     M6(6, new ItemBuilder(Material.BOOK).setName("&7Misja &c6").setLore(Arrays.asList(
             "&7Znajdz &c1 &aZakopana Skrzynie",
@@ -59,13 +59,13 @@ public enum GornikMissions {
     M10(10, new ItemBuilder(Material.BOOK).setName("&7Misja &c10").setLore(Arrays.asList(
             "&7Otworz &c32 &7Skrzynie Gornika",
             "&f&lNagroda:",
-            " &c+5% silny na ludzi"
+            " &c+5% silny na potwory"
     )).toItemStack().clone(), 32, 5,0,0),
     M11(11, new ItemBuilder(Material.BOOK).setName("&7Misja &c11").setLore(Arrays.asList(
             "&7Otrzymaj &c5 &7razy efekt &eHaste I &7po wydobyciu rudy",
             "&f&lNagroda:",
             " &a+55s &7czasu kopalni",
-            " &c+8% silny na ludzi"
+            " &c+8% silny na potwory"
     )).toItemStack().clone(), 5, 8,0,55_000),
     M12(12, new ItemBuilder(Material.BOOK).setName("&7Misja &c12").setLore(Arrays.asList(
             "&7Znajdz &c5 &aZakopanych Skrzyn",
@@ -87,7 +87,7 @@ public enum GornikMissions {
             "&7Osiagnij &c15 &7poziom &6Kilofu Gornika",
             "&f&lNagroda:",
             " &a+4m 10s &7czasu kopalni",
-            " &c+8% silny na ludzi"
+            " &c+8% silny na potwory"
     )).addTagInt("reqPickaxeLvl", 15).toItemStack().clone(), 1, 8,0,250_000),
     M16(16, new ItemBuilder(Material.BOOK).setName("&7Misja &c16").setLore(Arrays.asList(
             "&7Wykop &c256 &aRuda Jadeitu",
@@ -124,7 +124,7 @@ public enum GornikMissions {
             "&7Znajdz &c20 &aZakopanych Skrzyn",
             "&f&lNagroda:",
             " &a+1m 40s &7czasu kopalni",
-            " &c+8% silny na ludzi"
+            " &c+8% silny na potwory"
     )).toItemStack().clone(), 20, 8,0,100_000),
     M23(23, new ItemBuilder(Material.BOOK).setName("&7Misja &c23").setLore(Arrays.asList(
             "&7Znajdz &c48 &7Skrzyn Gornika",
@@ -142,36 +142,36 @@ public enum GornikMissions {
             " &2+5% defensywa na potwory"
     )).toItemStack().clone(), 96, 0,5,0),
     M25(26, new ItemBuilder(Material.BOOK).setName("&7Misja &c26").setLore(Arrays.asList(
-            "&7Wykop &c1024 &cRudy Rubinu",
+            "&7Wykop &c512 &cRudy Rubinu",
             "&f&lNagroda:",
             " &a+2m &7czasu kopalni"
-    )).toItemStack().clone(), 1_024, 0,0,360_000),
+    )).toItemStack().clone(), 512, 0,0,360_000),
     M27(27, new ItemBuilder(Material.BOOK).setName("&7Misja &c27").setLore(Arrays.asList(
             "&7Otrzymaj &c25 &7razy efekt &eHaste I &7po wydobyciu rudy",
             "&f&lNagroda:",
-            " &c+2% silny na ludzi",
+            " &c+2% silny na potwory",
             " &2+2% defensywa na potwory"
     )).toItemStack().clone(), 25, 4,0,120_000),
     M26(28, new ItemBuilder(Material.BOOK).setName("&7Misja &c28").setLore(Arrays.asList(
-            "&7Znajdz &c28 &aZakopane Skrzynie",
+            "&7Znajdz &c25 &aZakopane Skrzynie",
             "&f&lNagroda:",
             " &a+2m &7czasu kopalni",
-            " &c+4% silny na ludzi"
-    )).toItemStack().clone(), 28, 2,2,0),
+            " &c+4% silny na potwory"
+    )).toItemStack().clone(), 25, 2,2,0),
     M99(99, null, 0,0,0,0);
 
 
     private final int id;
     private final ItemStack item;
     private final int reqAmount;
-    private final double silnyNaLudzi, defNaMoby;
+    private final double silnyNaPotwory, defNaMoby;
     private final long bonusTime;
 
-    GornikMissions(final int id, final ItemStack item, final int reqAmount, final double silnyNaLudzi, final double defNaMoby, final long bonusTime) {
+    GornikMissions(final int id, final ItemStack item, final int reqAmount, final double silnyNaPotwory, final double defNaMoby, final long bonusTime) {
         this.id = id;
         this.item = item;
         this.reqAmount = reqAmount;
-        this.silnyNaLudzi = silnyNaLudzi;
+        this.silnyNaPotwory = silnyNaPotwory;
         this.defNaMoby = defNaMoby;
         this.bonusTime = bonusTime;
     }
@@ -188,8 +188,8 @@ public enum GornikMissions {
         return reqAmount;
     }
 
-    public double getSilnyNaLudzi() {
-        return DoubleUtils.round(silnyNaLudzi, 2);
+    public double getSilnyNaPotwory() {
+        return DoubleUtils.round(silnyNaPotwory, 2);
     }
 
     public double getDefNaMoby() {

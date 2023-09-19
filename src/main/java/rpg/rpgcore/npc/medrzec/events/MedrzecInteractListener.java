@@ -31,13 +31,13 @@ public class MedrzecInteractListener implements Listener {
                 e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() &&
                 Utils.removeColor(e.getItem().getItemMeta().getDisplayName()).equals("Rubinowe Serce"))  {
             if (user.getBonus() == 40) return;
-            if (user.getBonus() > 20) {
+            if (user.getBonus() >= 20) {
                 e.getPlayer().sendMessage(Utils.format("&6&lMedrzec &8>> &bSzafir &7to to, czego teraz potrzebuje!"));
                 return;
             }
             user.setBonus(user.getBonus() + 1);
             bonuses.getBonusesUser().setDodatkowehp(bonuses.getBonusesUser().getDodatkowehp() + 1);
-            e.getPlayer().setMaxHealth(e.getPlayer().getMaxHealth() + 1);
+            e.getPlayer().setMaxHealth(e.getPlayer().getMaxHealth() + 2);
             e.getPlayer().getInventory().removeItem(new ItemBuilder(GlobalItem.RUBINOWE_SERCE.getItemStack().clone()).setAmount(1).toItemStack());
             e.getPlayer().sendMessage(Utils.format("&a&lPomyslnie uzyto rubinowego serca!"));
             user.save();

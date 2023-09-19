@@ -3,6 +3,7 @@ package rpg.rpgcore.npc.handlarz.events;
 import org.bukkit.Material;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -134,7 +135,7 @@ public class PelerynkiInteractListener implements Listener {
                 if (entity instanceof Creature) {
                     if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
                     final Creature creature = (Creature) entity;
-                    if (creature.getName().contains("BOSS")) continue;
+                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MINIBOSS]")) continue;
                     creature.teleport(player);
                 }
             }

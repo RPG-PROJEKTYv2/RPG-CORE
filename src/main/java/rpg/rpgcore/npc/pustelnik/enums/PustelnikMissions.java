@@ -18,9 +18,9 @@ public enum PustelnikMissions {
             " "
     )).toItemStack().clone(), 6_000, 30.0),
     M2(2, new ItemBuilder(Material.BOOK).setName("&e&lPogromca Podziemia").setLore(Arrays.asList(
-            "&7Ukoncz &e2 &7dungeony z mapy",
+            "&7Ukoncz &e1 &7dungeony z mapy",
             " "
-    )).toItemStack().clone(), 2, 20.0),
+    )).toItemStack().clone(), 1, 20.0),
     M3(3, new ItemBuilder(Material.BOOK).setName("&e&lCzempion Areny").setLore(Arrays.asList(
             "&7Zabij &e5 &7graczy z nizszym, rownym badz wyzszym poziomem &8(w zakresie 10 lvli)",
             " "

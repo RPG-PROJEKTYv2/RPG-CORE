@@ -90,11 +90,6 @@ public class NewTargWystawCommand extends CommandAPI {
         lore.add(" ");
         lore.add(Utils.format("&7Wlasciciel: &c" + player.getName()));
         lore.add(Utils.format("&7Cena: &6" + Utils.spaceNumber(String.format("%.2f", kwota)) + "&2$"));
-        lore.add(" ");
-        lore.add("&8Wystawiajac ten przedmiot za kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(kwota)) + " &2$");
-        lore.add("&8Zaplacisz podatek za wystawienie przedmiotu");
-        lore.add("&8W wysokosci &c1% ceny wystawienia&8, czyli &6&o" + Utils.spaceNumber(Utils.kasaFormat.format((kwota * 1) / 100)) + " &2$");
-        lore.add(" ");
 
         meta.setLore(Utils.format(lore));
         is.setItemMeta(meta);

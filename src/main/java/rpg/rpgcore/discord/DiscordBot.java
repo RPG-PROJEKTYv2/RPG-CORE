@@ -25,10 +25,12 @@ public class DiscordBot extends ListenerAdapter {
     }
 
     public void sendChannelMessage(final String channelName, final EmbedBuilder embed) {
+        if (this.jda.getTextChannelsByName(channelName, true).isEmpty()) return;
         this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage(new MessageCreateBuilder().setEmbeds(new MessageEmbed[]{embed.build()}).build()).queue();
     }
     public void pingAdministration(final String channelName) {
         final MessageCreateData data = new MessageCreateBuilder().setContent("<@&" + "1010648182981677126" + ">").build();
+        if (this.jda.getTextChannelsByName(channelName, true).isEmpty()) return;
         this.jda.getTextChannelsByName(channelName, true).get(0).sendMessage(data).queue();
     }
 

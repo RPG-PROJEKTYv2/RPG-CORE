@@ -47,7 +47,10 @@ public class KrolGoryliListener20_30 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 20-30-BOSS 1 " + cordsToString);
-        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &7przybyl do swojego pana!"));
+        for (Player server : Bukkit.getOnlinePlayers()) {
+            if (!RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss20_30()) continue;
+            server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &7przybyl do swojego pana!"));
+        }
         bossyManager.incrementBoss20_30count();
     }
 }

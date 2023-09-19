@@ -30,9 +30,8 @@ public enum GornikItems {
             "&7Szansa Na Zakopana Skrzynie: &a+1%",
             " ",
             "&6&lBonus z pelnej zbroi",
-            "&7Zyskaj dodatkowe &a2 &7minuty na kopalni za kazda czesc zbroi",
-            "&7Dodatkowo otrzymujesz efekt &eHaste I &7na pierwsze &a5 &7minut",
-            "&7po wejsciu na kopalnie"
+            "&7Otrzymujesz permamentny efekt &eHaste I",
+            "&7kiedy jestes na Kopalni"
     )).addTagInt("bonusTime", 300_000).addTagDouble("doubleDrop", 3.5).addTagDouble("chestDrop", 1).hideFlag().toItemStack()),
     I10("Zbroja_Gornika", new ItemBuilder(Material.LEATHER_CHESTPLATE).setName("&8Zbroja Gornika").setLeatherArmorColorHEX(47, 82, 41).setLore(Arrays.asList(
             "&7Dodatkowy Czas: &a+8 min",
@@ -40,9 +39,8 @@ public enum GornikItems {
             "&7Szansa Na Zakopana Skrzynie: &a+2.5%",
             " ",
             "&6&lBonus z pelnej zbroi",
-            "&7Zyskaj dodatkowe &a2 &7minuty na kopalni za kazda czesc zbroi",
-            "&7Dodatkowo otrzymujesz efekt &eHaste I &7na pierwsze &a5 &7minut",
-            "&7po wejsciu na kopalnie"
+            "&7Otrzymujesz permamentny efekt &eHaste I",
+            "&7kiedy jestes na Kopalni"
     )).addTagInt("bonusTime", 480_000).addTagDouble("doubleDrop", 5).addTagDouble("chestDrop", 2.5).hideFlag().toItemStack()),
     I11("Spodnie_Gornika", new ItemBuilder(Material.LEATHER_LEGGINGS).setName("&8Spodnie Gornika").setLeatherArmorColorHEX(47, 82, 41).setLore(Arrays.asList(
             "&7Dodatkowy Czas: &a+7 min",
@@ -50,9 +48,8 @@ public enum GornikItems {
             "&7Szansa Na Zakopana Skrzynie: &a+1.75%",
             " ",
             "&6&lBonus z pelnej zbroi",
-            "&7Zyskaj dodatkowe &a2 &7minuty na kopalni za kazda czesc zbroi",
-            "&7Dodatkowo otrzymujesz efekt &eHaste I &7na pierwsze &a5 &7minut",
-            "&7po wejsciu na kopalnie"
+            "&7Otrzymujesz permamentny efekt &eHaste I",
+            "&7kiedy jestes na Kopalni"
     )).addTagInt("bonusTime", 420_000).addTagDouble("doubleDrop", 4).addTagDouble("chestDrop", 1.75).hideFlag().toItemStack()),
     I12("Buty_Gornika", new ItemBuilder(Material.LEATHER_BOOTS).setName("&8Buty Gornika").setLeatherArmorColorHEX(47, 82, 41).setLore(Arrays.asList(
             "&7Dodatkowy Czas: &a+4 min",
@@ -60,9 +57,8 @@ public enum GornikItems {
             "&7Szansa Na Zakopana Skrzynie: &a+0.5%",
             " ",
             "&6&lBonus z pelnej zbroi",
-            "&7Zyskaj dodatkowe &a2 &7minuty na kopalni za kazda czesc zbroi",
-            "&7Dodatkowo otrzymujesz efekt &eHaste I &7na pierwsze &a5 &7minut",
-            "&7po wejsciu na kopalnie"
+            "&7Otrzymujesz permamentny efekt &eHaste I",
+            "&7kiedy jestes na Kopalni"
     )).addTagInt("bonusTime", 240_000).addTagDouble("doubleDrop", 2.5).addTagDouble("chestDrop", 0.5).hideFlag().toItemStack());
 
 

@@ -26,14 +26,10 @@ import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.ItemShop;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerJoinListener implements Listener {
 
@@ -150,49 +146,7 @@ public class PlayerJoinListener implements Listener {
             throw new RuntimeException(ex);
         }
 
-        for (final ItemStack item : player.getInventory().getContents()) {
-            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) continue;
-            if (Utils.removeColor(item.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
-                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("45 sekund") || s.contains("1 minuta"))) continue;
-                if (Utils.getTagString(item, "type").equals("exp")) {
-                    final ItemMeta meta = item.getItemMeta();
-                    final List<String> lore = Arrays.asList(
-                            "&7Tryb: &aExpienie",
-                            (item.getItemMeta().getDisplayName().contains("+") ? "&7Cooldown: &c45 sekund" : "&7Cooldown: &c1 minuta"),
-                            "&7Zasieg Dzialania: &c" + Utils.getTagInt(item, "range") + " blokow",
-                            "",
-                            "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
-                            "&7Zmienia tryb na &aExpienie &7lub &cAFK",
-                            "",
-                            "&6Umiejetnosc: Uzycie przedmiotu &e&lRMB",
-                            "&7Teleportuje wszystkie moby w zasiegu jej",
-                            "&7dzialania do twojej lokalizacji"
-                    );
-                    meta.setLore(Utils.format(lore));
-                    item.setItemMeta(meta);
-                    player.sendMessage(Utils.format(" "));
-                    player.sendMessage(Utils.format("&cJeden z przedmiotow w twoim ekwipunku zostal zaktualizowany"));
-                    player.sendMessage(Utils.format("&cprzez administracje serwera!"));
-                    player.sendMessage(Utils.format("&cZaktualizowany przedmiot to:"));
-                    player.sendMessage(Utils.format("&8- " + item.getItemMeta().getDisplayName()));
-                    player.sendMessage(Utils.format(" "));
-                }
-            }
-            if (item.getItemMeta().getDisplayName().contains("Bifrost")) {
-                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains(Utils.format("&7Czas Odnowienia: &e30 sec")))) continue;
-                final ItemMeta meta = item.getItemMeta();
-                final List<String> lore = meta.getLore();
-                lore.set(1, Utils.format("&7Czas Odnowienia: &e30 sec"));
-                meta.setLore(lore);
-                item.setItemMeta(meta);
-                player.sendMessage(Utils.format(" "));
-                player.sendMessage(Utils.format("&cJeden z przedmiotow w twoim ekwipunku zostal zaktualizowany"));
-                player.sendMessage(Utils.format("&cprzez administracje serwera!"));
-                player.sendMessage(Utils.format("&cZaktualizowany przedmiot to:"));
-                player.sendMessage(Utils.format("&8- " + item.getItemMeta().getDisplayName()));
-                player.sendMessage(Utils.format(" "));
-            }
-        }
+        this.checkPlayerItems(player);
 
         rpgcore.getUserSaveManager().savePlayer(player, uuid);
         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
@@ -292,5 +246,49 @@ public class PlayerJoinListener implements Listener {
 
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, Utils.banMessage(banInfo[0], banInfo[1], banInfo[2], banInfo[3]));
         }
+    }
+
+    private void checkPlayerItems(final Player player) {
+        final List<String> itemNames = new ArrayList<>();
+        for (final ItemStack item : player.getInventory().getContents()) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
+                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("45 sekund") || s.contains("1 minuta"))) continue;
+                if (Utils.getTagString(item, "type").equals("exp")) {
+                    final ItemMeta meta = item.getItemMeta();
+                    final List<String> lore = Arrays.asList(
+                            "&7Tryb: &aExpienie",
+                            (item.getItemMeta().getDisplayName().contains("+") ? "&7Cooldown: &c45 sekund" : "&7Cooldown: &c1 minuta"),
+                            "&7Zasieg Dzialania: &c" + Utils.getTagInt(item, "range") + " blokow",
+                            "",
+                            "&6Umiejetnosc: Zmiana Trybu &e&lLMB",
+                            "&7Zmienia tryb na &aExpienie &7lub &cAFK",
+                            "",
+                            "&6Umiejetnosc: Uzycie przedmiotu &e&lRMB",
+                            "&7Teleportuje wszystkie moby w zasiegu jej",
+                            "&7dzialania do twojej lokalizacji"
+                    );
+                    meta.setLore(Utils.format(lore));
+                    item.setItemMeta(meta);
+                    itemNames.add(item.getItemMeta().getDisplayName());
+                    continue;
+                }
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).contains("Kilof Gornika") && item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("&6Umiejetnosc"))) {
+                final ItemMeta meta = item.getItemMeta();
+                meta.setLore(Utils.format(meta.getLore()));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+
+        if (itemNames.isEmpty()) return;
+        player.sendMessage(Utils.format(" "));
+        player.sendMessage(Utils.format("&cKilka przedmiotow w twoim ekwipunku zostal zaktualizowany"));
+        player.sendMessage(Utils.format("&cprzez administracje serwera!"));
+        player.sendMessage(Utils.format("&cZaktualizowane przedmioty to:"));
+        for (final String itemName : itemNames) player.sendMessage(Utils.format("&8- " + itemName));
+        player.sendMessage(Utils.format(" "));
     }
 }

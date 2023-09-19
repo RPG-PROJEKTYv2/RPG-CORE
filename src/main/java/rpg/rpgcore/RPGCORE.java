@@ -225,6 +225,7 @@ import rpg.rpgcore.newTarg.commands.NewTargWystawCommand;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClick;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClose;
 import rpg.rpgcore.npc.czarownica.CzarownicaNPC;
+import rpg.rpgcore.npc.czarownica.events.CzarownicaInteractListener;
 import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
@@ -539,6 +540,8 @@ public final class RPGCORE extends JavaPlugin {
         this.fixBuckets();
 
         try {
+            //MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY - GŁÓWNY BOT
+            //MTE1MjU1MjcwMzk0NDMxNDk2Mg.G4zvZC.sVF6AFJnaYHL8aMEhOkD9XjO-U-oksrgZ2GGrg - TESTOWY SERWER
             discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY");
         } catch (LoginException e) {
             throw new RuntimeException(e);
@@ -719,7 +722,10 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
+
         this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
+        //this.getServer().getPluginManager().registerEvents(new TestEntityDamageListener(this), this);
+
         this.getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractEntityListener(this), this);
@@ -896,6 +902,7 @@ public final class RPGCORE extends JavaPlugin {
 
         // ...CZAROWNICA
         this.getServer().getPluginManager().registerEvents(new CzarownicaInventoryClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new CzarownicaInteractListener(), this);
 
         // ...MISTYCZNY KOWAL
         this.getServer().getPluginManager().registerEvents(new MistycznyKowalInventoryClickListener(), this);

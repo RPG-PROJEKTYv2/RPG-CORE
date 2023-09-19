@@ -209,7 +209,6 @@ public class HellCodeCommand extends CommandAPI {
             }
 
             user.setHellCode("off");
-            user.setHellCodeLogin(false);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie wylaczyles hellcode!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
             double[] tps = MinecraftServer.getServer().recentTps;

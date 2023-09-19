@@ -47,18 +47,11 @@ public class GornikZaplacCommand extends CommandAPI {
         }
         user.setKasa(user.getKasa() - 250_000);
         final GornikUser gornikUser = rpgcore.getGornikNPC().find(player.getUniqueId());
-        boolean isFullGornikArmor = true;
         long bonusTime = 0;
         for (final ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor != null && armor.getType().toString().contains("LEATHER") && armor.getItemMeta().hasDisplayName() && armor.getItemMeta().getDisplayName().contains("Gornika")) {
                 bonusTime += Utils.getTagInt(armor, "bonusTime");
-            } else {
-                isFullGornikArmor = false;
             }
-        }
-        if (isFullGornikArmor) {
-            bonusTime += 480_000;
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 6_000, 0));
         }
         gornikUser.setTimeLeft(gornikUser.getMaxTimeLeft() + bonusTime);
         rpgcore.getGornikNPC().removeFromPayList(player.getUniqueId());

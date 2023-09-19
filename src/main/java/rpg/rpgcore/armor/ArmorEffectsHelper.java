@@ -51,48 +51,52 @@ public class ArmorEffectsHelper {
 
     public static void addEffectLeggings(Player player, int value) {
         int k = 0;
-        if (value > 59) {
+        if (value > 30) {
             k = 1;
         }
-        if (value > 119) {
+        if (value > 60) {
             k = 2;
         }
-        if (value > 179) {
+        if (value > 170) {
             k = 3;
         }
-        if (value > 239) {
+        if (value > 230) {
             k = 4;
         }
         if (k == 0) player.removePotionEffect(PotionEffectType.REGENERATION);
         if (k > 0) {
             player.removePotionEffect(PotionEffectType.REGENERATION);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999999, k));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999999, k-1));
         }
     }
 
     public static void addEffectBoots(Player player, int value) {
         int k = 0;
         if (value > 19) {
-            k = 100;
+            k = 75;
         }
         if (value > 39) {
-            k = 200;
+            k = 150;
         }
         if (value > 69) {
-            k = 300;
+            k = 200;
         }
         if (value > 99) {
-            k = 450;
+            k = 300;
         }
         if (value > 149) {
-            k = 600;
+            k = 450;
         }
         if (value > 199) {
-            k = 750;
+            k = 600;
         }
         if (value > 249) {
-            k = 900;
+            k = 750;
         }
+        if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Buty Gornika")) {
+            k = 600;
+        }
+
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());
 
         float walkSpeed = Math.min(0.2F + ((bonuses.getBonusesUser().getSzybkosc() + k) / 1500.0F), 1.0F);
@@ -118,6 +122,9 @@ public class ArmorEffectsHelper {
         }
         if (value > 159) {
             k = 4;
+        }
+        if (player.getInventory().getHelmet().getItemMeta().getDisplayName().contains("Helm Gornika")) {
+            k = 3;
         }
         if (k == 0) player.removePotionEffect(PotionEffectType.JUMP);
         if (k > 0) {

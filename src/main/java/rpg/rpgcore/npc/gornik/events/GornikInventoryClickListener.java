@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
@@ -44,6 +45,16 @@ public class GornikInventoryClickListener implements Listener {
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
+        if ((player.getOpenInventory().getTopInventory().getTitle().contains("Gornik") ||
+                Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Gornik » Kampania")) && e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (e.isShiftClick()) {
+                e.setCancelled(true);
+                return;
+            }
+            e.setCancelled(true);
+            return;
+        }
+
 
         if (title.equals("Gornik")) {
             e.setCancelled(true);
@@ -65,11 +76,19 @@ public class GornikInventoryClickListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
+            if (slot == 49) {
+                rpgcore.getGornikNPC().openGornik(player);
+                return;
+            }
+
             if (item == null || item.getType() == Material.AIR || item.getType() == Material.STAINED_GLASS_PANE) return;
             if (!item.hasItemMeta()) return;
             if (item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)) return;
 
             final GornikUser user = rpgcore.getGornikNPC().find(uuid);
+
+            if (user.getMission() == 28) return;
+
             final GornikMissions mission = GornikMissions.getById(user.getMission());
 
             if (user.getProgress() >= mission.getReqAmount()) {
@@ -77,9 +96,9 @@ public class GornikInventoryClickListener implements Listener {
                 user.setProgress(0);
                 user.setMission(user.getMission() + 1);
                 user.setDefNaMoby(user.getDefNaMoby() + mission.getDefNaMoby());
-                user.setSilnyNaMoby(user.getSilnyNaMoby() + mission.getSilnyNaLudzi());
+                user.setSilnyNaMoby(user.getSilnyNaMoby() + mission.getSilnyNaPotwory());
                 user.setMaxTimeLeft(user.getMaxTimeLeft() + mission.getBonusTime());
-                bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + mission.getSilnyNaLudzi());
+                bonuses.getBonusesUser().setSilnynapotwory(bonuses.getBonusesUser().getSilnynapotwory() + mission.getSilnyNaPotwory());
                 bonuses.getBonusesUser().setDefnamoby(bonuses.getBonusesUser().getDefnamoby() + mission.getDefNaMoby());
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataGornik(uuid, user);
@@ -129,11 +148,6 @@ public class GornikInventoryClickListener implements Listener {
 
                 if (Utils.getTagInt(player.getItemInHand(), "lvl") < reqLvl) return;
                 user.setProgress(1);
-                return;
-            }
-
-            if (slot == 49) {
-                rpgcore.getGornikNPC().openGornik(player);
                 return;
             }
             return;
@@ -300,79 +314,79 @@ public class GornikInventoryClickListener implements Listener {
                     player.getInventory().addItem(GornikItems.I7_1.getItemStack().clone());
                     break;
                 case 10:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 10) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 10)) return;
-                    if (user.getKasa() < 35_000_000) return;
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(10).toItemStack(),
-                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(10).toItemStack());
-                    user.setKasa(user.getKasa() - 35_000_000);
-                    player.getInventory().addItem(GornikItems.I9.getItemStack().clone());
-                    break;
-                case 19:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 24) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 24)) return;
-                    if (user.getKasa() < 75_000_000) return;
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(24).toItemStack(),
-                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(24).toItemStack());
-                    user.setKasa(user.getKasa() - 75_000_000);
-                    player.getInventory().addItem(GornikItems.I10.getItemStack().clone());
-                    break;
-                case 11:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 16) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 16)) return;
-                    if (user.getKasa() < 50_000_000) return;
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(16).toItemStack(),
-                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(16).toItemStack());
-                    user.setKasa(user.getKasa() - 50_000_000);
-                    player.getInventory().addItem(GornikItems.I11.getItemStack().clone());
-                    break;
-                case 20:
                     if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 8) ||
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 8) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 8) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 8) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 8) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 8) ||
-                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 8)) return;
+                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 4) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 4) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 2)) return;
                     if (user.getKasa() < 25_000_000) return;
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(8).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(8).toItemStack(),
-                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(8).toItemStack(),
-                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(8).toItemStack(),
+                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(4).toItemStack(),
+                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(4).toItemStack(),
+                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(2).toItemStack());
+                    user.setKasa(user.getKasa() - 25_000_000);
+                    player.getInventory().addItem(GornikItems.I9.getItemStack().clone());
+                    break;
+                case 19:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 12) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 12) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 10) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 10) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 6)) return;
+                    if (user.getKasa() < 50_000_000) return;
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(12).toItemStack(),
+                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(12).toItemStack(),
+                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(10).toItemStack(),
+                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(10).toItemStack(),
                             new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(8).toItemStack(),
                             new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(8).toItemStack(),
-                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(8).toItemStack());
-                    user.setKasa(user.getKasa() - 25_000_000);
+                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(6).toItemStack());
+                    user.setKasa(user.getKasa() - 50_000_000);
+                    player.getInventory().addItem(GornikItems.I10.getItemStack().clone());
+                    break;
+                case 11:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 10) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 10) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 8) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 4)) return;
+                    if (user.getKasa() < 35_000_000) return;
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(10).toItemStack(),
+                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(10).toItemStack(),
+                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(8).toItemStack(),
+                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(8).toItemStack(),
+                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(4).toItemStack());
+                    user.setKasa(user.getKasa() - 35_000_000);
+                    player.getInventory().addItem(GornikItems.I11.getItemStack().clone());
+                    break;
+                case 20:
+                    if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 6) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 4) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 4) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 2) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 2) ||
+                            !player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 1)) return;
+                    if (user.getKasa() < 17_500_000) return;
+                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(6).toItemStack(),
+                            new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(4).toItemStack(),
+                            new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(4).toItemStack(),
+                            new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(2).toItemStack(),
+                            new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(2).toItemStack(),
+                            new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    user.setKasa(user.getKasa() - 17_500_000);
                     player.getInventory().addItem(GornikItems.I12.getItemStack().clone());
                     break;
                 case 13:

@@ -11,12 +11,14 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
 import rpg.rpgcore.metiny.MetinyHelper;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
+import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
@@ -234,7 +236,7 @@ public class TajemniczePiaskiManager {
             return;
         }
         for (final Entity e : dungeon.getEntities()) {
-            if (e instanceof Player || e instanceof ArmorStand) continue;
+            if (e instanceof Player || e instanceof ArmorStand || e instanceof Item) continue;
             e.remove();
         }
     }
@@ -369,6 +371,10 @@ public class TajemniczePiaskiManager {
             if (user.getMissions().getSelectedMission() == 4) {
                 user.getMissions().setProgress(user.getMissions().getProgress() + 1);
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataMagazynier(player.getUniqueId(), user));
+            }
+            final PustelnikUser pustelnikUser = rpgcore.getPustelnikNPC().find(player.getUniqueId());
+            if (pustelnikUser.getMissionId() == 2) {
+                pustelnikUser.setProgress(pustelnikUser.getProgress() + 1);
             }
         }
         final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) hologram.getLines().get(3)).getText())).replace("Przechodzi: ", "");

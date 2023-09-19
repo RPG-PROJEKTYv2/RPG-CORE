@@ -118,6 +118,10 @@ public class GuildCommand extends CommandAPI {
                 rpgcore.getGuildManager().showGuildStats(tag, player);
                 return;
             }
+            if (args[0].equalsIgnoreCase("lider")) {
+                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cMusisz podac nowego lidera!"));
+                return;
+            }
         }
 
         if (args.length == 2) {
@@ -287,6 +291,38 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
 
+            }
+
+            if (args[0].equalsIgnoreCase("lider")) {
+                if (tag.equals("Brak Klanu")) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz klanu"));
+                    return;
+                }
+
+                final UUID uuidToSet = rpgcore.getUserManager().find(args[1]).getId();
+
+                if (uuidToSet == null) {
+                    player.sendMessage(Utils.GUILDSPREFIX + Utils.NIEMATAKIEGOGRACZA);
+                    return;
+                }
+
+                if (args[1].equalsIgnoreCase(player.getName())) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cJestes juz liderem tego klanu!"));
+                    return;
+                }
+
+                if (rpgcore.getGuildManager().getGuildMembers(tag).contains(uuidToSet)) {
+                    if (!rpgcore.getGuildManager().getGuildCoOwner(tag).isEmpty() && rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuidToSet.toString())) {
+                        rpgcore.getGuildManager().setGuildCoOwner(tag, "");
+                    }
+                    rpgcore.getGuildManager().find(tag).getGuild().setOwner(uuidToSet);
+                    rpgcore.getGuildManager().find(tag).setOwner(uuidToSet);
+                    rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&aGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &azostal wlasnie nowym liderem klanu &6" + tag));
+                    return;
+                } else {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cGracz &6" + rpgcore.getUserManager().find(uuidToSet).getName() + " &cnie jest czlonkiem twojego klanu"));
+                    return;
+                }
             }
 
         }

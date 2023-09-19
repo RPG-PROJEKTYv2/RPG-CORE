@@ -10,10 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.metiny.MetinyHelper;
@@ -117,7 +114,7 @@ public class IceTowerManager {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc despawn");
         for (Entity e : this.dungeonWorld.getEntities()) {
-            if (e instanceof Player) continue;
+            if (e instanceof Player || e instanceof Item) continue;
             e.remove();
         }
         this.dungeonWorld.getEntities().clear();

@@ -47,7 +47,10 @@ public class PrzekletaDuszaListener30_40 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 30-40-BOSS 1 " + cordsToString);
-        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &7przybyla do swojego pana!"));
+        for (Player server : Bukkit.getOnlinePlayers()) {
+            if (!RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss30_40()) continue;
+            server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &7przybyla do swojego pana!"));
+        }
         bossyManager.incrementBoss30_40count();
     }
 }

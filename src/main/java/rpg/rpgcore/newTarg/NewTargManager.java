@@ -386,11 +386,6 @@ public class NewTargManager {
         itemLore.remove(i-1);
         itemLore.remove(i-2);
         itemLore.remove(i-3);
-        itemLore.remove(i-4);
-        itemLore.remove(i-5);
-        itemLore.remove(i-6);
-        itemLore.remove(i-7);
-        itemLore.remove(i-8);
 
         meta.setLore(Utils.format(itemLore));
         itemStack.setItemMeta(meta);

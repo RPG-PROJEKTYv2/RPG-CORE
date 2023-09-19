@@ -13,6 +13,7 @@ import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -123,7 +124,7 @@ public class ProfileCommand extends CommandAPI {
                 "&7Dodatkowe Obrazenia: &f" + user.getDodatkoweobrazenia(),
                 "&7Silny Na Ludzi: &f" + user.getSilnynaludzi() + "%",
                 "&7Silny Na Potwory: &f" + user.getSilnynapotwory() + "%",
-                "&7Szansa Na Cios Krytyczny: &f" + (user.getSzansanakryta() / 4) + "%",
+                "&7Szansa Na Cios Krytyczny: &f" + (DoubleUtils.round(user.getSzansanakryta() / 2.25, 2)) + "%",
                 "&7Szansa Na Wzmocniony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
                 "&7Wzmocnienie Ciosu Krytycznego: &f" + user.getWzmocnienieKryta() + "%",
                 "&7Przeszycie Bloku Ciosu: &f" + user.getPrzeszyciebloku() + "%",
@@ -230,7 +231,7 @@ public class ProfileCommand extends CommandAPI {
                 "&7Dodatkowe Obrazenia: &f" + user.getDodatkoweobrazenia(),
                 "&7Silny Na Ludzi: &f" + user.getSilnynaludzi() + "%",
                 "&7Silny Na Potwory: &f" + user.getSilnynapotwory() + "%",
-                "&7Szansa Na Cios Krytyczny: &f" + user.getSzansanakryta() + "%",
+                "&7Szansa Na Cios Krytyczny: &f" + (DoubleUtils.round(user.getSzansanakryta() / 2.25, 2)) + "%",
                 "&7Szansa Na Wzmocniony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
                 "&7Wzmocnienie Ciosu Krytycznego: &f" + user.getWzmocnienieKryta() + "%",
                 "&7Przeszycie Bloku Ciosu: &f" + user.getPrzeszyciebloku() + "%",

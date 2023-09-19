@@ -16,6 +16,13 @@ public enum Artefakty {
             "&8podrozowac po swiecie.",
             "&4&lARTEFAKT"
     )).addGlowing().toItemStack().clone()),
+    A7("Bifrost2", new ItemBuilder(Material.COMPASS).setName("&b&lBifrost").setLore(Arrays.asList(
+            "&7Czas Odnowienia: &e1 min",
+            "",
+            "&8Zapomniany artefakt, dzieki ktoremu mozesz",
+            "&8podrozowac po swiecie.",
+            "&4&lARTEFAKT"
+    )).addGlowing().toItemStack().clone()),
     A2("Krwisty-Legendarny-Rog", new ItemBuilder(Material.INK_SACK, 1, (short) 1).setName("&4&lKrwisty Legendarny Rog").setLore(Arrays.asList(
             "&7Czas Odnowienia: &e45 sek",
             "&7Ilosc Potworow: &e15-30",

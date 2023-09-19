@@ -1,6 +1,7 @@
 package rpg.rpgcore.bao.events;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -36,10 +37,12 @@ public class BAOPlayerInteract implements Listener {
             return;
         }
 
-        if (!eventItem.equals(GlobalItem.getItem("I_KSIEGAMAGII", 1))) {
+        if (!eventItem.equals(GlobalItem.I_KSIEGAMAGII.getItemStack()) && !eventItem.equals(GlobalItem.I_KSIEGAMAGII_PLUS.getItemStack())) {
             return;
         }
         e.setCancelled(true);
+        e.setUseItemInHand(Event.Result.DENY);
+        e.setUseInteractedBlock(Event.Result.DENY);
         if (rpgcore.getUserManager().find(player.getUniqueId()).getLvl() < 70) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz posiadac minimum &c70 &7poziom, zeby uzywac &4&lKsiegi Magii"));
             return;
@@ -48,7 +51,13 @@ public class BAOPlayerInteract implements Listener {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw wylosowac swoje bonusy w &5&lStole Magii"));
             return;
         }
-        rpgcore.getBaoManager().openMainGUI(player, true);
+        if (eventItem.equals(GlobalItem.I_KSIEGAMAGII.getItemStack())) {
+            rpgcore.getBaoManager().openMainGUI(player, true);
+            return;
+        } else {
+            rpgcore.getBaoManager().openKsiegaMagiiPlus(player);
+            return;
+        }
 
 
     }

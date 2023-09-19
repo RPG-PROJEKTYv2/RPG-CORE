@@ -24,7 +24,9 @@ public enum CzarownicaMissions {
     M8(8, 256, Arrays.asList(GlobalItem.I_KSIEGAMAGII.getItemStack().clone(), GlobalItem.I_KSIEGAMAGII.getItemStack().clone())),
     M9(9, 32, Arrays.asList(new ItemBuilder(Material.ENCHANTED_BOOK).setName("&f&kaa&5 Magiczna Receptura &f&kaa").setLore(Arrays.asList(
             "&7Receptura ta umozliwi Ci wytwarzanie",
-            "&5&lKsiega Magii"
+            "&5&lKsiegi Magii &7oraz &5&lKsiegi Magii&b&l+",
+            "",
+            "&8Kliknij &6PPM &8zeby uzyc"
     )).toItemStack().clone()));
 
 
@@ -103,12 +105,10 @@ public enum CzarownicaMissions {
         }
 
         if (user.getMission() == 9) {
-            map.put(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
-            map.put(new ItemBuilder(SkrzynkiOther.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 4);
-            map.put(new ItemBuilder(SkrzynkiOther.I2.getItemStack().clone()).setAmount(1).toItemStack().clone(), 16);
-            map.put(new ItemBuilder(SkrzynkiOther.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 12);
-            map.put(new ItemBuilder(SkrzynkiOther.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 64);
-            map.put(new ItemBuilder(SkrzynkiOther.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 8);
+            map.put(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(1).toItemStack().clone(), 8);
+            map.put(new ItemBuilder(SkrzynkiOther.I1.getItemStack().clone()).setAmount(1).toItemStack().clone(), 2);
+            map.put(new ItemBuilder(SkrzynkiOther.I2.getItemStack().clone()).setAmount(1).toItemStack().clone(), 8);
+            map.put(new ItemBuilder(SkrzynkiOther.I4.getItemStack().clone()).setAmount(1).toItemStack().clone(), 48);
         }
 
         for (final ItemStack item : map.keySet()) {

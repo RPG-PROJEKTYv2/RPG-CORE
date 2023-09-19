@@ -47,7 +47,10 @@ public class WodzGoblinowListener10_20 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 10-20-BOSS 1 " + cordsToString);
-        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &7przybyl do swojego pana!"));
+        for (Player server : Bukkit.getOnlinePlayers()) {
+            if (!RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss10_20()) continue;
+           server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &7przybyl do swojego pana!"));
+        }
         bossyManager.incrementBoss10_20count();
     }
 }

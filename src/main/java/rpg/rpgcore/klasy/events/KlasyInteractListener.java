@@ -142,6 +142,7 @@ public class KlasyInteractListener implements Listener {
                             final PotionEffect blind = new PotionEffect(PotionEffectType.BLINDNESS, 100, 3, true, true);
                             final PotionEffect slow = new PotionEffect(PotionEffectType.SLOW, 100, 5, true, true);
                             for (final Player target : player.getNearbyEntities(5, 5, 5).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {
+                                if (rpgcore.getGuildManager().getGuildTag(target.getUniqueId()).equals(rpgcore.getGuildManager().getGuildTag(player.getUniqueId()))) continue;
                                 target.addPotionEffect(blind);
                                 target.addPotionEffect(slow);
                                 target.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cZostales trafiony efektem &7&lZaslony Dymnej &cgracza &6" + player.getName() + "&c!"));
@@ -173,7 +174,8 @@ public class KlasyInteractListener implements Listener {
                             }
                             final List<Double> targetHealth = new ArrayList<>();
                             for (Player target : player.getNearbyEntities(5, 5, 5).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {
-                                target.setVelocity(new Vector(0, 0.2, 0));
+                                if (rpgcore.getGuildManager().getGuildTag(target.getUniqueId()).equals(rpgcore.getGuildManager().getGuildTag(player.getUniqueId()))) continue;
+                                target.setVelocity(new Vector(0, 1.5, 0));
                                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2));
                                 targetHealth.add(target.getHealth() * 0.1);
                             }
@@ -228,6 +230,7 @@ public class KlasyInteractListener implements Listener {
                                 return;
                             }
                             for (Player target : player.getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {
+                                if (rpgcore.getGuildManager().getGuildTag(target.getUniqueId()).equals(rpgcore.getGuildManager().getGuildTag(player.getUniqueId()))) continue;
                                 final PotionEffect effect = this.effects.get(ChanceHelper.getRandInt(0, this.effects.size() - 1));
                                 if (effect.getType() == PotionEffectType.FIRE_RESISTANCE) {
                                     target.setFireTicks(100);

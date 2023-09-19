@@ -70,6 +70,10 @@ public class PlayerInteractEntityListener implements Listener {
         if (e.getRightClicked().getType().equals(EntityType.MAGMA_CUBE)) {
             if (Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")) {
                 e.setCancelled(true);
+                if (rpgcore.getCooldownManager().hasPlayerTeleporterCooldown(player.getUniqueId())) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz odczekac jeszcze &6" + rpgcore.getCooldownManager().getPlayerTeleporterCooldown(player.getUniqueId()) + " &csekund!"));
+                    return;
+                }
                 rpgcore.getTeleporterNPC().openTeleporterEXPOWISKA(player);
                 return;
             }

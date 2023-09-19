@@ -340,10 +340,25 @@ public class ChatInventoryClickListener implements Listener {
                 case 16:
                     user.setQuitMessageEnabled(!user.isQuitMessageEnabled());
                     break;
-                case 22:
+                case 19:
                     user.setDmgHologramsVisable(!user.isDmgHologramsVisable());
                     break;
-                case 26:
+                case 20:
+                    user.setBoss1_10(!user.isBoss1_10());
+                    break;
+                case 21:
+                    user.setBoss10_20(!user.isBoss10_20());
+                    break;
+                case 22:
+                    user.setBoss20_30(!user.isBoss20_30());
+                    break;
+                case 23:
+                    user.setBoss30_40(!user.isBoss30_40());
+                    break;
+                case 24:
+                    user.setBoss40_50(!user.isBoss40_50());
+                    break;
+                case 35:
                     final User mainUser = rpgcore.getUserManager().find(uuid);
                     if (mainUser.getRankUser().isHighStaff() && mainUser.isAdminCodeLogin()) {
                         user.setDatabaseMessageEnabled(!user.isDatabaseMessageEnabled());

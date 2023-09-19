@@ -47,7 +47,10 @@ public class TrytonListener40_50 implements Listener {
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 40-50-BOSS 1 " + cordsToString);
-        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &7przybyl do swojego pana!"));
+        for (Player server : Bukkit.getOnlinePlayers()) {
+            if (!RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss40_50()) continue;
+            server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &7przybyl do swojego pana!"));
+        }
         bossyManager.incrementBoss40_50count();
     }
 }

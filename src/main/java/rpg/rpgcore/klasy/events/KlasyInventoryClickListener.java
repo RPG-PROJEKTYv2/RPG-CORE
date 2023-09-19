@@ -50,6 +50,7 @@ public class KlasyInventoryClickListener implements Listener {
                     klasa.setUpgrade(0);
                     klasa.setBonus1(0);
                     klasa.setBonus2(0);
+                    klasa.setFirstReset(true);
                     klasa.save();
                     player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie zresetowales/-as swoja klase!"));
                 }

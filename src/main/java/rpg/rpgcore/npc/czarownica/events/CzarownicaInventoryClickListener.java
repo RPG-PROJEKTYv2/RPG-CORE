@@ -13,8 +13,13 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.Bossy;
+import rpg.rpgcore.utils.globalitems.expowiska.Ulepszacze;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -122,6 +127,72 @@ public class CzarownicaInventoryClickListener implements Listener {
         }
         if (title.equals("Czarownica - Crafting")) {
             e.setCancelled(true);
+            if (slot == 3) {
+                final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
+                if (!(player.getInventory().containsAtLeast(GlobalItem.I_KAMIENBAO.getItemStack(), 2) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I_CZASTKA_MAGII.getItemStack(), 2) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I12.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I13.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I14.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I15.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I16.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I17.getItemStack(), 16) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I18.getItemStack(), 16) &&
+                        user.getKasa() >= 5_000_000
+                )) {
+                    player.sendMessage(Utils.format("&5&lCzarownica &8>> &dCzegos Ci tutaj brakuje&c..."));
+                    player.closeInventory();
+                    return;
+                }
+                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_KAMIENBAO.getItemStack().clone()).setAmount(2).toItemStack(),
+                        new ItemBuilder(GlobalItem.I_CZASTKA_MAGII.getItemStack().clone()).setAmount(2).toItemStack(),
+                        new ItemBuilder(GlobalItem.I12.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I13.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I14.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I15.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I16.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I17.getItemStack().clone()).setAmount(16).toItemStack(),
+                        new ItemBuilder(GlobalItem.I18.getItemStack().clone()).setAmount(16).toItemStack()
+                );
+                user.setKasa(DoubleUtils.round(user.getKasa() - 5_000_000, 2));
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
+                player.getInventory().addItem(GlobalItem.I_KSIEGAMAGII.getItemStack().clone());
+                player.sendMessage(Utils.format("&5&lCzarownica &8>> &dPomyslnie wytworzyles " + item.getItemMeta().getDisplayName()));
+                return;
+            }
+            if (slot == 5) {
+                final User user = RPGCORE.getInstance().getUserManager().find(player.getUniqueId());
+                if (!(player.getInventory().containsAtLeast(GlobalItem.I_KSIEGAMAGII.getItemStack(), 1) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I_CZASTKA_MAGII.getItemStack(), 3) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I12.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I13.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I14.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I15.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I16.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I17.getItemStack(), 8) &&
+                        player.getInventory().containsAtLeast(GlobalItem.I18.getItemStack(), 8) &&
+                        user.getKasa() >= 7_500_000
+                )) {
+                    player.sendMessage(Utils.format("&5&lCzarownica &8>> &dCzegos Ci tutaj brakuje&c..."));
+                    player.closeInventory();
+                    return;
+                }
+                player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_KSIEGAMAGII.getItemStack().clone()).setAmount(1).toItemStack(),
+                        new ItemBuilder(GlobalItem.I_CZASTKA_MAGII.getItemStack().clone()).setAmount(3).toItemStack(),
+                        new ItemBuilder(GlobalItem.I12.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I13.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I14.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I15.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I16.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I17.getItemStack().clone()).setAmount(8).toItemStack(),
+                        new ItemBuilder(GlobalItem.I18.getItemStack().clone()).setAmount(8).toItemStack()
+                );
+                user.setKasa(DoubleUtils.round(user.getKasa() - 7_500_000, 2));
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
+                player.getInventory().addItem(GlobalItem.I_KSIEGAMAGII_PLUS.getItemStack().clone());
+                player.sendMessage(Utils.format("&5&lCzarownica &8>> &dPomyslnie wytworzyles " + item.getItemMeta().getDisplayName()));
+                return;
+            }
         }
     }
 }

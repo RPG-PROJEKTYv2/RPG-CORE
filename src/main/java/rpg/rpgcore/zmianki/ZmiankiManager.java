@@ -89,16 +89,11 @@ public class ZmiankiManager {
             if (lvl < 80) {
                 toReturn = rollFirstBonus(is, 1, 50);
                 toReturn = rollSecondBonus(toReturn.clone(), 0.01, 10);
-//                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 5);
-//                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 5);
-//                toReturn = rollFifthBonus(toReturn.clone(), 1, 10);
+
                 loreLvl = 50;
             } else {
                 toReturn = rollFirstBonus(is, 1, 200);
                 toReturn = rollSecondBonus(toReturn.clone(), 0.01, 20);
-//                toReturn = rollThirdBonus(toReturn.clone(), 0.01, 10);
-//                toReturn = rollFourthBonus(toReturn.clone(), 0.01, 10);
-//                toReturn = rollFifthBonus(toReturn.clone(), 1, 20);
                 loreLvl = 80;
             }
 
@@ -109,13 +104,19 @@ public class ZmiankiManager {
                     "&eSilny Na " + Utils.getTagString(toReturn, "silny-na-mob") + "&7: &f+" + Utils.getTagDouble(toReturn, "silny-na-val") + "%",
                     "&cWymagany Poziom: &6" + loreLvl,
                     "&8--------{&9&lMagiczne Zaczarowanie&8}--------"
-            )).addTagInt("lvl", loreLvl).toItemStack().clone();
+            )).toItemStack().clone();
+            net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(toReturn);
+            NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+            tag.setInt("lvl", loreLvl);
+            nmsStack.setTag(tag);
+            toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         } else {
             net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(is);
             NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
             tag.setDouble("defMoby", ChanceHelper.getRandDouble(1, 10));
             tag.setDouble("szansaWzmKryt", ChanceHelper.getRandDouble(0.1, 2.5));
             tag.setInt("szczescie", ChanceHelper.getRandInt(1, 5));
+            tag.setInt("lvl", 45);
             nmsStack.setTag(tag);
             toReturn = CraftItemStack.asBukkitCopy(nmsStack);
 
@@ -127,7 +128,8 @@ public class ZmiankiManager {
                     "&eSzczescie: &f+" + Utils.getTagInt(toReturn, "szczescie"),
                     "&cWymagany Poziom: &645",
                     "&8--------{&9&lMagiczne Zaczarowanie&8}--------"
-            )).addTagInt("lvl", 45).toItemStack().clone();
+            )).toItemStack().clone();
+
         }
 
 
@@ -152,7 +154,8 @@ public class ZmiankiManager {
     }
 
     private String getRandomMob() {
-        final List<String> mobs = Arrays.asList("&8Najemnik", "&2Goblin", "&7Goryl", "&8Zjawa", "&3Straznik Swiatyni", "&bMrozny Wilk", "&6Zywiolak Ognia", "&fMroczna Dusza");
+        final List<String> mobs = Arrays.asList("&8Najemnik", "&2Goblin", "&7Goryl", "&8Zjawa", "&3Straznik Swiatyni", "&bMrozny Wilk", "&6Zywiolak Ognia", "&fMroczna Dusza",
+                "&6Pustynny Ptasznik", "&5Podziemna Lowczyni");
         return mobs.get(ChanceHelper.getRandInt(0, mobs.size() - 1));
     }
 

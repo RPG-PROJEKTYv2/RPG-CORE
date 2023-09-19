@@ -13,7 +13,7 @@ import java.util.UUID;
 public class ChatUser implements Cloneable {
     private UUID uuid;
     private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled,
-    boss1_10;
+    boss1_10, boss10_20, boss20_30, boss30_40, boss40_50;
     private List<UUID> ignoredPlayers;
 
     public ChatUser(UUID uuid) {
@@ -29,6 +29,10 @@ public class ChatUser implements Cloneable {
         this.dmgHologramsVisable = true;
         this.databaseMessageEnabled = true;
         this.boss1_10 = true;
+        this.boss10_20 = true;
+        this.boss20_30 = true;
+        this.boss30_40 = true;
+        this.boss40_50 = true;
     }
 
     public ChatUser(Document document) {
@@ -44,6 +48,10 @@ public class ChatUser implements Cloneable {
         this.dmgHologramsVisable = document.getBoolean("dmgHologramsVisable");
         this.databaseMessageEnabled = (document.containsKey("databaseMessageEnabled") ? document.getBoolean("databaseMessageEnabled") : true);
         this.boss1_10 = (document.containsKey("boss1_10") ? document.getBoolean("boss1_10") : true);
+        this.boss10_20 = (document.containsKey("boss10_20") ? document.getBoolean("boss10_20") : true);
+        this.boss20_30 = (document.containsKey("boss20_30") ? document.getBoolean("boss20_30") : true);
+        this.boss30_40 = (document.containsKey("boss30_40") ? document.getBoolean("boss30_40") : true);
+        this.boss40_50 = (document.containsKey("boss40_50") ? document.getBoolean("boss40_50") : true);
     }
 
     public Document toDocument() {
@@ -58,7 +66,11 @@ public class ChatUser implements Cloneable {
                 .append("quitMessageEnabled", quitMessageEnabled)
                 .append("dmgHologramsVisable", dmgHologramsVisable)
                 .append("databaseMessageEnabled", databaseMessageEnabled)
-                .append("boss1_10", boss1_10);
+                .append("boss1_10", boss1_10)
+                .append("boss10_20", boss10_20)
+                .append("boss20_30", boss20_30)
+                .append("boss30_40", boss30_40)
+                .append("boss40_50", boss40_50);
     }
 
     @Override

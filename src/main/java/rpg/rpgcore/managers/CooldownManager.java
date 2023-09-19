@@ -16,6 +16,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> partyInviteCooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> magazynyCooldown = CacheBuilder.newBuilder().expireAfterWrite(3, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> bifrostCooldown = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> bifrost2Cooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> rogCooldown = CacheBuilder.newBuilder().expireAfterWrite(45, TimeUnit.SECONDS).build();
     private final Cache<UUID, Long> serceCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> eliksirPotegiCooldown = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build();
@@ -32,6 +33,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> liveCommandCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> rdzenCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
+    private final Cache<UUID, Long> teleporterCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -55,6 +57,9 @@ public class CooldownManager {
 
     public void givePlayerBiFrostCooldown(final UUID uuid) {
         this.bifrostCooldown.put(uuid, System.currentTimeMillis() + 30000L);
+    }
+    public void givePlayerBiFrost2Cooldown(final UUID uuid) {
+        this.bifrost2Cooldown.put(uuid, System.currentTimeMillis() + 60000L);
     }
 
     public void givePlayerRogCooldown(final UUID uuid) {
@@ -80,6 +85,9 @@ public class CooldownManager {
     public boolean hasBiFrostCooldown(final UUID uuid) {
         return this.bifrostCooldown.asMap().containsKey(uuid);
     }
+    public boolean hasBiFrost2Cooldown(final UUID uuid) {
+        return this.bifrost2Cooldown.asMap().containsKey(uuid);
+    }
 
     public boolean hasRogCooldown(final UUID uuid) {
         return this.rogCooldown.asMap().containsKey(uuid);
@@ -103,6 +111,9 @@ public class CooldownManager {
 
     public String getBiFrostCooldown(final UUID uuid) {
         return Utils.durationToString(this.bifrostCooldown.asMap().get(uuid), false);
+    }
+    public String getBiFrost2Cooldown(final UUID uuid) {
+        return Utils.durationToString(this.bifrost2Cooldown.asMap().get(uuid), false);
     }
 
     public String getRogCooldown(final UUID uuid) {
@@ -279,5 +290,17 @@ public class CooldownManager {
 
     public boolean hasPlayerTajemniczePiaskiCooldown(final UUID uuid) {
         return this.rdzenCooldown.asMap().containsKey(uuid);
+    }
+
+    public boolean hasPlayerTeleporterCooldown(final UUID uuid) {
+        return this.teleporterCooldown.asMap().containsKey(uuid);
+    }
+
+    public void givePlayerTeleporterCooldown(final UUID uuid) {
+        this.teleporterCooldown.put(uuid, System.currentTimeMillis() + 5000L);
+    }
+
+    public String getPlayerTeleporterCooldown(final UUID uuid) {
+        return Utils.durationToString(this.teleporterCooldown.asMap().get(uuid), false);
     }
 }

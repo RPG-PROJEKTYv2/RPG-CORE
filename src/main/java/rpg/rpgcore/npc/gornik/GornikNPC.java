@@ -146,7 +146,7 @@ public class GornikNPC {
 
 
         gui.setItem(10, new ItemBuilder(Material.BOOK_AND_QUILL).setName("&4&lKampania").setLore(Arrays.asList(
-                "&7Postep: &e" + (user.getMission() - 1) + "&7/&e27 &7(&e" + DoubleUtils.round((user.getMission() - 1) / 27.0 * 100, 2) + "%&7)"
+                "&7Postep: &e" + (user.getMission() - 1) + "&7/&e28 &7(&e" + DoubleUtils.round((user.getMission() - 1) / 28.0 * 100, 2) + "%&7)"
         )).toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.EMERALD).setName("&a&lSklep Gorniczy").addGlowing().toItemStack());
         gui.setItem(16, new ItemBuilder(Material.WORKBENCH).setName("&eCraftingi Gornicze").addGlowing().toItemStack());
@@ -263,50 +263,50 @@ public class GornikNPC {
         gui.setItem(10, new ItemBuilder(GornikItems.I9.getItemStack().clone()).setLoreCrafting(GornikItems.I9.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &8Ruda Wegla &8&l(x64) &7x10",
-                "&8- &7Ruda Zelaza &8&l(x64) &7x10",
-                "&8- &eRuda Topazu &8&l(x64) &7x10",
-                "&8- &1Ruda Tanzanitu &8&l(x64) &7x10",
-                "&8- &aRuda Jadeitu &8&l(x64) &7x10",
-                "&8- &bRuda Diamentu &8&l(x64) &7x10",
-                "&8- &cRuda Rubinu &8&l(x64) &7x10",
-                "&8- &635 000 000&2$"
+                "&8- &8Ruda Wegla &8&l(x64) &7x8",
+                "&8- &7Ruda Zelaza &8&l(x64) &7x8",
+                "&8- &eRuda Topazu &8&l(x64) &7x6",
+                "&8- &1Ruda Tanzanitu &8&l(x64) &7x6",
+                "&8- &aRuda Jadeitu &8&l(x64) &7x4",
+                "&8- &bRuda Diamentu &8&l(x64) &7x4",
+                "&8- &cRuda Rubinu &8&l(x64) &7x2",
+                "&8- &625 000 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(19, new ItemBuilder(GornikItems.I10.getItemStack().clone()).setLoreCrafting(GornikItems.I10.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &8Ruda Wegla &8&l(x64) &7x24",
-                "&8- &7Ruda Zelaza &8&l(x64) &7x24",
-                "&8- &eRuda Topazu &8&l(x64) &7x24",
-                "&8- &1Ruda Tanzanitu &8&l(x64) &7x24",
-                "&8- &aRuda Jadeitu &8&l(x64) &7x24",
-                "&8- &bRuda Diamentu &8&l(x64) &7x24",
-                "&8- &cRuda Rubinu &8&l(x64) &7x24",
-                "&8- &675 000 000&2$"
+                "&8- &8Ruda Wegla &8&l(x64) &7x12",
+                "&8- &7Ruda Zelaza &8&l(x64) &7x12",
+                "&8- &eRuda Topazu &8&l(x64) &7x10",
+                "&8- &1Ruda Tanzanitu &8&l(x64) &7x10",
+                "&8- &aRuda Jadeitu &8&l(x64) &7x8",
+                "&8- &bRuda Diamentu &8&l(x64) &7x8",
+                "&8- &cRuda Rubinu &8&l(x64) &7x6",
+                "&8- &650 000 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(11, new ItemBuilder(GornikItems.I11.getItemStack().clone()).setLoreCrafting(GornikItems.I11.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &8Ruda Wegla &8&l(x64) &7x16",
-                "&8- &7Ruda Zelaza &8&l(x64) &7x16",
-                "&8- &eRuda Topazu &8&l(x64) &7x16",
-                "&8- &1Ruda Tanzanitu &8&l(x64) &7x16",
-                "&8- &aRuda Jadeitu &8&l(x64) &7x16",
-                "&8- &bRuda Diamentu &8&l(x64) &7x16",
-                "&8- &cRuda Rubinu &8&l(x64) &7x16",
-                "&8- &650 000 000&2$"
+                "&8- &8Ruda Wegla &8&l(x64) &7x10",
+                "&8- &7Ruda Zelaza &8&l(x64) &7x10",
+                "&8- &eRuda Topazu &8&l(x64) &7x8",
+                "&8- &1Ruda Tanzanitu &8&l(x64) &7x8",
+                "&8- &aRuda Jadeitu &8&l(x64) &7x6",
+                "&8- &bRuda Diamentu &8&l(x64) &7x6",
+                "&8- &cRuda Rubinu &8&l(x64) &7x4",
+                "&8- &635 000 000&2$"
         )).hideFlag().toItemStack());
         gui.setItem(20, new ItemBuilder(GornikItems.I12.getItemStack().clone()).setLoreCrafting(GornikItems.I12.getItemStack().clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &8Ruda Wegla &8&l(x64) &7x8",
-                "&8- &7Ruda Zelaza &8&l(x64) &7x8",
-                "&8- &eRuda Topazu &8&l(x64) &7x8",
-                "&8- &1Ruda Tanzanitu &8&l(x64) &7x8",
-                "&8- &aRuda Jadeitu &8&l(x64) &7x8",
-                "&8- &bRuda Diamentu &8&l(x64) &7x8",
-                "&8- &cRuda Rubinu &8&l(x64) &7x8",
-                "&8- &625 000 000&2$"
+                "&8- &8Ruda Wegla &8&l(x64) &7x6",
+                "&8- &7Ruda Zelaza &8&l(x64) &7x6",
+                "&8- &eRuda Topazu &8&l(x64) &7x4",
+                "&8- &1Ruda Tanzanitu &8&l(x64) &7x4",
+                "&8- &aRuda Jadeitu &8&l(x64) &7x2",
+                "&8- &bRuda Diamentu &8&l(x64) &7x2",
+                "&8- &cRuda Rubinu &8&l(x64) &7x1",
+                "&8- &617 500 000&2$"
         )).hideFlag().toItemStack());
 
         // PRZEDMIOTY SPECJALNE

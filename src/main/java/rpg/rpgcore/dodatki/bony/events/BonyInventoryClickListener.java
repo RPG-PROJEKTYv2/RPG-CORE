@@ -50,6 +50,11 @@ public class BonyInventoryClickListener implements Listener {
         final DodatkiUser user = rpgcore.getDodatkiManager().find(uuid);
         final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
 
+        if (player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wolnego miejsca w swoim ekwipunku!"));
+            return;
+        }
+
         switch (Utils.removeColor(item.getItemMeta().getDisplayName())) {
             case "Bon Srednich Obrazen 5%":
                 user.getBony().setDmg5(new ItemStack(Material.AIR));

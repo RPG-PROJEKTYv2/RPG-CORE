@@ -249,8 +249,8 @@ public class GuildManager {
             if (user.getLvl() == 130) {
                 lore.add("&6Exp: &4&lMAX &6/ &4&lMAX &8(&4&lMAX &7%&8)");
             } else {
-                lore.add("&6Exp: &7" + user.getExp() + " &6/ &7" + rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)
-                        + " &8(&6" + Utils.procentFormat.format((user.getExp() / rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) * 100) + "&7%&8)");
+                lore.add("&6Exp: &7" + Utils.spaceNumber(DoubleUtils.round(user.getExp(), 2)) + " &6/ &7" + Utils.spaceNumber(DoubleUtils.round(rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1), 2))
+                        + " &8(&6" + DoubleUtils.round((user.getExp() / rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) * 100, 2) + "&7%&8)");
             }
             lore.add("&6Zabojstwa: &7" + this.getGuildKills(tag).get(uuid));
             lore.add("&6Zgony: &7" + this.getGuildDeaths(tag).get(uuid));

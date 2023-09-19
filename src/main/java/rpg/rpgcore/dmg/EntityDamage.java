@@ -67,10 +67,10 @@ public enum EntityDamage {
     TAJEMNICZE_PIASKI_MINIBOSS2("[MiniBOSS] Pustynny Przyzywacz", 200.0),
     TAJEMNICZE_PIASKI_BOSS("[BOSS] Cesarz Pustyni", 250.0),
 
-    MAP_90_100_1("Podziemna Lowczyni Lvl. 92", 180.0),
-    MAP_90_100_2("Podziemna Lowczyni Lvl. 95", 220.0),
-    MAP_90_100_3("Podziemna Lowczyni Lvl. 98", 240.0),
-    MAP_90_100_BOSS("[BOSS] Podziemny Rozpruwacz", 400.0),
+    MAP_90_100_1("Podziemna Lowczyni Lvl. 92", 210.0),
+    MAP_90_100_2("Podziemna Lowczyni Lvl. 95", 240.0),
+    MAP_90_100_3("Podziemna Lowczyni Lvl. 98", 270.0),
+    MAP_90_100_BOSS("[BOSS] Podziemny Rozpruwacz", 500.0),
 
     DEMONICZNE_SALE_MOB1("Demoniczy Lowca Lvl. 95", 1000.0),
     DEMONICZNE_SALE_MINIBOSS1("[MiniBOSS] Elitarny Sluga", 1600.0),

@@ -163,6 +163,14 @@ public class EntityDamageEntityListener implements Listener {
                     final Player victim = (Player) e.getDamager();
                     final Player attacker = (Player) e.getEntity();
 
+                    if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
+                        if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getLvl() < Utils.getTagInt(attacker.getItemInHand(), "lvl")) {
+                            attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie posiadasz wymaganego poziomu, aby uzywac tego przedmiotu!"));
+                            e.setCancelled(true);
+                            return;
+                        }
+                    }
+
                     if (rpgcore.getGodManager().containsPlayer(victim.getUniqueId())) {
                         e.setCancelled(true);
                         return;
@@ -235,11 +243,11 @@ public class EntityDamageEntityListener implements Listener {
                     //attacker.sendMessage("Final Damage - " + finalDmg);
 
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
-                    //attacker.sendMessage("Thorns Damage - " + finalThornsDamage);
-
-//                    victim.sendMessage("Redukcja - " + redukcja);
-//                    victim.sendMessage("Final Damage - " + finalDmg);
-//                    victim.sendMessage("Thorns Damage - " + finalThornsDamage);
+//                    attacker.sendMessage("Thorns Damage - " + finalThornsDamage);
+//
+//                    victim.sendMessage("Thorns Redukcja - " + redukcja);
+//                    victim.sendMessage("Thorns Po Reduckji - " + finalDmg);
+//                    victim.sendMessage("Thorns Final Damage - " + finalThornsDamage);
 
                     if (finalThornsDamage > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalThornsDamage);
@@ -253,17 +261,21 @@ public class EntityDamageEntityListener implements Listener {
                     return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
-                    final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity()), 2);
+                    final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity(), true), 2);
                     final double finalDmg = DoubleUtils.round(playerDamage * mnoznik, 2);
 
-//                    e.getDamager().sendMessage("Mnoznik - " + mnoznik);
-//                    e.getDamager().sendMessage("Player Damage - " + playerDamage);
-//                    e.getDamager().sendMessage("Final Damage - " + finalDmg);
+//                    e.getDamager().sendMessage("Thorns Mnoznik - " + mnoznik);
+//                    e.getDamager().sendMessage("Thorns Player Damage - " + playerDamage);
+//                    e.getDamager().sendMessage("Thorns Final Damage - " + finalDmg);
 
                     if (mnoznik > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                     } else {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                    }
+                    if (RPGCORE.getInstance().getUserManager().find(e.getDamager().getUniqueId()).getKrytyk() < finalDmg) {
+                        e.getDamager().sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
+                        RPGCORE.getInstance().getUserManager().find(e.getDamager().getUniqueId()).setKrytyk(finalDmg);
                     }
                     Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), e.getDamager(), (Player) e.getDamager()));
                     if (finalDmg < ((LivingEntity) e.getEntity()).getHealth()) {
@@ -349,11 +361,11 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
 
-                double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
-                double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
+                double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim); // 2 500
+                double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim); // 1 000
 
 //                attacker.sendMessage("&4&lDMG");
-//                attacker.sendMessage("&a&lDEF");
+//                victim.sendMessage("&a&lDEF");
 //
 //                attacker.sendMessage("Damage To Player (raw)- " + attackerDmg);
 //                victim.sendMessage("Wartosc Defa (raw)- " + wartoscDefa);
@@ -386,7 +398,7 @@ public class EntityDamageEntityListener implements Listener {
 //                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
 //                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
 
-                final double redukcja = wartoscDefa / (wartoscDefa + 40);
+                final double redukcja = wartoscDefa / (wartoscDefa + 40); // 0,9615
 
 
 //                victim.sendMessage("Redukcja - " + redukcja);
@@ -410,8 +422,17 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
                 final LivingEntity victim = (LivingEntity) e.getEntity();
-                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim);
+                if (!rpgcore.getVanishManager().isVanished(attacker.getUniqueId())) {
+                    for (Player rest : Bukkit.getOnlinePlayers()) {
+                        rest.showPlayer(attacker);
+                    }
+                }
+                final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim, false);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
+                if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getKrytyk() < attackerDmg) {
+                    attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + attackerDmg + " dmg)"));
+                    RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).setKrytyk(attackerDmg);
+                }
 //                attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
 //                attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
 //                attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
@@ -423,7 +444,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
                 }
 
-                if (Math.max(attacker.getLocation().getY(), victim.getLocation().getY()) - Math.min(attacker.getLocation().getY(), victim.getLocation().getY()) >= 1.5) {
+                if (attacker.getLocation().getY() - victim.getLocation().getY() >= 1.5) {
                     e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                     attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz atakowac mobow z wysokosci!"));
                 }

@@ -588,71 +588,67 @@ public class MongoManager {
                 user.setPierscienDoswiadczenia(0);
                 user.setPierscienDoswiadczeniaTime(0L);
                 RPGCORE.getInstance().getNmsManager().sendTitleAndSubTitle(player, RPGCORE.getInstance().getNmsManager().makeTitle("&8&l[&4&l!&8&l]", 5, 20, 5), RPGCORE.getInstance().getNmsManager().makeSubTitle("&cTwoj &ePierscien Doswiadczenia &cdobiegl konca", 5, 20, 5));
-                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> {
-                    RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user);
-                    RPGCORE.getInstance().getMongoManager().saveDataBonuses(user.getId(), bonuses);
-                });
             }
 
             final WWWUser wwwUser = rpgcore.getUserManager().findWWWUser(uuid);
-            wwwUser.setArmorJSON(Utils.itemStackArrayToJSON(armor));
-            wwwUser.setInventoryJSON(Utils.itemStackArrayToJSON(inventory));
-            wwwUser.setEnderchestJSON(Utils.itemStackArrayToJSON(enderchest));
-
-            final DodatkiUser dodatkiUser = rpgcore.getDodatkiManager().find(uuid);
-            final BonyUser bonyUser = dodatkiUser.getBony();
-            final AkcesoriaPodstUser akcesoriaPodstUser = dodatkiUser.getAkcesoriaPodstawowe();
-            final AkcesoriaDodatUser akcesoriaDodatUser = dodatkiUser.getAkcesoriaDodatkowe();
-
-            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Arrays.asList(
-                    bonyUser.getDmg5(),
-                    bonyUser.getDmg10(),
-                    bonyUser.getDmg15(),
-                    bonyUser.getDef5(),
-                    bonyUser.getDef10(),
-                    bonyUser.getDef15(),
-                    bonyUser.getKryt5(),
-                    bonyUser.getKryt10(),
-                    bonyUser.getKryt15(),
-                    bonyUser.getWzmkryt10(),
-                    bonyUser.getBlok20(),
-                    bonyUser.getPrzeszywka20(),
-                    bonyUser.getPredkosc25(),
-                    bonyUser.getPredkosc50(),
-                    bonyUser.getHp10(),
-                    bonyUser.getHp20(),
-                    bonyUser.getHp35(),
-                    bonyUser.getDmgMetiny()
-            )));
-
-            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
-                    akcesoriaPodstUser.getTarcza(),
-                    akcesoriaPodstUser.getNaszyjnik(),
-                    akcesoriaPodstUser.getKolczyki(),
-                    akcesoriaPodstUser.getPierscien(),
-                    akcesoriaPodstUser.getDiadem()
-            )));
-
-            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
-                    akcesoriaDodatUser.getSzarfa(),
-                    akcesoriaDodatUser.getPas(),
-                    akcesoriaDodatUser.getMedalion(),
-                    akcesoriaDodatUser.getEnergia()
-            )));
-
-            wwwUser.setUserPetyJSON(Utils.itemStackArrayToJSON(rpgcore.getPetyManager().findUserPets(uuid).getPety()));
-            wwwUser.setActivePet(Utils.itemStackToJSON(rpgcore.getPetyManager().findActivePet(uuid).getPet().getItem()));
-
-            final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(uuid);
-            wwwUser.setMagazyn1JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn1())));
-            wwwUser.setMagazyn2JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn2())));
-            wwwUser.setMagazyn3JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn3())));
-            wwwUser.setMagazyn4JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn4())));
-            wwwUser.setMagazyn5JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn5())));
+//            wwwUser.setArmorJSON(Utils.itemStackArrayToJSON(armor));
+//            wwwUser.setInventoryJSON(Utils.itemStackArrayToJSON(inventory));
+//            wwwUser.setEnderchestJSON(Utils.itemStackArrayToJSON(enderchest));
+//
+//            final DodatkiUser dodatkiUser = rpgcore.getDodatkiManager().find(uuid);
+//            final BonyUser bonyUser = dodatkiUser.getBony();
+//            final AkcesoriaPodstUser akcesoriaPodstUser = dodatkiUser.getAkcesoriaPodstawowe();
+//            final AkcesoriaDodatUser akcesoriaDodatUser = dodatkiUser.getAkcesoriaDodatkowe();
+//
+//            wwwUser.setBonyJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+//                    bonyUser.getDmg5(),
+//                    bonyUser.getDmg10(),
+//                    bonyUser.getDmg15(),
+//                    bonyUser.getDef5(),
+//                    bonyUser.getDef10(),
+//                    bonyUser.getDef15(),
+//                    bonyUser.getKryt5(),
+//                    bonyUser.getKryt10(),
+//                    bonyUser.getKryt15(),
+//                    bonyUser.getWzmkryt10(),
+//                    bonyUser.getBlok20(),
+//                    bonyUser.getPrzeszywka20(),
+//                    bonyUser.getPredkosc25(),
+//                    bonyUser.getPredkosc50(),
+//                    bonyUser.getHp10(),
+//                    bonyUser.getHp20(),
+//                    bonyUser.getHp35(),
+//                    bonyUser.getDmgMetiny()
+//            )));
+//
+//            wwwUser.setAkcesoriaPodstawoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+//                    akcesoriaPodstUser.getTarcza(),
+//                    akcesoriaPodstUser.getNaszyjnik(),
+//                    akcesoriaPodstUser.getKolczyki(),
+//                    akcesoriaPodstUser.getPierscien(),
+//                    akcesoriaPodstUser.getDiadem()
+//            )));
+//
+//            wwwUser.setAkcesoriaDodatkoweJSON(Utils.itemStackArrayToJSON(Arrays.asList(
+//                    akcesoriaDodatUser.getSzarfa(),
+//                    akcesoriaDodatUser.getPas(),
+//                    akcesoriaDodatUser.getMedalion(),
+//                    akcesoriaDodatUser.getEnergia()
+//            )));
+//
+//            wwwUser.setUserPetyJSON(Utils.itemStackArrayToJSON(rpgcore.getPetyManager().findUserPets(uuid).getPety()));
+//            wwwUser.setActivePet(Utils.itemStackToJSON(rpgcore.getPetyManager().findActivePet(uuid).getPet().getItem()));
+//
+//            final MagazynierUser magazynierUser = rpgcore.getMagazynierNPC().find(uuid);
+//            wwwUser.setMagazyn1JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn1())));
+//            wwwUser.setMagazyn2JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn2())));
+//            wwwUser.setMagazyn3JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn3())));
+//            wwwUser.setMagazyn4JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn4())));
+//            wwwUser.setMagazyn5JSON(Utils.itemStackArrayToJSON(Utils.itemStackArrayFromBase64(magazynierUser.getMagazyn5())));
 
 
             this.saveDataUser(uuid, rpgcore.getUserManager().find(uuid));
-            this.saveDataDodatki(uuid, dodatkiUser);
+            this.saveDataDodatki(uuid, rpgcore.getDodatkiManager().find(uuid));
             this.saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
             this.saveDataBao(uuid, rpgcore.getBaoManager().find(uuid));
             this.saveDataKlasy(uuid, rpgcore.getKlasyManager().find(uuid));
@@ -663,7 +659,7 @@ public class MongoManager {
             this.saveDataPrzyrodnik(uuid, rpgcore.getPrzyrodnikNPC().find(uuid));
             this.saveDataRybak(uuid, rpgcore.getRybakNPC().find(uuid));
             this.saveDataOs(uuid, rpgcore.getOsManager().find(uuid));
-            this.saveDataMagazynier(uuid, magazynierUser);
+            this.saveDataMagazynier(uuid, rpgcore.getMagazynierNPC().find(uuid));
             this.saveDataLowca(uuid, rpgcore.getLowcaNPC().find(uuid));
             this.saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
 

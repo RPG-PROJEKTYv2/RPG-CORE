@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
@@ -58,6 +59,15 @@ public class GuildsInventoryClick implements Listener {
                 player.closeInventory();
                 return;
             }
+            return;
+        }
+
+        if (player.getOpenInventory().getTopInventory().getTitle().contains("Czlonkowie Klanu") && e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (e.isShiftClick()) {
+                e.setCancelled(true);
+                return;
+            }
+            e.setCancelled(true);
             return;
         }
 

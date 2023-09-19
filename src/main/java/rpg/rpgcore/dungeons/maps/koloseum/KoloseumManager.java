@@ -194,7 +194,7 @@ public class KoloseumManager {
             return;
         }
         for (final Entity e : dungeon.getEntities()) {
-            if (e instanceof Player) continue;
+            if (e instanceof Player || e instanceof Item) continue;
             if (e.getName().contains("Wyznawca") || e.getName().contains("Czempion")) continue;
             e.remove();
         }

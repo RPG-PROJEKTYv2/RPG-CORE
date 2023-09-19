@@ -46,6 +46,11 @@ public class AkcesoriaDodatInventoryClickListener implements Listener {
             final DodatkiUser user = this.rpgcore.getDodatkiManager().find(uuid);
             final Bonuses bonuses = this.rpgcore.getBonusesManager().find(uuid);
 
+            if (player.getInventory().firstEmpty() == -1) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wolnego miejsca w swoim ekwipunku!"));
+                return;
+            }
+
             switch (slot) {
                 case 1:
                     final double ludzie = Utils.getTagDouble(item, "ludzie");

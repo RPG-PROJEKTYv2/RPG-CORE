@@ -152,6 +152,7 @@ public class RdzenPiaszczystychWydm {
     public void respawn() {
         this.hp = this.maxHp;
         this.destroyed = false;
+        this.entityId.clear();
         this.hologram.getVisibilitySettings().clearIndividualVisibilities();
         this.hologram.getLines().clear();
         this.defaultRdzenHolo.forEach(line -> this.hologram.getLines().appendText(Utils.format(line)));

@@ -182,7 +182,6 @@ public class NewTargInventoryClick implements Listener {
 
             if (clickedSlot < 4) {
                 String cena = "";
-                String podatek = "";
                 final ItemStack item = clickedInventory.getItem(4);
 
 
@@ -190,37 +189,7 @@ public class NewTargInventoryClick implements Listener {
                     if (s.contains("Cena: ")) {
                         cena = Utils.removeColor(s).replace("Cena: ", "").replace(" $", "").trim();
                     }
-                    if (s.contains("1% ceny wystawienia")) {
-                        podatek = Utils.removeColor(s).replace("W wysokosci 1% ceny wystawienia, czyli ", "").replace(" $", "");
-                    }
                 }
-
-                final double podatekInDouble = Double.parseDouble(podatek.replaceAll(" ", "").trim());
-                final double kasa = rpgcore.getUserManager().find(playerUUID).getKasa();
-
-                if (kasa < podatekInDouble) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz pieniedzy, zeby wystawic ten przedmiot"));
-
-                    rpgcore.getNewTargManager().returnPlayerItem(player, item);
-                    rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
-                    clickedInventory.setItem(4, new ItemStack(Material.AIR));
-                    rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
-                    return;
-                }
-                rpgcore.getUserManager().find(playerUUID).setKasa(kasa - podatekInDouble);
-                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID)));
-
-                final ItemMeta meta = item.getItemMeta();
-                final List<String> lore = meta.getLore();
-                final int loreSize = lore.size() - 1;
-
-                lore.remove(loreSize);
-                lore.remove(loreSize - 1);
-                lore.remove(loreSize - 2);
-                lore.remove(loreSize - 3);
-                lore.remove(loreSize - 4);
-                meta.setLore(Utils.format(lore));
-                item.setItemMeta(meta);
 
                 final Targ targ = rpgcore.getNewTargManager().find(playerUUID);
                 targ.addItem(item.clone());
@@ -238,7 +207,6 @@ public class NewTargInventoryClick implements Listener {
                                 "**Nazwa Przedmiotu: **" + Utils.removeColor(item.getItemMeta().getDisplayName()) + "\n" +
                                 "**Ilosc Przedmiotu: **" + item.getAmount() + "\n" +
                                 "**Cena Przedmiotu: **" + cena + "\n" +
-                                "**Zapłacony Podatek: **" + podatek + "$\n" +
                                 "**Typ Przedmiotu: **`" + item.getType().toString() + "`\n" +
                                 "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) + "\n", Color.GREEN));
                 rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
@@ -249,6 +217,7 @@ public class NewTargInventoryClick implements Listener {
 
             rpgcore.getNewTargManager().returnPlayerItem(player, clickedInventory.getItem(4));
             rpgcore.getNewTargManager().removeFromWystawia(playerUUID);
+            final ItemStack item = clickedInventory.getItem(4).clone();
             clickedInventory.setItem(4, new ItemStack(Material.AIR));
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, player::closeInventory, 1L);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&cAnulowales wystawianie przedmiotu"));
@@ -257,10 +226,10 @@ public class NewTargInventoryClick implements Listener {
                     "**Gracz: **`" + player.getName() + "` **anulowal wystawianie przedmiotu.**\n" +
                             "**Ping Gracza: **" + ((CraftPlayer) player).getHandle().ping + " ms\n" +
                             "**Ping Serwerowy: ** 1m - " + tps[0] + "tps, 5m - " + tps[1] + "tps, 15m - " + tps[2] + "tps\n" +
-                            "**Nazwa Przedmiotu: **" + Utils.removeColor(clickedInventory.getItem(4).getItemMeta().getDisplayName()) + "\n" +
-                            "**Ilosc Przedmiotu: **" + clickedInventory.getItem(4).getAmount() + "\n" +
-                            "**Typ Przedmiotu: **`" + clickedInventory.getItem(4).getType().toString() + "`\n" +
-                            "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(clickedInventory.getItem(4).getItemMeta().getLore()) + "\n", Color.RED));
+                            "**Nazwa Przedmiotu: **" + Utils.removeColor(item.getItemMeta().getDisplayName()) + "\n" +
+                            "**Ilosc Przedmiotu: **" + item.getAmount() + "\n" +
+                            "**Typ Przedmiotu: **`" + item.getType().toString() + "`\n" +
+                            "**Lore Przedmiotu: **\n" + RPGCORE.getDiscordBot().buildStringFromLore(item.getItemMeta().getLore()) + "\n", Color.RED));
         }
 
 
@@ -428,7 +397,7 @@ public class NewTargInventoryClick implements Listener {
         }
         final UUID playerUUID = player.getUniqueId();
         rpgcore.getUserManager().find(playerUUID).setKasa(kasaGracza - itemCena);
-        rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + itemCena);
+        rpgcore.getUserManager().find(targetUUID).setKasa(rpgcore.getUserManager().find(targetUUID).getKasa() + DoubleUtils.round(itemCena - (itemCena / 100) , 2));
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
             rpgcore.getMongoManager().saveDataUser(playerUUID, rpgcore.getUserManager().find(playerUUID));
             rpgcore.getMongoManager().saveDataUser(targetUUID, rpgcore.getUserManager().find(targetUUID));
@@ -445,10 +414,10 @@ public class NewTargInventoryClick implements Listener {
 
         if (clickedItem.getItemMeta().getDisplayName() == null) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getType() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(DoubleUtils.round(itemCena - (itemCena / 100), 2)) + " &2$"));
         } else {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie kupiles przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &aod gracza &6" + targetName + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
-            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena)) + " &2$"));
+            Bukkit.getPlayer(targetUUID).sendMessage(Utils.format(Utils.SERVERNAME + "&aPomyslnie sprzedales przedmiot &6" + clickedItem.getAmount() + "x " + clickedItem.getItemMeta().getDisplayName() + " &adla gracza &6" + player.getName() + " &aza kwote &6&o" + Utils.spaceNumber(DoubleUtils.round(itemCena - (itemCena / 100), 2)) + " &2$"));
         }
 
         final String itemName = clickedItem.getItemMeta().getDisplayName() == null ? clickedItem.getType().toString() : clickedItem.getItemMeta().getDisplayName();

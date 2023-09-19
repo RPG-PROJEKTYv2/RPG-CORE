@@ -990,7 +990,7 @@ public class DropFromChestsListener implements Listener {
                                         ChanceHelper.getRandInt(40,65),
                                         ChanceHelper.getRandDouble(0.3,0.5),
                                         ChanceHelper.getRandInt(-60,-45),
-                                        ChanceHelper.getRandInt(80,90), "&4&lEnergia Demona Ciemnosci");
+                                        ChanceHelper.getRandInt(90,100), "&4&lEnergia Demona Ciemnosci");
                                 break;
                             case FIREBALL:
                                 is = AkcesoriaDodatHelper.createMedalion(ChanceHelper.getRandInt(19,27),

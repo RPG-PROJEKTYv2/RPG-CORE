@@ -39,7 +39,7 @@ public class MedrzecNPC {
                     "  &8- &61 000 000&2$"
             )).toItemStack());
             gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lInformacje").setLore(Arrays.asList(
-                    "&7Aktualny bonus: &e" + DoubleUtils.round(medrzecUser.getBonus() / 2.0, 2) + "❤",
+                    "&7Aktualny bonus: &e" + medrzecUser.getBonus() + "❤",
                     "&7Szansa na znalezienie Serca: &e" + DoubleUtils.round(0.05 + ((0.05 * RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0), 2) + "%"
             )).toItemStack().clone());
         } else {
@@ -49,7 +49,7 @@ public class MedrzecNPC {
                     "  &8- &62 500 000&2$"
             )).toItemStack());
             gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&3&lInformacje").setLore(Arrays.asList(
-                    "&7Aktualny bonus: &e" + DoubleUtils.round(medrzecUser.getBonus() / 2.0, 2) + "❤",
+                    "&7Aktualny bonus: &e" + medrzecUser.getBonus() + "❤",
                     "&7Szansa na znalezienie Serca: &e" + DoubleUtils.round(0.015 + ((0.015 * RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie()) / 1000.0), 2) + "%"
             )).toItemStack().clone());
         }
