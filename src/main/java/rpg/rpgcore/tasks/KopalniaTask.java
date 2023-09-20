@@ -22,6 +22,7 @@ public class KopalniaTask implements Runnable {
     @Override
     public void run() {
         Bukkit.getWorld("Kopalnia").getPlayers().forEach(player -> {
+            if (Utils.removeColor(player.getName()).equals("Gornik")) return;
             boolean hasFullSet = true;
             for (final ItemStack armor : player.getInventory().getArmorContents()) {
                 if (!(armor != null && armor.getType().toString().contains("LEATHER") && armor.getItemMeta().hasDisplayName() && armor.getItemMeta().getDisplayName().contains("Gornika"))) {
@@ -34,7 +35,10 @@ public class KopalniaTask implements Runnable {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999, 0, true, true));
                 }
             } else {
-                player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+                if (player.getActivePotionEffects().stream().noneMatch(effect -> effect.getType().equals(PotionEffectType.FAST_DIGGING) &&
+                        (effect.getDuration() <= 600 || effect.getAmplifier() == 1))) {
+                    player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+                }
             }
 
             final GornikUser user = rpgcore.getGornikNPC().find(player.getUniqueId());

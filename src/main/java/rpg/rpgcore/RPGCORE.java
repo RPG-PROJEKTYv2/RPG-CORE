@@ -9,6 +9,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.lumine.xikage.mythicmobs.MythicMobs;
+import lombok.Getter;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import net.minecraft.server.v1_8_R3.Item;
 import org.bukkit.Bukkit;
@@ -332,138 +333,269 @@ public final class RPGCORE extends JavaPlugin {
     private SpawnManager spawn;
     private MongoManager mongo;
     private BackupMongoManager backupMongo;
+    @Getter
     private TeleportManager teleportManager;
+    @Getter
     private BanManager banManager;
+    @Getter
     private VanishManager vanishManager;
+    @Getter
     private NMSManager nmsManager;
+    @Getter
     private GodManager godManager;
+    @Getter
     private AdminPanelManager adminPanelManager;
+    @Getter
     private LvlManager lvlManager;
+    @Getter
     private DamageManager damageManager;
+    @Getter
     private ChatManager chatManager;
+    @Getter
     private BaoManager baoManager;
+    @Getter
     private OsManager osManager;
+    @Getter
     private DodatkiManager dodatkiManager;
+    @Getter
     private PomocManager pomocManager;
+    @Getter
     private RozpiskaManager rozpiskaManager;
+    @Getter
     private MuteManager muteManager;
+    @Getter
     private MSGManager msgManager;
+    @Getter
     private DuszologNPC duszologNPC;
+    @Getter
     private TeleporterNPC teleporterNPC;
+    @Getter
     private CooldownManager cooldownManager;
+    @Getter
     private MagazynierNPC magazynierNPC;
+    @Getter
     private RybakNPC rybakNPC;
+    @Getter
     private GuildManager guildManager;
+    @Getter
     private UserSaveManager userSaveManager;
+    @Getter
     private HandlarzNPC handlarzNPC;
+    @Getter
     private KowalNPC kowalNPC;
+    @Getter
     private NewTargManager newTargManager;
+    @Getter
     private KolekcjonerNPC kolekcjonerNPC;
+    @Getter
     private PrzekletyCzarnoksieznikBossManager przekletyCzarnoksieznikBossManager;
+    @Getter
     private MetinyManager metinyManager;
+    @Getter
     private MetinologNPC metinologNPC;
+    @Getter
     private ServerManager serverManager;
+    @Getter
     private PrzyrodnikNPC przyrodnikNPC;
+    @Getter
     private ListaNPCManager listaNPCManager;
+    @Getter
     private UserManager userManager;
+    @Getter
     private PartyManager partyManager;
+    @Getter
     private LowcaNPC lowcaNPC;
+    @Getter
     private LesnikNPC lesnikNPC;
+    @Getter
     private PetyManager petyManager;
+    @Getter
     private ZamekNieskonczonosciManager zamekNieskonczonosciManager;
+    @Getter
     private BonusesManager bonusesManager;
     // ================================ SKRZYNKI INNE ================================
+    // ================================ SKRZYNKI INNE ================================
+    @Getter
     private PozlacanySkarbManager pozlacanySkarbManager;
+    @Getter
     private CiezkaSkrzyniaKowalaManager ciezkaSkrzyniaKowalaManager;
+    @Getter
     private SurowceManager surowceManager;
+    @Getter
     private TajemniczaManager tajemniczaManager;
+    @Getter
     private ZwierzakiManager zwierzakiManager;
+    // ================================ SKRZYNKI EXPOWISKA ===============================
+    // exp1
     // ================================ SKRZYNKI EXPOWISKO ================================
     // EXPOWISKO 1
+    @Getter
     private RozbojnikManager najemnikManager;
     private DowodcaRozbojnikow wygnaniecManager;
+    // exp2
     // EXPOWISKO 2
+    @Getter
     private GoblinManager goblinManager;
+    @Getter
     private WodzGoblinowManager wodzGoblinowManager;
+    // exp3
     // EXPOWISKO 3
+    @Getter
     private GorylManager gorylManager;
+    @Getter
     private KrolGoryliManager krolGoryliManager;
+    // exp4
     // EXPOWISKO 4
+    @Getter
     private ZjawaManager zjawaManager;
+    @Getter
     private PrzekletaDuszaManager przekletaDuszaManager;
+    // exp5
     // EXPOWISKO 5
+    @Getter
     private StraznikSwiatyniManager straznikSwiatyniManager;
+    @Getter
     private TrytonManager trytonManager;
+    // exp6
     // EXPOWISKO 6
+    @Getter
     private MroznyWilkManager mroznyWilkManager;
     // EXPOWISKO 7
     private PiekielnyRycerzManager piekielnyRycerzManager;
+    @Getter
     private ZywiolakOgniaManager zywiolakOgniaManager;
+    // exp8
     // EXPOWISKO 8
+    @Getter
     private MrocznaDuszaManager mrocznaDuszaManager;
+    @Getter
     private PrzekletyCzarnoksieznikManager przekletyCzarnoksieznikManager;
+    // exp9
     // EXPOWISKO 9
+    @Getter
     private MitycznyPajakManager mitycznyPajakManager;
+    // exp10
     // EXPOWISK0 10
+    @Getter
     private PodziemnyRozpruwaczManager podziemnyRozpruwaczManager;
+    // exp11
     // EXPOWISKO 11
+    @Getter
     private MitycznyKrakenManager mitycznyKrakenManager;
+    // exp12
     // Expowisko 12
+    @Getter
     private KrysztalowyWladcaManager krysztalowyWladcaManager;
+    // exp13
     // Expowisko 13
+    @Getter
     private StarozytnySmoczyCesarzManager starozytnySmoczyCesarzManager;
+    // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ===============================
+    // ice tower
     // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ================================
     // ice tower
+    @Getter
     private KrolLoduManager krolLoduManager;
+    @Getter
     private LodowySlugaManager lodowySlugaManager;
     // inne od dunga
+    // inne od dunga
+    @Getter
     private SakiewkaUlepszaczyManager sakiewkaUlepszaczyManager;
+    // dungeon 60-70
     // dung 60-70
+    @Getter
     private PiekielnyWladcaManager piekielnyWladcaManager;
+    @Getter
     private KoloseumManager koloseumManager;
+    // dungeon 70-80
     // dung 70-80
+    @Getter
     private CzempionArenyManager czempionArenyManager;
+    // dungeon 80-90
     // dung 80-90
+    @Getter
     private CesarzPustyniManager cesarzPustyniManager;
+    // dungeon 90-100
     // dung 90-100
+    @Getter
     private DemonCiemnosciManager demonCiemnosciManager;
     // ================================ SKRZYNKI NPCTY & INNE ================================
+    // ================================ SKRZYNKI NPCTY & INNE ================================
+    @Getter
     private GornikChestManager gornikChestManager;
+    @Getter
     private RybakChestManager rybakChestManager;
 
     // cos innego...
+    @Getter
     private DungeonsManager dungeonsManager;
+    @Getter
     private ZmiankiManager zmiankiManager;
+    @Getter
     private WyslannikNPC wyslannikNPC;
+    @Getter
     private IceTowerManager iceTowerManager;
+    /*public TestNPC getTestNPC() {
+        return testNPC;
+    }*/
+    // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
     // private TestNPC testNPC; // TU JEST TEST NPC
+    @Getter
     private KociolkiManager kociolkiManager;
+    @Getter
     private TopkiManager topkiManager;
+    @Getter
     private CraftingiManager craftingiManager;
+    @Getter
     private SerwerWhiteListManager serwerWhiteListManager;
+    @Getter
     private ArtefaktyZaLvlManager artefaktyZaLvlManager;
+    @Getter
     private ShowcaseItemManager showcaseItemManager;
+    @Getter
     private DisabledManager disabledManager;
+    @Getter
     private TradeManager tradeManager;
+    @Getter
     private WyszkolenieManager wyszkolenieManager;
+    @Getter
     private MedrzecNPC medrzecNPC;
+    @Getter
     private InvseeManager invseeManager;
+    @Getter
     private BossyManager bossyManager;
+    @Getter
     private PustelnikNPC pustelnikNPC;
+    @Getter
     private MistrzYangNPC mistrzYangNPC;
+    @Getter
     private CzarownicaNPC czarownicaNPC;
+    @Getter
     private PrzedsionekManager przedsionekManager;
+    @Getter
     private UstawieniaKontaManager ustawieniaKontaManager;
+    @Getter
     private MistycznyKowalManager mistycznyKowalManager;
+    @Getter
     private RzemieslnikManager rzemieslnikManager;
+    @Getter
     private GornikNPC gornikNPC;
+    @Getter
     private OreManager oreManager;
+    @Getter
     private KlasyManager klasyManager;
+    @Getter
     private BackupManager backupManager;
+    @Getter
     private KodTworcyManager kodTworcyManager;
+    @Getter
     private TajemniczePiaskiManager tajemniczePiaskiManager;
+    @Getter
     private WygnanyKowalNPC wygnanyKowalNPC;
+    @Getter
     private ZlotnikNPC zlotnikNPC;
+    @Getter
     private MroznyStrozNPC mroznyStrozNPC;
 
 
@@ -716,6 +848,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new KodCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new WedkaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SwordCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new KilofCommand());
     }
 
     private void initEvents() {
@@ -1272,194 +1405,9 @@ public final class RPGCORE extends JavaPlugin {
         return spawn;
     }
 
-    public TeleportManager getTeleportManager() {
-        return teleportManager;
-    }
-
-    public BanManager getBanManager() {
-        return this.banManager;
-    }
-
-    public VanishManager getVanishManager() {
-        return vanishManager;
-    }
-
-    public NMSManager getNmsManager() {
-        return nmsManager;
-    }
-
-    public GodManager getGodManager() {
-        return godManager;
-    }
-
-    public AdminPanelManager getAdminPanelManager() {
-        return adminPanelManager;
-    }
-
-    public LvlManager getLvlManager() {
-        return lvlManager;
-    }
-
-    public DamageManager getDamageManager() {
-        return damageManager;
-    }
-
-    public ChatManager getChatManager() {
-        return chatManager;
-    }
-
-
-    public OsManager getOsManager() {
-        return osManager;
-    }
-
-    public DodatkiManager getDodatkiManager() {
-        return dodatkiManager;
-    }
-
-    public PomocManager getPomocManager() {
-        return pomocManager;
-    }
-
-    public MuteManager getMuteManager() {
-        return muteManager;
-    }
-
-    public MSGManager getMsgManager() {
-        return msgManager;
-    }
-
-    public TradeManager getTradeManager() {
-        return tradeManager;
-    }
-
-    public DuszologNPC getDuszologNPC() {
-        return duszologNPC;
-    }
-
-
-    public TeleporterNPC getTeleporterNPC() {
-        return teleporterNPC;
-    }
-
-    public CooldownManager getCooldownManager() {
-        return cooldownManager;
-    }
-
-    public RybakNPC getRybakNPC() {
-        return rybakNPC;
-    }
-
-    public MagazynierNPC getMagazynierNPC() {
-        return magazynierNPC;
-    }
-
-    public KolekcjonerNPC getKolekcjonerNPC() {
-        return kolekcjonerNPC;
-    }
-
-    public GuildManager getGuildManager() {
-        return guildManager;
-    }
-
-    public NewTargManager getNewTargManager() {
-        return newTargManager;
-    }
-
-    public UserSaveManager getUserSaveManager() {
-        return userSaveManager;
-    }
-
-    public HandlarzNPC getHandlarzNPC() {
-        return handlarzNPC;
-    }
-
-    public KowalNPC getKowalNPC() {
-        return kowalNPC;
-    }
-
-    public MetinyManager getMetinyManager() {
-        return metinyManager;
-    }
-
-    public MetinologNPC getMetinologNPC() {
-        return metinologNPC;
-    }
-
-    public ServerManager getServerManager() {
-        return serverManager;
-    }
-
-    // ================================ SKRZYNKI INNE ================================
-    public PozlacanySkarbManager getPozlacanySkarbManager() {
-        return pozlacanySkarbManager;
-    }
-
-    public CiezkaSkrzyniaKowalaManager getCiezkaSkrzyniaKowalaManager() {
-        return ciezkaSkrzyniaKowalaManager;
-    }
-
-    public SurowceManager getSurowceManager() {
-        return surowceManager;
-    }
-
-    public TajemniczaManager getTajemniczaManager() {
-        return tajemniczaManager;
-    }
-
-    public ZwierzakiManager getZwierzakiManager() {
-        return zwierzakiManager;
-    }
-
-    // ================================ SKRZYNKI EXPOWISKA ===============================
-    // exp1
-    public RozbojnikManager getNajemnikManager() {
-        return najemnikManager;
-    }
 
     public DowodcaRozbojnikow getDowodcaRozbojnikow() {
         return wygnaniecManager;
-    }
-
-    // exp2
-    public GoblinManager getGoblinManager() {
-        return goblinManager;
-    }
-
-    public WodzGoblinowManager getWodzGoblinowManager() {
-        return wodzGoblinowManager;
-    }
-
-    // exp3
-    public GorylManager getGorylManager() {
-        return gorylManager;
-    }
-
-    public KrolGoryliManager getKrolGoryliManager() {
-        return krolGoryliManager;
-    }
-
-    // exp4
-    public ZjawaManager getZjawaManager() {
-        return zjawaManager;
-    }
-
-    public PrzekletaDuszaManager getPrzekletaDuszaManager() {
-        return przekletaDuszaManager;
-    }
-
-    // exp5
-    public StraznikSwiatyniManager getStraznikSwiatyniManager() {
-        return straznikSwiatyniManager;
-    }
-
-    public TrytonManager getTrytonManager() {
-        return trytonManager;
-    }
-
-    // exp6
-    public MroznyWilkManager getMroznyWilkManager() {
-        return mroznyWilkManager;
     }
 
     // exp7
@@ -1467,233 +1415,7 @@ public final class RPGCORE extends JavaPlugin {
         return piekielnyRycerzManager;
     }
 
-    public ZywiolakOgniaManager getZywiolakOgniaManager() {
-        return zywiolakOgniaManager;
-    }
-
-    // exp8
-    public MrocznaDuszaManager getMrocznaDuszaManager() {
-        return mrocznaDuszaManager;
-    }
-
-    public PrzekletyCzarnoksieznikManager getPrzekletyCzarnoksieznikManager() {
-        return przekletyCzarnoksieznikManager;
-    }
-
-    // exp9
-    public MitycznyPajakManager getMitycznyPajakManager() {
-        return mitycznyPajakManager;
-    }
-
-    // exp10
-    public PodziemnyRozpruwaczManager getPodziemnyRozpruwaczManager() {
-        return podziemnyRozpruwaczManager;
-    }
-
-    // exp11
-    public MitycznyKrakenManager getMitycznyKrakenManager() {
-        return mitycznyKrakenManager;
-    }
-
-    // exp12
-    public KrysztalowyWladcaManager getKrysztalowyWladcaManager() {
-        return krysztalowyWladcaManager;
-    }
-
-    // exp13
-    public StarozytnySmoczyCesarzManager getStarozytnySmoczyCesarzManager() {
-        return starozytnySmoczyCesarzManager;
-    }
-
-    // ================================ SKRZYNKI DUNGEONY & MAPY SPECJALNE ===============================
-    // ice tower
-    public KrolLoduManager getKrolLoduManager() {
-        return krolLoduManager;
-    }
-    public LodowySlugaManager getLodowySlugaManager() {
-        return lodowySlugaManager;
-    }
-    // inne od dunga
-    public SakiewkaUlepszaczyManager getSakiewkaUlepszaczyManager() { return sakiewkaUlepszaczyManager; }
-    // dungeon 60-70
-    public PiekielnyWladcaManager getPiekielnyWladcaManager() { return piekielnyWladcaManager;}
-    // dungeon 70-80
-    public CzempionArenyManager getCzempionArenyManager() { return czempionArenyManager; }
-    // dungeon 80-90
-    public CesarzPustyniManager getCesarzPustyniManager() { return cesarzPustyniManager; }
-    // dungeon 90-100
-    public DemonCiemnosciManager getDemonCiemnosciManager() { return demonCiemnosciManager; }
-    // ================================ SKRZYNKI NPCTY & INNE ================================
-    public GornikChestManager getGornikChestManager() {
-        return gornikChestManager;
-    }
-    public RybakChestManager getRybakChestManager() { return rybakChestManager; }
-
-    public PrzyrodnikNPC getPrzyrodnikNPC() {
-        return przyrodnikNPC;
-    }
-
-    public ListaNPCManager getListaNPCManager() {
-        return listaNPCManager;
-    }
-
-    public BaoManager getBaoManager() {
-        return baoManager;
-    }
-
-    public RozpiskaManager getRozpiskaManager() {
-        return rozpiskaManager;
-    }
-    public UserManager getUserManager() {
-        return userManager;
-    }
-
-    public BonusesManager getBonusesManager() {
-        return bonusesManager;
-    }
-
-    public PartyManager getPartyManager() {
-        return partyManager;
-    }
-
-    public LowcaNPC getLowcaNPC() {
-        return lowcaNPC;
-    }
-
-    public LesnikNPC getLesnikNPC() {
-        return lesnikNPC;
-    }
-
-    public WyslannikNPC getWyslannikNPC() { return wyslannikNPC; }
-
-    public PrzekletyCzarnoksieznikBossManager getPrzekletyCzarnoksieznikBossManager() {
-        return przekletyCzarnoksieznikBossManager;
-    }
-
-    public PetyManager getPetyManager() {
-        return petyManager;
-    }
-
-    public ZamekNieskonczonosciManager getZamekNieskonczonosciManager() {
-        return zamekNieskonczonosciManager;
-    }
-
-    public DungeonsManager getDungeonsManager() {
-        return dungeonsManager;
-    }
-
-    public ZmiankiManager getZmiankiManager() {
-        return zmiankiManager;
-    }
-
-    public IceTowerManager getIceTowerManager() {
-        return iceTowerManager;
-    }
-
-    /*public TestNPC getTestNPC() {
-        return testNPC;
-    }*/ // TO TWORZYSZ ZAWSZE BO INACEJ NIE ODWOLASZ SIE W BAZIE DANYCH DO TEGO
-    public KociolkiManager getKociolkiManager() {
-        return kociolkiManager;
-    }
-
-    public TopkiManager getTopkiManager() {
-        return topkiManager;
-    }
-
-    public CraftingiManager getCraftingiManager() {
-        return craftingiManager;
-    }
-
-    public SerwerWhiteListManager getSerwerWhiteListManager() {
-        return serwerWhiteListManager;
-    }
-
-    public ArtefaktyZaLvlManager getArtefaktyZaLvlManager() {
-        return artefaktyZaLvlManager;
-    }
-
-    public ShowcaseItemManager getShowcaseItemManager() {
-        return showcaseItemManager;
-    }
-
-    public DisabledManager getDisabledManager() {
-        return disabledManager;
-    }
-
-    public WyszkolenieManager getWyszkolenieManager() {
-        return wyszkolenieManager;
-    }
-
-    public MedrzecNPC getMedrzecNPC() {
-        return medrzecNPC;
-    }
-
-    public InvseeManager getInvseeManager() {
-        return invseeManager;
-    }
-
-    public BossyManager getBossyManager() {
-        return bossyManager;
-    }
-
-    public PustelnikNPC getPustelnikNPC() {
-        return pustelnikNPC;
-    }
-
-    public MistrzYangNPC getMistrzYangNPC() {
-        return mistrzYangNPC;
-    }
-
-    public CzarownicaNPC getCzarownicaNPC() {
-        return czarownicaNPC;
-    }
-
-    public PrzedsionekManager getPrzedsionekManager() {
-        return przedsionekManager;
-    }
-
-    public UstawieniaKontaManager getUstawieniaKontaManager() {
-        return ustawieniaKontaManager;
-    }
-
-    public MistycznyKowalManager getMistycznyKowalManager() {
-        return mistycznyKowalManager;
-    }
-
-    public RzemieslnikManager getRzemieslnikManager() { return rzemieslnikManager; }
-    public GornikNPC getGornikNPC() {
-        return gornikNPC;
-    }
-
-    public OreManager getOreManager() {
-        return oreManager;
-    }
-
-    public KlasyManager getKlasyManager() {
-        return klasyManager;
-    }
-    public BackupManager getBackupManager() {
-        return backupManager;
-    }
-
-    public KodTworcyManager getKodTworcyManager() {
-        return this.kodTworcyManager;
-    }
-
-    public KoloseumManager getKoloseumManager() {
-        return koloseumManager;
-    }
-    public TajemniczePiaskiManager getTajemniczePiaskiManager() {
-        return tajemniczePiaskiManager;
-    }
-    public WygnanyKowalNPC getWygnanyKowalNPC() {
-        return wygnanyKowalNPC;
-    }
-    public ZlotnikNPC getZlotnikNPC() {
-        return zlotnikNPC;
-    }
-    public MroznyStrozNPC getMroznyStrozNPC() {
-        return mroznyStrozNPC;
-    }
 }
+
+
+

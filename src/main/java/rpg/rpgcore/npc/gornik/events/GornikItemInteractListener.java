@@ -41,11 +41,17 @@ public class GornikItemInteractListener implements Listener {
             player.sendMessage(Utils.format("&6&lGornik &8>> &cMusisz odczekac jeszcze &6" + RPGCORE.getInstance().getCooldownManager().getPlayerPickaxeAbilityCooldown(player.getUniqueId()) + "&c!"));
             return;
         }
+        final int itemExp = Utils.getTagInt(player.getItemInHand(), "exp");
+        if (itemExp < 2_500) {
+            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz &62 500 &cexp zeby uzyc tej umiejetnosci!"));
+            return;
+        }
+        RPGCORE.getInstance().getGornikNPC().updateExp(player.getItemInHand(), -2_500);
         e.setCancelled(true);
         e.setUseItemInHand(Event.Result.DENY);
         e.setUseInteractedBlock(Event.Result.DENY);
         final GornikUser user = RPGCORE.getInstance().getGornikNPC().find(e.getPlayer().getUniqueId());
-        final PotionEffect effect = new PotionEffect(PotionEffectType.FAST_DIGGING, 120, 1);
+        final PotionEffect effect = new PotionEffect(PotionEffectType.FAST_DIGGING, 1200, 1);
 
         player.addPotionEffect(effect);
         player.sendMessage(Utils.format("&6&lGornik &8>> &7Uzywasz mocy swojego &6Kilofa&7!"));

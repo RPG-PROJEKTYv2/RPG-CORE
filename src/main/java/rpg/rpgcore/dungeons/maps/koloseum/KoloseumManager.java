@@ -161,7 +161,7 @@ public class KoloseumManager {
                 return;
             }
             this.startPhase1();
-        }, 20 * 5);
+        }, 20 * 15);
     }
 
     public void openMapGate() {

@@ -203,7 +203,7 @@ public class TajemniczePiaskiManager {
                 return;
             }
             this.startPhase1();
-        }, 20 * 5);
+        }, 20 * 20);
     }
 
     public void openMapGate() {

@@ -179,7 +179,7 @@ public class GornikNPC {
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lGornik &8>> &a&lSklep Gorniczy"));
 
 
-        gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player).clone()).setLoreCrafting(GornikItems.getKilof(player).clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player.getUniqueId()).clone()).setLoreCrafting(GornikItems.getKilof(player.getUniqueId()).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$"
         )).addTagInt("price", 50_000_000).toItemStack().clone());
@@ -329,7 +329,7 @@ public class GornikNPC {
         )).toItemStack());
 
         //ULEPSZENIA KILOFA
-        final ItemStack playerPickaxe = GornikItems.getKilof(player).clone();
+        final ItemStack playerPickaxe = GornikItems.getKilof(player.getUniqueId()).clone();
         gui.setItem(15, new ItemBuilder(playerPickaxe.clone()).setType(Material.IRON_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
@@ -395,7 +395,7 @@ public class GornikNPC {
         }
         meta.setLore(lore);
         item.setItemMeta(meta);
-        if (itemExp + exp >= reqExp) {
+        if (itemExp + exp >= reqExp && Utils.getTagInt(item, "lvl") != 31) {
             this.updateLvl(item);
         }
     }

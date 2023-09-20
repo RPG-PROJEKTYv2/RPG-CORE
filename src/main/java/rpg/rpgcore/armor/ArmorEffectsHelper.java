@@ -93,7 +93,8 @@ public class ArmorEffectsHelper {
         if (value > 249) {
             k = 750;
         }
-        if (player.getInventory().getBoots() != null && player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Buty Gornika")) {
+        if (player.getInventory().getBoots() != null && player.getInventory().getBoots().hasItemMeta() && player.getInventory().getBoots().getItemMeta().hasDisplayName()
+                && player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Buty Gornika")) {
             k = 600;
         }
 
@@ -123,7 +124,8 @@ public class ArmorEffectsHelper {
         if (value > 159) {
             k = 4;
         }
-        if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getItemMeta().getDisplayName().contains("Helm Gornika")) {
+        if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().hasItemMeta()
+                && player.getInventory().getHelmet().getItemMeta().hasDisplayName() && player.getInventory().getHelmet().getItemMeta().getDisplayName().contains("Helm Gornika")) {
             k = 3;
         }
         if (k == 0) player.removePotionEffect(PotionEffectType.JUMP);

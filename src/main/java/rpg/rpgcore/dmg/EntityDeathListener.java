@@ -85,6 +85,8 @@ public class EntityDeathListener implements Listener {
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataMagazynier(killer.getUniqueId(), RPGCORE.getInstance().getMagazynierNPC().find(killer.getUniqueId())));
         }
 
+        rpgcore.getCooldownManager().givePlayerTeleporterCooldown(victim.getUniqueId());
+
         final User victimUser = rpgcore.getUserManager().find(victim.getUniqueId());
         final User killerUser = rpgcore.getUserManager().find(killer.getUniqueId());
         final PustelnikUser pustelnikUser = rpgcore.getPustelnikNPC().find(killer.getUniqueId());

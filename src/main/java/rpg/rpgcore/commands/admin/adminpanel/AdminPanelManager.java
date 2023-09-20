@@ -337,10 +337,10 @@ public class AdminPanelManager {
         for (final GornikItems gornikItems : GornikItems.values()) {
             gui.setItem(gui.firstEmpty(), gornikItems.getItemStack());
         }
-        gui.setItem(gui.firstEmpty(), GornikItems.getKilof(player).clone());
-        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.IRON_PICKAXE).toItemStack().clone());
-        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.GOLD_PICKAXE).toItemStack().clone());
-        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player).clone()).setType(Material.DIAMOND_PICKAXE).toItemStack().clone());
+        gui.setItem(gui.firstEmpty(), GornikItems.getKilof(player.getUniqueId()).clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player.getUniqueId()).clone()).setType(Material.IRON_PICKAXE).toItemStack().clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player.getUniqueId()).clone()).setType(Material.GOLD_PICKAXE).toItemStack().clone());
+        gui.setItem(gui.firstEmpty(), new ItemBuilder(GornikItems.getKilof(player.getUniqueId()).clone()).setType(Material.DIAMOND_PICKAXE).toItemStack().clone());
 
         gui.setItem(22, Utils.powrot().clone());
 

@@ -3,10 +3,13 @@ package rpg.rpgcore.utils.globalitems.npc;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
+import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public enum GornikItems {
     I1("Ruda_Wegla", new ItemBuilder(Material.COAL_ORE).setName("&8Ruda Wegla").hideFlag().toItemStack()),
@@ -98,15 +101,16 @@ public enum GornikItems {
         return itemStack;
     }
 
-    public static ItemStack getKilof(final Player player) {
+    public static ItemStack getKilof(final UUID uuid) {
         final int reqExp = GornikLevels.getByLvl(1).getReqExp();
+        final User user = RPGCORE.getInstance().getUserManager().find(uuid);
         return new ItemBuilder(Material.STONE_PICKAXE).setName("&6Kilof Gornika").setLore(Arrays.asList(
                 "&7Poziom: &61",
                 "&7Exp: &60&7/&6" + reqExp,
-                "&7Wlasciciel: &6" + player.getName()
+                "&7Wlasciciel: &6" + user.getName()
         ))
-                .addTagString("owner", player.getName())
-                .addTagString("owner-uuid", player.getUniqueId().toString())
+                .addTagString("owner", user.getName())
+                .addTagString("owner-uuid", uuid.toString())
                 .addTagInt("lvl", 1)
                 .addTagInt("exp", 0)
                 .addTagInt("reqExp", reqExp)

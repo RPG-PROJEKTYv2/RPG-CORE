@@ -171,7 +171,7 @@ public class GornikInventoryClickListener implements Listener {
 
                     user.setKasa(user.getKasa() - price);
                     player.sendMessage(Utils.format("&6&lGornik &8>> &7Trzymaj, oby Ci dobrze sluzyl!"));
-                    player.getInventory().addItem(GornikItems.getKilof(player).clone());
+                    player.getInventory().addItem(GornikItems.getKilof(player.getUniqueId()).clone());
                     player.closeInventory();
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
                     break;
