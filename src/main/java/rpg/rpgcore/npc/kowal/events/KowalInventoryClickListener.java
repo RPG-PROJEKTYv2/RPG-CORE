@@ -71,6 +71,7 @@ public class KowalInventoryClickListener implements Listener {
                     || item.getItemMeta().getDisplayName() == null || item.getItemMeta().getLore() == null)) {
                 return;
             }
+            if (item.getItemMeta().getDisplayName().contains("Gornika")) return;
             final ItemStack itemToGui = item.clone();
             String itemDisplayName = "";
             if (!itemToGui.getItemMeta().hasDisplayName()) {
