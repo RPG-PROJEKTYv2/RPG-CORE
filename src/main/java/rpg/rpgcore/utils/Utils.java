@@ -5,10 +5,7 @@ import com.mojang.authlib.properties.Property;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -57,6 +54,10 @@ public class Utils {
     public static DecimalFormat kasaFormat = new DecimalFormat("0.00");
     public static DecimalFormat procentFormat = new DecimalFormat("00.00");
     public static int MAXLVL = 130;
+
+    public static final List<World> customDungeonWorlds = Arrays.asList(
+            Bukkit.getWorld("CustomDung1")
+    );
 
     public static String format(String str) {
         return ChatColor.translateAlternateColorCodes('&', str.replace(">>", "»").replace("<<", "«"));

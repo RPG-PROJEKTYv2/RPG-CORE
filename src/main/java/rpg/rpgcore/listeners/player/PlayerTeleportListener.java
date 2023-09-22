@@ -20,7 +20,7 @@ public class PlayerTeleportListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onTeleport(final PlayerTeleportEvent e) {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN || e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND ||
-                e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN || e.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL ||
+                e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN ||
                 e.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
 
             if (e.getFrom().getWorld() == e.getTo().getWorld()) {

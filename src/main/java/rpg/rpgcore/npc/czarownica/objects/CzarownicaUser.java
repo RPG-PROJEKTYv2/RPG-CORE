@@ -34,7 +34,7 @@ public class CzarownicaUser implements Cloneable {
             if (key.equals("_id")) continue;
             this.progressMap.put(Utils.deserializeItem(key), progressMap.getInteger(key));
         }
-        this.isUnlocked = false;
+        this.isUnlocked = (document.containsKey("isUnlocked") ? document.getBoolean("isUnlocked") : false);
     }
 
     public void incrementProgress(final ItemStack item) {
@@ -58,6 +58,7 @@ public class CzarownicaUser implements Cloneable {
         for (final ItemStack item : this.progressMap.keySet()) {
             progressMap.append(Utils.serializeItem(item), this.progressMap.get(item));
         }
+        document.append("isUnlocked", this.isUnlocked);
         document.append("progressMap", progressMap);
         return document;
     }

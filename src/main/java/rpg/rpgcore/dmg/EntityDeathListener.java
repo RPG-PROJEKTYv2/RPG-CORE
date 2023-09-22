@@ -41,6 +41,8 @@ public class EntityDeathListener implements Listener {
         e.setKeepLevel(true);
         e.getEntity().closeInventory();
 
+        if (Utils.customDungeonWorlds.contains(e.getEntity().getWorld())) return;
+
         if (e.getEntity().getWorld().getName().equals("Dungeon60-70")) {
             if (e.getEntity().getWorld().getPlayers().isEmpty()) {
                 final String playerName = Utils.removeColor(Objects.requireNonNull(((TextHologramLine) rpgcore.getPrzedsionekManager().getDungeonHologram().getLines().get(3)).getText())).replace("Przechodzi: ", "");

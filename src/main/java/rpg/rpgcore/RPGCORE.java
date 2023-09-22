@@ -672,9 +672,9 @@ public final class RPGCORE extends JavaPlugin {
         this.fixBuckets();
 
         try {
-            //MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY - GŁÓWNY BOT
-            //MTE1MjU1MjcwMzk0NDMxNDk2Mg.G4zvZC.sVF6AFJnaYHL8aMEhOkD9XjO-U-oksrgZ2GGrg - TESTOWY SERWER
-            discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.G4WBAu.JNyI0YhZtn9f0C4NAgjoTOuw6_Cua8iBvpXEpY");
+            //MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk - GŁÓWNY BOT
+            //MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo - TESTOWY SERWER
+            discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk");
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
@@ -982,7 +982,6 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new RybakInventoryClick(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
         this.getServer().getPluginManager().registerEvents(new RybakInteractListener(this), this);
-
         this.getServer().getPluginManager().registerEvents(new RybakRegionEnterListener(), this);
 
         // ...MAGAZYNIER

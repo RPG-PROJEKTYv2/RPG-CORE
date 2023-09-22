@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners.block;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -38,6 +39,7 @@ public class BlockInteractListener implements Listener {
         final Player player = e.getPlayer();
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (player.getItemInHand() != null) {
+                if (player.getGameMode() == GameMode.CREATIVE) return;
                 if (player.getItemInHand().getType().equals(Material.ENDER_PEARL) || player.getItemInHand().getType().equals(Material.EYE_OF_ENDER)
                         || player.getItemInHand().getType().equals(Material.SNOW_BALL) || player.getItemInHand().getType().equals(Material.EGG)) {
                     e.setCancelled(true);

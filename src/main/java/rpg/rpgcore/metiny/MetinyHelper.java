@@ -84,6 +84,7 @@ public class MetinyHelper {
             if (w.getName().equals("Dungeon90-100") && !w.getPlayers().isEmpty()) {
                 continue;
             }
+            if (Utils.customDungeonWorlds.contains(w) && !w.getPlayers().isEmpty()) continue;
             for (org.bukkit.entity.Entity e : w.getEntities()) {
                 if (e.getType().equals(EntityType.ENDER_CRYSTAL)) {
                     if (RPGCORE.getInstance().getMetinyManager().isMetin(e.getLocation())) {
@@ -321,6 +322,8 @@ public class MetinyHelper {
             kasaToAdd = 16_000;
             RPGCORE.getInstance().getTajemniczePiaskiManager().incrementCounter();
         }
+
+        //TODO ---------------------------------------- POWYŻEJ 90 000 SA CUSTOM DUNGEONY ----------------------------------------
 
         final String worldName = String.valueOf(entity.getWorld().getName()).replaceAll(" ", "");
         final int mobsToSpawn = RPGCORE.getInstance().getMetinyManager().find(id).getMetins().getMoby();

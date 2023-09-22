@@ -87,7 +87,7 @@ public class GornikInventoryClickListener implements Listener {
 
             final GornikUser user = rpgcore.getGornikNPC().find(uuid);
 
-            if (user.getMission() == 28) return;
+            if (user.getMission() > 28) return;
 
             final GornikMissions mission = GornikMissions.getById(user.getMission());
 
