@@ -8,15 +8,15 @@ import rpg.rpgcore.utils.globalitems.ItemShop;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 public enum OsRybak {
-    M1(1, 0, 50, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(3).toItemStack().clone()),
-    M2(2, 1, 200, GlobalItem.getItem("I6", 2).clone()),
-    M3(3, 2, 500, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(5).toItemStack().clone()),
-    M4(4, 3, 1_200, GlobalItem.getItem("I2", 4).clone()),
-    M5(5, 4, 3_000, GlobalItem.getItem("I1", 2).clone()),
-    M6(6, 5, 7_500, GlobalItem.getItem("I1", 4).clone()),
-    M7(7, 6, 12_500, GlobalItem.getItem("I1", 6).clone()),
-    M8(8, 7, 30_000, ItemShop.IS10.getItems().get(0).clone()),
-    M9(9, 8, 50_000, new ItemBuilder(Material.STONE).setName("&d&lTajemnicza Moc &4&l(SOON)").toItemStack().clone());
+    M1(1, 0, 200, GlobalItem.getItem("I10", 3).clone()),
+    M2(2, 1, 500, GlobalItem.getItem("I_OCZYSZCZENIE", 3).clone()),
+    M3(3, 2, 1000, GlobalItem.getItem("I_METAL", 3).clone()),
+    M4(4, 3, 2_500, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l25 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M5(5, 4, 5_000, GlobalItem.getItem("I_KSIEGAMAGII", 5).clone()),
+    M6(6, 5, 7_500, GlobalItem.getItem("I_METAL", 8).clone()),
+    M7(7, 6, 12_500, GlobalItem.getItem("I_OCZYSZCZENIE", 10).clone()),
+    M8(8, 7, 24_000, GlobalItem.getItem("I10", 12).clone()),
+    M9(9, 8, 50_000, ItemShop.IS14.getItems().get(0).clone());
 
 
     private final int mission;

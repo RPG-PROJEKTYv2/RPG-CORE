@@ -3,20 +3,22 @@ package rpg.rpgcore.osiagniecia.enums;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
+import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 
 public enum OsGracze {
-    M1(1, 0, 5, ItemHelper.createSword("&8Miecz Skrytobojcy", Material.IRON_SWORD, 25, 15, false).clone()),
-    M2(2, 1, 20, ItemHelper.createArmor("&8Helm Skrytobojcy", Material.IRON_HELMET, 33, 7).clone()),
-    M3(3, 2, 50, ItemHelper.createArmor("&8Zbroja Skrytobojcy", Material.IRON_CHESTPLATE, 55, 15).clone()),
-    M4(4, 3, 120, GlobalItem.getItem("I1", 1).clone()),
-    M5(5, 4, 300, GlobalItem.getItem("I1", 5).clone()),
-    M6(6, 5, 750, AkcesoriaPodsHelper.createNaszyjnik(155, 28, 36, 76, "&8Tarcza Skrytobojcy").clone()),
-    M7(7, 6, 1_500, GlobalItem.getItem("I4", 2).clone()),
-    M8(8, 7, 4_500, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone()),
-    M9(9, 8, 7_500, new ItemBuilder(Material.STONE).setName("&4&lWKROTCE").toItemStack().clone());
+    M1(1, 0, 5, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l2 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M2(2, 1, 25, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l5 500 000&2$").addGlowing().toItemStack().clone().clone()),
+    M3(3, 2, 50, GlobalItem.getItem("I_OCZYSZCZENIE", 3).clone()),
+    M4(4, 3, 100, GlobalItem.getItem("I_KSIEGAMAGII", 3).clone()),
+    M5(5, 4, 200, GlobalItem.getItem("I_KSIEGAMAGII_PLUS", 1).clone()),
+    M6(6, 5, 550, GlobalItem.getHells(75).clone()),
+    M7(7, 6, 1_000, SkrzynkiOther.getItem("I2", 16).clone()),
+    M8(8, 7, 3_500, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l50 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M9(9, 8, 7_000, BonType.DEFENSYWA_5.getBon());
 
     private final int mission;
     private final int reqMission;

@@ -116,7 +116,9 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
             // BOSS
             case "[BOSS] Dowodca Rozbojnikow":
-                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
+                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss1_10()) {
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
+                }
                 rpgcore.getBossyManager().decrementBoss1_10count();
                 addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
                 // LOWCA
@@ -160,7 +162,9 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
             // BOSS
             case "[BOSS] Wodz Goblinow":
-                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &fzostal zabity przez: &e" + player.getName()));
+                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss10_20()) {
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &fzostal zabity przez: &e" + player.getName()));
+                }
                 rpgcore.getBossyManager().decrementBoss10_20count();
                 addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 2) {
@@ -191,7 +195,9 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
             // BOSS
             case "[BOSS] Krol Goryli":
-                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &fzostal zabity przez: &e" + player.getName()));
+                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss20_30()) {
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &fzostal zabity przez: &e" + player.getName()));
+                }
                 rpgcore.getBossyManager().decrementBoss20_30count();
                 addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 3) {
@@ -223,7 +229,9 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 4 -----------------------------------------
             // BOSS
             case "[BOSS] Przekleta Dusza":
-                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &fzostal zabity przez: &e" + player.getName()));
+                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss30_40()) {
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &fzostal zabity przez: &e" + player.getName()));
+                }
                 rpgcore.getBossyManager().decrementBoss30_40count();
                 addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 4) {
@@ -257,7 +265,9 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 5 -----------------------------------------
             // BOSS
             case "[BOSS] Tryton":
-                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &fzostal zabity przez: &e" + player.getName()));
+                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss40_50()) {
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &fzostal zabity przez: &e" + player.getName()));
+                }
                 rpgcore.getBossyManager().decrementBoss40_50count();
                 addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 5) {
@@ -618,6 +628,7 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Krol Lodu":
+                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lKrol Lodu &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.I11.getItemStack().clone(), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 6) {
                     addDropPlayer(player, LowcaItems.getItem("Lodowej-Wiezy", 1), getDropChance(szczescie, 15), true, true, entity);

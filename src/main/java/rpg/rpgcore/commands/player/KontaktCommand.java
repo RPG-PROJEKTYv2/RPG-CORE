@@ -25,7 +25,7 @@ public class KontaktCommand extends CommandAPI {
         }
         player.sendMessage(" ");
         player.sendMessage(Utils.format("&7Kliknij:"));
-        player.sendMessage(Utils.format("&a&lDiscord: &6&ldc.hellrpg.pl"));
+        player.sendMessage(Utils.format("&a&lDiscord: &6&lhttps://discord.gg/N5n8nf7EWE"));
         player.sendMessage(Utils.format("&a&lFacebook: &6&lfb.hellrpg.pl"));
         player.sendMessage(Utils.format("&a&lStrona &6&lwww.hellrpg.pl"));
         player.sendMessage(Utils.format("&a&lYouTube &6&lyoutube.com/@hellrpg-minecraft"));

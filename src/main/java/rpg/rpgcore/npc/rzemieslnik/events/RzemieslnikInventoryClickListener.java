@@ -39,13 +39,13 @@ public class RzemieslnikInventoryClickListener implements Listener {
 
             if (slot == 12) {
                 if (!(player.getInventory().containsAtLeast(GlobalItem.I_FRAGMENT_BONA.getItemStack(), 3) &&
-                        user.getKasa() >= 300_000_000)) {
+                        user.getKasa() >= 200_000_000)) {
                     player.sendMessage(Utils.format("&f&lRzemieslnik &8>> &7Chyba zapomniales itemow..."));
                     player.closeInventory();
                     return;
                 }
                 player.getInventory().removeItem(new ItemBuilder(GlobalItem.I_FRAGMENT_BONA.getItemStack().clone()).setAmount(3).toItemStack());
-                user.setKasa(DoubleUtils.round(user.getKasa() - 300_000_000, 2));
+                user.setKasa(DoubleUtils.round(user.getKasa() - 200_000_000, 2));
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
                 final int liczba = ChanceHelper.getRandInt(1, 3);
                 if (liczba == 1) {

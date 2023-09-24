@@ -40,8 +40,8 @@ public class RzemieslnikManager {
         item = Utils.getPlayerInventoryItemCount(player, GlobalItem.getItem("I_FRAGMENT_BONA",1));
         prefix = (item >= 3 ? "&3&m" : "&3");
         lore.add("  &8- " + prefix + "&3&lFragment Tajemniczego Bona &8x3 (" + item + "/3)");
-        prefix = (kasa >= 300_000_000 ? "&a&m" : "&c");
-        lore.add("  &8- " + prefix + "300 000 000 $");
+        prefix = (kasa >= 200_000_000 ? "&a&m" : "&c");
+        lore.add("  &8- " + prefix + "200 000 000 $");
         lore.add("&7&m----------{&f&l Wymagane Przedmioty &7&m}----------");
         return lore;
     }

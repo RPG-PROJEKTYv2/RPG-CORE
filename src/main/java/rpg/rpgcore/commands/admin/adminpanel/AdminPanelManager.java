@@ -163,6 +163,7 @@ public class AdminPanelManager {
         )).toItemStack());
         gui.setItem(12, GlobalItem.I_KAMIENBAO.getItemStack());
         gui.setItem(13, GlobalItem.I_KSIEGAMAGII.getItemStack());
+        gui.setItem(14, GlobalItem.I_KSIEGAMAGII_PLUS.getItemStack());
 
         gui.setItem(15, GlobalItem.RUDA_MITHRYLU.getItemStack());
         gui.setItem(16, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack());

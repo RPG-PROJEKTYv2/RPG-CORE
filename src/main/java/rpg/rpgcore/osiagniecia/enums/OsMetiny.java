@@ -5,26 +5,19 @@ import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
+import rpg.rpgcore.utils.globalitems.ItemShop;
+import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
 
 public enum OsMetiny {
-    // tajemnicza x3
-    M1(1, 0, 5, GlobalItem.getItem("I4", 1).clone()),
-    // pozlacana x2
-    M2(2, 1, 15, GlobalItem.getCheck(1_000).clone()),
-    // spodnie niszczyciela metinow
-    M3(3, 2, 50, ItemHelper.createArmor("&bSpodnie Niszczyciela Metinow", Material.IRON_LEGGINGS, 18, 2).clone()),
-    // pozlacana x6
-    M4(4, 3, 150, GlobalItem.getItem("I50", 2).clone()),
-    // hells x15
-    M5(5, 4, 500, ItemHelper.createArmor("&bButy Niszczyciela Metinow", Material.IRON_BOOTS, 45, 15).clone()),
-    // czek 50kk
-    M6(6, 5, 1_250, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l50 000 000&2$").addGlowing().toItemStack().clone().clone()),
-    //x`
-    M7(7, 6, 2_500, GlobalItem.getHells(50).clone()),
-    //
-    M8(8, 7, 5_000, GlobalItem.getItem("I1", 4).clone()),
-    // elita 14d
-    M9(9, 8, 10_000, GlobalItem.getItem("I1", 8).clone());
+    M1(1, 0, 200, SkrzynkiOther.getItem("I2", 3).clone()),
+    M2(2, 1, 500, GlobalItem.getItem("I_KAMIENBAO", 5).clone()),
+    M3(3, 2, 1000, GlobalItem.getItem("I_OCZYSZCZENIE", 8).clone()),
+    M4(4, 3, 2000, GlobalItem.getItem("I10", 8).clone()),
+    M5(5, 4, 5000, GlobalItem.getItem("I_METAL", 7).clone()),
+    M6(6, 5, 7_550, SkrzynkiOther.getItem("I2", 16).clone()),
+    M7(7, 6, 12_000, new ItemBuilder(Material.DOUBLE_PLANT).setName("&eCzek na &6&l50 000 000&2$").addGlowing().toItemStack().clone().clone()),
+    M8(8, 7, 16_500, GlobalItem.getHells(100).clone()),
+    M9(9, 8, 25_000, ItemShop.IS14.getItems().get(0).clone());
 
 
     private final int mission;

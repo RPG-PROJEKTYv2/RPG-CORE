@@ -51,7 +51,7 @@ public class OsManager {
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."
         )).toItemStack().clone());
 
-        gui.setItem(14, new ItemBuilder(Material.CHEST).setName("&cOtworzone Skrzynki").setLore(Arrays.asList(
+        gui.setItem(14, new ItemBuilder(Material.CHEST).setName("&cOtworzone Skrzynki &8(&4&lWKROTCE&8)").setLore(Arrays.asList(
                 "&7Wykonane: &6" + osUser.getSkrzynki() + "&7/&69",
                 "",
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."
@@ -61,13 +61,13 @@ public class OsManager {
                 "",
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."
         )).toItemStack().clone());
-        gui.setItem(16, new ItemBuilder(Material.ANVIL).setName("&cUdane Ulepszenia u Kowala").setLore(Arrays.asList(
+        gui.setItem(16, new ItemBuilder(Material.ANVIL).setName("&cUdane Ulepszenia u Kowala &8(&4&lWKROTCE&8)").setLore(Arrays.asList(
                 "&7Wykonane: &6" + osUser.getUlepszenia() + "&7/&69",
                 "",
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."
         )).toItemStack().clone());
 
-        gui.setItem(28, new ItemBuilder(Material.FISHING_ROD).setName("&cUdane Polowy &8(&4&lWKROTCE&8)").setLore(Arrays.asList(
+        gui.setItem(28, new ItemBuilder(Material.FISHING_ROD).setName("&cUdane Polowy").setLore(Arrays.asList(
                 "&7Wykonane: &6" + osUser.getRybak() + "&7/&69",
                 "",
                 "&8Kliknij, zeby zobaczyc wiecej szczegolow."

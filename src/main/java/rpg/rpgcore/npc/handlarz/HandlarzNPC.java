@@ -131,7 +131,18 @@ public class  HandlarzNPC {
 
         gui.setItem(49, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
-        gui.setItem(53, new ItemBuilder(Material.GOLD_NUGGET).setName("&cTwoje &4&lH&6&lS&c: " + Utils.spaceNumber(String.valueOf(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getHellcoins()))).toItemStack());
+        gui.setItem(53, new ItemBuilder(Material.GOLD_NUGGET).setName("&cTwoje &4&lH&6&lS&c: " + Utils.spaceNumber(String.valueOf(RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getHellcoins())))
+                .setLore(Arrays.asList(
+                        "",
+                        "&7W celu zakupienia &6waluty &7udaj sie",
+                        "&7na naszego discorda &6/kontakt",
+                        "&7stworz na nim ticket w kategorii",
+                        "&6platnosci &7oraz czekaj na dalsze",
+                        "&7informacje podane przez administratora",
+                        "",
+                        "&f&l1zl = 10HS",
+                        ""
+                )).toItemStack());
         player.openInventory(gui);
     }
 

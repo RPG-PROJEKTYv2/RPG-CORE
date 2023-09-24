@@ -216,29 +216,29 @@ public class ChatManager {
             gui.setItem(19, new ItemBuilder(Material.ARMOR_STAND).setName("&cPokazywanie zadawanych obrazen").setLore(Arrays.asList(" ", "&8* &9Status: &c&lGRACZ")).toItemStack().clone());
         }
         if (user.isBoss1_10()) {
-            gui.setItem(20, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 1-10").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+            gui.setItem(20, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 1-10").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(20, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 1-10").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            gui.setItem(20, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie  1-10").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isBoss10_20()) {
-            gui.setItem(21, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 10-20").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+            gui.setItem(21, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 10-20").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(21, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 10-20").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            gui.setItem(21, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 10-20").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isBoss20_30()) {
-            gui.setItem(22, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 20-30").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+            gui.setItem(22, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 20-30").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(22, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 20-30").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            gui.setItem(22, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 20-30").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isBoss30_40()) {
-            gui.setItem(23, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 30-40").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+            gui.setItem(23, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 30-40").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(23, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 30-40").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            gui.setItem(23, new ItemBuilder(Material.FIREBALL).setName("&cInformacje  o Bossie 30-40").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
         if (user.isBoss40_50()) {
-            gui.setItem(24, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 40-50").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+            gui.setItem(24, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 40-50").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
         } else {
-            gui.setItem(24, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o przywolaniu Bossa 40-50").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+            gui.setItem(24, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 40-50").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
 
         final User mainUser = rpgcore.getUserManager().find(player.getUniqueId());

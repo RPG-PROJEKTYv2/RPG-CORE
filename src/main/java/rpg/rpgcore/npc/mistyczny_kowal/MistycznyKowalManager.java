@@ -115,7 +115,7 @@ public class MistycznyKowalManager {
 
         int randomPercent = 1;
 
-        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 7))) {
+        if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 9))) {
             randomPercent = ChanceHelper.getRandInt(55, 60);
         } else if (ChanceHelper.getChance(MobDropHelper.getDropChance(szczescie, 25))) {
             randomPercent = ChanceHelper.getRandInt(45, 54);

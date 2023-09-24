@@ -111,7 +111,8 @@ public class ArtefaktyInteractListener implements Listener {
                 if (!player.getLocation().getWorld().getName().equals("50-60map") && !player.getLocation().getWorld().getName().equals("60-70map") &&
                         !player.getLocation().getWorld().getName().equals("70-80map") && !player.getLocation().getWorld().getName().equals("80-90map") &&
                         !player.getLocation().getWorld().getName().equals("90-100map") && !player.getLocation().getWorld().getName().equals("100-110map") &&
-                        !player.getLocation().getWorld().getName().equals("110-120map") && !player.getLocation().getWorld().getName().equals("120-130map")) {
+                        !player.getLocation().getWorld().getName().equals("110-120map") && !player.getLocation().getWorld().getName().equals("120-130map")
+                        && !player.getLocation().getWorld().getName().equals("Dungeon80-90")) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz uzywac tego artefaktu na mapach bez pvp!"));
                     rpgcore.getCooldownManager().givePlayerSerceCooldown(uuid);
                     return;

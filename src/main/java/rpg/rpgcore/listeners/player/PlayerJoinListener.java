@@ -83,7 +83,7 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().addItem(ItemHelper.createArmor("&8Zbroja Poczatkujacego", Material.LEATHER_CHESTPLATE, 3, 0));
             player.getInventory().addItem(ItemHelper.createArmor("&8Spodnie Poczatkujacego", Material.LEATHER_LEGGINGS, 3, 0));
             player.getInventory().addItem(ItemHelper.createArmor("&8Buty Poczatkujacego", Material.LEATHER_BOOTS, 3, 0));
-            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 2, 1, false));
+            player.getInventory().addItem(ItemHelper.createSword("&7Startowa Maczeta", Material.WOOD_SWORD, 1, 1, false));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().createPlayer(player, uuid, player.getName(), player.getInventory().getContents(), player.getInventory().getArmorContents(), player.getEnderChest().getContents());
                 rpgcore.getBackupMongoManager().getPool().firstJoin(uuid);

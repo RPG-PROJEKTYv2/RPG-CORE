@@ -404,6 +404,9 @@ public enum HandlarzSellItems {
     // fragment magii
     I344("Czastka Magii",Material.BLAZE_POWDER,500_000),
 
+    I345("Mithrylowe Ostrze",Material.DIAMOND_SWORD,500_000),
+    I346("Miyhrylowy Sztylet",Material.DIAMOND_SWORD,500_000),
+
     
     I_ERROR("ERROR", Material.AIR, 0);
     private final String name;

@@ -353,8 +353,8 @@ public class TestEntityDamageListener implements Listener {
                 double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
                 double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
-                attacker.sendMessage(Utils.format("&4&lDMG"));
-                victim.sendMessage(Utils.format("&a&lDEF"));
+               // attacker.sendMessage(Utils.format("&4&lDMG"));
+                //victim.sendMessage(Utils.format("&a&lDEF"));
 
                 attacker.sendMessage("Damage To Player (raw)- " + attackerDmg);
                 victim.sendMessage("Wartosc Defa (raw)- " + wartoscDefa);
@@ -384,15 +384,15 @@ public class TestEntityDamageListener implements Listener {
                     wartoscDefa *= 0.5;
                 }
 
-                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
-                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
+               // attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
+               // victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
 
 
                 double finalDmg = DoubleUtils.round(attackerDmg/wartoscDefa, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-                attacker.sendMessage("Final Dmg - " + finalDmg);
+                //attacker.sendMessage("Final Dmg - " + finalDmg);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
                 if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getKrytyk() < finalDmg) {
                     attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
@@ -509,7 +509,7 @@ public class TestEntityDamageListener implements Listener {
                 rpgcore.getNmsManager().sendMobInfo(attacker, (LivingEntity) e.getEntity(), e.getFinalDamage());
             }
         } else
-            if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
+        if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
             // Victim jest Graczem
             if (e.getEntity() instanceof Player) {
                 final Player victim = (Player) e.getEntity();

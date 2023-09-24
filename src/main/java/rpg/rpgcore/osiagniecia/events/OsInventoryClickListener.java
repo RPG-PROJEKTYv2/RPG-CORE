@@ -56,16 +56,16 @@ public class OsInventoryClickListener implements Listener {
                     rpgcore.getOsManager().openOsMetiny(player);
                     return;
                 case 14:
-                    rpgcore.getOsManager().openOsSkrzynki(player);
+                    //rpgcore.getOsManager().openOsSkrzynki(player);
                     return;
                 case 15:
                     rpgcore.getOsManager().openOsNiesy(player);
                     return;
                 case 16:
-                    rpgcore.getOsManager().openOsUlepszenia(player);
+                    //rpgcore.getOsManager().openOsUlepszenia(player);
                     return;
                 case 28:
-                    //rpgcore.getOsManager().openOsRybak(player);
+                    rpgcore.getOsManager().openOsRybak(player);
                     return;
                 case 29:
                     rpgcore.getOsManager().openOsGornik(player);

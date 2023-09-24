@@ -312,12 +312,13 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
+        /*
         attacker.sendMessage(Utils.format("&6&lDEBUG"));
         attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         attacker.sendMessage(Utils.format("&cDmg: " + dmg));
         attacker.sendMessage(Utils.format("&cKS: " + ks));
         attacker.sendMessage(Utils.format("&cSilny Na: " + Utils.getTagDouble(weapon, "silny-na-val")));
-        attacker.sendMessage(Utils.format("&6&lDEBUG"));
+        attacker.sendMessage(Utils.format("&6&lDEBUG"));*/
 
 
         dmg = dmg * 2 * (mnoznik / 100);
@@ -499,15 +500,15 @@ public class DamageManager {
         }
 
         double wartoscDefa = DoubleUtils.round(prot * (mnoznik / 100), 2);
-        victim.sendMessage(Utils.format("&6&lDEBUG"));
-        victim.sendMessage(Utils.format("&aWartosc defa: " + wartoscDefa));
-        victim.sendMessage(Utils.format("&aMnoznik: " + mnoznik));
+        //victim.sendMessage(Utils.format("&6&lDEBUG"));
+        //victim.sendMessage(Utils.format("&aWartosc defa: " + wartoscDefa));
+        //victim.sendMessage(Utils.format("&aMnoznik: " + mnoznik));
 
         double finalDmg = DoubleUtils.round((mobDamage / wartoscDefa) * 2, 3);
 
-        victim.sendMessage(Utils.format("&aFinal Dmg: " + finalDmg));
+        //victim.sendMessage(Utils.format("&aFinal Dmg: " + finalDmg));
 
-        victim.sendMessage(Utils.format("&6&lDEBUG"));
+        //victim.sendMessage(Utils.format("&6&lDEBUG"));
 
         return finalDmg;
     }
