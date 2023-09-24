@@ -102,6 +102,11 @@ public class GuildCommand extends CommandAPI {
 
             if (args[0].equalsIgnoreCase("pvp")) {
 
+                if (!(rpgcore.getGuildManager().getGuildOwner(tag).equals(uuid) || rpgcore.getGuildManager().getGuildCoOwner(tag).equals(uuid.toString()))) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie jestes zalozycielem / zastepca klanu"));
+                    return;
+                }
+
                 final boolean pvpStatus = rpgcore.getGuildManager().getGuildPvPStatus(tag);
 
                 if (pvpStatus) {

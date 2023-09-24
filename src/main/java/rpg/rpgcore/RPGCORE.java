@@ -674,7 +674,7 @@ public final class RPGCORE extends JavaPlugin {
         try {
             //MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk - GŁÓWNY BOT
             //MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo - TESTOWY SERWER
-            discordBot = new DiscordBot("MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk");
+            discordBot = new DiscordBot("MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo");
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
@@ -856,8 +856,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
 
-        this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
-        //this.getServer().getPluginManager().registerEvents(new TestEntityDamageListener(this), this);
+        //this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new TestEntityDamageListener(this), this);
 
         this.getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);

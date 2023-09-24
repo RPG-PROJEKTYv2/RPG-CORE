@@ -59,7 +59,7 @@ public class LesnikInventoryClick implements Listener {
             if (ChanceHelper.getChance(chance)) {
                 lesnikObject.getUser().setProgress(lesnikObject.getUser().getProgress() + 1);
                 player.sendMessage(Utils.format("&2&lLesnik &8>> &aDziekuje ci za ten przedmiot"));
-                if (lesnikObject.getUser().getProgress() == mission.getReqAmount()) {
+                if (lesnikObject.getUser().getProgress() >= mission.getReqAmount()) {
                     final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
                     lesnikObject.getUser().giveCooldown();
                     lesnikObject.getUser().setProgress(0);

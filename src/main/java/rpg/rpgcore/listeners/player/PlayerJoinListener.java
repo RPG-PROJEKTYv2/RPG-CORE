@@ -17,8 +17,10 @@ import org.bukkit.potion.PotionEffect;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.armor.ArmorEffectsHelper;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
+import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.pets.objects.Pet;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
@@ -116,7 +118,8 @@ public class PlayerJoinListener implements Listener {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
         }
 
-        user.setHellCodeLogin(false);
+        if (user.getHellCode().equals("off")) user.setHellCodeLogin(true);
+        else user.setHellCodeLogin(false);
         user.setAdminCodeLogin(false);
 
         if (!user.getRankUser().isHighStaff()) {
@@ -250,10 +253,16 @@ public class PlayerJoinListener implements Listener {
 
     private void checkPlayerItems(final Player player) {
         final List<String> itemNames = new ArrayList<>();
-        for (final ItemStack item : player.getInventory().getContents()) {
-            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) continue;
+        final List<ItemStack> playerAllItems = new ArrayList<>(Arrays.asList(player.getInventory().getContents()));
+
+        playerAllItems.addAll(Arrays.asList(player.getEnderChest().getContents()));
+
+        for (final ItemStack item : playerAllItems) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
             if (Utils.removeColor(item.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
-                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("45 sekund") || s.contains("1 minuta"))) continue;
+                if (item.getItemMeta().getLore().stream().anyMatch(s -> s.contains("45 sekund") || s.contains("1 minuta")))
+                    continue;
                 if (Utils.getTagString(item, "type").equals("exp")) {
                     final ItemMeta meta = item.getItemMeta();
                     final List<String> lore = Arrays.asList(
@@ -281,12 +290,385 @@ public class PlayerJoinListener implements Listener {
                 itemNames.add(item.getItemMeta().getDisplayName());
                 continue;
             }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+
+        final MagazynierUser magazyny = rpgcore.getMagazynierNPC().find(player.getUniqueId());
+        ItemStack[] mag1 = new ItemStack[0];
+        ItemStack[] mag2 = new ItemStack[0];
+        ItemStack[] mag3 = new ItemStack[0];
+        ItemStack[] mag4 = new ItemStack[0];
+        ItemStack[] mag5 = new ItemStack[0];
+        try {
+            if (magazyny.isUnlocked1())
+                mag1 = Utils.itemStackArrayFromBase64(magazyny.getMagazyn1());
+            if (magazyny.isUnlocked2())
+                mag2 = Utils.itemStackArrayFromBase64(magazyny.getMagazyn2());
+            if (magazyny.isUnlocked3())
+                mag3 = Utils.itemStackArrayFromBase64(magazyny.getMagazyn3());
+            if (magazyny.isUnlocked4())
+                mag4 = Utils.itemStackArrayFromBase64(magazyny.getMagazyn4());
+            if (magazyny.isUnlocked5())
+                mag5 = Utils.itemStackArrayFromBase64(magazyny.getMagazyn5());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (final ItemStack item : mag1) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+        for (final ItemStack item : mag2) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+        for (final ItemStack item : mag3) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+        for (final ItemStack item : mag4) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+        for (final ItemStack item : mag5) {
+            if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore())
+                continue;
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Czempiona Areny") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+            if (Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni") && !Utils.getTagBoolean(item, "energiaFix1")) {
+                Utils.setTagInt(item, "blok", (int) Math.floor((double) Utils.getTagInt(item, "blok") / 2), true);
+                Utils.setTagBoolean(item, "energiaFix1", true);
+                final ItemMeta meta = item.getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(item, "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                item.setItemMeta(meta);
+                itemNames.add(item.getItemMeta().getDisplayName());
+                continue;
+            }
+        }
+
+        magazyny.setMagazyn1(Utils.itemStackArrayToBase64(mag1));
+        magazyny.setMagazyn2(Utils.itemStackArrayToBase64(mag2));
+        magazyny.setMagazyn3(Utils.itemStackArrayToBase64(mag3));
+        magazyny.setMagazyn4(Utils.itemStackArrayToBase64(mag4));
+        magazyny.setMagazyn5(Utils.itemStackArrayToBase64(mag5));
+
+
+        final DodatkiUser dodatkiUser = rpgcore.getDodatkiManager().find(player.getUniqueId());
+        if (!dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getType().equals(Material.AIR)) {
+            if (Utils.removeColor(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName()).equals("Energia Piekielnego Kowala")
+                    && !Utils.getTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1")) {
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(player.getUniqueId());
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                Utils.setTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok", (int) Math.floor((double) Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") / 2), true);
+                Utils.setTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1", true);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                final ItemMeta meta = dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                dodatkiUser.getAkcesoriaDodatkowe().getEnergia().setItemMeta(meta);
+                itemNames.add(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName());
+            } else
+            if (Utils.removeColor(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName()).equals("Energia Piekielnego Wladcy")
+                    && !Utils.getTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1")) {
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(player.getUniqueId());
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                Utils.setTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok", (int) Math.floor((double) Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") / 2), true);
+                Utils.setTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1", true);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                final ItemMeta meta = dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                dodatkiUser.getAkcesoriaDodatkowe().getEnergia().setItemMeta(meta);
+                itemNames.add(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName());
+            } else
+            if (Utils.removeColor(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName()).equals("Energia Czempiona Areny")
+                    && !Utils.getTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1")) {
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(player.getUniqueId());
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                Utils.setTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok", (int) Math.floor((double) Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") / 2), true);
+                Utils.setTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1", true);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                final ItemMeta meta = dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                dodatkiUser.getAkcesoriaDodatkowe().getEnergia().setItemMeta(meta);
+                itemNames.add(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName());
+            } else
+            if (Utils.removeColor(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName()).equals("Energia Cesarza Pustyni")
+                    && !Utils.getTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1")) {
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(player.getUniqueId());
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() - Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                Utils.setTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok", (int) Math.floor((double) Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") / 2), true);
+                Utils.setTagBoolean(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "energiaFix1", true);
+                bonuses.getBonusesUser().setBlokciosu(bonuses.getBonusesUser().getBlokciosu() + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok"));
+                final ItemMeta meta = dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta();
+                final List<String> lore = meta.getLore();
+                lore.set(3, "&7Blok Ciosu: &c" + Utils.getTagInt(dodatkiUser.getAkcesoriaDodatkowe().getEnergia(), "blok") + "%");
+                meta.setLore(Utils.format(lore));
+                dodatkiUser.getAkcesoriaDodatkowe().getEnergia().setItemMeta(meta);
+                itemNames.add(dodatkiUser.getAkcesoriaDodatkowe().getEnergia().getItemMeta().getDisplayName());
+            }
         }
 
         if (itemNames.isEmpty()) return;
         player.sendMessage(Utils.format(" "));
-        player.sendMessage(Utils.format("&cKilka przedmiotow w twoim ekwipunku zostal zaktualizowany"));
-        player.sendMessage(Utils.format("&cprzez administracje serwera!"));
+        player.sendMessage(Utils.format("&cKilka przedmiotow w twoim ekwipunku, enderchest, akcesorium lub magazynach"));
+        player.sendMessage(Utils.format("&czostal zaktualizowany przez administracje serwera!"));
         player.sendMessage(Utils.format("&cZaktualizowane przedmioty to:"));
         for (final String itemName : itemNames) player.sendMessage(Utils.format("&8- " + itemName));
         player.sendMessage(Utils.format(" "));

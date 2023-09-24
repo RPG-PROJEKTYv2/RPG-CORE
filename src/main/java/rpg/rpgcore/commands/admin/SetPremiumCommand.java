@@ -96,7 +96,7 @@ public class SetPremiumCommand extends CommandAPI {
 
             rpgcore.getServer().broadcastMessage(" ");
             rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
-            rpgcore.getServer().broadcastMessage(Utils.format("  &aGracz &6" + user.getName() + " &aotrzymmal range &9&lTworca&a!"));
+            rpgcore.getServer().broadcastMessage(Utils.format("  &aGracz &6" + user.getName() + " &aotrzymal range &9&lTworca&a!"));
             rpgcore.getServer().broadcastMessage(Utils.format("               &4&lHELL&8&lRPG            "));
             rpgcore.getServer().broadcastMessage(" ");
 

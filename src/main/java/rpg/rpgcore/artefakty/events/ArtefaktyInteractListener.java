@@ -3,6 +3,7 @@ package rpg.rpgcore.artefakty.events;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -42,6 +43,8 @@ public class ArtefaktyInteractListener implements Listener {
 
         if (eventItem.getType() == Material.COMPASS && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Bifrost")) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
                 if (eventItem.getItemMeta().getLore().stream().anyMatch(s -> s.contains("1 min"))) {
                     if (rpgcore.getCooldownManager().hasBiFrost2Cooldown(uuid)) {
@@ -69,6 +72,8 @@ public class ArtefaktyInteractListener implements Listener {
         if (eventItem.getType() == Material.INK_SACK && eventItem.getDurability() == 1 &&
                 eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Krwisty Legendarny Rog")) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
 
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
                 if (rpgcore.getCooldownManager().hasRogCooldown(uuid)) {
@@ -96,6 +101,8 @@ public class ArtefaktyInteractListener implements Listener {
         }
         if (eventItem.getType() == Material.WATCH && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Serce Yothuna")) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
                 if (rpgcore.getCooldownManager().hasSerceCooldown(uuid)) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + rpgcore.getCooldownManager().getSerceCooldown(uuid)));
@@ -127,6 +134,8 @@ public class ArtefaktyInteractListener implements Listener {
         }
         if (eventItem.getType() == Material.LAVA_BUCKET && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
                 if (rpgcore.getCooldownManager().hasEliksirPotegiCooldown(uuid)) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + rpgcore.getCooldownManager().getEliksirPotegiCooldown(uuid)));
@@ -152,6 +161,8 @@ public class ArtefaktyInteractListener implements Listener {
         }
         if (eventItem.getType() == Material.WATER_BUCKET && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
             e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
                 if (rpgcore.getCooldownManager().hasEliksirObronncyCooldown(uuid)) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + rpgcore.getCooldownManager().getEliksirObronncyCooldown(uuid)));

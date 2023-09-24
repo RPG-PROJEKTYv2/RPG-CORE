@@ -443,14 +443,14 @@ public class    MobDropHelper {
                 // przepa do krakenow
                 addDropPlayer(player, Przepustki.I1.getItemStack().clone(), getDropChance(szczescie, 0.15), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.0025) ,true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.005) ,true,true, entity);
                 addDropPlayer(player, AkceItems.A10.getItemStack(), akceDropChance50plus, true, false, entity);
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("90-100", 1), getDropChance(szczescie, 1.35), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I5.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I11.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
-                if (ChanceHelper.getChance(getDropChance(szczescie, 0.0015))) {
+                if (ChanceHelper.getChance(getDropChance(szczescie, 0.005))) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,366.5,80,235.5");
                     Bukkit.broadcastMessage(" ");
                     Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &dpojawil sie w swojej komnacie!"));

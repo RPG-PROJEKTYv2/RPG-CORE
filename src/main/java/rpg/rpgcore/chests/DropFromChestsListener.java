@@ -47,6 +47,11 @@ public class DropFromChestsListener implements Listener {
                 || player.getItemInHand().getType().equals(Material.JUKEBOX)
                 || player.getItemInHand().getType().equals(Material.FLOWER_POT_ITEM)) {
 
+            if (!rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
+                return;
+            }
+
             final ItemStack playerItem = player.getItemInHand();
 
             if (playerItem.getItemMeta().hasDisplayName()) {
@@ -888,7 +893,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-25,-15),
                                         ChanceHelper.getRandInt(27,41),
-                                        ChanceHelper.getRandInt(33,53),
+                                        ChanceHelper.getRandInt(16,26),
                                         ChanceHelper.getRandDouble(0.1,0.2),
                                         ChanceHelper.getRandInt(-50,-35),
                                         ChanceHelper.getRandInt(60,70), "&c&lEnergia Piekielnego Wladcy");
@@ -921,7 +926,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-30,-21),
                                         ChanceHelper.getRandInt(33,46),
-                                        ChanceHelper.getRandInt(32,56),
+                                        ChanceHelper.getRandInt(17,28),
                                         ChanceHelper.getRandDouble(0.1,0.3),
                                         ChanceHelper.getRandInt(-55,-40),
                                         ChanceHelper.getRandInt(70,80), "&6&lEnergia Czempiona Areny");
@@ -954,7 +959,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-36,-28),
                                         ChanceHelper.getRandInt(40,55),
-                                        ChanceHelper.getRandInt(38,56),
+                                        ChanceHelper.getRandInt(19,28),
                                         ChanceHelper.getRandDouble(0.2,0.4),
                                         ChanceHelper.getRandInt(-60,-45),
                                         ChanceHelper.getRandInt(80,90), "&4&lEnergia Cesarza Pustyni");
@@ -987,7 +992,7 @@ public class DropFromChestsListener implements Listener {
                             case MINECART:
                                 is = AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-45,-33),
                                         ChanceHelper.getRandInt(50,61),
-                                        ChanceHelper.getRandInt(40,65),
+                                        ChanceHelper.getRandInt(20,32),
                                         ChanceHelper.getRandDouble(0.3,0.5),
                                         ChanceHelper.getRandInt(-60,-45),
                                         ChanceHelper.getRandInt(90,100), "&4&lEnergia Demona Ciemnosci");

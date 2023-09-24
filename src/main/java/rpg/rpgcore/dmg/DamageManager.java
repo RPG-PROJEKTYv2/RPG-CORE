@@ -83,13 +83,12 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 4;
+        double dmg = 0;
         double mnoznik = 100;
         double krytyk = 0;
         double wzmKryt = 0;
         double wzmKrytDmg = 0;
 
-        double drugiMnoznik = 100;
         double tyra = 100;
 
         // MIECZ DMG
@@ -101,13 +100,14 @@ public class DamageManager {
                     attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko potwory!"));
                     return 0;
                 case "tyra":
-                    tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA");
+                    if (weapon.getItemMeta().getDisplayName().contains("Wzmocniony")) tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA") * 2;
+                    else tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA");
                     break;
                 default:
                     break;
             }
 
-            dmg += Utils.getTagInt(weapon, "dmg");
+            dmg += Utils.getTagInt(weapon, "dmg") * 3;
             dmg += Utils.getTagInt(weapon, "dodatkowe");
 //            final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
 //            final int attackerLvl = rpgcore.getUserManager().find(uuid).getLvl();
@@ -187,36 +187,6 @@ public class DamageManager {
             rpgcore.getKlasyManager().getUsedSkrytoPassive().remove(attacker.getUniqueId());
         }
 
-
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus1().equals("Silny Na Potwory")) {
-                drugiMnoznik += bao.getValue1();
-                mnoznik -= bao.getValue1();
-            }
-        }
-
-        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().getType().equals(Material.AIR)) {
-            mnoznik -= 5;
-            drugiMnoznik += 5;
-        }
-        if (!bony.getDmg10().getType().equals(Material.AIR)) {
-            mnoznik -= 10;
-            drugiMnoznik += 10;
-        }
-        if (!bony.getDmg15().getType().equals(Material.AIR)) {
-            mnoznik -= 15;
-            drugiMnoznik += 15;
-        }
-
-        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
-        double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
-            dmgEnergia -= Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-            mnoznik += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-        }
-
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
@@ -224,40 +194,36 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag);
         }
 
-        dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
+
+        dmg = dmg * 2 * (mnoznik / 100);
         dmg = dmg * (tyra / 100);
-        krytyk /= 4;
+
+        krytyk /= 2.25;
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + (wzmKrytDmg / 100));
+            dmg = dmg * (2.5 + (wzmKrytDmg / 100));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + (wzmKrytDmg / 100));
+                dmg = dmg * (2.5 + (wzmKrytDmg / 100));
             }
         }
 
         double finalDmg = DoubleUtils.round(dmg, 2);
         if (finalDmg < 0) finalDmg = 0;
 
-        if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
-            attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
-            RPGCORE.getInstance().getUserManager().find(uuid).setKrytyk(finalDmg);
-        }
-
         return finalDmg;
     }
 
-    public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim) {
+    public double calculateAttackerDmgToEntity(final Player attacker, final Entity victim, final boolean thornsDmg) {
         attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 4;
+        double dmg = 0;
         double mnoznik = 100;
         double krytyk = 0;
         double wzmKryt = 0;
         double wzmKrytDmg = 0;
 
-        double drugiMnoznik = 100;
         double ks = 100;
 
         // MIECZ DMG
@@ -270,17 +236,18 @@ public class DamageManager {
                     attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko graczy!"));
                     return 0;
                 case "ks":
-                    ks += Utils.getTagInt(weapon, "mobyProcentKS");
+                    if (weapon.getItemMeta().getDisplayName().contains("Wzmocniony")) ks += Utils.getTagInt(weapon, "mobyProcentKS") * 2;
+                    else ks += Utils.getTagInt(weapon, "mobyProcentKS");
                     break;
                 default:
                     break;
             }
 
-            dmg += Utils.getTagInt(weapon, "dmg");
-            dmg += Utils.getTagInt(weapon, "moby");
+            dmg += Utils.getTagInt(weapon, "dmg") * 1.75;
+            dmg += Utils.getTagInt(weapon, "moby") * 1.25;
             dmg += Utils.getTagInt(weapon, "dodatkowe");
             if (Utils.removeColor(victim.getCustomName()).contains(Utils.removeColor(Utils.getTagString(weapon, "silny-na-mob")))) {
-                drugiMnoznik += Utils.getTagInt(weapon, "silny-na-val");
+                mnoznik += Utils.getTagDouble(weapon, "silny-na-val");
             }
             //krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
@@ -345,54 +312,37 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus1().equals("Silny Na Ludzi")) {
-                drugiMnoznik += bao.getValue1();
-                mnoznik -= bao.getValue1();
+        attacker.sendMessage(Utils.format("&6&lDEBUG"));
+        attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
+        attacker.sendMessage(Utils.format("&cDmg: " + dmg));
+        attacker.sendMessage(Utils.format("&cKS: " + ks));
+        attacker.sendMessage(Utils.format("&cSilny Na: " + Utils.getTagDouble(weapon, "silny-na-val")));
+        attacker.sendMessage(Utils.format("&6&lDEBUG"));
+
+
+        dmg = dmg * 2 * (mnoznik / 100);
+        dmg = dmg * (ks / 100);
+
+        krytyk /= 2.25;
+
+
+        if (ChanceHelper.getChance(krytyk)) {
+            dmg = dmg * (2.5 + (wzmKrytDmg / 100));
+            if (ChanceHelper.getChance(wzmKryt)) {
+                dmg = dmg * (2.5 + (wzmKrytDmg / 100));
             }
         }
 
-        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDmg5().getType().equals(Material.AIR)) {
-            mnoznik -= 5;
-            drugiMnoznik += 5;
-        }
-        if (!bony.getDmg10().getType().equals(Material.AIR)) {
-            mnoznik -= 10;
-            drugiMnoznik += 10;
-        }
-        if (!bony.getDmg15().getType().equals(Material.AIR)) {
-            mnoznik -= 15;
-            drugiMnoznik += 15;
-        }
-
-        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
-        double dmgEnergia = 100;
-        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
-            dmgEnergia -= Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-            mnoznik += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "mDmg");
-
-        }
-
-        dmg = (dmg * (mnoznik / 100) * (drugiMnoznik / 100)) / (dmgEnergia / 100);
-        dmg = dmg * (ks / 100);
-        krytyk /= 4;
-
-        if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + (wzmKrytDmg / 100));
-            if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (1.5 + (wzmKrytDmg / 100));
+        if (thornsDmg) {
+            if (weapon != null && weapon.getType() != Material.AIR && weapon.hasItemMeta() && Utils.removeColor(weapon.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
+                dmg = dmg * 1.25;
             }
         }
 
         double finalDmg = DoubleUtils.round(dmg, 2);
-        if (finalDmg < 0) finalDmg = 0;
 
-        if (RPGCORE.getInstance().getUserManager().find(uuid).getKrytyk() < finalDmg) {
-            attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
-            RPGCORE.getInstance().getUserManager().find(uuid).setKrytyk(finalDmg);
-        }
+
+        if (finalDmg < 0) finalDmg = 0;
 
         return finalDmg;
     }
@@ -400,10 +350,8 @@ public class DamageManager {
     public double calculatePlayerDef(final Player player) {
         final UUID uuid = player.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double def = 10;
+        double def = 0;
         double mnoznik = 100;
-
-        double drugiMnoznik = 100;
 
         mnoznik += bonuses.getSredniadefensywa();
         mnoznik += bonuses.getDefnaludzi();
@@ -417,43 +365,8 @@ public class DamageManager {
             mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus2().equals("Odpornosc przeciwko Potworom")) {
-                drugiMnoznik += bao.getValue2();
-                mnoznik -= bao.getValue2();
-            }
-        }
-
-        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().getType().equals(Material.AIR)) {
-            mnoznik -= 5;
-            drugiMnoznik += 5;
-        }
-        if (!bony.getDef10().getType().equals(Material.AIR)) {
-            mnoznik -= 10;
-            drugiMnoznik += 10;
-        }
-        if (!bony.getDef15().getType().equals(Material.AIR)) {
-            mnoznik -= 15;
-            drugiMnoznik += 15;
-        }
-
         if (rpgcore.getKlasyManager().getPaladinPassive().asMap().containsKey(uuid)) {
             mnoznik += 10;
-        }
-
-        final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
-            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
-            mnoznik -= defTarcza;
-            drugiMnoznik += defTarcza;
-        }
-        final AkcesoriaDodatUser akcesoriaDodat = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaDodatkowe();
-        double energia = 100;
-        if (!akcesoriaDodat.getEnergia().getType().equals(Material.AIR)) {
-            energia += Utils.getTagDouble(akcesoriaDodat.getEnergia(), "def");
-            mnoznik -= energia;
         }
 
         if (player.getInventory().getHelmet() != null) {
@@ -469,7 +382,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = (def * 2) * Math.pow((mnoznik / 100), 2) * (drugiMnoznik / 100) * (energia / 100);
+        def = def * (mnoznik / 100);
 
         return DoubleUtils.round(def, 3);
     }
@@ -479,9 +392,8 @@ public class DamageManager {
         final UUID attackerUUID = attacker.getUniqueId();
         final BonusesUser victimBonuses = rpgcore.getBonusesManager().find(victimUUID).getBonusesUser();
         final BonusesUser attackerBonuses = rpgcore.getBonusesManager().find(attackerUUID).getBonusesUser();
-        // TODO DO ZMIANY PO DODANIU NPC OD PRZESZYWKI
-        double victimBlok = victimBonuses.getBlokciosu() * 0.8;
-        double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku() * 1.25;
+        double victimBlok = victimBonuses.getBlokciosu();
+        double attackerPrzeszywka = attackerBonuses.getPrzeszyciebloku();
         attacker.setItemInHand(ItemHelper.checkEnchants(attacker.getItemInHand(), attacker));
         if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR && String.valueOf(attacker.getItemInHand().getType()).contains("SWORD")) {
             attackerPrzeszywka += Utils.getTagInt(attacker.getItemInHand(), "przeszywka");
@@ -548,90 +460,55 @@ public class DamageManager {
     public double calculateEntityDamageToPlayer(final Entity entity, final Player victim) {
         final UUID uuid = victim.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double mnoznikProcenty = 100;
+        double mnoznik = 100;
         int prot = 0;
-        double protMnoznik;
-        final double mnoznikBaza = 0.1;
         final double mobDamage = EntityDamage.getByName(Utils.removeColor(entity.getName()).trim());
-        double drugiMnoznik = 100;
 
-        mnoznikProcenty += bonuses.getSredniadefensywa();
-        mnoznikProcenty += bonuses.getDefnamoby();
-        mnoznikProcenty += bonuses.getMinusdefnamoby();
-        mnoznikProcenty += bonuses.getMinussredniadefensywa();
+        mnoznik += bonuses.getSredniadefensywa();
+        mnoznik += bonuses.getDefnamoby();
+        mnoznik += bonuses.getMinusdefnamoby();
+        mnoznik += bonuses.getMinussredniadefensywa();
 
         // MAGICZNE ZACZAROWANIE (ZBROJA)
         if (victim.getInventory().getHelmet() != null) {
-            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getHelmet(), "defMoby");
+            prot += Utils.getTagInt(victim.getInventory().getHelmet(), "prot");
+            mnoznik += Utils.getTagDouble(victim.getInventory().getHelmet(), "defMoby");
         }
         if (victim.getInventory().getChestplate() != null) {
-            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getChestplate(), "defMoby");
+            prot += Utils.getTagInt(victim.getInventory().getChestplate(), "prot");
+            mnoznik += Utils.getTagDouble(victim.getInventory().getChestplate(), "defMoby");
         }
         if (victim.getInventory().getLeggings() != null) {
-            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getLeggings(), "defMoby");
+            prot += Utils.getTagInt(victim.getInventory().getLeggings(), "prot");
+            mnoznik += Utils.getTagDouble(victim.getInventory().getLeggings(), "defMoby");
         }
         if (victim.getInventory().getBoots() != null) {
-            mnoznikProcenty += Utils.getTagDouble(victim.getInventory().getBoots(), "defMoby");
+            prot += Utils.getTagInt(victim.getInventory().getBoots(), "prot");
+            mnoznik += Utils.getTagDouble(victim.getInventory().getBoots(), "defMoby");
         }
 
         if (rpgcore.getKlasyManager().getPaladinPassive().asMap().containsKey(uuid)) {
-            mnoznikProcenty += 10;
+            mnoznik += 10;
         }
 
 
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
-            mnoznikProcenty += rpgcore.getGuildManager().getGuildSredniDef(tag);
+            mnoznik += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
-        if (!rpgcore.getBaoManager().isNotRolled(uuid)) {
-            final BaoUser bao = rpgcore.getBaoManager().find(uuid).getBaoUser();
-            if (!bao.getBonus2().equals("Odpornosc przeciwko Ludziom")) {
-                drugiMnoznik += bao.getValue2();
-                mnoznikProcenty -= bao.getValue2();
-            }
-        }
+        double wartoscDefa = DoubleUtils.round(prot * (mnoznik / 100), 2);
+        victim.sendMessage(Utils.format("&6&lDEBUG"));
+        victim.sendMessage(Utils.format("&aWartosc defa: " + wartoscDefa));
+        victim.sendMessage(Utils.format("&aMnoznik: " + mnoznik));
 
-        final BonyUser bony = rpgcore.getDodatkiManager().find(uuid).getBony();
-        if (!bony.getDef5().getType().equals(Material.AIR)) {
-            mnoznikProcenty -= 5;
-            drugiMnoznik += 5;
-        }
-        if (!bony.getDef10().getType().equals(Material.AIR)) {
-            mnoznikProcenty -= 10;
-            drugiMnoznik += 10;
-        }
-        if (!bony.getDef15().getType().equals(Material.AIR)) {
-            mnoznikProcenty -= 15;
-            drugiMnoznik += 15;
-        }
+        double finalDmg = DoubleUtils.round((mobDamage / wartoscDefa) * 2, 3);
 
-        final AkcesoriaPodstUser akcesoriaPodst = rpgcore.getDodatkiManager().find(uuid).getAkcesoriaPodstawowe();
-        if (!akcesoriaPodst.getTarcza().getType().equals(Material.AIR)) {
-            final double defTarcza = Utils.getTagDouble(akcesoriaPodst.getTarcza(), "def");
-            mnoznikProcenty -= defTarcza;
-            drugiMnoznik += defTarcza;
-        }
+        victim.sendMessage(Utils.format("&aFinal Dmg: " + finalDmg));
 
-        if (victim.getInventory().getHelmet() != null) {
-            prot += Utils.getTagInt(victim.getInventory().getHelmet(), "prot");
-        }
-        if (victim.getInventory().getChestplate() != null) {
-            prot += Utils.getTagInt(victim.getInventory().getChestplate(), "prot");
-        }
-        if (victim.getInventory().getLeggings() != null) {
-            prot += Utils.getTagInt(victim.getInventory().getLeggings(), "prot");
-        }
-        if (victim.getInventory().getBoots() != null) {
-            prot += Utils.getTagInt(victim.getInventory().getBoots(), "prot");
-        }
+        victim.sendMessage(Utils.format("&6&lDEBUG"));
 
-        protMnoznik = prot * 0.01;
-
-        double finalDmg = mobDamage / ((mnoznikProcenty / 100) + protMnoznik + mnoznikBaza) / (drugiMnoznik * 0.9 / 100);
-
-
-        return DoubleUtils.round(finalDmg * 2, 3);
+        return finalDmg;
     }
 }

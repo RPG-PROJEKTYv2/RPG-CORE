@@ -74,15 +74,16 @@ public class GiveAkcesoriaCommand extends CommandAPI {
                 player.getInventory().addItem(AkcesoriaDodatHelper.createMedalion(val1, val2, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
             case "energia":
+                double przebicie = 0;
                 try {
                     val3 = Integer.parseInt(args[3]);
-                    val4 = Integer.parseInt(args[4]);
+                    przebicie = Double.parseDouble(args[4]);
                     val5 = Integer.parseInt(args[5]);
                 } catch (NumberFormatException e) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz podac liczby!"));
                     return;
                 }
-                player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(val1, val2, val3, val4, val5, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
+                player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(val1, val2, val3, przebicie, val5, lvl, Utils.format(String.join(" ", Arrays.copyOfRange(args, 7, args.length)))));
                 break;
         }
     }

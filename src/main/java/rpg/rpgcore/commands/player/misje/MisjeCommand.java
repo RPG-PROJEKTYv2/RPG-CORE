@@ -10,8 +10,8 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
-import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;
+import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerUser;
 import rpg.rpgcore.npc.lowca.enums.LowcaMissions;
 import rpg.rpgcore.npc.lowca.objects.LowcaUser;
 import rpg.rpgcore.npc.magazynier.enums.MagazynierMissions;
@@ -142,7 +142,11 @@ public class MisjeCommand extends CommandAPI {
             gui.setItem(32, new ItemBuilder(Material.BARRIER).setName("&6&lOsiagnij 60 poziom, zeby odblokowac").toItemStack());
         } else {
             final GornikUser gornikUser = rpgcore.getGornikNPC().find(targetUUID);
-            gui.setItem(32, new ItemBuilder(GornikMissions.getById(gornikUser.getMission()).getItem().clone()).setLoreCrafting(GornikMissions.getById(gornikUser.getMission()).getItem().clone().getItemMeta().getLore(), Arrays.asList(" ", "&7Postep: &6" + gornikUser.getProgress() + "&7/&6" + GornikMissions.getById(gornikUser.getMission()).getReqAmount())).toItemStack().clone());
+            if (gornikUser.getMission() > 28) {
+                gui.setItem(32, new ItemBuilder(Material.BARRIER).setName("6&lGornik").setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack());
+            } else {
+                gui.setItem(32, new ItemBuilder(GornikMissions.getById(gornikUser.getMission()).getItem().clone()).setLoreCrafting(GornikMissions.getById(gornikUser.getMission()).getItem().clone().getItemMeta().getLore(), Arrays.asList(" ", "&7Postep: &6" + gornikUser.getProgress() + "&7/&6" + GornikMissions.getById(gornikUser.getMission()).getReqAmount())).toItemStack().clone());
+            }
         }
 
         // SIODY RZAD

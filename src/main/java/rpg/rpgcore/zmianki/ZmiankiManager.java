@@ -107,7 +107,12 @@ public class ZmiankiManager {
             )).toItemStack().clone();
             net.minecraft.server.v1_8_R3.ItemStack nmsStack = org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(toReturn);
             NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-            tag.setInt("lvl", loreLvl);
+            if (toReturn.getItemMeta().getDisplayName().contains("Mithrylowe Ostrze") || toReturn.getItemMeta().getDisplayName().contains("Mithrylowy Sztylet")) {
+                final int reqLvl = 65;
+                if (lvl > reqLvl) {
+                    tag.setInt("lvl", lvl);
+                }
+            } else tag.setInt("lvl", loreLvl);
             nmsStack.setTag(tag);
             toReturn = CraftItemStack.asBukkitCopy(nmsStack);
         } else {

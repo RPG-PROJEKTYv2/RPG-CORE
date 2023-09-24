@@ -43,7 +43,7 @@ public class CiezkaSkrzyniaKowalaManager {
                         Bukkit.getServer().broadcastMessage(Utils.format("&eGracz: &c" + player.getName() + " &eznalazl &4&lENERGIE PIEKIELNEGO KOWALA&e!!!"));
                         Bukkit.getServer().broadcastMessage(" ");
                         player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-33, -25),
-                                ChanceHelper.getRandInt(27, 61), ChanceHelper.getRandInt(25, 55), ChanceHelper.getRandDouble(0.1, 0.4),
+                                ChanceHelper.getRandInt(13, 32), ChanceHelper.getRandInt(25, 55), ChanceHelper.getRandDouble(0.1, 0.4),
                                 ChanceHelper.getRandInt(-50, -45), ChanceHelper.getRandInt(60, 90), "&4&lEnergia Piekielnego Kowala"));
                         return;
                     }

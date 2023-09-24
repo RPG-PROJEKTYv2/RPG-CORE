@@ -25,12 +25,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-public class EntityDamageEntityListener implements Listener {
-
+public class TestEntityDamageListener implements Listener {
     private final RPGCORE rpgcore;
 
-    public EntityDamageEntityListener(RPGCORE rpgcore) {
+    public TestEntityDamageListener(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
     }
 
@@ -83,7 +81,7 @@ public class EntityDamageEntityListener implements Listener {
     );
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onDamage(final EntityDamageByEntityEvent e) {
+    public void onPreDamage(final EntityDamageByEntityEvent e) {
         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
         if (e.isApplicable(EntityDamageEvent.DamageModifier.ARMOR))
             e.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
@@ -96,10 +94,7 @@ public class EntityDamageEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onEntityDamage(final EntityDamageByEntityEvent e) {
-
-        if (Utils.customDungeonWorlds.contains(e.getDamager().getWorld()) || Utils.customDungeonWorlds.contains(e.getEntity().getWorld())) return;
-
+    public void onDamage(final EntityDamageByEntityEvent e) {
         if (e.isCancelled()) return;
 
         if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
@@ -158,6 +153,8 @@ public class EntityDamageEntityListener implements Listener {
             e.setCancelled(true);
             return;
         }
+
+
 
         if (e.getCause() == EntityDamageEvent.DamageCause.THORNS) {
             if (e.getDamager() instanceof Player) {
@@ -255,7 +252,7 @@ public class EntityDamageEntityListener implements Listener {
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
                     final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity(), true), 2);
-                    final double finalDmg = DoubleUtils.round(playerDamage * mnoznik, 2);
+                    final double finalDmg = DoubleUtils.round(playerDamage * mnoznik * 0.6, 2);
 
                     if (mnoznik > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
@@ -274,6 +271,9 @@ public class EntityDamageEntityListener implements Listener {
                 }
             }
         }
+
+
+
 
 
         // ATAKUJACY JEST GRACZEM
@@ -350,14 +350,14 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
 
-                double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim); // 2 500
-                double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim); // 1 000
+                double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
+                double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
 
-//                attacker.sendMessage("&4&lDMG");
-//                victim.sendMessage("&a&lDEF");
-//
-//                attacker.sendMessage("Damage To Player (raw)- " + attackerDmg);
-//                victim.sendMessage("Wartosc Defa (raw)- " + wartoscDefa);
+                attacker.sendMessage(Utils.format("&4&lDMG"));
+                victim.sendMessage(Utils.format("&a&lDEF"));
+
+                attacker.sendMessage("Damage To Player (raw)- " + attackerDmg);
+                victim.sendMessage("Wartosc Defa (raw)- " + wartoscDefa);
 
 
                 if (rpgcore.getKociolkiManager().find(attacker.getUniqueId()).isEgzekutor()) {
@@ -384,25 +384,26 @@ public class EntityDamageEntityListener implements Listener {
                     wartoscDefa *= 0.5;
                 }
 
-//                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
-//                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
-
-                final double redukcja = wartoscDefa / (wartoscDefa + 40); // 0,9615
+                attacker.sendMessage("Damage To Player (Po wszystkim)- " + attackerDmg);
+                victim.sendMessage("Wartosc Defa (Po wszystkim)- " + wartoscDefa);
 
 
-//                victim.sendMessage("Redukcja - " + redukcja);
-
-                double finalDmg = DoubleUtils.round((1 - redukcja) * attackerDmg, 2);
+                double finalDmg = DoubleUtils.round(attackerDmg/wartoscDefa, 2);
                 if (finalDmg < 0) {
                     finalDmg = 0;
                 }
-//                attacker.sendMessage("Final Dmg - " + finalDmg);
+                attacker.sendMessage("Final Dmg - " + finalDmg);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
+                if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getKrytyk() < finalDmg) {
+                    attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + finalDmg + " dmg)"));
+                    RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).setKrytyk(finalDmg);
+                }
                 Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket("&c&l", e.getFinalDamage(), victim, attacker));
                 rpgcore.getNmsManager().sendMobInfo(attacker, victim, e.getFinalDamage());
                 rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
+            }
 
-            } else {
+            else {
                 // ... Victim jest Mobem
 
                 if (e.getEntity() instanceof ItemFrame) {
@@ -418,10 +419,6 @@ public class EntityDamageEntityListener implements Listener {
                 }
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim, false);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
-                if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getKrytyk() < attackerDmg) {
-                    attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + attackerDmg + " dmg)"));
-                    RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).setKrytyk(attackerDmg);
-                }
 //                attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
 //                attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
 //                attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
@@ -438,6 +435,10 @@ public class EntityDamageEntityListener implements Listener {
                     attacker.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz atakowac mobow z wysokosci!"));
                 }
 
+                if (RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).getKrytyk() < e.getDamage(EntityDamageEvent.DamageModifier.BASE)) {
+                    attacker.sendMessage(Utils.format("&4Damage &8>> &cUstanowiles swoj nowy najwiekszy zadany dmg! &4(" + DoubleUtils.round(e.getDamage(EntityDamageEvent.DamageModifier.BASE),2) + " dmg)"));
+                    RPGCORE.getInstance().getUserManager().find(attacker.getUniqueId()).setKrytyk(attackerDmg);
+                }
 
                 if (rpgcore.getKlasyManager().getMagRMB().contains(attacker.getUniqueId())) {
                     final Location loc = victim.getLocation();
@@ -507,7 +508,8 @@ public class EntityDamageEntityListener implements Listener {
             if (e.getDamage() < ((LivingEntity) e.getEntity()).getHealth()) {
                 rpgcore.getNmsManager().sendMobInfo(attacker, (LivingEntity) e.getEntity(), e.getFinalDamage());
             }
-        } else if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
+        } else
+            if (e.getDamager() instanceof Creature || e.getDamager() instanceof Monster) {
             // Victim jest Graczem
             if (e.getEntity() instanceof Player) {
                 final Player victim = (Player) e.getEntity();
@@ -524,82 +526,4 @@ public class EntityDamageEntityListener implements Listener {
             }
         }
     }
-
-    private void updateCustomName(final Entity entity, final double dmg) {
-        if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            if (entity.isInsideVehicle()) {
-                livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
-            } else {
-                livingEntity = (LivingEntity) entity.getPassenger();
-                livingEntity.damage(dmg);
-                livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*if (damager instanceof Player) {
-            final Player p = (Player) damager;
-            double dmgZMiecza;
-
-            // SETOWANIE NAZWY MOBOW Z RYBAKA
-
-            if (p.getItemInHand() == null) {
-                e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
-                Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
-                if ((entity.getCustomName() != null && entity.getCustomName().contains("Podwodny Wladca")) || entity.getPassenger().getCustomName().contains("Podwodny Wladca")) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    if (entity.isInsideVehicle()) {
-                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
-                    } else {
-                        livingEntity = (LivingEntity) entity.getPassenger();
-                        livingEntity.damage(e.getDamage());
-                        livingEntity.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) livingEntity.getHealth() + "&7/&c" + (int) livingEntity.getMaxHealth() + " ❤"));
-                    }
-                }
-                return;
-            }
-
-            // ... BIJE MIECZEM
-
-            if (String.valueOf(p.getItemInHand().getType()).contains("SWORD")) {
-                for (int j = 0; j < p.getItemInHand().getItemMeta().getLore().size(); j++) {
-                    if (p.getItemInHand().getItemMeta().getLore().get(j).trim().contains("Obrazenia: ")) {
-                        dmgZMiecza = Double.parseDouble(Utils.removeColor(p.getItemInHand().getItemMeta().getLore().get(j).trim().replace("Obrazenia: ", "")));
-                        e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), dmgZMiecza));
-                    }
-                }
-
-            } else {
-                e.setDamage(rpgcore.getDamageManager().calculateDamage(p.getUniqueId(), 0.0));
-                //TODO WALI COS NULLPOINTEREM W IFIE I TRZEBA SPRAWDZIC CO
-
-            }
-            Bukkit.getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getDamageManager().sendDamagePacket(e.getDamage(), entity.getLocation(), p));
-        }*/
-
 }
