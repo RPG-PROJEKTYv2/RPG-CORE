@@ -405,9 +405,13 @@ public enum HandlarzSellItems {
     I344("Czastka Magii",Material.BLAZE_POWDER,500_000),
 
     I345("Mithrylowe Ostrze",Material.DIAMOND_SWORD,500_000),
-    I346("Miyhrylowy Sztylet",Material.DIAMOND_SWORD,500_000),
+    I346("Mithrylowy Sztylet",Material.DIAMOND_SWORD,500_000),
 
-    
+    I347("Ruda Mithrylu",Material.PRISMARINE,15_000),
+    I348("Magiczne Zaczarowanie",Material.INK_SACK,20_000),
+
+
+
     I_ERROR("ERROR", Material.AIR, 0);
     private final String name;
     private final Material material;
@@ -480,19 +484,19 @@ public enum HandlarzSellItems {
             if (Utils.getTagString(item, "type").equals("ks")) {
                 int mobyProcentKS = Utils.getTagInt(item, "mobyProcentKS");
                 if (mobyProcentKS > 10) {
-                    mnoznik = 50;
-                }
-                if (mobyProcentKS > 20) {
                     mnoznik = 100;
                 }
-                if (mobyProcentKS > 30) {
+                if (mobyProcentKS > 20) {
                     mnoznik = 200;
                 }
-                if (mobyProcentKS > 40) {
+                if (mobyProcentKS > 30) {
                     mnoznik = 300;
                 }
+                if (mobyProcentKS > 40) {
+                    mnoznik = 400;
+                }
                 if (mobyProcentKS > 50) {
-                    mnoznik = 500;
+                    mnoznik = 600;
                 }
                 if (mobyProcentKS > 60) {
                     mnoznik = 1000;
@@ -503,16 +507,16 @@ public enum HandlarzSellItems {
             } else if (Utils.getTagString(item, "type").equals("tyra")) {
                 int ludzieProcentTYRA = Utils.getTagInt(item, "ludzieProcentTYRA");
                 if (ludzieProcentTYRA > 10) {
-                    mnoznik = 50;
-                }
-                if (ludzieProcentTYRA > 20) {
                     mnoznik = 100;
                 }
-                if (ludzieProcentTYRA > 30) {
+                if (ludzieProcentTYRA > 20) {
                     mnoznik = 200;
                 }
-                if (ludzieProcentTYRA > 40) {
+                if (ludzieProcentTYRA > 30) {
                     mnoznik = 300;
+                }
+                if (ludzieProcentTYRA > 40) {
+                    mnoznik = 400;
                 }
                 if (ludzieProcentTYRA > 50) {
                     mnoznik = 500;

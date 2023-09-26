@@ -62,9 +62,9 @@ public class  HandlarzNPC {
             }
         }
 
-        gui.setItem(12, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &bSwiatyni").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I1.getCena())).toItemStack());
-        gui.setItem(13, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &fKrysztalowej Sali").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I2.getCena())).toItemStack());
-        gui.setItem(14, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &6Tajemniczej Siedziby").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I3.getCena())).toItemStack());
+        gui.setItem(12, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &bSwiatyni &f(&e100-110&f)").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I1.getCena(), "")).toItemStack());
+        gui.setItem(13, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &fKrysztalowej Sali &f(&e110-120&f)").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I2.getCena())).toItemStack());
+        gui.setItem(14, new ItemBuilder(Material.PAPER).setName("&eWejsciowka do &6Tajemniczej Siedziby &f(&e120-130&f)").setLore(Arrays.asList("", "&7Cena przedmiotu: &e" + Przepustki.I3.getCena())).toItemStack());
 
         gui.setItem(22, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
 
