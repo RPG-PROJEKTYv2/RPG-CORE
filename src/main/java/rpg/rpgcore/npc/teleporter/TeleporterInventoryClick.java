@@ -107,9 +107,7 @@ public class TeleporterInventoryClick implements Listener {
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
                 if (slot == 33) {
-                    player.closeInventory();
-                    player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostalo zablokowane przez administracje!"));
-                    /* (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
+                    if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                             player.closeInventory();
@@ -124,12 +122,14 @@ public class TeleporterInventoryClick implements Listener {
                         player.getInventory().removeItem(Przepustki.getItem("I1", 1));
                     } else {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie posiadasz wejsciowki!"));
-                    }*/
+                    }
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
                 if (slot == 34) {
-                    if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
+                    player.closeInventory();
+                    player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostalo zablokowane przez administracje!"));
+                   /* if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                             player.closeInventory();
@@ -144,7 +144,7 @@ public class TeleporterInventoryClick implements Listener {
                         player.getInventory().removeItem(Przepustki.getItem("I2", 1));
                     } else {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie posiadasz wejsciowki!"));
-                    }
+                    }*/
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {

@@ -263,7 +263,7 @@ public class MetinyHelper {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 101 && id <= 110) {
+        if ((id >= 101 && id <= 110) || (id >= 10101 && id <= 10110)) {
            kasaToAdd = 6000;
             if (metinolog.getMetinologUser().getPostepGive() == 11) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I100-110", 1), 25, true, true, entity);
