@@ -19,6 +19,10 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.goxy.minecraft.api.Goxy;
+import pl.goxy.minecraft.api.GoxyApi;
+import pl.goxy.sdk.GoxySdk;
+import pl.goxy.sdk.exception.GoxyApiErrorException;
 import rpg.rpgcore.BACKUP.BackupManager;
 import rpg.rpgcore.BACKUP.commands.BackupCommand;
 import rpg.rpgcore.BACKUP.database.BackupMongoManager;
@@ -318,6 +322,7 @@ import rpg.rpgcore.zmianki.events.ZmiankiInventoryCloseListener;
 import rpg.rpgcore.zmianki.events.ZmiankiItemInteractListener;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -329,6 +334,7 @@ public final class RPGCORE extends JavaPlugin {
     private static MythicMobs mythicMobs;
     private static WorldGuardPlugin worldGuard;
     private static ProtocolManager protocolManager;
+    private static GoxySdk goxy;
     private final Config config = new Config(this);
     private SpawnManager spawn;
     private MongoManager mongo;
@@ -637,6 +643,7 @@ public final class RPGCORE extends JavaPlugin {
         mythicMobs = MythicMobs.inst();
         worldGuard = WorldGuardPlugin.inst();
         protocolManager = ProtocolLibrary.getProtocolManager();
+        goxy = GoxyApi.getGoxySdk();
         new PluginMessageReceiveListener(this);
         this.config.createConfig();
         this.initDatabase();
@@ -671,10 +678,23 @@ public final class RPGCORE extends JavaPlugin {
 
         this.fixBuckets();
 
+        System.out.println(" ");
+
+        String token = "MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk";
+
+        try {
+            if (goxy.getTokenInfo().getServer().getName().equals("Testowy")) {
+                token = "MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo";
+            }
+        } catch (GoxyApiErrorException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             //MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk - GŁÓWNY BOT
             //MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo - TESTOWY SERWER
-            discordBot = new DiscordBot("MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo");
+            System.out.println(token);
+            discordBot = new DiscordBot(token);
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
@@ -797,8 +817,6 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GuildChatCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new KoszCommand());
         CommandAPI.getCommand().register("HellRPGCore", new MythicStick());
-        CommandAPI.getCommand().register("HellRPGCore", new SetDmgCommand());
-        CommandAPI.getCommand().register("HellRPGCore", new TestAnimationCommand());
         CommandAPI.getCommand().register("HellRPGCore", new TestCommand());
         CommandAPI.getCommand().register("HellRPGCore", new RemoveNearbyEntitiesCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SetPremiumCommand(this));
@@ -849,6 +867,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new WedkaCommand());
         CommandAPI.getCommand().register("HellRPGCore", new SwordCommand());
         CommandAPI.getCommand().register("HellRPGCore", new KilofCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new ResetKrytCommand());
     }
 
     private void initEvents() {
@@ -856,8 +875,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
 
-        //this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new TestEntityDamageListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageEntityListener(this), this);
 
         this.getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
@@ -983,6 +1001,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new RybakInventoryCloseListener(), this);
         this.getServer().getPluginManager().registerEvents(new RybakInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new RybakRegionEnterListener(), this);
+        this.getServer().getPluginManager().registerEvents(new RybakItemPickupListener(), this);
 
         // ...MAGAZYNIER
         this.getServer().getPluginManager().registerEvents(new MagazynierInventoryClick(this), this);

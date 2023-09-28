@@ -15,7 +15,7 @@ public class GiveAkcesoriaCommand extends CommandAPI {
     public GiveAkcesoriaCommand() {
         super("giveakcesoria");
         this.setAliases(Arrays.asList("akcedaj", "dajakce", "giveakce"));
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }
 

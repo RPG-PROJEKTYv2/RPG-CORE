@@ -21,22 +21,18 @@ public class MemoryCommand extends CommandAPI {
         super("memory");
         this.setAliases(Arrays.asList("mem", "ram"));
         this.setRankLevel(RankType.HA);
-        this.setRestrictedForPlayer(true);
     }
 
     @Override
     public void executeCommand(final CommandSender sender, final String[] args) {
-        final Player player = (Player) sender;
-        final World world = player.getWorld();
         long freeMemory = Runtime.getRuntime().freeMemory() / 1024L / 1024L;
         long maxMemory = Runtime.getRuntime().maxMemory() / 1024L / 1024L;
         long usedMemory = Runtime.getRuntime().totalMemory() / 1024L / 1024L;
-        player.sendMessage(Utils.format("&8&m          &8( &6Statystyki Serwera &8)&m          " + "\n" +
+        sender.sendMessage(Utils.format("&8&m          &8( &6Statystyki Serwera &8)&m          " + "\n" +
                 this.formatTPS() + "\n" +
                 "&eCzas dzialania: &6" + this.time() + "\n" +
                 "&eZajeta Pamiec: &6" + this.formatMemory((double) maxMemory - (double) freeMemory, (double) maxMemory) + "MB\n" +
                 "&eWolna Pamiec: &6" + this.formatFree((double) freeMemory, (double) usedMemory) + "MB\n" +
-                "&eZaladowane chunki: &f" + world.getLoadedChunks().length + "\n" +
                 "&eEntity: &f" + this.getEntitiesCount() + "\n" +
                 "&eGracze: &f" + Bukkit.getOnlinePlayers().size() + "\n" +
                 "&8&m          &8( &6Statystyki Serwera &8)&m          "));

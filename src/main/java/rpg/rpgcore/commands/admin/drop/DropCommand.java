@@ -14,7 +14,7 @@ public class DropCommand extends CommandAPI {
     public DropCommand() {
         super("drop");
         this.setRestrictedForPlayer(true);
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.ADMIN);
     }
 
     @Override

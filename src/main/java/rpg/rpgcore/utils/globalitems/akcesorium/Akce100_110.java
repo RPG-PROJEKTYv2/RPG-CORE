@@ -52,27 +52,27 @@ public enum Akce100_110 {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1337, 2700),
-                            ChanceHelper.getRandInt(20, 30), ChanceHelper.getRandInt(20, 25), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Naszyjnik"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1600, 3750),
+                            ChanceHelper.getRandInt(20, 35), ChanceHelper.getRandInt(20, 30), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(25, 32),
-                            ChanceHelper.getRandInt(30, 52), ChanceHelper.getRandInt(6, 10), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(25, 38),
+                            ChanceHelper.getRandInt(30, 60), ChanceHelper.getRandInt(6, 12), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(30, 60),
-                            ChanceHelper.getRandInt(37, 53), ChanceHelper.getRandInt(25, 37), ChanceHelper.getRandInt(100, 110), "&b&lMityczna Tarcza"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(30, 65),
+                            ChanceHelper.getRandInt(37, 57), ChanceHelper.getRandInt(25, 40), ChanceHelper.getRandInt(100, 110), "&b&lMityczna Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(19, 28),
-                            ChanceHelper.getRandInt(25, 40), ChanceHelper.getRandInt(-98, -80), ChanceHelper.getRandInt(100, 110), "&b&lMityczne Kolczyki"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(19, 35),
+                            ChanceHelper.getRandInt(25, 45), ChanceHelper.getRandInt(-110, -70), ChanceHelper.getRandInt(100, 110), "&b&lMityczne Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(20, 34), ChanceHelper.getRandInt(20, 32), ChanceHelper.getRandInt(63, 105),
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(20, 38), ChanceHelper.getRandInt(20, 35), ChanceHelper.getRandInt(63, 105),
                             ChanceHelper.getRandInt(100, 110), "&b&lMityczny Pierscien"));
                     return;
                 }

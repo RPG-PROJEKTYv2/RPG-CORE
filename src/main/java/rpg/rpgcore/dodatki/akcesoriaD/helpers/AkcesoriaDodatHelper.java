@@ -3,6 +3,7 @@ package rpg.rpgcore.dodatki.akcesoriaD.helpers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.utils.ItemBuilder;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;
 import java.util.stream.Collector;
@@ -50,7 +51,9 @@ public class AkcesoriaDodatHelper {
                 "&7Zmniejszona Predkosc Ruchu: &c" + mspeed,
                 " ",
                 "&cWymagany poziom: &6" + lvl
-        )).addTagInt("mDmg", mDmg).addTagInt("def", def).addTagInt("blok", blok).addTagDouble("przebicie", przebicie).addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
+        )).addTagInt("mDmg", mDmg).addTagInt("def", def).addTagInt("blok", blok).addTagDouble("przebicie", przebicie)
+                .addTagInt("mspeed", mspeed).addTagInt("lvl", lvl).addTagBoolean("energiaFix1", true)
+                .hideFlag().toItemStack().clone();
     }
 }
 /*

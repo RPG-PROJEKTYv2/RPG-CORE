@@ -26,7 +26,7 @@ public class KociolkiTask implements Runnable {
                     kociolkiUser.setEliksirObroncyTime(kociolkiUser.getEliksirObroncyTime() - 1);
                     if (kociolkiUser.getEliksirObroncyTime() == 0) {
                         kociolkiUser.setEliksirObroncy(false);
-                        rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSredniadefensywa() - 10);
+                        rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSredniadefensywa() - 25);
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                             rpgcore.getMongoManager().saveDataBonuses(player.getUniqueId(), rpgcore.getBonusesManager().find(player.getUniqueId()));
                             rpgcore.getMongoManager().saveDataKociolki(player.getUniqueId(), kociolkiUser);
@@ -40,7 +40,7 @@ public class KociolkiTask implements Runnable {
                     kociolkiUser.setEliksirPotegiTime(kociolkiUser.getEliksirPotegiTime() - 1);
                     if (kociolkiUser.getEliksirPotegiTime() == 0) {
                         kociolkiUser.setEliksirPotegi(false);
-                        rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSrednieobrazenia() - 10);
+                        rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSrednieobrazenia() - 25);
                         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                             rpgcore.getMongoManager().saveDataBonuses(player.getUniqueId(), rpgcore.getBonusesManager().find(player.getUniqueId()));
                             rpgcore.getMongoManager().saveDataKociolki(player.getUniqueId(), kociolkiUser);

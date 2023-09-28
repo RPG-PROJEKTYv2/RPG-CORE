@@ -73,29 +73,29 @@ public class ArmorEffectsHelper {
     public static void addEffectBoots(Player player, int value) {
         int k = 0;
         if (value > 19) {
-            k = 75;
+            k = 50;
         }
         if (value > 39) {
-            k = 150;
+            k = 100;
         }
         if (value > 69) {
-            k = 200;
+            k = 150;
         }
         if (value > 99) {
-            k = 300;
+            k = 200;
         }
         if (value > 149) {
-            k = 450;
+            k = 250;
         }
         if (value > 199) {
-            k = 600;
+            k = 325;
         }
         if (value > 249) {
-            k = 750;
+            k = 400;
         }
         if (player.getInventory().getBoots() != null && player.getInventory().getBoots().hasItemMeta() && player.getInventory().getBoots().getItemMeta().hasDisplayName()
                 && player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Buty Gornika")) {
-            k = 600;
+            k = 250;
         }
 
         final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId());

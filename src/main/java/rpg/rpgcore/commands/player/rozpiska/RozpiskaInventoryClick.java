@@ -131,6 +131,15 @@ public class RozpiskaInventoryClick implements Listener {
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
             }
+            if (slot == 33) {
+                if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
+                    rpgcore.getRozpiskaManager().openELEVENTHexp(player);
+                    return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
+                }
+            }
             /*if (slot == 30) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
                 }

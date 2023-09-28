@@ -889,4 +889,35 @@ public class Utils {
         final String[] split = string.split(":");
         return new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
     }
+
+    public static String intToRoman(int num) {
+        int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        String[] romanLetters = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        StringBuilder roman = new StringBuilder();
+        for(int i = 0; i < values.length; i++) {
+            while(num >= values[i]) {
+                num = num - values[i];
+                roman.append(romanLetters[i]);
+            }
+        }
+        return roman.toString();
+    }
+
+    public static String shorterNumber(double number) {
+        if (number < 1_000) {
+            return String.valueOf(number);
+        } else if (number < 1_000_000) {
+            double num = number / 1_000.0;
+            return String.format("%.3f K", num);
+        } else if (number < 1_000_000_000) {
+            double num = number / 1_000_000.0;
+            return String.format("%.3f M", num);
+        } else if (number < 1_000_000_000_000.0){
+            double num = number / 1_000_000_000.0;
+            return String.format("%.3f B", num);
+        } else {
+            double num = number / 1_000_000_000_000.0;
+            return String.format("%.3f T", num);
+        }
+    }
 }

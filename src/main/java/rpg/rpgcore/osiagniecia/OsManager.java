@@ -91,7 +91,7 @@ public class OsManager {
 
         for (int i = 0; i < 9; i++) {
             if (i < osUser.getGracze()) {
-                gui.setItem(9 + i, new ItemBuilder(Material.DIAMOND_SWORD).setName("&cZabici Gracza #" + (i + 1)).setLore(Arrays.asList(
+                gui.setItem(9 + i, new ItemBuilder(Material.DIAMOND_SWORD).setName("&cZabici Gracze #" + (i + 1)).setLore(Arrays.asList(
                         "&7Postep: &f" + OsGracze.getByMission(i + 1).getReqProgress() + "&7/&f" + OsGracze.getByMission(i + 1).getReqProgress(),
                         "&7Status: &a&lODEBRANE",
                         "",

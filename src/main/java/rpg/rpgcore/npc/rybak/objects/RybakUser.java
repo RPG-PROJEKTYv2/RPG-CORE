@@ -14,6 +14,7 @@ import java.util.UUID;
 public class RybakUser implements Cloneable {
     private final UUID uuid;
     private StaruszekUser staruszekUser;
+    private MlodszyRybakUser mlodszyRybakUser;
     private double podwojnyDrop;
     private int lvlWedki, expWedki, wylowioneRyby;
     private final List<Integer> clickedArmorStands;
@@ -22,6 +23,7 @@ public class RybakUser implements Cloneable {
     public RybakUser(final UUID uuid) {
         this.uuid = uuid;
         this.staruszekUser = new StaruszekUser(uuid);
+        this.mlodszyRybakUser = new MlodszyRybakUser(uuid);
         this.podwojnyDrop = 0;
         this.lvlWedki = 1;
         this.expWedki = 0;
@@ -34,6 +36,8 @@ public class RybakUser implements Cloneable {
         this.uuid = UUID.fromString(document.getString("_id"));
         if (document.containsKey("staruszekUser")) this.staruszekUser = new StaruszekUser(document.get("staruszekUser", Document.class));
         else this.staruszekUser = new StaruszekUser(this.uuid);
+        if (document.containsKey("mlodszyRybakUser")) this.mlodszyRybakUser = new MlodszyRybakUser(document.get("mlodszyRybakUser", Document.class));
+        else this.mlodszyRybakUser = new MlodszyRybakUser(this.uuid);
         this.podwojnyDrop = (document.containsKey("podwojnyDrop") ? document.getDouble("podwojnyDrop") : 0);
         this.lvlWedki = (document.containsKey("lvlWedki") ? document.getInteger("lvlWedki") : 1);
         this.expWedki = (document.containsKey("expWedki") ? document.getInteger("expWedki") : 0);
@@ -49,6 +53,7 @@ public class RybakUser implements Cloneable {
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())
                 .append("staruszekUser", this.staruszekUser.toDocument())
+                .append("mlodszyRybakUser", this.mlodszyRybakUser.toDocument())
                 .append("podwojnyDrop", this.podwojnyDrop)
                 .append("lvlWedki", this.lvlWedki)
                 .append("expWedki", this.expWedki)
@@ -62,6 +67,7 @@ public class RybakUser implements Cloneable {
         try {
             final RybakUser rybakUser = (RybakUser) super.clone();
             rybakUser.setStaruszekUser(this.staruszekUser.clone());
+            rybakUser.setMlodszyRybakUser(this.mlodszyRybakUser.clone());
             return rybakUser;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

@@ -34,6 +34,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> rdzenCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> teleporterCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> antyLogout = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -302,5 +303,13 @@ public class CooldownManager {
 
     public String getPlayerTeleporterCooldown(final UUID uuid) {
         return Utils.durationToString(this.teleporterCooldown.asMap().get(uuid), false);
+    }
+
+    public boolean hasAntyLogout(final UUID uuid) {
+        return this.antyLogout.asMap().containsKey(uuid);
+    }
+
+    public void giveAntyLogout(final UUID uuid) {
+        this.antyLogout.put(uuid, System.currentTimeMillis() + 10000L);
     }
 }

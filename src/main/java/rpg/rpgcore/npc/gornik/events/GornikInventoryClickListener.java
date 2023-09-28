@@ -7,6 +7,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemFlag;
@@ -176,74 +177,172 @@ public class GornikInventoryClickListener implements Listener {
                     rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
                     break;
                 case 1:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I1.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I1.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 2:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I2.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I2.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I2.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I2.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 3:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I3.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I3.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I3.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I3.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I3_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 4:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I4.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I4.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I4.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I4.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I4_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 5:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I5.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I5.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I5.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I5.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I5_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I5_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 6:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I6.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I6.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I6.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I6.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I6_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I6_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 7:
-                    if (!player.getInventory().containsAtLeast(GornikItems.I7.getItemStack(), 1)) {
-                        player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
-                        return;
+                    if (e.getClick() == ClickType.LEFT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I7.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I7.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(price) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
                     }
-                    player.getInventory().removeItem(new ItemBuilder(GornikItems.I7.getItemStack().clone()).setAmount(1).toItemStack());
-                    user.setKasa(DoubleUtils.round(user.getKasa() + price, 2));
-                    player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + price + "&2$&7!"));
-                    rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                    if (e.getClick() == ClickType.RIGHT) {
+                        if (!player.getInventory().containsAtLeast(GornikItems.I7_1.getItemStack(), 1)) {
+                            player.sendMessage(Utils.format("&6&lGornik &8>> &cNie posiadasz tego przedmiotu!"));
+                            return;
+                        }
+                        player.getInventory().removeItem(new ItemBuilder(GornikItems.I7_1.getItemStack().clone()).setAmount(1).toItemStack());
+                        user.setKasa(DoubleUtils.round(user.getKasa() + (price * 64), 2));
+                        player.sendMessage(Utils.format("&6&lGornik &8>> &7Sprzedales przedmiot za &e" + Utils.spaceNumber(DoubleUtils.round(price * 64, 2)) + "&2$&7!"));
+                        rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+                        break;
+                    }
                     break;
                 case 8:
                     rpgcore.getGornikNPC().openGornik(player);

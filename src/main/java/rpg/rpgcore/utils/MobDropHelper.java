@@ -1,12 +1,14 @@
 package rpg.rpgcore.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bossy.objects.BossyUser;
 import rpg.rpgcore.chat.objects.ChatUser;
+import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
@@ -20,11 +22,12 @@ import rpg.rpgcore.utils.globalitems.expowiska.*;
 import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
 import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
 import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
+import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
 import java.util.UUID;
 
-public class    MobDropHelper {
+public class MobDropHelper {
 
     public static void addDropPlayer(Player player, ItemStack is, double chance, boolean message, boolean pickup, Entity entity) {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
@@ -32,6 +35,16 @@ public class    MobDropHelper {
             if (ChanceHelper.getChance(chance)) {
                 player.getInventory().addItem(is);
                 if (message) {
+                    if (is.equals(BonType.WZM_KRYTYK_10.getBon())) {
+                        Bukkit.getServer().broadcastMessage("");
+                        Bukkit.getServer().broadcastMessage(Utils.format("&7&lStara Fabryka &8>> &7Gracz &e" + player.getName() + " &7zdobyl " + is.getItemMeta().getDisplayName() + " &7z " + entity.getName()));
+                        Bukkit.getServer().broadcastMessage("");
+                    }
+                    if (is.equals(BonType.PRZESZYWKA_20.getBon())) {
+                        Bukkit.getServer().broadcastMessage("");
+                        Bukkit.getServer().broadcastMessage(Utils.format("&7&lStara Fabryka &8>> &7Gracz &e" + player.getName() + " &7zdobyl " + is.getItemMeta().getDisplayName() + " &7z " + entity.getName()));
+                        Bukkit.getServer().broadcastMessage("");
+                    }
                     if (user.isItemDropEnabled())
                         player.sendMessage(Utils.format("&8+ &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName()));
                 }
@@ -41,7 +54,8 @@ public class    MobDropHelper {
                 entity.getWorld().dropItem(entity.getLocation(), is);
                 if (message) {
                     if (user.isItemDropEnabled())
-                        player.sendMessage(Utils.format(("&8[ &7DROP &8] &8&l>> &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));       }
+                        player.sendMessage(Utils.format(("&8[ &7DROP &8] &8&l>> &7x" + is.getAmount() + " " + is.getItemMeta().getDisplayName())));
+                }
             }
         }
     }
@@ -71,8 +85,7 @@ public class    MobDropHelper {
             szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
         }
 
-        final double akceDropChance50lvl= getDropChance(szczescie, 0.04);
-        final double akceDropChance50plus = getDropChance(szczescie, 0.01);
+        final double akceDropChance50lvl = getDropChance(szczescie, 0.1);
         final double niesDropChance50lvl = getDropChance(szczescie, 0.06);
         final double niesDropChance50plus = getDropChance(szczescie, 0.04);
         final double chestDropChance50lvl = getDropChance(szczescie, 1.2);
@@ -116,8 +129,10 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
             // BOSS
             case "[BOSS] Dowodca Rozbojnikow":
-                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss1_10()) {
-                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
+                for (final Player server : Bukkit.getOnlinePlayers()) {
+                    if (RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss1_10()) {
+                        server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &c&lDowodca Rozbojnikow &fzostal zabity przez: &e" + player.getName()));
+                    }
                 }
                 rpgcore.getBossyManager().decrementBoss1_10count();
                 addDropPlayer(player, Skrzynki.getItem("I1", 1), 100, true, true, entity);
@@ -162,8 +177,10 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 2 -----------------------------------------
             // BOSS
             case "[BOSS] Wodz Goblinow":
-                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss10_20()) {
-                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &fzostal zabity przez: &e" + player.getName()));
+                for (final Player server : Bukkit.getOnlinePlayers()) {
+                    if (RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss10_20()) {
+                        server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &a&lWodz Goblinow &fzostal zabity przez: &e" + player.getName()));
+                    }
                 }
                 rpgcore.getBossyManager().decrementBoss10_20count();
                 addDropPlayer(player, Skrzynki.getItem("I3", 1), 100, true, true, entity);
@@ -178,7 +195,7 @@ public class    MobDropHelper {
             case "Goblin Lvl. 14":
             case "Goblin Lvl. 16":
             case "Goblin Lvl. 19":
-                addDropPlayer(player, Skrzynki.getItem("I4", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I4", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A2.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N2.getItemStack(), niesDropChance50lvl, true, false, entity);
@@ -195,8 +212,10 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 3 -----------------------------------------
             // BOSS
             case "[BOSS] Krol Goryli":
-                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss20_30()) {
-                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &fzostal zabity przez: &e" + player.getName()));
+                for (final Player server : Bukkit.getOnlinePlayers()) {
+                    if (RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss20_30()) {
+                        server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lKrol Goryli &fzostal zabity przez: &e" + player.getName()));
+                    }
                 }
                 rpgcore.getBossyManager().decrementBoss20_30count();
                 addDropPlayer(player, Skrzynki.getItem("I5", 1), 100, true, true, entity);
@@ -211,7 +230,7 @@ public class    MobDropHelper {
             case "Goryl Lvl. 21":
             case "Goryl Lvl. 25":
             case "Goryl Lvl. 28":
-                addDropPlayer(player, Skrzynki.getItem("I6", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I6", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A3.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N3.getItemStack(), niesDropChance50lvl, true, false, entity);
@@ -229,8 +248,10 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 4 -----------------------------------------
             // BOSS
             case "[BOSS] Przekleta Dusza":
-                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss30_40()) {
-                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &fzostal zabity przez: &e" + player.getName()));
+                for (final Player server : Bukkit.getOnlinePlayers()) {
+                    if (RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss30_40()) {
+                        server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &7&lPrzekleta Dusza &fzostal zabity przez: &e" + player.getName()));
+                    }
                 }
                 rpgcore.getBossyManager().decrementBoss30_40count();
                 addDropPlayer(player, Skrzynki.getItem("I7", 1), 100, true, true, entity);
@@ -248,7 +269,7 @@ public class    MobDropHelper {
             case "Zjawa Lvl. 32":
             case "Zjawa Lvl. 36":
             case "Zjawa Lvl. 39":
-                addDropPlayer(player, Skrzynki.getItem("I8", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I8", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A4.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N4.getItemStack(), niesDropChance50lvl, true, false, entity);
@@ -265,8 +286,10 @@ public class    MobDropHelper {
             // ----------------------------------------- EXPOWISKO 5 -----------------------------------------
             // BOSS
             case "[BOSS] Tryton":
-                if (RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).isBoss40_50()) {
-                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &fzostal zabity przez: &e" + player.getName()));
+                for (final Player server : Bukkit.getOnlinePlayers()) {
+                    if (RPGCORE.getInstance().getChatManager().find(server.getUniqueId()).isBoss40_50()) {
+                        server.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lTryton &fzostal zabity przez: &e" + player.getName()));
+                    }
                 }
                 rpgcore.getBossyManager().decrementBoss40_50count();
                 addDropPlayer(player, Skrzynki.getItem("I9", 1), 100, true, true, entity);
@@ -281,7 +304,7 @@ public class    MobDropHelper {
             case "Straznik Swiatyni Lvl. 43":
             case "Straznik Swiatyni Lvl. 46":
             case "Straznik Swiatyni Lvl. 47":
-                addDropPlayer(player, Skrzynki.getItem("I10", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I10", 1), getDropChance(szczescie, 1.3), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A5.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N5.getItemStack(), niesDropChance50lvl, true, false, entity);
@@ -302,8 +325,8 @@ public class    MobDropHelper {
             case "Mrozny Wilk Lvl. 55":
             case "Mrozny Wilk Lvl. 56":
                 // zmianki
-                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.35), true, false, entity);
-                addDropPlayer(player, Skrzynki.getItem("I12", 1), chestDropChance50lvl, true, true, entity);
+                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.2), true, false, entity);
+                addDropPlayer(player, Skrzynki.getItem("I12", 1), getDropChance(szczescie, 1.3), true, true, entity);
                 // AKCESORIUM
                 addDropPlayer(player, AkceItems.A6.getItemStack(), akceDropChance50lvl, true, false, entity);
                 addDropPlayer(player, NiesyItems.N6.getItemStack(), niesDropChance50lvl, true, false, entity);
@@ -336,10 +359,10 @@ public class    MobDropHelper {
             case "Zywiolak Ognia Lvl. 66":
             case "Zywiolak Ognia Lvl. 68":
                 addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.015), true, false, entity);
-                addDropPlayer(player, Skrzynki.getItem("I14", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I14", 1), getDropChance(szczescie, 1.0), true, true, entity);
                 addDropPlayer(player, Bossy.getItem("I60_70", 1), getDropChance(szczescie, 0.085), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A7.getItemStack(), getDropChance(szczescie, 0.09), true, false ,entity);
+                addDropPlayer(player, AkceItems.A7.getItemStack(), getDropChance(szczescie, 0.08), true, false, entity);
                 addDropPlayer(player, NiesyItems.N7.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("60-70", 1), getDropChance(szczescie, 1.5), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KLUCZ_PIEKIELNY_PRZEDSIONEK.getItemStack().clone(), getDropChance(szczescie, 0.03), true, true, entity);
@@ -376,12 +399,13 @@ public class    MobDropHelper {
                 // bao
                 addDropPlayer(player, GlobalItem.I_KAMIENBAO.getItemStack().clone(), getDropChance(szczescie, 0.025), true, false, entity);
                 // przedmiot do wzm mieczy [wygnany kowal]
-                addDropPlayer(player, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack(), getDropChance(szczescie, 0.15), true, true ,entity);
-                addDropPlayer(player, Skrzynki.getItem("I16", 1), chestDropChance50plus, true, true, entity);
+                addDropPlayer(player, GlobalItem.I_ODLAMEK_ZAKLETEJ_DUSZY.getItemStack(), getDropChance(szczescie, 0.15), true, true, entity);
+                addDropPlayer(player, GlobalItem.I50.getItemStack(), getDropChance(szczescie, 0.02), true, true, entity);
+                addDropPlayer(player, Skrzynki.getItem("I16", 1), getDropChance(szczescie, 0.8), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, Bossy.I2.getItemStack(),  getDropChance(szczescie, 0.2),true,true,entity);
-                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.005), true, true, entity);
-                addDropPlayer(player, AkceItems.A8.getItemStack(), akceDropChance50plus, true, false, entity);
+                addDropPlayer(player, Bossy.I2.getItemStack(), getDropChance(szczescie, 0.2), true, true, entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_KOLOSEUM.getItemStack(), getDropChance(szczescie, 0.0095), true, true, entity);
+                addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 0.07), true, false, entity);
                 addDropPlayer(player, NiesyItems.N8.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, Ulepszacze.getItem("70-80", 1), getDropChance(szczescie, 1.5), true, true, entity);
@@ -401,9 +425,8 @@ public class    MobDropHelper {
             case "[BOSS] Mityczny Pajak":
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &e&lMityczny Pajak &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I17", 1), 100, true, true, entity);
-                addDropPlayer(player, GlobalItem.RUDA_MITHRYLU.getItemStack().clone(), getDropChance(szczescie, 0.06), true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 9) {
-                    addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 20), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("80-90", 1), getDropChance(szczescie, 25), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 9) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -413,12 +436,12 @@ public class    MobDropHelper {
             case "Pustynny Ptasznik Lvl. 84":
             case "Pustynny Ptasznik Lvl. 87":
             case "Pustynny Ptasznik Lvl. 89":
-                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.005),true,true,entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_TAJEMNICZE_PIASKI.getItemStack(), getDropChance(szczescie, 0.008), true, true, entity);
                 addDropPlayer(player, NiesyItems.N9.getItemStack(), niesDropChance50plus, true, false, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, akceDropChance50lvl), true, false, entity);
+                addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 0.06), true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("80-90", 1), getDropChance(szczescie, 1.4), true, true, entity);
-                addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.02), true, true, entity);
+                addDropPlayer(player, Bossy.I3.getItemStack(), getDropChance(szczescie, 0.08), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I10.getItem().clone(), getDropChance(szczescie, 0.04), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I13.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
@@ -440,7 +463,7 @@ public class    MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I19", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 10) {
-                    addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 20), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("90-100", 1), getDropChance(szczescie, 50), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 10) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
@@ -453,19 +476,19 @@ public class    MobDropHelper {
                 // przepa do krakenow
                 addDropPlayer(player, Przepustki.I1.getItemStack().clone(), getDropChance(szczescie, 0.15), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.005) ,true,true, entity);
-                addDropPlayer(player, AkceItems.A10.getItemStack(), akceDropChance50plus, true, false, entity);
+                addDropPlayer(player, Dungeony.I_KLUCZ_DEMONICZNE_SALE.getItemStack(), getDropChance(szczescie, 0.005), true, true, entity);
+                addDropPlayer(player, AkceItems.A10.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), niesDropChance50plus, true, false, entity);
                 addDropPlayer(player, Ulepszacze.getItem("90-100", 1), getDropChance(szczescie, 1.35), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I5.getItem().clone(), getDropChance(szczescie, 0.035), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I11.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
-                if (ChanceHelper.getChance(getDropChance(szczescie, 0.005))) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,366.5,80,235.5");
-                    Bukkit.broadcastMessage(" ");
-                    Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &dpojawil sie w swojej komnacie!"));
-                    Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &dZostal przywolany przez &5" + player.getName() + "&d!"));
-                    Bukkit.broadcastMessage(" ");
+                if (ChanceHelper.getChance(getDropChance(szczescie, 0.02))) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 90-100-BOSS 1 90-100map,413.5,86,47.5");
+                    Bukkit.getServer().broadcastMessage(" ");
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &5&lPodziemny Rozpruwacz &dpojawil sie w swojej komnacie!"));
+                    Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &dZostal przywolany przez &5" + player.getName() + "&d!"));
+                    Bukkit.getServer().broadcastMessage(" ");
                 }
                 if (przyrodnikMission.getNumber() == 9) {
                     addDropPlayer(player, PrzyrodnikItems.getItem("90-100"), getDropChance(szczescie, przyrodnikMission.getDropChance()), true, true, entity);
@@ -496,9 +519,9 @@ public class    MobDropHelper {
                 // przepa do krysztalowej sali
                 addDropPlayer(player, Przepustki.I2.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
                 // AKCESORIUM
-                addDropPlayer(player, AkceItems.A11.getItemStack(), akceDropChance50lvl, true, false, entity);
-                addDropPlayer(player, NiesyItems.N11.getItemStack(), niesDropChance50plus, true, false, entity);
-                addDropPlayer(player, Ulepszacze.getItem("100-110", 1), getDropChance(szczescie, 2.0), true, true, entity);
+                addDropPlayer(player, AkceItems.A11.getItemStack(), getDropChance(szczescie, 0.05), true, false, entity);
+                addDropPlayer(player, NiesyItems.N11.getItemStack(), getDropChance(szczescie, 0.02), true, false, entity);
+                addDropPlayer(player, Ulepszacze.getItem("100-110", 1), getDropChance(szczescie, 1.3), true, true, entity);
                 addDropPlayer(player, GlobalItem.getItem("I_CZASTKA_MAGII", 1), getDropChance(szczescie, 0.02), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I14.getItem().clone(), getDropChance(szczescie, 0.03), true, true, entity);
                 addDropPlayer(player, WyszkolenieItems.I6.getItem().clone(), getDropChance(szczescie, 0.025), true, true, entity);
@@ -652,7 +675,7 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Piekielny Wladca":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 45), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1, 5)), getDropChance(szczescie, 45), true, true, entity);
                 addDropPlayer(player, Dungeony.getItem("I_PIEKIELNY_PRZEDSIONEK_SKRZYNKA", 1), 100, true, true, entity);
                 rpgcore.getPrzedsionekManager().incrementCounter();
                 break;
@@ -673,9 +696,9 @@ public class    MobDropHelper {
             case "[MiniBOSS] Wyznawca Posejdona":
             case "[MiniBOSS] Wyznawca Zeusa":
             case "[MiniBOSS] Wyznawca Hadesa":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,3)), getDropChance(szczescie, 30), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1, 3)), getDropChance(szczescie, 30), true, true, entity);
                 addDropPlayer(player, AkceItems.A8.getItemStack(), getDropChance(szczescie, 2), true, false, entity);
-                if (ChanceHelper.getChance(getDropChance(szczescie, 7.5))) {
+                if (ChanceHelper.getChance(getDropChance(szczescie, 15))) {
                     player.getInventory().addItem(Dungeony.I_SAKIEWKA_ZE_ZLOTYM_PROSZKIEM.getItemStack());
                     Bukkit.getServer().broadcastMessage(" ");
                     Bukkit.getServer().broadcastMessage(Utils.format("&6&lKoloseum &8>> &7Gracz &f" + player.getName() + " &7znalazl &eSakiewke ze Zlotym Proszkiem&7!"));
@@ -687,11 +710,11 @@ public class    MobDropHelper {
                 }
                 break;
             case "[BOSS] Czempion Areny":
-                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1,5)), getDropChance(szczescie, 45), true, true, entity);
+                addDropPlayer(player, Dungeony.getItem("I_SAKIEWKA_ULEPSZACZY", ChanceHelper.getRandInt(1, 5)), getDropChance(szczescie, 45), true, true, entity);
                 addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getKoloseumManager().incrementCounter();
                 break;
-        // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
             case "Truposz Lvl. 85":
                 addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
                 if (rpgcore.getTajemniczePiaskiManager().getDungeonStatus() == DungeonStatus.ETAP_1) {
@@ -704,7 +727,8 @@ public class    MobDropHelper {
                     rpgcore.getTajemniczePiaskiManager().incrementCounter();
                 }
                 rpgcore.getTajemniczePiaskiManager().getRdzenieLocation().values().forEach(rdzen -> {
-                    if (rdzen.getEntityId().contains("" + entity.getEntityId())) rdzen.getEntityId().remove("" + entity.getEntityId());
+                    if (rdzen.getEntityId().contains("" + entity.getEntityId()))
+                        rdzen.getEntityId().remove("" + entity.getEntityId());
                 });
                 break;
             case "[MiniBOSS] Pustynny Tarczownik":
@@ -717,6 +741,35 @@ public class    MobDropHelper {
             case "[BOSS] Cesarz Pustyni":
                 addDropPlayer(player, Dungeony.I_TAJEMNICZE_PIASKI_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                break;
+
+            //                                            RYBAK WYSPA 2
+            case "Wodny Stwor Lvl. 50":
+                addDropPlayer(player, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), getDropChance(szczescie, 0.1), true, false, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 5)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I16.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 4)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I17.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 3)).toItemStack().clone(), 100, true, true, entity);
+                break;
+            case "Nurek Glebinowy Lvl. 90":
+                addDropPlayer(player, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), getDropChance(szczescie, 2.5), true, false, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I17.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 6)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I18.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 5)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 3)).toItemStack().clone(), 100, true, true, entity);
+                break;
+            case "Morski Ksiaze Lvl. 999":
+                addDropPlayer(player, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), getDropChance(szczescie, 25), true, false, entity);
+                addDropPlayer(player, BonType.PRZESZYWKA_20.getBon(), getDropChance(szczescie, 0.01), true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I18.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(10, 15)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(8, 12)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(5, 10)).toItemStack().clone(), 100, true, true, entity);
+                break;
+            case "Posejdon Lvl. 130":
+                addDropPlayer(player, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), getDropChance(szczescie, 100), true, false, entity);
+                addDropPlayer(player, RybakItems.I22.getItemStack().clone(), getDropChance(szczescie, 100), true, false, entity);
+                addDropPlayer(player, BonType.WZM_KRYTYK_10.getBon(), getDropChance(szczescie, 1), true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(32, 64)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(16, 32)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I23.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 3)).toItemStack().clone(), 100, true, true, entity);
                 break;
         }
 

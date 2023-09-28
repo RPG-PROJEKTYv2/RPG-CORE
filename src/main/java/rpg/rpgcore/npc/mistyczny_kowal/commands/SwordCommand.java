@@ -11,7 +11,7 @@ import rpg.rpgcore.utils.globalitems.GlobalItem;
 public class SwordCommand extends CommandAPI {
     public SwordCommand() {
         super("sword");
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }
 

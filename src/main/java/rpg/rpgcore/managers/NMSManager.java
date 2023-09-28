@@ -46,17 +46,17 @@ public class NMSManager {
                 BossBarUtil.updateBar(player, Utils.format(
                         entity.getCustomName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
+                                Utils.spaceNumber(DoubleUtils.round(entity.getHealth() - dmg, 2)) +
                                 "&7/&c" +
-                                DoubleUtils.round(entity.getMaxHealth(), 0)
+                                Utils.spaceNumber(DoubleUtils.round(entity.getMaxHealth(), 0))
                 ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             } else {
                 BossBarUtil.setBar(player, Utils.format(
                         entity.getCustomName() +
                                 "&7: &c" +
-                                DoubleUtils.round(entity.getHealth() - dmg, 2) +
+                                Utils.spaceNumber(DoubleUtils.round(entity.getHealth() - dmg, 2)) +
                                 "&7/&c" +
-                                DoubleUtils.round(entity.getMaxHealth(), 0)
+                                Utils.spaceNumber(DoubleUtils.round(entity.getMaxHealth(), 0))
                 ), (float) ((entity.getHealth() - dmg) / entity.getMaxHealth()) * 100);
             }
         }

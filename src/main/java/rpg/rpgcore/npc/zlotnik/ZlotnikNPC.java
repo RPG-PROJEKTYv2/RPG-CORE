@@ -162,12 +162,12 @@ public class ZlotnikNPC {
                     lore.add(Utils.format("&cWymagany poziom: &690"));
                     Utils.setTagInt(akce, "lvl", 90, false);
                 }
-                Utils.setTagDouble(akce, "def", Utils.getTagDouble(akce, "def") + 15, true);
-                Utils.setTagDouble(akce, "blok", Utils.getTagDouble(akce, "blok") + 15, true);
-                Utils.setTagInt(akce, "hp", Utils.getTagInt(akce, "hp") + 10, true);
 
                 meta.setLore(lore);
                 akce.setItemMeta(meta);
+                Utils.setTagDouble(akce, "def", Utils.getTagDouble(akce, "def") + 15, true);
+                Utils.setTagDouble(akce, "blok", Utils.getTagDouble(akce, "blok") + 15, true);
+                Utils.setTagInt(akce, "hp", Utils.getTagInt(akce, "hp") + 10, true);
                 break;
 
             case HOPPER_MINECART:
@@ -183,12 +183,12 @@ public class ZlotnikNPC {
                     lore.add(Utils.format("&cWymagany poziom: &690"));
                     Utils.setTagInt(akce, "lvl", 90, false);
                 }
-                Utils.setTagDouble(akce, "ludzie", Utils.getTagDouble(akce, "ludzie") + 10, true);
-                Utils.setTagDouble(akce, "odpo", Utils.getTagDouble(akce, "odpo") + 10, true);
-                Utils.setTagInt(akce, "mspeed", Utils.getTagInt(akce, "mspeed") - (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "mspeed") * 4) / 100), 0), true);
 
                 meta.setLore(lore);
                 akce.setItemMeta(meta);
+                Utils.setTagDouble(akce, "ludzie", Utils.getTagDouble(akce, "ludzie") + 10, true);
+                Utils.setTagDouble(akce, "odpo", Utils.getTagDouble(akce, "odpo") + 10, true);
+                Utils.setTagInt(akce, "mspeed", Utils.getTagInt(akce, "mspeed") - (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "mspeed") * 4) / 100), 0), true);
                 break;
             case STORAGE_MINECART:
                 meta.setDisplayName(Utils.format("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()));
@@ -203,12 +203,12 @@ public class ZlotnikNPC {
                     lore.add(Utils.format("&cWymagany poziom: &690"));
                     Utils.setTagInt(akce, "lvl", 90, false);
                 }
-                Utils.setTagInt(akce, "ddmg", Utils.getTagInt(akce, "ddmg") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "ddmg") * 20) / 100), 0), true);
-                Utils.setTagDouble(akce, "kryt", Utils.getTagDouble(akce, "kryt") + 20, true);
-                Utils.setTagDouble(akce, "srdmg", Utils.getTagDouble(akce, "srdmg") + 20, true);
 
                 meta.setLore(lore);
                 akce.setItemMeta(meta);
+                Utils.setTagInt(akce, "ddmg", Utils.getTagInt(akce, "ddmg") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "ddmg") * 20) / 100), 0), true);
+                Utils.setTagDouble(akce, "kryt", Utils.getTagDouble(akce, "kryt") + 20, true);
+                Utils.setTagDouble(akce, "srdmg", Utils.getTagDouble(akce, "srdmg") + 20, true);
                 break;
             case EXPLOSIVE_MINECART:
                 meta.setDisplayName(Utils.format("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()));
@@ -223,12 +223,12 @@ public class ZlotnikNPC {
                     lore.add(Utils.format("&cWymagany poziom: &690"));
                     Utils.setTagInt(akce, "lvl", 90, false);
                 }
-                Utils.setTagDouble(akce, "przebicie", Utils.getTagDouble(akce, "przebicie") + 10, true);
-                Utils.setTagDouble(akce, "wkryt", Utils.getTagDouble(akce, "wkryt") + 10, true);
-                Utils.setTagInt(akce, "speed", Utils.getTagInt(akce, "speed") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "speed") * 5) / 100), 0), true);
 
                 meta.setLore(lore);
                 akce.setItemMeta(meta);
+                Utils.setTagDouble(akce, "przebicie", Utils.getTagDouble(akce, "przebicie") + 10, true);
+                Utils.setTagDouble(akce, "wkryt", Utils.getTagDouble(akce, "wkryt") + 10, true);
+                Utils.setTagInt(akce, "speed", Utils.getTagInt(akce, "speed") + (int) DoubleUtils.round(Math.ceil((double) (Utils.getTagInt(akce, "speed") * 5) / 100), 0), true);
                 break;
             case WATCH:
                 meta.setDisplayName(Utils.format("&6&lWzmocniony " + akce.getItemMeta().getDisplayName()));
@@ -243,12 +243,12 @@ public class ZlotnikNPC {
                     lore.add(Utils.format("&cWymagany poziom: &690"));
                     Utils.setTagInt(akce, "lvl", 90, false);
                 }
-                Utils.setTagDouble(akce, "srdmg", Utils.getTagDouble(akce, "srdmg") + 10, true);
-                Utils.setTagDouble(akce, "potwory", Utils.getTagDouble(akce, "potwory") + 10, true);
-                Utils.setTagDouble(akce, "exp", Utils.getTagDouble(akce, "exp") + 5, true);
 
                 meta.setLore(lore);
                 akce.setItemMeta(meta);
+                Utils.setTagDouble(akce, "srdmg", Utils.getTagDouble(akce, "srdmg") + 10, true);
+                Utils.setTagDouble(akce, "potwory", Utils.getTagDouble(akce, "potwory") + 10, true);
+                Utils.setTagDouble(akce, "exp", Utils.getTagDouble(akce, "exp") + 5, true);
                 break;
         }
         player.getInventory().addItem(akce);

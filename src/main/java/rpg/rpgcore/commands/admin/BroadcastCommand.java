@@ -17,15 +17,12 @@ public class BroadcastCommand extends CommandAPI {
         super("broadcast");
         this.setAliases(Arrays.asList("bc", "alert", "ogloszenie", "title"));
         this.setRankLevel(RankType.ADMIN);
-        this.setRestrictedForPlayer(true);
     }
 
     @Override
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
-        final Player player = (Player) sender;
-
         if (args.length < 2) {
-            player.sendMessage(Utils.poprawneUzycie("broadcast <title/bar> <wiadomosc>"));
+            sender.sendMessage(Utils.poprawneUzycie("broadcast <title/bar> <wiadomosc>"));
             return;
         }
 

@@ -140,6 +140,10 @@ public class NewTargInventoryClick implements Listener {
             final double playerMoney = rpgcore.getUserManager().find(playerUUID).getKasa();
 
             if (player.getName().equals(itemOwnwer)) {
+                if (player.getInventory().firstEmpty() == -1) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wolnego miejsca w swoim ekwipunku!"));
+                    return;
+                }
                 final Targ targ = rpgcore.getNewTargManager().find(itemOwnerUUID);
                 if (!targ.getItemList().contains(clickedItem)) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));
@@ -254,6 +258,10 @@ public class NewTargInventoryClick implements Listener {
             final UUID targetUUID = rpgcore.getUserManager().find(targetName).getId();
 
             if (player.getName().equals(targetName)) {
+                if (player.getInventory().firstEmpty() == -1) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie posiadasz wolnego miejsca w swoim ekwipunku!"));
+                    return;
+                }
                 final Targ targ = rpgcore.getNewTargManager().find(targetUUID);
                 if (!targ.getItemList().contains(clickedItem)) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTego przedmiotu nie ma juz na twoim targu!"));

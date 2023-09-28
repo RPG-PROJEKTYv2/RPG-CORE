@@ -1,10 +1,14 @@
 package rpg.rpgcore.npc.rybak.events;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import net.minecraft.server.v1_8_R3.EntityFishingHook;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.FishHook;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,10 +16,13 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.BlockIterator;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
+import rpg.rpgcore.npc.rybak.tasks.HookNameTask;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.Utils;
 
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.Set;
+import java.util.UUID;
 
 public class PlayerFishListener implements Listener {
 
@@ -58,11 +65,47 @@ public class PlayerFishListener implements Listener {
             player.sendMessage(Utils.format("&8[&c✘&8] &cTa wedka nie nalezy do ciebie!"));
             return;
         }
-        
+
+        if (e.getState() == PlayerFishEvent.State.FISHING) {
+            final Set<ProtectedRegion> playerRegion = RPGCORE.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).getRegions();
+            if (playerRegion == null || playerRegion.isEmpty()) {
+                e.setCancelled(true);
+                e.getHook().remove();
+                player.sendMessage(Utils.format("&8[&c✘&8] &cCos poszlo nie tak!"));
+                return;
+            }
+            final String regionId = playerRegion.stream().findFirst().get().getId();
+            int time = 300;
+            switch (regionId) {
+                case "rybak-wyspa1":
+                    if (!Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName()).equals("Stara Wedka")) {
+                        player.sendMessage(Utils.format("&8[&c✘&8] &cNa tej wyspie mozesz lowic tylko &6Stara Wedka&c!"));
+                        e.setCancelled(true);
+                        e.getHook().remove();
+                        return;
+                    }
+                    time -= Utils.getTagInt(player.getItemInHand(), "lure-speed");
+                    rpgcore.getRybakNPC().getTimeMap().put(player.getUniqueId(), time / 20 * 1000L);
+                    this.setBiteTime(e.getHook(), time);
+                    new HookNameTask(rpgcore, player, e);
+                    break;
+                case "rybak-wyspa2":
+                    time -= Utils.getTagInt(player.getItemInHand(), "lure-speed");
+                    rpgcore.getRybakNPC().getTimeMap().put(player.getUniqueId(), time / 20 * 1000L);
+                    this.setBiteTime(e.getHook(), time);
+                    new HookNameTask(rpgcore, player, e);
+                    break;
+                case "rybak-wyspa3":
+                    break;
+            }
+
+
+        }
+
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             e.getCaught().remove();
             //rpgcore.getRybakNPC().spawnNurekGlebinowy(player, e.getHook().getLocation());
-            this.checkPlayer(player, e);
+            this.checkPlayer(player, e, e.getHook().getLocation());
         }
     }
 
@@ -80,8 +123,7 @@ public class PlayerFishListener implements Listener {
     }
 
 
-
-    private void checkPlayer(final Player player, final PlayerFishEvent e) {
+    private void checkPlayer(final Player player, final PlayerFishEvent e, final Location hookLocation) {
         final int check = ChanceHelper.getRandInt(1, 2); //new Random().nextInt(4) + 1;
         switch (check) {
             case 1:
@@ -98,6 +140,7 @@ public class PlayerFishListener implements Listener {
                 break;*/
         }
         final float toCheckBefore = player.getLocation().getPitch(); //(check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
+        final Location playerLocation = player.getLocation();
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
             final float toCheckAfter = player.getLocation().getPitch(); //(check == 1 || check == 2 ? player.getLocation().getPitch() : player.getLocation().getYaw());
             final float different = player.getLocation().getYaw(); //(check == 1 || check == 2 ? player.getLocation().getYaw() : player.getLocation().getPitch());
@@ -106,7 +149,8 @@ public class PlayerFishListener implements Listener {
                     player.teleport(new Location(Bukkit.getWorld("Rybak"), 10.5, 147, -93.5, 135F, 31F));
 
                     rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-                        if (!player.getLocation().equals(new Location(Bukkit.getWorld("Rybak"), 10.5, 147, -93.5, 135F, 31F))) return;
+                        if (!player.getLocation().equals(new Location(Bukkit.getWorld("Rybak"), 10.5, 147, -93.5, 135F, 31F)))
+                            return;
                         if (e.getHook() == null) return;
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + player.getName() + " 6 h Lowienie Na Afk (skrypt?)");
                     }, 100L);
@@ -132,7 +176,7 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                     return;
                 }
-                RybakHelper.getDrop(player);
+                RybakHelper.getDrop(player, playerLocation, hookLocation);
                 return;
             }
             if (check == 2) {
@@ -140,7 +184,7 @@ public class PlayerFishListener implements Listener {
                     player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
                     return;
                 }
-                RybakHelper.getDrop(player);
+                RybakHelper.getDrop(player, playerLocation, hookLocation);
             }
             /*if (check == 3) {
                 if (toCheckAfter <= -35 && !(different >= -50 && different <= 50)) {
@@ -160,15 +204,25 @@ public class PlayerFishListener implements Listener {
         }, 40L);
     }
 
+    private void setBiteTime(FishHook hook, int time) {
+        EntityFishingHook hookCopy = (EntityFishingHook) ((CraftEntity) hook).getHandle();
 
-//    private org.bukkit.util.Vector getVector(Location owner, Entity entity) {
-//        double d0 = owner.getX() - entity.getLocation().getX();
-//        double d1 = owner.getY() - entity.getLocation().getY();
-//        double d2 = owner.getZ() - entity.getLocation().getZ();
-//        return new org.bukkit.util.Vector(d0 * 0.1D, d1 * 0.1D + Math.sqrt(Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2)) * 0.08D, d2 * 0.1D);
-//    }
+        Field fishCatchTime = null;
 
+        try {
+            fishCatchTime = EntityFishingHook.class.getDeclaredField("aw");
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
 
+        fishCatchTime.setAccessible(true);
+
+        try {
+            fishCatchTime.setInt(hookCopy, time);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

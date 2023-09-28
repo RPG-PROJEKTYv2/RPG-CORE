@@ -15,7 +15,7 @@ public class DisableCommand extends CommandAPI {
 
     public DisableCommand(final RPGCORE rpgcore) {
         super("disable");
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.ADMIN);
         this.setAliases(Arrays.asList("wylacz"));
         this.rpgcore = rpgcore;
     }

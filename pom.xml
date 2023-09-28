@@ -87,6 +87,10 @@
             <id>sk89q-repo</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
+        <repository>
+            <id>goxy-repo</id>
+            <url>https://repo.goxy.pl</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -165,6 +169,12 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>6.1.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.goxy.minecraft</groupId>
+            <artifactId>goxy-api</artifactId>
+            <version>0.10.2</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

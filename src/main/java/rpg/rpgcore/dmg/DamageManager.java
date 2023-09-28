@@ -100,14 +100,14 @@ public class DamageManager {
                     attacker.sendMessage(Utils.format("&cTym mieczem mozesz bic tylko potwory!"));
                     return 0;
                 case "tyra":
-                    if (weapon.getItemMeta().getDisplayName().contains("Wzmocniony")) tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA") * 2;
+                    if (weapon.getItemMeta().getDisplayName().contains("Wzmocniony")) tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA") * 2.25;
                     else tyra += Utils.getTagInt(weapon, "ludzieProcentTYRA");
                     break;
                 default:
                     break;
             }
 
-            dmg += Utils.getTagInt(weapon, "dmg") * 3;
+            dmg += Utils.getTagInt(weapon, "dmg") * 3.25;
             dmg += Utils.getTagInt(weapon, "dodatkowe");
 //            final String silnyLvl = Utils.getTagString(weapon, "silny-lvl");
 //            final int attackerLvl = rpgcore.getUserManager().find(uuid).getLvl();
@@ -195,7 +195,7 @@ public class DamageManager {
         }
 
 
-        dmg = dmg * 2 * (mnoznik / 100);
+        dmg = dmg * 2.5 * (mnoznik / 100);
         dmg = dmg * (tyra / 100);
 
         krytyk /= 2.25;
@@ -203,7 +203,7 @@ public class DamageManager {
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * (2.5 + (wzmKrytDmg / 100));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (2.5 + (wzmKrytDmg / 100));
+                dmg = dmg * (1.25 + (wzmKrytDmg / 100));
             }
         }
 
@@ -247,7 +247,7 @@ public class DamageManager {
             dmg += Utils.getTagInt(weapon, "moby") * 1.25;
             dmg += Utils.getTagInt(weapon, "dodatkowe");
             if (Utils.removeColor(victim.getCustomName()).contains(Utils.removeColor(Utils.getTagString(weapon, "silny-na-mob")))) {
-                mnoznik += Utils.getTagDouble(weapon, "silny-na-val");
+                mnoznik += Utils.getTagDouble(weapon, "silny-na-val") * 2;
             }
             //krytyk += Utils.getTagDouble(weapon, "krytyk");
         } else {
@@ -330,7 +330,7 @@ public class DamageManager {
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * (2.5 + (wzmKrytDmg / 100));
             if (ChanceHelper.getChance(wzmKryt)) {
-                dmg = dmg * (2.5 + (wzmKrytDmg / 100));
+                dmg = dmg * (1.25 + (wzmKrytDmg / 100));
             }
         }
 
@@ -383,7 +383,7 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
-        def = def * (mnoznik / 100);
+        def = def * 0.85 * (mnoznik / 100);
 
         return DoubleUtils.round(def, 3);
     }

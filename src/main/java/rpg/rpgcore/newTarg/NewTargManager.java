@@ -292,15 +292,15 @@ public class NewTargManager {
                 for (ItemStack is : allItems) {
                     itemNameMap.put(is, Utils.removeColor(is.getItemMeta().getDisplayName()));
                 }
-                Stream<Map.Entry<ItemStack, String>> sortedAZ = itemNameMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+                Stream<Map.Entry<ItemStack, String>> sortedAZ = itemNameMap.entries().stream().sorted(Map.Entry.comparingByValue());
                 sortedAZ.forEach(e -> sortedItems.add(e.getKey()));
-                System.out.println(sortedAZ);
+
                 break;
             case 4:
                 for (ItemStack is : allItems) {
                     itemNameMap.put(is, Utils.removeColor(is.getItemMeta().getDisplayName()));
                 }
-                Stream<Map.Entry<ItemStack, String>> sortedZA = itemNameMap.entries().stream().sorted(Map.Entry.comparingByValue());
+                Stream<Map.Entry<ItemStack, String>> sortedZA = itemNameMap.entries().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
                 sortedZA.forEach(e -> sortedItems.add(e.getKey()));
                 break;
         }
@@ -383,9 +383,9 @@ public class NewTargManager {
         final List<String> itemLore = meta.getLore();
 
         final int i = itemLore.size();
-        itemLore.remove(i-1);
-        itemLore.remove(i-2);
-        itemLore.remove(i-3);
+        itemLore.remove(i - 1);
+        itemLore.remove(i - 2);
+        itemLore.remove(i - 3);
 
         meta.setLore(Utils.format(itemLore));
         itemStack.setItemMeta(meta);

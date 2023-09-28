@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.api.CommandAPI;
@@ -28,9 +30,15 @@ public class SpawnCommand extends CommandAPI {
         final Player player = (Player) sender;
         if (args.length == 0) {
             player.teleport(rpgcore.getSpawnManager().getSpawn());
-            player.setHealth(player.getMaxHealth());
             rpgcore.getCooldownManager().givePlayerTeleporterCooldown(player.getUniqueId());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));
+//            if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
+//                if (player.getLastDamageCause() != null && player.getLastDamageCause().getCause() != null && player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+//                    player.damage(player.getMaxHealth(), ((EntityDamageByEntityEvent) player.getLastDamageCause()).getDamager());
+//                    return;
+//                }
+//            }
+            player.setHealth(player.getMaxHealth());
             if (player.hasPotionEffect(PotionEffectType.SLOW)) {
                 player.removePotionEffect(PotionEffectType.SLOW);
             }
@@ -65,8 +73,11 @@ public class SpawnCommand extends CommandAPI {
                 return;
             }
             this.rpgcore.getTeleportManager().setBeforeTeleportLocation(target.getUniqueId(), target.getLocation());
+            target.teleport(rpgcore.getSpawnManager().getSpawn());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano gracza &6" + target.getName() + " &ana spawna!"));
             target.sendMessage(Utils.format(Utils.SERVERNAME + "&aZostales przeteleportowany na spawna!"));
+            if (rpgcore.getCooldownManager().hasAntyLogout(target.getUniqueId())) return;
+            target.setHealth(target.getMaxHealth());
             if (target.hasPotionEffect(PotionEffectType.SLOW)) {
                 target.removePotionEffect(PotionEffectType.SLOW);
             }
@@ -76,7 +87,6 @@ public class SpawnCommand extends CommandAPI {
             if (target.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
                 target.removePotionEffect(PotionEffectType.FAST_DIGGING);
             }
-            target.teleport(rpgcore.getSpawnManager().getSpawn());
         }
 
     }

@@ -12,8 +12,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.bonuses.Bonuses;
+import rpg.rpgcore.npc.rybak.enums.MlodszyRybakMissions;
 import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
+import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.ItemBuilder;
@@ -60,6 +63,8 @@ public class RybakInventoryClick implements Listener {
                 return;
             }
 
+            if (user.getMission() == 27) return;
+
             final StaruszekMissions mission = StaruszekMissions.getMissionById(user.getMission());
 
             assert mission != null;
@@ -74,7 +79,14 @@ public class RybakInventoryClick implements Listener {
 
                 if (user.getMission() == 27) {
                     user.setDone(true);
-                    rpgcore.getServer().broadcastMessage(Utils.format("&6&lStaruszek &8>> &7Gracz &e" + player.getName() + " &7wykonal moje wszystkie misje!"));
+                    rpgcore.getServer().broadcastMessage(Utils.format("&6&lStaruszek &8>> &7Gracz &e" + player.getName() + " &7wykonal moje &4&lWSZYSTKIE &7misje!"));
+                    if (rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() < 4 && !rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().contains(player.getName())) {
+                        rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getGracze().add(player.getName());
+                        rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().setNadanych(rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + 1);
+                        rpgcore.getArtefaktyZaLvlManager().save();
+                        player.getInventory().addItem(Artefakty.getArtefakt("Eliksir-Potegi", player));
+                        Bukkit.getServer().broadcastMessage(Utils.format("&6&lStaruszek &8>> &7Poniewaz ukonczyl je, jako &c" + rpgcore.getArtefaktyZaLvlManager().getArtefaktyZaLvl().getRybak().getNadanych() + " &7na serwerze, otrzymal &6&lEliksir Potegi&7!"));
+                    }
                 } else {
                     rpgcore.getServer().broadcastMessage(Utils.format("&6&lStaruszek &8>> &7Gracz &e" + player.getName() + " &7wykonal moja &c" + (user.getMission() - 1) + " &7misje!"));
                 }
@@ -84,6 +96,8 @@ public class RybakInventoryClick implements Listener {
                     rpgcore.getMongoManager().saveDataRybak(user.getUuid(), rpgcore.getRybakNPC().find(user.getUuid()));
                     rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
                 });
+                rpgcore.getRybakNPC().onClickStaruszek(player);
+                return;
             }
 
             if (item.getType().equals(Material.BOOK) && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
@@ -100,18 +114,20 @@ public class RybakInventoryClick implements Listener {
                     return;
                 }
 
-                int amount = 1;
+                int amount = 0;
                 for (ItemStack items : player.getInventory().getContents()) {
+                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName()) continue;
                     if (items.isSimilar(reqItem)) amount += items.getAmount();
                 }
 
-                if (amount > Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount()) amount -= amount - Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount();
+                if (user.getProgress() + amount > Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount()) amount -= user.getProgress() + amount - Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount();
 
                 player.getInventory().removeItem(new ItemBuilder(reqItem.clone()).setAmount(amount).toItemStack());
                 user.setProgress(user.getProgress() + amount);
 
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(user.getUuid(), rpgcore.getRybakNPC().find(user.getUuid())));
                 player.sendMessage(Utils.format("&6&lStaruszek &8>> &aPomyslnie oddales &6" + amount + " &aprzedmiotow do misji!"));
+                rpgcore.getRybakNPC().onClickStaruszek(player);
                 return;
             }
 
@@ -216,6 +232,119 @@ public class RybakInventoryClick implements Listener {
         }
 
 
+
+        //                                          MLODSZY RYBAK (WYSPA 2)                            //
+
+        if (title.equals("Mlodszy Rybak")) {
+            e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE) return;
+
+            final MlodszyRybakUser user = rpgcore.getRybakNPC().find(player.getUniqueId()).getMlodszyRybakUser();
+
+            if (e.getSlot() == 26) {
+                rpgcore.getRybakNPC().openMlodszyRybakShop(player);
+                return;
+            }
+
+            if (user.getMission() == 27) return;
+
+            final MlodszyRybakMissions mission = MlodszyRybakMissions.getMissionById(user.getMission());
+
+            assert mission != null;
+
+            if (user.getProgress() >= mission.getReqAmount()) {
+                user.setMission(user.getMission() + 1);
+                user.setProgress(0);
+
+                user.setSrDef(user.getSrDef() + mission.getSrDef());
+                user.setDodatkowyDmg(user.getDodatkowyDmg() + mission.getDodatkoweDmg());
+                user.setPrzeszywka(user.getPrzeszywka() + mission.getPrzeszywka());
+                final Bonuses bonuses = rpgcore.getBonusesManager().find(player.getUniqueId());
+                bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + mission.getSrDef());
+                bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + mission.getDodatkoweDmg());
+                bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + mission.getPrzeszywka());
+
+                if (user.getMission() == 27) {
+                    user.setDone(true);
+                    rpgcore.getServer().broadcastMessage(Utils.format("&3&lMlodszy Rybak &8>> &bGracz &3" + player.getName() + " &bwykonal moje &4&lWSZYSTKIE &bmisje!"));
+                } else {
+                    rpgcore.getServer().broadcastMessage(Utils.format("&3&lMlodszy Rybak &8>> &bGracz &3" + player.getName() + " &bwykonal moja &c" + (user.getMission() - 1) + " &bmisje!"));
+                }
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &bTwoja nagroda to:"));
+                player.sendMessage(Utils.format("&a+" + mission.getSrDef() + "% sredniej defensywy"));
+                player.sendMessage(Utils.format("&c+" + mission.getDodatkoweDmg() + " dodatkowych obrazen"));
+                player.sendMessage(Utils.format("&6+" + mission.getPrzeszywka() + "% przeszycia bloku ciosu"));
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                    rpgcore.getMongoManager().saveDataRybak(user.getUuid(), rpgcore.getRybakNPC().find(user.getUuid()));
+                    rpgcore.getMongoManager().saveDataBonuses(bonuses.getId(), bonuses);
+                });
+                rpgcore.getRybakNPC().onClickMlodszyRybak(player);
+                return;
+            }
+
+            if (item.getType().equals(Material.BOOK) && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
+                if (!(user.getMission() == 8 || user.getMission() == 9 || user.getMission() == 10 || user.getMission() == 11 || user.getMission() == 12
+                        || user.getMission() == 13 || user.getMission() == 14)) return;
+
+                final String itemName = Utils.getTagString(item, "itemName");
+                if (itemName.isEmpty()) return;
+
+                final ItemStack reqItem = Objects.requireNonNull(RybakItems.getByName(itemName)).getItemStack();
+
+                if (!player.getInventory().containsAtLeast(reqItem, 1)) {
+                    player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cNie posiadasz tego przedmiotu!"));
+                    player.closeInventory();
+                    return;
+                }
+
+                int amount = 0;
+                for (ItemStack items : player.getInventory().getContents()) {
+                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName()) continue;
+                    if (items.isSimilar(reqItem)) amount += items.getAmount();
+                }
+
+                if (user.getProgress() + amount > Objects.requireNonNull(MlodszyRybakMissions.getMissionById(user.getMission())).getReqAmount())
+                    amount -= user.getProgress() + amount - Objects.requireNonNull(MlodszyRybakMissions.getMissionById(user.getMission())).getReqAmount();
+
+                player.getInventory().removeItem(new ItemBuilder(reqItem.clone()).setAmount(amount).toItemStack());
+                user.setProgress(user.getProgress() + amount);
+
+                rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(user.getUuid(), rpgcore.getRybakNPC().find(user.getUuid())));
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &aPomyslnie oddales &6" + amount + " &aprzedmiotow do misji!"));
+                rpgcore.getRybakNPC().onClickMlodszyRybak(player);
+                return;
+            }
+
+            return;
+        }
+
+
+        if (title.equals("Mlodszy Rybak » Sklep")) {
+            e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) return;
+
+
+            final ItemStack reqItem = Objects.requireNonNull(RybakItems.getByName(Utils.getTagString(e.getCurrentItem(), "itemName"))).getItemStack();
+
+            if (!player.getInventory().containsAtLeast(reqItem, 1)) {
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cNie posiadasz tego przedmiotu!"));
+                player.closeInventory();
+                return;
+            }
+
+            final int price = Utils.getTagInt(e.getCurrentItem(), "price");
+
+            player.getInventory().removeItem(new ItemBuilder(reqItem.clone()).setAmount(1).toItemStack());
+            final User user = rpgcore.getUserManager().find(player.getUniqueId());
+            user.setKasa(user.getKasa() + price);
+            player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &aPomyslnie sprzedales " + item.getItemMeta().getDisplayName() + " &aza &6" + Utils.spaceNumber(price) + "&2$&a!"));
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            return;
+        }
 
 
         //                                          ANTY AFK                            //

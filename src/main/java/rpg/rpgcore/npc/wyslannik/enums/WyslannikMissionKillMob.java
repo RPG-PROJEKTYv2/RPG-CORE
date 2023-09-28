@@ -10,7 +10,8 @@ public enum WyslannikMissionKillMob {
     M7(7, 4,6_000,"&6Zywiolak Ognia"),
     M8(8, 5,12_000,"&fMroczna Dusza"),
     M9(9, 5,25_000,"&6Pustynny Ptasznik"),
-    M10(10, 8,50_000,"&5Podziemna Lowczyni");
+    M10(10, 8,50_000,"&5Podziemna Lowczyni"),
+    M11(11, 12,75_000,"&bPodwodny Straznik");
     private final int mission;
     private final int sredniDMG;
     private final int mobsAmount;

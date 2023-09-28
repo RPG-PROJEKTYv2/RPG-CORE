@@ -181,36 +181,58 @@ public class GornikNPC {
 
         gui.setItem(0, new ItemBuilder(GornikItems.getKilof(player.getUniqueId()).clone()).setLoreCrafting(GornikItems.getKilof(player.getUniqueId()).clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(50_000_000) + "&2$",
+                ""
         )).addTagInt("price", 50_000_000).toItemStack().clone());
 
         gui.setItem(1, new ItemBuilder(GornikItems.I1.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(20_750) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(20_750) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 20_750).toItemStack().clone());
         gui.setItem(2, new ItemBuilder(GornikItems.I2.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(25_750) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(25_750) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 25_750).toItemStack().clone());
         gui.setItem(3, new ItemBuilder(GornikItems.I3.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(35_985) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(35_985) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 35_985).toItemStack().clone());
         gui.setItem(4, new ItemBuilder(GornikItems.I4.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(45_100) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(45_100) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 45_100).toItemStack().clone());
         gui.setItem(5, new ItemBuilder(GornikItems.I5.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(55_250) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(55_250) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 55_250).toItemStack().clone());
         gui.setItem(6, new ItemBuilder(GornikItems.I6.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(70_750) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(70_750) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 70_750).toItemStack().clone());
         gui.setItem(7, new ItemBuilder(GornikItems.I7.getItemStack().clone()).setLore(Arrays.asList(
                 " ",
-                "&7Cena: &e" + Utils.spaceNumber(90_500) + "&2$"
+                "&7Cena: &e" + Utils.spaceNumber(90_500) + "&2$",
+                "",
+                "&6&lLPM | &8Sprzedaj x1",
+                "&6&lPPM | &8Sprzedaj zestackowane (x64)"
         )).addTagInt("price", 90_500).toItemStack().clone());
 
 

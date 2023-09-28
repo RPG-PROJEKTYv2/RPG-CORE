@@ -109,8 +109,10 @@ public class ZmiankiManager {
             NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
             if (toReturn.getItemMeta().getDisplayName().contains("Mithrylowe Ostrze") || toReturn.getItemMeta().getDisplayName().contains("Mithrylowy Sztylet")) {
                 final int reqLvl = 65;
-                if (lvl > reqLvl) {
-                    tag.setInt("lvl", lvl);
+                if (loreLvl > reqLvl) {
+                    tag.setInt("lvl", loreLvl);
+                } else {
+                    tag.setInt("lvl", reqLvl);
                 }
             } else tag.setInt("lvl", loreLvl);
             nmsStack.setTag(tag);

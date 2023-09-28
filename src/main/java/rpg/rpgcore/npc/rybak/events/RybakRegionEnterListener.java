@@ -35,6 +35,13 @@ public class RybakRegionEnterListener implements Listener {
 
         final ProtectedRegion region = to.stream().findFirst().get();
 
+        if ((region.getId().equals("rybak-most1") || region.getId().equals("rybak-wyspa2")) &&
+                RPGCORE.getInstance().getDisabledManager().getDisabled().getDisabledNpc().contains("Stara Fabryka")) {
+            player.teleport(new Location(player.getWorld(), -7.5, 157, -177.5, 0, 0));
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa lokalizacja zostala tymczasowo wylaczona przez administratora serwera!"));
+            return;
+        }
+
         if ((region.getId().equals("rybak-most1") || region.getId().equals("rybak-wyspa2")) && !RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getStaruszekUser().isDone()) {
             player.teleport(new Location(player.getWorld(), -7.5, 157, -177.5, 0, 0));
             player.sendMessage(Utils.format("&6&lStaruszek &8>> &cNie ukonczyles jeszcze wszystkich moich misji!"));

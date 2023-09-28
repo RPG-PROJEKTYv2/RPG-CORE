@@ -649,19 +649,19 @@ public class DropFromChestsListener implements Listener {
                         ItemStack is = item.getRewardItem();
                         switch (is.getType()) {
                             case STORAGE_MINECART:
-                                is = AkcesoriaPodsHelper.createNaszyjnik(1100, 23, 19, 95,"&6&lNaszyjnik Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createNaszyjnik(1800, 26, 24, 95,"&6&lNaszyjnik Podziemnego Rozpruwacza");
                                 break;
                             case WATCH:
-                                is = AkcesoriaPodsHelper.createDiadem(22, 28, 5, 95, "&6&lDiadem Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createDiadem(31, 44, 10, 96, "&6&lDiadem Podziemnego Rozpruwacza");
                                 break;
                             case EXPLOSIVE_MINECART:
-                                is = AkcesoriaPodsHelper.createPierscien(20, 20, 59, 95, "&6&lPierscien Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createPierscien(35, 25, 80, 97, "&6&lPierscien Podziemnego Rozpruwacza");
                                 break;
                             case ITEM_FRAME:
-                                is = AkcesoriaPodsHelper.createTarcza(38, 42, 20,95, "&6&lTarcza Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createTarcza(55, 42, 25,98, "&6&lTarcza Podziemnego Rozpruwacza");
                                 break;
                             case HOPPER_MINECART:
-                                is = AkcesoriaPodsHelper.createKolczyki(19, 25, -83,95, "&6&lKolczyki Podziemnego Rozpruwacza");
+                                is = AkcesoriaPodsHelper.createKolczyki(23, 37, -83,99, "&6&lKolczyki Podziemnego Rozpruwacza");
                                 break;
                             default:
                                 break;

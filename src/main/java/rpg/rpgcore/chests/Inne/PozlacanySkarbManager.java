@@ -38,7 +38,6 @@ public class PozlacanySkarbManager {
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
         for (Items item : this.pozlacanyskarb ) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
-                item.getRewardItem().setAmount(item.getAmount());
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + item.getAmount() + " " + item.getRewardItem().getItemMeta().getDisplayName()));
                 return item;
             }

@@ -77,10 +77,10 @@ public enum EntityDamage {
     DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 55_000),
 
     // DO TAD SKONCZONE POWYZEJ NIE !
-    MAP_100_110_1("Podwodny Straznik Lvl. 104", 10300),
-    MAP_100_110_2("Podwodny Straznik Lvl. 106", 12700),
-    MAP_100_110_3("Podwodny Straznik Lvl. 109", 14200),
-    MAP_100_110_BOSS("[BOSS] Mityczny Kraken", 22110),
+    MAP_100_110_1("Podwodny Straznik Lvl. 104", 31_500),
+    MAP_100_110_2("Podwodny Straznik Lvl. 106", 32_400),
+    MAP_100_110_3("Podwodny Straznik Lvl. 109", 33_300),
+    MAP_100_110_BOSS("[BOSS] Mityczny Kraken", 60_000),
 
     MAP_110_120_1("Mrozny Stroz Lvl. 114", 18800),
     MAP_110_120_2("Mrozny Stroz Lvl. 116", 20800),

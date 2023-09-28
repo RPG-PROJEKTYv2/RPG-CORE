@@ -17,10 +17,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.npc.rybak.enums.MlodszyRybakMissions;
 import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
+import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.utils.ChanceHelper;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
@@ -52,6 +55,7 @@ public class RybakNPC {
         this.armorStandMap = rpgcore.getMongoManager().loadAllRybakArmorStands();
 
         this.initWyspa1Drops();
+        this.initWyspa2Drops();
     }
 
 
@@ -180,11 +184,6 @@ public class RybakNPC {
             return;
         }
 
-        if (staruszekUser.getMission() == 27) {
-            player.sendMessage(Utils.format("&6&lStaruszek &8>> &7Wykonales juz wszystkie moje misje! Ruszaj dalej w swoja przygode!"));
-            return;
-        }
-
         final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&6&lStaruszek"));
         for (int i = 0; i < 27; i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
@@ -250,6 +249,142 @@ public class RybakNPC {
         player.openInventory(gui);
 
     }
+
+// ========================================= MLODSZY RYBAK - WYSPA 2 ========================================= //
+
+    private final Set<Items> wyspa2Drops = new HashSet<>();
+
+    private void initWyspa2Drops() {
+        this.wyspa2Drops.add(new Items("2", 3, RybakItems.I19.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("3", 6, RybakItems.I15.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("4", 11, RybakItems.I16.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("5", 15.75, RybakItems.I17.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("6", 28.5, RybakItems.I18.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("7", 37.5, RybakItems.I21.getItemStack(), 1));
+        this.wyspa2Drops.add(new Items("8", 61.25, RybakItems.I20.getItemStack(), 1));
+    }
+
+    public ItemStack getWyspa2Drop(final Player player) {
+        final ItemStack wedka = player.getItemInHand();
+        final String krysztal = Utils.getTagString(wedka, "krysztal");
+        this.wyspa2Drops.add(new Items("1", 0.001 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
+
+        switch (krysztal) {
+            case "Mrocznych Wod":
+                this.wyspa2Drops.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I22.getItemStack(), 1));
+                break;
+            case "Podwodnych Spiewow":
+                this.wyspa2Drops.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I23.getItemStack(), 1));
+                break;
+        }
+        Set<Items> playerDrop = new HashSet<>(this.wyspa2Drops);
+
+        List<Items> toSort = new ArrayList<>(playerDrop);
+
+        toSort = toSort.stream().sorted(Comparator.comparingDouble(Items::getChance)).collect(Collectors.toList());
+
+        playerDrop = ImmutableSet.copyOf(toSort);
+        for (Items item : playerDrop) {
+            if (ChanceHelper.getChance(item.getChance())) {
+                final ItemStack reward = item.getRewardItem();
+                reward.setAmount(item.getAmount());
+                return reward.clone();
+            }
+        }
+        return null;
+    }
+
+
+
+
+    private final Map<UUID, Long> timeMap = new HashMap<>();
+
+
+    public void onClickMlodszyRybak(final Player player) {
+        final RybakUser rybak = this.find(player.getUniqueId());
+        final MlodszyRybakUser user = rybak.getMlodszyRybakUser();
+
+        if (!user.isReceivedRod()) {
+            if (player.getItemInHand() == null || player.getItemInHand().getType() != Material.FISHING_ROD) {
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cNajpierw przynies mi &6Stara Wedke&c!"));
+                return;
+            }
+            if (!Utils.getTagString(player.getItemInHand(), "owner").equals(player.getName())) {
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cTa wedka nie nalezy do ciebie!"));
+                return;
+            }
+            if (rpgcore.getUserManager().find(player.getUniqueId()).getKasa() < 25_000_000) {
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cHola hola... Nie ma nic za darmo!"));
+                player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &8Ta przyjemnosc bedzie cie kosztowac &625 000 000&2$"));
+                return;
+            }
+            final int lvl = Utils.getTagInt(player.getItemInHand(), "lvl");
+            final int exp = Utils.getTagInt(player.getItemInHand(), "exp");
+            final int udanePolowy = Utils.getTagInt(player.getItemInHand(), "udanePolowy");
+            final double doubleDrop = Utils.getTagDouble(player.getItemInHand(), "doubleDrop");
+            rybak.setLvlWedki(lvl);
+            rybak.setExpWedki(exp);
+            rybak.setWylowioneRyby(udanePolowy);
+            rybak.setPodwojnyDrop(doubleDrop);
+            player.getInventory().remove(new ItemBuilder(player.getItemInHand().clone()).setAmount(1).toItemStack().clone());
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Hmmmm... A wiec jestes znajomym &6&lStaruszka", 40L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7No dobra powiedzmy, ze ci ufam", 80L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Zanim dostaniesz wedke, ktora umozliwi ci lowienie na tej wyspie", 120L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Musisz wiedziec kilka rzeczy", 160L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Dawno dawno temu wyspe te nawiedzil &5Czarnoksieznik", 200L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Poniewaz &6&lStaruszek &7wdal sie z nim w mala sprzeczke", 240L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &5Czarnoksieznik &7postanowil rzucic klatwe na te wyspe", 280L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7a sam &6&lStaruszek &7zostal skazany na zycie w samotnosci na innej wyspie", 320L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &cNIE OPOWIADAL CI TEGO?!?!", 360L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7No dobra, ale do rzeczy.", 400L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Na tej wyspie z wody mozesz wylowic jakies dziwne &dKrysztaly", 440L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Kazdy z nich ma inne wlasciwosci i gwarantuje inne bonusy", 480L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Tak samo doszly mnie sluchy, ze zalegly sie tu jakies &3wodne stwory", 520L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Ale nie pominienes miec z nimi problemu... &aPrawda?", 560L);
+            this.sendDelayedMessage(player, "&3&lMlodszy Rybak &8>> &7Teraz skoro juz wszystko wiesz, jestes &agotowy &7na dalszy ciag swojej wedkarskiej przygody", 600L);
+            rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> player.getInventory().addItem(RybakItems.getSlabaWedkaRybacka(player.getName(), lvl, exp, udanePolowy, doubleDrop)), 600L);
+            user.setReceivedRod(true);
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(player.getUniqueId(), rybak));
+            return;
+        }
+
+        final Inventory gui = Bukkit.createInventory(null, 27, Utils.format("&3&lMlodszy Rybak"));
+        for (int i = 0; i < 27; i++) {
+            gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+        }
+
+        for (int i = 1; i < MlodszyRybakMissions.values().length + 1; i++) {
+            if (user.getMission() > i) {
+                gui.setItem(i - 1, new ItemBuilder(Material.BOOK).setName("&7Misja #&c" + i).setLore(Arrays.asList(" ", "&a&lWYKONANO!")).addGlowing().toItemStack().clone());
+            } else if (user.getMission() == i) {
+                gui.setItem(i - 1, Objects.requireNonNull(MlodszyRybakMissions.getMissionById(i)).getMissionItem(user.getProgress()).clone());
+            } else {
+                gui.setItem(i - 1, new ItemBuilder(Material.BARRIER).setName("&7Misja #&c" + i).setLore(Arrays.asList(" ", "&cWykonaj poprzednia misje, zeby odblokowac!")).addGlowing().toItemStack().clone());
+            }
+        }
+
+        gui.setItem(26, new ItemBuilder(Material.EMERALD).setName("&aSklep").addGlowing().toItemStack());
+
+        player.openInventory(gui);
+    }
+
+    public void openMlodszyRybakShop(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&3&lMlodszy Rybak &8>> &aSklep"));
+
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
+
+        gui.setItem(0, this.addPrice(RybakItems.I20.getItemStack(), 16250));
+        gui.setItem(1, this.addPrice(RybakItems.I21.getItemStack(), 19625));
+        gui.setItem(2, this.addPrice(RybakItems.I18.getItemStack(), 23750));
+        gui.setItem(3, this.addPrice(RybakItems.I17.getItemStack(), 31250));
+        gui.setItem(4, this.addPrice(RybakItems.I16.getItemStack(), 38750));
+        gui.setItem(5, this.addPrice(RybakItems.I15.getItemStack(), 45000));
+        gui.setItem(6, this.addPrice(RybakItems.I19.getItemStack(), 55000));
+
+        player.openInventory(gui);
+    }
+
+
 
 
 // ========================================= ANTY AFK ========================================= //
@@ -326,10 +461,10 @@ public class RybakNPC {
     // ========================================= RESPIENIE MOBOW ========================================= //
 
 
-    public void runFishAnimation(final Player player, final Entity entity) {
-        double pushX = player.getLocation().getDirection().normalize().getX() * -2;
-        double pushY = player.getLocation().getDirection().normalize().getY() * -2;
-        double pushZ = player.getLocation().getDirection().normalize().getZ() * -2;
+    public void runFishAnimation(final Location playerLocation, final Entity entity) {
+        double pushX = playerLocation.getDirection().normalize().getX() * -2;
+        double pushY = playerLocation.getDirection().normalize().getY() * -2;
+        double pushZ = playerLocation.getDirection().normalize().getZ() * -2;
 
         Vector push = new Vector(pushX, pushY, pushZ);
 
@@ -339,53 +474,39 @@ public class RybakNPC {
 
     // ========================================= MOBY ========================================= //
 
-    public void spawnNurekGlebinowy(final Player player, final Location location) {
-        final LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
-        final double maxHealth = 150000;
-        entity.setMaxHealth(maxHealth);
-        entity.setHealth(maxHealth);
-        entity.setCustomName(Utils.format("&3Nurek Glebinowy"));
-        player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + entity.getCustomName()));
-        entity.setCustomName(Utils.format("&3Nurek Glebinowy &c" + (int) entity.getHealth() + "&7/&c" + (int) entity.getMaxHealth() + " ❤"));
-        runFishAnimation(player, entity);
+    public void spawnNurekGlebinowy(final Location playerLocation, final Location location) {
+        final LivingEntity entity = (LivingEntity) RPGCORE.getMythicMobs().getMobManager().spawnMob("NUREK-GLEBINOWY", location).getEntity().getBukkitEntity();
+        runFishAnimation(playerLocation, entity);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            if (entity.isDead()) return;
+            entity.remove();
+        }, 20 * 60 * 2);
+    }
 
-        EntityEquipment entityInv = entity.getEquipment();
-        final ItemBuilder helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
-        final ItemBuilder klata = new ItemBuilder(Material.LEATHER_CHESTPLATE);
-        final ItemBuilder spodnie = new ItemBuilder(Material.LEATHER_LEGGINGS);
-        final ItemBuilder buty = new ItemBuilder(Material.LEATHER_BOOTS);
-        final ItemBuilder miecz = new ItemBuilder(Material.GOLD_SWORD);
+    public void spawnPosejdon(final Location playerLocation, final Location location) {
+        final LivingEntity entity = (LivingEntity) RPGCORE.getMythicMobs().getMobManager().spawnMob("POSEJDON", location).getEntity().getBukkitEntity();
+        runFishAnimation(playerLocation, entity);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            if (entity.isDead()) return;
+            entity.remove();
+        }, 20 * 60 * 4);
+    }
 
-        helm.setSkullOwnerByURL("470342fb-1116-3032-9b24-6f674e1e52b0", "Glebinowy_nurek",
-                "eyJ0aW1lc3RhbXAiOjE0OTE2NjU5Nzc1NDAsInByb2ZpbGVJZCI6IjdkYTJhYjNhOTNj" +
-                        "YTQ4ZWU4MzA0OGFmYzNiODBlNjhlIiwicHJvZmlsZU5hbWUiOiJHb2xkYXBmZWwiLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dH" +
-                        "VyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzg1NjkyNDUzNzFlZGZmNjNhMjY5MTNhOTcyZjJj" +
-                        "NDRmYmU0MWY3NWU0MjY2OGE3MjU5OTc1OWNmNDUyZjNhIn19fQ==",
-                "SoovlSRBotT4WJa/7ta9ecVEyV8iEel7Ln3qtbRESHpiWwNwqmiPpV8vtjtL9YB3c2D+z/0Xao2BVaBJICMBB5UeS7MgxV6Pp1dqZ0uuxrsS2H4rvceQzX" +
-                        "s7lphLvxIveVu4z7VBZL/sEj2pAcIDCqvb5T2F9Fi2PMROBcDNZI/D5f088MbCZ1pgyi5DZWRhAGLwFwAPu6j7iyo+rq9LKWsOP7QPXmzmtuj545duhc2yEMZ" +
-                        "RLYyJY6nVM/PrwtqIoUB6r6tm0ETLmL/H8idoauqwNwZfOFsFVgxKeZWHHr6xCz0vTNk/vs43k5ZF8szzdCmHeKGffe9YfO6ftXwMuR/KLVv1YaYsNkSD3VcFuGa" +
-                        "IJl17VmvxLlo01KfZqYfZoKEK4YLR2sqGSLNwcf46UWlXtawXf/AscPy6V38+qJYTnQHDxa7wVbzUQaANYxz42XwPxPDO2fTWlPkw3Y1WL4mRZ3I10QwiXgPh4CRpL" +
-                        "1UsVvNcljZncanI0W8So3b9S9fsEWce7vipQvMZTCjH9p7lC1B8orRxNfwx9lZ+94bpOkHcD+JI1l+TGS4Z2gRSF/+CBLGeU71XROGYX1Ocvc/gfpMofUVAWQxMjGkW5" +
-                        "wXJmSJiyLpD7TOd098ll8nsi7vRrCGPoYBFrSA6vJyDIbaUeQiDmlA8euKpOtuYeAw=");
-        player.getInventory().addItem(helm.toItemStack());
-        klata.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
-        spodnie.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
-        buty.setLeatherArmorColorHEX(19, 46, 110).addGlowing();
-        miecz.addGlowing();
-
-        entityInv.setHelmet(helm.toItemStack());
-        entityInv.setChestplate(klata.toItemStack());
-        entityInv.setLeggings(spodnie.toItemStack());
-        entityInv.setBoots(buty.toItemStack());
-        entityInv.setItemInHand(miecz.toItemStack());
-
-        entityInv.setHelmetDropChance(0f);
-        entityInv.setChestplateDropChance(0f);
-        entityInv.setLeggingsDropChance(0f);
-        entityInv.setBootsDropChance(0f);
-        entityInv.setItemInHandDropChance(0f);
-
-
+    public void spawnMorskiKsiaze(final Location playerLocation, final Location location) {
+        final LivingEntity entity = (LivingEntity) RPGCORE.getMythicMobs().getMobManager().spawnMob("MORSKI-KSIAZE", location).getEntity().getBukkitEntity();
+        runFishAnimation(playerLocation, entity);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            if (entity.isDead()) return;
+            entity.remove();
+        }, 20 * 60 * 3);
+    }
+    public void spawnWodnyStwor(final Location playerLocation, final Location location) {
+        final LivingEntity entity = (LivingEntity) RPGCORE.getMythicMobs().getMobManager().spawnMob("WODNY-STWOR", location).getEntity().getBukkitEntity();
+        runFishAnimation(playerLocation, entity);
+        RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> {
+            if (entity.isDead()) return;
+            entity.remove();
+        }, 20 * 60 * 2);
     }
 
     public void setNoAi(final Entity entity) {
@@ -401,68 +522,6 @@ public class RybakNPC {
         el.a(tag);
     }
 
-    public void spawnPodwodnyWladca(final Player player, final Location location) {
-        final LivingEntity entity = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.GUARDIAN);
-        final LivingEntity entityPassenger = (LivingEntity) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(location, EntityType.ZOMBIE);
-        setNoAi(entityPassenger);
-        entity.setPassenger(entityPassenger);
-        entityPassenger.setCustomNameVisible(true);
-        entityPassenger.setCustomName(Utils.format("&6&lPodwodny Wladca"));
-        runFishAnimation(player, entity);
-        player.sendMessage(Utils.format(Utils.RYBAK + "&aPomyslnie wylowiles &6" + entityPassenger.getCustomName()));
-        final double maxHealth = 500000;
-        entity.setMaxHealth(maxHealth);
-        entity.setHealth(maxHealth);
-        entityPassenger.setMaxHealth(maxHealth);
-        entityPassenger.setHealth(maxHealth);
-        entityPassenger.setCustomName(Utils.format("&6&lPodwodny Wladca &c" + (int) entityPassenger.getHealth() + "&7/&c" + (int) entityPassenger.getMaxHealth() + " ❤"));
-
-        final ItemBuilder helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
-        final ItemBuilder klata = new ItemBuilder(Material.LEATHER_CHESTPLATE);
-        final ItemBuilder spodnie = new ItemBuilder(Material.LEATHER_LEGGINGS);
-        final ItemBuilder buty = new ItemBuilder(Material.DIAMOND_CHESTPLATE);
-        final ItemBuilder topor = new ItemBuilder(Material.GOLD_AXE);
-
-        helm.setSkullOwnerByURL("6e315266-5e72-3f8e-8119-3c76b40759f3", "skina5d6712e",
-                "eyJ0aW1lc3RhbXAiOjE0OTE5NTE5MjE5NTMsInByb2ZpbGVJZCI6IjQzYTgzNzNkNjQyOTQ1M" +
-                        "TBhOWFhYjMwZjViM2NlYmIzIiwicHJvZmlsZU5hbWUiOiJTa3VsbENsaWVudFNraW42Iiwic2" +
-                        "lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDo" +
-                        "vL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xNjkwOTkzNmI1ZmExOTI0ZjkxZDFk" +
-                        "ZTNlODcwZWQ3MTQwYmY0MzVjMWExYTU1ZGE1NzNmYzNhODhlYmQ1YmVjIn19fQ==",
-                "mjdFL9WeVt9RTTFRpk5MD0tkU0yboelX5VEZV2gAYPEnQLGmeVWP5q9tUedIC1y" +
-                        "XFd12qY8R843quCC27bHODR1Fb+nOUElaw/xd3uQ1DEiROvAbMI+Ua5El4vlAUmDWO" +
-                        "h+kMD386t6VsmgMI4CdOOLjKc6uoFYzKS7xTzPkCrSdnU3C//Erv4QcKCwqzOXcTAsF" +
-                        "vWqUXWfc23jJmxlHI2jYqhpN3vWllhdt5A16g3y6F+x2rXDSCqZTyaxITRYeEsKNix2" +
-                        "yVCtSa92vJdTCfgUOtqN2UDft5/eEWGsNUvi81AuojWha3ht8DhksJCcZFLTahg30B/" +
-                        "1YKVyYZTsgpFF1tQxSpd/RQnGKAEwWAEgxAdQvFu0CmJZdK3y4FMX6TB7lcp+hSXF/G" +
-                        "KDPVfprVSeS2/DvGSI4AJQvIQADbeF0kiqBbVG+dy3c7n7OvvDqXjUs4vKoGcLAirrS" +
-                        "dpSKvxtGGLVr33MDciTwuTyrCI5+Z+wFHydW3WXuzCi+v3Hu79SkkGMazzzCmlXf9J5" +
-                        "JL+3LAIy4uVcSfYjl72zpyLEbv6i4oYJGRihqY6X9v4LvXnKhsWnG0w7Uk4TMnRl8EM" +
-                        "+e5LpXK41kj0OpOT2f2pe2PnOPQyLJzBoA3Q+UDSaVneAm2R2DjHkg+ou3uL9raUkk1" +
-                        "2qEHGHDk3N+WXyA/4o=");
-
-        klata.setLeatherArmorColorHEX(92, 25, 23);
-        spodnie.setLeatherArmorColorHEX(10, 10, 10);
-        buty.addGlowing();
-        topor.addGlowing().addEnchant(Enchantment.KNOCKBACK, 4);
-
-
-        EntityEquipment eq = entityPassenger.getEquipment();
-
-        eq.setHelmet(helm.toItemStack());
-        eq.setChestplate(klata.toItemStack());
-        eq.setLeggings(spodnie.toItemStack());
-        eq.setBoots(buty.toItemStack());
-        eq.setItemInHand(topor.toItemStack());
-
-        eq.setHelmetDropChance(0f);
-        eq.setChestplateDropChance(0f);
-        eq.setLeggingsDropChance(0f);
-        eq.setBootsDropChance(0f);
-        eq.setItemInHandDropChance(0f);
-
-
-    }
 
     // ========================================= ANTY AFK cz. 2 ========================================= //
 
