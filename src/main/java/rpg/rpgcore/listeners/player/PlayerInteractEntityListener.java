@@ -197,6 +197,10 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getRybakNPC().onClickStaruszek(player);
                 return;
             }
+            if (entityName.contains("Mlodszy Rybak")) {
+                rpgcore.getRybakNPC().onClickMlodszyRybak(player);
+                return;
+            }
             if (entityName.equalsIgnoreCase("Przyjaciel")) {
                 rpgcore.getRybakNPC().onClickPrzyjaciel(player);
                 return;

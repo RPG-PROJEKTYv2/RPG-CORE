@@ -21,7 +21,7 @@ public class CiezkaSkrzyniaKowalaManager {
     private final Set<Items> kowal = Sets.newConcurrentHashSet();
 
     public CiezkaSkrzyniaKowalaManager() {
-        this.kowal.add(new Items("1", 0.32, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
+        this.kowal.add(new Items("1", 0.16, new ItemBuilder(Material.MINECART).setName("&4&lEnergia Piekielnego Kowala").toItemStack(),1));
         this.kowal.add(new Items("2", 3.0, GlobalItem.I_KAMIENBAO.getItemStack(), 1));
         this.kowal.add(new Items("3", 5.0, GlobalItem.getItem("I_METAL", 1), 1));
         this.kowal.add(new Items("4", 7.0, GlobalItem.getItem("I_OCZYSZCZENIE", 2),1));
@@ -43,7 +43,7 @@ public class CiezkaSkrzyniaKowalaManager {
                         Bukkit.getServer().broadcastMessage(Utils.format("&eGracz: &c" + player.getName() + " &eznalazl &4&lENERGIE PIEKIELNEGO KOWALA&e!!!"));
                         Bukkit.getServer().broadcastMessage(" ");
                         player.getInventory().addItem(AkcesoriaDodatHelper.createEnergia(ChanceHelper.getRandInt(-33, -25),
-                                ChanceHelper.getRandInt(13, 32), ChanceHelper.getRandInt(25, 55), ChanceHelper.getRandDouble(0.1, 0.4),
+                                ChanceHelper.getRandInt(13, 32), ChanceHelper.getRandInt(12, 28), ChanceHelper.getRandDouble(0.1, 0.4),
                                 ChanceHelper.getRandInt(-50, -45), ChanceHelper.getRandInt(60, 90), "&4&lEnergia Piekielnego Kowala"));
                         return;
                     }

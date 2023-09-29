@@ -165,10 +165,10 @@ public class MisjeCommand extends CommandAPI {
         if (user.getLvl() < 30) {
             gui.setItem(34, new ItemBuilder(Material.BARRIER).setName("&6&lOsiagnij 30 poziom, zeby odblokowac").toItemStack());
         } else {
-            if (rpgcore.getRybakNPC().find(player.getUniqueId()).getStaruszekUser().isDone()) {
+            if (rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().isDone()) {
                 gui.setItem(34, new ItemBuilder(Material.FISHING_ROD).setName("&a&lUkonczono!").toItemStack());
             } else {
-                gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(rpgcore.getRybakNPC().find(player.getUniqueId()).getStaruszekUser().getMission())).getMissionItem(rpgcore.getRybakNPC().find(player.getUniqueId()).getStaruszekUser().getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
+                gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getMission())).getMissionItem(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
             }
         }
 

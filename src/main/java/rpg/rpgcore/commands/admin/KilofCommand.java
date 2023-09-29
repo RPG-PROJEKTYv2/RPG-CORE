@@ -14,7 +14,7 @@ import rpg.rpgcore.utils.globalitems.npc.GornikItems;
 public class KilofCommand extends CommandAPI {
     public KilofCommand() {
         super("kilof");
-        this.setRankLevel(RankType.HA);
+        this.setRankLevel(RankType.ADMIN);
         this.setRestrictedForPlayer(true);
     }
 

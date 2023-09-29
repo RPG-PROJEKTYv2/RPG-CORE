@@ -103,8 +103,8 @@ public class TabManager {
             }
 
             final int lvl = user.getLvl();
-            final String exp = String.format("%.2f", user.getExp());
-            final String expNextLvl = String.format("%.2f", rpgcore.getLvlManager().getExpForLvl(lvl + 1));
+            final String exp = Utils.shorterNumber(user.getExp());
+            final String expNextLvl = Utils.shorterNumber(rpgcore.getLvlManager().getExpForLvl(lvl + 1));
             final String procenty = String.format("%.2f", (user.getExp() / rpgcore.getLvlManager().getExpForLvl(lvl + 1)) * 100);
 
             tab.set(player, 0, 2, "&7Gracz: &c" + player.getName());

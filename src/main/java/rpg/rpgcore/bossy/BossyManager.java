@@ -18,6 +18,7 @@ import java.util.*;
 public class BossyManager {
     @Getter
     private BossyUser bossyUser;
+
     public BossyManager() {
         bossyUser = RPGCORE.getInstance().getMongoManager().loadAllBossy();
     }
@@ -40,11 +41,26 @@ public class BossyManager {
     @Getter
     private int boss60_70count = 0;
 
-    public void incrementBoss1_10count() { boss1_10count++; }
-    public void incrementBoss10_20count() { boss10_20count++; }
-    public void incrementBoss20_30count() { boss20_30count++; }
-    public void incrementBoss30_40count() { boss30_40count++; }
-    public void incrementBoss40_50count() { boss40_50count++; }
+    public void incrementBoss1_10count() {
+        boss1_10count++;
+    }
+
+    public void incrementBoss10_20count() {
+        boss10_20count++;
+    }
+
+    public void incrementBoss20_30count() {
+        boss20_30count++;
+    }
+
+    public void incrementBoss30_40count() {
+        boss30_40count++;
+    }
+
+    public void incrementBoss40_50count() {
+        boss40_50count++;
+    }
+
     public void incrementBoss60_70count() {
         boss60_70count++;
     }
@@ -53,22 +69,27 @@ public class BossyManager {
         if (boss1_10count <= 0) return;
         boss1_10count--;
     }
+
     public void decrementBoss10_20count() {
         if (boss10_20count <= 0) return;
         boss10_20count--;
     }
+
     public void decrementBoss20_30count() {
         if (boss20_30count <= 0) return;
         boss20_30count--;
     }
+
     public void decrementBoss30_40count() {
         if (boss30_40count <= 0) return;
         boss30_40count--;
     }
+
     public void decrementBoss40_50count() {
         if (boss40_50count <= 0) return;
         boss40_50count--;
     }
+
     public void decrementBoss60_70count() {
         if (boss60_70count <= 0) return;
         boss60_70count--;
@@ -111,6 +132,7 @@ public class BossyManager {
     public boolean isLocationPlace70_80(final Location location) {
         return placeLocations70_80.contains(location);
     }
+
     public boolean isLocationPlaceUsed70_80(final Location location) {
         return armorStands70_80Map.containsKey(location);
     }
@@ -165,7 +187,7 @@ public class BossyManager {
         }
         setStage70_80(stage);
         if (stage == Stage70_80.SPAWNED) return;
-        Bukkit.broadcastMessage(Utils.format(stage.getMessage()));
+        Bukkit.getServer().broadcastMessage(Utils.format(stage.getMessage()));
     }
 
     public void decrementStage70_80() {
@@ -191,10 +213,14 @@ public class BossyManager {
     }
 
     private Location getSpawnLocation(final Location blockLocation) {
-        if (blockLocation.getX() == -1 && blockLocation.getY() == 82 && blockLocation.getZ() == 296) return new Location(Bukkit.getWorld("70-80map"), -0.5, 83, 296.5);
-        if (blockLocation.getX() == -49 && blockLocation.getY() == 82 && blockLocation.getZ() == 248) return new Location(Bukkit.getWorld("70-80map"), -48.5, 83, 248.5);
-        if (blockLocation.getX() == -1 && blockLocation.getY() == 82 && blockLocation.getZ() == 200) return new Location(Bukkit.getWorld("70-80map"), -0.5, 83, 200.5);
-        if (blockLocation.getX() == 47 && blockLocation.getY() == 82 && blockLocation.getZ() == 248) return new Location(Bukkit.getWorld("70-80map"), 47.5, 83, 248.5);
+        if (blockLocation.getX() == -1 && blockLocation.getY() == 82 && blockLocation.getZ() == 296)
+            return new Location(Bukkit.getWorld("70-80map"), -0.5, 83, 296.5);
+        if (blockLocation.getX() == -49 && blockLocation.getY() == 82 && blockLocation.getZ() == 248)
+            return new Location(Bukkit.getWorld("70-80map"), -48.5, 83, 248.5);
+        if (blockLocation.getX() == -1 && blockLocation.getY() == 82 && blockLocation.getZ() == 200)
+            return new Location(Bukkit.getWorld("70-80map"), -0.5, 83, 200.5);
+        if (blockLocation.getX() == 47 && blockLocation.getY() == 82 && blockLocation.getZ() == 248)
+            return new Location(Bukkit.getWorld("70-80map"), 47.5, 83, 248.5);
         return blockLocation;
     }
 
@@ -213,7 +239,7 @@ public class BossyManager {
         final int i = RPGCORE.getInstance().getServer().getScheduler().scheduleAsyncRepeatingTask(RPGCORE.getInstance(), () -> {
             final Location loc = as.getLocation().clone();
             loc.setYaw(loc.getYaw() + 10);
-            double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0)*8) / 20;
+            double delta = Math.sin(Math.toRadians(System.currentTimeMillis() / 100.0) * 8) / 20;
             loc.add(0, delta, 0);
             as.teleport(loc);
         }, 0L, 1L);
@@ -235,9 +261,10 @@ public class BossyManager {
             if (sb.toString().contains(player.getName())) continue;
             sb.append("&e").append(player.getName()).append(", ");
         }
-        Bukkit.broadcastMessage(" ");
-        Bukkit.broadcastMessage(Utils.format(Stage70_80.SPAWNED.getMessage() + sb.substring(0, sb.toString().length() - 2)));
-        Bukkit.broadcastMessage(" ");
+
+        Bukkit.getServer().broadcastMessage(" ");
+        Bukkit.getServer().broadcastMessage(Utils.format(Stage70_80.SPAWNED.getMessage() + sb.substring(0, sb.toString().length() - 2)));
+        Bukkit.getServer().broadcastMessage(" ");
 
         location70_80Map.clear();
         armorStands70_80Map.clear();
@@ -279,7 +306,7 @@ public class BossyManager {
         Bukkit.broadcastMessage(" ");
         Bukkit.broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMistyczny Kraken &3przyplywa z glebin i czeka na swoja ofiare!"));
         Bukkit.broadcastMessage(" ");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 100-110-BOSS 1 100-110map,73.5,79,199.5");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 100-110-BOSS 1 100-110map,-24.5,5,-42.5");
         this.bossyUser.resetMobsCount100_110();
         this.bossyUser.save();
     }
@@ -352,7 +379,6 @@ public class BossyManager {
     public boolean isKlejnot120_130_2(Location location) {
         return klejnot120_130_2Locations.contains(location);
     }
-
 
 
     private final List<Location> klejnot120_130_1BlocksE = Arrays.asList(
@@ -430,7 +456,7 @@ public class BossyManager {
     private final boolean[] klejnoty120_130 = new boolean[]{false, false};
     @Getter
     @Setter
-    private  boolean gate120_130open = false;
+    private boolean gate120_130open = false;
 
     private void incrementKlejnot120_130Count() {
         klejnot120_130Count++;

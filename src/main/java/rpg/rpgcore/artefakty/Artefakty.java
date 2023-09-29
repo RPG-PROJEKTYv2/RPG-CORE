@@ -28,8 +28,7 @@ public enum Artefakty {
             "&7Ilosc Potworow: &e15-30",
             "",
             "&8Odebrany od Elitarnego Wodza Orkow",
-            "&8pozwala na przywolanie wszystkich stworzen",
-            "&8w zasiegu jego dzialania",
+            "&8pozwala na przyzwanie potworow z danej mapy.",
             "&4&lARTEFAKT"
     )).addTagInt("range", 35).addGlowing().toItemStack().clone()),
     A3("Serce-Yothuna", new ItemBuilder(Material.WATCH).setName("&c&lSerce Yothuna").setLore(Arrays.asList(

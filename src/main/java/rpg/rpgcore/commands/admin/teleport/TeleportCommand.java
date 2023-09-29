@@ -18,7 +18,7 @@ public class TeleportCommand extends CommandAPI {
     public TeleportCommand(RPGCORE rpgcore) {
         super("teleport");
         this.setAliases(Arrays.asList("tp"));
-        this.setRankLevel(RankType.KIDMOD);
+        this.setRankLevel(RankType.MOD);
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;
     }

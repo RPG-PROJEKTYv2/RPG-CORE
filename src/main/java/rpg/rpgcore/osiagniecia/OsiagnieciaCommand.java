@@ -22,6 +22,10 @@ public class OsiagnieciaCommand extends CommandAPI {
             player.sendMessage(Utils.poprawneUzycie("osiagniecia"));
             return;
         }
+        if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getLvl() < 55) {
+            player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Osiagniecia sa dostepne od &655 &7poziomu!"));
+            return;
+        }
         RPGCORE.getInstance().getOsManager().openOsGUI(player);
     }
 }

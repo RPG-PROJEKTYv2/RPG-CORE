@@ -104,7 +104,7 @@ public class ZlotnikInventoryClickListener implements Listener {
                 );
                 user.setKasa(DoubleUtils.round(user.getKasa() - 100_000_000, 2));
                 RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
-                RPGCORE.getInstance().getZlotnikNPC().wzmAkce(player, e.getClickedInventory().getItem(2).clone());
+                RPGCORE.getInstance().getZlotnikNPC().wzmAkce(player, e.getClickedInventory().getItem(2));
                 e.getClickedInventory().setItem(2, RPGCORE.getInstance().getZlotnikNPC().getMiejsceItem());
                 player.closeInventory();
             }

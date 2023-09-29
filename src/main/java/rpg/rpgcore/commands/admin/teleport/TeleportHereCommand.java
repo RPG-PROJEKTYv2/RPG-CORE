@@ -16,7 +16,7 @@ public class TeleportHereCommand extends CommandAPI {
 
     public TeleportHereCommand(RPGCORE rpgcore) {
         super("teleporthere");
-        this.setRankLevel(RankType.MOD);
+        this.setRankLevel(RankType.ADMIN);
         this.setAliases(Arrays.asList("tphere", "tph", "s"));
         this.setRestrictedForPlayer(true);
         this.rpgcore = rpgcore;

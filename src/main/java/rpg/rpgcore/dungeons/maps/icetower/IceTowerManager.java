@@ -455,6 +455,7 @@ public class IceTowerManager {
         this.antyAfkTime = 0;
         this.antyAfkMaxTime = 360;
         this.status = DungeonStatus.UPGRADING;
+        this.updateEtap();
         this.backPlayers();
         this.liftGate();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc sel 77");

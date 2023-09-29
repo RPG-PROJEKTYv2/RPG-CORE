@@ -36,26 +36,27 @@ public class MobsHpCommand extends CommandAPI {
         gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.INK_SACK, 1,(short)1).setName("&cExpowisko").setLore(Arrays.asList(
                 "",
-                "&6Rozbojnik: &c22 &7/ &c27 &7/ &c33",
-                "&2Goblin: &c40 &7/ &c55 &7/ &c70 ",
-                "&7Goryl: &c75 &7/ &c85 &7/ &c100",
-                "&8Zjawa: &c100 &7/ &c150 &7/ &c210",
-                "&3Straznik Swiatyni: &c300 &7/ &c360 &7/ &c500",
-                "&bMrozny Wilk: &c720 &7/ &c780 &7/ &c860",
-                "&6Zywiolak Ognia: &c1800 &7/ &c2600 &7/ &c3800",
-                "&fMroczna Dusza: &c11500 &7/ &c14500 &7/ &c19000",
-                "&6Pustynny Ptasznik: &c31000 &7/ &c38000 &7/ &c50000",
-                "&5Podziemna Lowczyni: &c85000 &7/ &c110000 &7/ &c145000",
+                "&6Rozbojnik: &c24 &7/ &c30 &7/ &c34",
+                "&2Goblin: &c125 &7/ &c160 &7/ &c200",
+                "&7Goryl: &c280 &7/ &c320 &7/ &c380",
+                "&8Zjawa: &c580 &7/ &c640 &7/ &c740",
+                "&3Straznik Swiatyni: &c820 &7/ &c1 000 &7/ &c1 400",
+                "&bMrozny Wilk: &c2 000 &7/ &c2 250 &7/ &c2 500",
+                "&6Zywiolak Ognia: &c6 000 &7/ &c7 500 &7/ &c9 000",
+                "&fMroczna Dusza: &c37 500 &7/ &c45 000 &7/ &c50 000",
+                "&6Pustynny Ptasznik: &c65 000 &7/ &c80 000 &7/ &c125 000",
+                "&5Podziemna Lowczyni: &c310 000 &7/ &c380 000 &7/ &c435 000",
+                "&bPodwodny Straznik: &c750 000 &7/ &c825 000 &7/ &c925 000",
                 ""
                 )).toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.INK_SACK, 1,(short)6).setName("&cMapy Specjalne").setLore(Arrays.asList(
                 "",
-                "&bLodowy Sluga: &c1400",
-                "&cOgnisty Duch: &c8000",
-                "&eZapomniany Wojownik: &c16000 &7/ &c20000",
-                "&7Truposz: &c40000 &7/ &c50000",
-                "&cDemoniczy Lowca: &c245000",
+                "&bLodowy Sluga: &c2 250 &7/ &c2 450 &7/ 2 650",
+                "&cOgnisty Duch: &c4 250",
+                "&eZapomniany Wojownik: &c27 000 &7/ &c28 000",
+                "&7Truposz: &c75 000 &7/ &c85 000",
+                "&cDemoniczy Lowca: &c415 000",
                 ""
         )).toItemStack().clone());
         gui.setItem(4, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());

@@ -4,10 +4,14 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +27,8 @@ import rpg.rpgcore.utils.Utils;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GuildManager {
@@ -441,10 +447,42 @@ public class GuildManager {
             prefix = "&c";
             messagePrefix = "&c";
         }
+
+        final String messagePrefixF = messagePrefix;
+
+        final TextComponent senderPrefixComponent = new TextComponent(Utils.format("&8[&6"+ tag +"&8] " + prefix + sender.getName() + " &8>> " + messagePrefixF));
+
+        if (message.contains("[eq]") || message.contains("[i]") ||message.contains("[item]")) {
+            List<String> msg = new ArrayList<>(Arrays.asList(message.split("\\[eq]")));
+            if (message.contains("[i]")) {
+                msg = new ArrayList<>(Arrays.asList(message.split("\\[i]")));
+            } else if (message.contains("[item]")) {
+                msg = new ArrayList<>(Arrays.asList(message.split("\\[item]")));
+            }
+
+            TextComponent item = new TextComponent("");
+
+            if (sender.getItemInHand() != null && sender.getItemInHand().getType() != Material.AIR) {
+                item = new TextComponent(Utils.format("&8[&6x" + sender.getItemInHand().getAmount() + " "
+                        + (sender.getItemInHand().getItemMeta().hasDisplayName() ? sender.getItemInHand().getItemMeta().getDisplayName() : sender.getItemInHand().getType().toString()) + "&8]"));
+                item.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(CraftItemStack.asNMSCopy(sender.getItemInHand()).save(new NBTTagCompound()).toString()).create()));
+            }
+
+            if (msg.isEmpty()) {
+                senderPrefixComponent.addExtra(item);
+            } else {
+                senderPrefixComponent.addExtra(Utils.format(messagePrefix + msg.get(0)));
+                senderPrefixComponent.addExtra(item);
+                senderPrefixComponent.addExtra(Utils.format(messagePrefix + msg.stream().skip(1).map(arg -> arg + " " + messagePrefixF).collect((Collector) Collectors.joining()).toString()));
+            }
+        } else {
+            senderPrefixComponent.addExtra(Utils.format(messagePrefix + message));
+        }
+
         for (final UUID uuid : this.getGuildMembers(tag)) {
             if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
                 final Player player = Bukkit.getPlayer(uuid);
-                player.sendMessage(Utils.format("&8[&6"+ tag +"&8] " + prefix + sender.getName() + " &8>> " + messagePrefix + message));
+                player.spigot().sendMessage(senderPrefixComponent);
             }
         }
     }

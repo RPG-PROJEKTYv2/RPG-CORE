@@ -35,7 +35,7 @@ public class KlasyInteractListener implements Listener {
             new PotionEffect(PotionEffectType.POISON, 100, 3),
             new PotionEffect(PotionEffectType.BLINDNESS, 100, 3),
             new PotionEffect(PotionEffectType.SLOW, 100, 3),
-            new PotionEffect(PotionEffectType.SLOW_DIGGING, 1, 1),
+            new PotionEffect(PotionEffectType.SLOW, 1, 8),
             new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 1)
     );
 
@@ -237,8 +237,7 @@ public class KlasyInteractListener implements Listener {
                                     target.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Zostales &epodpalony &7przez &6" + player.getName() + "&7!"));
                                     continue;
                                 }
-                                if (effect.getType() == PotionEffectType.SLOW_DIGGING) {
-                                    target.setWalkSpeed(0);
+                                if (effect.getType() == PotionEffectType.SLOW && effect.getAmplifier() == 8) {
                                     rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> target.setWalkSpeed(0.2F), 100L);
                                     target.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &7Zostales &bzamrozony &7przez &6" + player.getName() + "&7!"));
                                     continue;

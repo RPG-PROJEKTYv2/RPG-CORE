@@ -220,7 +220,10 @@ public class AsyncPlayerChatListener implements Listener {
             "test",
             "drop",
             "backup",
-            "wedka"
+            "wedka",
+            "kilof",
+            "sword",
+            "resetkryt"
     );
 
     @EventHandler

@@ -109,8 +109,10 @@ public class ZmiankiManager {
             NBTTagCompound tag = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
             if (toReturn.getItemMeta().getDisplayName().contains("Mithrylowe Ostrze") || toReturn.getItemMeta().getDisplayName().contains("Mithrylowy Sztylet")) {
                 final int reqLvl = 65;
-                if (lvl > reqLvl) {
-                    tag.setInt("lvl", lvl);
+                if (loreLvl > reqLvl) {
+                    tag.setInt("lvl", loreLvl);
+                } else {
+                    tag.setInt("lvl", reqLvl);
                 }
             } else tag.setInt("lvl", loreLvl);
             nmsStack.setTag(tag);
@@ -160,7 +162,7 @@ public class ZmiankiManager {
 
     private String getRandomMob() {
         final List<String> mobs = Arrays.asList("&8Najemnik", "&2Goblin", "&7Goryl", "&8Zjawa", "&3Straznik Swiatyni", "&bMrozny Wilk", "&6Zywiolak Ognia", "&fMroczna Dusza",
-                "&6Pustynny Ptasznik", "&5Podziemna Lowczyni");
+                "&6Pustynny Ptasznik", "&5Podziemna Lowczyni", "&bPodwodny Straznik");
         return mobs.get(ChanceHelper.getRandInt(0, mobs.size() - 1));
     }
 

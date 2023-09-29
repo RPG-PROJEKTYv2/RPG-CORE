@@ -1,6 +1,7 @@
 package rpg.rpgcore.artefakty.events;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -8,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -111,14 +114,16 @@ public class ArtefaktyInteractListener implements Listener {
                 if (!player.getLocation().getWorld().getName().equals("50-60map") && !player.getLocation().getWorld().getName().equals("60-70map") &&
                         !player.getLocation().getWorld().getName().equals("70-80map") && !player.getLocation().getWorld().getName().equals("80-90map") &&
                         !player.getLocation().getWorld().getName().equals("90-100map") && !player.getLocation().getWorld().getName().equals("100-110map") &&
-                        !player.getLocation().getWorld().getName().equals("110-120map") && !player.getLocation().getWorld().getName().equals("120-130map")
-                        && !player.getLocation().getWorld().getName().equals("Dungeon80-90")) {
+                        !player.getLocation().getWorld().getName().equals("110-120map") && !player.getLocation().getWorld().getName().equals("120-130map") &&
+                        !player.getLocation().getWorld().getName().equals("Dungeon70-80") && !player.getLocation().getWorld().getName().equals("Dungeon80-90") &&
+                        !player.getLocation().getWorld().getName().equals("DemonTower") && !player.getLocation().getWorld().getName().equals("Dungeon90-100")) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz uzywac tego artefaktu na mapach bez pvp!"));
                     rpgcore.getCooldownManager().givePlayerSerceCooldown(uuid);
                     return;
                 }
                 for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                     if (entity instanceof Player) {
+                        if (rpgcore.getGuildManager().getGuildTag(player.getUniqueId()).equals(rpgcore.getGuildManager().getGuildTag(entity.getUniqueId()))) continue;
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
@@ -133,7 +138,8 @@ public class ArtefaktyInteractListener implements Listener {
                 return;
             }
         }
-        if (eventItem.getType() == Material.LAVA_BUCKET && eventItem.getItemMeta().hasDisplayName() && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
+        if (eventItem.getType() == Material.LAVA_BUCKET && eventItem.getItemMeta().hasDisplayName()
+                && Utils.removeColor(eventItem.getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
@@ -143,11 +149,11 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 if (rpgcore.getKociolkiManager().find(uuid).isEliksirPotegi()) {
-                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() - DoubleUtils.round(10, 2));
+                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() - DoubleUtils.round(25, 2));
                 }
                 rpgcore.getKociolkiManager().find(uuid).setEliksirPotegi(true);
                 rpgcore.getKociolkiManager().find(uuid).setEliksirPotegiTime(300);
-                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() + DoubleUtils.round(10, 2));
+                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSrednieobrazenia(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSrednieobrazenia() + DoubleUtils.round(25, 2));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
                     rpgcore.getMongoManager().saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
@@ -170,11 +176,11 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 if (rpgcore.getKociolkiManager().find(uuid).isEliksirObroncy()) {
-                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() - DoubleUtils.round(10, 2));
+                    rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() - DoubleUtils.round(25, 2));
                 }
                 rpgcore.getKociolkiManager().find(uuid).setEliksirObroncy(true);
                 rpgcore.getKociolkiManager().find(uuid).setEliksirObroncyTime(300);
-                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() + DoubleUtils.round(10, 2));
+                rpgcore.getBonusesManager().find(uuid).getBonusesUser().setSredniadefensywa(rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSredniadefensywa() + DoubleUtils.round(25, 2));
                 rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                     rpgcore.getMongoManager().saveDataBonuses(uuid, rpgcore.getBonusesManager().find(uuid));
                     rpgcore.getMongoManager().saveDataKociolki(uuid, rpgcore.getKociolkiManager().find(uuid));
@@ -184,6 +190,32 @@ public class ArtefaktyInteractListener implements Listener {
             } else {
                 player.sendMessage(Utils.format("&4&lArtefakty &8>> &cTen artefakt nie nalezy do ciebie!"));
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBucketInteract(final PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBucketInteract(final PlayerInteractAtEntityEvent e) {
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
+            e.setCancelled(true);
         }
     }
 }
