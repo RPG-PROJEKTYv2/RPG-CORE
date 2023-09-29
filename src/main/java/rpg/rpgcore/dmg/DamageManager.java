@@ -198,7 +198,7 @@ public class DamageManager {
         dmg = dmg * 2.5 * (mnoznik / 100);
         dmg = dmg * (tyra / 100);
 
-        krytyk /= 2.25;
+        krytyk /= 3;
 
         if (ChanceHelper.getChance(krytyk)) {
             dmg = dmg * (2.5 + (wzmKrytDmg / 100));
@@ -324,7 +324,7 @@ public class DamageManager {
         dmg = dmg * 2 * (mnoznik / 100);
         dmg = dmg * (ks / 100);
 
-        krytyk /= 2.25;
+        krytyk /= 3;
 
 
         if (ChanceHelper.getChance(krytyk)) {

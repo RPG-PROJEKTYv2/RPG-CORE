@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.rybak.helpers;
 
+import com.google.common.collect.Sets;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,6 +11,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.rybak.enums.LureBonuses;
 import rpg.rpgcore.npc.rybak.enums.WedkaExp;
 import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
@@ -18,9 +21,11 @@ import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -435,5 +440,26 @@ public class RybakHelper {
 
         meta.setLore(Utils.format(lore));
         wedka.setItemMeta(meta);
+    }
+
+    private final static Set<Items> niesy = Sets.newHashSet(
+            new Items("1", 0.01, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&3&lMorskie Szczescie I").setLore(Arrays.asList(
+                    "&7Gwarantuje &b+1.5% &7szansy na wylowienie",
+                    "&2potwora&7, &dkrysztalu &7lub &3Niesamowitego Przedmiotu"
+            )).toItemStack().clone(), 1),
+            new Items("2", 1, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&3&lMorskie Szczescie I").setLore(Arrays.asList(
+                    "&7Gwarantuje &b+0.5% &7szansy na wylowienie",
+                    "&2potwora&7, &dkrysztalu &7lub &3Niesamowitego Przedmiotu"
+            )).toItemStack().clone(), 1)
+    );
+
+
+    public static ItemStack getRandomNies() {
+        for (final Items item : niesy) {
+            if (ChanceHelper.getChance(item.getChance())) {
+                return item.getRewardItem().clone();
+            }
+        }
+        return getRandomNies();
     }
 }

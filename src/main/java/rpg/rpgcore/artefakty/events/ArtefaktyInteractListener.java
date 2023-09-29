@@ -1,6 +1,7 @@
 package rpg.rpgcore.artefakty.events;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -8,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -187,6 +190,32 @@ public class ArtefaktyInteractListener implements Listener {
             } else {
                 player.sendMessage(Utils.format("&4&lArtefakty &8>> &cTen artefakt nie nalezy do ciebie!"));
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBucketInteract(final PlayerInteractEntityEvent e) {
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBucketInteract(final PlayerInteractAtEntityEvent e) {
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
+            e.setCancelled(true);
+            return;
+        }
+        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+                && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
+            e.setCancelled(true);
         }
     }
 }

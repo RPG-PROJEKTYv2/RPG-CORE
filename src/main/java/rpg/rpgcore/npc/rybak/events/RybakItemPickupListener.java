@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
@@ -19,8 +20,6 @@ public class RybakItemPickupListener implements Listener {
         if (e.getItem().getItemStack().getType() == Material.WOOL && e.getItem().getItemStack().getDurability() == 10) {
             e.getItem().remove();
             e.setCancelled(true);
-            final OsUser osUser = RPGCORE.getInstance().getOsManager().find(e.getPlayer().getUniqueId());
-            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
 
             int amount = e.getItem().getItemStack().getAmount();
 
@@ -44,5 +43,32 @@ public class RybakItemPickupListener implements Listener {
             }
 
         }
+        /*if (e.getItem().getItemStack().isSimilar(RybakItems.I22.getItemStack())) {
+            e.getItem().remove();
+            e.setCancelled(true);
+            final OsUser osUser = RPGCORE.getInstance().getOsManager().find(e.getPlayer().getUniqueId());
+            osUser.setNiesyProgress(osUser.getNiesyProgress() + 1);
+
+            int amount = e.getItem().getItemStack().getAmount();
+
+            if (e.getPlayer().getInventory().containsAtLeast(e.getItem().getItemStack(), 1)) {
+                for (ItemStack is : e.getPlayer().getInventory().getContents()) {
+                    if (is != null && is.isSimilar(e.getItem().getItemStack())) {
+                        amount += is.getAmount();
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < amount; i++) {
+                final ItemStack krysztal = RybakHelper.getRandomNies();
+
+                Bukkit.getServer().broadcastMessage(" ");
+                Bukkit.getServer().broadcastMessage(Utils.format("&7&lStara Fabryka &8>> &7Gracz &e" + e.getPlayer().getName() + " &7znalazl &3&lNiesamowity Przedmiot&7!"));
+                Bukkit.getServer().broadcastMessage(" ");
+
+                e.getPlayer().getInventory().addItem(krysztal.clone());
+            }
+        }*/
     }
 }

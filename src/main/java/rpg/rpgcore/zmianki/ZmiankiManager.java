@@ -162,7 +162,7 @@ public class ZmiankiManager {
 
     private String getRandomMob() {
         final List<String> mobs = Arrays.asList("&8Najemnik", "&2Goblin", "&7Goryl", "&8Zjawa", "&3Straznik Swiatyni", "&bMrozny Wilk", "&6Zywiolak Ognia", "&fMroczna Dusza",
-                "&6Pustynny Ptasznik", "&5Podziemna Lowczyni");
+                "&6Pustynny Ptasznik", "&5Podziemna Lowczyni", "&bPodwodny Straznik");
         return mobs.get(ChanceHelper.getRandInt(0, mobs.size() - 1));
     }
 

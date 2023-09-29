@@ -20,7 +20,8 @@ public class MitycznyPajakListener80_90 implements Listener {
     public void onInteract(final PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
         final ItemStack item = e.getItem();
-        if (item == null || item.getType() != Material.SPIDER_EYE || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Przywolanie")) return;
+        if (item == null || item.getType() != Material.SPIDER_EYE || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName() || !Utils.removeColor(item.getItemMeta().getDisplayName()).equals("Przywolanie"))
+            return;
         final Player player = e.getPlayer();
 
         if (!player.getWorld().getName().equals("80-90map")) {
@@ -42,11 +43,9 @@ public class MitycznyPajakListener80_90 implements Listener {
         }
 
         player.getInventory().removeItem(new ItemBuilder(item.clone()).setAmount(1).toItemStack().clone());
-        for (final Player map : Bukkit.getWorld("80-90map").getPlayers()) {
-            map.sendMessage(" ");
-            map.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &fGracz &6" + player.getName() + " &fprzywolal &e&lMitycznego Pajaka&f!"));
-            map.sendMessage(" ");
-        }
+        Bukkit.getServer().broadcastMessage(" ");
+        Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &fGracz &6" + player.getName() + " &fprzywolal &e&lMitycznego Pajaka&f!"));
+        Bukkit.getServer().broadcastMessage(" ");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mm m spawn 80-90-BOSS 1 80-90map,-40.5,68,146.5");
     }
 }

@@ -43,8 +43,17 @@ public class RybakRegionEnterListener implements Listener {
         }
 
         if ((region.getId().equals("rybak-most1") || region.getId().equals("rybak-wyspa2")) && !RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getStaruszekUser().isDone()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()
+                    && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) return;
             player.teleport(new Location(player.getWorld(), -7.5, 157, -177.5, 0, 0));
             player.sendMessage(Utils.format("&6&lStaruszek &8>> &cNie ukonczyles jeszcze wszystkich moich misji!"));
+        }
+
+        if ((region.getId().equals("rybak-most2") || region.getId().equals("rybak-wyspa3")) && !RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getMlodszyRybakUser().isDone()) {
+            if (RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).getRankUser().isHighStaff()
+                    && RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isAdminCodeLogin()) return;
+            player.teleport(new Location(player.getWorld(), -7.5, 164, -274.5, 180, 0));
+            player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &cNie ukonczyles jeszcze wszystkich moich misji!"));
         }
 
 

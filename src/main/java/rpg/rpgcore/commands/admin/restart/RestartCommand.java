@@ -51,6 +51,8 @@ public class RestartCommand extends CommandAPI {
                 } else {
                     player.getInventory().addItem((user.getPierscienDoswiadczeniaTime() - System.currentTimeMillis() > 2_700_000L ? GlobalItem.I55.getItemStack().clone() : GlobalItem.I54.getItemStack().clone()));
                 }
+                user.setPierscienDoswiadczenia(0);
+                user.setPierscienDoswiadczeniaTime(0L);
                 Bukkit.getServer().broadcastMessage(Utils.format("&6&lPierscien Doswiadczenia &8&l>> &fGracz &e" + player.getName() + " &fotrzymal zwrot Pierscienia Doswiadczenia!"));
             }
 
