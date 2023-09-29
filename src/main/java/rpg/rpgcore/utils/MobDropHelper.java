@@ -477,7 +477,7 @@ public class    MobDropHelper {
                 break;
             // ----------------------------------------- EXPOWISKO 12 -----------------------------------------
             // BOSS
-            case "[BOSS] Mityczny Kraken":
+            case "[BOSS] Mistyczny Kraken":
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
