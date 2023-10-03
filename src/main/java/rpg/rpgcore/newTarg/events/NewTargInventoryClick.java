@@ -172,6 +172,12 @@ public class NewTargInventoryClick implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cBrakuje ci &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemPrice - playerMoney)) + " &2$"));
                 return;
             }
+
+            if (!e.getClick().isShiftClick()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPrzedmioty mozesz kupic tylko poprzez &6&oSHIFT + LPM"));
+                return;
+            }
+
             this.finalizeTradeCategory(player, itemOwnerUUID, itemOwnwer, playerMoney, itemPrice, clickedItem);
             return;
         }
@@ -292,6 +298,11 @@ public class NewTargInventoryClick implements Listener {
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz wystarczajacych srodkow, zeby kupic ten przedmiot."));
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&cBrakuje ci &6&o" + Utils.spaceNumber(Utils.kasaFormat.format(itemCena - kasaGracza)) + " &2$"));
 
+                return;
+            }
+
+            if (!e.getClick().isShiftClick()) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&cPrzedmioty mozesz kupic tylko poprzez &6&oSHIFT + LPM"));
                 return;
             }
 
