@@ -2,6 +2,7 @@ package rpg.rpgcore.npc.rybak.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -267,5 +268,24 @@ public class RybakInteractListener implements Listener {
                 return;
         }
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataRybak(player.getUniqueId(), rpgcore.getRybakNPC().find(player.getUniqueId())));
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onRybakStolInteract(final PlayerInteractEvent e) {
+        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) return;
+        if (!e.getPlayer().getWorld().getName().equals("Rybak")) return;
+        if (e.getClickedBlock() == null || e.getClickedBlock().getType() == Material.AIR) return;
+        if (!e.getClickedBlock().getType().equals(Material.ENCHANTMENT_TABLE)) return;
+        if (!e.getClickedBlock().getLocation().equals(new Location(Bukkit.getWorld("Rybak"), 16, 164, -293))) return;
+        e.setCancelled(true);
+        e.setUseInteractedBlock(Event.Result.DENY);
+        e.setUseItemInHand(Event.Result.DENY);
+
+        final Player player = e.getPlayer();
+        if (e.getItem() == null || !e.getItem().getType().equals(Material.FISHING_ROD)) {
+            player.sendMessage(Utils.format("&b&lStol Rybacki &8>> &cKliknij na mnie &6Slaba Wedka Rybacka &ci zobacz co sie stanie!"));
+            return;
+        }
+        rpgcore.getRybakNPC().openRybackiStolWyspa2(player);
     }
 }

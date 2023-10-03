@@ -70,6 +70,7 @@ public class ProfileCommand extends CommandAPI {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&4&lProfil &6&l" + player.getName()));
 
         int szczescie = 0;
+        double defNaMoby = user.getDefnamoby();
 
         for (int i = 0; i < 54; i++) {
             gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
@@ -78,30 +79,37 @@ public class ProfileCommand extends CommandAPI {
         if (player.getInventory().getHelmet() != null) {
             gui.setItem(11, player.getInventory().getHelmet().clone());
             szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
+            defNaMoby += Utils.getTagDouble(player.getInventory().getHelmet(), "defMoby");
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
+
         if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
             gui.setItem(19, player.getItemInHand().clone());
-            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
         } else {
             gui.setItem(19, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Przedmiotu").toItemStack());
         }
+
         if (player.getInventory().getChestplate() != null) {
             gui.setItem(20, player.getInventory().getChestplate().clone());
-            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
+            szczescie += Utils.getTagInt(player.getInventory().getChestplate(), "szczescie");
+            defNaMoby += Utils.getTagDouble(player.getInventory().getChestplate(), "defMoby");
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
         if (player.getInventory().getLeggings() != null) {
             gui.setItem(29, player.getInventory().getLeggings().clone());
-            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
+            szczescie += Utils.getTagInt(player.getInventory().getLeggings(), "szczescie");
+            defNaMoby += Utils.getTagDouble(player.getInventory().getLeggings(), "defMoby");
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
+
         if (player.getInventory().getBoots() != null) {
             gui.setItem(38, player.getInventory().getBoots().clone());
-            szczescie += Utils.getTagInt(player.getInventory().getHelmet(), "szczescie");
+            szczescie += Utils.getTagInt(player.getInventory().getBoots(), "szczescie");
+            defNaMoby += Utils.getTagDouble(player.getInventory().getBoots(), "defMoby");
+
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
@@ -136,7 +144,7 @@ public class ProfileCommand extends CommandAPI {
         gui.setItem(25, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&aStatystyki Defensywy").setLore(Arrays.asList(
                 "&7Srednia Defensywa: &f" + user.getSredniadefensywa() + "%",
                 "&7Defensywa Przeciwko Ludziom: &f" + user.getDefnaludzi() + "%",
-                "&7Defensywa Przeciwko Potworom: &f" + user.getDefnamoby() + "%",
+                "&7Defensywa Przeciwko Potworom: &f" + defNaMoby + "%",
                 "&7Blok Ciosu: &f" + user.getBlokciosu() + "%",
                 "&7Zmniejszona Defensywa: &f" + user.getMinussredniadefensywa() + "%",
                 "&7Zmniejszona Defensywa Przeciwko Ludziom: &f" + user.getMinusdefnaludzi() + "%",
@@ -185,30 +193,35 @@ public class ProfileCommand extends CommandAPI {
         }
 
         int szczescie = 0;
+        double defNaMoby = user.getDefnamoby();
 
         final ItemStack[] armor = Utils.itemStackArrayFromBase64(RPGCORE.getInstance().getUserManager().find(targetUUID).getInventoriesUser().getArmor());
 
         if (armor[3] != null && armor[3].getType() != Material.AIR) {
             gui.setItem(11, armor[3].clone());
             szczescie += Utils.getTagInt(armor[3], "szczescie");
+            defNaMoby += Utils.getTagInt(armor[3], "defMoby");
         } else {
             gui.setItem(11, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Helmu").toItemStack());
         }
         if (armor[2] != null && armor[2].getType() != Material.AIR) {
             gui.setItem(20, armor[2].clone());
             szczescie += Utils.getTagInt(armor[2], "szczescie");
+            defNaMoby += Utils.getTagInt(armor[2], "defMoby");
         } else {
             gui.setItem(20, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Zbroi").toItemStack());
         }
         if (armor[1] != null && armor[1].getType() != Material.AIR) {
             gui.setItem(29, armor[1].clone());
             szczescie += Utils.getTagInt(armor[1], "szczescie");
+            defNaMoby += Utils.getTagInt(armor[1], "defMoby");
         } else {
             gui.setItem(29, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Spodni").toItemStack());
         }
         if (armor[0] != null && armor[0].getType() != Material.AIR) {
             gui.setItem(38, armor[0].clone());
             szczescie += Utils.getTagInt(armor[0], "szczescie");
+            defNaMoby += Utils.getTagInt(armor[0], "defMoby");
         } else {
             gui.setItem(38, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("&cBrak Butow").toItemStack());
         }
@@ -243,7 +256,7 @@ public class ProfileCommand extends CommandAPI {
         gui.setItem(25, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&aStatystyki Defensywy").setLore(Arrays.asList(
                 "&7Srednia Defensywa: &f" + user.getSredniadefensywa() + "%",
                 "&7Defensywa Przeciwko Ludziom: &f" + user.getDefnaludzi() + "%",
-                "&7Defensywa Przeciwko Potworom: &f" + user.getDefnamoby() + "%",
+                "&7Defensywa Przeciwko Potworom: &f" + defNaMoby + "%",
                 "&7Blok Ciosu: &f" + user.getBlokciosu() + "%",
                 "&7Zmniejszona Defensywa: &f" + user.getMinussredniadefensywa() + "%",
                 "&7Zmniejszona Defensywa Przeciwko Ludziom: &f" + user.getMinusdefnaludzi() + "%",

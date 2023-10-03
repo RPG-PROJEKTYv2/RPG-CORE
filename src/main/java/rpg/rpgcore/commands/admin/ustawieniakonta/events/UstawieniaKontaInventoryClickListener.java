@@ -25,6 +25,7 @@ import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
+import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
@@ -545,7 +546,7 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     ustawieniaKontaManager.openPrzyrodnik(player, target);
                     return;
                 case 29:
-                    ustawieniaKontaManager.openRybakM(player, target);
+                    ustawieniaKontaManager.openRybakSelect(player, target);
                     return;
                 case 30:
                     ustawieniaKontaManager.openWyslannik(player, target);
@@ -1210,7 +1211,19 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
             return;
         }
 
-        if (title.contains("Misje » Rybak - ")) {
+        if (title.contains("Misje » Rybak - Wybor")) {
+            e.setCancelled(true);
+
+            if (slot == 1) {
+                rpgcore.getUstawieniaKontaManager().openRybakStaruszek(player, this.getUUIDFromTitle(title));
+                return;
+            }
+            if (slot == 3) {
+                rpgcore.getUstawieniaKontaManager().openRybakMlodszyRybak(player, this.getUUIDFromTitle(title));
+            }
+        }
+
+        if (title.contains("Misje » Rybak - Staruszek - ")) {
             e.setCancelled(true);
 
             if (item == null) return;
@@ -1230,13 +1243,56 @@ public class UstawieniaKontaInventoryClickListener implements Listener {
                     staruszek.setSrDef(staruszek.getSrDef() + value);
                     bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
                     break;
+                case 4:
+                    staruszek.setDone(!staruszek.isDone());
+                    break;
             }
 
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
                 rpgcore.getMongoManager().saveDataRybak(rybak.getUuid(), rybak);
                 rpgcore.getMongoManager().saveDataBonuses(rybak.getUuid(), bonuses);
             });
-            rpgcore.getUstawieniaKontaManager().openRybakM(player, rybak.getUuid());
+            rpgcore.getUstawieniaKontaManager().openRybakStaruszek(player, rybak.getUuid());
+            return;
+        }
+        if (title.contains("Misje » Rybak - Mlodszy Rybak - ")) {
+            e.setCancelled(true);
+
+            if (item == null) return;
+            final RybakUser rybak = rpgcore.getRybakNPC().find(this.getUUIDFromTitle(title));
+            final MlodszyRybakUser user = rybak.getMlodszyRybakUser();
+            final Bonuses bonuses = rpgcore.getBonusesManager().find(rybak.getUuid());
+            final double value = this.getValueFromClickKey(e.getClick());
+
+            switch (slot) {
+                case 0:
+                    user.setMission(user.getMission() + (int) value);
+                    break;
+                case 1:
+                    user.setProgress(user.getProgress() + (int) value);
+                    break;
+                case 2:
+                    user.setSrDef(user.getSrDef() + value);
+                    bonuses.getBonusesUser().setSredniadefensywa(bonuses.getBonusesUser().getSredniadefensywa() + value);
+                    break;
+                case 3:
+                    user.setDodatkowyDmg(user.getDodatkowyDmg() + (int) value);
+                    bonuses.getBonusesUser().setDodatkoweobrazenia(bonuses.getBonusesUser().getDodatkoweobrazenia() + (int) value);
+                    break;
+                case 4:
+                    user.setPrzeszywka(user.getPrzeszywka() + value);
+                    bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + value);
+                    break;
+                case 5:
+                    user.setDone(!user.isDone());
+                    break;
+            }
+
+            rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> {
+                rpgcore.getMongoManager().saveDataRybak(rybak.getUuid(), rybak);
+                rpgcore.getMongoManager().saveDataBonuses(rybak.getUuid(), bonuses);
+            });
+            rpgcore.getUstawieniaKontaManager().openRybakStaruszek(player, rybak.getUuid());
             return;
         }
 

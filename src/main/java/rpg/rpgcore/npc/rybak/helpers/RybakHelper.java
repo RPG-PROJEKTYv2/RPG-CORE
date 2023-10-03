@@ -28,6 +28,7 @@ import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RybakHelper {
 
@@ -441,6 +442,43 @@ public class RybakHelper {
         meta.setLore(Utils.format(lore));
         wedka.setItemMeta(meta);
     }
+
+    public static void removeKrysztal(final ItemStack wedka, final Player player) {
+        final String krysztal = Utils.getTagString(wedka, "krysztal");
+        final double krysztalValue = Utils.getTagDouble(wedka, "krysztalValue");
+
+        player.getInventory().addItem(RybakItems.getKrysztal(krysztal, krysztalValue).clone());
+
+        Utils.setTagString(wedka, "krysztal", "BRAK");
+        Utils.setTagDouble(wedka, "krysztalValue", 0, true);
+
+        final ItemMeta meta = wedka.getItemMeta();
+        final List<String> lore = meta.getLore();
+        final int index = lore.indexOf(lore.stream().filter(s -> s.contains("Aktywny Krysztal")).collect(Collectors.toList()).get(0));
+
+        lore.set(index, "&7Aktywny Krysztal: &cBRAK");
+
+        meta.setLore(Utils.format(lore));
+        wedka.setItemMeta(meta);
+    }
+
+    public static void addKrysztal(final ItemStack wedka, final ItemStack krysztal) {
+        final double krysztalValue = Utils.getTagDouble(krysztal, "krysztalValue");
+
+        Utils.setTagString(wedka, "krysztal", Utils.removeColor(krysztal.getItemMeta().getDisplayName()).replace("Krysztal ", "").trim());
+        Utils.setTagDouble(wedka, "krysztalValue", krysztalValue, true);
+
+        final ItemMeta meta = wedka.getItemMeta();
+        final List<String> lore = meta.getLore();
+
+        final int index = lore.indexOf(lore.stream().filter(s -> s.contains("Aktywny Krysztal")).collect(Collectors.toList()).get(0));
+
+        lore.set(index, "&7Aktywny Krysztal: " + krysztal.getItemMeta().getDisplayName().replace(Utils.format("&5&lKrysztal "), "").trim() + " &8(&f" + krysztalValue + "%&8)");
+
+        meta.setLore(Utils.format(lore));
+        wedka.setItemMeta(meta);
+    }
+
 
     private final static Set<Items> niesy = Sets.newHashSet(
             new Items("1", 0.01, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&3&lMorskie Szczescie I").setLore(Arrays.asList(

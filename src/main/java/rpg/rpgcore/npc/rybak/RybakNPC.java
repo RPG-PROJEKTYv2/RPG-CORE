@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -384,6 +385,29 @@ public class RybakNPC {
         player.openInventory(gui);
     }
 
+    public void openRybackiStolWyspa2(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&b&lStol Rybacki"));
+
+        for (int i = 0; i < gui.getSize(); i++) {
+            if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 3).setName(" ").toItemStack());
+            else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 11).setName(" ").toItemStack());
+        }
+        final ItemStack wedka = player.getItemInHand();
+        final String krysztal = Utils.getTagString(wedka, "krysztal");
+
+        if (krysztal.equals("BRAK")) {
+            gui.setItem(2, getNoKrysztalItem());
+        } else {
+            gui.setItem(2, RybakItems.getKrysztal(krysztal, Utils.getTagDouble(wedka, "krysztalValue")));
+        }
+
+
+        player.openInventory(gui);
+    }
+
+    public ItemStack getNoKrysztalItem() {
+        return new ItemBuilder(Material.IRON_FENCE).setName("&cBrak Krysztalu").toItemStack();
+    }
 
 
 

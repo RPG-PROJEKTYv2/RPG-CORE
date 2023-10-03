@@ -126,7 +126,7 @@ public class EntityDeathListener implements Listener {
                 rpgcore.getGuildManager().updateGuildExpEarned(rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()), killer.getUniqueId(), 10);
                 rpgcore.getGuildManager().updateGuildExp(rpgcore.getGuildManager().getGuildTag(killer.getUniqueId()), 10);
             }
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME  + killerGuild + "&a" +killer.getName() + " &7zabija " + victimGuild + "&c" + victim.getName()));
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.SERVERNAME  + killerGuild + "&a" + killer.getName() + " &7zabija " + victimGuild + "&c" + victim.getName()));
             return;
         }
 
@@ -134,29 +134,13 @@ public class EntityDeathListener implements Listener {
         final String victimGuild = rpgcore.getGuildManager().getGuildTag(victim.getUniqueId());
 
         if (killerGuild.equals(victimGuild)) {
-            rpgcore.getGuildManager().updateGuildPoints(killerGuild, -50);
             rpgcore.getGuildManager().updateGuildKills(killerGuild, killer.getUniqueId(), 1);
             rpgcore.getGuildManager().updateGuildDeaths(victimGuild, victim.getUniqueId(), 1);
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [-25] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-25]"));
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName()));
             return;
         }
 
-        final int killerLvl = rpgcore.getUserManager().find(killer.getUniqueId()).getLvl();
-        final int victimLvl = rpgcore.getUserManager().find(victim.getUniqueId()).getLvl();
-
-        if ((killerLvl - victimLvl >= 0 && killerLvl - victimLvl < 10) || (victimLvl - killerLvl >= 0 && victimLvl - killerLvl < 10)) {
-            rpgcore.getGuildManager().updateGuildPoints(killerGuild, 30);
-            rpgcore.getGuildManager().updateGuildPoints(victimGuild, -30);
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [+30] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-30]"));
-        } else if ((killerLvl - victimLvl > 10 && killerLvl - victimLvl < 20) || (victimLvl - killerLvl > 10 && victimLvl - killerLvl < 20)) {
-            rpgcore.getGuildManager().updateGuildPoints(killerGuild, 15);
-            rpgcore.getGuildManager().updateGuildPoints(victimGuild, -15);
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [+15] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-15]"));
-        } else {
-            rpgcore.getGuildManager().updateGuildPoints(killerGuild, 5);
-            rpgcore.getGuildManager().updateGuildPoints(victimGuild, -5);
-            rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " [+5] &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName() + " [-5]"));
-        }
+        rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName()));
         rpgcore.getGuildManager().updateGuildExp(killerGuild, 10);
         rpgcore.getGuildManager().updateGuildExpEarned(killerGuild, killer.getUniqueId(), 10);
         rpgcore.getGuildManager().updateGuildKills(killerGuild, killer.getUniqueId(), 1);

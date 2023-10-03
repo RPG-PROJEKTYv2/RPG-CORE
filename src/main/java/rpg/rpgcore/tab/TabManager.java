@@ -121,23 +121,21 @@ public class TabManager {
             tab.set(player, 0, 8, "&7                                ");
             tab.set(player, 0, 9, "&4&lKLAN");
             if (!tag.equals("Brak Klanu")) {
-                tab.set(player, 0, 10, "&7Punkty: &c" + rpgcore.getGuildManager().getGuildPoints(tag));
-                tab.set(player, 0, 11, "&7Poziom: &c" + rpgcore.getGuildManager().getGuildLvl(tag));
+                tab.set(player, 0, 10, "&7Poziom: &c" + rpgcore.getGuildManager().getGuildLvl(tag));
                 if (rpgcore.getGuildManager().getGuildLvl(tag) == 50) {
-                    tab.set(player, 0, 12, "&7Exp: &4&lMAX &7/ &4&lMAX");
+                    tab.set(player, 0, 11, "&7Exp: &4&lMAX &7/ &4&lMAX");
                 } else {
-                    tab.set(player, 0, 12, "&7Exp: &c" + rpgcore.getGuildManager().getGuildExp(tag) + "&7/&c" + rpgcore.getGuildManager().getGuildNextLvlExp(tag));
+                    tab.set(player, 0, 11, "&7Exp: &c" + rpgcore.getGuildManager().getGuildExp(tag) + "&7/&c" + rpgcore.getGuildManager().getGuildNextLvlExp(tag));
                 }
-                tab.set(player, 0, 13, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
-                tab.set(player, 0, 14, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
-                tab.set(player, 0, 15, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
+                tab.set(player, 0, 12, "&7Kredyty: &c" + rpgcore.getGuildManager().getGuildBalance(tag) + " &7kredytow");
+                tab.set(player, 0, 13, "&7Zabojstwa: &c" + rpgcore.getGuildManager().getGuildKillsAll(tag));
+                tab.set(player, 0, 14, "&7Zgony: &c" + rpgcore.getGuildManager().getGuildDeathsAll(tag));
             } else {
-                tab.set(player, 0, 10, "&7Punkty: &cn/a");
-                tab.set(player, 0, 11, "&7Poziom: &cn/a");
-                tab.set(player, 0, 12, "&7Exp: &cn/a");
-                tab.set(player, 0, 13, "&7Kredyty: &cn/a");
-                tab.set(player, 0, 14, "&7Zabojstwa: &cn/a");
-                tab.set(player, 0, 15, "&7Zgony: &cn/a");
+                tab.set(player, 0, 10, "&7Poziom: &cn/a");
+                tab.set(player, 0, 11, "&7Exp: &cn/a");
+                tab.set(player, 0, 12, "&7Kredyty: &cn/a");
+                tab.set(player, 0, 13, "&7Zabojstwa: &cn/a");
+                tab.set(player, 0, 14, "&7Zgony: &cn/a");
             }
             if (topki.get(uuid) == 2) {
                 topki.replace(uuid, 0);

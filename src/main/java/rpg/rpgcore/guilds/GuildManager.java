@@ -124,7 +124,6 @@ public class GuildManager {
         } else {
             player.sendMessage(Utils.format("&6PvP: &c&lOFF"));
         }
-        player.sendMessage(Utils.format("&6Punkty: &7" + guild.getPoints()));
         player.sendMessage(Utils.format("&6Lvl: &7" + guild.getLevel()));
         if (this.getGuildLvl(tag) == 50) {
             player.sendMessage(Utils.format("&6Exp: &4&lMAX &7/ &4&lMAX"));
@@ -213,7 +212,6 @@ public class GuildManager {
         panel.setItem(10, members.setName("&6&lCzlonkowie").setLore(lore).toItemStack());
 
         lore.clear();
-        lore.add("&6Punkty: &7" + guild.getPoints());
         lore.add("&6Lvl: &7" + guild.getLevel());
         if (this.getGuildLvl(tag) == 50) {
             lore.add("&6Exp: &4&lMAX &6/ &4&lMAX");

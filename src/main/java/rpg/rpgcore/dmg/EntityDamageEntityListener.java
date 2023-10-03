@@ -454,6 +454,7 @@ public class EntityDamageEntityListener implements Listener {
 
                     for (LivingEntity rest : list) {
                         if (rest.equals(victim)) continue;
+                        if (rest.getName() != null && this.blockedEntiies.contains(Utils.removeColor(rest.getName()))) continue;
 
                         if (user.getExp() >= rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) {
                             break;

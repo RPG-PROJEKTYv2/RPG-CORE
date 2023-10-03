@@ -181,7 +181,7 @@ public enum RybakItems {
             case "Krysztal Wladcy Oceanow":
                 value = ChanceHelper.getRandDouble(0.001, 1.5);
                 krysztal.setLore(Arrays.asList(
-                        "&7tSzansa na wylowienie &3&lPosejdona&7: &f" + DoubleUtils.round(value, 3) + "%"
+                        "&7Szansa na wylowienie &3&lPosejdona&7: &f" + DoubleUtils.round(value, 3) + "%"
                 )).addTagDouble("krysztalValue", DoubleUtils.round(value, 3));
                 break;
             case "Krysztal Rzecznego Krola":
@@ -205,5 +205,36 @@ public enum RybakItems {
         }
 
         return krysztal.addGlowing().toItemStack().clone();
+    }
+
+    public static ItemStack getKrysztal(final String krysztal, final double value) {
+        switch ("Krysztal " + krysztal) {
+            case "Krysztal Oceanicznej Grozy":
+                return new ItemBuilder(I24.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa na wylowienie &9Glebinowego Nurka&7: &f" + DoubleUtils.round(value, 2) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 2)).toItemStack().clone();
+            case "Krysztal Zlotej Rybki":
+                return new ItemBuilder(I25.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa na wylowienie &b&lMorskiego Ksiecia&7: &f" + DoubleUtils.round(value, 2) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 2)).toItemStack().clone();
+            case "Krysztal Wladcy Oceanow":
+                return new ItemBuilder(I26.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa na wylowienie &3&lPosejdona&7: &f" + DoubleUtils.round(value, 3) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 3)).toItemStack().clone();
+            case "Krysztal Rzecznego Krola":
+                return new ItemBuilder(I27.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa Na Potrojny Polow: &f" + DoubleUtils.round(value, 1) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 1)).toItemStack().clone();
+            case "Krysztal Mrocznych Wod":
+                return new ItemBuilder(I28.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa Na &3&lNiesamowity Przedmiot: &f" + DoubleUtils.round(value, 2) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 2)).toItemStack().clone();
+            case "Krysztal Podwodnych Spiewow":
+                return new ItemBuilder(I29.getItemStack().clone()).setLore(Arrays.asList(
+                        "&7Szansa Na &b&lPodwodny Skarb: &f" + DoubleUtils.round(value, 2) + "%"
+                )).addTagDouble("krysztalValue", DoubleUtils.round(value, 2)).toItemStack().clone();
+            default:
+                return new ItemStack(Material.AIR);
+        }
     }
 }

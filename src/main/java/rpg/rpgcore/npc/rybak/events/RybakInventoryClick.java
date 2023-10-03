@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +17,7 @@ import rpg.rpgcore.artefakty.Artefakty;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.npc.rybak.enums.MlodszyRybakMissions;
 import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
+import rpg.rpgcore.npc.rybak.helpers.RybakHelper;
 import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.user.User;
@@ -343,6 +345,41 @@ public class RybakInventoryClick implements Listener {
             user.setKasa(user.getKasa() + price);
             player.sendMessage(Utils.format("&3&lMlodszy Rybak &8>> &aPomyslnie sprzedales " + item.getItemMeta().getDisplayName() + " &aza &6" + Utils.spaceNumber(price) + "&2$&a!"));
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getMongoManager().saveDataUser(user.getId(), user));
+            return;
+        }
+
+        if (title.equals("Stol Rybacki")) {
+            e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.IRON_FENCE) return;
+
+            if (e.getSlot() != 2) return;
+
+            final ItemStack wedka = player.getItemInHand();
+
+            final String krysztal = Utils.getTagString(wedka, "krysztal");
+
+            if (krysztal.equals("BRAK")) return;
+
+            RybakHelper.removeKrysztal(wedka, player);
+            player.closeInventory();
+            return;
+        }
+
+        if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Stol Rybacki") && e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (item == null || item.getType() != Material.INK_SACK || Utils.getTagDouble(item, "krysztalValue") == 0) return;
+            final ItemStack wedka = player.getItemInHand();
+
+            final String krysztal = Utils.getTagString(wedka, "krysztal");
+
+            if (!krysztal.equals("BRAK")) return;
+            e.setResult(Event.Result.DENY);
+            e.setCancelled(true);
+
+            RybakHelper.addKrysztal(wedka, item);
+            player.getInventory().setItem(e.getSlot(), null);
+            player.closeInventory();
             return;
         }
 
