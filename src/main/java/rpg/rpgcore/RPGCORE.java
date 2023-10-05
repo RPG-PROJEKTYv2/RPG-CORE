@@ -678,7 +678,6 @@ public final class RPGCORE extends JavaPlugin {
 
         this.fixBuckets();
 
-        System.out.println(" ");
 
         String token = "MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk";
 
@@ -693,7 +692,6 @@ public final class RPGCORE extends JavaPlugin {
         try {
             //MTAxNTczNDAzOTU3MjkxNDIzOA.GvBYut.n20OWrY6cTgx6_qkT-xVQuif1wJ5q4GhiIwkZk - GŁÓWNY BOT
             //MTE1MjU1MjcwMzk0NDMxNDk2Mg.GA4gsQ.2DvKi8AXwGN_HhVQV2AMCm-L08Bj7TXfou99Wo - TESTOWY SERWER
-            System.out.println(token);
             discordBot = new DiscordBot(token);
         } catch (LoginException e) {
             throw new RuntimeException(e);

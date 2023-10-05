@@ -408,8 +408,8 @@ public class RybakHelper {
                 break;
             case "Slaba Wedka Rybacka":
                 lore.set(8, "&7Szansa Na Podwojenie Polowu: &f" + (DoubleUtils.round(doubleDrop + stats.getDropx2(), 1)) + "&f%");
-                lore.set(9, "&7Szansa Na Zwyklego Potwora: &f" + (DoubleUtils.round(zwyklyMob + stats.getMobDrop(), 2)) + "&f%");
-                lore.set(10, "&7Szansa Na Krysztal: &f" + (DoubleUtils.round(krysztalDrop + stats.getKrysztalDrop(), 3)) + "&f%");
+                lore.set(9, "&7Szansa Na Zwyklego Potwora: &f" + (DoubleUtils.round(Utils.getTagDouble(wedka, "zwyklyMob"), 2)) + "&f%");
+                lore.set(10, "&7Szansa Na Krysztal: &f" + (DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"), 3)) + "&f%");
                 break;
         }
         if (lvl % 10 == 0) {
