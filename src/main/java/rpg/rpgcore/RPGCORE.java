@@ -280,6 +280,8 @@ import rpg.rpgcore.npc.rybak.command.WedkaCommand;
 import rpg.rpgcore.npc.rybak.events.*;
 import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
+import rpg.rpgcore.npc.straganiarz.StraganiarzManager;
+import rpg.rpgcore.npc.straganiarz.events.StraganiarzInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalInventoryClickListener;
@@ -586,6 +588,8 @@ public final class RPGCORE extends JavaPlugin {
     @Getter
     private RzemieslnikManager rzemieslnikManager;
     @Getter
+    private StraganiarzManager straganiarzManager;
+    @Getter
     private GornikNPC gornikNPC;
     @Getter
     private OreManager oreManager;
@@ -779,6 +783,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new GodCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new SpeedCommand());
         CommandAPI.getCommand().register("HellRPGCore", new FlyCommand(this));
+        CommandAPI.getCommand().register("HellRPGCore", new StraganiarzCommand());
         CommandAPI.getCommand().register("HellRPGCore", new HistoryCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new BackCommand(this));
         CommandAPI.getCommand().register("HellRPGCore", new ClearCommand());
@@ -1014,6 +1019,8 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new HandlarzInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new PelerynkiInteractListener(), this);
 
+        // ...STRAGANIARZ
+        this.getServer().getPluginManager().registerEvents(new StraganiarzInventoryClickListener(), this);
         // ...KOWAL
         this.getServer().getPluginManager().registerEvents(new KowalInventoryClickListener(this), this);
         this.getServer().getPluginManager().registerEvents(new KowalInventoryCloseListener(), this);
@@ -1164,6 +1171,7 @@ public final class RPGCORE extends JavaPlugin {
         this.zmiankiManager = new ZmiankiManager();
         this.kociolkiManager = new KociolkiManager(this);
         this.topkiManager = new TopkiManager(this);
+        this.straganiarzManager = new StraganiarzManager();
         this.craftingiManager = new CraftingiManager();
         this.serwerWhiteListManager = new SerwerWhiteListManager(this);
         this.artefaktyZaLvlManager = new ArtefaktyZaLvlManager(this);

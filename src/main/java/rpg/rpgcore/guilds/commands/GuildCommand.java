@@ -171,7 +171,7 @@ public class GuildCommand extends CommandAPI {
                     return;
                 }
                 rpgcore.getGuildManager().invitePlayer(tag, uuidToInvite, target);
-                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie zaprosiles gracza &6" + target.getName() + " &ado tswojego klanu!"));
+                player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&aPomyslnie zaprosiles gracza &6" + target.getName() + " &ado twojego klanu!"));
                 return;
             }
 

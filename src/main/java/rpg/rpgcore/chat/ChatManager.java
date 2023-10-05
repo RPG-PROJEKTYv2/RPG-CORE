@@ -160,8 +160,14 @@ public class ChatManager {
         item.setItemMeta(itemMeta);
         eqGUI.addItem(item);
 
+        //          POKAZ KRYTYK          \\
         eqGUI.addItem(new ItemBuilder(Material.IRON_SWORD).setName("&6&lPokaz Krytyk").setLore(Arrays.asList(
                 "&7Pokaz swoj cios krytyczny na chacie"
+        )).hideFlag().toItemStack());
+
+        //          POKAZ PRZEKLETA MOC          \\
+        eqGUI.addItem(new ItemBuilder(Material.NETHER_BRICK).setName("&6&lPokaz Przekleta Moc").setLore(Arrays.asList(
+                "&7Pokaz swoja przekleta moc na chacie"
         )).hideFlag().toItemStack());
 
         return eqGUI;

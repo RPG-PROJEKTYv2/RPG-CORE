@@ -181,7 +181,8 @@ public class AsyncPlayerChatListener implements Listener {
             "misje", "list", "lista", "gracze", "onlinelist", "listagraczy", "craftingi", "rangi", "vip", "elita",
             "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower",
             "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb",
-            "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob", "gc", "kc"
+            "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob", "gc", "kc",
+            "straganiarz", "stragan", "wymien", "stackowanie", "rozmien"
     );
     final List<String> ownCommandsAdmin = Arrays.asList(
             "adminpanel", "paneladmin",

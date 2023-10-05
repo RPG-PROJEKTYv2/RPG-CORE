@@ -205,6 +205,10 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getRybakNPC().onClickPrzyjaciel(player);
                 return;
             }
+            if (entityName.equalsIgnoreCase("Straganiarz")) {
+                rpgcore.getStraganiarzManager().openGUI1(player);
+                return;
+            }
             // KOWAL
             if (entityName.equalsIgnoreCase("Kowal")) {
                 rpgcore.getKowalNPC().openKowalMainGui(player);

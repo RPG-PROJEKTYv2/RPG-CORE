@@ -29,15 +29,19 @@ public class SpawnCommand extends CommandAPI {
     public void executeCommand(CommandSender sender, String[] args) throws IOException {
         final Player player = (Player) sender;
         if (args.length == 0) {
+            if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz uzywac tej komendy podczas &cwalki&7!"));
+                return;
+            }
             player.teleport(rpgcore.getSpawnManager().getSpawn());
             rpgcore.getCooldownManager().givePlayerTeleporterCooldown(player.getUniqueId());
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&aPrzeteleportowano na spawna!"));
-//            if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
-//                if (player.getLastDamageCause() != null && player.getLastDamageCause().getCause() != null && player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-//                    player.damage(player.getMaxHealth(), ((EntityDamageByEntityEvent) player.getLastDamageCause()).getDamager());
-//                    return;
-//                }
-//            }
+            //if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
+             //   if (player.getLastDamageCause() != null && player.getLastDamageCause().getCause() != null && player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                 //   player.damage(player.getMaxHealth(), ((EntityDamageByEntityEvent) player.getLastDamageCause()).getDamager());
+                 //   return;
+              //  }
+           // }
             player.setHealth(player.getMaxHealth());
             if (player.hasPotionEffect(PotionEffectType.SLOW)) {
                 player.removePotionEffect(PotionEffectType.SLOW);

@@ -43,7 +43,8 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eDodatkowa kasa z mobow i metinow: &c+25%",
                 "&7* &eZwiekszone Szczescie: &c+25",
                 "&7* &eDostep do /zestawrangi",
-                "&7* &eDostep do /ec"
+                "&7* &eDostep do /ec",
+                "&7* &eDostep do /stragan"
 
         )).addGlowing().toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.BOOK).setName("&9&lTworca").setLore(Arrays.asList(" ",
@@ -55,6 +56,7 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eDostep do /live",
                 "&7* &eDostep do /zestawrangi",
                 "&7* &eDostep do /ec",
+                "&7* &eDostep do /stragan",
                 "",
                 "&7Wymagania:",
                 "&4&lYou&f&lTube&7: &eminimum 200 subskrypcji",
@@ -73,7 +75,8 @@ public class RangiCommand extends CommandAPI {
                 "&7* &eZwiekszone Szczescie: &c+50",
                 "&7* &eDostep do /enderchest",
                 "&7* &eDostep do /zestawrangi",
-                "&7* &eDostep do /magazyn"
+                "&7* &eDostep do /magazyn",
+                "&7* &eDostep do /stragan"
         )).addGlowing().toItemStack().clone());
         gui.setItem(3, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&c&lInformacje").setLore(Arrays.asList(
                 " ",

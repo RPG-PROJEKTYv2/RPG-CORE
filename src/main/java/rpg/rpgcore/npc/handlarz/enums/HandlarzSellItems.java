@@ -190,8 +190,11 @@ public enum HandlarzSellItems {
 
     // 100-110 BOSS
     // 100-110 BOSS AKCE
-    // 146
-
+    I137("Naszyjnik Mitycznego Krakena", Material.STORAGE_MINECART, 2_200_000),
+    I138("Diadem Mitycznego Krakena", Material.WATCH, 1_500_000),
+    I139("Pierscien Mitycznego Krakena", Material.EXPLOSIVE_MINECART, 1_200_000),
+    I140("Tarcza Mitycznego Krakena", Material.ITEM_FRAME, 1_200_000),
+    I141("Kolczyki Mitycznego Krakena", Material.HOPPER_MINECART, 1_200_000),
     // 110-120 BOSS
     // 110-120 BOSS AKCE
     // 156
@@ -267,8 +270,11 @@ public enum HandlarzSellItems {
     I218("Skradzione Trzewiki", Material.DIAMOND_BOOTS, 1_500_000),
     I219("Skradziony Miecz", Material.DIAMOND_SWORD, 3_000_000),
     // NIES 100-110
-    // 224
-
+    I220("Podwodny Czepek", Material.DIAMOND_HELMET, 4_500_000),
+    I221("Podwodna Kamizelka", Material.DIAMOND_CHESTPLATE,4_500_000),
+    I222("Podwodne Gacie", Material.DIAMOND_LEGGINGS,  4_500_000),
+    I223("Podwodne Pletwy", Material.DIAMOND_BOOTS, 4_500_000),
+    I224("Podwodny Sztylet", Material.DIAMOND_SWORD, 8_000_000),
     // NIES 110-120
     // 229
 
@@ -331,7 +337,11 @@ public enum HandlarzSellItems {
     I278("Skradziona Tarcza", Material.ITEM_FRAME, 1_500_000),
     I279("Skradzione Kolczyki", Material.HOPPER_MINECART, 3_000_000),
     // AKCESORIUM 100-110
-    // 284
+    I280("Mityczna Naszyjnik", Material.STORAGE_MINECART, 4_500_000),
+    I281("Mityczny Diadem", Material.WATCH, 3_500_000),
+    I282("Mityczny Pierscien", Material.EXPLOSIVE_MINECART, 3_500_000),
+    I283("Mityczna Tarcza", Material.ITEM_FRAME, 3_500_000),
+    I284("Mityczne Kolczyki", Material.HOPPER_MINECART, 5_000_000),
     // AKCESORIUM 110-120
     // 289
     // AKCESORIUM 120-130
@@ -400,15 +410,15 @@ public enum HandlarzSellItems {
     I341("Stal",Material.IRON_INGOT,10000.0),
     I342("Proch",Material.SULPHUR,12000.0),
     // fragment metalu
-    I343("Fragment Stali Kowala",Material.PRISMARINE_CRYSTALS,250_000),
+    I343("Fragment Stali Kowala",Material.PRISMARINE_CRYSTALS,100_000),
     // fragment magii
-    I344("Czastka Magii",Material.BLAZE_POWDER,500_000),
+    I344("Czastka Magii",Material.BLAZE_POWDER,120_000),
 
-    I345("Mithrylowe Ostrze",Material.DIAMOND_SWORD,500_000),
-    I346("Mithrylowy Sztylet",Material.DIAMOND_SWORD,500_000),
+    I345("Mithrylowe Ostrze",Material.DIAMOND_SWORD,2_500_000),
+    I346("Mithrylowy Sztylet",Material.DIAMOND_SWORD,2_500_000),
 
-    I347("Ruda Mithrylu",Material.PRISMARINE,15_000),
-    I348("Magiczne Zaczarowanie",Material.INK_SACK,20_000),
+    I347("Ruda Mithrylu",Material.PRISMARINE,35_000),
+    I348("Magiczne Zaczarowanie",Material.INK_SACK,25_000),
 
 
 
@@ -484,22 +494,22 @@ public enum HandlarzSellItems {
             if (Utils.getTagString(item, "type").equals("ks")) {
                 int mobyProcentKS = Utils.getTagInt(item, "mobyProcentKS");
                 if (mobyProcentKS > 10) {
-                    mnoznik = 100;
-                }
-                if (mobyProcentKS > 20) {
-                    mnoznik = 200;
-                }
-                if (mobyProcentKS > 30) {
-                    mnoznik = 300;
-                }
-                if (mobyProcentKS > 40) {
                     mnoznik = 400;
                 }
+                if (mobyProcentKS > 20) {
+                    mnoznik = 800;
+                }
+                if (mobyProcentKS > 30) {
+                    mnoznik = 1400;
+                }
+                if (mobyProcentKS > 40) {
+                    mnoznik = 2000;
+                }
                 if (mobyProcentKS > 50) {
-                    mnoznik = 600;
+                    mnoznik = 3000;
                 }
                 if (mobyProcentKS > 60) {
-                    mnoznik = 1000;
+                    mnoznik = 10000;
                 }
                 // ...
 
@@ -507,22 +517,22 @@ public enum HandlarzSellItems {
             } else if (Utils.getTagString(item, "type").equals("tyra")) {
                 int ludzieProcentTYRA = Utils.getTagInt(item, "ludzieProcentTYRA");
                 if (ludzieProcentTYRA > 10) {
-                    mnoznik = 100;
-                }
-                if (ludzieProcentTYRA > 20) {
-                    mnoznik = 200;
-                }
-                if (ludzieProcentTYRA > 30) {
-                    mnoznik = 300;
-                }
-                if (ludzieProcentTYRA > 40) {
                     mnoznik = 400;
                 }
+                if (ludzieProcentTYRA > 20) {
+                    mnoznik = 800;
+                }
+                if (ludzieProcentTYRA > 30) {
+                    mnoznik = 1400;
+                }
+                if (ludzieProcentTYRA > 40) {
+                    mnoznik = 2000;
+                }
                 if (ludzieProcentTYRA > 50) {
-                    mnoznik = 500;
+                    mnoznik = 3000;
                 }
                 if (ludzieProcentTYRA > 60) {
-                    mnoznik = 1000;
+                    mnoznik = 10000;
                 }
                 // ...
 

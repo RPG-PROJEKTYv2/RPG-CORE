@@ -124,8 +124,15 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
         }
-        if (title.equals("Niesamowite - ADMINISTRACJA") || title.equals("Akcesorium - ADMINISTRACJA") ||  title.equals("Ulepszacze - ADMINISTRACJA")) {
+        if (title.equals("Niesamowite - ADMINISTRACJA") || title.equals("Akcesorium - ADMINISTRACJA")) {
             if (slot == 17) {
+                e.setCancelled(true);
+                rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
+                return;
+            }
+        }
+        if (title.equals("Ulepszacze - ADMINISTRACJA")) {
+            if (slot == 44) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
                 return;

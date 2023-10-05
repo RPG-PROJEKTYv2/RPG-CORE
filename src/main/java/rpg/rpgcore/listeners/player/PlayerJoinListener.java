@@ -115,6 +115,9 @@ public class PlayerJoinListener implements Listener {
         if (user.getLvl() <= 5) {
             player.teleport(spawnLocations1_10.get(ChanceHelper.getRandInt(0, spawnLocations1_10.size() - 1)));
         } else {
+            if (RPGCORE.getInstance().getCooldownManager().hasAntyLogout(player.getUniqueId())) {
+                player.teleport(new Location(Bukkit.getWorld("world"), -102.514, 89.5, -225.507, 89.8F, -0.5F));
+            }
             player.teleport(rpgcore.getSpawnManager().getSpawn());
         }
 

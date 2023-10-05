@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bao.objects.BaoUser;
+import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
 import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.DoubleUtils;
@@ -303,6 +304,51 @@ public class ChatInventoryClickListener implements Listener {
                         }
                     }
                     formatPrzed.addExtra(Utils.format(finalMessage.toString()));
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.spigot().sendMessage(formatPrzed);
+                    }
+                    break;
+                case 7:
+                    final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznikUser = rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid);
+
+                    if (rpgcore.getUserManager().find(uuid).getLvl() < 70) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cMusisz posiadac minimum &c70 &7poziom, zeby pokazac Przekleta Moc na chacie"));
+                        player.closeInventory();
+                        break;
+                    }
+
+                    if (przekletyCzarnoksieznikUser.getDefMOB() == 0 || przekletyCzarnoksieznikUser.getDmgMOB() == 0) {
+                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie masz wylosowanych bonusow!"));
+                        player.closeInventory();
+                        break;
+                    }
+
+                    final TextComponent przekletaMoc = new TextComponent("§8[§5Przekleta Moc Czarnoksieznika§8]");
+                    final TextComponent MOCtext = new TextComponent(
+                            "§5Przekleta Moc gracza: §c" + player.getName() +
+                                    "§7:\n§cSilny Na Potwory: §e+" +  przekletyCzarnoksieznikUser.getDmgMOB() + "%§7/§625%" +
+                                    "\n§cDefensywa Przeciwko Potworom: §e+" + przekletyCzarnoksieznikUser.getDefMOB() + "%§7/§625%" +
+                                    "\n");
+                    przekletaMoc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{MOCtext}));
+
+
+                    if (msg.isEmpty()) {
+                        formatPrzed.addExtra(przekletaMoc);
+                    } else {
+                        if (!isHighStaff) {
+                            formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(0))));
+                        } else {
+                            formatPrzed.addExtra(Utils.format(" " + color + msg.get(0)));
+                        }
+                        formatPrzed.addExtra(przekletaMoc);
+                        for (int i = 1; i < msg.size(); i++) {
+                            if (!isHighStaff) {
+                                formatPrzed.addExtra(Utils.format(" &f" + Utils.removeColor(msg.get(i))));
+                            } else {
+                                formatPrzed.addExtra(Utils.format(" " + color + msg.get(i)));
+                            }
+                        }
+                    }
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.spigot().sendMessage(formatPrzed);
                     }

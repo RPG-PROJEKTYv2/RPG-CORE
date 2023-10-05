@@ -312,4 +312,8 @@ public class CooldownManager {
     public void giveAntyLogout(final UUID uuid) {
         this.antyLogout.put(uuid, System.currentTimeMillis() + 10000L);
     }
+
+    public void removeAntyLogout(final UUID uuid) {
+        this.antyLogout.put(uuid, System.currentTimeMillis() + 1L);
+    }
 }

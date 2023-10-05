@@ -256,11 +256,11 @@ public class AdminPanelManager {
     }
 
     public void openUlepszaczeGUI(final Player player) {
-        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&f&lUlepszacze &f- ADMINISTRACJA"));
+        final Inventory gui = Bukkit.createInventory(null, 45, Utils.format("&f&lUlepszacze &f- ADMINISTRACJA"));
         for (final Ulepszacze ulepszacze : Ulepszacze.values()) {
             gui.setItem(gui.firstEmpty(), ulepszacze.getItem());
         }
-        gui.setItem(17, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
+        gui.setItem(44, new ItemBuilder(Material.ARROW).setName("&cPowrot").toItemStack());
         player.openInventory(gui);
     }
 

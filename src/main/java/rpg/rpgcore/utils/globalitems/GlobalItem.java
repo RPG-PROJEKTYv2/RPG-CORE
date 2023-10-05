@@ -25,7 +25,7 @@ public enum GlobalItem {
     I_KSIEGAMAGII_PLUS("I_KSIEGAMAGII_PLUS", new ItemBuilder(Material.ENCHANTED_BOOK).setName("&5&lKsiega Magii&b&l+").setLore(Arrays.asList("&8Ta magiczna ksiega pozwoli Ci", "&8zmienic &cwartosc &8wybranego bonusu w &6Stole Magii", "&8Pamietaj &c&lAdministracja &8nie odpowiada za zmieniane bonusy")).toItemStack().clone()),
 
     I11("I11", new ItemBuilder(Material.GOLD_NUGGET).setName("&4&lH&6&lS &4&lvalue").setLore(Arrays.asList("&8&oKliknij&8, zeby zasilic swoj balans")).addGlowing().toItemStack().clone()),
-    // MATERIALY
+    // MATERIALY x1
     I12("I12", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I13("I13", new ItemBuilder(Material.DIAMOND).setName("&bBrylant").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I14("I14", new ItemBuilder(Material.EMERALD).setName("&aSzmaragd").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
@@ -33,6 +33,14 @@ public enum GlobalItem {
     I16("I16", new ItemBuilder(Material.STONE).setName("&7Kamien").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I17("I17", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
     I18("I18", new ItemBuilder(Material.SULPHUR).setName("&7Proch").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    // MATERIALY x64
+    I12_64("I12_64", new ItemBuilder(Material.GOLD_INGOT).setName("&eZloto &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I13_64("I13_64", new ItemBuilder(Material.DIAMOND).setName("&bBrylant &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I14_64("I14_64", new ItemBuilder(Material.EMERALD).setName("&aSzmaragd &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I15_64("I15_64", new ItemBuilder(Material.REDSTONE).setName("&cPyl &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I16_64("I16_64", new ItemBuilder(Material.STONE).setName("&7Kamien &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I17_64("I17_64", new ItemBuilder(Material.IRON_INGOT).setName("&8Stal &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
+    I18_64("I18_64", new ItemBuilder(Material.SULPHUR).setName("&7Proch &8(&ex64&8)").setLore(Arrays.asList("&8&oMaterial")).hideFlag().toItemStack().clone()),
 
     I_ODLAMEK_ZAKLETEJ_DUSZY("I_ODLAMEK_ZAKLETEJ_DUSZY", new ItemBuilder(Material.COAL).setName("&8Odlamek Zakletej Duszy").setLore(Arrays.asList("", "&7Przedmiot ten potrzebny jest &3Wygnanemu Kowalowi&7!")).hideFlag().toItemStack().clone()),
 
