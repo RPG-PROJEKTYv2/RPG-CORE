@@ -52,11 +52,12 @@ public class PlayerQuitListener implements Listener {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
             rpgcore.getGuildManager().putGuildLastOnline(tag, uuid, new Date());
         }
+
         if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
             player.setHealth(0);
             rpgcore.getCooldownManager().removeAntyLogout(player.getUniqueId());
-            return;
         }
+
         if (!rpgcore.getUserManager().find(uuid).getRankUser().isHighStaff()) {
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (rpgcore.getChatManager().find(online.getUniqueId()).isQuitMessageEnabled()) {

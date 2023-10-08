@@ -2,6 +2,7 @@ package rpg.rpgcore.managers;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import lombok.Getter;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> pickaxeAbility = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build();
     private final Cache<UUID, Long> rdzenCooldown = CacheBuilder.newBuilder().expireAfterWrite(500, TimeUnit.MILLISECONDS).build();
     private final Cache<UUID, Long> teleporterCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
+    @Getter
     private final Cache<UUID, Long> antyLogout = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
@@ -313,7 +315,11 @@ public class CooldownManager {
         this.antyLogout.put(uuid, System.currentTimeMillis() + 10000L);
     }
 
+    public String getAntyLogout(final UUID uuid) {
+        return Utils.durationToString(this.antyLogout.asMap().get(uuid), false);
+    }
+
     public void removeAntyLogout(final UUID uuid) {
-        this.antyLogout.put(uuid, System.currentTimeMillis() + 1L);
+        this.antyLogout.asMap().remove(uuid);
     }
 }

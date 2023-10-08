@@ -734,7 +734,7 @@ public class Utils {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
         if (!nmsStack.hasTag()) return 0;
         NBTTagCompound tagCompound = nmsStack.getTag();
-        if (tagCompound.hasKey(tag)) return DoubleUtils.round(tagCompound.getDouble(tag), 2);
+        if (tagCompound.hasKey(tag)) return DoubleUtils.round(tagCompound.getDouble(tag), 4);
         return 0;
     }
 
@@ -780,7 +780,7 @@ public class Utils {
             double old = tagCompound.getDouble(tag);
             if (old > value) return;
         }
-        tagCompound.setDouble(tag, DoubleUtils.round(value, 2));
+        tagCompound.setDouble(tag, DoubleUtils.round(value, 4));
         nmsStack.setTag(tagCompound);
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }

@@ -37,21 +37,14 @@ public class ProfileCommand extends CommandAPI {
                 return;
             }
             if (args.length == 1) {
-                final OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
-
-                if (offlineTarget == null) {
-                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
-                    return;
-                }
-
-                final User user = RPGCORE.getInstance().getUserManager().find(offlineTarget.getUniqueId());
+                final User user = RPGCORE.getInstance().getUserManager().find(args[0]);
 
                 if (user == null) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&cNie znaleziono podanego gracza!"));
                     return;
                 }
 
-                this.createProfileGUI(player, offlineTarget.getUniqueId(), offlineTarget.getName());
+                this.createProfileGUI(player, user.getId(), user.getName());
                 return;
             }
             player.sendMessage(Utils.poprawneUzycie("profile <player>"));
@@ -132,8 +125,7 @@ public class ProfileCommand extends CommandAPI {
                 "&7Dodatkowe Obrazenia: &f" + user.getDodatkoweobrazenia(),
                 "&7Silny Na Ludzi: &f" + user.getSilnynaludzi() + "%",
                 "&7Silny Na Potwory: &f" + user.getSilnynapotwory() + "%",
-                "&7Szansa Na Cios Krytyczny: &f" + (DoubleUtils.round(user.getSzansanakryta() / 2.25, 2)) + "%",
-                "&7Szansa Na Wzmocniony Cios Krytyczny: &f" + user.getSzansanawzmocnieniekryta() + "%",
+                "&7Szansa Na Cios Krytyczny: &f" + (DoubleUtils.round((user.getSzansanakryta() + user.getSzansanawzmocnieniekryta()) / 4, 2)) + "%",
                 "&7Wzmocnienie Ciosu Krytycznego: &f" + user.getWzmocnienieKryta() + "%",
                 "&7Przeszycie Bloku Ciosu: &f" + user.getPrzeszyciebloku() + "%",
                 "&7Zmniejszone Obrazenia: &f" + user.getMinussrednieobrazenia() + "%",
@@ -144,7 +136,7 @@ public class ProfileCommand extends CommandAPI {
         gui.setItem(25, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("&aStatystyki Defensywy").setLore(Arrays.asList(
                 "&7Srednia Defensywa: &f" + user.getSredniadefensywa() + "%",
                 "&7Defensywa Przeciwko Ludziom: &f" + user.getDefnaludzi() + "%",
-                "&7Defensywa Przeciwko Potworom: &f" + defNaMoby + "%",
+                "&7Defensywa Przeciwko Potworom: &f" + DoubleUtils.round(defNaMoby, 2) + "%",
                 "&7Blok Ciosu: &f" + user.getBlokciosu() + "%",
                 "&7Zmniejszona Defensywa: &f" + user.getMinussredniadefensywa() + "%",
                 "&7Zmniejszona Defensywa Przeciwko Ludziom: &f" + user.getMinusdefnaludzi() + "%",

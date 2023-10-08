@@ -30,7 +30,7 @@ public class SpawnCommand extends CommandAPI {
         final Player player = (Player) sender;
         if (args.length == 0) {
             if (rpgcore.getCooldownManager().hasAntyLogout(player.getUniqueId())) {
-                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Nie mozesz uzywac tej komendy podczas &cwalki&7!"));
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz odczekac jeszcze &c" + rpgcore.getCooldownManager().getAntyLogout(player.getUniqueId()) + " &7do zakonczenia walki!"));
                 return;
             }
             player.teleport(rpgcore.getSpawnManager().getSpawn());

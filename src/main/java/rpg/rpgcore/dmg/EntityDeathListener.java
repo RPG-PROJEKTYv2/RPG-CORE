@@ -140,6 +140,11 @@ public class EntityDeathListener implements Listener {
             return;
         }
 
+        if (rpgcore.getCooldownManager().hasAntyLogout(victim.getUniqueId())) {
+            rpgcore.getCooldownManager().removeAntyLogout(victim.getUniqueId());
+        }
+
+
         rpgcore.getServer().broadcastMessage(Utils.format(Utils.GUILDSPREFIX + "&8[&3" + killerGuild + "&8] &a" + killer.getName() + " &7zabija &8[&3" + victimGuild + "&8] &c" + victim.getName()));
         rpgcore.getGuildManager().updateGuildExp(killerGuild, 10);
         rpgcore.getGuildManager().updateGuildExpEarned(killerGuild, killer.getUniqueId(), 10);

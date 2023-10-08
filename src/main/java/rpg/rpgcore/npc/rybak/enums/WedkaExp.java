@@ -98,11 +98,12 @@ public enum WedkaExp {
     }
 
     public double getMobDrop() {
-        return DoubleUtils.round(mobDrop, 1);
+        return DoubleUtils.round(mobDrop, 2);
     }
 
     public double getKrysztalDrop() {
-        return DoubleUtils.round(krysztalDrop, 1);
+        System.out.println(krysztalDrop);
+        return krysztalDrop;
     }
 
     public static WedkaExp getWedkaExp(final int lvl) {

@@ -210,7 +210,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
 
                     double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(victim, attacker), 2);
-                    double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(victim);
+                    double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(attacker);
 
                     if (rpgcore.getKociolkiManager().find(victim.getUniqueId()).isEgzekutor()) {
                         playerDamage *= 1.75;
@@ -236,8 +236,9 @@ public class EntityDamageEntityListener implements Listener {
                     }
 
                     final double finalDmg = DoubleUtils.round(playerDamage / wartoscDefa, 2);
-
+                    //attacker.sendMessage(Utils.format("&cFinal DMG (thorns): " + finalDmg));
                     final double finalThornsDamage = DoubleUtils.round(finalDmg * 0.00125 * rpgcore.getDamageManager().calculatePlayerThorns(victim), 2);
+                    //attacker.sendMessage(Utils.format("&cFinal THORNS DMG TO PLAYER (thorns): " + finalThornsDamage));
 
                     if (finalThornsDamage > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalThornsDamage);
@@ -254,7 +255,7 @@ public class EntityDamageEntityListener implements Listener {
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
                     final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity(), true), 2);
-                    final double finalDmg = DoubleUtils.round(playerDamage * mnoznik * 0.6, 2);
+                    final double finalDmg = DoubleUtils.round(playerDamage * mnoznik * 0.7, 2);
 
                     if (mnoznik > 0) {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, finalDmg);
@@ -424,11 +425,6 @@ public class EntityDamageEntityListener implements Listener {
                 }
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim, false);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
-//                attacker.sendMessage("Base - " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
-//                attacker.sendMessage("Armor - " + e.getDamage(EntityDamageEvent.DamageModifier.ARMOR));
-//                attacker.sendMessage("Resistance - " + e.getDamage(EntityDamageEvent.DamageModifier.RESISTANCE));
-//                attacker.sendMessage("Dmg event - " + e.getDamage());
-//                attacker.sendMessage("Dmg final - " + e.getFinalDamage());
                 if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
                     if (((Monster) victim).getTarget() != attacker) {
                         ((Monster) victim).setTarget(attacker);
