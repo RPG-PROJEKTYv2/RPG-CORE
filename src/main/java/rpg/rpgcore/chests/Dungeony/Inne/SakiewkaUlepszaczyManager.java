@@ -34,8 +34,7 @@ public class SakiewkaUlepszaczyManager {
         for (Items item : this.sakiewkaUlepszaczy) {
             if (item.getChance() >= 100.0 || item.getChance() > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 final Items clone = item.clone();
-                clone.setAmount(ChanceHelper.getRandInt(2, 6));
-                clone.getRewardItem().setAmount(clone.getAmount());
+                clone.getRewardItem().setAmount(ChanceHelper.getRandInt(2, 6));
                 if (user.isChestDropEnabled()) player.sendMessage(Utils.format("&2+ &fx" + clone.getRewardItem().getAmount()) + " " + clone.getRewardItem().getItemMeta().getDisplayName());
                 player.getInventory().addItem(clone.getRewardItem());
                 return;

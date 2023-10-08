@@ -91,6 +91,10 @@ public class LvlManager {
         if (user.getRankPlayerUser().getRankType() == RankTypePlayer.ELITA) dodatkowyExp += 50;
         dodatkowyExp += rpgcore.getBonusesManager().find(uuid).getBonusesUser().getDodatkowyExp();
 
+        if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
+            dodatkowyExp += rpgcore.getGuildManager().getGuildDodatkowyExp(rpgcore.getGuildManager().getGuildTag(uuid));
+        }
+
         return dodatkowyExp;
     }
 

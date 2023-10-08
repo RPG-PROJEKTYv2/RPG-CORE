@@ -19,6 +19,7 @@ public class BossyTargetChangeListener implements Listener {
             if (ChanceHelper.getChance(40)) {
                 final List<Player> targets = e.getEntity().getNearbyEntities(6, 6, 6).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
                 if (targets.size() > 1) {
+                    if (!(e.getEntity() instanceof Creature)) return;
                     final Creature entity = (Creature) e.getEntity();
                     entity.setTarget(targets.get(ChanceHelper.getRandInt(0, targets.size() - 1)));
                 }

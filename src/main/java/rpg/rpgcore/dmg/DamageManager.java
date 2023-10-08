@@ -83,7 +83,7 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 0;
+        double dmg = 1;
         double mnoznik = 100;
         double krytyk = 0;
         double wzmKrytDmg = 0;
@@ -242,10 +242,9 @@ public class DamageManager {
         final ItemStack weapon = attacker.getItemInHand();
         final UUID uuid = attacker.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double dmg = 0;
+        double dmg = 1;
         double mnoznik = 100;
         double krytyk = 0;
-        double wzmKryt = 0;
         double wzmKrytDmg = 0;
         double bony = 100;
 
@@ -394,7 +393,7 @@ public class DamageManager {
     public double calculatePlayerDef(final Player player) {
         final UUID uuid = player.getUniqueId();
         final BonusesUser bonuses = rpgcore.getBonusesManager().find(uuid).getBonusesUser();
-        double def = 0;
+        double def = 1;
         double mnoznik = 100;
         double bony = 100;
         double gildia = 100;

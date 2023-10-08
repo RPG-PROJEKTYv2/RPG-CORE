@@ -94,7 +94,7 @@ public class PelerynkiInteractListener implements Listener {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + RPGCORE.getInstance().getCooldownManager().getPelerynkaPCooldownExp(uuid)));
                     return;
                 }
-                if (!player.getWorld().getName().contains("map")) {
+                if (!player.getWorld().getName().contains("map") && !player.getWorld().getName().contains("Dungeon")) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego tutaj uzyc!"));
                     RPGCORE.getInstance().getCooldownManager().givePelerynkaPCooldownExp(uuid);
                     return;

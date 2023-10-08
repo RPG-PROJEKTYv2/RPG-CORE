@@ -19,7 +19,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.goxy.minecraft.api.Goxy;
 import pl.goxy.minecraft.api.GoxyApi;
 import pl.goxy.sdk.GoxySdk;
 import pl.goxy.sdk.exception.GoxyApiErrorException;
@@ -160,6 +159,11 @@ import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.ZamekNieskonczonosciMana
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciEntityDamgeListener;
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
+import rpg.rpgcore.dungeons.maps.demoniczneSale.DemoniczneSaleManager;
+import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSaleEntityDamageListener;
+import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSaleInteractListener;
+import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSalePortalEntryListener;
+import rpg.rpgcore.dungeons.maps.demoniczneSale.tasks.DemoniczneSaleTask;
 import rpg.rpgcore.dungeons.maps.icetower.IceTowerManager;
 import rpg.rpgcore.dungeons.maps.icetower.events.IceTowerListener;
 import rpg.rpgcore.dungeons.maps.icetower.tasks.IceTowerTask;
@@ -607,6 +611,8 @@ public final class RPGCORE extends JavaPlugin {
     private ZlotnikNPC zlotnikNPC;
     @Getter
     private MroznyStrozNPC mroznyStrozNPC;
+    @Getter
+    private DemoniczneSaleManager demoniczneSaleManager;
 
 
     private int i = 1;
@@ -1293,6 +1299,12 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiPortalEntryListener(this), this);
         this.getServer().getPluginManager().registerEvents(new TajemniczePiaskiEntityDamageListener(), this);
 
+        // DEMONICZNE SALE
+        this.demoniczneSaleManager = new DemoniczneSaleManager(this);
+        this.getServer().getPluginManager().registerEvents(new DemoniczneSaleInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new DemoniczneSalePortalEntryListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new DemoniczneSaleEntityDamageListener(), this);
+
     }
 
     private void initCustomDungeons() {
@@ -1348,6 +1360,8 @@ public final class RPGCORE extends JavaPlugin {
         new KoloseumTask(this);
         // ... TAJEMNICZE PIASKI
         new TajemniczePiaskiTask(this);
+        // ... DEMONICZNE SALE
+        new DemoniczneSaleTask(this);
         // ... ICE TOWER
         new IceTowerTask(this);
 

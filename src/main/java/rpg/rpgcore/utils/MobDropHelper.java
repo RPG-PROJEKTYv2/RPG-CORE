@@ -714,7 +714,7 @@ public class MobDropHelper {
                 addDropPlayer(player, Dungeony.I_KOLOSEUM_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getKoloseumManager().incrementCounter();
                 break;
-            // ----------------------------------------- PIEKIELNY PRZEDSIONEK -----------------------------------------
+            // ----------------------------------------- TAJEMNICZE PIASKI -----------------------------------------
             case "Truposz Lvl. 85":
                 addDropPlayer(player, AkceItems.A9.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
                 if (rpgcore.getTajemniczePiaskiManager().getDungeonStatus() == DungeonStatus.ETAP_1) {
@@ -741,6 +741,26 @@ public class MobDropHelper {
             case "[BOSS] Cesarz Pustyni":
                 addDropPlayer(player, Dungeony.I_TAJEMNICZE_PIASKI_SKRZYNKA.getItemStack(), 100, true, true, entity);
                 rpgcore.getTajemniczePiaskiManager().incrementCounter();
+                break;
+            // ----------------------------------------- DEMONICZNE SALE -----------------------------------------
+            case "Demoniczny Lowca Lvl. 95":
+                addDropPlayer(player, Dungeony.I_DEMONICZNY_SARKOFAG.getItemStack(), 0.0075, true, true, entity);
+                addDropPlayer(player, AkceItems.A10.getItemStack(), getDropChance(szczescie, 0.07), true, false, entity);
+                addDropPlayer(player, NiesyItems.N10.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
+                break;
+            case "[MiniBOSS] Elitarny Sluga":
+                addDropPlayer(player, AkceItems.A10.getItemStack(), getDropChance(szczescie, 50), true, false, entity);
+                addDropPlayer(player, NiesyItems.N10.getItemStack(), getDropChance(szczescie, 10), true, false, entity);
+                addDropPlayer(player, Dungeony.I_SAKIEWKA_ULEPSZACZY.getItemStack(), 100, true, true, entity);
+                if (rpgcore.getDemoniczneSaleManager().getDungeonStatus() == DungeonStatus.ETAP_2) {
+                    rpgcore.getDemoniczneSaleManager().incrementCounter();
+                }
+                break;
+            case "[BOSS] Demon Ciemnosci":
+                addDropPlayer(player, Dungeony.I_DEMONICZNE_SALE_SKRZYNKA.getItemStack(), 100, true, true, entity);
+                if (rpgcore.getDemoniczneSaleManager().getDungeonStatus() == DungeonStatus.BOSS) {
+                    rpgcore.getDemoniczneSaleManager().incrementCounter();
+                }
                 break;
 
             //                                            RYBAK WYSPA 2

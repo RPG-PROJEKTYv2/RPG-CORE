@@ -404,8 +404,8 @@ public class GuildManager {
         if (this.getGuildDodatkowyExp(tag) != 25) {
             lore.add(" ");
             lore.add("&6Koszt ulepszenia:");
-            lore.add("&8- &72 &6kredyt");
-            lore.add("&8- &c&l100 &4&lH&6&lS");
+            lore.add("&8- &71 &6kredyt");
+            lore.add("&8- &c&l20 &4&lH&6&lS");
             return expItem.setName("&c&lDodatkowy EXP").setLore(lore).hideFlag().toItemStack().clone();
         } else {
             lore.add(" ");

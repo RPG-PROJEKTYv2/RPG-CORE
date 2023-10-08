@@ -268,24 +268,24 @@ public class RybakNPC {
     public ItemStack getWyspa2Drop(final Player player) {
         final ItemStack wedka = player.getItemInHand();
         final String krysztal = Utils.getTagString(wedka, "krysztal");
-        this.wyspa2Drops.add(new Items("1", 0.001 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
+        Set<Items> wyspa2DropsClone = new HashSet<>(this.wyspa2Drops);
+        wyspa2DropsClone.add(new Items("1", 0.00075 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
 
         switch (krysztal) {
             case "Mrocznych Wod":
-                this.wyspa2Drops.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I22.getItemStack(), 1));
+                wyspa2DropsClone.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I22.getItemStack(), 1));
                 break;
             case "Podwodnych Spiewow":
-                this.wyspa2Drops.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I23.getItemStack(), 1));
+                wyspa2DropsClone.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I23.getItemStack(), 1));
                 break;
         }
-        Set<Items> playerDrop = new HashSet<>(this.wyspa2Drops);
 
-        List<Items> toSort = new ArrayList<>(playerDrop);
+        List<Items> toSort = new ArrayList<>(wyspa2DropsClone);
 
         toSort = toSort.stream().sorted(Comparator.comparingDouble(Items::getChance)).collect(Collectors.toList());
 
-        playerDrop = ImmutableSet.copyOf(toSort);
-        for (Items item : playerDrop) {
+        wyspa2DropsClone = ImmutableSet.copyOf(toSort);
+        for (Items item : wyspa2DropsClone) {
             if (ChanceHelper.getChance(item.getChance())) {
                 final ItemStack reward = item.getRewardItem();
                 reward.setAmount(item.getAmount());

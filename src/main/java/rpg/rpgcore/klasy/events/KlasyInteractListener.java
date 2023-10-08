@@ -146,6 +146,7 @@ public class KlasyInteractListener implements Listener {
                                 target.addPotionEffect(blind);
                                 target.addPotionEffect(slow);
                                 target.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cZostales trafiony efektem &7&lZaslony Dymnej &cgracza &6" + player.getName() + "&c!"));
+                                player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cGracz &6" + target.getName() + "&czostal trafiony efektem twojej &7&lZaslony Dymnej"));
                             }
                             player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &aPomyslnie uzyles/-as &7&lZaslony Dymnej&a!"));
                             return;
@@ -178,6 +179,7 @@ public class KlasyInteractListener implements Listener {
                                 target.setVelocity(new Vector(0, 1.5, 0));
                                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2));
                                 targetHealth.add(target.getHealth() * 0.1);
+                                player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cGracz &6" + target.getName() + "&czostal trafiony efektem &eBurzy Ostrzy"));
                             }
                             double toAdd = 0;
                             if (!targetHealth.isEmpty()) for (int i = 0; i < 3; i++)
@@ -231,6 +233,7 @@ public class KlasyInteractListener implements Listener {
                             }
                             for (Player target : player.getNearbyEntities(10, 10, 10).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList())) {
                                 if (rpgcore.getGuildManager().getGuildTag(target.getUniqueId()).equals(rpgcore.getGuildManager().getGuildTag(player.getUniqueId()))) continue;
+                                player.sendMessage(Utils.format("&c&lDowodca Strazy &8>> &cGracz &6" + target.getName() + "&czostal trafiony efektem &5Puszki Pandory"));
                                 final PotionEffect effect = this.effects.get(ChanceHelper.getRandInt(0, this.effects.size() - 1));
                                 if (effect.getType() == PotionEffectType.FIRE_RESISTANCE) {
                                     target.setFireTicks(100);

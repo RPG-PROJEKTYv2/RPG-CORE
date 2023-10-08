@@ -63,7 +63,8 @@ public class ChatManager {
                             "\n&7Lider Gildii: &6" + (Bukkit.getPlayer(guild.getOwner()) != null ? "&a" + Bukkit.getPlayer(guild.getOwner()).getName() : "&c" + Bukkit.getOfflinePlayer(guild.getOwner()).getName()) +
                             "\n&7Ilosc czlonkow: &6" + guild.getMembers().size() + "&7/&615" +
                             "\n&7Poziom: &6" + guild.getLevel() +
-                            "\n&7Doswiadczenie: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag))) + "%"))}));
+                            (guild.getLevel() >= 50 ? "\n&7Doswiadczenie: &4&lMAX&7/&4&lMAX" :
+            "\n&7Doswiadczenie: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(guild.getExp(), rpgcore.getGuildManager().getGuildNextLvlExp(tag))) + "%")))}));
             guildM.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/klan info " + tag));
             main.addExtra(guildM);
         }

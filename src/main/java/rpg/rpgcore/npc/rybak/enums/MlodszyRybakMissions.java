@@ -36,71 +36,71 @@ public enum MlodszyRybakMissions {
 
     M8(8, new ItemBuilder(Material.BOOK).setName("&7Misja #&c8").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Dorszy"
-    )).addTagString("itemName", "Dorsz").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Dorsz").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M9(9, new ItemBuilder(Material.BOOK).setName("&7Misja #&c9").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Lososi"
-    )).addTagString("itemName", "Losos").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Losos").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M10(10, new ItemBuilder(Material.BOOK).setName("&7Misja #&c10").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Plotek"
-    )).addTagString("itemName", "Plotka").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Plotka").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M11(11, new ItemBuilder(Material.BOOK).setName("&7Misja #&c11").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Sandaczy"
-    )).addTagString("itemName", "Sandacz").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Sandacz").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M12(12, new ItemBuilder(Material.BOOK).setName("&7Misja #&c12").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Postragow"
-    )).addTagString("itemName", "Pstrag").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Pstrag").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M13(13, new ItemBuilder(Material.BOOK).setName("&7Misja #&c13").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Okoni"
-    )).addTagString("itemName", "Okon").toItemStack().clone(), 256, 75, 0.5, 0.5),
+    )).addTagString("itemName", "Okon").toItemStack().clone(), 256, 30, 0.5, 0.5),
     M14(14, new ItemBuilder(Material.BOOK).setName("&7Misja #&c14").setLore(Arrays.asList(
             "&7Oddaj &c256 &6Amurow"
-    )).addTagString("itemName", "Amur").toItemStack().clone(), 256, 75, 0.5, 0.5), //DMG - 525, PRZESZYWKA - 3.5%, DEF - 3.5%
+    )).addTagString("itemName", "Amur").toItemStack().clone(), 256, 30, 0.5, 0.5), //DMG - 210, PRZESZYWKA - 3.5%, DEF - 3.5%
 
 
     I15(15, new ItemBuilder(Material.BOOK).setName("&7Misja #&c15").setLore(Arrays.asList(
             "&7Wylow &c4 &bWodne Stwory"
-    )).toItemStack().clone(), 4, 125, 1, 1),
+    )).toItemStack().clone(), 4, 50, 1, 1),
     I16(16, new ItemBuilder(Material.BOOK).setName("&7Misja #&c16").setLore(Arrays.asList(
             "&7Wylow &c3 &9Nurkow Glebinowych"
-    )).toItemStack().clone(), 3, 125, 1, 1),
+    )).toItemStack().clone(), 3, 50, 1, 1),
     I17(17, new ItemBuilder(Material.BOOK).setName("&7Misja #&c17").setLore(Arrays.asList(
             "&7Wylow &c2 &b&lMorskich Ksieciow"
-    )).toItemStack().clone(), 2, 125, 1, 1),
+    )).toItemStack().clone(), 2, 50, 1, 1),
     I18(18, new ItemBuilder(Material.BOOK).setName("&7Misja #&c18").setLore(Arrays.asList(
             "&7Wylow &c1 &3&lPosejdona"
-    )).toItemStack().clone(), 1, 125, 1, 1), //DMG - 500, PRZESZYWKA - 4%, DEF - 4%
+    )).toItemStack().clone(), 1, 50, 1, 1), //DMG - 200, PRZESZYWKA - 4%, DEF - 4%
 
 
     I19(19, new ItemBuilder(Material.BOOK).setName("&7Misja #&c19").setLore(Arrays.asList(
             "&7Wylow &c3 &5&lKrysztaly Czarnoksieznika"
-    )).toItemStack().clone(), 3, 200, 2, 2),
+    )).toItemStack().clone(), 3, 75, 2, 2),
     I20(20, new ItemBuilder(Material.BOOK).setName("&7Misja #&c20").setLore(Arrays.asList(
             "&7Wylow &c5 &3&lNiesamowitych Przedmiotow &8&l(&7&lStara Fabryka&8&l)"
-    )).toItemStack().clone(), 5, 200, 2, 2),
+    )).toItemStack().clone(), 5, 75, 2, 2),
     I21(21, new ItemBuilder(Material.BOOK).setName("&7Misja #&c21").setLore(Arrays.asList(
             "&7Wylow &c5 &b&lPodwodnych Skarbow"
-    )).toItemStack().clone(), 5, 200, 2, 2), //DMG - 600, PRZESZYWKA - 6%, DEF - 6%
+    )).toItemStack().clone(), 5, 75, 2, 2), //DMG - 225, PRZESZYWKA - 6%, DEF - 6%
 
 
     I22(22, new ItemBuilder(Material.BOOK).setName("&7Misja #&c22").setLore(Arrays.asList(
             "&7Otworz &c10 &b&lPodwodne Skarby"
-    )).toItemStack().clone(), 10, 200, 2, 3), //DMG - 200, PRZESZYWKA - 2%, DEF - 3%
+    )).toItemStack().clone(), 10, 50, 2, 3), //DMG - 50, PRZESZYWKA - 2%, DEF - 3%
 
 
     I23(23, new ItemBuilder(Material.BOOK).setName("&7Misja #&c23").setLore(Arrays.asList(
             "&7Zabij &c10 &bWodnych Stworow"
-    )).toItemStack().clone(), 10, 275, 1.5, 2.5),
+    )).toItemStack().clone(), 10, 90, 1.5, 2.5),
     I24(24, new ItemBuilder(Material.BOOK).setName("&7Misja #&c24").setLore(Arrays.asList(
             "&7Zabij &c8 &9Nurkow Glebinowych"
-    )).toItemStack().clone(), 8, 275, 1.5, 2.5),
+    )).toItemStack().clone(), 8, 100, 1.5, 2.5),
     I25(25, new ItemBuilder(Material.BOOK).setName("&7Misja #&c25").setLore(Arrays.asList(
             "&7Zabij &c6 &b&lMorskich Ksieciow"
-    )).toItemStack().clone(), 6, 275, 1.5, 2.5),
+    )).toItemStack().clone(), 6, 100, 1.5, 2.5),
     I26(26, new ItemBuilder(Material.BOOK).setName("&7Misja #&c26").setLore(Arrays.asList(
             "&7Zabij &c4 &3&lPosejdonow"
-    )).toItemStack().clone(), 4, 425, 1.5, 2.5); //DMG - 1250, PRZESZYWKA - 6%, DEF - 10%
+    )).toItemStack().clone(), 4, 250, 1.5, 2.5); //DMG - 540, PRZESZYWKA - 6%, DEF - 10%
 
-    //TOTAL DMG - 3250
+    //TOTAL DMG - 1400
     //TOTAL PRZESZYWKA - 25%
     //TOTAL DEF - 30%
 

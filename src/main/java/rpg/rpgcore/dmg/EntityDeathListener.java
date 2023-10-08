@@ -57,6 +57,9 @@ public class EntityDeathListener implements Listener {
         e.getEntity().setHealth(e.getEntity().getMaxHealth());
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
         e.getEntity().getActivePotionEffects().clear();
+
+        if (e.getEntity().getLastDamageCause() == null) return;
+
         if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
             return;
         }

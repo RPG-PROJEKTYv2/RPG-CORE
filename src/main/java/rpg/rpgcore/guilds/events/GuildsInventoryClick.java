@@ -157,14 +157,14 @@ public class GuildsInventoryClick implements Listener {
                         player.closeInventory();
                         return;
                     }
-                    if (!player.getInventory().containsAtLeast(GlobalItem.getHells(100), 1)) {
+                    if (!player.getInventory().containsAtLeast(GlobalItem.getHells(20), 1)) {
                         player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cNie posiadasz odpowiednich przedmiotow do ulepszenia tego drzewka!"));
                         player.closeInventory();
                         return;
                     }
                     rpgcore.getGuildManager().updateGuildDodatkowyExp(tag, 2.5);
                     rpgcore.getGuildManager().updateGuildBalance(tag, -1);
-                    player.getInventory().removeItem(GlobalItem.getHells(100));
+                    player.getInventory().removeItem(GlobalItem.getHells(20));
                     break;
                 case 5:
                     return;

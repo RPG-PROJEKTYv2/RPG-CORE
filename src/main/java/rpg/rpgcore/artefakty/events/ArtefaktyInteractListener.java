@@ -128,6 +128,7 @@ public class ArtefaktyInteractListener implements Listener {
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
                         entity.sendMessage(Utils.format("&4&lArtefakty &8>> &cGracz &4" + player.getName() + " &cnalozyl na Ciebie efekt artefaktu &4Serca Yothuna&c!"));
+                        player.sendMessage(Utils.format("&4&lArtefakty &8>> &cGracz &4" + entity.getName() + " &czostal trafiony efektem artefaktu &4Serca Yothuna&c!"));
                     }
                 }
                 rpgcore.getCooldownManager().givePlayerSerceCooldown(uuid);
@@ -195,12 +196,12 @@ public class ArtefaktyInteractListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBucketInteract(final PlayerInteractEntityEvent e) {
-        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
                 && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
             e.setCancelled(true);
             return;
         }
-        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
                 && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
             e.setCancelled(true);
         }
@@ -208,12 +209,12 @@ public class ArtefaktyInteractListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBucketInteract(final PlayerInteractAtEntityEvent e) {
-        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
+        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.WATER_BUCKET
                 && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Obroncy")) {
             e.setCancelled(true);
             return;
         }
-        if (e.getRightClicked() instanceof EnderCrystal && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
+        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.LAVA_BUCKET
                 && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && Utils.removeColor(e.getPlayer().getItemInHand().getItemMeta().getDisplayName()).equals("Eliksir Potegi")) {
             e.setCancelled(true);
         }

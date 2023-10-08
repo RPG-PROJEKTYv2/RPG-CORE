@@ -24,8 +24,8 @@ public enum Dungeony {
     I_TAJEMNICZE_PIASKI_SKRZYNKA("I_TAJEMNICZE_PIASKI_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Cesarza").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone()),
     // 90-100
     I_KLUCZ_DEMONICZNE_SALE("I_KLUCZ_DEMONICZNE_SALE", new ItemBuilder(Material.TRIPWIRE_HOOK).setName("&4&lKlucz Do Demoniczej Sali").setLore(Arrays.asList(" ", "&7Klucz ten otwiera droge do &4&lDemoniczej Sali&7!")).hideFlag().toItemStack().clone()),
-    I_TAJEMNICZY_SARKOFAG("I_TAJEMNICZY_SARKOFAG", new ItemBuilder(Material.NETHER_WARTS).setName("&4Demoniczny Sarkofag").setLore(Arrays.asList("", "&7Pozwoli ci on zasilic &cdemoniczny krag&7!")).toItemStack().clone()),
-    I_DEMONICZNE_SALE_SKRZYNKA("I_DEMONICZNE_SALE_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Elitarnego Slugi").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
+    I_DEMONICZNY_SARKOFAG("I_DEMONICZNY_SARKOFAG", new ItemBuilder(Material.NETHER_STALK).setName("&4Fragment Demonicznego Sarkofagu").setLore(Arrays.asList("", "&7Pozwoli ci on uzupelnic &4&lDenoniczny Sarkofag&7!")).toItemStack().clone()),
+    I_DEMONICZNE_SALE_SKRZYNKA("I_DEMONICZNE_SALE_SKRZYNKA", new ItemBuilder(Material.JUKEBOX).setName("&4Skrzynia Demona Ciemnosci").setLore(Arrays.asList(" ","&7Kliknij aby zobaczyc co skrywa...")).hideFlag().toItemStack().clone());
 
     private final ItemStack itemStack;
     private final String name;
