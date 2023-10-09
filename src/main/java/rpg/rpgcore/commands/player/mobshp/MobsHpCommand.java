@@ -40,17 +40,17 @@ public class MobsHpCommand extends CommandAPI {
         gui.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());
         gui.setItem(1, new ItemBuilder(Material.INK_SACK, 1,(short)1).setName("&cExpowisko").setLore(Arrays.asList(
                 "",
-                "&6Rozbojnik: &c24 &7/ &c30 &7/ &c34",
-                "&2Goblin: &c125 &7/ &c160 &7/ &c200",
-                "&7Goryl: &c280 &7/ &c320 &7/ &c380",
-                "&8Zjawa: &c580 &7/ &c640 &7/ &c740",
-                "&3Straznik Swiatyni: &c820 &7/ &c1 000 &7/ &c1 400",
-                "&bMrozny Wilk: &c2 000 &7/ &c2 250 &7/ &c2 500",
-                "&6Zywiolak Ognia: &c6 000 &7/ &c7 500 &7/ &c9 000",
-                "&fMroczna Dusza: &c37 500 &7/ &c45 000 &7/ &c50 000",
-                "&6Pustynny Ptasznik: &c65 000 &7/ &c80 000 &7/ &c125 000",
-                "&5Podziemna Lowczyni: &c310 000 &7/ &c380 000 &7/ &c435 000",
-                "&bPodwodny Straznik: &c750 000 &7/ &c825 000 &7/ &c925 000",
+                "&6Rozbojnik: &c35",
+                "&2Goblin: &c100",
+                "&7Goryl: &c225",
+                "&8Zjawa: &c400",
+                "&3Straznik Swiatyni: &c740",
+                "&bMrozny Wilk: &c1 400",
+                "&6Zywiolak Ognia: &c6 000",
+                "&fMroczna Dusza: &c45 000",
+                "&6Pustynny Ptasznik: &c80 000",
+                "&5Podziemna Lowczyni: &c250 000",
+                "&bPodwodny Straznik: &c750 000",
                 ""
                 )).toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());

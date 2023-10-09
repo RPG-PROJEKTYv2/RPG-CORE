@@ -19,15 +19,15 @@ public enum Dungeons {
     KOLOSEUM_MINIBOSS4("[MiniBOSS] Wyznawca Hadesa", 57_661.0,500_000,70,80),
     KOLOSEUM_BOSS("[BOSS] Czempion Areny", 2_000_000,1_500_000,70,80),
     // 80-90
-    TAJEMNICZE_PIASKI_MOB1("Truposz Lvl. 85", 85_396.0,550_000,80,90),
-    TAJEMNICZE_PIASKI_MOB2("Truposz Lvl. 89", 96_327.0,650_000,80,90),
+    TAJEMNICZE_PIASKI_MOB1("Truposz Lvl. 85", 85_396.0,1500,80,90),
+    TAJEMNICZE_PIASKI_MOB2("Truposz Lvl. 89", 96_327.0,2000,80,90),
     TAJEMNICZE_PIASKI_MINIBOSS1("[MiniBOSS] Pustynny Tarczownik", 156_327.0,1,80,90),
     TAJEMNICZE_PIASKI_MINIBOSS2("[MiniBOSS] Pustynny Przyzywacz", 196_327.0,1,80,90),
     TAJEMNICZE_PIASKI_BOSS("[BOSS] Cesarz Pustyni", 6_908_910.0,3_500_000,80,90),
     // 90-100
-    DEMONICZNE_SALE_MOB1("Demoniczny Lowca Lvl. 95", 89_340,375_000,90,100),
+    DEMONICZNE_SALE_MOB1("Demoniczny Lowca Lvl. 95", 89_340,2500,90,100),
     DEMONICZNE_SALE_MINIBOSS1("[MiniBOSS] Elitarny Sluga", 4_525_756.0,2_500_000,90,100),
-    DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 18_625_921.0,6_000_000,90,100),
+    DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 18_625_921.0,4_500_000,90,100),
     ERROR("Error", 0, 0, 1, 1);
 
     private final String name;
