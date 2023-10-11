@@ -29,8 +29,8 @@ public class DemoniczneSaleTask implements Runnable {
             return;
         }
         rpgcore.getDemoniczneSaleManager().incrementTime();
-        if (rpgcore.getDemoniczneSaleManager().getTime() >= 7_200) {
-            rpgcore.getDemoniczneSaleManager().endDungeon();
+        if (rpgcore.getDemoniczneSaleManager().getTime() >= 7_200 && rpgcore.getDemoniczneSaleManager().getDungeonStatus() == DungeonStatus.ETAP_1) {
+            rpgcore.getDemoniczneSaleManager().startPhase2();
             return;
         }
         switch (rpgcore.getDemoniczneSaleManager().getDungeonStatus()) {

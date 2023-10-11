@@ -25,7 +25,7 @@ public enum Dungeons {
     TAJEMNICZE_PIASKI_MINIBOSS2("[MiniBOSS] Pustynny Przyzywacz", 196_327.0,1,80,90),
     TAJEMNICZE_PIASKI_BOSS("[BOSS] Cesarz Pustyni", 6_908_910.0,3_500_000,80,90),
     // 90-100
-    DEMONICZNE_SALE_MOB1("Demoniczny Lowca Lvl. 95", 89_340,2500,90,100),
+    DEMONICZNE_SALE_MOB1("Demoniczny Lowca Lvl. 95", 99_340,2500,90,100),
     DEMONICZNE_SALE_MINIBOSS1("[MiniBOSS] Elitarny Sluga", 4_525_756.0,2_500_000,90,100),
     DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 18_625_921.0,4_500_000,90,100),
     ERROR("Error", 0, 0, 1, 1);

@@ -487,7 +487,7 @@ public class RybakNPC {
 
     public void runFishAnimation(final Location playerLocation, final Entity entity) {
         double pushX = playerLocation.getDirection().normalize().getX() * -2;
-        double pushY = playerLocation.getDirection().normalize().getY() * -2;
+        double pushY = playerLocation.getDirection().normalize().getY() * -1.5;
         double pushZ = playerLocation.getDirection().normalize().getZ() * -2;
 
         Vector push = new Vector(pushX, pushY, pushZ);

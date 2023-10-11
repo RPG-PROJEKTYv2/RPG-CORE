@@ -157,11 +157,12 @@ public class RybakHelper {
     }
 
     private static int addRewardWyspa2(final Player player, final int dropAmount, final Location playerLocation, final Location hookLocation) {
-        ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa2Drop(player).clone();
+        ItemStack reward = RPGCORE.getInstance().getRybakNPC().getWyspa2Drop(player);
         if (reward == null) {
             player.sendMessage(Utils.format("&8[&c✘&8] &cNiestety ryba zerwala sie z linki..."));
             return 0;
         }
+        reward = reward.clone();
         final MlodszyRybakUser user = RPGCORE.getInstance().getRybakNPC().find(player.getUniqueId()).getMlodszyRybakUser();
 
         final int mission = user.getMission();

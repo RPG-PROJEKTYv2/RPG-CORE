@@ -53,7 +53,7 @@ public class Utils {
     public static DecimalFormat df = new DecimalFormat("0.0");
     public static DecimalFormat kasaFormat = new DecimalFormat("0.00");
     public static DecimalFormat procentFormat = new DecimalFormat("00.00");
-    public static int MAXLVL = 130;
+    public static int MAXLVL = 110;
 
     public static final List<World> customDungeonWorlds = Arrays.asList(
             Bukkit.getWorld("CustomDung1")

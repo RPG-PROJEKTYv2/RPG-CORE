@@ -744,7 +744,7 @@ public class MobDropHelper {
                 break;
             // ----------------------------------------- DEMONICZNE SALE -----------------------------------------
             case "Demoniczny Lowca Lvl. 95":
-                addDropPlayer(player, Dungeony.I_DEMONICZNY_SARKOFAG.getItemStack(), 0.0075, true, true, entity);
+                addDropPlayer(player, Dungeony.I_DEMONICZNY_SARKOFAG.getItemStack(), 0.09, true, true, entity);
                 addDropPlayer(player, AkceItems.A10.getItemStack(), getDropChance(szczescie, 0.07), true, false, entity);
                 addDropPlayer(player, NiesyItems.N10.getItemStack(), getDropChance(szczescie, 0.055), true, false, entity);
                 break;

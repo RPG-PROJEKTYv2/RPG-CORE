@@ -128,7 +128,8 @@ public class TeleporterInventoryClick implements Listener {
             if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
                 if (slot == 34) {
                     player.closeInventory();
-                    player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostalo zablokowane przez administracje!"));
+                    player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostanie wlaczone kiedy 4 osoby osiagna wymagany na nie poziom!"));
+                    return;
                    /* if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));

@@ -104,13 +104,13 @@ public class LvlManager {
         final double dodatkowyExp = this.getDodatkowyExp(killerUUID);
         final double kasa = this.getKasa(mob, killerUUID);
         double expDoDodania = this.getExp(mob);
-        expDoDodania += DoubleUtils.round(expDoDodania * dodatkowyExp / 100, 2);
+        expDoDodania += DoubleUtils.round(expDoDodania * (dodatkowyExp / 100), 2);
 
         if (rpgcore.getPetyManager().findActivePet(killerUUID).getPet().getItem() != null) {
             rpgcore.getPetyManager().increasePetExp(killer, rpgcore.getPetyManager().findActivePet(killer.getUniqueId()).getPet().getItem(), DoubleUtils.round(expDoDodania / 100, 2));
         }
 
-        if (user.getLvl() == 130) {
+        if (user.getLvl() == Utils.MAXLVL) {
             rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendActionBar(killer, "&8[&6EXP&8]&7(&6+ " + dodatkowyExp + "%&7) &f+0 exp &8(&4MAX LVL&8) &8| &2+ " + Utils.spaceNumber(String.format("%.2f", kasa)) + "$ &8[&6EXP&8]"));
             return;
         }
@@ -179,6 +179,12 @@ public class LvlManager {
         killer.sendMessage(Utils.format("&2+ &a" + Utils.spaceNumber(kasaZaLvl) + "&2$"));
         killer.setExp(0);
         killer.setLevel(nextLvlGracza);
+        if (nextLvlGracza == Utils.MAXLVL) {
+            for (int i = 0; i < 50; i++) {
+                rpgcore.getServer().broadcastMessage(" ");
+            }
+            rpgcore.getServer().broadcastMessage(Utils.format(Utils.LVLPREFIX + "&fGracz &3" + killer.getName() + " &fosiagnal &4&lMAXYMALNY &fpoziom. Gratulacje!"));
+        }
         if ((nextLvlGracza >= 10 && nextLvlGracza % 5 == 0) || nextLvlGracza > 60) {
             rpgcore.getServer().broadcastMessage(" ");
             rpgcore.getServer().broadcastMessage(Utils.format(Utils.LVLPREFIX + "&fGracz &3" + killer.getName() + " &fosiagnal &3" + nextLvlGracza + " &fpoziom. Gratulacje!"));

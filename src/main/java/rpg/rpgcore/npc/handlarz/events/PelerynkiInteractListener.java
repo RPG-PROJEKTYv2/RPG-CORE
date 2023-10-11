@@ -113,7 +113,7 @@ public class PelerynkiInteractListener implements Listener {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cMusisz poczekac &4" + RPGCORE.getInstance().getCooldownManager().getPelerynkaCooldownExp(uuid)));
                     return;
                 }
-                if (!player.getWorld().getName().contains("map")) {
+                if (!player.getWorld().getName().contains("map") && !player.getWorld().getName().contains("Dungeon")) {
                     player.sendMessage(Utils.format("&4&lArtefakty &8>> &cNie mozesz tego tutaj uzyc!"));
                     RPGCORE.getInstance().getCooldownManager().givePelerynkaCooldownExp(uuid);
                     return;
@@ -135,7 +135,7 @@ public class PelerynkiInteractListener implements Listener {
                 if (entity instanceof Creature) {
                     if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
                     final Creature creature = (Creature) entity;
-                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MINIBOSS]")) continue;
+                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MiniBOSS]")) continue;
                     creature.teleport(player);
                 }
             }
@@ -151,7 +151,7 @@ public class PelerynkiInteractListener implements Listener {
             for (Entity entity : player.getNearbyEntities(range, range, range)) {
                 if (entity instanceof Creature) {
                     if (entity.getCustomName().contains("Mistyczny Kowal")) continue;
-                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MINIBOSS]")) return;
+                    if (Utils.removeColor(entity.getCustomName()).contains("[BOSS]") || Utils.removeColor(entity.getCustomName()).contains("[MiniBOSS]")) return;
                     final Creature creature = (Creature) entity;
                     creature.setTarget(player);
                 }

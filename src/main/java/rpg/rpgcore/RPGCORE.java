@@ -161,7 +161,6 @@ import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczono
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciInventoryClick;
 import rpg.rpgcore.dungeons.custom.zamekNieskonczonosci.events.ZamekNieskonczonosciMoveListener;
 import rpg.rpgcore.dungeons.maps.demoniczneSale.DemoniczneSaleManager;
-import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSaleEntityDamageListener;
 import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSaleInteractListener;
 import rpg.rpgcore.dungeons.maps.demoniczneSale.events.DemoniczneSalePortalEntryListener;
 import rpg.rpgcore.dungeons.maps.demoniczneSale.tasks.DemoniczneSaleTask;
@@ -1304,7 +1303,6 @@ public final class RPGCORE extends JavaPlugin {
         this.demoniczneSaleManager = new DemoniczneSaleManager(this);
         this.getServer().getPluginManager().registerEvents(new DemoniczneSaleInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new DemoniczneSalePortalEntryListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new DemoniczneSaleEntityDamageListener(), this);
 
     }
 

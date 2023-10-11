@@ -810,11 +810,13 @@ public class GuildManager {
     }
 
     public void updateGuildLvl(final String tag, final int lvl) {
+        if (this.getGuildExp(tag) >= 50) return;
         this.find(tag).getGuild().setLevel(this.find(tag).getGuild().getLevel() + lvl);
     }
 
     public void updateGuildExp(final String tag, final double exp) {
         this.find(tag).getGuild().setExp(this.find(tag).getGuild().getExp() + DoubleUtils.round(exp, 2));
+        if (this.getGuildExp(tag) >= 50) return;
         if (this.getGuildExp(tag) >= this.getGuildNextLvlExp(tag)) {
             this.updateGuildLvl(tag, 1);
             this.setGuildExp(tag, 0);
@@ -939,6 +941,7 @@ public class GuildManager {
     }
 
     public double getGuildNextLvlExp(final String tag) {
+        if (this.getGuildLvl(tag) >= 50) return 0;
         return DoubleUtils.round(this.guildLvlMap.get(this.getGuildLvl(tag) + 1), 2);
     }
 

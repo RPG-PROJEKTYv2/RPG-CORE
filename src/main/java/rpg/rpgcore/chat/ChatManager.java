@@ -20,6 +20,7 @@ import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.guilds.objects.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
@@ -69,10 +70,13 @@ public class ChatManager {
             main.addExtra(guildM);
         }
         final User user = rpgcore.getUserManager().find(player.getUniqueId());
-        final TextComponent lvl = (user.getLvl() == 130 ? new TextComponent(Utils.format("&8[&bLvl. &4&lMAX&8] ")) : new TextComponent(Utils.format("&8[&bLvl. &f" + user.getLvl() + "&8] ")));
+        final TextComponent lvl = (user.getLvl() == Utils.MAXLVL ? new TextComponent(Utils.format("&8[&bLvl. &4&lMAX&8] ")) : new TextComponent(Utils.format("&8[&bLvl. &f" + user.getLvl() + "&8] ")));
         lvl.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
-                new TextComponent(Utils.format("&7Poziom: &6" + user.getLvl() +
-                        "\n&7Postep do nastepnego poziomu: &6" + String.format("%.2f", Utils.convertDoublesToPercentage(user.getExp(), rpgcore.getLvlManager().getExpForLvl(user.getLvl()))) + "%"))}));
+                new TextComponent(
+                        (user.getLvl() == Utils.MAXLVL ?
+                                Utils.format("&7Poziom: &4&lMAX\n&7Postep do nastepnego poziomu: &4&lMAX&6%")
+                                :
+                                Utils.format("&7Poziom: &6" + user.getLvl() + "\n&7Postep do nastepnego poziomu: &6" + DoubleUtils.round((user.getExp() / rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) * 100, 2)) + "%"))}));
         main.addExtra(lvl);
 
         TextComponent rank;
