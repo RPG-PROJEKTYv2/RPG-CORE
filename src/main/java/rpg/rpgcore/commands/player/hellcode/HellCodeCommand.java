@@ -1,4 +1,4 @@
-package rpg.rpgcore.commands.player;
+package rpg.rpgcore.commands.player.hellcode;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;

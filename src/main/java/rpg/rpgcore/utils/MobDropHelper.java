@@ -781,7 +781,7 @@ public class MobDropHelper {
                 addDropPlayer(player, BonType.PRZESZYWKA_20.getBon(), getDropChance(szczescie, 0.01), true, true, entity);
                 addDropPlayer(player, new ItemBuilder(RybakItems.I18.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(10, 15)).toItemStack().clone(), 100, true, true, entity);
                 addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(8, 12)).toItemStack().clone(), 100, true, true, entity);
-                addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(5, 10)).toItemStack().clone(), 100, true, true, entity);
+                addDropPlayer(player, new ItemBuilder(RybakItems.I20.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(5, 10)).toItemStack().clone(), 100, true, true, entity);
                 break;
             case "Posejdon Lvl. 130":
                 addDropPlayer(player, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), getDropChance(szczescie, 100), true, false, entity);

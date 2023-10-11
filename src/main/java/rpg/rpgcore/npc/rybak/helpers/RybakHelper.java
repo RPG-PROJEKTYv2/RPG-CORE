@@ -166,10 +166,8 @@ public class RybakHelper {
 
         final int mission = user.getMission();
 
-        if (dropAmount == 2) {
-            reward.setAmount(reward.getAmount() * 2);
-        }
 
+        reward.setAmount(dropAmount);
 
         final String krysztal = Utils.getTagString(player.getItemInHand(), "krysztal");
 
@@ -244,11 +242,11 @@ public class RybakHelper {
                 if (mission == 5) user.setProgress(user.getProgress() + 1);
                 break;
             case "Okon":
-                exp = 5;
+                exp = 5 * reward.getAmount() + 2;
                 if (mission == 6) user.setProgress(user.getProgress() + 1);
                 break;
             case "Amur":
-                exp = 5;
+                exp = 5 * reward.getAmount() + 2;
                 if (mission == 7) user.setProgress(user.getProgress() + 1);
                 break;
             case "Podwodny Skarb":

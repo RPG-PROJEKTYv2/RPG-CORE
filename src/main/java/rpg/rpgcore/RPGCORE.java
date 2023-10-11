@@ -119,6 +119,7 @@ import rpg.rpgcore.commands.player.craftingi.CraftingiInventoryClickListener;
 import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
 import rpg.rpgcore.commands.player.enderchest.EnderChestCommand;
 import rpg.rpgcore.commands.player.enderchest.EnderChestInventoryCloseListener;
+import rpg.rpgcore.commands.player.hellcode.HellCodeCommand;
 import rpg.rpgcore.commands.player.kod_tworcy.KodCommand;
 import rpg.rpgcore.commands.player.kod_tworcy.KodTworcyManager;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
