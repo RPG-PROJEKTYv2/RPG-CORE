@@ -200,7 +200,7 @@ public class AkcesoriaPodsInteractListener implements Listener {
                 return;
             }
 
-            final double przeszycie = Utils.getTagDouble(eventItem, "przeszycie");
+            final double przeszycie = Utils.getTagDouble(eventItem, "przebicie");
             final double wkryt = Utils.getTagDouble(eventItem, "wkryt");
             final int speed = Utils.getTagInt(eventItem, "speed");
 

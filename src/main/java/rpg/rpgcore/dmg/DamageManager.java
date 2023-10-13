@@ -14,10 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bao.objects.BaoUser;
 import rpg.rpgcore.bonuses.BonusesUser;
-import rpg.rpgcore.dodatki.akcesoriaD.objects.AkcesoriaDodatUser;
-import rpg.rpgcore.dodatki.akcesoriaP.objects.AkcesoriaPodstUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
 import rpg.rpgcore.klasy.enums.KlasyMain;
 import rpg.rpgcore.utils.ChanceHelper;
@@ -62,6 +59,7 @@ public class DamageManager {
         rpgcore.getServer().getScheduler().runTaskLaterAsynchronously(rpgcore, () -> this.destroySendHologram(stand, p), 20L);
         if (rpgcore.getChatManager().find(p.getUniqueId()).isDmgHologramsVisable()) {
             for (Entity e : p.getLocation().getWorld().getNearbyEntities(p.getLocation(), 30, 30, 30)) {
+                if (e == null) continue;
                 if (e instanceof Player) {
                     Player player = (Player) e;
                     if (player != p) {
