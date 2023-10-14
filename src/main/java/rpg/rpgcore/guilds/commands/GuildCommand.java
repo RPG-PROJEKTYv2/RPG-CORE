@@ -352,6 +352,11 @@ public class GuildCommand extends CommandAPI {
 
                 tag = args[1].toUpperCase(Locale.ROOT);
 
+                if (tag.length() > 4) {
+                    player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cMaksymalna dlugosc tagu klanu to 4!"));
+                    return;
+                }
+
                 if (rpgcore.getGuildManager().getListOfGuilds().contains(tag)) {
                     player.sendMessage(Utils.format(Utils.GUILDSPREFIX + "&cKlan o takiej nazwie juz istnieje"));
                     return;
