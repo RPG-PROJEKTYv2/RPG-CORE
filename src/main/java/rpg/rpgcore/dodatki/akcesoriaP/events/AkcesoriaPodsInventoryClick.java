@@ -132,7 +132,7 @@ public class AkcesoriaPodsInventoryClick implements Listener {
                     });
                     break;
                 case 5:
-                    final double przeszycie = Utils.getTagDouble(item, "przeszycie");
+                    final double przeszycie = Utils.getTagDouble(item, "przebicie");
                     final double wkryt = Utils.getTagDouble(item, "wkryt");
                     final int speed = Utils.getTagInt(item, "speed");
 

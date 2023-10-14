@@ -9,10 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -30,7 +28,6 @@ import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Getter
@@ -269,11 +266,11 @@ public class RybakNPC {
         final ItemStack wedka = player.getItemInHand();
         final String krysztal = Utils.getTagString(wedka, "krysztal");
         Set<Items> wyspa2DropsClone = new HashSet<>(this.wyspa2Drops);
-        wyspa2DropsClone.add(new Items("1", 0.00075 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
+        wyspa2DropsClone.add(new Items("1", 0.0075 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
 
         switch (krysztal) {
             case "Mrocznych Wod":
-                wyspa2DropsClone.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I22.getItemStack(), 1));
+                wyspa2DropsClone.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue") / 2, RybakItems.I22.getItemStack(), 1));
                 break;
             case "Podwodnych Spiewow":
                 wyspa2DropsClone.add(new Items("9", Utils.getTagDouble(wedka, "krysztalValue"), RybakItems.I23.getItemStack(), 1));

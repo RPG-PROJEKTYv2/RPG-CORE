@@ -9,7 +9,7 @@ public class GodVanishTask implements Runnable {
 
     public GodVanishTask(final RPGCORE rpgcore) {
         this.rpgcore = rpgcore;
-        this.rpgcore.getServer().getScheduler().scheduleAsyncRepeatingTask(this.rpgcore, this, 0L, 20L);
+        this.rpgcore.getServer().getScheduler().scheduleSyncRepeatingTask(this.rpgcore, this, 0L, 20L);
     }
 
     @Override
@@ -19,10 +19,20 @@ public class GodVanishTask implements Runnable {
             final boolean vanish = rpgcore.getVanishManager().isVanished(p.getUniqueId());
             if (god && vanish) {
                 rpgcore.getNmsManager().sendActionBar(p, "&3&lVanish &8| &d&lGOD");
+                for (final Player rest : rpgcore.getServer().getOnlinePlayers()) {
+                    if (rest.canSee(p)) {
+                        rest.hidePlayer(p);
+                    }
+                }
             } else if (god) {
                 rpgcore.getNmsManager().sendActionBar(p, "&d&lGOD");
             } else if (vanish) {
                 rpgcore.getNmsManager().sendActionBar(p, "&3&lVanish");
+                for (final Player rest : rpgcore.getServer().getOnlinePlayers()) {
+                    if (rest.canSee(p)) {
+                        rest.hidePlayer(p);
+                    }
+                }
             }
         }
     }
