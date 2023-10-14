@@ -2,7 +2,7 @@ package rpg.rpgcore.commands.admin.kolorki;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
 

@@ -8,7 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;

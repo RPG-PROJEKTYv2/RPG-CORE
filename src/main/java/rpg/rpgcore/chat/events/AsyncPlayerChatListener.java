@@ -36,7 +36,7 @@ public class AsyncPlayerChatListener implements Listener {
         String message = e.getMessage();
         final User user = rpgcore.getUserManager().find(uuid);
         e.setCancelled(true);
-        if (!user.isHellCodeLogin() && !user.getHellCode().equals("off")) {
+        if (!user.isHellCodeLogin() && !user.getHellCode().equals("off") && !rpgcore.getChatManager().find(uuid).getHellcodeUser().isChatEnabled()) {
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zeby pisac na chacie musisz sie najpierw zalogowac swoim HellCode. Uzyj: &c/hellcode <kod>"));
             return;
         }
@@ -185,7 +185,7 @@ public class AsyncPlayerChatListener implements Listener {
             "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower",
             "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb",
             "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob", "gc", "kc",
-            "straganiarz", "stragan", "wymien", "stackowanie", "rozmien"
+            "straganiarz", "stragan", "wymien", "stackowanie", "rozmien", "hcpanel"
     );
     final List<String> ownCommandsAdmin = Arrays.asList(
             "adminpanel", "paneladmin",
@@ -227,7 +227,8 @@ public class AsyncPlayerChatListener implements Listener {
             "wedka",
             "kilof",
             "sword",
-            "resetkryt"
+            "resetkryt",
+            "mute", "tempmute", "unmute"
     );
 
     @EventHandler

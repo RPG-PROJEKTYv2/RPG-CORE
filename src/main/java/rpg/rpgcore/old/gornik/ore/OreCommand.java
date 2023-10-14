@@ -1,15 +1,10 @@
 package rpg.rpgcore.old.gornik.ore;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Stream;
 
 public class OreCommand extends CommandAPI {
     public OreCommand() {

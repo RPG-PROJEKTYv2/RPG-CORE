@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;

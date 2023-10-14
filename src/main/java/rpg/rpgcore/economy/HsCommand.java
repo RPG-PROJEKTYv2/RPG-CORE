@@ -3,11 +3,9 @@ package rpg.rpgcore.economy;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
-import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.GlobalItem;
 
 import java.io.IOException;
 import java.util.Arrays;

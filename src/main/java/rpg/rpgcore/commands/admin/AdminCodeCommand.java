@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.tab.TabManager;

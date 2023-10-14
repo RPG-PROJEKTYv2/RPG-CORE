@@ -38,7 +38,8 @@ public class PlayerInteractEntityListener implements Listener {
             return;
         }
 
-        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")) {
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")
+                && !rpgcore.getChatManager().find(player.getUniqueId()).getHellcodeUser().isEntityInteract()) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
             return;
@@ -316,6 +317,19 @@ public class PlayerInteractEntityListener implements Listener {
                     e.setCancelled(true);
                     return;
                 }
+
+                if (rpgcore.getDisabledManager().getDisabled().getDisabledCommands().contains("trade")) {
+                    e.setCancelled(true);
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&cTa interakcja zostala tymczasowo wylaczona przed Administracje serwera!"));
+                    return;
+                }
+
+                if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin()) {
+                    e.setCancelled(true);
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
+                    return;
+                }
+
                 final UUID entityUUID = playerRightClicked.getUniqueId();
 
                 if (rpgcore.getTradeManager().isInTradeRequestMap(uuid)) {

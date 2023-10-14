@@ -3,7 +3,7 @@ package rpg.rpgcore.commands.player;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.utils.Utils;
 
 import java.util.Arrays;

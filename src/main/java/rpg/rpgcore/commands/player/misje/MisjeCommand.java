@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.kolekcjoner.enums.KolekcjonerMissions;

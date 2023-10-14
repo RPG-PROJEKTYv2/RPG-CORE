@@ -3,12 +3,10 @@ package rpg.rpgcore.guilds.commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class GuildChatCommand extends CommandAPI {
     private final RPGCORE rpgcore;

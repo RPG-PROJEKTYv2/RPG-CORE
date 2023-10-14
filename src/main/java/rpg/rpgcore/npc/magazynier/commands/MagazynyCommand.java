@@ -3,7 +3,7 @@ package rpg.rpgcore.npc.magazynier.commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;

@@ -26,7 +26,7 @@ public class BlockInteractListener implements Listener {
     public void onInteract(final PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
-                if (!rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin()) {
+                if (!rpgcore.getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin() && !rpgcore.getChatManager().find(e.getPlayer().getUniqueId()).getHellcodeUser().isEnderchest()) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
                 }

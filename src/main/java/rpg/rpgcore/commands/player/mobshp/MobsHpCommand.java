@@ -1,22 +1,18 @@
 package rpg.rpgcore.commands.player.mobshp;
 
-import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.UUID;
 
 public class MobsHpCommand extends CommandAPI {
     public MobsHpCommand() {

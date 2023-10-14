@@ -1,4 +1,4 @@
-package rpg.rpgcore.api;
+package rpg.rpgcore.commands.api;
 
 import lombok.SneakyThrows;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -9,6 +9,7 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.commands.player.hellcode.panel.objects.HellcodeUser;
 import rpg.rpgcore.discord.EmbedUtil;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
@@ -50,7 +51,7 @@ public abstract class CommandAPI extends Command {
             "topki", "top", "ping", "tower", "dt", "demontower", "live", "gamma", "nv", "nightvision", "icetower",
             "gornikzaplac", "kontakt", "socjale", "www", "strona", "discord", "dc", "facebook", "fb",
             "zestawrangi", "kod", "kodtworcy", "hp", "mobhp", "hpmob", "gc", "kc",
-            "straganiarz", "stragan", "wymien", "stackowanie", "rozmien"
+            "straganiarz", "stragan", "wymien", "stackowanie", "rozmien", "hcpanel"
 
     );
 
@@ -123,12 +124,23 @@ public abstract class CommandAPI extends Command {
                     }
                 }
             }
-            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc")) {
+            if (!s.equals("hellcode") && !s.equals("code") && !s.equals("hc") && !s.equals("spawn") && !s.equals("bossy") && !s.equals("pomoc") && !s.equals("msg") && !s.equals("r")) {
                 if (userProfile.getHellCode().isEmpty()) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw stworzyc swoj hellcode! Uzyj: &c/hellcode stworz <kod> <kod>"));
                     return false;
                 }
                 if (!userProfile.isHellCodeLogin() && !userProfile.getHellCode().equals("off")) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim HellCode! Uzyj: &c/hellcode <kod>"));
+                    return false;
+                }
+            }
+            if (s.equals("msg") || s.equals("r")) {
+                final HellcodeUser hcUser = RPGCORE.getInstance().getChatManager().find(player.getUniqueId()).getHellcodeUser();
+                if (userProfile.getHellCode().isEmpty()) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Musisz najpierw stworzyc swoj hellcode! Uzyj: &c/hellcode stworz <kod> <kod>"));
+                    return false;
+                }
+                if (!userProfile.isHellCodeLogin() && !userProfile.getHellCode().equals("off") && !hcUser.isMsgAndReply()) {
                     player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed uzyciem tej komendy zaloguj sie swoim HellCode! Uzyj: &c/hellcode <kod>"));
                     return false;
                 }

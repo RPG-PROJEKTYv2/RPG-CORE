@@ -2,7 +2,7 @@ package rpg.rpgcore.commands.admin;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.ranks.types.RankType;

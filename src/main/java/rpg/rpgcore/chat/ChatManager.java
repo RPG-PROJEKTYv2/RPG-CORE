@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chat.objects.ChatUser;
+import rpg.rpgcore.commands.player.hellcode.panel.objects.HellcodeUser;
 import rpg.rpgcore.guilds.objects.Guild;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.user.User;
@@ -306,6 +307,63 @@ public class ChatManager {
         System.out.println(helm.toPlainText());
         return helm;
     }
+
+    //                                                      HELLCODE PANEL                                                    \\
+
+    public void openHellcodePanel(final Player player) {
+        final HellcodeUser user = this.find(player.getUniqueId()).getHellcodeUser();
+        final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&6&lHellCode Panel"));
+
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+
+        gui.setItem(1, new ItemBuilder(Material.PAPER).setName("&cMozliwosc Pisania Na Chacie").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7pisac na chacie.",
+                "",
+                "&7Status: " + (user.isChatEnabled() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+        gui.setItem(2, new ItemBuilder(Material.PAPER).setName("&cMozliwosc Pisania i Odpisywania na Prywatne Wiadomosci").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7pisac oraz odpowiadac",
+                "&7na prywatne wiadomosci przychodzace do twojego konta.",
+                "",
+                "&7Status: " + (user.isMsgAndReply() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+        gui.setItem(3, new ItemBuilder(Material.ENDER_CHEST).setName("&cMozliwosc Otwierania Enderchesta").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7otwierac twoj &5enderchest&7.",
+                "",
+                "&7Status: " + (user.isEnderchest() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+
+        gui.setItem(5, new ItemBuilder(Material.CHEST).setName("&cMozliwosc Otwierania Magazynow").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7otwierac twoje &6Magazyny&7.",
+                "",
+                "&7Status: " + (user.isMagazyn() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+        gui.setItem(6, new ItemBuilder(Material.IRON_SWORD).setName("&cMozliwosc Interakcji w Ekwipunku").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7wykonywac wszelkie interakcj",
+                "&7zwiazane z ekwpinukiem, np. przenoszenie przedmiotow miedzy ekwipunkami,",
+                "&7zmiana zbroji, itd.",
+                "",
+                "&7Status: " + (user.isInventoryInteract() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+        gui.setItem(7, new ItemBuilder(Material.DIAMOND_SWORD).setName("&cMozliwosc Interakcji z NPC").setLore(Arrays.asList(
+                "&7Wlaczajac ta opcje umozliwisz osobie bez",
+                "&7wpisanego &4Hellcodu &7interakcje z &c&lKAZDYM",
+                "&7NPC na serwerze.",
+                "",
+                "&7Status: " + (user.isEntityInteract() ? "&a&lWLACZONE" : "&c&lWYLACZONE")
+        )).toItemStack().clone());
+
+        player.openInventory(gui);
+    }
+
+
+    //                                                      HELLCODE PANEL                                                    \\
+
 
     public RankType getRankReqForChat() {
         return this.rankReqForChat;

@@ -176,7 +176,7 @@ public class EntityDamageEntityListener implements Listener {
                     }
 
                     if (victim.getInventory().contains(Artefakty.getArtefakt("Egzekutor", victim))) {
-                        if (ChanceHelper.getChance(5.0)) {
+                        if (ChanceHelper.getChance(2.0)) {
                             if (!rpgcore.getCooldownManager().hasEgzekutorCooldown(victim.getUniqueId())) {
                                 rpgcore.getKociolkiManager().find(victim.getUniqueId()).setEgzekutor(true);
                                 rpgcore.getKociolkiManager().find(victim.getUniqueId()).setEgzekutorTime(5);
@@ -318,7 +318,7 @@ public class EntityDamageEntityListener implements Listener {
                 }
 
                 if (attacker.getInventory().contains(Artefakty.getArtefakt("Egzekutor", attacker))) {
-                    if (ChanceHelper.getChance(5.0)) {
+                    if (ChanceHelper.getChance(2.0)) {
                         if (!rpgcore.getCooldownManager().hasEgzekutorCooldown(attacker.getUniqueId())) {
                             rpgcore.getKociolkiManager().find(attacker.getUniqueId()).setEgzekutor(true);
                             rpgcore.getKociolkiManager().find(attacker.getUniqueId()).setEgzekutorTime(5);

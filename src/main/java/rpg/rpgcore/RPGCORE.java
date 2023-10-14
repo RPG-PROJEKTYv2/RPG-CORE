@@ -27,7 +27,7 @@ import rpg.rpgcore.BACKUP.commands.BackupCommand;
 import rpg.rpgcore.BACKUP.database.BackupMongoManager;
 import rpg.rpgcore.BACKUP.events.BackupInventoryClickListener;
 import rpg.rpgcore.BACKUP.tasks.BackupTask;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.armor.ArmorEffectListener;
 import rpg.rpgcore.armor.ArmorEffectTask;
 import rpg.rpgcore.artefakty.ArtefaktyCommand;
@@ -120,6 +120,8 @@ import rpg.rpgcore.commands.player.craftingi.CraftingiManager;
 import rpg.rpgcore.commands.player.enderchest.EnderChestCommand;
 import rpg.rpgcore.commands.player.enderchest.EnderChestInventoryCloseListener;
 import rpg.rpgcore.commands.player.hellcode.HellCodeCommand;
+import rpg.rpgcore.commands.player.hellcode.panel.HellCodePanelCommand;
+import rpg.rpgcore.commands.player.hellcode.panel.events.HellCodePanelInventoryClickListener;
 import rpg.rpgcore.commands.player.kod_tworcy.KodCommand;
 import rpg.rpgcore.commands.player.kod_tworcy.KodTworcyManager;
 import rpg.rpgcore.commands.player.kosz.KoszCommand;
@@ -877,6 +879,7 @@ public final class RPGCORE extends JavaPlugin {
         CommandAPI.getCommand().register("HellRPGCore", new SwordCommand());
         CommandAPI.getCommand().register("HellRPGCore", new KilofCommand());
         CommandAPI.getCommand().register("HellRPGCore", new ResetKrytCommand());
+        CommandAPI.getCommand().register("HellRPGCore", new HellCodePanelCommand(this));
     }
 
     private void initEvents() {
@@ -928,6 +931,9 @@ public final class RPGCORE extends JavaPlugin {
         // EQ
         this.getServer().getPluginManager().registerEvents(new EQInventoryClose(this), this);
         this.getServer().getPluginManager().registerEvents(new ChatInventoryClickListener(this), this);
+
+        // HELLCODE PANEl
+        this.getServer().getPluginManager().registerEvents(new HellCodePanelInventoryClickListener(), this);
 
         // AKCESORIA
         this.getServer().getPluginManager().registerEvents(new DodatkiInventoryClick(), this);
@@ -1215,6 +1221,8 @@ public final class RPGCORE extends JavaPlugin {
         this.wygnanyKowalNPC = new WygnanyKowalNPC();
         this.zlotnikNPC = new ZlotnikNPC();
         this.mroznyStrozNPC = new MroznyStrozNPC(this);
+
+        this.bonusesManager.fix();
     }
 
     private void initChests() {

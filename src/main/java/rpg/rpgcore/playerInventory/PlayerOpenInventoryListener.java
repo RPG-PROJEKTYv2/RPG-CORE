@@ -25,7 +25,7 @@ public class PlayerOpenInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onItemClick(final PlayerInteractEvent e) {
         if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
-        if (!RPGCORE.getInstance().getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin()) {
+        if (!RPGCORE.getInstance().getUserManager().find(e.getPlayer().getUniqueId()).isHellCodeLogin() && !RPGCORE.getInstance().getChatManager().find(e.getPlayer().getUniqueId()).getHellcodeUser().isInventoryInteract()) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
@@ -44,8 +44,7 @@ public class PlayerOpenInventoryListener implements Listener {
                     e.setCancelled(true);
                     final int slot = e.getSlot();
                     if (slot == 3) {
-                        player.teleport(RPGCORE.getInstance().getSpawnManager().getSpawn());
-                        player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zostales przeteleportowany na spawn!"));
+                        player.performCommand("spawn");
                         return;
                     }
                     if (!RPGCORE.getInstance().getUserManager().find(player.getUniqueId()).isHellCodeLogin()) {

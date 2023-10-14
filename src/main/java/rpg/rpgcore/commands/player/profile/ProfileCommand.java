@@ -2,13 +2,12 @@ package rpg.rpgcore.commands.player.profile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.api.CommandAPI;
+import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.ranks.types.RankTypePlayer;

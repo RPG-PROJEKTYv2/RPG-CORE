@@ -3,6 +3,7 @@ package rpg.rpgcore.chat.objects;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
+import rpg.rpgcore.commands.player.hellcode.panel.objects.HellcodeUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class ChatUser implements Cloneable {
     private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled,
     boss1_10, boss10_20, boss20_30, boss30_40, boss40_50;
     private List<UUID> ignoredPlayers;
+    private HellcodeUser hellcodeUser;
 
     public ChatUser(UUID uuid) {
         this.uuid = uuid;
@@ -33,6 +35,7 @@ public class ChatUser implements Cloneable {
         this.boss20_30 = true;
         this.boss30_40 = true;
         this.boss40_50 = true;
+        this.hellcodeUser = new HellcodeUser(uuid);
     }
 
     public ChatUser(Document document) {
@@ -52,6 +55,8 @@ public class ChatUser implements Cloneable {
         this.boss20_30 = (document.containsKey("boss20_30") ? document.getBoolean("boss20_30") : true);
         this.boss30_40 = (document.containsKey("boss30_40") ? document.getBoolean("boss30_40") : true);
         this.boss40_50 = (document.containsKey("boss40_50") ? document.getBoolean("boss40_50") : true);
+        if (document.containsKey("hellcodeUser")) this.hellcodeUser = new HellcodeUser(document.get("hellcodeUser", Document.class));
+        else this.hellcodeUser = new HellcodeUser(uuid);
     }
 
     public Document toDocument() {
@@ -70,13 +75,16 @@ public class ChatUser implements Cloneable {
                 .append("boss10_20", boss10_20)
                 .append("boss20_30", boss20_30)
                 .append("boss30_40", boss30_40)
-                .append("boss40_50", boss40_50);
+                .append("boss40_50", boss40_50)
+                .append("hellcodeUser", hellcodeUser.toDocument());
     }
 
     @Override
     public ChatUser clone() {
         try {
-            return (ChatUser) super.clone();
+            ChatUser chatUser = (ChatUser) super.clone();
+            chatUser.setHellcodeUser(hellcodeUser.clone());
+            return chatUser;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
