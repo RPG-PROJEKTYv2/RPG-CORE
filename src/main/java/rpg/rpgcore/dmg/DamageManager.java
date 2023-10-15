@@ -586,6 +586,7 @@ public class DamageManager {
 
         double finalValue = prot;
 
+        finalValue *= 2;
         finalValue *= (gildia / 100);
         finalValue *= 1.25 * (mnoznik / 100);
         finalValue *= (bony / 100);

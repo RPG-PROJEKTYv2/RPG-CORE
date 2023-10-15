@@ -80,7 +80,7 @@ public enum EntityDamage {
     MAP_100_110_1("Podwodny Straznik Lvl. 104", 31_500),
     MAP_100_110_2("Podwodny Straznik Lvl. 106", 32_400),
     MAP_100_110_3("Podwodny Straznik Lvl. 109", 33_300),
-    MAP_100_110_BOSS("[BOSS] Mityczny Kraken", 60_000),
+    MAP_100_110_BOSS("[BOSS] Mistyczny Kraken", 150_000),
 
     MAP_110_120_1("Mrozny Stroz Lvl. 114", 18800),
     MAP_110_120_2("Mrozny Stroz Lvl. 116", 20800),
@@ -96,7 +96,7 @@ public enum EntityDamage {
 
     EntityDamage(final String name, final double damage) {
         this.name = name;
-        this.damage = damage;
+        this.damage = damage * 2;
     }
 
 
