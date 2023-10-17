@@ -294,6 +294,11 @@ public class PlayerInteractEntityListener implements Listener {
                 rpgcore.getMroznyStrozNPC().click(player);
                 return;
             }
+            // ...SUMMONBLADE
+            if (entityName.equalsIgnoreCase("Summonblade")) {
+                rpgcore.getSummonbladeNPC().openSummonbladeGUI(player);
+                return;
+            }
 
             // TRADE
             if (player.isSneaking()) {

@@ -65,6 +65,7 @@ public class KowalInventoryClickListener implements Listener {
         if (inventory.getType().equals(InventoryType.PLAYER) && Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Kowal - Ulepszanie")) {
             e.setCancelled(true);
             final String clickedItemType = String.valueOf(item.getType());
+            if (rpgcore.getCooldownManager().hasKowalGUICooldown(player.getUniqueId())) return;
             if (!(clickedItemType.contains("_HELMET") || clickedItemType.contains("_CHESTPLATE") || clickedItemType.contains("_LEGGINGS") || clickedItemType.contains("_BOOTS")
                     || clickedItemType.contains("_SWORD") || (item.getType().equals(Material.IRON_INGOT) && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Stal Kowalska"))
                     || (item.getType().equals(Material.BOOK) && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Podrecznik Kowala"))
@@ -96,6 +97,7 @@ public class KowalInventoryClickListener implements Listener {
                 itemToGui.setAmount(1);
                 player.getOpenInventory().getTopInventory().setItem(14, itemToGui);
                 rpgcore.getKowalNPC().addOstatniUlepszonyItem(uuid, itemToGui);
+                rpgcore.getCooldownManager().giveKowalGUICooldown(player.getUniqueId());
                 return;
             }
 
@@ -106,6 +108,7 @@ public class KowalInventoryClickListener implements Listener {
             player.getInventory().removeItem(item);
             player.getOpenInventory().getTopInventory().setItem(12, itemToGui);
             rpgcore.getKowalNPC().addOstatniUlepszonyItem(uuid, itemToGui);
+            rpgcore.getCooldownManager().giveKowalGUICooldown(player.getUniqueId());
             return;
         }
 
@@ -130,9 +133,9 @@ public class KowalInventoryClickListener implements Listener {
 
             if (slot == 22 && !inventory.getItem(12).equals(rpgcore.getKowalNPC().getPlaceForItem())) {
                 int zwoj = 0;
-                if (inventory.getItem(14).equals(GlobalItem.getItem("I_METAL", 1))) {
+                if (inventory.getItem(14).isSimilar(GlobalItem.getItem("I_METAL", 1))) {
                     zwoj = 2;
-                } else if (inventory.getItem(14).equals(GlobalItem.getItem("I10", 1))) {
+                } else if (inventory.getItem(14).isSimilar(GlobalItem.getItem("I10", 1))) {
                     zwoj = 1;
                 }
 

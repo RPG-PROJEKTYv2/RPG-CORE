@@ -1,6 +1,5 @@
 package rpg.rpgcore.npc.teleporter;
 
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -67,6 +67,7 @@ public class MobDropHelper {
 
         int szczescie = rpgcore.getBonusesManager().find(uuid).getBonusesUser().getSzczescie();
         final RankTypePlayer rank = rpgcore.getUserManager().find(uuid).getRankPlayerUser().getRankType();
+        final int lvl = rpgcore.getUserManager().find(uuid).getLvl();
         if (rank == RankTypePlayer.VIP) szczescie += 25;
         if (rank == RankTypePlayer.TWORCA) szczescie += 35;
         if (rank == RankTypePlayer.ELITA) szczescie += 50;
@@ -143,6 +144,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 1) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss1_10progress();
+                }
                 break;
             // MOB
             case "Rozbojnik Lvl. 3":
@@ -190,6 +194,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 2) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss10_20progress();
+                }
                 break;
             // MOB
             case "Goblin Lvl. 14":
@@ -224,6 +231,9 @@ public class MobDropHelper {
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 3) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+                }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss20_30progress();
                 }
                 break;
             // MOB
@@ -264,6 +274,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 4) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss30_40progress();
+                }
                 break;
             // MOB
             case "Zjawa Lvl. 32":
@@ -298,6 +311,9 @@ public class MobDropHelper {
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 5) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+                }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss40_50progress();
                 }
                 break;
             // MOB
@@ -353,6 +369,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 7) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss60_70progress();
+                }
                 break;
             // MOB
             case "Zywiolak Ognia Lvl. 64":
@@ -390,6 +409,9 @@ public class MobDropHelper {
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 8) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+                }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss70_80progress();
                 }
                 break;
             // MOB
@@ -431,6 +453,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 9) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss80_90progress();
+                }
                 break;
             // MOB
             case "Pustynny Ptasznik Lvl. 84":
@@ -468,6 +493,9 @@ public class MobDropHelper {
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 10) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
                 }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss90_100progress();
+                }
                 break;
             // MOB
             case "Podziemna Lowczyni Lvl. 92":
@@ -504,10 +532,13 @@ public class MobDropHelper {
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &b&lMityczny Kraken &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I21", 1), 100, true, true, entity);
                 if (rpgcore.getLowcaNPC().find(uuid).getLowcaUser().getMission() == 11) {
-                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 25), true, true, entity);
+                    addDropPlayer(player, LowcaItems.getItem("100-110", 1), getDropChance(szczescie, 30), true, true, entity);
                 }
                 if (rpgcore.getWyslannikNPC().find(uuid).getKillBossMission() == 11) {
                     rpgcore.getWyslannikNPC().find(uuid).setKillBossMissionProgress(rpgcore.getWyslannikNPC().find(uuid).getKillBossMissionProgress() + 1);
+                }
+                if (lvl >= 110) {
+                    rpgcore.getSummonbladeNPC().find(uuid).incrementBoss100_110progress();
                 }
                 break;
             // MOB
@@ -540,6 +571,10 @@ public class MobDropHelper {
                 break;
             // ----------------------------------------- EXPOWISKO 13 -----------------------------------------
             // BOSS
+            case "[BOSS] Ereb":
+                Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &f&lEreb &7zostal zabity przez: &f" + player.getName()));
+                addDropPlayer(player, GlobalItem.KRYSZTALOWA_BARIERA.getItemStack(), getDropChance(szczescie, 50), true, true, entity);
+                break;
             case "[BOSS] Krysztalowy Wladca":
                 Bukkit.getServer().broadcastMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &1&lKrysztalowy Wladca &fzostal zabity przez: &e" + player.getName()));
                 addDropPlayer(player, Skrzynki.getItem("I23", 1), 100, true, true, entity);
@@ -554,6 +589,11 @@ public class MobDropHelper {
             case "Mrozny Stroz Lvl. 114":
             case "Mrozny Stroz Lvl. 116":
             case "Mrozny Stroz Lvl. 118":
+                if (!rpgcore.getSummonbladeNPC().find(uuid).isActivated()) {
+                    player.sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby otrzymac drop z tych niesamowitych stworzen"));
+                    player.sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
+                    return;
+                }
                 // przepa do krysztalowej sali
                 addDropPlayer(player, Przepustki.I2.getItemStack().clone(), getDropChance(szczescie, 0.05), true, true, entity);
                 // przepa do tajemniczej siedziby

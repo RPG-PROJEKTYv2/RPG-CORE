@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -43,6 +44,9 @@ public class PrzekletaDuszaListener30_40 implements Listener {
             player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &7&lPrzekletej Duszy! &7(Limit na mape: 3)"));
             return;
         }
+        e.setUseInteractedBlock(Event.Result.DENY);
+        e.setUseItemInHand(Event.Result.DENY);
+        e.setCancelled(true);
         player.getInventory().removeItem(new ItemBuilder(Bossy.I30_40.getItemStack().clone()).setAmount(1).toItemStack());
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();

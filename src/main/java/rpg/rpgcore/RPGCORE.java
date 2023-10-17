@@ -288,6 +288,9 @@ import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
 import rpg.rpgcore.npc.straganiarz.StraganiarzManager;
 import rpg.rpgcore.npc.straganiarz.events.StraganiarzInventoryClickListener;
+import rpg.rpgcore.npc.summonblade.SummonbladeNPC;
+import rpg.rpgcore.npc.summonblade.events.SummonbladeInteractListener;
+import rpg.rpgcore.npc.summonblade.events.SummonbladeInventoryClickListener;
 import rpg.rpgcore.npc.teleporter.TeleporterInventoryClick;
 import rpg.rpgcore.npc.teleporter.TeleporterNPC;
 import rpg.rpgcore.npc.wygnany_kowal.WygnanyKowalInventoryClickListener;
@@ -615,6 +618,8 @@ public final class RPGCORE extends JavaPlugin {
     private MroznyStrozNPC mroznyStrozNPC;
     @Getter
     private DemoniczneSaleManager demoniczneSaleManager;
+    @Getter
+    private SummonbladeNPC summonbladeNPC;
 
 
     private int i = 1;
@@ -1140,6 +1145,10 @@ public final class RPGCORE extends JavaPlugin {
 
         // MROZNY STROZ
         this.getServer().getPluginManager().registerEvents(new MroznyStrozInventoryClickListener(), this);
+
+        // SUMMONBLADE
+        this.getServer().getPluginManager().registerEvents(new SummonbladeInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SummonbladeInteractListener(), this);
     }
 
     private void initDatabase() {
@@ -1221,6 +1230,7 @@ public final class RPGCORE extends JavaPlugin {
         this.wygnanyKowalNPC = new WygnanyKowalNPC();
         this.zlotnikNPC = new ZlotnikNPC();
         this.mroznyStrozNPC = new MroznyStrozNPC(this);
+        this.summonbladeNPC = new SummonbladeNPC(this);
 
         this.bonusesManager.fix();
     }

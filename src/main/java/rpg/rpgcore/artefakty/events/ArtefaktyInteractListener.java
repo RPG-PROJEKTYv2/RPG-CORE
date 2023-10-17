@@ -85,10 +85,10 @@ public class ArtefaktyInteractListener implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
 
             if (Utils.getTagString(eventItem, "owner_name").equals(player.getName()) && Utils.getTagString(eventItem, "owner_uuid").equals(uuid.toString())) {
-                if (eventItem.getItemMeta().getLore().stream().anyMatch(s -> Utils.removeColor(s).contains("Ilosc Potworow: 15-30"))) {
+                if (eventItem.getItemMeta().getLore().stream().anyMatch(s -> Utils.removeColor(s).contains("Ilosc Potworow: 5-15"))) {
                     final ItemMeta meta = eventItem.getItemMeta();
                     final List<String> lore = meta.getLore();
-                    lore.set(2, "&7Ilosc Potworow: &e5-15");
+                    lore.set(2, "&7Ilosc Potworow: &e10-25");
                     meta.setLore(Utils.format(lore));
                     eventItem.setItemMeta(meta);
                     player.sendMessage(Utils.format(" "));
@@ -114,7 +114,7 @@ public class ArtefaktyInteractListener implements Listener {
                     return;
                 }
                 final String map = player.getWorld().getName().replace("map", "");
-                for (int i = 0; i < ChanceHelper.getRandInt(5, 15); i++) {
+                for (int i = 0; i < ChanceHelper.getRandInt(10, 25); i++) {
                     final double x = ChanceHelper.getRandDouble(-0.1, 0.1);
                     final double z = ChanceHelper.getRandDouble(-0.1, 0.1);
                     RPGCORE.getMythicMobs().getMobManager().spawnMob(map + "-MOB3", player.getLocation().clone().add(x, 1.5, z));

@@ -36,8 +36,8 @@ public class RestartCommand extends CommandAPI {
             sender.sendMessage(Utils.format(Utils.SERVERNAME + "&cSerwer jest juz w trakcie restartu!"));
             return;
         }
-        if (args.length != 0) {
-            sender.sendMessage(Utils.poprawneUzycie("restart"));
+        if (args.length > 1) {
+            sender.sendMessage(Utils.poprawneUzycie("restart [-instant]"));
             return;
         }
 
@@ -106,6 +106,18 @@ public class RestartCommand extends CommandAPI {
         }
 
         restart.setRestarting(true);
+
+        if (args[0] != null && args[0].equals("-instant")) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cAktualnie Trwa Restart Serwera!\n&7Zapraszamy ponownie za chwile"));
+            }
+            System.out.println(Utils.format(Utils.SERVERNAME + "&aZapisano graczy i wylogowano"));
+            System.out.println(Utils.format(Utils.SERVERNAME + "&aSerwer zostanie wylaczony za 10 sekundy..."));
+            RPGCORE.getInstance().getSerwerWhiteListManager().getWhitelist().setEnabled(true);
+            Bukkit.getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart"), 200L);
+            return;
+        }
+
         new RestartTask(rpgcore);
         sender.sendMessage(Utils.format(Utils.SERVERNAME + "&aRozpoczeto restart serwera!"));
 

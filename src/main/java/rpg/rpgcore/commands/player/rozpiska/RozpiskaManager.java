@@ -558,7 +558,7 @@ public class RozpiskaManager {
         final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
         final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
 
-        openTENTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&5Podziemna Lowczyni").setLore(Arrays.asList("",
+        openTENTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&bPodwodny Straznik").setLore(Arrays.asList("",
                 "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.6) + "%",
                 "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
                 "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.03) + "%",
@@ -583,7 +583,7 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
         openTENTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&b&lMityczny Kraken").setLore(Arrays.asList("",
                 "&3&lSkrzynia &b&lMitycznego Krakena: &f100%",
-                "&4Trofeum Bossa 100-110: &f" + MobDropHelper.getDropChance(szczescie, 25) + "%",
+                "&4Trofeum Bossa 100-110: &f" + MobDropHelper.getDropChance(szczescie, 30) + "%",
                 ""
         )).addGlowing().toItemStack().clone());
         openTENTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&b&lMetin Oceanu").setLore(Arrays.asList("",

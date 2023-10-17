@@ -44,6 +44,7 @@ import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.npc.summonblade.objects.SummonbladeUser;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
@@ -416,6 +417,11 @@ public class MongoManager {
                 addDataMroznyStroz(user);
                 rpgcore.getMroznyStrozNPC().add(user);
             }
+            if (pool.getSummonblade().find(new Document("_id", uuid.toString())).first() == null) {
+                final SummonbladeUser user = new SummonbladeUser(uuid);
+                addDataSummonblade(user);
+                rpgcore.getSummonbladeNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -545,6 +551,10 @@ public class MongoManager {
         final MroznyStrozUser mroznyStrozUser = new MroznyStrozUser(uuid);
         this.addDataMroznyStroz(mroznyStrozUser);
         rpgcore.getMroznyStrozNPC().add(mroznyStrozUser);
+
+        final SummonbladeUser summonbladeUser = new SummonbladeUser(uuid);
+        this.addDataSummonblade(summonbladeUser);
+        rpgcore.getSummonbladeNPC().add(summonbladeUser);
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
@@ -678,6 +688,7 @@ public class MongoManager {
             this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
+            this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -810,6 +821,7 @@ public class MongoManager {
             this.saveDataPrzekletyCzarnoksieznikEffect(uuid, rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid));
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
+            this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -2137,6 +2149,32 @@ public class MongoManager {
     public void saveAllMroznyStroz() {
         for (final MroznyStrozUser mroznyStrozUser : rpgcore.getMroznyStrozNPC().getMroznyStrozUsers()) {
             this.saveDataMroznyStroz(mroznyStrozUser.getUuid(), mroznyStrozUser);
+        }
+    }
+
+    public Map<UUID, SummonbladeUser> loadAllSummonblade() {
+        Map<UUID, SummonbladeUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getSummonblade().find()) {
+            final SummonbladeUser summonbladeUser = new SummonbladeUser(document);
+            userMap.put(summonbladeUser.getUuid(), summonbladeUser);
+        }
+        return userMap;
+    }
+
+    public void addDataSummonblade(final SummonbladeUser summonbladeUser) {
+        if (this.pool.getSummonblade().find(new Document("_id", summonbladeUser.getUuid().toString())).first() != null) {
+            this.pool.getSummonblade().deleteOne(new Document("_id", summonbladeUser.getUuid().toString()));
+        }
+        this.pool.getSummonblade().insertOne(summonbladeUser.toDocument());
+    }
+
+    public void saveDataSummonblade(final UUID uuid, final SummonbladeUser summonbladeUser) {
+        this.pool.getSummonblade().findOneAndReplace(new Document("_id", uuid.toString()), summonbladeUser.toDocument());
+    }
+
+    public void saveAllSummonblade() {
+        for (final SummonbladeUser summonbladeUser : rpgcore.getSummonbladeNPC().getSummonbladeUsers()) {
+            this.saveDataSummonblade(summonbladeUser.getUuid(), summonbladeUser);
         }
     }
 
