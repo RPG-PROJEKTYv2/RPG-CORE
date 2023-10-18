@@ -43,7 +43,7 @@ public class RybakItemPickupListener implements Listener {
             }
 
         }
-        /*if (e.getItem().getItemStack().isSimilar(RybakItems.I22.getItemStack())) {
+        if (e.getItem().getItemStack().isSimilar(RybakItems.I22.getItemStack())) {
             e.getItem().remove();
             e.setCancelled(true);
             final OsUser osUser = RPGCORE.getInstance().getOsManager().find(e.getPlayer().getUniqueId());
@@ -61,14 +61,17 @@ public class RybakItemPickupListener implements Listener {
 
 
             for (int i = 0; i < amount; i++) {
-                final ItemStack krysztal = RybakHelper.getRandomNies();
+                final ItemStack nies = RybakHelper.getRandomNies();
 
-                Bukkit.getServer().broadcastMessage(" ");
-                Bukkit.getServer().broadcastMessage(Utils.format("&7&lStara Fabryka &8>> &7Gracz &e" + e.getPlayer().getName() + " &7znalazl &3&lNiesamowity Przedmiot&7!"));
-                Bukkit.getServer().broadcastMessage(" ");
+                if (nies == null) {
+                    e.getPlayer().sendMessage(Utils.format("&7&lStara Fabryka &8>> &cNiestety ten przedmiot okazal sie byc uszkodzony!"));
+                    continue;
+                }
 
-                e.getPlayer().getInventory().addItem(krysztal.clone());
+                e.getPlayer().sendMessage(Utils.format("&a+ " + nies.getItemMeta().getDisplayName()));
+
+                e.getPlayer().getInventory().addItem(nies.clone());
             }
-        }*/
+        }
     }
 }
