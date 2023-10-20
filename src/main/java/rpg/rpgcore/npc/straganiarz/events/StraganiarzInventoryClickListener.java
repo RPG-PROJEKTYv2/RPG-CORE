@@ -165,13 +165,13 @@ public class StraganiarzInventoryClickListener implements Listener {
                     return;
                 case 23:
                     if (e.getClick().isLeftClick()) {
-                        if (!player.getInventory().containsAtLeast(Ulepszacze.I_SZAFIROWESERCE.getItem(), 64)) return;
-                        player.getInventory().removeItem(new ItemBuilder(Ulepszacze.I_SZAFIROWESERCE.getItem().clone()).setAmount(64).toItemStack());
+                        if (!player.getInventory().containsAtLeast(Ulepszacze.I_SZAFIROWYSKRAWEK.getItem(), 64)) return;
+                        player.getInventory().removeItem(new ItemBuilder(Ulepszacze.I_SZAFIROWYSKRAWEK.getItem().clone()).setAmount(64).toItemStack());
                         player.getInventory().addItem(new ItemBuilder(Ulepszacze.I_SZAFIROWESERCE64.getItem().clone()).setAmount(1).toItemStack());
                     } else if (e.isRightClick()) {
                         if (!player.getInventory().containsAtLeast(Ulepszacze.I_SZAFIROWESERCE64.getItem(), 1)) return;
                         player.getInventory().removeItem(new ItemBuilder(Ulepszacze.I_SZAFIROWESERCE64.getItem().clone()).setAmount(1).toItemStack());
-                        player.getInventory().addItem(new ItemBuilder(Ulepszacze.I_SZAFIROWESERCE.getItem().clone()).setAmount(64).toItemStack());
+                        player.getInventory().addItem(new ItemBuilder(Ulepszacze.I_SZAFIROWYSKRAWEK.getItem().clone()).setAmount(64).toItemStack());
                     }
                     return;
                 case 24:

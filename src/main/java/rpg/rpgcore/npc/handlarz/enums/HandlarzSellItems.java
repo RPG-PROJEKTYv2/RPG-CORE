@@ -337,11 +337,11 @@ public enum HandlarzSellItems {
     I278("Skradziona Tarcza", Material.ITEM_FRAME, 1_500_000),
     I279("Skradzione Kolczyki", Material.HOPPER_MINECART, 3_000_000),
     // AKCESORIUM 100-110
-    I280("Mityczna Naszyjnik", Material.STORAGE_MINECART, 4_500_000),
-    I281("Mityczny Diadem", Material.WATCH, 3_500_000),
-    I282("Mityczny Pierscien", Material.EXPLOSIVE_MINECART, 3_500_000),
-    I283("Mityczna Tarcza", Material.ITEM_FRAME, 3_500_000),
-    I284("Mityczne Kolczyki", Material.HOPPER_MINECART, 5_000_000),
+    I280("Mityczna Naszyjnik", Material.STORAGE_MINECART, 2_500_000),
+    I281("Mityczny Diadem", Material.WATCH, 2_500_000),
+    I282("Mityczny Pierscien", Material.EXPLOSIVE_MINECART, 2_500_000),
+    I283("Mityczna Tarcza", Material.ITEM_FRAME, 2_500_000),
+    I284("Mityczne Kolczyki", Material.HOPPER_MINECART, 3_500_000),
     // AKCESORIUM 110-120
     // 289
     // AKCESORIUM 120-130

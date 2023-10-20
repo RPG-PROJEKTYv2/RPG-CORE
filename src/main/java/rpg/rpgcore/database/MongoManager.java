@@ -16,6 +16,7 @@ import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznik
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
+import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
@@ -217,6 +218,12 @@ public class MongoManager {
             }
             if (pool.getMroznyStroz().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getMroznyStroz().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getSummonblade().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getSummonblade().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getAlchemik().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getAlchemik().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
             rpgcore.getBackupMongoManager().getPool().getDatabase().getCollection(uuid.toString().replace("-", "_")).drop();
@@ -422,6 +429,11 @@ public class MongoManager {
                 addDataSummonblade(user);
                 rpgcore.getSummonbladeNPC().add(user);
             }
+            if (pool.getAlchemik().find(new Document("_id", uuid.toString())).first() == null) {
+                final AlchemikUser user = new AlchemikUser(uuid);
+                addDataAlchemik(user);
+                rpgcore.getAlchemikNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -556,6 +568,10 @@ public class MongoManager {
         this.addDataSummonblade(summonbladeUser);
         rpgcore.getSummonbladeNPC().add(summonbladeUser);
 
+        final AlchemikUser alchemikUser = new AlchemikUser(uuid);
+        this.addDataAlchemik(alchemikUser);
+        rpgcore.getAlchemikNPC().add(alchemikUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -689,6 +705,7 @@ public class MongoManager {
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
+            this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -822,6 +839,7 @@ public class MongoManager {
             this.saveDataWyslannik(uuid, rpgcore.getWyslannikNPC().find(uuid));
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
+            this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -2175,6 +2193,32 @@ public class MongoManager {
     public void saveAllSummonblade() {
         for (final SummonbladeUser summonbladeUser : rpgcore.getSummonbladeNPC().getSummonbladeUsers()) {
             this.saveDataSummonblade(summonbladeUser.getUuid(), summonbladeUser);
+        }
+    }
+
+    public Map<UUID, AlchemikUser> loadAllAlchemik() {
+        Map<UUID, AlchemikUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getAlchemik().find()) {
+            final AlchemikUser alchemikUser = new AlchemikUser(document);
+            userMap.put(alchemikUser.getUuid(), alchemikUser);
+        }
+        return userMap;
+    }
+
+    public void addDataAlchemik(final AlchemikUser alchemikUser) {
+        if (this.pool.getAlchemik().find(new Document("_id", alchemikUser.getUuid().toString())).first() != null) {
+            this.pool.getAlchemik().deleteOne(new Document("_id", alchemikUser.getUuid().toString()));
+        }
+        this.pool.getAlchemik().insertOne(alchemikUser.toDocument());
+    }
+
+    public void saveDataAlchemik(final UUID uuid, final AlchemikUser alchemikUser) {
+        this.pool.getAlchemik().findOneAndReplace(new Document("_id", uuid.toString()), alchemikUser.toDocument());
+    }
+
+    public void saveAllAlchemik() {
+        for (final AlchemikUser alchemikUser : rpgcore.getAlchemikNPC().getAlchemikUsers()) {
+            this.saveDataAlchemik(alchemikUser.getUuid(), alchemikUser);
         }
     }
 

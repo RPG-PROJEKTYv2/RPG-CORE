@@ -19,10 +19,7 @@ import rpg.rpgcore.utils.globalitems.AkceItems;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
 import rpg.rpgcore.utils.globalitems.NiesyItems;
 import rpg.rpgcore.utils.globalitems.expowiska.*;
-import rpg.rpgcore.utils.globalitems.npc.LesnikItems;
-import rpg.rpgcore.utils.globalitems.npc.LowcaItems;
-import rpg.rpgcore.utils.globalitems.npc.PrzyrodnikItems;
-import rpg.rpgcore.utils.globalitems.npc.RybakItems;
+import rpg.rpgcore.utils.globalitems.npc.*;
 import rpg.rpgcore.wyszkolenie.enums.WyszkolenieItems;
 
 import java.util.UUID;
@@ -830,6 +827,13 @@ public class MobDropHelper {
                 addDropPlayer(player, new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(32, 64)).toItemStack().clone(), 100, true, true, entity);
                 addDropPlayer(player, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(16, 32)).toItemStack().clone(), 100, true, true, entity);
                 addDropPlayer(player, new ItemBuilder(RybakItems.I23.getItemStack().clone()).setAmount(ChanceHelper.getRandInt(1, 3)).toItemStack().clone(), 100, true, true, entity);
+                break;
+        //                                            ALCHEMIK
+            case "Uczen Alchemika":
+                addDropPlayer(player, AlchemikItems.I1.getItemStack(), getDropChance(szczescie, 0.1), true, true, entity);
+                addDropPlayer(player, AlchemikItems.I2.getItemStack(), getDropChance(szczescie, 0.075), true, true, entity);
+                addDropPlayer(player, AlchemikItems.I3.getItemStack(), getDropChance(szczescie, 0.085), true, false, entity);
+                addDropPlayer(player, AlchemikItems.I8.getItemStack(), getDropChance(szczescie, 0.00025), true, true, entity);
                 break;
         }
 

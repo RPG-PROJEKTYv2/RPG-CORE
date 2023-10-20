@@ -77,7 +77,10 @@ public class EntityDamageEntityListener implements Listener {
             "Przyjaciel",
             "Wygnany Kowal",
             "Zlotnik",
-            "Mrozny Stroz"
+            "Mrozny Stroz",
+            "Summonblade",
+            "Alchemik",
+            "Duszolog"
     );
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -258,6 +261,10 @@ public class EntityDamageEntityListener implements Listener {
                         e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                         e.getDamager().sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby moc atakowac te magiczne stworzenia"));
                         e.getDamager().sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
+                        return;
+                    }
+                    if (e.getEntity().getWorld().equals(Bukkit.getWorld("Alchemik"))) {
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
                         return;
                     }
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());

@@ -61,6 +61,10 @@ public class SummonbladeNPC {
         return this.userMap.get(uuid);
     }
 
+    public void remove(final UUID uuid) {
+        this.userMap.remove(uuid);
+    }
+
     public ImmutableSet<SummonbladeUser> getSummonbladeUsers() {
         return ImmutableSet.copyOf(this.userMap.values());
     }

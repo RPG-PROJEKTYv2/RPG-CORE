@@ -235,6 +235,11 @@ import rpg.rpgcore.newTarg.commands.NewTargSprawdzCommand;
 import rpg.rpgcore.newTarg.commands.NewTargWystawCommand;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClick;
 import rpg.rpgcore.newTarg.events.NewTargInventoryClose;
+import rpg.rpgcore.npc.alchemik.AlchemikNPC;
+import rpg.rpgcore.npc.alchemik.events.AlchemikInteractListener;
+import rpg.rpgcore.npc.alchemik.events.AlchemikInventoryClickListener;
+import rpg.rpgcore.npc.alchemik.events.AlchemikInventoryCloseListener;
+import rpg.rpgcore.npc.alchemik.events.AlchemikItemPickupListener;
 import rpg.rpgcore.npc.czarownica.CzarownicaNPC;
 import rpg.rpgcore.npc.czarownica.events.CzarownicaInteractListener;
 import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
@@ -620,6 +625,8 @@ public final class RPGCORE extends JavaPlugin {
     private DemoniczneSaleManager demoniczneSaleManager;
     @Getter
     private SummonbladeNPC summonbladeNPC;
+    @Getter
+    private AlchemikNPC alchemikNPC;
 
 
     private int i = 1;
@@ -769,6 +776,8 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMistrzYang();
         this.mongo.saveAllCzarownica();
         this.mongo.saveAllMroznyStroz();
+        this.mongo.saveAllSummonblade();
+        this.mongo.saveAllAlchemik();
 
         //this.mongo.clearDatabase();
 
@@ -1149,6 +1158,12 @@ public final class RPGCORE extends JavaPlugin {
         // SUMMONBLADE
         this.getServer().getPluginManager().registerEvents(new SummonbladeInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new SummonbladeInteractListener(), this);
+
+        // ALCHEMIK
+        this.getServer().getPluginManager().registerEvents(new AlchemikInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new AlchemikInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new AlchemikInventoryCloseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new AlchemikItemPickupListener(), this);
     }
 
     private void initDatabase() {
@@ -1231,8 +1246,7 @@ public final class RPGCORE extends JavaPlugin {
         this.zlotnikNPC = new ZlotnikNPC();
         this.mroznyStrozNPC = new MroznyStrozNPC(this);
         this.summonbladeNPC = new SummonbladeNPC(this);
-
-        this.bonusesManager.fix();
+        this.alchemikNPC = new AlchemikNPC(this);
     }
 
     private void initChests() {

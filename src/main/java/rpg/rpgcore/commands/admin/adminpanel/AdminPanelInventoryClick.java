@@ -152,8 +152,12 @@ public class AdminPanelInventoryClick implements Listener {
                 rpgcore.getAdminPanelManager().openLowcaGUI(player);
                 return;
             }
-            if (slot == 22) {
+            if (slot == 21) {
                 rpgcore.getAdminPanelManager().openLesnikGUI(player);
+                return;
+            }
+            if (slot == 22) {
+                rpgcore.getAdminPanelManager().openAlchemikGUI(player);
                 return;
             }
             if (slot == 26) {
@@ -161,7 +165,7 @@ public class AdminPanelInventoryClick implements Listener {
                 return;
             }
         }
-        if (title.equals("Przyrodnik - ADMINISTRACJA") || title.equals("Metinolog - ADMINISTRACJA") || title.equals("Lowca - ADMINISTRACJA")) {
+        if (title.equals("Przyrodnik - ADMINISTRACJA") || title.equals("Metinolog - ADMINISTRACJA") || title.equals("Lowca - ADMINISTRACJA") || title.equals("Alchemik - ADMINISTRACJA")) {
             if (slot == 17) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openNpctyGUI(player);

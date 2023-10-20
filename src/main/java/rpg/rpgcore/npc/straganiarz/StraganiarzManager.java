@@ -40,7 +40,7 @@ public class StraganiarzManager {
         gui.setItem(20, new ItemBuilder(Ulepszacze.I_TRUJACAROSLINA.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
         gui.setItem(21, new ItemBuilder(Ulepszacze.I_JADPTASZNIKA.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Ulepszacze.I_MROCZNYMATERIAL.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
-        gui.setItem(23, new ItemBuilder(Ulepszacze.I_SZAFIROWESERCE.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
+        gui.setItem(23, new ItemBuilder(Ulepszacze.I_SZAFIROWYSKRAWEK.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
         gui.setItem(24, new ItemBuilder(Ulepszacze.I_ZAKLETYLOD.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)", "").toItemStack().clone());
 
         gui.setItem(31, new ItemBuilder(Ulepszacze.I_NIEBIANSKIMATERIAL.getItem().clone()).addLoreLine("", "&7Kliknij PPM aby rozstakowac &e(&c64x1 - 64&e)", "&7Kliknij LPM aby zestakowac &e(&c64 - 64x1&e)").toItemStack().clone());

@@ -19,7 +19,7 @@ public enum Ulepszacze {
     I_TRUJACAROSLINA("70-80", new ItemBuilder(Material.RED_ROSE, 1, (short)2).setName("&5Trujaca Roslina").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_JADPTASZNIKA("80-90", new ItemBuilder(Material.SPIDER_EYE).setName("&6Jad Ptasznika").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_MROCZNYMATERIAL("90-100", new ItemBuilder(Material.NETHER_BRICK_ITEM).setName("&9Mroczny Material").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
-    I_SZAFIROWESERCE("100-110", new ItemBuilder(Material.INK_SACK, 1, (short)4).setName("&bSzafirowy Skrawek").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
+    I_SZAFIROWYSKRAWEK("100-110", new ItemBuilder(Material.INK_SACK, 1, (short)4).setName("&bSzafirowy Skrawek").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_ZAKLETYLOD("110-120", new ItemBuilder(Material.ICE).setName("&bZaklety Lod").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     I_NIEBIANSKIMATERIAL("120-130", new ItemBuilder(Material.INK_SACK, 1, (short)12).setName("&3Niebianki Material").setLore(Arrays.asList("&8&oUlepszacz")).hideFlag().toItemStack().clone()),
     //x64
