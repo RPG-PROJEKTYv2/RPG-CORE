@@ -366,13 +366,7 @@ public class TeleporterNPC {
     }
 
     public void teleportExp12(final Player player) {
-        switch (new Random().nextInt(2)) {
-            case 0:
-                player.teleport(new Location(Bukkit.getWorld("110-120map"), -100, 66, -156, -90.1F, -0.6F));
-                return;
-            case 1:
-                player.teleport(new Location(Bukkit.getWorld("110-120map"), 100, 66, -156, 90.1F, -0.6F));
-        }
+        player.teleport(new Location(Bukkit.getWorld("110-120map"), -0.5, 75.5, -155.5, 180F, 0));
     }
 
     public void teleportExp13(final Player player) {

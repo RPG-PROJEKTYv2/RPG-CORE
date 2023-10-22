@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.chests.Items;
+import rpg.rpgcore.dodatki.akcesoriaD.helpers.AkcesoriaDodatHelper;
 import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.npc.rybak.enums.LureBonuses;
 import rpg.rpgcore.npc.rybak.enums.WedkaExp;
@@ -19,10 +20,7 @@ import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
 import rpg.rpgcore.npc.rybak.objects.StaruszekUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
-import rpg.rpgcore.utils.ChanceHelper;
-import rpg.rpgcore.utils.DoubleUtils;
-import rpg.rpgcore.utils.ItemBuilder;
-import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.npc.RybakItems;
 
 import java.util.Arrays;
@@ -172,8 +170,8 @@ public class RybakHelper {
 
         final String krysztal = Utils.getTagString(player.getItemInHand(), "krysztal");
 
-        if (ChanceHelper.getChance(0.125 + Utils.getTagDouble(player.getItemInHand(), "zwyklyMob"))) {
-            if (ChanceHelper.getChance(0.5 + (krysztal.equals("Wladcy Oceanow") ? Utils.getTagDouble(player.getItemInHand(), "krysztalValue") : 0))) {
+        if (ChanceHelper.getChance(0.2137 + Utils.getTagDouble(player.getItemInHand(), "zwyklyMob"))) {
+            if (ChanceHelper.getChance(0.69420 + (krysztal.equals("Wladcy Oceanow") ? Utils.getTagDouble(player.getItemInHand(), "krysztalValue") : 0))) {
                 if (user.getMission() == 18) user.setProgress(user.getProgress() + 1);
                 RPGCORE.getInstance().getRybakNPC().spawnPosejdon(playerLocation, hookLocation);
 
@@ -480,23 +478,42 @@ public class RybakHelper {
 
 
     private final static Set<Items> niesy = Sets.newHashSet(
-            new Items("1", 0.01, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&3&lMorskie Szczescie I").setLore(Arrays.asList(
-                    "&7Gwarantuje &b+1.5% &7szansy na wylowienie",
-                    "&2potwora&7, &dkrysztalu &7lub &3Niesamowitego Przedmiotu"
+            new Items("1", 0.5, new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1),
+            new Items("2", 1.5, new ItemBuilder(Material.LEASH).setName("&3Rybacki Pas").toItemStack().clone(), 1),
+            new Items("3", 2.5, new ItemBuilder(RybakItems.I5.getItemStack().clone()).setAmount(3).toItemStack(), 3),
+            new Items("4", 5, ItemHelper.createSword("&b&lNiesamowity Rybacki Miecz", Material.WOOD_SWORD, 75, 25, true), 3),
+            new Items("5", 5, new ItemBuilder(Material.DOUBLE_PLANT, 1, (short) 3).setName("&2&lWodorost").setLore(Arrays.asList(
+                    "&8Podobno posiada &dmagiczne &8wlasciwosci.",
+                    "&8W polaczeniu z odpowiednimi przedmiotami,",
+                    "&8moze dac cos nowego"
             )).toItemStack().clone(), 1),
-            new Items("2", 1, new ItemBuilder(Material.ENCHANTED_BOOK).setName("&3&lMorskie Szczescie I").setLore(Arrays.asList(
-                    "&7Gwarantuje &b+0.5% &7szansy na wylowienie",
-                    "&2potwora&7, &dkrysztalu &7lub &3Niesamowitego Przedmiotu"
-            )).toItemStack().clone(), 1)
+            new Items("6", 15, new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(7).toItemStack().clone(), 1),
+            new Items("7", 15, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(7).toItemStack().clone(), 1),
+            new Items("8", 15, new ItemBuilder(RybakItems.I20.getItemStack().clone()).setAmount(7).toItemStack().clone(), 1),
+            new Items("9", 15, new ItemBuilder(RybakItems.I21.getItemStack().clone()).setAmount(7).toItemStack().clone(), 1)
     );
 
 
     public static ItemStack getRandomNies() {
         for (final Items item : niesy) {
             if (ChanceHelper.getChance(item.getChance())) {
-                return item.getRewardItem().clone();
+                ItemStack itemStack = item.getRewardItem().clone();
+
+                if (itemStack.getType().equals(Material.LEASH)) {
+                    itemStack = AkcesoriaDodatHelper.createPas(
+                            ChanceHelper.getRandInt(1, 30),
+                            ChanceHelper.getRandInt(1, 30),
+                            ChanceHelper.getRandInt(50, 120),
+                            "&3&lRybacki Pas"
+                    ).clone();
+                }
+                if (itemStack.getType().equals(Material.WOOL)) {
+                    itemStack = RybakItems.getRandomKrysztal().clone();
+                }
+
+                return itemStack;
             }
         }
-        return getRandomNies();
+        return null;
     }
 }

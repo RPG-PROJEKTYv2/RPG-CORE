@@ -76,16 +76,18 @@ public enum EntityDamage {
     DEMONICZNE_SALE_MINIBOSS1("[MiniBOSS] Elitarny Sluga", 40_500),
     DEMONICZNE_SALE_BOSS("[BOSS] Demon Ciemnosci", 55_000),
 
-    // DO TAD SKONCZONE POWYZEJ NIE !
     MAP_100_110_1("Podwodny Straznik Lvl. 104", 31_500),
     MAP_100_110_2("Podwodny Straznik Lvl. 106", 32_400),
     MAP_100_110_3("Podwodny Straznik Lvl. 109", 33_300),
     MAP_100_110_BOSS("[BOSS] Mistyczny Kraken", 150_000),
 
-    MAP_110_120_1("Mrozny Stroz Lvl. 114", 18800),
-    MAP_110_120_2("Mrozny Stroz Lvl. 116", 20800),
-    MAP_110_120_3("Mrozny Stroz Lvl. 118", 23800),
-    MAP_110_120_BOSS("[BOSS] Krysztalowy Wladca", 30500),
+    MAP_110_120_1("Mrozny Stroz Lvl. 114", 40_000),
+    MAP_110_120_2("Mrozny Stroz Lvl. 116", 42_500),
+    MAP_110_120_3("Mrozny Stroz Lvl. 118", 45_000),
+    MAP_110_120_BOSS("[BOSS] Krysztalowy Wladca", 79_825),
+    MAP_110_120_PREBOSS("[BOSS] Ereb", 71_250),
+
+    // DO TAD SKONCZONE POWYZEJ NIE !
 
     MAP_120_130_1("Mnich Lvl. 123", 24900),
     MAP_120_130_2("Mnich Lvl. 126", 27000),

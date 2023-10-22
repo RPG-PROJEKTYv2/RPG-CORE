@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 
 public class AkcesoriaDodatHelper {
 
-    public static ItemStack createSzarfa(final int ludize, final int moby, final int lvl, final String... name) {
+    public static ItemStack createSzarfa(final int ludzie, final int moby, final int lvl, final String... name) {
         return new ItemBuilder(Material.LADDER).setName(Arrays.stream(name).map(arg -> arg + " ").collect((Collector) Collectors.joining()).toString().trim()).setLore(Arrays.asList(
                 "&7Typ: &cAkcesorium Dodatkowe",
-                "&7Silny przeciwko ludziom: &c" + ludize + "%",
+                "&7Silny przeciwko ludziom: &c" + ludzie + "%",
                 "&7Silny przeciwko potworom: &c" + moby + "%",
                 " ",
                 "&cWymagany poziom: &6" + lvl
-        )).addTagDouble("ludzie", ludize).addTagDouble("moby", moby).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
+        )).addTagDouble("ludzie", ludzie).addTagDouble("moby", moby).addTagInt("lvl", lvl).hideFlag().toItemStack().clone();
     }
 
     public static ItemStack createPas(final int defLudzie, final int defMoby, final int lvl, final String... name) {

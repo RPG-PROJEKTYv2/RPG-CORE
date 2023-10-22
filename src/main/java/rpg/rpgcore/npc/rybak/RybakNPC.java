@@ -266,7 +266,7 @@ public class RybakNPC {
         final ItemStack wedka = player.getItemInHand();
         final String krysztal = Utils.getTagString(wedka, "krysztal");
         Set<Items> wyspa2DropsClone = new HashSet<>(this.wyspa2Drops);
-        wyspa2DropsClone.add(new Items("1", 0.0075 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
+        wyspa2DropsClone.add(new Items("1", 0.075 + DoubleUtils.round(Utils.getTagDouble(wedka, "krysztalDrop"),3), new ItemBuilder(Material.WOOL, 1, (short) 10).setName("&5&lKrysztal Czarnoksieznika").toItemStack().clone(), 1));
 
         switch (krysztal) {
             case "Mrocznych Wod":

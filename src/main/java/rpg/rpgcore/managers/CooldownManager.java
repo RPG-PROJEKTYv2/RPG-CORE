@@ -37,6 +37,7 @@ public class CooldownManager {
     private final Cache<UUID, Long> teleporterCooldown = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.SECONDS).build();
     @Getter
     private final Cache<UUID, Long> antyLogout = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();
+    private final Cache<UUID, Long> kowalGUICooldown = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
 
     public long getPlayerChatCooldown(final UUID uuid) {
         return this.chatCooldown.asMap().get(uuid);
@@ -321,5 +322,13 @@ public class CooldownManager {
 
     public void removeAntyLogout(final UUID uuid) {
         this.antyLogout.asMap().remove(uuid);
+    }
+
+    public boolean hasKowalGUICooldown(final UUID uuid) {
+        return this.kowalGUICooldown.asMap().containsKey(uuid);
+    }
+
+    public void giveKowalGUICooldown(final UUID uuid) {
+        this.kowalGUICooldown.put(uuid, System.currentTimeMillis() + 1000L);
     }
 }

@@ -65,7 +65,8 @@ public class AdminPanelManager {
         gui.setItem(12, new ItemBuilder(Material.MILK_BUCKET).setName("&fPrzyrodnik").addGlowing().toItemStack().clone());
         gui.setItem(13, new ItemBuilder(Material.MILK_BUCKET).setName("&fMetinolog").addGlowing().toItemStack().clone());
         gui.setItem(14, new ItemBuilder(Material.MILK_BUCKET).setName("&fLowca").addGlowing().toItemStack().clone());
-        gui.setItem(22, new ItemBuilder(Material.BUCKET).setName("&fLesnik").addGlowing().toItemStack().clone());
+        gui.setItem(21, new ItemBuilder(Material.BUCKET).setName("&fLesnik").addGlowing().toItemStack().clone());
+        gui.setItem(22, new ItemBuilder(Material.BUCKET).setName("&fAlchemik").addGlowing().toItemStack().clone());
 
         gui.setItem(26, Utils.powrot());
 
@@ -101,6 +102,14 @@ public class AdminPanelManager {
             gui.setItem(gui.firstEmpty(), lesnikItems.getItem());
         }
         gui.setItem(8, Utils.powrot());
+        player.openInventory(gui);
+    }
+    public void openAlchemikGUI(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&c&lAlchemik &f- ADMINISTRACJA"));
+        for (final AlchemikItems alchemikItems : AlchemikItems.values()) {
+            gui.setItem(gui.firstEmpty(), alchemikItems.getItemStack());
+        }
+        gui.setItem(17, Utils.powrot());
         player.openInventory(gui);
     }
     public void openPrzedmiotySpecjalneGui(final Player player) {

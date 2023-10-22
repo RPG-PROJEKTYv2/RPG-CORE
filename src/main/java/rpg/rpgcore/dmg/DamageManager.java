@@ -17,6 +17,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
 import rpg.rpgcore.klasy.enums.KlasyMain;
+import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
@@ -208,6 +209,15 @@ public class DamageManager {
             gildia += rpgcore.getGuildManager().getGuildSilnyNaLudzi(tag) / 2;
         }
 
+        // ALCHEMIK
+        double alchemik = 100;
+        final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(uuid);
+        if (!alchemikUser.getLudzi().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getLudzi(), "silnyNaLudzi");
+        if (!alchemikUser.getPotegi().getType().equals(Material.AIR)) {
+            alchemik += Utils.getTagDouble(alchemikUser.getPotegi(), "srDmg");
+            dmg += Utils.getTagInt(alchemikUser.getPotegi(), "dodatkowe");
+        }
+
         /*attacker.sendMessage(Utils.format("&6&lDEBUG"));
         attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         attacker.sendMessage(Utils.format("&cBony: " + bony));
@@ -220,6 +230,7 @@ public class DamageManager {
         dmg = dmg * 2.5 * (mnoznik / 100);
         dmg *= (bony / 100);
         dmg = dmg * (tyra / 100);
+        dmg = dmg * (alchemik / 100);
 
         krytyk /= 4;
 
@@ -351,6 +362,15 @@ public class DamageManager {
             gildie += rpgcore.getGuildManager().getGuildSredniDmg(tag);
         }
 
+        // ALCHEMIK
+        double alchemik = 100;
+        final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(uuid);
+        if (!alchemikUser.getPotworow().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getPotworow(), "silnyNaMoby");
+        if (!alchemikUser.getPotegi().getType().equals(Material.AIR)) {
+            alchemik += Utils.getTagDouble(alchemikUser.getPotegi(), "srDmg");
+            dmg += Utils.getTagInt(alchemikUser.getPotegi(), "dodatkowe");
+        }
+
         /*attacker.sendMessage(Utils.format("&6&lDEBUG"));
         attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         attacker.sendMessage(Utils.format("&cBony: " + bony));
@@ -364,12 +384,18 @@ public class DamageManager {
         dmg = dmg * 2 * (mnoznik / 100);
         dmg *= (bony / 100);
         dmg = dmg * (ks / 100);
+        dmg = dmg * (alchemik / 100);
 
         krytyk /= 4;
+        if (victim.getWorld().getName().equals("Alchemik")) {
+            dmg = 1;
+        }
 
 
         if (ChanceHelper.getChance(krytyk)) {
-            dmg = dmg * (1.5 + (wzmKrytDmg / 100));
+            if (victim.getWorld().getName().equals("Alchemik")) {
+                dmg = 2;
+            } else dmg = dmg * (1.5 + (wzmKrytDmg / 100));
         }
 
         if (thornsDmg) {
@@ -377,6 +403,7 @@ public class DamageManager {
                 dmg = dmg * 1.25;
             }
         }
+
 
         double finalDmg = DoubleUtils.round(dmg, 2);
 
@@ -439,6 +466,12 @@ public class DamageManager {
             def += Utils.getTagInt(player.getInventory().getBoots(), "prot");
         }
 
+        // ALCHEMIK
+        double alchemik = 100;
+        final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(uuid);
+        if (!alchemikUser.getLudzi().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getLudzi(), "defNaLudzi");
+        if (!alchemikUser.getObrony().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getObrony(), "srDef");
+
         /*player.sendMessage(Utils.format("&6&lDEBUG"));
         player.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         player.sendMessage(Utils.format("&cBony: " + bony));
@@ -448,6 +481,7 @@ public class DamageManager {
         def *= (gildia / 100);
         def *= 0.85 * (mnoznik / 100) * (bony / 100);
         def *= (bony / 100);
+        def *= (alchemik / 100);
 
         /*player.sendMessage(Utils.format("&6&lDef PO: " + def));
         player.sendMessage(Utils.format("&6&lDEBUG"));*/
@@ -469,6 +503,10 @@ public class DamageManager {
         if (rpgcore.getKlasyManager().find(victimUUID).getMainKlasa() == KlasyMain.CZARODZIEJ) {
             victimBlok += 5;
         }
+
+        // ALCHEMIK
+        final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(victimUUID);
+        if (!alchemikUser.getObrony().getType().equals(Material.AIR)) victimBlok += Utils.getTagDouble(alchemikUser.getObrony(), "blok");
 
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
     }
@@ -584,12 +622,20 @@ public class DamageManager {
             gildia += rpgcore.getGuildManager().getGuildSredniDef(tag);
         }
 
+        // ALCHEMIK
+        double alchemik = 100;
+        final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(uuid);
+        if (!alchemikUser.getPotworow().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getPotworow(), "defNaMoby");
+        if (!alchemikUser.getObrony().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getObrony(), "srDef");
+
+
         double finalValue = prot;
 
         finalValue *= 2;
         finalValue *= (gildia / 100);
         finalValue *= 1.25 * (mnoznik / 100);
         finalValue *= (bony / 100);
+        finalValue *= (alchemik / 100);
 
         double wartoscDefa = DoubleUtils.round(finalValue, 2);
         //victim.sendMessage(Utils.format("&6&lDEBUG"));

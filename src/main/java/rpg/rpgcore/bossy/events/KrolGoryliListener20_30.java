@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,9 +41,12 @@ public class KrolGoryliListener20_30 implements Listener {
         }
 
         if (bossyManager.getBoss20_30count() == 4) {
-            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &f&lKroli Gorylow! &7(Limit na mape: 3)"));
+            player.sendMessage(Utils.format("&8&l(&4&lBOSS&8&l) &8>> &cW tym momencie nie mozesz przywolac wiecej &f&lKroli Gorylow! &7(Limit na mape: 4)"));
             return;
         }
+        e.setUseInteractedBlock(Event.Result.DENY);
+        e.setUseItemInHand(Event.Result.DENY);
+        e.setCancelled(true);
         player.getInventory().removeItem(new ItemBuilder(Bossy.I20_30.getItemStack().clone()).setAmount(1).toItemStack());
         final Location loc = player.getLocation();
         final String cordsToString = loc.getWorld().getName() + "," + loc.getX() + "," + (loc.getY() + 3) + "," + loc.getZ();

@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.commands.api.CommandAPI;
 import rpg.rpgcore.ranks.types.RankType;
 import rpg.rpgcore.utils.Utils;
@@ -24,7 +25,8 @@ public class GmCommand extends CommandAPI {
         if (target != sender) {
             sender.sendMessage(Utils.format("&7>> &7Zmieniono tryb gracza: &e" + target.getName() + " &7na: &e" + tryb.toString().toLowerCase()));
         }
-        target.setGameMode(tryb);
+        if (tryb == GameMode.SPECTATOR) RPGCORE.getInstance().getServer().getScheduler().runTaskLater(RPGCORE.getInstance(), () -> target.setGameMode(tryb), 20L);
+        else target.setGameMode(tryb);
         target.sendMessage(Utils.format("&7>> &7Zmieniono twoj tryb gry na: &e" + tryb.toString().toLowerCase()));
     }
 

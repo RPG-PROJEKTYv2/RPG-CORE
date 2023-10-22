@@ -12,6 +12,7 @@ import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.utils.*;
 import rpg.rpgcore.utils.globalitems.expowiska.SkrzynkiOther;
+import rpg.rpgcore.utils.globalitems.npc.AlchemikItems;
 import rpg.rpgcore.utils.globalitems.npc.MetinologItems;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 
@@ -321,6 +322,13 @@ public class MetinyHelper {
         if (id >= 50_000 && id <= 50_005) {
             kasaToAdd = 16_000;
             RPGCORE.getInstance().getTajemniczePiaskiManager().incrementCounter();
+        }
+
+        // ---------------------------------------- ALCHEMIK ----------------------------------------
+        if (id >= 80_000 && id <= 80_007) {
+            kasaToAdd = 10_000;
+            MobDropHelper.addDropPlayer(player, AlchemikItems.I8.getItemStack(), MobDropHelper.getDropChance(player.getUniqueId(), 0.00125), true, true, entity);
+            MobDropHelper.addDropPlayer(player, AlchemikItems.I3.getItemStack(), MobDropHelper.getDropChance(player.getUniqueId(), 0.125), true, false, entity);
         }
 
         //TODO ---------------------------------------- POWYŻEJ 90 000 SA CUSTOM DUNGEONY ----------------------------------------

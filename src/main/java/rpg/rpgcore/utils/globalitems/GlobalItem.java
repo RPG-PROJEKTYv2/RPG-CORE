@@ -92,6 +92,10 @@ public enum GlobalItem {
             "",
             "&8&oKomus na pewno sie to przyda..."
     )).toItemStack().clone()),
+    KRYSZTALOWA_BARIERA("KRYSZTALOWA_BARIERA", new ItemBuilder(Material.BANNER, 1, (short) 15).setName("&f&lKrysztalowa Bariera").setLore(Arrays.asList(
+            "&8&oKliknij, aby aktywowac i zaczac dostawac",
+            "&8&oexpa oraz drop z &fMroznych Strozow"
+    )).toItemStack().clone()),
     // KONIEC MOZLIWYCH MISJI U NPC
     I_ERROR("error", new ItemBuilder(Material.BARRIER).setName("&aUkonczono!").setLore(Arrays.asList("&7Ukonczyles/as juz wszystkie dostepne", "&7Misje u tego npc!", "", "&8Mozliwe ze w przyszloscie", "&8pojawi sie ich wiecej")).toItemStack().clone());
 

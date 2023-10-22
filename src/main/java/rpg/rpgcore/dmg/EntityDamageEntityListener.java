@@ -77,7 +77,10 @@ public class EntityDamageEntityListener implements Listener {
             "Przyjaciel",
             "Wygnany Kowal",
             "Zlotnik",
-            "Mrozny Stroz"
+            "Mrozny Stroz",
+            "Summonblade",
+            "Alchemik",
+            "Duszolog"
     );
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -253,6 +256,17 @@ public class EntityDamageEntityListener implements Listener {
                     rpgcore.getCooldownManager().giveAntyLogout(attacker.getUniqueId());
                     return;
                 } else if (e.getEntity() instanceof Creature || e.getEntity() instanceof Monster) {
+                    if (e.getEntity().getWorld().equals(Bukkit.getWorld("110-120map")) && !Utils.removeColor(e.getEntity().getName()).equals("[BOSS] Ereb")
+                            && !rpgcore.getSummonbladeNPC().find(e.getDamager().getUniqueId()).isActivated()) {
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                        e.getDamager().sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby moc atakowac te magiczne stworzenia"));
+                        e.getDamager().sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
+                        return;
+                    }
+                    if (e.getEntity().getWorld().equals(Bukkit.getWorld("Alchemik"))) {
+                        e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                        return;
+                    }
                     final double mnoznik = rpgcore.getDamageManager().calculatePlayerThornsDmg((Player) e.getDamager());
                     final double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToEntity((Player) e.getDamager(), e.getEntity(), true), 2);
                     final double finalDmg = DoubleUtils.round(playerDamage * mnoznik * 0.7, 2);
@@ -423,6 +437,15 @@ public class EntityDamageEntityListener implements Listener {
                         rest.showPlayer(attacker);
                     }
                 }
+
+                if (victim.getWorld().equals(Bukkit.getWorld("110-120map")) && !Utils.removeColor(victim.getName()).equals("[BOSS] Ereb")
+                        && !rpgcore.getSummonbladeNPC().find(attacker.getUniqueId()).isActivated()) {
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 0);
+                    victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby moc atakowac te magiczne stworzenia"));
+                    victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
+                    return;
+                }
+
                 final double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToEntity(attacker, victim, false);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, attackerDmg);
                 if (victim.getCustomName() != null && victim.getCustomName().contains("Ksiaze Mroku")) {
@@ -538,6 +561,13 @@ public class EntityDamageEntityListener implements Listener {
                     loc.setPitch(loc.getPitch() + 180);
                     victim.teleport(loc);
                     e.setDamage(EntityDamageEvent.DamageModifier.BASE, victim.getMaxHealth() / 10);
+                    return;
+                }
+                if (e.getDamager().getWorld().equals(Bukkit.getWorld("110-120map")) && !Utils.removeColor(e.getDamager().getName()).equals("[BOSS] Ereb")
+                        && !rpgcore.getSummonbladeNPC().find(victim.getUniqueId()).isActivated()) {
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, victim.getHealth());
+                    victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby ochronic sie przed magiczna moca tych stworzen"));
+                    victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
                     return;
                 }
 
