@@ -48,6 +48,8 @@ public class User implements Cloneable {
     private int serverJoins;
     private Map<String, Integer> mobMap;
     private UUID lastMsgUUID;
+    private int sezonowiecPoints;
+    private long rankLeftForUpdate;
 
     public User(final UUID id, final String name) {
         this.id = id;
@@ -75,6 +77,8 @@ public class User implements Cloneable {
         this.firstTime = true;
         this.serverJoins = 0;
         this.mobMap = new HashMap<>();
+        this.sezonowiecPoints = 0;
+        this.rankLeftForUpdate = 0L;
     }
 
     public User(final Document document) {
@@ -120,7 +124,9 @@ public class User implements Cloneable {
         this.tworca = document.getBoolean("tworca");
         this.firstTime = (document.containsKey("firstTime") ? document.getBoolean("firstTime") : true);
         this.serverJoins = (document.containsKey("serverJoins") ? document.getInteger("serverJoins") : 0);
+        this.sezonowiecPoints = (document.containsKey("sezonowiecPoints") ? document.getInteger("sezonowiecPoints") : 0);
         this.mobMap = new HashMap<>();
+        this.rankLeftForUpdate = (document.containsKey("rankLeftForUpdate") ? document.getLong("rankLeftForUpdate") : this.rankPlayerUser.getTime() - System.currentTimeMillis());
         final Document mobMapD = (document.containsKey("mobMap") ? (Document) document.get("mobMap") : new Document());
         if (!mobMapD.isEmpty()) {
             for (final String key : mobMapD.keySet()) {
@@ -162,6 +168,10 @@ public class User implements Cloneable {
         }
     }
 
+    public void incrementSezonowiecPoints() {
+        this.sezonowiecPoints++;
+    }
+
     public Document toDocument() {
         final Document mobMapD = new Document("_id", "mobMap");
         for (final String key : this.mobMap.keySet()) {
@@ -194,6 +204,8 @@ public class User implements Cloneable {
                 .append("tworca", this.tworca)
                 .append("firstTime", this.firstTime)
                 .append("serverJoins", this.serverJoins)
+                .append("sezonowiecPoints", this.sezonowiecPoints)
+                .append("rankLeftForUpdate", this.rankLeftForUpdate)
                 .append("mobMap", mobMapD);
     }
 

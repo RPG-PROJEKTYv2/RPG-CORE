@@ -19,16 +19,18 @@ public class DuszologInteractListener implements Listener {
             final Player player = e.getPlayer();
             e.setCancelled(true);
 
-            if (!e.getPlayer().isSneaking()) {
-                return;
-            }
 
             if (!as.getHelmet().equals(RPGCORE.getInstance().getDuszologNPC().getHelm())) {
                 return;
             }
 
+            if (!e.getPlayer().isSneaking()) {
+                e.getPlayer().sendMessage(Utils.format("&5&lDuszolog &8>> &7Aby zebrac dusze, kliknij na nia &6&lSHIFT+PPM&7!"));
+                return;
+            }
+
             if (!as.getCustomName().contains(e.getPlayer().getName())) {
-                player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Ta dusza nalezy chyba do kogos innego prawda?"));
+                player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Ta dusza nalezy chyba do kogos innego, prawda?"));
                 return;
             }
 

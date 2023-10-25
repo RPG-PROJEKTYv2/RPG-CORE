@@ -81,11 +81,11 @@ public enum EntityDamage {
     MAP_100_110_3("Podwodny Straznik Lvl. 109", 33_300),
     MAP_100_110_BOSS("[BOSS] Mistyczny Kraken", 150_000),
 
-    MAP_110_120_1("Mrozny Stroz Lvl. 114", 40_000),
-    MAP_110_120_2("Mrozny Stroz Lvl. 116", 42_500),
-    MAP_110_120_3("Mrozny Stroz Lvl. 118", 45_000),
-    MAP_110_120_BOSS("[BOSS] Krysztalowy Wladca", 79_825),
-    MAP_110_120_PREBOSS("[BOSS] Ereb", 71_250),
+    MAP_110_120_1("Mrozny Stroz Lvl. 114", 80_000),
+    MAP_110_120_2("Mrozny Stroz Lvl. 116", 85_000),
+    MAP_110_120_3("Mrozny Stroz Lvl. 118", 90_000),
+    MAP_110_120_BOSS("[BOSS] Krysztalowy Wladca", 180_000),
+    MAP_110_120_PREBOSS("[BOSS] Ereb", 90_000),
 
     // DO TAD SKONCZONE POWYZEJ NIE !
 

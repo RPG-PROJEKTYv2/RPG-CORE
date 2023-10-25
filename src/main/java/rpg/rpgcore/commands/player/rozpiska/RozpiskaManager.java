@@ -596,6 +596,52 @@ public class RozpiskaManager {
         )).addGlowing().toItemStack().clone());
 
 
+        player.openInventory(openTENTHexp);
+    }
+
+    public void openTWELVTHexp(final Player player) {
+        final Inventory openTENTHexp = this.ramkaGUI("&cExpowisko &8* &f(&a110-120&f)");
+        final UUID uuid = player.getUniqueId();
+        final int szczescie = RPGCORE.getInstance().getBonusesManager().find(player.getUniqueId()).getBonusesUser().getSzczescie();
+        final int medrzecBonus = rpgcore.getMedrzecNPC().find(uuid).getBonus();
+
+        openTENTHexp.setItem(21, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.SKELETON.ordinal()).setName("&fMrozny Stroz").setLore(Arrays.asList("",
+                "&2Skrzynia Z Surowcami: &f" + MobDropHelper.getDropChance(szczescie, 1.6) + "%",
+                "&3Tajemnicza Skrzynia: &f" + MobDropHelper.getDropChance(szczescie, 0.35) + "%",
+                "&7&lCiezka Skrzynia Kowala: &f" + MobDropHelper.getDropChance(szczescie, 0.03) + "%",
+                "&e&lPozlacany Skarb: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "",
+                "&6&lAKCESORIUM: &f" + MobDropHelper.getDropChance(szczescie, 0.03) + "%",
+                "&b&lNIESAMOWITY PRZEDMIOT: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                "",
+                "&bZaklety Lod: &f" + MobDropHelper.getDropChance(szczescie, 1.1) + "%",
+                "&fMrozna Pieczec: &f" + MobDropHelper.getDropChance(szczescie,0.12) + "%",
+                "&bFragment Krysztalu: &f" + MobDropHelper.getDropChance(szczescie,0.25) + "%",
+                "&6Zywica: &f" + MobDropHelper.getDropChance(szczescie, 0.045) + "%",
+                "",
+                "&eWejsciowka do &fKrysztalowej Sali: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%",
+                "&eWejsciowka do &6Tajemniczej Siedziby: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "",
+                "&6Niezniszczalny Podrecznik: &f" + MobDropHelper.getDropChance(szczescie, 0.01) + "%",
+                "&6Podrecznik Telentu II: &f" + MobDropHelper.getDropChance(szczescie, 0.005) + "%",
+                "&d&lCzastka Magii: &f" + MobDropHelper.getDropChance(szczescie, 0.02) + "%",
+                (medrzecBonus < 20 ? "&cZniszczone Rubinowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.05) + "%" : "&bZniszczone Szafirowe Serce: &f" + MobDropHelper.getDropChance(szczescie, 0.015) + "%"),
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTENTHexp.setItem(22, new ItemBuilder(Material.SKULL_ITEM, 1, (short) SkullType.WITHER.ordinal()).setName("&1&lKrysztalowy Wladca").setLore(Arrays.asList("",
+                "&8[&4&lBOSS&8] &3&lSkrzynia &1&lKrysztalowego Wladcy: &f100%",
+                "&4Trofeum Bossa 110-120: &f" + MobDropHelper.getDropChance(szczescie, 50) + "%",
+                ""
+        )).addGlowing().toItemStack().clone());
+        openTENTHexp.setItem(23, new ItemBuilder(Material.NETHER_STAR).setName("&f&lKrysztalowy Metin").setLore(Arrays.asList("",
+                "&4Odlamek Kamienia Metin 110-120: &f25%",
+                "",
+                "&aUkryty Przedmiot: &f0.0075%",
+                "&6Ukryty Przedmiot: &f0.003%",
+                "&cUkryty Przedmiot: &f0.001%",
+                ""
+        )).addGlowing().toItemStack().clone());
+
 
         player.openInventory(openTENTHexp);
     }

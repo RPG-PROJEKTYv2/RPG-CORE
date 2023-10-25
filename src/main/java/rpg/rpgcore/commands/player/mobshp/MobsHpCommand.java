@@ -47,6 +47,7 @@ public class MobsHpCommand extends CommandAPI {
                 "&6Pustynny Ptasznik: &c80 000",
                 "&5Podziemna Lowczyni: &c250 000",
                 "&bPodwodny Straznik: &c750 000",
+                "&fMrozny Stroz: &c2 000 000 &7/ &c2 250 000 &7/ &c2 500 000",
                 ""
                 )).toItemStack().clone());
         gui.setItem(2, new ItemBuilder(Material.STAINED_GLASS_PANE,1, (short)15).toItemStack().clone());

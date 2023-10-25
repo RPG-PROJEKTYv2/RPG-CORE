@@ -190,7 +190,8 @@ public class EntityDeathListener implements Listener {
         }
 
         if (player != null) {
-            MobDropHelper.dropFromMob(player, entity);
+            MobDropHelper.dropFromMob(player, entity, (e.getEntity().getLastDamageCause() != null
+                    && e.getEntity().getLastDamageCause().getCause() != null && e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.THORNS));
         }
     }
 }

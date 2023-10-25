@@ -37,7 +37,7 @@ public class RestartCommand extends CommandAPI {
             return;
         }
         if (args.length > 1) {
-            sender.sendMessage(Utils.poprawneUzycie("restart [-instant]"));
+            sender.sendMessage(Utils.poprawneUzycie("stop [-i]"));
             return;
         }
 
@@ -107,7 +107,7 @@ public class RestartCommand extends CommandAPI {
 
         restart.setRestarting(true);
 
-        if (args[0] != null && args[0].equals("-instant")) {
+        if (args.length == 1 && args[0] != null && args[0].equals("-i")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.kickPlayer(Utils.format(Utils.CLEANSERVERNAME + "\n&cAktualnie Trwa Restart Serwera!\n&7Zapraszamy ponownie za chwile"));
             }

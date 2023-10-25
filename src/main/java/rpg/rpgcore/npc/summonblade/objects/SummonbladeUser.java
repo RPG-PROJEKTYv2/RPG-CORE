@@ -98,16 +98,16 @@ public class SummonbladeUser {
     }
 
     public void reset() {
-        this.boss1_10progress = 0;
-        this.boss10_20progress = 0;
-        this.boss20_30progress = 0;
-        this.boss30_40progress = 0;
-        this.boss40_50progress = 0;
-        this.boss60_70progress = 0;
-        this.boss70_80progress = 0;
-        this.boss80_90progress = 0;
-        this.boss90_100progress = 0;
-        this.boss100_110progress = 0;
+        this.boss1_10progress -= 32;
+        this.boss10_20progress -= 28;
+        this.boss20_30progress -= 24;
+        this.boss30_40progress -= 20;
+        this.boss40_50progress -= 16;
+        this.boss60_70progress -= 12;
+        this.boss70_80progress -= 4;
+        this.boss80_90progress -= 2;
+        this.boss90_100progress -= 1;
+        this.boss100_110progress -= 1;
     }
 
     public void setActivated() {

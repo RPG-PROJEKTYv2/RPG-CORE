@@ -1,5 +1,7 @@
 package rpg.rpgcore.listeners.player;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -11,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.commands.admin.restart.RestartManager;
 import rpg.rpgcore.dungeons.DungeonStatus;
+import rpg.rpgcore.npc.sezonowiec.SezonowiecNPC;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
@@ -300,7 +303,16 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
             if (entityName.equalsIgnoreCase("Alchemik")) {
-                rpgcore.getAlchemikNPC().openAlchemikGUI(player);
+                if (e.getRightClicked().getWorld().getName().equals("Alchemik")) rpgcore.getAlchemikNPC().openAlchemikGUI(player);
+                else player.teleport(new Location(Bukkit.getWorld("Alchemik"), -41.5, 52, -21.5, 90F, 0F));
+                return;
+            }
+            if (entityName.equalsIgnoreCase("Sezonowiec")) {
+                SezonowiecNPC.openSeznonowiecGUI(player);
+                return;
+            }
+            if (entityName.equalsIgnoreCase("Nereus")) {
+                rpgcore.getNereusNPC().openNereusGUI(player);
                 return;
             }
 
@@ -327,7 +339,8 @@ public class PlayerInteractEntityListener implements Listener {
                         entityName.equalsIgnoreCase("Mistyczny Kowal") ||entityName.equalsIgnoreCase("Przyjaciel") ||
                         entityName.equalsIgnoreCase("Staruszek") ||entityName.equalsIgnoreCase("Wygnany Kowal") ||
                         entityName.equalsIgnoreCase("Zlotnik") || entityName.equalsIgnoreCase("Mrozny Stroz") ||
-                        entityName.equalsIgnoreCase("Summonblade") || entityName.equalsIgnoreCase("Alchemik") || entityName.equalsIgnoreCase("Duszolog")) {
+                        entityName.equalsIgnoreCase("Summonblade") || entityName.equalsIgnoreCase("Alchemik") || entityName.equalsIgnoreCase("Duszolog") ||
+                        entityName.equalsIgnoreCase("Sezonowiec") || entityName.equalsIgnoreCase("Nereus")) {
                     e.setCancelled(true);
                     return;
                 }

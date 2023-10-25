@@ -80,7 +80,9 @@ public class EntityDamageEntityListener implements Listener {
             "Mrozny Stroz",
             "Summonblade",
             "Alchemik",
-            "Duszolog"
+            "Duszolog",
+            "Sezonowiec",
+            "Nereus"
     );
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -475,7 +477,7 @@ public class EntityDamageEntityListener implements Listener {
                         if (rest.equals(victim)) continue;
                         if (rest.getName() != null && this.blockedEntiies.contains(Utils.removeColor(rest.getName()))) continue;
 
-                        if (user.getExp() >= rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1)) {
+                        if (user.getExp() >= rpgcore.getLvlManager().getExpForLvl(user.getLvl() + 1) && user.getLvl() != 130) {
                             break;
                         }
 
@@ -485,8 +487,8 @@ public class EntityDamageEntityListener implements Listener {
                             if (rest.getHealth() > dmg) {
                                 rest.damage(dmg);
                             } else {
-                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest), 10L);
-                                else MobDropHelper.dropFromMob(attacker, rest);
+                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest, false), 10L);
+                                else MobDropHelper.dropFromMob(attacker, rest, false);
                                 rest.damage(dmg);
                             }
                             if (!wasFirstDropUsed) wasFirstDropUsed = true;
@@ -496,8 +498,8 @@ public class EntityDamageEntityListener implements Listener {
                             if (rest.getHealth() > dmg) {
                                 rest.damage(dmg);
                             } else {
-                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest), 10L);
-                                else MobDropHelper.dropFromMob(attacker, rest);
+                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest, false), 10L);
+                                else MobDropHelper.dropFromMob(attacker, rest, false);
                                 rest.damage(dmg);
                             }
                             if (!wasFirstDropUsed) wasFirstDropUsed = true;
@@ -507,8 +509,8 @@ public class EntityDamageEntityListener implements Listener {
                             if (rest.getHealth() > dmg) {
                                 rest.damage(dmg);
                             } else {
-                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest), 10L);
-                                else MobDropHelper.dropFromMob(attacker, rest);
+                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest, false), 10L);
+                                else MobDropHelper.dropFromMob(attacker, rest, false);
                                 rest.damage(dmg);
                             }
                             if (!wasFirstDropUsed) wasFirstDropUsed = true;
@@ -517,8 +519,8 @@ public class EntityDamageEntityListener implements Listener {
                             if (rest.getHealth() > attackerDmg) {
                                 rest.damage(attackerDmg);
                             } else {
-                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest), 10L);
-                                else MobDropHelper.dropFromMob(attacker, rest);
+                                if (wasFirstDropUsed) rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> MobDropHelper.dropFromMob(attacker, rest, false), 10L);
+                                else MobDropHelper.dropFromMob(attacker, rest, false);
                                 rest.damage(attackerDmg);
                             }
                             if (!wasFirstDropUsed) wasFirstDropUsed = true;
@@ -568,6 +570,11 @@ public class EntityDamageEntityListener implements Listener {
                     e.setDamage(EntityDamageEvent.DamageModifier.BASE, victim.getHealth());
                     victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cZeby ochronic sie przed magiczna moca tych stworzen"));
                     victim.sendMessage(Utils.format("&6&lSoulblade &8>> &cMusisz aktywowac &f&lKrysztalowa Bariere"));
+                    return;
+                }
+
+                if (e.getDamager().getWorld().getName().equals("Alchemik")) {
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE, 6);
                     return;
                 }
 

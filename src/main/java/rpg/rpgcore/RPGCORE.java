@@ -212,6 +212,7 @@ import rpg.rpgcore.listeners.*;
 import rpg.rpgcore.listeners.block.*;
 import rpg.rpgcore.listeners.custom.AkcesoriumPickUpListener;
 import rpg.rpgcore.listeners.custom.ItemSpawnListener;
+import rpg.rpgcore.listeners.custom.Miasto1TeleportListener;
 import rpg.rpgcore.listeners.custom.NiesyPickUpListener;
 import rpg.rpgcore.listeners.player.*;
 import rpg.rpgcore.lvl.LvlCommand;
@@ -282,6 +283,9 @@ import rpg.rpgcore.npc.mistyczny_kowal.commands.SwordCommand;
 import rpg.rpgcore.npc.mistyczny_kowal.events.MistycznyKowalInventoryClickListener;
 import rpg.rpgcore.npc.mrozny_stroz.MroznyStrozNPC;
 import rpg.rpgcore.npc.mrozny_stroz.events.MroznyStrozInventoryClickListener;
+import rpg.rpgcore.npc.nereus.NereusNPC;
+import rpg.rpgcore.npc.nereus.events.NereusInteractListener;
+import rpg.rpgcore.npc.nereus.events.NereusInventoryClickListener;
 import rpg.rpgcore.npc.przyrodnik.events.PrzyrodnikInventoryClick;
 import rpg.rpgcore.npc.przyrodnik.PrzyrodnikNPC;
 import rpg.rpgcore.npc.pustelnik.PustelnikNPC;
@@ -291,6 +295,7 @@ import rpg.rpgcore.npc.rybak.command.WedkaCommand;
 import rpg.rpgcore.npc.rybak.events.*;
 import rpg.rpgcore.npc.rzemieslnik.RzemieslnikManager;
 import rpg.rpgcore.npc.rzemieslnik.events.RzemieslnikInventoryClickListener;
+import rpg.rpgcore.npc.sezonowiec.events.SezonowiecInventoryClickListener;
 import rpg.rpgcore.npc.straganiarz.StraganiarzManager;
 import rpg.rpgcore.npc.straganiarz.events.StraganiarzInventoryClickListener;
 import rpg.rpgcore.npc.summonblade.SummonbladeNPC;
@@ -627,6 +632,8 @@ public final class RPGCORE extends JavaPlugin {
     private SummonbladeNPC summonbladeNPC;
     @Getter
     private AlchemikNPC alchemikNPC;
+    @Getter
+    private NereusNPC nereusNPC;
 
 
     private int i = 1;
@@ -778,6 +785,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllMroznyStroz();
         this.mongo.saveAllSummonblade();
         this.mongo.saveAllAlchemik();
+        this.mongo.saveAllNereus();
 
         //this.mongo.clearDatabase();
 
@@ -920,6 +928,7 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityCombustListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(this), this);
         this.getServer().getPluginManager().registerEvents(new MobsHpInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new Miasto1TeleportListener(), this);
         //this.getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
         // BAO
         this.getServer().getPluginManager().registerEvents(new BAOInventoryClick(this), this);
@@ -1164,6 +1173,13 @@ public final class RPGCORE extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new AlchemikInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new AlchemikInventoryCloseListener(), this);
         this.getServer().getPluginManager().registerEvents(new AlchemikItemPickupListener(), this);
+
+        // SEZONOWIEC
+        this.getServer().getPluginManager().registerEvents(new SezonowiecInventoryClickListener(), this);
+
+        // NEREUS
+        this.getServer().getPluginManager().registerEvents(new NereusInventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new NereusInteractListener(), this);
     }
 
     private void initDatabase() {
@@ -1247,6 +1263,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mroznyStrozNPC = new MroznyStrozNPC(this);
         this.summonbladeNPC = new SummonbladeNPC(this);
         this.alchemikNPC = new AlchemikNPC(this);
+        this.nereusNPC = new NereusNPC(this);
     }
 
     private void initChests() {

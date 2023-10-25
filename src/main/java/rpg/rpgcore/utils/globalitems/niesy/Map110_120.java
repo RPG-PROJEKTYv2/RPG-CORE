@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Map110_120 {
-    I110_120_1("110-120-1", 14.0, ItemHelper.createArmor("&f&fMrozny Kaszkiet", Material.DIAMOND_HELMET, 84, 15)),
-    I110_120_2("110-120-2", 14.0, ItemHelper.createArmor("&f&fMrozna Koszula", Material.DIAMOND_CHESTPLATE, 87, 15)),
+    I110_120_1("110-120-1", 14.0, ItemHelper.createArmor("&f&lMrozny Kaszkiet", Material.DIAMOND_HELMET, 84, 15)),
+    I110_120_2("110-120-2", 14.0, ItemHelper.createArmor("&f&lMrozna Koszula", Material.DIAMOND_CHESTPLATE, 87, 15)),
     I110_120_3("110-120-3", 14.0, ItemHelper.createArmor("&f&lMrozne Spodnie", Material.DIAMOND_LEGGINGS, 86, 15)),
     I110_120_4("110-120-4", 14.0, ItemHelper.createArmor("&f&lMrozne Buty", Material.DIAMOND_BOOTS, 82, 15)),
     I110_120_5("110-120-5", 12.0, ItemHelper.createSword("&f&lMrozna Katana", Material.DIAMOND_SWORD, 77, 43,true));

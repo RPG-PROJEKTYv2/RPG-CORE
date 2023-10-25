@@ -40,12 +40,14 @@ public class TeleporterInventoryClick implements Listener {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                 rpgcore.getTeleporterNPC().teleportExp1(player);
+                return;
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 9) {
                 if (slot == 12) {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp2(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 19) {
@@ -53,6 +55,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp3(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 29) {
@@ -60,6 +63,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp4(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 39) {
@@ -67,6 +71,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp5(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
@@ -74,6 +79,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp6(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
@@ -81,6 +87,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp7(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
@@ -88,6 +95,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp8(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
@@ -95,6 +103,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp9(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
@@ -102,6 +111,7 @@ public class TeleporterInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                     rpgcore.getTeleporterNPC().teleportExp10(player);
+                    return;
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
@@ -111,44 +121,52 @@ public class TeleporterInventoryClick implements Listener {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                             player.closeInventory();
                             rpgcore.getTeleporterNPC().teleportExp11(player);
+                            return;
                         } else {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&7Twoj poziom jest zbyt niski aby uzywac talizmanu!"));
+                            return;
                         }
                     } else if (player.getInventory().containsAtLeast(Przepustki.getItem("I1", 1),1)) {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                         player.closeInventory();
                         rpgcore.getTeleporterNPC().teleportExp11(player);
                         player.getInventory().removeItem(Przepustki.getItem("I1", 1));
+                        return;
                     } else {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie posiadasz wejsciowki!"));
+                        return;
                     }
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
                 if (slot == 34) {
-                    player.closeInventory();
-                    player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostanie wlaczone kiedy 4 osoby osiagna wymagany na nie poziom!"));
-                    return;
-                   /* if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
+                   if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                             player.closeInventory();
                             rpgcore.getTeleporterNPC().teleportExp12(player);
+                            return;
                         } else {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&7Twoj poziom jest zbyt niski aby uzywac talizmanu!"));
+                            return;
                         }
                     } else if (player.getInventory().containsAtLeast(Przepustki.getItem("I2", 1),1)) {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
                         player.closeInventory();
                         rpgcore.getTeleporterNPC().teleportExp12(player);
                         player.getInventory().removeItem(Przepustki.getItem("I2", 1));
+                       return;
                     } else {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie posiadasz wejsciowki!"));
-                    }*/
+                       return;
+                    }
                 }
             }
             if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {
-                if (slot == 40) {
+                player.closeInventory();
+                player.sendMessage(Utils.SERVERNAME + Utils.format("&4&lTo expowisko zostanie wlaczone kiedy 4 osoby osiagna wymagany na nie poziom!"));
+                return;
+                /*if (slot == 40) {
                     if (player.getInventory().containsAtLeast(Przepustki.getItem("I4", 1), 1)) {
                         if (rpgcore.getUserManager().find(uuid).getLvl() >= 120) {
                             player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));
@@ -165,7 +183,7 @@ public class TeleporterInventoryClick implements Listener {
                     } else {
                         player.sendMessage(Utils.SERVERNAME + Utils.format("&7Nie posiadasz wejsciowki!"));
                     }
-                }
+                }*/
             }
         }
     }

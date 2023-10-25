@@ -26,10 +26,6 @@ public class AlchemikInteractListener implements Listener {
         if (!e.getItem().hasItemMeta()) return;
         if (!e.getItem().getItemMeta().hasDisplayName()) return;
 
-        e.setCancelled(true);
-        e.setUseInteractedBlock(Event.Result.DENY);
-        e.setUseItemInHand(Event.Result.DENY);
-
         final Player player = e.getPlayer();
 
         final AlchemikUser user = this.rpgcore.getAlchemikNPC().find(player.getUniqueId());
@@ -38,6 +34,9 @@ public class AlchemikInteractListener implements Listener {
 
         final String name = Utils.removeColor(e.getItem().getItemMeta().getDisplayName());
         if (name.equals("Alchemiczny Podrecznik")) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (user.getLvl() == 50) {
                 player.sendMessage(Utils.format("&5&lAlchemik &8>> &cOsiagnales juz maksymalny &5Poziom Alchemickii&c!"));
                 return;
@@ -45,6 +44,9 @@ public class AlchemikInteractListener implements Listener {
             user.incrementProgress(player);
             player.getInventory().removeItem(new ItemBuilder(AlchemikItems.I2.getItemStack().clone()).setAmount(1).toItemStack());
         } else if (name.equals("Alchemicki Krysztal Potegi +" + krysztalLvl)) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (e.getItem().getAmount() > 1) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
                 return;
@@ -69,6 +71,9 @@ public class AlchemikInteractListener implements Listener {
             player.getInventory().setItemInHand(new ItemStack(Material.AIR));
             player.sendMessage(Utils.format("&5&lAlchemik &8>> &dPomyslnie zalozono &c&lAlchemicki Krysztal Potegi &8(&f" + srDmg + "&8/&f" + dodatkowe + "&8)"));
         } else if (name.equals("Alchemicki Krysztal Obrony +" + krysztalLvl)) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (e.getItem().getAmount() > 1) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
                 return;
@@ -93,6 +98,9 @@ public class AlchemikInteractListener implements Listener {
             player.getInventory().setItemInHand(new ItemStack(Material.AIR));
             player.sendMessage(Utils.format("&5&lAlchemik &8>> &dPomyslnie zalozono &9&lAlchemicki Krysztal Obrony &8(&f" + srDef + "&8/&f" + blok + "&8)"));
         } else if (name.equals("Alchemicki Krysztal Potworow +" + krysztalLvl)) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (e.getItem().getAmount() > 1) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
                 return;
@@ -118,6 +126,9 @@ public class AlchemikInteractListener implements Listener {
             player.getInventory().setItemInHand(new ItemStack(Material.AIR));
             player.sendMessage(Utils.format("&5&lAlchemik &8>> &dPomyslnie zalozono &2&lAlchemicki Krysztal Potworow &8(&f" + silnyNaMoby + "&8/&f" + defNaMoby + "&8)"));
         } else if (name.equals("Alchemicki Krysztal Ludzi +" + krysztalLvl)) {
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
             if (e.getItem().getAmount() > 1) {
                 player.sendMessage(Utils.format("&8[&c✘&8] &cNie mozesz zalozyc wiecej niz 1 przedmiotu. Rozdziel je!"));
                 return;

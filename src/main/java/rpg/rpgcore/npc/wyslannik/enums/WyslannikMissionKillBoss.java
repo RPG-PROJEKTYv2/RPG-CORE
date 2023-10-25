@@ -11,7 +11,9 @@ public enum WyslannikMissionKillBoss {
     M8(8, 5,3,"&8[&4&lBOSS&8] &5&lPrzeklety Czarnoksieznik"),
     M9(9, 5,3,"&8[&4&lBOSS&8] &e&lMityczny Pajak"),
     M10(10, 8,3,"&8[&4&lBOSS&8] &5&lPodziemny Rozpruwacz"),
-    M11(11, 12,3,"&8[&4&lBOSS&8] &b&lMistyczny Kraken");
+    M11(11, 12,3,"&8[&4&lBOSS&8] &b&lMistyczny Kraken"),
+    M12(12, 14,3,"&8[&4&lBOSS&8] &1&lKrysztalowy Wladca")
+    ;
     private final int mission;
     private final int sredniDEF;
     private final int bossAmount;

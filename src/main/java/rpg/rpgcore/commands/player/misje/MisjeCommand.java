@@ -18,6 +18,7 @@ import rpg.rpgcore.npc.magazynier.enums.MagazynierMissions;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologUser;
 import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
+import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillMob;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
@@ -143,7 +144,7 @@ public class MisjeCommand extends CommandAPI {
         } else {
             final GornikUser gornikUser = rpgcore.getGornikNPC().find(targetUUID);
             if (gornikUser.getMission() > 28) {
-                gui.setItem(32, new ItemBuilder(Material.BARRIER).setName("6&lGornik").setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack());
+                gui.setItem(32, new ItemBuilder(Material.BARRIER).setName("&6&lGornik").setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack());
             } else {
                 gui.setItem(32, new ItemBuilder(GornikMissions.getById(gornikUser.getMission()).getItem().clone()).setLoreCrafting(GornikMissions.getById(gornikUser.getMission()).getItem().clone().getItemMeta().getLore(), Arrays.asList(" ", "&7Postep: &6" + gornikUser.getProgress() + "&7/&6" + GornikMissions.getById(gornikUser.getMission()).getReqAmount())).toItemStack().clone());
             }
@@ -166,7 +167,12 @@ public class MisjeCommand extends CommandAPI {
             gui.setItem(34, new ItemBuilder(Material.BARRIER).setName("&6&lOsiagnij 30 poziom, zeby odblokowac").toItemStack());
         } else {
             if (rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().isDone()) {
-                gui.setItem(34, new ItemBuilder(Material.FISHING_ROD).setName("&a&lUkonczono!").toItemStack());
+                final MlodszyRybakUser mlodszyRybakUser = rpgcore.getRybakNPC().find(targetUUID).getMlodszyRybakUser();
+                if (mlodszyRybakUser.getMission() > 26) {
+                    gui.setItem(34, new ItemBuilder(Material.BARRIER).setName("&6&lRybak").setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack());
+                } else {
+                    gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(mlodszyRybakUser.getMission())).getMissionItem(mlodszyRybakUser.getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
+                }
             } else {
                 gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getMission())).getMissionItem(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
             }

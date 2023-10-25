@@ -104,12 +104,18 @@ public class MetinyHelper {
 
     public static void attackMetin(final Location loc, final Entity entity, final Player player) {
         if (!RPGCORE.getInstance().getMetinyManager().isMetin(loc)) {
-            System.out.println(2);
             return;
         }
         int damage = 1;
         final Metiny metiny = RPGCORE.getInstance().getMetinyManager().find(loc);
         final int id = metiny.getId();
+
+        if (loc.getWorld().getName().equals("110-120map") && !RPGCORE.getInstance().getSummonbladeNPC().find(player.getUniqueId()).isActivated()) {
+            player.sendMessage(Utils.format("&6&lSummonblade &8>> &cJakas magiczna sila blokuje twoje ataki!"));
+            player.sendMessage(Utils.format("&6&lSummonblade &8>> &cPodobno tylko &f&lKrysztalowa Bariera &cmoze ja przebic!"));
+            return;
+        }
+
         if (player.getWorld().getName().equals("zamekNieskonczonosci") && RPGCORE.getInstance().getZamekNieskonczonosciManager().rdzenMap.get(id) == null) {
             player.sendMessage(Utils.format("&c&lKsiaze Mroku: &fHAHAHAHAH... nic nie zdzialasz!"));
             player.damage(player.getMaxHealth() / 10);
@@ -273,7 +279,7 @@ public class MetinyHelper {
                 metinolog.getMetinologUser().setPostepMisjiKill(metinolog.getMetinologUser().getPostepMisjiKill() + 1);
             }
         }
-        if (id >= 111 && id <= 120) {
+        if (id >= 111 && id <= 120 || (id >= 10111 && id <= 10120)) {
            kasaToAdd = 8000;
             if (metinolog.getMetinologUser().getPostepGive() == 12) {
                 MobDropHelper.addDropPlayer(player, MetinologItems.getItem("I110-120", 1), 25, true, true, entity);

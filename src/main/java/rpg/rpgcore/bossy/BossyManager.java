@@ -21,6 +21,7 @@ public class BossyManager {
 
     public BossyManager() {
         bossyUser = RPGCORE.getInstance().getMongoManager().loadAllBossy();
+        bossyUser.setRdzen110_120Locations(new ArrayList<>());
     }
 
     public void set(final BossyUser user) {

@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.DoubleUtils;
+import rpg.rpgcore.utils.Utils;
 
 import java.util.stream.Collectors;
 
@@ -43,6 +44,10 @@ public class EntityDamageListener implements Listener {
             }
 
             if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+                if (Utils.customDungeonWorlds.contains(victim.getWorld())) {
+                    e.setCancelled(true);
+                    return;
+                }
                 double damage = DoubleUtils.round(victim.getMaxHealth() / 25 * 2, 2);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, damage);
                 RPGCORE.getInstance().getDamageManager().sendDamagePacket("&6", damage, victim, victim);

@@ -18,6 +18,7 @@ import rpg.rpgcore.bonuses.BonusesUser;
 import rpg.rpgcore.dodatki.bony.objects.BonyUser;
 import rpg.rpgcore.klasy.enums.KlasyMain;
 import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
+import rpg.rpgcore.npc.nereus.objects.NereusUser;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemHelper;
@@ -218,6 +219,11 @@ public class DamageManager {
             dmg += Utils.getTagInt(alchemikUser.getPotegi(), "dodatkowe");
         }
 
+        //NEREUS I RELIKTY
+        double relikt = 100;
+        final NereusUser nereusUser = rpgcore.getNereusNPC().find(uuid);
+        if (!nereusUser.getPotegi().getType().equals(Material.AIR)) relikt += Utils.getTagInt(nereusUser.getPotegi(), "val");
+
         /*attacker.sendMessage(Utils.format("&6&lDEBUG"));
         attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         attacker.sendMessage(Utils.format("&cBony: " + bony));
@@ -228,9 +234,10 @@ public class DamageManager {
 
         dmg *= (gildia / 100);
         dmg = dmg * 2.5 * (mnoznik / 100);
+        dmg *= (tyra / 100);
+        dmg *= (relikt / 100);
+        dmg *= (alchemik / 100);
         dmg *= (bony / 100);
-        dmg = dmg * (tyra / 100);
-        dmg = dmg * (alchemik / 100);
 
         krytyk /= 4;
 
@@ -371,6 +378,11 @@ public class DamageManager {
             dmg += Utils.getTagInt(alchemikUser.getPotegi(), "dodatkowe");
         }
 
+        //NEREUS I RELIKTY
+        double relikt = 100;
+        final NereusUser nereusUser = rpgcore.getNereusNPC().find(uuid);
+        if (!nereusUser.getPotegi().getType().equals(Material.AIR)) relikt += Utils.getTagInt(nereusUser.getPotegi(), "val");
+
         /*attacker.sendMessage(Utils.format("&6&lDEBUG"));
         attacker.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         attacker.sendMessage(Utils.format("&cBony: " + bony));
@@ -382,9 +394,10 @@ public class DamageManager {
 
         dmg *= (gildie / 100);
         dmg = dmg * 2 * (mnoznik / 100);
+        dmg *= (ks / 100);
+        dmg *= (relikt / 100);
+        dmg *= (alchemik / 100);
         dmg *= (bony / 100);
-        dmg = dmg * (ks / 100);
-        dmg = dmg * (alchemik / 100);
 
         krytyk /= 4;
         if (victim.getWorld().getName().equals("Alchemik")) {
@@ -472,6 +485,11 @@ public class DamageManager {
         if (!alchemikUser.getLudzi().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getLudzi(), "defNaLudzi");
         if (!alchemikUser.getObrony().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getObrony(), "srDef");
 
+        //NEREUS I RELIKTY
+        double relikt = 100;
+        final NereusUser nereusUser = rpgcore.getNereusNPC().find(uuid);
+        if (!nereusUser.getPrzodkow().getType().equals(Material.AIR)) relikt += Utils.getTagInt(nereusUser.getPrzodkow(), "val");
+
         /*player.sendMessage(Utils.format("&6&lDEBUG"));
         player.sendMessage(Utils.format("&cMnoznik: " + mnoznik));
         player.sendMessage(Utils.format("&cBony: " + bony));
@@ -480,8 +498,9 @@ public class DamageManager {
 
         def *= (gildia / 100);
         def *= 0.85 * (mnoznik / 100) * (bony / 100);
-        def *= (bony / 100);
+        def *= (relikt / 100);
         def *= (alchemik / 100);
+        def *= (bony / 100);
 
         /*player.sendMessage(Utils.format("&6&lDef PO: " + def));
         player.sendMessage(Utils.format("&6&lDEBUG"));*/
@@ -507,6 +526,10 @@ public class DamageManager {
         // ALCHEMIK
         final AlchemikUser alchemikUser = rpgcore.getAlchemikNPC().find(victimUUID);
         if (!alchemikUser.getObrony().getType().equals(Material.AIR)) victimBlok += Utils.getTagDouble(alchemikUser.getObrony(), "blok");
+
+        //NEREUS I RELIKTY
+        final NereusUser nereusUser = rpgcore.getNereusNPC().find(attackerUUID);
+        if (!nereusUser.getStarozytnosci().getType().equals(Material.AIR)) attackerPrzeszywka += Utils.getTagInt(nereusUser.getStarozytnosci(), "val");
 
         return DoubleUtils.round(victimBlok - attackerPrzeszywka, 2);
     }
@@ -614,8 +637,6 @@ public class DamageManager {
         }
 
 
-
-
         // GILDIA
         if (!rpgcore.getGuildManager().getGuildTag(uuid).equals("Brak Klanu")) {
             final String tag = rpgcore.getGuildManager().getGuildTag(uuid);
@@ -628,14 +649,19 @@ public class DamageManager {
         if (!alchemikUser.getPotworow().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getPotworow(), "defNaMoby");
         if (!alchemikUser.getObrony().getType().equals(Material.AIR)) alchemik += Utils.getTagDouble(alchemikUser.getObrony(), "srDef");
 
+        //NEREUS I RELIKTY
+        double relikt = 100;
+        final NereusUser nereusUser = rpgcore.getNereusNPC().find(uuid);
+        if (!nereusUser.getPrzodkow().getType().equals(Material.AIR)) relikt += Utils.getTagInt(nereusUser.getPrzodkow(), "val");
 
         double finalValue = prot;
 
         finalValue *= 2;
         finalValue *= (gildia / 100);
         finalValue *= 1.25 * (mnoznik / 100);
-        finalValue *= (bony / 100);
+        finalValue *= (relikt / 100);
         finalValue *= (alchemik / 100);
+        finalValue *= (bony / 100);
 
         double wartoscDefa = DoubleUtils.round(finalValue, 2);
         //victim.sendMessage(Utils.format("&6&lDEBUG"));

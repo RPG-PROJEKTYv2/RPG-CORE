@@ -189,14 +189,29 @@ public enum HandlarzSellItems {
     I136("Kolczyki Podziemnego Rozpruwacza", Material.HOPPER_MINECART, 500000),
 
     // 100-110 BOSS
+    I137("Miecz Mitycznego Krakena", Material.DIAMOND_SWORD, 150_000),
+    I138("Helm Mitycznego Krakena", Material.DIAMOND_HELMET, 150_000),
+    I139("Zbroja Mitycznego Krakena", Material.DIAMOND_CHESTPLATE, 150_000),
+    I140("Spodnie Mitycznego Krakena", Material.DIAMOND_LEGGINGS, 150_000),
+    I141("Buty Mitycznego Krakena", Material.DIAMOND_BOOTS, 150_000),
     // 100-110 BOSS AKCE
-    I137("Naszyjnik Mitycznego Krakena", Material.STORAGE_MINECART, 2_200_000),
-    I138("Diadem Mitycznego Krakena", Material.WATCH, 1_500_000),
-    I139("Pierscien Mitycznego Krakena", Material.EXPLOSIVE_MINECART, 1_200_000),
-    I140("Tarcza Mitycznego Krakena", Material.ITEM_FRAME, 1_200_000),
-    I141("Kolczyki Mitycznego Krakena", Material.HOPPER_MINECART, 1_200_000),
+    I142("Naszyjnik Mitycznego Krakena", Material.STORAGE_MINECART, 2_200_000),
+    I143("Diadem Mitycznego Krakena", Material.WATCH, 2_000_000),
+    I144("Pierscien Mitycznego Krakena", Material.EXPLOSIVE_MINECART, 2_000_000),
+    I145("Tarcza Mitycznego Krakena", Material.ITEM_FRAME, 2_000_000),
+    I146("Kolczyki Mitycznego Krakena", Material.HOPPER_MINECART, 2_750_000),
     // 110-120 BOSS
+    I147("Miecz Krysztalowego Wladcy", Material.DIAMOND_SWORD, 200_000),
+    I148("Helm Krysztalowego Wladcy", Material.DIAMOND_HELMET, 200_000),
+    I149("Zbroja Krysztalowego Wladcy", Material.DIAMOND_CHESTPLATE, 200_000),
+    I150("Spodnie Krysztalowego Wladcy", Material.DIAMOND_LEGGINGS, 200_000),
+    I151("Buty Krysztalowego Wladcy", Material.DIAMOND_BOOTS, 200_000),
     // 110-120 BOSS AKCE
+    I152("Naszyjnik Krysztalowego Wladcy", Material.STORAGE_MINECART, 2_500_000),
+    I153("Diadem Krysztalowego Wladcy", Material.WATCH, 2_200_000),
+    I154("Pierscien Krysztalowego Wladcy", Material.EXPLOSIVE_MINECART, 2_200_000),
+    I155("Tarcza Krysztalowego Wladcy", Material.ITEM_FRAME, 2_200_000),
+    I156("Kolczyki Krysztalowego Wladcy", Material.HOPPER_MINECART, 3_000_000),
     // 156
 
     // 120-130 BOSS
@@ -276,6 +291,11 @@ public enum HandlarzSellItems {
     I223("Podwodne Pletwy", Material.DIAMOND_BOOTS, 4_500_000),
     I224("Podwodny Sztylet", Material.DIAMOND_SWORD, 8_000_000),
     // NIES 110-120
+    I225("Mrozny Kaszkiet", Material.DIAMOND_HELMET, 5_000_000),
+    I226("Mrozna Koszula", Material.DIAMOND_CHESTPLATE,5_000_000),
+    I227("Mrozne Spodnie", Material.DIAMOND_LEGGINGS,  5_000_000),
+    I228("Mrozne Buty", Material.DIAMOND_BOOTS, 5_000_000),
+    I229("Mrozna Katana", Material.DIAMOND_SWORD, 8_500_000),
     // 229
 
     // NIES 120-130
@@ -335,14 +355,19 @@ public enum HandlarzSellItems {
     I276("Skradziony Diadem", Material.WATCH, 1_500_000),
     I277("Skradziony Pierscien", Material.EXPLOSIVE_MINECART, 1_500_000),
     I278("Skradziona Tarcza", Material.ITEM_FRAME, 1_500_000),
-    I279("Skradzione Kolczyki", Material.HOPPER_MINECART, 3_000_000),
+    I279("Skradzione Kolczyki", Material.HOPPER_MINECART, 2_000_000),
     // AKCESORIUM 100-110
-    I280("Mityczna Naszyjnik", Material.STORAGE_MINECART, 2_500_000),
-    I281("Mityczny Diadem", Material.WATCH, 2_500_000),
-    I282("Mityczny Pierscien", Material.EXPLOSIVE_MINECART, 2_500_000),
-    I283("Mityczna Tarcza", Material.ITEM_FRAME, 2_500_000),
-    I284("Mityczne Kolczyki", Material.HOPPER_MINECART, 3_500_000),
+    I280("Mityczny Naszyjnik", Material.STORAGE_MINECART, 1_750_000),
+    I281("Mityczny Diadem", Material.WATCH, 1_750_000),
+    I282("Mityczny Pierscien", Material.EXPLOSIVE_MINECART, 1_750_000),
+    I283("Mityczna Tarcza", Material.ITEM_FRAME, 1_750_000),
+    I284("Mityczne Kolczyki", Material.HOPPER_MINECART, 2_500_000),
     // AKCESORIUM 110-120
+    I285("Szkarlatny Naszyjnik", Material.STORAGE_MINECART, 2_300_000),
+    I286("Szkarlatny Diadem", Material.WATCH, 2_200_000),
+    I287("Szkarlatny Pierscien", Material.EXPLOSIVE_MINECART, 2_200_000),
+    I288("Szkarlatna Tarcza", Material.ITEM_FRAME, 2_200_000),
+    I289("Szkarlatne Kolczyki", Material.HOPPER_MINECART, 2_750_000),
     // 289
     // AKCESORIUM 120-130
     // 294 + 1

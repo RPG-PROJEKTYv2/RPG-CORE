@@ -42,6 +42,7 @@ import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
+import rpg.rpgcore.npc.nereus.objects.NereusUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
@@ -224,6 +225,9 @@ public class MongoManager {
             }
             if (pool.getAlchemik().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getAlchemik().deleteOne(new Document("_id", uuid.toString()));
+            }
+            if (pool.getNereus().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getNereus().deleteOne(new Document("_id", uuid.toString()));
             }
             toRemove.add(doc);
             rpgcore.getBackupMongoManager().getPool().getDatabase().getCollection(uuid.toString().replace("-", "_")).drop();
@@ -434,6 +438,11 @@ public class MongoManager {
                 addDataAlchemik(user);
                 rpgcore.getAlchemikNPC().add(user);
             }
+            if (pool.getNereus().find(new Document("_id", uuid.toString())).first() == null) {
+                final NereusUser user = new NereusUser(uuid);
+                addDataNereus(user);
+                rpgcore.getNereusNPC().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -572,6 +581,11 @@ public class MongoManager {
         this.addDataAlchemik(alchemikUser);
         rpgcore.getAlchemikNPC().add(alchemikUser);
 
+
+        final NereusUser nereusUser = new NereusUser(uuid);
+        this.addDataNereus(nereusUser);
+        rpgcore.getNereusNPC().add(nereusUser);
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -706,6 +720,7 @@ public class MongoManager {
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
+            this.saveDataNereus(uuid, rpgcore.getNereusNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -840,6 +855,7 @@ public class MongoManager {
             this.saveDataMroznyStroz(uuid, rpgcore.getMroznyStrozNPC().find(uuid));
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
+            this.saveDataNereus(uuid, rpgcore.getNereusNPC().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -2219,6 +2235,32 @@ public class MongoManager {
     public void saveAllAlchemik() {
         for (final AlchemikUser alchemikUser : rpgcore.getAlchemikNPC().getAlchemikUsers()) {
             this.saveDataAlchemik(alchemikUser.getUuid(), alchemikUser);
+        }
+    }
+
+    public Map<UUID, NereusUser> loadAllNereus() {
+        Map<UUID, NereusUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getNereus().find()) {
+            final NereusUser nereusUser = new NereusUser(document);
+            userMap.put(nereusUser.getUuid(), nereusUser);
+        }
+        return userMap;
+    }
+
+    public void addDataNereus(final NereusUser nereusUser) {
+        if (this.pool.getNereus().find(new Document("_id", nereusUser.getUuid().toString())).first() != null) {
+            this.pool.getNereus().deleteOne(new Document("_id", nereusUser.getUuid().toString()));
+        }
+        this.pool.getNereus().insertOne(nereusUser.toDocument());
+    }
+
+    public void saveDataNereus(final UUID uuid, final NereusUser nereusUser) {
+        this.pool.getNereus().findOneAndReplace(new Document("_id", uuid.toString()), nereusUser.toDocument());
+    }
+
+    public void saveAllNereus() {
+        for (final NereusUser nereusUser : rpgcore.getNereusNPC().getNereusUsers()) {
+            this.saveDataNereus(nereusUser.getUuid(), nereusUser);
         }
     }
 

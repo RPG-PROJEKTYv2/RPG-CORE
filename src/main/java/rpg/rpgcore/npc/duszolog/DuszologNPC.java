@@ -2,6 +2,7 @@ package rpg.rpgcore.npc.duszolog;
 
 
 import com.google.common.collect.ImmutableSet;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,6 +26,7 @@ public class DuszologNPC {
     private final RPGCORE rpgcore;
     private final Map<UUID, DuszologObject> userMap;
 
+    @Getter
     private final ItemStack helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL("cbe35234-725b-42e1-a4c1-e92f4e6b477b", "skinf3f35cf8",
             "eyJ0aW1lc3RhbXAiOjE1ODY0NzU4ODYyNTIsInByb2ZpbGVJZCI6ImJlY2RkYjI4YTJjODQ5YjRhOWIwOTIyYTU4MDUxNDIwIiwicHJvZmlsZU5hbWUiOiJTdFR2Iiwic2lnbmF0dXJlUmV" +
                     "xdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83NjMyOWJkN2JlOWQwZGJmZjFhODE5ZGI0N2RmZjk1Z" +
@@ -77,11 +79,6 @@ public class DuszologNPC {
     }
 
 
-    public ItemStack getHelm() {
-        return helm;
-    }
-
-
     public void add(DuszologObject duszologObject) {
         this.userMap.put(duszologObject.getID(), duszologObject);
     }
@@ -97,9 +94,5 @@ public class DuszologNPC {
 
     public ImmutableSet<DuszologObject> getDuszologObject() {
         return ImmutableSet.copyOf(this.userMap.values());
-    }
-
-    public boolean isDuszologObject(final UUID string) {
-        return this.userMap.containsKey(string);
     }
 }

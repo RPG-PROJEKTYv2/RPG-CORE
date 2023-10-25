@@ -181,6 +181,7 @@ public class AdminPanelManager {
         gui.setItem(19, GlobalItem.ZNISZCZONE_SZAFIROWE_SERCE.getItemStack());
         gui.setItem(20, GlobalItem.SZAFIROWE_SERCE.getItemStack());
         gui.setItem(21, GlobalItem.RUBINOWE_SERCE.getItemStack());
+        gui.setItem(23, NereusItems.I1.getItemStack());
         gui.setItem(26, Utils.powrot());
         player.openInventory(gui);
     }

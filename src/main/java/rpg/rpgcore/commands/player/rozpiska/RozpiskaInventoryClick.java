@@ -58,6 +58,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 13) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 19) {
@@ -67,6 +68,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 14) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 29) {
@@ -76,6 +78,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 15) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 39) {
@@ -85,6 +88,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 28) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 49) {
@@ -94,6 +98,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 29) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 59) {
@@ -103,6 +108,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 30) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
@@ -112,6 +118,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 31) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
@@ -121,6 +128,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 32) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
@@ -130,6 +138,7 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
+                return;
             }
             if (slot == 33) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
@@ -139,33 +148,19 @@ public class RozpiskaInventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
-            }
-            /*if (slot == 30) {
-                if (rpgcore.getUserManager().find(uuid).getLvl() > 69) {
-                }
-                return;
-            }
-            if (slot == 31) {
-                if (rpgcore.getUserManager().find(uuid).getLvl() > 79) {
-                }
-                return;
-            }
-            if (slot == 32) {
-                if (rpgcore.getUserManager().find(uuid).getLvl() > 89) {
-                }
-                return;
-            }
-            if (slot == 33) {
-                if (rpgcore.getUserManager().find(uuid).getLvl() > 99) {
-                }
                 return;
             }
             if (slot == 34) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 109) {
+                    rpgcore.getRozpiskaManager().openTWELVTHexp(player);
+                    return;
+                } else {
+                    player.closeInventory();
+                    player.sendMessage(Utils.format("&cTwoj poziom jest zbyt niski."));
                 }
                 return;
             }
-            if (slot == 40) {
+            /*if (slot == 40) {
                 if (rpgcore.getUserManager().find(uuid).getLvl() > 119) {
                 }
                 return;

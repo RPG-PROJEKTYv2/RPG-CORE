@@ -46,10 +46,10 @@ public class AlchemikNPC {
                 "&7Doswiadczenie Alchemickie: " + getProgressBar(user.getProgress()),
                 "",
                 "&f&lInformacje o Dropie",
-                "&6Alchemiczny Pyl&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.01) + "%",
-                "&5Alchemiczny Podrecznik&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.01) + "%",
-                "&eAlchemiczna Sakwa&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.01) + "%",
-                "&aAlchemiczny Rdzen&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.01) + "%"
+                "&6Alchemiczny Pyl&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.5) + "%",
+                "&5Alchemiczny Podrecznik&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.35) + "%",
+                "&eAlchemiczna Sakwa&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.15) + "%",
+                "&aAlchemiczny Rdzen&7: " + MobDropHelper.getDropChance(player.getUniqueId(), 0.0025) + "%"
         )).toItemStack().clone());
         gui.setItem(16, new ItemBuilder(Material.BEACON).setName("&eTwoje Alchemickie Krysztaly").toItemStack().clone());
         gui.setItem(22, new ItemBuilder(Material.ANVIL).setName("&eUlepszanie Alchemickich Krysztalow").toItemStack());

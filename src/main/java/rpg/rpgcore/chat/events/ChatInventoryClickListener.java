@@ -220,15 +220,15 @@ public class ChatInventoryClickListener implements Listener {
                     final double expNaNextLvlGracza = rpgcore.getLvlManager().getExpForLvl(lvlGracza + 1);
 
                     if (msg.isEmpty()) {
-                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
+                        finalMessage = new StringBuilder(Utils.format(" &8[&f" + Utils.spaceNumber(Utils.shorterNumber(expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(Utils.shorterNumber(expNaNextLvlGracza)) + " &bexp" + " &7(&b" + DoubleUtils.round((expGracza / expNaNextLvlGracza) * 100, 2) + "%&7)&8]"));
                     } else {
                         if (!isHighStaff) {
-                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
+                            finalMessage = new StringBuilder("&f" + Utils.removeColor(msg.get(0)) + Utils.format(" &8[&f" + Utils.spaceNumber(Utils.shorterNumber(expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(Utils.shorterNumber(expNaNextLvlGracza)) + " &bexp" + " &7(&b" + DoubleUtils.round((expGracza / expNaNextLvlGracza) * 100, 2) + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(" &f").append(msg.get(i));
                             }
                         } else {
-                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.spaceNumber(String.format("%.2f", expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(String.format("%.2f", expNaNextLvlGracza)) + " &bexp" + " &7(&b" + ((expGracza / expNaNextLvlGracza) * 100 == 0 ? Utils.procentFormat.format((expGracza / expNaNextLvlGracza) * 100) : "0.0") + "%&7)&8]"));
+                            finalMessage = new StringBuilder(msg.get(0) + Utils.format(" &8[&f " + Utils.spaceNumber(Utils.shorterNumber(expGracza)) + " &bexp &7/&f " + Utils.spaceNumber(Utils.shorterNumber(expNaNextLvlGracza)) + " &bexp" + " &7(&b" + DoubleUtils.round((expGracza / expNaNextLvlGracza) * 100, 2) + "%&7)&8]"));
                             for (int i = 1; i < msg.size(); i++) {
                                 finalMessage.append(color).append(msg.get(i));
                             }
