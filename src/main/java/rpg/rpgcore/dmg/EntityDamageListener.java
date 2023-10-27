@@ -25,6 +25,7 @@ public class EntityDamageListener implements Listener {
         if (e.getEntity() instanceof Player) {
             final Player victim = (Player) e.getEntity();
             if (e.getCause() == EntityDamageEvent.DamageCause.POISON) {
+                if (Utils.customDungeonWorlds.contains(victim.getWorld())) return;
                 final PotionEffect effect = victim.getActivePotionEffects().stream().filter(potion -> potion.getType() == PotionEffectType.POISON).collect(Collectors.toList()).get(0);
                 final int amplifier = effect.getAmplifier();
 
@@ -44,10 +45,7 @@ public class EntityDamageListener implements Listener {
             }
 
             if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                if (Utils.customDungeonWorlds.contains(victim.getWorld())) {
-                    e.setCancelled(true);
-                    return;
-                }
+                if (Utils.customDungeonWorlds.contains(victim.getWorld())) return;
                 double damage = DoubleUtils.round(victim.getMaxHealth() / 25 * 2, 2);
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, damage);
                 RPGCORE.getInstance().getDamageManager().sendDamagePacket("&6", damage, victim, victim);
