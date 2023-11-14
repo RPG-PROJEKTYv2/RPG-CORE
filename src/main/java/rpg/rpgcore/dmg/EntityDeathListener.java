@@ -41,7 +41,6 @@ public class EntityDeathListener implements Listener {
         e.setKeepLevel(true);
         e.getEntity().closeInventory();
 
-        if (Utils.customDungeonWorlds.contains(e.getEntity().getWorld())) return;
 
         if (e.getEntity().getWorld().getName().equals("Dungeon60-70")) {
             if (e.getEntity().getWorld().getPlayers().isEmpty()) {
@@ -55,9 +54,11 @@ public class EntityDeathListener implements Listener {
 //        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
         e.getEntity().setHealth(e.getEntity().getMaxHealth());
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
-        e.getEntity().getActivePotionEffects().clear();
-
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
+            e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn());
+            e.getEntity().getActivePotionEffects().clear();
+        }, 1L);
+        //TODO Buguje sie czyszczenie efektow, czysci all poza poisoonem i do tego nie wracaja te z seta jakimms cudem
         if (e.getEntity().getLastDamageCause() == null) return;
 
         if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {

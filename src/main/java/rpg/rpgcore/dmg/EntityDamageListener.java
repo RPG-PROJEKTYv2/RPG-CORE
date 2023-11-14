@@ -26,6 +26,7 @@ public class EntityDamageListener implements Listener {
             final Player victim = (Player) e.getEntity();
             if (e.getCause() == EntityDamageEvent.DamageCause.POISON) {
                 if (Utils.customDungeonWorlds.contains(victim.getWorld())) return;
+                if (victim.getActivePotionEffects().stream().noneMatch(potion -> potion.getType() == PotionEffectType.POISON)) return;
                 final PotionEffect effect = victim.getActivePotionEffects().stream().filter(potion -> potion.getType() == PotionEffectType.POISON).collect(Collectors.toList()).get(0);
                 final int amplifier = effect.getAmplifier();
 
