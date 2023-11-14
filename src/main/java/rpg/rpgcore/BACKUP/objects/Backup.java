@@ -12,8 +12,9 @@ import rpg.rpgcore.dodatki.objects.DodatkiUser;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.newTarg.objects.Targ;
+import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
-import rpg.rpgcore.npc.duszolog.objects.DuszologObject;
+import rpg.rpgcore.npc.duszolog.objects.DuszologUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
@@ -24,9 +25,11 @@ import rpg.rpgcore.npc.medrzec.objects.MedrzecUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologObject;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
 import rpg.rpgcore.npc.mrozny_stroz.objects.MroznyStrozUser;
+import rpg.rpgcore.npc.nereus.objects.NereusUser;
 import rpg.rpgcore.npc.przyrodnik.objects.PrzyrodnikObject;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.npc.rybak.objects.RybakUser;
+import rpg.rpgcore.npc.summonblade.objects.SummonbladeUser;
 import rpg.rpgcore.npc.wyslannik.objects.WyslannikUser;
 import rpg.rpgcore.osiagniecia.objects.OsUser;
 import rpg.rpgcore.pets.objects.PetObject;
@@ -59,7 +62,7 @@ public class Backup implements Cloneable {
     private final Klasa klasa;
     private final MedrzecUser medrzec;
     private final GornikUser gornik;
-    private final DuszologObject duszolog;
+    private final DuszologUser duszolog;
     private final PrzyrodnikObject przyrodnik;
     private final ChatUser chat;
     private final MagazynierUser magazynier;
@@ -78,6 +81,9 @@ public class Backup implements Cloneable {
     private final PrzekletyCzarnoksieznikUser przekletyCzarnoksieznik;
     private final Targ targ;
     private final MroznyStrozUser mroznyStroz;
+    private final AlchemikUser alchemik;
+    private final NereusUser nereus;
+    private final SummonbladeUser summonblade;
 
 
 
@@ -114,6 +120,9 @@ public class Backup implements Cloneable {
         this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
         this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
         this.mroznyStroz = this.rpgcore.getMroznyStrozNPC().find(uuid).clone();
+        this.alchemik = this.rpgcore.getAlchemikNPC().find(uuid).clone();
+        this.nereus = this.rpgcore.getNereusNPC().find(uuid).clone();
+        this.summonblade = this.rpgcore.getSummonbladeNPC().find(uuid).clone();
     }
 
     public Backup(final UUID uuid, final String date) {
@@ -149,6 +158,9 @@ public class Backup implements Cloneable {
         this.przekletyCzarnoksieznik = this.rpgcore.getPrzekletyCzarnoksieznikBossManager().find(uuid).clone();
         this.targ = this.rpgcore.getNewTargManager().find(uuid).clone();
         this.mroznyStroz = this.rpgcore.getMroznyStrozNPC().find(uuid).clone();
+        this.alchemik = this.rpgcore.getAlchemikNPC().find(uuid).clone();
+        this.nereus = this.rpgcore.getNereusNPC().find(uuid).clone();
+        this.summonblade = this.rpgcore.getSummonbladeNPC().find(uuid).clone();
     }
 
     public Backup(final String collectionName, final Document document) {
@@ -175,8 +187,8 @@ public class Backup implements Cloneable {
         else this.medrzec = new MedrzecUser(this.uuid);
         if (document.containsKey("gornik")) this.gornik = new GornikUser(document.get("gornik", Document.class));
         else this.gornik = new GornikUser(this.uuid);
-        if (document.containsKey("duszolog")) this.duszolog = new DuszologObject(document.get("duszolog", Document.class));
-        else this.duszolog = new DuszologObject(this.uuid);
+        if (document.containsKey("duszolog")) this.duszolog = new DuszologUser(document.get("duszolog", Document.class));
+        else this.duszolog = new DuszologUser(this.uuid);
         if (document.containsKey("przyrodnik")) this.przyrodnik = new PrzyrodnikObject(document.get("przyrodnik", Document.class));
         else this.przyrodnik = new PrzyrodnikObject(this.uuid);
         if (document.containsKey("chat")) this.chat = new ChatUser(document.get("chat", Document.class));
@@ -213,6 +225,12 @@ public class Backup implements Cloneable {
         else this.targ = new Targ(this.uuid);
         if (document.containsKey("mroznyStroz")) this.mroznyStroz = new MroznyStrozUser(document.get("mroznyStroz", Document.class));
         else this.mroznyStroz = new MroznyStrozUser(this.uuid);
+        if (document.containsKey("alchemik")) this.alchemik = new AlchemikUser(document.get("alchemik", Document.class));
+        else this.alchemik = new AlchemikUser(this.uuid);
+        if (document.containsKey("nereus")) this.nereus = new NereusUser(document.get("nereus", Document.class));
+        else this.nereus = new NereusUser(this.uuid);
+        if (document.containsKey("summonblade")) this.summonblade = new SummonbladeUser(document.get("summonblade", Document.class));
+        else this.summonblade = new SummonbladeUser(this.uuid);
     }
 
     public Date getDateToCompare() {
@@ -259,7 +277,11 @@ public class Backup implements Cloneable {
                 .append("wyslannik", this.wyslannik.toDocument())
                 .append("przekletyCzarnoksieznik", this.przekletyCzarnoksieznik.toDocument())
                 .append("targ", this.targ.toDocument()
-                .append("mroznyStroz", this.mroznyStroz.toDocument()));
+                .append("mroznyStroz", this.mroznyStroz.toDocument())
+                .append("alchemik", this.alchemik.toDocument())
+                .append("nereus", this.nereus.toDocument())
+                .append("summonblade", this.summonblade.toDocument())
+                );
     }
 
     public boolean equals(final Backup backup) {

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class NereusUser {
+public class NereusUser implements Cloneable {
     private final UUID uuid;
     private boolean dialog;
     private ItemStack potegi, wiecznosci, starozytnosci, przodkow;
@@ -42,5 +42,14 @@ public class NereusUser {
                 .append("wiecznosci", Utils.serializeItem(this.wiecznosci))
                 .append("starozytnosci", Utils.serializeItem(this.starozytnosci))
                 .append("przodkow", Utils.serializeItem(this.przodkow));
+    }
+
+    @Override
+    public NereusUser clone() {
+        try {
+            return (NereusUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

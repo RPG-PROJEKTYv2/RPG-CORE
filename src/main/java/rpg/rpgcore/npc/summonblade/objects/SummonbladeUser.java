@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class SummonbladeUser {
+public class SummonbladeUser implements Cloneable {
     private final UUID uuid;
     private int boss1_10progress, boss10_20progress, boss20_30progress, boss30_40progress, boss40_50progress,
             boss60_70progress, boss70_80progress, boss80_90progress, boss90_100progress, boss100_110progress;
@@ -110,10 +110,6 @@ public class SummonbladeUser {
         this.boss100_110progress -= 1;
     }
 
-    public void setActivated() {
-        this.activated = true;
-    }
-
     public Document toDocument() {
         return new Document("_id", this.uuid.toString())
                 .append("boss1_10progress", this.boss1_10progress)
@@ -127,5 +123,14 @@ public class SummonbladeUser {
                 .append("boss90_100progress", this.boss90_100progress)
                 .append("boss100_110progress", this.boss100_110progress)
                 .append("activated", this.activated);
+    }
+
+    @Override
+    public SummonbladeUser clone() {
+        try {
+            return (SummonbladeUser) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

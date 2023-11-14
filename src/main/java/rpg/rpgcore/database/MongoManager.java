@@ -18,6 +18,7 @@ import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.npc.duszolog.objects.DuszologUser;
 import rpg.rpgcore.npc.gornik.objects.GornikUser;
 import rpg.rpgcore.npc.gornik.ore.objects.Ore;
 import rpg.rpgcore.npc.mistrz_yang.objects.MistrzYangUser;
@@ -33,7 +34,6 @@ import rpg.rpgcore.kociolki.KociolkiUser;
 import rpg.rpgcore.lvl.artefaktyZaLvL.ArtefaktyZaLvl;
 import rpg.rpgcore.managers.disabled.Disabled;
 import rpg.rpgcore.metiny.Metiny;
-import rpg.rpgcore.npc.duszolog.objects.DuszologObject;
 import rpg.rpgcore.npc.handlarz.objects.HandlarzUser;
 import rpg.rpgcore.npc.kolekcjoner.objects.KolekcjonerObject;
 import rpg.rpgcore.npc.lesnik.objects.LesnikObject;
@@ -325,7 +325,7 @@ public class MongoManager {
                 rpgcore.getGornikNPC().add(user);
             }
             if (pool.getDuszolog().find(new Document("_id", uuid.toString())).first() == null) {
-                final DuszologObject user = new DuszologObject(uuid);
+                final DuszologUser user = new DuszologUser(uuid);
                 this.addDataDuszolog(user);
                 rpgcore.getDuszologNPC().add(user);
             }
@@ -477,9 +477,9 @@ public class MongoManager {
         this.addDataKlasy(klasa);
         rpgcore.getKlasyManager().add(klasa);
 
-        final DuszologObject duszologObject = new DuszologObject(uuid);
-        this.addDataDuszolog(duszologObject);
-        rpgcore.getDuszologNPC().add(duszologObject);
+        final DuszologUser duszologUser = new DuszologUser(uuid);
+        this.addDataDuszolog(duszologUser);
+        rpgcore.getDuszologNPC().add(duszologUser);
 
         final KolekcjonerObject kolekcjonerObject = new KolekcjonerObject(uuid);
         this.addDataKolekcjner(kolekcjonerObject);
@@ -1208,29 +1208,29 @@ public class MongoManager {
     }
 
     // Duszolog
-    public Map<UUID, DuszologObject> loadAllDuszolog() {
-        Map<UUID, DuszologObject> duszolog = new HashMap<>();
+    public Map<UUID, DuszologUser> loadAllDuszolog() {
+        Map<UUID, DuszologUser> duszolog = new HashMap<>();
         for (Document document : this.pool.getDuszolog().find()) {
-            DuszologObject duszologObject = new DuszologObject(document);
-            duszolog.put(duszologObject.getID(), duszologObject);
+            final DuszologUser duszologUser = new DuszologUser(document);
+            duszolog.put(duszologUser.getUuid(), duszologUser);
         }
         return duszolog;
     }
 
-    public void addDataDuszolog(final DuszologObject duszologObject) {
-        if (this.pool.getDuszolog().find(new Document("_id", duszologObject.getID().toString())).first() != null) {
-            this.pool.getDuszolog().deleteOne(new Document("_id", duszologObject.getID().toString()));
+    public void addDataDuszolog(final DuszologUser duszologUser) {
+        if (this.pool.getDuszolog().find(new Document("_id", duszologUser.getUuid().toString())).first() != null) {
+            this.pool.getDuszolog().deleteOne(new Document("_id", duszologUser.getUuid().toString()));
         }
-        this.pool.getDuszolog().insertOne(duszologObject.toDocument());
+        this.pool.getDuszolog().insertOne(duszologUser.toDocument());
     }
 
-    public void saveDataDuszolog(final UUID id, final DuszologObject duszologObject) {
-        this.pool.getDuszolog().findOneAndReplace(new Document("_id", id.toString()), duszologObject.toDocument());
+    public void saveDataDuszolog(final UUID id, final DuszologUser duszologUser) {
+        this.pool.getDuszolog().findOneAndReplace(new Document("_id", id.toString()), duszologUser.toDocument());
     }
 
     public void saveAllDuszolog() {
-        for (DuszologObject duszologObject : rpgcore.getDuszologNPC().getDuszologObject()) {
-            this.saveDataDuszolog(duszologObject.getID(), duszologObject);
+        for (DuszologUser duszologUser : rpgcore.getDuszologNPC().getDuszologObject()) {
+            this.saveDataDuszolog(duszologUser.getUuid(), duszologUser);
         }
     }
 

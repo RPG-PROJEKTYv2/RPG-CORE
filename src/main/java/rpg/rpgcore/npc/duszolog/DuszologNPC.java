@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.npc.duszolog.objects.DuszologObject;
 import rpg.rpgcore.npc.duszolog.objects.DuszologUser;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
@@ -24,7 +23,7 @@ import java.util.UUID;
 
 public class DuszologNPC {
     private final RPGCORE rpgcore;
-    private final Map<UUID, DuszologObject> userMap;
+    private final Map<UUID, DuszologUser> userMap;
 
     @Getter
     private final ItemStack helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL("cbe35234-725b-42e1-a4c1-e92f4e6b477b", "skinf3f35cf8",
@@ -45,7 +44,7 @@ public class DuszologNPC {
 
     public void openMainGUI(final Player player) {
         final UUID uuid = player.getUniqueId();
-        final DuszologUser duszologUser = this.find(uuid).getDuszologUser();
+        final DuszologUser duszologUser = this.find(uuid);
         final Inventory gui = Bukkit.createInventory(null, 9, Utils.format("&8Duszolog"));
 
         for (int i = 0; i < gui.getSize(); i++) {
@@ -54,8 +53,8 @@ public class DuszologNPC {
 
 
         gui.setItem(0, new ItemBuilder(Material.PAPER).setName("&b&lStatystyki").setLore(Arrays.asList(
-                "&fBonus1: &c" + duszologUser.getValue1() + "%",
-                "&fBonus2: &c" + duszologUser.getValue2() + "%"
+                "&fPrzeszycie Bloku Ciosu: &c" + duszologUser.getPrzeszywka() + "%",
+                "&fSzansa Na Cios Krytyczny: &c" + duszologUser.getKrytykk() + "%"
         )).toItemStack().clone());
         gui.setItem(4, new ItemBuilder(Material.BOOK).setName("&c&lKampania").addGlowing().toItemStack());
         gui.setItem(8, new ItemBuilder(Material.REDSTONE_TORCH_ON).setName("&4&lInformajce").addGlowing().toItemStack());
@@ -79,20 +78,19 @@ public class DuszologNPC {
     }
 
 
-    public void add(DuszologObject duszologObject) {
-        this.userMap.put(duszologObject.getID(), duszologObject);
+    public void add(DuszologUser duszologUser) {
+        this.userMap.put(duszologUser.getUuid(), duszologUser);
     }
 
-    public DuszologObject find(final UUID uuid) {
-        this.userMap.computeIfAbsent(uuid, k -> new DuszologObject(uuid));
+    public DuszologUser find(final UUID uuid) {
         return this.userMap.get(uuid);
     }
 
-    public void set(final UUID uuid, final DuszologObject duszologObject) {
-        this.userMap.replace(uuid, duszologObject);
+    public void set(final UUID uuid, final DuszologUser duszologUser) {
+        this.userMap.replace(uuid, duszologUser);
     }
 
-    public ImmutableSet<DuszologObject> getDuszologObject() {
+    public ImmutableSet<DuszologUser> getDuszologObject() {
         return ImmutableSet.copyOf(this.userMap.values());
     }
 }

@@ -130,6 +130,7 @@ public class MobDropHelper {
         final PrzyrodnikMissions przyrodnikMission = PrzyrodnikMissions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
         if (ChanceHelper.getChance(getDropChance(szczescie, 100))) {
             rpgcore.getDuszologNPC().spawnDusza(player, entity);
+            player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Psst... Chyba znalazles jedna ze zblakanych &ddusz&7!"));
         }
         switch (entityName) {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------
