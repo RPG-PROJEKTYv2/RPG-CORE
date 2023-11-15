@@ -185,7 +185,7 @@ public class PlayerInteractEntityListener implements Listener {
             }
             // DUSZOLOG
             if (entityName.equalsIgnoreCase("Duszolog")) {
-                rpgcore.getDuszologNPC().openMainGUI(player);
+                rpgcore.getDuszologNPC().openMainGUI(player, 1);
                 return;
             }
             // RYBAK
