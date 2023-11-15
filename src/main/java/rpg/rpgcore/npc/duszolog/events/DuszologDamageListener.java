@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import rpg.rpgcore.RPGCORE;
 
 public class DuszologDamageListener implements Listener {
 
@@ -14,7 +13,7 @@ public class DuszologDamageListener implements Listener {
     public void onDamage(final EntityDamageByEntityEvent e) {
         if (e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
             ArmorStand as = (ArmorStand) e.getEntity();
-            if (as.getHelmet().equals(RPGCORE.getInstance().getDuszologNPC().getHelm())) {
+            if (as.getCustomName().contains(e.getDamager().getName())) {
                 e.setCancelled(true);
             }
         }

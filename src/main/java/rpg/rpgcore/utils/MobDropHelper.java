@@ -12,6 +12,7 @@ import rpg.rpgcore.dodatki.bony.enums.BonType;
 import rpg.rpgcore.dungeons.DungeonStatus;
 import rpg.rpgcore.npc.czarownica.enums.CzarownicaMissions;
 import rpg.rpgcore.npc.czarownica.objects.CzarownicaUser;
+import rpg.rpgcore.npc.duszolog.enums.DuszologMissions;
 import rpg.rpgcore.npc.przyrodnik.enums.PrzyrodnikMissions;
 import rpg.rpgcore.npc.pustelnik.objects.PustelnikUser;
 import rpg.rpgcore.ranks.types.RankTypePlayer;
@@ -128,9 +129,14 @@ public class MobDropHelper {
 
 
         final PrzyrodnikMissions przyrodnikMission = PrzyrodnikMissions.getByNumber(rpgcore.getPrzyrodnikNPC().find(uuid).getUser().getMission());
-        if (ChanceHelper.getChance(getDropChance(szczescie, 100))) {
-            rpgcore.getDuszologNPC().spawnDusza(player, entity);
-            player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Psst... Chyba znalazles jedna ze zblakanych &ddusz&7!"));
+        final DuszologMissions duszolog = DuszologMissions.getByEntityName(entityName);
+        if (duszolog != null) {
+            if (ChanceHelper.getChance(getDropChance(szczescie, duszolog.getSpawnChance()))) {
+                if (!rpgcore.getDuszologNPC().find(uuid).getCompletionMap().getOrDefault(duszolog.getEntityName(), false)) {
+                    rpgcore.getDuszologNPC().spawnDusza(player, entity);
+                    player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Psst... Chyba znalazles jedna ze zblakanych &ddusz&7!"));
+                }
+            }
         }
         switch (entityName) {
             // ----------------------------------------- EXPOWISKO 1 -----------------------------------------

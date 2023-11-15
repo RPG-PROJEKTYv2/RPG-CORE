@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.npc.duszolog.objects.DuszologUser;
 import rpg.rpgcore.utils.Utils;
 
 public class DuszologInteractListener implements Listener {
@@ -20,7 +21,7 @@ public class DuszologInteractListener implements Listener {
             e.setCancelled(true);
 
 
-            if (!as.getHelmet().equals(RPGCORE.getInstance().getDuszologNPC().getHelm())) {
+            if (!as.getCustomName().contains(player.getName())) {
                 return;
             }
 
@@ -33,8 +34,12 @@ public class DuszologInteractListener implements Listener {
                 player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Ta dusza nalezy chyba do kogos innego, prawda?"));
                 return;
             }
+            final String entityName = as.getCustomName().substring(0, as.getCustomName().indexOf('-') - 1);
+            final DuszologUser user = RPGCORE.getInstance().getDuszologNPC().find(player.getUniqueId());
+            user.incrementProgress(Utils.removeColor(entityName));
+            RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataDuszolog(player.getUniqueId(), user));
 
-            player.sendMessage(Utils.format("&5&lDuszolog &8>> &aPomyslnie zebrales dusze " + as.getCustomName().substring(0, as.getCustomName().indexOf('-') - 1) + "&a!"));
+            player.sendMessage(Utils.format("&5&lDuszolog &8>> &aPomyslnie zebrales dusze " + entityName + "&a!"));
             as.remove();
         }
     }

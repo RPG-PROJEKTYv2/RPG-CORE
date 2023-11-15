@@ -2,7 +2,6 @@ package rpg.rpgcore.npc.duszolog;
 
 
 import com.google.common.collect.ImmutableSet;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,8 +25,7 @@ public class DuszologNPC {
     private final RPGCORE rpgcore;
     private final Map<UUID, DuszologUser> userMap;
 
-    @Getter
-    private final ItemStack helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL("cbe35234-725b-42e1-a4c1-e92f4e6b477b", "skinf3f35cf8",
+    /*private final ItemStack helm = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL("cbe35234-725b-42e1-a4c1-e92f4e6b477b", "skinf3f35cf8",
             "eyJ0aW1lc3RhbXAiOjE1ODY0NzU4ODYyNTIsInByb2ZpbGVJZCI6ImJlY2RkYjI4YTJjODQ5YjRhOWIwOTIyYTU4MDUxNDIwIiwicHJvZmlsZU5hbWUiOiJTdFR2Iiwic2lnbmF0dXJlUmV" +
                     "xdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83NjMyOWJkN2JlOWQwZGJmZjFhODE5ZGI0N2RmZjk1Z" +
                     "WY1NDE4MDAwYjgyODNhYmZlYTBmMjEwZTJkNjg5Y2UwIn19fQ==",
@@ -35,7 +33,7 @@ public class DuszologNPC {
                     "+2jmXL4hYUk0MHx1I9lWhb9qZJLoxUkgguPhaF9FS/DGLkTndv34ynScmHYc0xSZkxd2yldlpRVVyvX3S8X6vO8vvcXVzcH6yUMIO1yVvUBVqdq/lqoM+Fm82iU3SsEnSL5ev9ZfzrX33BNgFwUgwseeL" +
                     "a/tkQxWLG/d47azOFBcYGH3js0OB78yBSsbeb0OJ5E8gQG0h7pOCBO/pz9YVASyYImb8JtpDfYe2bE1RxqBdiEprCcMSl7EsWCy4iL0BFx9SwjW4Tqfb+5olcBnHi+f7FZN/V0rQtfKT5xMxFr/5Fl1RPb" +
                     "i55IXAIqLTiYV53PMiVw312pjXe2YctpFrSGCwftI292F8DEQjbGSCyls5dyGjkdD2iVtkUS8gvCI3XnwDD9VCqQas37J3PRl6FgoXPSC0g7CnFCrzl5Z3jxdRsjxVSvn/iXVr7+n2DP9dVmE2lmNGvm6Y1" +
-                    "xM4A6isFTGj+B39l+kkWsE/ales/lksmzn2V0psQdsT6dUU29FthTo2FJrqTzVAsrkrxPEHwc=").toItemStack().clone();
+                    "xM4A6isFTGj+B39l+kkWsE/ales/lksmzn2V0psQdsT6dUU29FthTo2FJrqTzVAsrkrxPEHwc=").toItemStack().clone();*/
     private final ItemBuilder leftArrow = new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL("a69bdf9a-b058-4dcf-8a02-37f76d34a646", "skinebf80341",
             "ewogICJ0aW1lc3RhbXAiIDogMTYwMDI3NzkyMzA0NywKICAicHJvZmlsZUlkIiA6ICI5MWYwNGZlOTBmMzY0M2I1OGYyMGUzMzc1Zjg2ZDM5ZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTdG9ybVN0b3JteSIsCiAgI" +
                     "nNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS84OWE5OGJhOT" +
@@ -61,14 +59,6 @@ public class DuszologNPC {
         this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllDuszolog();
     }
-    /*
-     0  1  2  3  4  5  6  7  8
-     9  10 11 12 13 14 15 16 17
-     18 19 20 21 22 23 24 25 26
-     27 28 29 30 31 32 33 34 35
-     36 37 38 39 40 41 42 43 44
-     45 46 47 48 49 50 51 52 53
-     */
 
 
     public void openMainGUI(final Player player, final int page) {
@@ -77,28 +67,34 @@ public class DuszologNPC {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&8Duszolog #" + page));
 
         for (int i = 0; i < gui.getSize(); i++) {
-            if ((i > 9 && i < 17) || (i > 18 && i < 26) || (i > 27 && i < 35) || (i > 36 && i < 44))
-                if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 5).setName(" ").toItemStack());
-                else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 11).setName(" ").toItemStack());
+            if (!((i > 9 && i < 17) || (i > 18 && i < 26) || (i > 27 && i < 35) || (i > 36 && i < 44)))
+                if (i % 2 == 0) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 10).setName(" ").toItemStack());
+                else gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 2).setName(" ").toItemStack());
         }
 
         final List<ItemStack> guiItems = new ArrayList<>();
 
         Arrays.stream(DuszologMissions.values()).forEach(mission -> {
-            final DuszologMissionsTextures info = DuszologMissionsTextures.getMission(mission.getEntityName().split("\\.")[0].trim());
+            final DuszologMissionsTextures info = DuszologMissionsTextures.getMission(mission.getEntityName());
             assert info != null;
-            guiItems.add(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&c" + mission.getEntityName())
-                    .setSkullOwnerByURL(info.getUuid(), info.getNick(), info.getTexture(), info.getSignature())
-                    .setLore(Arrays.asList(
-                            "&7Postep: &f" + (duszologUser.getProgressMap().getOrDefault(mission.getEntityName(), 0)) + "&7/&f" + mission.getReqAmount(),
-                            "",
-                            "&f&lInformacje",
-                            "&7Szansa na drop: &c" + mission.getSpawnChance() + "%",
-                            "",
-                            "&f&lNagroda",
-                            "&8- &e+" + mission.getPrzeszyka() + "% szansy na przeszycie bloku ciosu",
-                            "&8- &5+" + mission.getKrytyk() + "% szansy na cios krytyczny"
-                    )).toItemStack().clone());
+            if (!duszologUser.getCompletionMap().getOrDefault(mission.getEntityName(), false)) {
+                guiItems.add(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&c" + mission.getEntityName())
+                        .setSkullOwnerByURL(info.getUuid(), info.getNick(), info.getTexture(), info.getSignature())
+                        .setLore(Arrays.asList(
+                                "&7Postep: &f" + (duszologUser.getProgressMap().getOrDefault(mission.getEntityName(), 0)) + "&7/&f" + mission.getReqAmount(),
+                                "",
+                                "&f&lInformacje",
+                                "&7Szansa na drop: &c" + mission.getSpawnChance() + "%",
+                                "",
+                                "&f&lNagroda",
+                                "&8- &e+" + mission.getPrzeszyka() + "% szansy na przeszycie bloku ciosu",
+                                "&8- &5+" + mission.getKrytyk() + "% szansy na cios krytyczny"
+                        )).toItemStack().clone());
+            } else {
+                guiItems.add(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&c" + mission.getEntityName())
+                        .setSkullOwnerByURL(info.getUuid(), info.getNick(), info.getTexture(), info.getSignature())
+                        .setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack().clone());
+            }
         });
 
 
@@ -108,7 +104,7 @@ public class DuszologNPC {
             gui.setItem(47, leftArrow.setName("&cStrona " + (page - 1)).toItemStack().clone());
         }
         if (PageUtils.isPageValid(guiItems, page + 1, 28)) {
-            gui.setItem(51, leftArrow.setName("&cStrona " + (page + 1)).toItemStack().clone());
+            gui.setItem(51, rightArrow.setName("&cStrona " + (page + 1)).toItemStack().clone());
         }
 
         PageUtils.getPageItems(guiItems, page, 28).forEach(itemStack -> gui.setItem(gui.firstEmpty(), itemStack));
@@ -116,7 +112,7 @@ public class DuszologNPC {
         gui.setItem(49, new ItemBuilder(Material.PAPER).setName("&cStatystyki").setLore(Arrays.asList(
                 "&7Ukonczone misje: &c" + (int) duszologUser.getCompletionMap().values().stream().filter(aBoolean -> aBoolean).count() + "&7/&c" + DuszologMissions.values().length,
                 "&7Szansa Na Przeszycie Bloku Ciosu: &c" + duszologUser.getPrzeszywka() + "%",
-                "&7Szansa Na Cios Krytyczny: &c" + duszologUser.getKrytykk() + "%"
+                "&7Szansa Na Cios Krytyczny: &c" + duszologUser.getKrytyk() + "%"
         )).toItemStack().clone());
 
 
@@ -125,10 +121,12 @@ public class DuszologNPC {
     }
 
     public void spawnDusza(final Player player, final Entity entity) {
+        final DuszologMissionsTextures texture = DuszologMissionsTextures.getMission(Utils.removeColor(entity.getName()));
+        assert texture != null;
         ArmorStand as = (ArmorStand) Bukkit.getWorld(player.getWorld().getName()).spawnEntity(new Location(entity.getWorld(), entity.getLocation().getX(), entity.getLocation().getY() - 1.5, entity.getLocation().getZ(), entity.getLocation().getYaw(), entity.getLocation().getPitch()), EntityType.ARMOR_STAND);
         as.setCustomName(entity.getName() + " - " + player.getName());
         as.setCustomNameVisible(false);
-        as.setHelmet(helm);
+        as.setHelmet(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setSkullOwnerByURL(texture.getUuid(), texture.getNick(), texture.getTexture(), texture.getSignature()).toItemStack());
         as.setVisible(false);
         as.setGravity(false);
         rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {

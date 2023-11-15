@@ -1,5 +1,6 @@
 package rpg.rpgcore.npc.teleporter;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,6 +37,7 @@ public class TeleporterInventoryClick implements Listener {
 
         if (Utils.removeColor(title).equals("TELEPORTER")) {
             e.setCancelled(true);
+            if (e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) return;
             if (slot == 11) {
                 player.closeInventory();
                 player.sendMessage(Utils.SERVERNAME + Utils.format("&aPrzeteleportowales sie na mape!"));

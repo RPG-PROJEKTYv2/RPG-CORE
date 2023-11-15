@@ -247,6 +247,7 @@ import rpg.rpgcore.npc.czarownica.events.CzarownicaInventoryClickListener;
 import rpg.rpgcore.npc.duszolog.DuszologNPC;
 import rpg.rpgcore.npc.duszolog.events.DuszologDamageListener;
 import rpg.rpgcore.npc.duszolog.events.DuszologInteractListener;
+import rpg.rpgcore.npc.duszolog.events.DuszologInventoryClickListener;
 import rpg.rpgcore.npc.gornik.GornikNPC;
 import rpg.rpgcore.npc.gornik.events.GornikBlockBreakListener;
 import rpg.rpgcore.npc.gornik.events.GornikInventoryClickListener;
@@ -1026,6 +1027,7 @@ public final class RPGCORE extends JavaPlugin {
         // NPC
 
         // ...DUSZOLOG
+        this.getServer().getPluginManager().registerEvents(new DuszologInventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new DuszologDamageListener(), this);
         this.getServer().getPluginManager().registerEvents(new DuszologInteractListener(), this);
 
