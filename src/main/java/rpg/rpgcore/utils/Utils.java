@@ -56,6 +56,7 @@ public class Utils {
     public static int MAXLVL = 120;
 
     public static final List<World> customDungeonWorlds = Arrays.asList(
+            Bukkit.getWorld("DungLobby"),
             Bukkit.getWorld("CustomDung1")
     );
 

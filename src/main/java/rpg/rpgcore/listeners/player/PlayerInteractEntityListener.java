@@ -41,6 +41,8 @@ public class PlayerInteractEntityListener implements Listener {
             return;
         }
 
+        if (Utils.customDungeonWorlds.contains(e.getRightClicked().getWorld())) return;
+
         if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")
                 && !rpgcore.getChatManager().find(player.getUniqueId()).getHellcodeUser().isEntityInteract()) {
             e.setCancelled(true);

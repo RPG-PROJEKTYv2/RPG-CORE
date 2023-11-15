@@ -126,7 +126,15 @@ public class User implements Cloneable {
         this.serverJoins = (document.containsKey("serverJoins") ? document.getInteger("serverJoins") : 0);
         this.sezonowiecPoints = (document.containsKey("sezonowiecPoints") ? document.getInteger("sezonowiecPoints") : 0);
         this.mobMap = new HashMap<>();
-        this.rankLeftForUpdate = (document.containsKey("rankLeftForUpdate") ? document.getLong("rankLeftForUpdate") : this.rankPlayerUser.getTime() - System.currentTimeMillis());
+        if (document.containsKey("rankLeftForUpdate")) {
+            try {
+                this.rankLeftForUpdate = document.getLong("rankLeftForUpdate");
+            } catch (ClassCastException e) {
+                this.rankLeftForUpdate = (long) document.getInteger("rankLeftForUpdate");
+            }
+        } else {
+            this.rankLeftForUpdate = this.rankPlayerUser.getTime() - System.currentTimeMillis();
+        }
         final Document mobMapD = (document.containsKey("mobMap") ? (Document) document.get("mobMap") : new Document());
         if (!mobMapD.isEmpty()) {
             for (final String key : mobMapD.keySet()) {
