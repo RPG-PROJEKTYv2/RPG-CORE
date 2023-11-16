@@ -1,8 +1,12 @@
 package rpg.rpgcore.npc.magazynier;
 
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutOpenSignEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -192,27 +196,27 @@ public class MagazynierNPC {
         final MagazynierUser user = this.find(player.getUniqueId());
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lLista Magazynow"));
         if (user.isUnlocked1()) {
-            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&aMagazyn #1").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn1Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&cMagazyn #1").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked2()) {
-            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&aMagazyn #2").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn2Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&cMagazyn #2").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked3()) {
-            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&aMagazyn #3").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn3Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&cMagazyn #3").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked4()) {
-            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&aMagazyn #4").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn4Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&cMagazyn #4").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked5()) {
-            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&aMagazyn #5").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn5Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&cMagazyn #5").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
@@ -223,27 +227,27 @@ public class MagazynierNPC {
         final MagazynierUser user = this.find(target);
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lLista Magazynow &8&l- &6&l" + target.toString()));
         if (user.isUnlocked1()) {
-            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&aMagazyn #1").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn1Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&cMagazyn #1").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked2()) {
-            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&aMagazyn #2").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn2Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&cMagazyn #2").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked3()) {
-            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&aMagazyn #3").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn3Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&cMagazyn #3").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked4()) {
-            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&aMagazyn #4").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn4Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&cMagazyn #4").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked5()) {
-            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&aMagazyn #5").setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn5Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&cMagazyn #5").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
@@ -266,6 +270,7 @@ public class MagazynierNPC {
         }
         player.openInventory(gui);
     }
+
     public void openMagazyn(final Player player, final UUID target, final String magazynContents, final int magazynNumber) {
         final Inventory gui = Bukkit.createInventory(null, 54, Utils.format("&c&lMagazyn #" + magazynNumber + " &8&l- &6&l" + target.toString()));
         if (magazynContents.isEmpty()) {
@@ -279,6 +284,14 @@ public class MagazynierNPC {
             throw new RuntimeException(e);
         }
         player.openInventory(gui);
+    }
+
+
+    public void openRenameGUI(final Player player) {
+        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+        BlockPosition bp = new BlockPosition(entityPlayer);
+        PacketPlayOutOpenSignEditor packet = new PacketPlayOutOpenSignEditor(bp);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 
     public MagazynierUser find(final UUID uuid) {

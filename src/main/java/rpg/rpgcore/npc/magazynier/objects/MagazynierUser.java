@@ -12,6 +12,7 @@ public class MagazynierUser implements Cloneable {
     private final UUID uuid;
     private int points;
     private String magazyn1, magazyn2, magazyn3, magazyn4, magazyn5;
+    private String magazyn1Name, magazyn2Name, magazyn3Name, magazyn4Name, magazyn5Name;
     private boolean unlocked1, unlocked2, unlocked3, unlocked4, unlocked5, remoteCommand;
     private MagazynierMissions missions;
     private long resetTime;
@@ -20,10 +21,15 @@ public class MagazynierUser implements Cloneable {
         this.uuid = uuid;
         this.points = 0;
         this.magazyn1 = "";
+        this.magazyn1Name = "Magazyn #1";
         this.magazyn2 = "";
+        this.magazyn2Name = "Magazyn #2";
         this.magazyn3 = "";
+        this.magazyn3Name = "Magazyn #3";
         this.magazyn4 = "";
+        this.magazyn4Name = "Magazyn #4";
         this.magazyn5 = "";
+        this.magazyn5Name = "Magazyn #5";
         this.unlocked1 = true;
         this.unlocked2 = false;
         this.unlocked3 = false;
@@ -39,10 +45,15 @@ public class MagazynierUser implements Cloneable {
         this.uuid = UUID.fromString(document.getString("_id"));
         this.points = document.getInteger("points");
         this.magazyn1 = document.getString("magazyn1");
+        this.magazyn1Name = (document.containsKey("magazyn1Name") ? document.getString("magazyn1Name") : "Magazyn #1");
         this.magazyn2 = document.getString("magazyn2");
+        this.magazyn2Name = (document.containsKey("magazyn2Name") ? document.getString("magazyn2Name") : "Magazyn #2");
         this.magazyn3 = document.getString("magazyn3");
+        this.magazyn3Name = (document.containsKey("magazyn3Name") ? document.getString("magazyn3Name") : "Magazyn #3");
         this.magazyn4 = document.getString("magazyn4");
+        this.magazyn4Name = (document.containsKey("magazyn4Name") ? document.getString("magazyn4Name") : "Magazyn #4");
         this.magazyn5 = document.getString("magazyn5");
+        this.magazyn5Name = (document.containsKey("magazyn5Name") ? document.getString("magazyn5Name") : "Magazyn #5");
         this.unlocked1 = document.getBoolean("unlocked1");
         this.unlocked2 = document.getBoolean("unlocked2");
         this.unlocked3 = document.getBoolean("unlocked3");
@@ -67,10 +78,15 @@ public class MagazynierUser implements Cloneable {
         return new Document("_id", this.uuid.toString())
                 .append("points", this.points)
                 .append("magazyn1", this.magazyn1)
+                .append("magazyn1Name", this.magazyn1Name)
                 .append("magazyn2", this.magazyn2)
+                .append("magazyn2Name", this.magazyn2Name)
                 .append("magazyn3", this.magazyn3)
+                .append("magazyn3Name", this.magazyn3Name)
                 .append("magazyn4", this.magazyn4)
+                .append("magazyn4Name", this.magazyn4Name)
                 .append("magazyn5", this.magazyn5)
+                .append("magazyn5Name", this.magazyn5Name)
                 .append("unlocked1", this.unlocked1)
                 .append("unlocked2", this.unlocked2)
                 .append("unlocked3", this.unlocked3)

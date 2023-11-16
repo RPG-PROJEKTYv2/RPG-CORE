@@ -75,14 +75,11 @@ public class PlayerFishListener implements Listener {
                 return;
             }
             final String regionId = playerRegion.stream().findFirst().get().getId();
-            int time = 300;
+            int time = 250;
             switch (regionId) {
                 case "rybak-wyspa1":
-                    if (!Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName()).equals("Stara Wedka")) {
-                        player.sendMessage(Utils.format("&8[&c✘&8] &cNa tej wyspie mozesz lowic tylko &6Stara Wedka&c!"));
-                        e.setCancelled(true);
-                        e.getHook().remove();
-                        return;
+                    if (Utils.removeColor(player.getItemInHand().getItemMeta().getDisplayName()).equals("Stara Wedka")) {
+                        time = 200;
                     }
                     time -= Utils.getTagInt(player.getItemInHand(), "lure-speed");
                     rpgcore.getRybakNPC().getTimeMap().put(player.getUniqueId(), time / 20 * 1000L);

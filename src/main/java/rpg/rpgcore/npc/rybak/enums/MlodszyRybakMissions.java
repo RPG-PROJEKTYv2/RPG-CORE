@@ -12,26 +12,26 @@ import java.util.Arrays;
 public enum MlodszyRybakMissions {
 
     M1(1, new ItemBuilder(Material.BOOK).setName("&7Misja #&c1").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Dorszy"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Dorszy"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M2(2, new ItemBuilder(Material.BOOK).setName("&7Misja #&c2").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Lososi"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Lososi"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M3(3, new ItemBuilder(Material.BOOK).setName("&7Misja #&c3").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Plotek"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Plotek"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M4(4, new ItemBuilder(Material.BOOK).setName("&7Misja #&c4").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Sandaczy"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Sandaczy"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M5(5, new ItemBuilder(Material.BOOK).setName("&7Misja #&c5").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Postragow"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Postragow"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M6(6, new ItemBuilder(Material.BOOK).setName("&7Misja #&c6").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Okoni"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5),
+            "&7Wylow &c96 &6Okoni"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5),
     M7(7, new ItemBuilder(Material.BOOK).setName("&7Misja #&c7").setLore(Arrays.asList(
-            "&7Wylow &c128 &6Amurow"
-    )).toItemStack().clone(), 128, 25, 0.5, 0.5), //DMG - 175, PRZESZYWKA - 3.5%, DEF - 3.5%
+            "&7Wylow &c96 &6Amurow"
+    )).toItemStack().clone(), 96, 25, 0.5, 0.5), //DMG - 175, PRZESZYWKA - 3.5%, DEF - 3.5%
 
 
     M8(8, new ItemBuilder(Material.BOOK).setName("&7Misja #&c8").setLore(Arrays.asList(
@@ -75,8 +75,8 @@ public enum MlodszyRybakMissions {
             "&7Wylow &c3 &5&lKrysztaly Czarnoksieznika"
     )).toItemStack().clone(), 3, 75, 2, 2),
     I20(20, new ItemBuilder(Material.BOOK).setName("&7Misja #&c20").setLore(Arrays.asList(
-            "&7Wylow &c5 &3&lNiesamowitych Przedmiotow &8&l(&7&lStara Fabryka&8&l)"
-    )).toItemStack().clone(), 5, 75, 2, 2),
+            "&7Wylow &c4 &3&lNiesamowitych Przedmiotow &8&l(&7&lStara Fabryka&8&l)"
+    )).toItemStack().clone(), 4, 75, 2, 2),
     I21(21, new ItemBuilder(Material.BOOK).setName("&7Misja #&c21").setLore(Arrays.asList(
             "&7Wylow &c5 &b&lPodwodnych Skarbow"
     )).toItemStack().clone(), 5, 75, 2, 2), //DMG - 225, PRZESZYWKA - 6%, DEF - 6%
