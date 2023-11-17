@@ -6,6 +6,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
@@ -187,30 +188,86 @@ public class MagazynierInventoryClick implements Listener {
             switch (slot) {
                 case 0:
                     if (user.isUnlocked1()) {
+                        if (e.getClick() == ClickType.RIGHT) {
+                            RPGCORE.getInstance().getSignGUI().open(player, new String[]{"", "^^^^^^^^^^^^^^^", "Podaj Nowa", "Nazwe Magazynu 1"}, (player1, lines) -> {
+                                if (lines[0].replaceAll("\"", "").isEmpty()) {
+                                    rpgcore.getMagazynierNPC().openMagazynyList(player);
+                                    return;
+                                }
+                                user.setMagazyn1Name(lines[0].replace("\\u0026", "&").replaceAll("\"", ""));
+                                rpgcore.getMagazynierNPC().openMagazynyList(player);
+                            });
+                            return;
+                        }
                         rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn1(), 1);
                         return;
                     }
                     break;
                 case 1:
                     if (user.isUnlocked2()) {
+                        if (e.getClick() == ClickType.RIGHT) {
+                            player.closeInventory();
+                            RPGCORE.getInstance().getSignGUI().open(player, new String[]{"", "^^^^^^^^^^^^^^^", "Podaj Nowa", "Nazwe Magazynu 2"}, (player1, lines) -> {
+                                if (lines[0].replaceAll("\"", "").isEmpty()) {
+                                    rpgcore.getMagazynierNPC().openMagazynyList(player);
+                                    return;
+                                }
+                                user.setMagazyn2Name(lines[0].replace("\\u0026", "&").replaceAll("\"", ""));
+                                rpgcore.getMagazynierNPC().openMagazynyList(player);
+                            });
+                            return;
+                        }
                         rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn2(), 2);
                         return;
                     }
                     break;
                 case 2:
                     if (user.isUnlocked3()) {
+                        if (e.getClick() == ClickType.RIGHT) {
+                            RPGCORE.getInstance().getSignGUI().open(player, new String[]{"", "^^^^^^^^^^^^^^^", "Podaj Nowa", "Nazwe Magazynu 3"}, (player1, lines) -> {
+                                if (lines[0].replaceAll("\"", "").isEmpty()) {
+                                    rpgcore.getMagazynierNPC().openMagazynyList(player);
+                                    return;
+                                }
+                                user.setMagazyn3Name(lines[0].replace("\\u0026", "&").replaceAll("\"", ""));
+                                rpgcore.getMagazynierNPC().openMagazynyList(player);
+                            });
+                            return;
+                        }
                         rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn3(), 3);
                         return;
                     }
                     break;
                 case 3:
                     if (user.isUnlocked4()) {
+                        if (e.getClick() == ClickType.RIGHT) {
+                            RPGCORE.getInstance().getSignGUI().open(player, new String[]{"", "^^^^^^^^^^^^^^^", "Podaj Nowa", "Nazwe Magazynu 4"}, (player1, lines) -> {
+                                if (lines[0].replaceAll("\"", "").isEmpty()) {
+                                    rpgcore.getMagazynierNPC().openMagazynyList(player);
+                                    return;
+                                }
+                                user.setMagazyn4Name(lines[0].replace("\\u0026", "&").replaceAll("\"", ""));
+                                rpgcore.getMagazynierNPC().openMagazynyList(player);
+                            });
+                            return;
+                        }
                         rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn4(), 4);
                         return;
                     }
                     break;
                 case 4:
                     if (user.isUnlocked5()) {
+                        if (e.getClick() == ClickType.RIGHT) {
+                            RPGCORE.getInstance().getSignGUI().open(player, new String[]{"", "^^^^^^^^^^^^^^^", "Podaj Nowa", "Nazwe Magazynu 5"}, (player1, lines) -> {
+                                if (lines[0].replaceAll("\"", "").isEmpty()) {
+                                    rpgcore.getMagazynierNPC().openMagazynyList(player);
+                                    return;
+                                }
+                                user.setMagazyn5Name(lines[0].replace("\\u0026", "&").replaceAll("\"", ""));
+                                rpgcore.getMagazynierNPC().openMagazynyList(player);
+                            });
+                            return;
+                        }
                         rpgcore.getMagazynierNPC().openMagazyn(player, user.getMagazyn5(), 5);
                         return;
                     }

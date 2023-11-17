@@ -188,6 +188,7 @@ import rpg.rpgcore.economy.HsCommand;
 import rpg.rpgcore.economy.KasaCommand;
 import rpg.rpgcore.economy.WyplacCommand;
 import rpg.rpgcore.entities.EntityTypes;
+import rpg.rpgcore.events.EventManager;
 import rpg.rpgcore.guilds.commands.GuildChatCommand;
 import rpg.rpgcore.guilds.commands.GuildCommand;
 import rpg.rpgcore.guilds.GuildManager;
@@ -336,6 +337,7 @@ import rpg.rpgcore.trade.events.TradeInventoryCloseListener;
 import rpg.rpgcore.user.UserManager;
 import rpg.rpgcore.utils.Config;
 import rpg.rpgcore.utils.Utils;
+import rpg.rpgcore.utils.signGUI.SignGUI;
 import rpg.rpgcore.wyszkolenie.WyszkolenieManager;
 import rpg.rpgcore.wyszkolenie.events.WyszkolenieInventoryClickListener;
 import rpg.rpgcore.zmianki.ZmiankiManager;
@@ -635,6 +637,10 @@ public final class RPGCORE extends JavaPlugin {
     private AlchemikNPC alchemikNPC;
     @Getter
     private NereusNPC nereusNPC;
+    @Getter
+    private SignGUI signGUI;
+    @Getter
+    private EventManager eventManager;
 
 
     private int i = 1;
@@ -787,6 +793,7 @@ public final class RPGCORE extends JavaPlugin {
         this.mongo.saveAllSummonblade();
         this.mongo.saveAllAlchemik();
         this.mongo.saveAllNereus();
+        this.mongo.saveAllHeadHuntEvent();
 
         //this.mongo.clearDatabase();
 
@@ -1238,6 +1245,8 @@ public final class RPGCORE extends JavaPlugin {
         this.klasyManager = new KlasyManager(this);
         this.backupManager = new BackupManager(this);
         this.kodTworcyManager = new KodTworcyManager(this);
+        this.signGUI = new SignGUI(this);
+        this.eventManager = new EventManager(this);
     }
 
     private void initNPCS() {

@@ -14,6 +14,7 @@ import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
+import rpg.rpgcore.events.headHuntEvent.objects.HeadHuntUser;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
 import rpg.rpgcore.npc.alchemik.objects.AlchemikUser;
@@ -229,6 +230,9 @@ public class MongoManager {
             if (pool.getNereus().find(new Document("_id", uuid.toString())).first() != null) {
                 pool.getNereus().deleteOne(new Document("_id", uuid.toString()));
             }
+            if (pool.getHeadHuntEvent().find(new Document("_id", uuid.toString())).first() != null) {
+                pool.getHeadHuntEvent().deleteOne(new Document("_id", uuid.toString()));
+            }
             toRemove.add(doc);
             rpgcore.getBackupMongoManager().getPool().getDatabase().getCollection(uuid.toString().replace("-", "_")).drop();
         }
@@ -443,6 +447,18 @@ public class MongoManager {
                 addDataNereus(user);
                 rpgcore.getNereusNPC().add(user);
             }
+            if (pool.getHeadHuntEvent().find(new Document("_id", uuid.toString())).first() == null) {
+                final HeadHuntUser user = new HeadHuntUser(uuid);
+
+                final Location glowka1 = rpgcore.getEventManager().getHeadHuntManager().getRandom(uuid, 1);
+                user.setGlowka1(glowka1);
+                user.getGlowka1PrevLocations().add(glowka1);
+
+                //...
+
+                addDataHeadHuntEvent(user);
+                rpgcore.getEventManager().getHeadHuntManager().add(user);
+            }
         }
         if (pool.getOther().find(new Document("_id", "dodatkowyExp")).first() == null) {
             final ServerUser user = new ServerUser("dodatkowyExp");
@@ -586,6 +602,18 @@ public class MongoManager {
         this.addDataNereus(nereusUser);
         rpgcore.getNereusNPC().add(nereusUser);
 
+        final HeadHuntUser headHuntUser = new HeadHuntUser(uuid);
+
+        final Location glowka1 = rpgcore.getEventManager().getHeadHuntManager().getRandom(uuid, 1);
+        headHuntUser.setGlowka1(glowka1);
+        headHuntUser.getGlowka1PrevLocations().add(glowka1);
+
+        //...
+
+        this.addDataHeadHuntEvent(headHuntUser);
+        rpgcore.getEventManager().getHeadHuntManager().add(headHuntUser);
+
+
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER
         // TEZ NIE ZAPOMNIEC BO NIE BEDZIE DZIALAL NPC
         // PATRZ loadALL() DALEJ
@@ -721,6 +749,7 @@ public class MongoManager {
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
             this.saveDataNereus(uuid, rpgcore.getNereusNPC().find(uuid));
+            this.saveDataHeadHuntEvent(uuid, rpgcore.getEventManager().getHeadHuntManager().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -856,6 +885,7 @@ public class MongoManager {
             this.saveDataSummonblade(uuid, rpgcore.getSummonbladeNPC().find(uuid));
             this.saveDataAlchemik(uuid, rpgcore.getAlchemikNPC().find(uuid));
             this.saveDataNereus(uuid, rpgcore.getNereusNPC().find(uuid));
+            this.saveDataHeadHuntEvent(uuid, rpgcore.getEventManager().getHeadHuntManager().find(uuid));
             // TU ZAPISUJESZ USERA PRZY TYCH BACKUPACH CO 5 MIN i PRZY WYLACZENIU SERWERA
             // TEZ NIE ZAPOMNIEC BO SIE WYPIERODLI JAK WYSLANNIK :D
             //this.saveDataTest(uuid, rpgcore.getTestNPC().find(uuid));
@@ -2261,6 +2291,33 @@ public class MongoManager {
     public void saveAllNereus() {
         for (final NereusUser nereusUser : rpgcore.getNereusNPC().getNereusUsers()) {
             this.saveDataNereus(nereusUser.getUuid(), nereusUser);
+        }
+    }
+
+
+    public Map<UUID, HeadHuntUser> loadAllHeadHuntEvent() {
+        Map<UUID, HeadHuntUser> userMap = new HashMap<>();
+        for (Document document : this.pool.getHeadHuntEvent().find()) {
+            final HeadHuntUser headHuntUser = new HeadHuntUser(document);
+            userMap.put(headHuntUser.getUuid(), headHuntUser);
+        }
+        return userMap;
+    }
+
+    public void addDataHeadHuntEvent(final HeadHuntUser headHuntUser) {
+        if (this.pool.getHeadHuntEvent().find(new Document("_id", headHuntUser.getUuid().toString())).first() != null) {
+            this.pool.getHeadHuntEvent().deleteOne(new Document("_id", headHuntUser.getUuid().toString()));
+        }
+        this.pool.getHeadHuntEvent().insertOne(headHuntUser.toDocument());
+    }
+
+    public void saveDataHeadHuntEvent(final UUID uuid, final HeadHuntUser headHuntUser) {
+        this.pool.getHeadHuntEvent().findOneAndReplace(new Document("_id", uuid.toString()), headHuntUser.toDocument());
+    }
+
+    public void saveAllHeadHuntEvent() {
+        for (final HeadHuntUser headHuntUser : rpgcore.getEventManager().getHeadHuntManager().getHeadHuntUsers()) {
+            this.saveDataHeadHuntEvent(headHuntUser.getUuid(), headHuntUser);
         }
     }
 

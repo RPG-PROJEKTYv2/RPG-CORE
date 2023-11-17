@@ -196,27 +196,52 @@ public class MagazynierNPC {
         final MagazynierUser user = this.find(player.getUniqueId());
         final Inventory gui = Bukkit.createInventory(null, InventoryType.HOPPER, Utils.format("&c&lLista Magazynow"));
         if (user.isUnlocked1()) {
-            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn1Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn1Name()).setLore(Arrays.asList(
+                    "&a&lOdblokowany!",
+                    "",
+                    "&6&lLPM &8| &7Kliknij, aby otworzyc",
+                    "&6&lPPM &8| &7Kliknij, zeby zmienic nazwe magazynu"
+            )).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(0, new ItemBuilder(Material.CHEST).setName("&cMagazyn #1").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked2()) {
-            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn2Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn2Name()).setLore(Arrays.asList(
+                    "&a&lOdblokowany!",
+                    "",
+                    "&6&lLPM &8| &7Kliknij, aby otworzyc",
+                    "&6&lPPM &8| &7Kliknij, zeby zmienic nazwe magazynu"
+            )).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(1, new ItemBuilder(Material.CHEST).setName("&cMagazyn #2").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked3()) {
-            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn3Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn3Name()).setLore(Arrays.asList(
+                    "&a&lOdblokowany!",
+                    "",
+                    "&6&lLPM &8| &7Kliknij, aby otworzyc",
+                    "&6&lPPM &8| &7Kliknij, zeby zmienic nazwe magazynu"
+            )).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(2, new ItemBuilder(Material.CHEST).setName("&cMagazyn #3").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked4()) {
-            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn4Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn4Name()).setLore(Arrays.asList(
+                    "&a&lOdblokowany!",
+                    "",
+                    "&6&lLPM &8| &7Kliknij, aby otworzyc",
+                    "&6&lPPM &8| &7Kliknij, zeby zmienic nazwe magazynu"
+            )).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(3, new ItemBuilder(Material.CHEST).setName("&cMagazyn #4").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }
         if (user.isUnlocked5()) {
-            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn5Name()).setLore(Arrays.asList("&a&lOdblokowany!", "&8&oKliknij&8, aby otworzyc")).hideFlag().toItemStack().clone());
+            gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&a" + user.getMagazyn5Name()).setLore(Arrays.asList(
+                    "&a&lOdblokowany!",
+                    "",
+                    "&6&lLPM &8| &7Kliknij, aby otworzyc",
+                    "&6&lPPM &8| &7Kliknij, zeby zmienic nazwe magazynu"
+            )).hideFlag().toItemStack().clone());
         } else {
             gui.setItem(4, new ItemBuilder(Material.CHEST).setName("&cMagazyn #5").setLore(Arrays.asList("&c&lZablokowany!")).hideFlag().toItemStack().clone());
         }

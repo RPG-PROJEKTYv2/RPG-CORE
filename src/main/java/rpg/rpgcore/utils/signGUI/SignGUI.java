@@ -19,6 +19,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+
 public class SignGUI {
     //TODO JAKBY NIE DZIAŁAŁO TO https://github.com/MarcinWieczorek/NovaGuilds/tree/master/src/main/java/co/marcin/novaguilds/impl/util/signgui
     protected ProtocolManager protocolManager;
@@ -113,14 +114,4 @@ public class SignGUI {
     public interface SignGUIListener {
         void onSignDone(Player player, String[] lines);
     }
-    /* USAGE
-    public static void openSign(Player p) {
-        Main.getSignGUI().open(p, new String[] { "test0", "test1", "test2", "test3" }, new SignGUI.SignGUIListener() {
-            @Override
-            public void onSignDone(Player player, String[] lines) {
-                System.out.println(lines[0]);
-            }
-        });
-    }
-     */
 }
