@@ -1,9 +1,11 @@
 package rpg.rpgcore.events.headHuntEvent;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import rpg.rpgcore.RPGCORE;
+import rpg.rpgcore.events.headHuntEvent.objects.HeadHuntPricePoolUser;
 import rpg.rpgcore.events.headHuntEvent.objects.HeadHuntUser;
 import rpg.rpgcore.utils.ChanceHelper;
 
@@ -12,6 +14,8 @@ import java.util.*;
 public class HeadHuntManager {
 
     private final Map<UUID, HeadHuntUser> userMap;
+    @Getter
+    private final HeadHuntPricePoolUser pricePool;
 
     private final List<Location> glowka1Locations = Arrays.asList(
             new Location(Bukkit.getWorld("1-10map"), -217, 65, 380),
@@ -25,6 +29,7 @@ public class HeadHuntManager {
 
     public HeadHuntManager(final RPGCORE rpgcore) {
         this.userMap = rpgcore.getMongoManager().loadAllHeadHuntEvent();
+        this.pricePool = rpgcore.getMongoManager().loadHeadHuntPricePool();
         //rpgcore.getServer().getPluginManager().registerEvents(new HeadHuntEventInventoryClickListener(), rpgcore);
     }
 

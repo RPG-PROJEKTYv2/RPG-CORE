@@ -14,6 +14,7 @@ import rpg.rpgcore.bao.objects.BaoObject;
 import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.bossy.effects.PrzekletyCzarnoksieznik.PrzekletyCzarnoksieznikUser;
 import rpg.rpgcore.dungeons.maps.tajemniczePiaski.objects.RdzenPiaszczystychWydm;
+import rpg.rpgcore.events.headHuntEvent.objects.HeadHuntPricePoolUser;
 import rpg.rpgcore.events.headHuntEvent.objects.HeadHuntUser;
 import rpg.rpgcore.klasy.objects.Klasa;
 import rpg.rpgcore.newTarg.objects.Targ;
@@ -2298,6 +2299,7 @@ public class MongoManager {
     public Map<UUID, HeadHuntUser> loadAllHeadHuntEvent() {
         Map<UUID, HeadHuntUser> userMap = new HashMap<>();
         for (Document document : this.pool.getHeadHuntEvent().find()) {
+            if (document.getString("_id").equals("HeadHuntPricePool")) continue;
             final HeadHuntUser headHuntUser = new HeadHuntUser(document);
             userMap.put(headHuntUser.getUuid(), headHuntUser);
         }
@@ -2319,6 +2321,20 @@ public class MongoManager {
         for (final HeadHuntUser headHuntUser : rpgcore.getEventManager().getHeadHuntManager().getHeadHuntUsers()) {
             this.saveDataHeadHuntEvent(headHuntUser.getUuid(), headHuntUser);
         }
+    }
+
+    public HeadHuntPricePoolUser loadHeadHuntPricePool() {
+        final Document document = this.pool.getHeadHuntEvent().find(new Document("_id", "HeadHuntPricePool")).first();
+        if (document == null) {
+            final HeadHuntPricePoolUser user = new HeadHuntPricePoolUser();
+            this.pool.getHeadHuntEvent().insertOne(user.toDocument());
+            return new HeadHuntPricePoolUser();
+        }
+        return new HeadHuntPricePoolUser(document);
+    }
+
+    public void saveHeadHuntPricePool() {
+        this.pool.getHeadHuntEvent().findOneAndReplace(new Document("_id", "HeadHuntPricePool"), rpgcore.getEventManager().getHeadHuntManager().getPricePool().toDocument());
     }
 
 
