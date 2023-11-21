@@ -1,16 +1,15 @@
-package rpg.rpgcore.utils.globalitems.akcesorium;
+package rpg.rpgcore.utils.globalitems.akcesoriumNEW;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.chat.objects.ChatUser;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.dodatki.akcesoriaP.helpers.AkcesoriaPodsHelper;
 import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
+
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 

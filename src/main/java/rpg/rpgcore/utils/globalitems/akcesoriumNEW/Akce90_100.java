@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.globalitems.akcesorium;
+package rpg.rpgcore.utils.globalitems.akcesoriumNEW;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
@@ -15,17 +15,17 @@ import rpg.rpgcore.utils.Utils;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public enum Akce100_110 {
-    I100_110_1("100-110-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&b&lMityczna Tarcza").toItemStack()),
-    I100_110_2("100-110-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&b&lMityczny Pierscien").toItemStack()),
-    I100_110_3("100-110-3", 11, new ItemBuilder(Material.WATCH).setName("&b&lMityczny Diadem").toItemStack()),
-    I100_110_4("100-110-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&b&lMityczny Naszyjnik").toItemStack()),
-    I100_110_5("100-110-5", 9, new ItemBuilder(Material.HOPPER_MINECART).setName("&b&lMityczne Kolczyki").toItemStack());
+public enum Akce90_100 {
+    I90_100_1("90-100-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&9&lSkradziona Tarcza").toItemStack()),
+    I90_100_2("90-100-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&9&lSkradziony Pierscien").toItemStack()),
+    I90_100_3("90-100-3", 11, new ItemBuilder(Material.WATCH).setName("&9&lSkradziony Diadem").toItemStack()),
+    I90_100_4("90-100-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&9&lSkradziony Naszyjnik").toItemStack()),
+    I90_100_5("90-100-5", 9, new ItemBuilder(Material.HOPPER_MINECART).setName("&9&lSkradzione Kolczyki").toItemStack());
     private final String name;
     private final double dropChance;
     private final ItemStack item;
 
-    Akce100_110(String name, double dropChance, ItemStack item) {
+    Akce90_100(String name, double dropChance, ItemStack item) {
         this.name = name;
         this.dropChance = dropChance;
         this.item = item;
@@ -33,8 +33,8 @@ public enum Akce100_110 {
     public String getName() { return name; }
     public double getDropChance() { return dropChance; }
     public ItemStack getItem() { return item; }
-    public static Akce100_110 getByName(String name) {
-        for (Akce100_110 item : Akce100_110.values()) {
+    public static Akce90_100 getByName(String name) {
+        for (Akce90_100 item : Akce90_100.values()) {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
@@ -45,35 +45,35 @@ public enum Akce100_110 {
     public static void getDrop(final Player player, final double szczescie) {
         final Set<Items> drop = Sets.newConcurrentHashSet();
         final ChatUser user = RPGCORE.getInstance().getChatManager().find(player.getUniqueId());
-        for (Akce100_110 item : Akce100_110.values()) {
+        for (Akce90_100 item : Akce90_100.values()) {
             drop.add(new Items(item.getName(), item.getDropChance(), item.getItem(), 1));
         }
         for (Items item : drop) {
             if (item.getChance() + szczescie >= 100.0 || item.getChance() + szczescie > ThreadLocalRandom.current().nextDouble(0.0, 100.0)) {
                 player.sendMessage(Utils.format("&2+ &f" + item.getRewardItem().getItemMeta().getDisplayName()));
                 if (item.getRewardItem().getType() == Material.STORAGE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(1600, 3750),
-                            ChanceHelper.getRandInt(20, 35), ChanceHelper.getRandInt(20, 30), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Naszyjnik"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createNaszyjnik(ChanceHelper.getRandInt(540, 1500),
+                            ChanceHelper.getRandInt(20, 28), ChanceHelper.getRandInt(15, 23), ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Naszyjnik"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.WATCH) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(25, 38),
-                            ChanceHelper.getRandInt(30, 60), ChanceHelper.getRandInt(6, 12), ChanceHelper.getRandInt(100, 110), "&b&lMityczny Diadem"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createDiadem(ChanceHelper.getRandInt(20, 29),
+                            ChanceHelper.getRandInt(20, 44), ChanceHelper.getRandInt(5, 8), ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Diadem"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.ITEM_FRAME) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(30, 65),
-                            ChanceHelper.getRandInt(37, 57), ChanceHelper.getRandInt(25, 40), ChanceHelper.getRandInt(100, 110), "&b&lMityczna Tarcza"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createTarcza(ChanceHelper.getRandInt(30, 53),
+                            ChanceHelper.getRandInt(35, 48), ChanceHelper.getRandInt(20, 30), ChanceHelper.getRandInt(90, 100), "&9&lSkradziona Tarcza"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.HOPPER_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(19, 35),
-                            ChanceHelper.getRandInt(25, 45), ChanceHelper.getRandInt(-110, -70), ChanceHelper.getRandInt(100, 110), "&b&lMityczne Kolczyki"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createKolczyki(ChanceHelper.getRandInt(18, 25),
+                            ChanceHelper.getRandInt(21, 35), ChanceHelper.getRandInt(-87, -75), ChanceHelper.getRandInt(90, 100), "&9&lSkradzione Kolczyki"));
                     return;
                 }
                 if (item.getRewardItem().getType() == Material.EXPLOSIVE_MINECART) {
-                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(20, 38), ChanceHelper.getRandInt(20, 35), ChanceHelper.getRandInt(63, 105),
-                            ChanceHelper.getRandInt(100, 110), "&b&lMityczny Pierscien"));
+                    player.getInventory().addItem(AkcesoriaPodsHelper.createPierscien(ChanceHelper.getRandInt(18, 30), ChanceHelper.getRandInt(19, 29), ChanceHelper.getRandInt(60, 100),
+                            ChanceHelper.getRandInt(90, 100), "&9&lSkradziony Pierscien"));
                     return;
                 }
                 player.getInventory().addItem(item.getRewardItem());

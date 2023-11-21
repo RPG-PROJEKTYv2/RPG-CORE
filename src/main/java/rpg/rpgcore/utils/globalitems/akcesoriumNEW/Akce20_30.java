@@ -1,4 +1,4 @@
-package rpg.rpgcore.utils.globalitems.akcesorium;
+package rpg.rpgcore.utils.globalitems.akcesoriumNEW;
 
 import com.google.common.collect.Sets;
 import org.bukkit.Material;

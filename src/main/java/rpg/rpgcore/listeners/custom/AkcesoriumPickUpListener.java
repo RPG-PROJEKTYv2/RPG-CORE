@@ -2,7 +2,6 @@ package rpg.rpgcore.listeners.custom;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,8 +9,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.utils.Utils;
-import rpg.rpgcore.utils.globalitems.AkceItems;
-import rpg.rpgcore.utils.globalitems.akcesorium.*;
+import rpg.rpgcore.utils.globalitems.akcesoriumOLD.*;
 
 public class AkcesoriumPickUpListener implements Listener {
 

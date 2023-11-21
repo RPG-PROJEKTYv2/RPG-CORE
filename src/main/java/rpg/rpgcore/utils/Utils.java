@@ -818,6 +818,19 @@ public class Utils {
         is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
     }
 
+    public static void removeTag(final ItemStack is, final String tag) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(is);
+        NBTTagCompound tagCompound;
+        if (!nmsStack.hasTag()) {
+            tagCompound = new NBTTagCompound();
+        } else {
+            tagCompound = nmsStack.getTag();
+            tagCompound.remove(tag);
+        }
+        nmsStack.setTag(tagCompound);
+        is.setItemMeta(CraftItemStack.getItemMeta(nmsStack));
+    }
+
     public static int getPlayerInventoryItemCount(final Player player, final ItemStack itemStack) {
         int count = 0;
         for (final ItemStack item : player.getInventory().getContents()) {

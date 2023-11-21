@@ -14,7 +14,7 @@ import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.Utils;
 import rpg.rpgcore.utils.globalitems.GlobalItem;
-import rpg.rpgcore.utils.globalitems.akcesorium.*;
+import rpg.rpgcore.utils.globalitems.akcesoriumOLD.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

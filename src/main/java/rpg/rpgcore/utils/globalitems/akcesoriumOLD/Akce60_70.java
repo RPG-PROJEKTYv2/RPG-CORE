@@ -1,6 +1,7 @@
-package rpg.rpgcore.utils.globalitems.akcesorium;
+package rpg.rpgcore.utils.globalitems.akcesoriumOLD;
 
 import com.google.common.collect.Sets;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,19 +17,27 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Akce60_70 {
-    I60_70_1("60-70-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&4&lOgnista Tarcza").toItemStack()),
-    I60_70_2("60-70-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lOgnisty Pierscien").toItemStack()),
-    I60_70_3("60-70-3", 11, new ItemBuilder(Material.WATCH).setName("&4&lOgnisty Diadem").toItemStack()),
-    I60_70_4("60-70-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&4&lOgnisty Naszyjnik").toItemStack()),
-    I60_70_5("60-70-5", 9, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lOgniste Kolczyki").toItemStack());
+    I60_70_1("60-70-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&4&lOgnista Tarcza").toItemStack(), 26, 37, 22, 31, 12, 16),
+    I60_70_2("60-70-2", 12, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&4&lOgnisty Pierscien").toItemStack(), 15, 22, 15, 23, 20, 80),
+    I60_70_3("60-70-3", 11, new ItemBuilder(Material.WATCH).setName("&4&lOgnisty Diadem").toItemStack(), 20, 23, 20, 31, 3, 7),
+    I60_70_4("60-70-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&4&lOgnisty Naszyjnik").toItemStack(), 145, 200, 16, 22, 12, 18),
+    I60_70_5("60-70-5", 9, new ItemBuilder(Material.HOPPER_MINECART).setName("&4&lOgniste Kolczyki").toItemStack(), 14, 17, 18, 23, -65, -50);
     private final String name;
     private final double dropChance;
     private final ItemStack item;
+    @Getter
+    private final int min1,max1,min2,max2,min3,max3;
 
-    Akce60_70(String name, double dropChance, ItemStack item) {
+    Akce60_70(String name, double dropChance, ItemStack item, int min1, int max1, int min2, int max2, int min3, int max3) {
         this.name = name;
         this.dropChance = dropChance;
         this.item = item;
+        this.min1 = min1;
+        this.max1 = max1;
+        this.min2 = min2;
+        this.max2 = max2;
+        this.min3 = min3;
+        this.max3 = max3;
     }
 
     public String getName() {
@@ -48,6 +57,13 @@ public enum Akce60_70 {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
+        }
+        return null;
+    }
+
+    public static Akce60_70 getByAkceName(final String name) {
+        for (final Akce60_70 akce : values()) {
+            if (akce.getItem().getItemMeta().getDisplayName().equals(name)) return akce;
         }
         return null;
     }

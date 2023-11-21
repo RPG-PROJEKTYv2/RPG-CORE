@@ -1,6 +1,7 @@
-package rpg.rpgcore.utils.globalitems.akcesorium;
+package rpg.rpgcore.utils.globalitems.akcesoriumOLD;
 
 import com.google.common.collect.Sets;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,18 +17,26 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Akce10_20 {
-    I10_20_3("10-20-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&2&lZielona Tarcza").toItemStack()),
-    I10_20_2("10-20-2", 12, new ItemBuilder(Material.WATCH).setName("&2&lZielony Diadem").toItemStack()),
-    I10_20_4("10-20-3", 11, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&2&lZielony Pierscien").toItemStack()),
-    I10_20_1("10-20-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&2&lZielony Naszyjnik").toItemStack());
+    I10_20_3("10-20-1", 13, new ItemBuilder(Material.ITEM_FRAME).setName("&2&lZielona Tarcza").toItemStack(), 9, 16, 6, 11, 3, 6),
+    I10_20_2("10-20-2", 12, new ItemBuilder(Material.WATCH).setName("&2&lZielony Diadem").toItemStack(), 9, 10, 11, 15, 1, 5),
+    I10_20_4("10-20-3", 11, new ItemBuilder(Material.EXPLOSIVE_MINECART).setName("&2&lZielony Pierscien").toItemStack(), 8, 10, 10, 12, 25, 35),
+    I10_20_1("10-20-4", 10, new ItemBuilder(Material.STORAGE_MINECART).setName("&2&lZielony Naszyjnik").toItemStack(), 10, 17, 10, 17, 4, 7);
     private final String name;
     private final double dropChance;
     private final ItemStack item;
+    @Getter
+    private final int min1,max1,min2,max2,min3,max3;
 
-    Akce10_20(String name, double dropChance, ItemStack item) {
+    Akce10_20(String name, double dropChance, ItemStack item, int min1, int max1, int min2, int max2, int min3, int max3) {
         this.name = name;
         this.dropChance = dropChance;
         this.item = item;
+        this.min1 = min1;
+        this.max1 = max1;
+        this.min2 = min2;
+        this.max2 = max2;
+        this.min3 = min3;
+        this.max3 = max3;
     }
     public String getName() { return name; }
     public double getDropChance() { return dropChance; }
@@ -37,6 +46,13 @@ public enum Akce10_20 {
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
+        }
+        return null;
+    }
+
+    public static Akce10_20 getByAkceName(final String name) {
+        for (final Akce10_20 akce : values()) {
+            if (akce.getItem().getItemMeta().getDisplayName().equals(name)) return akce;
         }
         return null;
     }

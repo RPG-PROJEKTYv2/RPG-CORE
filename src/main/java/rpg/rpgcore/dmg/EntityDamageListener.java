@@ -42,7 +42,11 @@ public class EntityDamageListener implements Listener {
                        damage = DoubleUtils.round(victim.getMaxHealth() * 0.125, 3); //0.0175
                        break;
                 }
-                e.setDamage(EntityDamageEvent.DamageModifier.BASE, damage);
+                if (damage == 0) return;
+                if (victim.getHealth() <= damage) {
+                    victim.removePotionEffect(PotionEffectType.POISON);
+                    victim.setHealth(0);
+                } else e.setDamage(EntityDamageEvent.DamageModifier.BASE, damage);
                 RPGCORE.getInstance().getDamageManager().sendDamagePacket("&2", damage, victim, victim);
                 return;
             }
