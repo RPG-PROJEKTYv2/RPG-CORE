@@ -25,9 +25,9 @@ public class ProfileInventoryClickListener implements Listener {
                 return;
             }
             final Player player = (Player) e.getWhoClicked();
-            Player target = Bukkit.getPlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "").replace(" (Admin)", ""));
+            Player target = Bukkit.getPlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "").replace(" (Admin)", "").trim());
             if (target == null) {
-                final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "").replace(" (Admin)", ""));
+                final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(Utils.removeColor(e.getClickedInventory().getTitle()).replace("Profil ", "").replace(" (Admin)", "").trim());
                 if (slot == 13) Bukkit.getServer().dispatchCommand(player, "misje " + offlinePlayer.getName());
                 if (slot == 40) RPGCORE.getInstance().getMagazynierNPC().openMagazynyList(player, offlinePlayer.getUniqueId());
                 if (slot == 48) RPGCORE.getInstance().getDodatkiManager().openAkcePodsGUI(player, offlinePlayer.getUniqueId());

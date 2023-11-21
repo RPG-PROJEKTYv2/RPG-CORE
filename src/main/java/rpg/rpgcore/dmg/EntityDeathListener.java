@@ -54,14 +54,14 @@ public class EntityDeathListener implements Listener {
 //        ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
 
         e.getEntity().setHealth(e.getEntity().getMaxHealth());
-        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
-            e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn());
-            e.getEntity().getActivePotionEffects().clear();
-        }, 1L);
-        //TODO Buguje sie czyszczenie efektow, czysci all poza poisoonem i do tego nie wracaja te z seta jakimms cudem
+        rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> e.getEntity().teleport(rpgcore.getSpawnManager().getSpawn()), 1L);
+
+        //rpgcore.getServer().getScheduler().runTaskLater(rpgcore,  () -> e.getEntity().getPlayer().removePotionEffect(PotionEffectType.POISON), 30L); // DLACZEZEGO KURWA CZYSCI ALL EFEKTY
+        // ZAKOMENTROWAĆ TO I SPRAWDZIĆ CZY DALEJ USUWA ALL EFEKTY
+
         if (e.getEntity().getLastDamageCause() == null) return;
 
-        if (e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getEntity().getLastDamageCause().getCause() != EntityDamageEvent.DamageCause.THORNS) {
+        if (!e.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) && !e.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.THORNS)) {
             return;
         }
 

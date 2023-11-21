@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.bonuses.Bonuses;
@@ -28,6 +29,18 @@ public class DuszologInventoryClickListener implements Listener {
         final String title = Utils.removeColor(e.getClickedInventory().getTitle());
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
+
+        if (player.getOpenInventory().getTopInventory().getTitle().contains("Duszolog #") && e.getClickedInventory().getType() == InventoryType.PLAYER) {
+            if (e.isShiftClick()) {
+                e.setResult(Event.Result.DENY);
+                e.setCancelled(true);
+                return;
+            }
+            e.setResult(Event.Result.DENY);
+            e.setCancelled(true);
+            return;
+        }
+
 
         if (title.contains("Duszolog #")) {
             e.setCancelled(true);
@@ -60,11 +73,11 @@ public class DuszologInventoryClickListener implements Listener {
 
             user.getCompletionMap().put(entityName, true);
             user.getProgressMap().put(entityName, 0);
-            user.setPrzeszywka(user.getPrzeszywka() + mission.getPrzeszyka());
+            user.setSilnyNaLudzi(user.getSilnyNaLudzi() + mission.getSilnyNaLudzi());
             user.setKrytyk(user.getKrytyk() + mission.getKrytyk());
 
             final Bonuses bonuses = RPGCORE.getInstance().getBonusesManager().find(uuid);
-            bonuses.getBonusesUser().setPrzeszyciebloku(bonuses.getBonusesUser().getPrzeszyciebloku() + mission.getPrzeszyka());
+            bonuses.getBonusesUser().setSilnynaludzi(bonuses.getBonusesUser().getSilnynaludzi() + mission.getSilnyNaLudzi());
             bonuses.getBonusesUser().setSzansanakryta(bonuses.getBonusesUser().getSzansanakryta() + mission.getKrytyk());
             player.sendMessage(Utils.format("&5&lDuszolog &8>> &aDziekuje Ci za te dusze &d" + entityName + "&a. Na pewno sie przydadza!"));
 

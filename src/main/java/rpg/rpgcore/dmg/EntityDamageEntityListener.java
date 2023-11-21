@@ -191,28 +191,7 @@ public class EntityDamageEntityListener implements Listener {
                             }
                         }
                     }
-                    boolean przebicie = false;
-                    if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(victim))) {
-                        if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(attacker, victim))) {
-                            e.setCancelled(true);
-                            if (ChanceHelper.getChance(15.0)) {
-                                final int trueDmg = rpgcore.getBonusesManager().find(victim.getUniqueId()).getBonusesUser().getTruedamage();
-                                attacker.setHealth(attacker.getHealth() - trueDmg);
-                                if (trueDmg == 0) {
-                                    return;
-                                }
-                                attacker.sendMessage(Utils.format("&cGracz " + victim.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
-                                victim.sendMessage(Utils.format("&aZadales/-as graczu " + attacker.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
-                            }
-                            victim.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + attacker.getName() + "&c!"));
-                            attacker.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + victim.getName() + "&a!"));
-                            return;
-                        }
-                    } else {
-                        przebicie = true;
-                        victim.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + attacker.getName() + "&c!"));
-                        attacker.sendMessage(Utils.format("&aGracz " + victim.getName() + " przebil twoj pancerz!"));
-                    }
+
 
                     double playerDamage = DoubleUtils.round(rpgcore.getDamageManager().calculateAttackerDmgToPlayer(victim, attacker), 2);
                     double wartoscDefa = rpgcore.getDamageManager().calculatePlayerDef(attacker);
@@ -236,9 +215,33 @@ public class EntityDamageEntityListener implements Listener {
                             }
                         }
                     }
+
+                    boolean przebicie = false;
+                    if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(victim))) {
+                        if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(attacker, victim))) {
+                            e.setCancelled(true);
+                            if (ChanceHelper.getChance(15.0)) {
+                                final int trueDmg = rpgcore.getBonusesManager().find(victim.getUniqueId()).getBonusesUser().getTruedamage();
+                                if (trueDmg != 0) {
+                                    attacker.setHealth(attacker.getHealth() - trueDmg);
+                                    attacker.sendMessage(Utils.format("&cGracz " + victim.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
+                                    victim.sendMessage(Utils.format("&aZadales/-as graczu " + attacker.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
+                                }
+                            }
+                            victim.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + attacker.getName() + "&c!"));
+                            attacker.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + victim.getName() + "&a!"));
+                            playerDamage *= 0.8;
+                        }
+                    } else {
+                        przebicie = true;
+                        victim.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + attacker.getName() + "&c!"));
+                        attacker.sendMessage(Utils.format("&aGracz " + victim.getName() + " przebil twoj pancerz!"));
+                    }
+
                     if (przebicie) {
                         wartoscDefa *= 0.5;
                     }
+
 
                     final double finalDmg = DoubleUtils.round(playerDamage / wartoscDefa, 2);
                     //attacker.sendMessage(Utils.format("&cFinal DMG (thorns): " + finalDmg));
@@ -344,29 +347,6 @@ public class EntityDamageEntityListener implements Listener {
                         }
                     }
                 }
-                boolean przebicie = false;
-                if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(attacker))) {
-                    if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(victim, attacker))) {
-                        e.setCancelled(true);
-                        if (ChanceHelper.getChance(15.0)) {
-                            final int trueDmg = rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getTruedamage();
-                            victim.setHealth(victim.getHealth() - trueDmg);
-                            if (trueDmg == 0) {
-                                return;
-                            }
-                            victim.sendMessage(Utils.format("&cGracz " + attacker.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
-                            attacker.sendMessage(Utils.format("&aZadales/-as graczu " + victim.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
-                        }
-                        attacker.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + victim.getName() + "&c!"));
-                        victim.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + attacker.getName() + "&a!"));
-                        rpgcore.getCooldownManager().givePvpCooldown(attacker.getUniqueId());
-                        return;
-                    }
-                } else {
-                    przebicie = true;
-                    attacker.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + victim.getName() + "&c!"));
-                    victim.sendMessage(Utils.format("&aGracz " + attacker.getName() + " przebil twoj pancerz!"));
-                }
 
 
                 double attackerDmg = rpgcore.getDamageManager().calculateAttackerDmgToPlayer(attacker, victim);
@@ -397,6 +377,28 @@ public class EntityDamageEntityListener implements Listener {
                             }
                         }
                     }
+                }
+
+                boolean przebicie = false;
+                if (!ChanceHelper.getChance(rpgcore.getDamageManager().calculatePrzebicie(attacker))) {
+                    if (ChanceHelper.getChance(rpgcore.getDamageManager().calculateVictimBlok(victim, attacker))) {
+                        e.setCancelled(true);
+                        if (ChanceHelper.getChance(15.0)) {
+                            final int trueDmg = rpgcore.getBonusesManager().find(attacker.getUniqueId()).getBonusesUser().getTruedamage();
+                            if (trueDmg != 0) {
+                                victim.setHealth(victim.getHealth() - trueDmg);
+                                victim.sendMessage(Utils.format("&cGracz " + attacker.getName() + " zadal ci obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ twojego prawdziwego zdrowia!"));
+                                attacker.sendMessage(Utils.format("&aZadales/-as graczu " + victim.getName() + " obrazenia o wartosci &f" + (trueDmg / 2.0) + "&c❤ &ajego prawdziwego zdrowia!"));
+                            }
+                        }
+                        attacker.sendMessage(Utils.format("&cTwoj atak zostal zablokowany przez gracza &4" + victim.getName() + "&c!"));
+                        victim.sendMessage(Utils.format("&aZablokowales/-as cios gracza " + attacker.getName() + "&a!"));
+                        attackerDmg *= 0.8;
+                    }
+                } else {
+                    przebicie = true;
+                    attacker.sendMessage(Utils.format("&cTwoj atak przebil pancerz gracza &4" + victim.getName() + "&c!"));
+                    victim.sendMessage(Utils.format("&aGracz " + attacker.getName() + " przebil twoj pancerz!"));
                 }
 
                 if (przebicie) {

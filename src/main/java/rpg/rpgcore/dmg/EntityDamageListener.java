@@ -24,11 +24,11 @@ public class EntityDamageListener implements Listener {
         }
         if (e.getEntity() instanceof Player) {
             final Player victim = (Player) e.getEntity();
-            if (e.getCause() == EntityDamageEvent.DamageCause.POISON) {
-                if (Utils.customDungeonWorlds.contains(victim.getWorld())) return;
-                if (victim.getActivePotionEffects().stream().noneMatch(potion -> potion.getType() == PotionEffectType.POISON)) return;
-                final PotionEffect effect = victim.getActivePotionEffects().stream().filter(potion -> potion.getType() == PotionEffectType.POISON).collect(Collectors.toList()).get(0);
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)) {
+                if (victim.getActivePotionEffects().stream().noneMatch(potion -> potion.getType().equals(PotionEffectType.POISON))) return;
+                final PotionEffect effect = victim.getActivePotionEffects().stream().filter(potion -> potion.getType().equals(PotionEffectType.POISON)).collect(Collectors.toList()).get(0);
                 final int amplifier = effect.getAmplifier();
+
 
                 double damage = 0;
                 switch (amplifier) {
@@ -37,9 +37,11 @@ public class EntityDamageListener implements Listener {
                         break;
                     case 1:
                         damage = victim.getMaxHealth() / 40 * 2;
+                        break;
+                    case 3:
+                       damage = DoubleUtils.round(victim.getMaxHealth() * 0.125, 3); //0.0175
+                       break;
                 }
-
-
                 e.setDamage(EntityDamageEvent.DamageModifier.BASE, damage);
                 RPGCORE.getInstance().getDamageManager().sendDamagePacket("&2", damage, victim, victim);
                 return;

@@ -43,7 +43,12 @@ public class MagazynierNPC {
                 " ",
                 "&7Ale pamietaj:",
                 "&4&lMISJE RESETUJA SIE CO 24H!",
-                "&4&lMUSISZ KLIKNAC W MISJE, ZEBY JA WYBRAC!")).toItemStack());
+                "&4&lMUSISZ KLIKNAC W MISJE, ZEBY JA WYBRAC!",
+                "",
+                "&7Twoje misje zostana zresetowane za:",
+                "&6" + (this.find(player.getUniqueId()).getResetTime() <= System.currentTimeMillis() ?
+                        "Teraz!" :
+                        Utils.durationToString(this.find(player.getUniqueId()).getResetTime() - System.currentTimeMillis(), true)))).toItemStack());
 
         player.openInventory(gui);
     }

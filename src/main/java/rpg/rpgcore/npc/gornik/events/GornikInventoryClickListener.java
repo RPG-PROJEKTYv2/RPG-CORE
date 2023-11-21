@@ -46,7 +46,7 @@ public class GornikInventoryClickListener implements Listener {
         final ItemStack item = e.getCurrentItem();
         final int slot = e.getSlot();
 
-        if ((player.getOpenInventory().getTopInventory().getTitle().contains("Gornik") ||
+        if (((player.getOpenInventory().getTopInventory().getTitle().contains("Gornik") && !Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Gornik - ADMINISTRACJA"))||
                 Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Gornik » Kampania")) && e.getClickedInventory().getType() == InventoryType.PLAYER) {
             if (e.isShiftClick()) {
                 e.setCancelled(true);
@@ -524,13 +524,14 @@ public class GornikInventoryClickListener implements Listener {
                     player.getInventory().removeItem(new ItemBuilder(GornikItems.I1_1.getItemStack().clone()).setAmount(5).toItemStack(),
                             new ItemBuilder(GornikItems.I2_1.getItemStack().clone()).setAmount(5).toItemStack());
                     user.setKasa(user.getKasa() - 10_000_000);
-                    player.getItemInHand().setType(Material.IRON_PICKAXE);
+                    player.getItemInHand().setType(Material.GOLD_PICKAXE);
+                    if (!Utils.getTagBoolean(player.getItemInHand(), "fix1")) Utils.setTagBoolean(player.getItemInHand(), "fix1", true);
                     break;
                 case 24:
                     if (player.getItemInHand() == null || !player.getItemInHand().getType().toString().contains("_PICKAXE") ||
                             !player.getItemInHand().hasItemMeta() || !player.getItemInHand().getItemMeta().getDisplayName().contains("Kilof Gornika"))
                         return;
-                    if (!player.getItemInHand().getType().equals(Material.IRON_PICKAXE)) return;
+                    if (!player.getItemInHand().getType().equals(Material.GOLD_PICKAXE)) return;
                     if (Utils.getTagInt(player.getItemInHand(), "lvl") < 17) return;
                     if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 10) ||
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 10) ||
@@ -542,13 +543,14 @@ public class GornikInventoryClickListener implements Listener {
                             new ItemBuilder(GornikItems.I3_1.getItemStack().clone()).setAmount(5).toItemStack(),
                             new ItemBuilder(GornikItems.I4_1.getItemStack().clone()).setAmount(5).toItemStack());
                     user.setKasa(user.getKasa() - 25_000_000);
-                    player.getItemInHand().setType(Material.GOLD_PICKAXE);
+                    player.getItemInHand().setType(Material.IRON_PICKAXE);
+                    if (!Utils.getTagBoolean(player.getItemInHand(), "fix1")) Utils.setTagBoolean(player.getItemInHand(), "fix1", true);
                     break;
                 case 16:
                     if (player.getItemInHand() == null || !player.getItemInHand().getType().toString().contains("_PICKAXE") ||
                             !player.getItemInHand().hasItemMeta() || !player.getItemInHand().getItemMeta().getDisplayName().contains("Kilof Gornika"))
                         return;
-                    if (!player.getItemInHand().getType().equals(Material.GOLD_PICKAXE)) return;
+                    if (!player.getItemInHand().getType().equals(Material.IRON_PICKAXE)) return;
                     if (Utils.getTagInt(player.getItemInHand(), "lvl") < 25) return;
                     if (!player.getInventory().containsAtLeast(GornikItems.I1_1.getItemStack(), 20) ||
                             !player.getInventory().containsAtLeast(GornikItems.I2_1.getItemStack(), 20) ||

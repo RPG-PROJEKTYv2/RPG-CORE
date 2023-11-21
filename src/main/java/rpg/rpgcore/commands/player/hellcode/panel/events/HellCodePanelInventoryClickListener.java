@@ -55,6 +55,7 @@ public class HellCodePanelInventoryClickListener implements Listener {
                 default:
                     return;
             }
+            RPGCORE.getInstance().getChatManager().openHellcodePanel(player);
             RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataChatUsers(player.getUniqueId(), chatUser));
 
         }

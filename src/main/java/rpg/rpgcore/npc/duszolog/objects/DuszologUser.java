@@ -12,13 +12,13 @@ import java.util.UUID;
 @Setter
 public class DuszologUser implements Cloneable {
     private final UUID uuid;
-    private double przeszywka, krytyk;
+    private double silnyNaLudzi, krytyk;
     private final Map<String, Integer> progressMap;
     private final Map<String, Boolean> completionMap;
 
     public DuszologUser(final UUID uuid) {
         this.uuid = uuid;
-        this.przeszywka = 0;
+        this.silnyNaLudzi = 0;
         this.krytyk = 0;
         this.progressMap = new HashMap<>();
         this.completionMap = new HashMap<>();
@@ -26,8 +26,10 @@ public class DuszologUser implements Cloneable {
 
     public DuszologUser(final Document document) {
         this.uuid = UUID.fromString(document.getString("_id"));
-        this.przeszywka = (document.containsKey("value1") ? document.getDouble("value1") : document.getDouble("przeszywka"));
-        this.krytyk = (document.containsKey("value1") ? document.getDouble("value1") : document.getDouble("krytykk"));
+        this.silnyNaLudzi = (document.containsKey("value1") ? document.getDouble("value1") :
+                (document.containsKey("przeszywka") ? document.getDouble("przeszywka") : document.getDouble("silnyNaLudzi")));
+        this.krytyk = (document.containsKey("value1") ? document.getDouble("value1") :
+                (document.containsKey("krytykk") ? document.getDouble("krytykk") : document.getDouble("krytyk")));
         final Map<String, Integer> progressMap = new HashMap<>();
         final Document progressMapD = (document.containsKey("progressMap") ? document.get("progressMap", Document.class) : new Document());
         progressMapD.keySet().forEach(key -> {
@@ -61,8 +63,8 @@ public class DuszologUser implements Cloneable {
         completionMap.forEach((key, value) -> completionMapD.append(key.replaceAll(" ", "_").replaceAll("Lvl\\.", "Lvl"), value));
 
         return new Document("_id", this.uuid.toString())
-                .append("przeszywka", this.przeszywka)
-                .append("krytykk", this.krytyk)
+                .append("silnyNaLudzi", this.silnyNaLudzi)
+                .append("krytyk", this.krytyk)
                 .append("progressMap", progressMapD)
                 .append("completionMap", completionMapD);
     }

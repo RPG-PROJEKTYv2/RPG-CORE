@@ -15,6 +15,7 @@ import rpg.rpgcore.RPGCORE;
 import rpg.rpgcore.npc.duszolog.enums.DuszologMissions;
 import rpg.rpgcore.npc.duszolog.enums.DuszologMissionsTextures;
 import rpg.rpgcore.npc.duszolog.objects.DuszologUser;
+import rpg.rpgcore.utils.DoubleUtils;
 import rpg.rpgcore.utils.ItemBuilder;
 import rpg.rpgcore.utils.PageUtils;
 import rpg.rpgcore.utils.Utils;
@@ -87,8 +88,8 @@ public class DuszologNPC {
                                 "&7Szansa na drop: &c" + mission.getSpawnChance() + "%",
                                 "",
                                 "&f&lNagroda",
-                                "&8- &e+" + mission.getPrzeszyka() + "% szansy na przeszycie bloku ciosu",
-                                "&8- &5+" + mission.getKrytyk() + "% szansy na cios krytyczny"
+                                "&8- &c+" + mission.getSilnyNaLudzi() + "% Silny Na Ludzi",
+                                "&8- &d+" + mission.getKrytyk() + "% Szansy Na Cios Krytyczny"
                         )).toItemStack().clone());
             } else {
                 guiItems.add(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3).setName("&c" + mission.getEntityName())
@@ -111,8 +112,8 @@ public class DuszologNPC {
 
         gui.setItem(49, new ItemBuilder(Material.PAPER).setName("&cStatystyki").setLore(Arrays.asList(
                 "&7Ukonczone misje: &c" + (int) duszologUser.getCompletionMap().values().stream().filter(aBoolean -> aBoolean).count() + "&7/&c" + DuszologMissions.values().length,
-                "&7Szansa Na Przeszycie Bloku Ciosu: &c" + duszologUser.getPrzeszywka() + "%",
-                "&7Szansa Na Cios Krytyczny: &c" + duszologUser.getKrytyk() + "%"
+                "&7Silny Na Ludzi: &c" + DoubleUtils.round(duszologUser.getSilnyNaLudzi(),2) + "%",
+                "&7Szansa Na Cios Krytyczny: &c" + DoubleUtils.round(duszologUser.getKrytyk(), 2) + "%"
         )).toItemStack().clone());
 
 
@@ -133,7 +134,7 @@ public class DuszologNPC {
             if (!as.isDead()) {
                 as.remove();
             }
-        }, 200L);
+        }, 300L);
     }
 
 

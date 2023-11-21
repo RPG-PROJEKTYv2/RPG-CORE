@@ -404,6 +404,9 @@ public class ChatInventoryClickListener implements Listener {
                 case 24:
                     user.setBoss40_50(!user.isBoss40_50());
                     break;
+                case 25:
+                    user.setBao(!user.isBao());
+                    break;
                 case 35:
                     final User mainUser = rpgcore.getUserManager().find(uuid);
                     if (mainUser.getRankUser().isHighStaff() && mainUser.isAdminCodeLogin()) {

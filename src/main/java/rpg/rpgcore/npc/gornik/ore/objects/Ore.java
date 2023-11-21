@@ -39,7 +39,11 @@ public class Ore {
         this.maxHp = document.getInteger("maxHp");
         this.currentHp = document.getInteger("currentHp");
         this.exp = document.getInteger("exp");
-        this.respawnTime = document.getLong("respawnTime");
+        try {
+            this.respawnTime = document.getLong("respawnTime");
+        } catch (final ClassCastException e) {
+            this.respawnTime = (long) document.getInteger("respawnTime");
+        }
     }
 
     public long getRandomRespawnTime() {

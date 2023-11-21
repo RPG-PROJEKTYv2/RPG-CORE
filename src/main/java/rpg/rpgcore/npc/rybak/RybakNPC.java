@@ -247,6 +247,31 @@ public class RybakNPC {
         player.openInventory(gui);
 
     }
+    public void onClickPrzyjacielWyspa2(final Player player) {
+        final Inventory gui = Bukkit.createInventory(null, 18, Utils.format("&6&lPrzyjaciel &8(&7&lStara Fabryka&8)"));
+
+        for (int i = 0; i < gui.getSize(); i++) gui.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (short) 7).setName(" ").toItemStack());
+
+        gui.setItem(1, new ItemBuilder(RybakItems.I15.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(2, new ItemBuilder(RybakItems.I16.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(3, new ItemBuilder(RybakItems.I17.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(4, new ItemBuilder(RybakItems.I18.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(5, new ItemBuilder(RybakItems.I19.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(6, new ItemBuilder(RybakItems.I20.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+        gui.setItem(7, new ItemBuilder(RybakItems.I21.getItemStack().clone()).addLoreLine(" ", "&7Kliknij, zeby zestackowac!").toItemStack());
+
+        gui.setItem(10, new ItemBuilder(RybakItems.I15.getItemStack().clone()).setName(RybakItems.I15.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(11, new ItemBuilder(RybakItems.I16.getItemStack().clone()).setName(RybakItems.I16.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(12, new ItemBuilder(RybakItems.I17.getItemStack().clone()).setName(RybakItems.I17.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(13, new ItemBuilder(RybakItems.I18.getItemStack().clone()).setName(RybakItems.I18.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(14, new ItemBuilder(RybakItems.I19.getItemStack().clone()).setName(RybakItems.I19.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(15, new ItemBuilder(RybakItems.I20.getItemStack().clone()).setName(RybakItems.I20.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+        gui.setItem(16, new ItemBuilder(RybakItems.I21.getItemStack().clone()).setName(RybakItems.I21.getItemStack().clone().getItemMeta().getDisplayName() + " &7(x64)").addLoreLine(" ", "&7Kliknij, zeby rozstackowac!").toItemStack());
+
+
+        player.openInventory(gui);
+
+    }
 
 // ========================================= MLODSZY RYBAK - WYSPA 2 ========================================= //
 

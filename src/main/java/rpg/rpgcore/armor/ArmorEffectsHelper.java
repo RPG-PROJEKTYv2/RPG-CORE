@@ -43,10 +43,6 @@ public class ArmorEffectsHelper {
             k1 = 25;
         }
         player.setMaxHealth((bonuses.getBonusesUser().getDodatkowehp() * 2) + (k1 * 2));
-
-        if (player.getWorld().getName().equals("world")) {
-            player.setHealth(player.getMaxHealth());
-        }
     }
 
     public static void addEffectLeggings(Player player, int value) {

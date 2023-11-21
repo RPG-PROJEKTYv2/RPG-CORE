@@ -202,26 +202,29 @@ public class BaoManager {
 
         final BaoUser user = this.rpgcore.getBaoManager().find(uuid).getBaoUser();
 
-        rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
-        rpgcore.getServer().broadcastMessage(Utils.format("  &7Nowe bonusy gracza &c " + playerName));
-        rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus1() + ": &f" + user.getValue1() + "%"));
-        rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus2() + ": &f" + user.getValue2() + "%"));
-        if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + " DMG"));
-        } else {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + "%"));
+        for (final Player rest : Bukkit.getOnlinePlayers()) {
+            if (!rpgcore.getChatManager().find(rest.getUniqueId()).isBao() && rest.getUniqueId() != uuid) continue;
+            rest.sendMessage(Utils.format("          &5&lSTOL MAGII        "));
+            rest.sendMessage(Utils.format("  &7Nowe bonusy gracza &c " + playerName));
+            rest.sendMessage(Utils.format("  &7" + user.getBonus1() + ": &f" + user.getValue1() + "%"));
+            rest.sendMessage(Utils.format("  &7" + user.getBonus2() + ": &f" + user.getValue2() + "%"));
+            if (user.getBonus3().equalsIgnoreCase("dodatkowe obrazenia")) {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + " DMG"));
+            } else {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus3() + ": &f" + user.getValue3() + "%"));
+            }
+            if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4()));
+            } else {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4() + "%"));
+            }
+            if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + " HP"));
+            } else {
+                rest.sendMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + "%"));
+            }
+            rest.sendMessage(Utils.format("          &5&lSTOL MAGII        "));
         }
-        if (user.getBonus4().equalsIgnoreCase("predkosc ruchu") || user.getBonus4().equalsIgnoreCase("szczescie")) {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4()));
-        } else {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus4() + ": &f" + user.getValue4() + "%"));
-        }
-        if (user.getBonus5().equalsIgnoreCase("dodatkowe hp")) {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + " HP"));
-        } else {
-            rpgcore.getServer().broadcastMessage(Utils.format("  &7" + user.getBonus5() + ": &f" + user.getValue5() + "%"));
-        }
-        rpgcore.getServer().broadcastMessage(Utils.format("          &5&lSTOL MAGII        "));
     }
 
     public void losujNowyBonus1(final UUID uuid) {

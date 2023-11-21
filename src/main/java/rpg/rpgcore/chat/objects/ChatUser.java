@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ChatUser implements Cloneable {
     private UUID uuid;
     private boolean pingsEnabled, chestDropEnabled, niesDropEnabled, itemDropEnabled, msgEnabled, joinMessageEnabled, quitMessageEnabled, dmgHologramsVisable, databaseMessageEnabled,
-    boss1_10, boss10_20, boss20_30, boss30_40, boss40_50;
+    boss1_10, boss10_20, boss20_30, boss30_40, boss40_50, bao;
     private List<UUID> ignoredPlayers;
     private HellcodeUser hellcodeUser;
 
@@ -35,6 +35,7 @@ public class ChatUser implements Cloneable {
         this.boss20_30 = true;
         this.boss30_40 = true;
         this.boss40_50 = true;
+        this.bao = true;
         this.hellcodeUser = new HellcodeUser(uuid);
     }
 
@@ -55,6 +56,7 @@ public class ChatUser implements Cloneable {
         this.boss20_30 = (document.containsKey("boss20_30") ? document.getBoolean("boss20_30") : true);
         this.boss30_40 = (document.containsKey("boss30_40") ? document.getBoolean("boss30_40") : true);
         this.boss40_50 = (document.containsKey("boss40_50") ? document.getBoolean("boss40_50") : true);
+        this.bao = (document.containsKey("bao") ? document.getBoolean("bao") : true);
         if (document.containsKey("hellcodeUser")) this.hellcodeUser = new HellcodeUser(document.get("hellcodeUser", Document.class));
         else this.hellcodeUser = new HellcodeUser(uuid);
     }
@@ -76,6 +78,7 @@ public class ChatUser implements Cloneable {
                 .append("boss20_30", boss20_30)
                 .append("boss30_40", boss30_40)
                 .append("boss40_50", boss40_50)
+                .append("bao", bao)
                 .append("hellcodeUser", hellcodeUser.toDocument());
     }
 

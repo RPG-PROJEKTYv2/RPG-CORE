@@ -1,7 +1,6 @@
 package rpg.rpgcore.listeners.player;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -22,9 +21,9 @@ import rpg.rpgcore.entities.EntityTypes;
 import rpg.rpgcore.entities.PetArmorStand.PetArmorStand;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.pets.objects.Pet;
+import rpg.rpgcore.ranks.types.RankTypePlayer;
 import rpg.rpgcore.tab.TabManager;
 import rpg.rpgcore.user.User;
-import rpg.rpgcore.utils.ChanceHelper;
 import rpg.rpgcore.utils.ItemHelper;
 import rpg.rpgcore.utils.NameTagUtil;
 import rpg.rpgcore.utils.Utils;
@@ -41,17 +40,6 @@ public class PlayerJoinListener implements Listener {
         this.rpgcore = rpgcore;
     }
 
-    private final World world = Bukkit.getWorld("1-10map");
-    private final List<Location> spawnLocations1_10 = Arrays.asList(
-            new Location(world, -68.5, 76, -296.5),
-            new Location(world, -95.5, 76, -346.5),
-            new Location(world, -160.5, 76, -306.5),
-            new Location(world, -28.5, 76, -283.5),
-            new Location(world, 31.5, 76, -290.5),
-            new Location(world, 51.5, 76, -210.5),
-            new Location(world, 83.5, 78, -157.5),
-            new Location(world, 96.5, 78, -61.5)
-    );
 
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -112,17 +100,9 @@ public class PlayerJoinListener implements Listener {
         }
 
 
-        if (user.getLvl() <= 5) {
-            player.teleport(spawnLocations1_10.get(ChanceHelper.getRandInt(0, spawnLocations1_10.size() - 1)));
-        } else {
-            if (RPGCORE.getInstance().getCooldownManager().hasAntyLogout(player.getUniqueId())) {
-                player.teleport(new Location(Bukkit.getWorld("world"), -102.514, 89.5, -225.507, 89.8F, -0.5F));
-            }
-            player.teleport(rpgcore.getSpawnManager().getSpawn());
-        }
+        player.teleport(rpgcore.getSpawnManager().getSpawn());
 
-        if (user.getHellCode().equals("off")) user.setHellCodeLogin(true);
-        else user.setHellCodeLogin(false);
+        user.setHellCodeLogin(user.getHellCode().equals("off"));
         user.setAdminCodeLogin(false);
 
         if (!user.getRankUser().isHighStaff()) {
@@ -173,24 +153,6 @@ public class PlayerJoinListener implements Listener {
 
         NameTagUtil.setPlayerNameTag(player, "updatePrefix");
 
-        final Bonuses bonuses = rpgcore.getBonusesManager().find(uuid);
-        int dmg = 0;
-        if (!rpgcore.getDodatkiManager().find(uuid).getBony().getDmgMetiny().getType().equals(Material.AIR)) {
-            switch (Utils.removeColor(rpgcore.getDodatkiManager().find(uuid).getBony().getDmgMetiny().getItemMeta().getDisplayName())) {
-                case "Bon Zwiekszonych Obrazen W Kamienie Metin +2":
-                    dmg = 2;
-                    break;
-                case "Bon Zwiekszonych Obrazen W Kamienie Metin +3":
-                    dmg = 3;
-                    break;
-                case "Bon Zwiekszonych Obrazen W Kamienie Metin +5":
-                    dmg = 5;
-                    break;
-            }
-        }
-        bonuses.getBonusesUser().setDmgMetiny(rpgcore.getMetinologNPC().find(uuid).getMetinologUser().getDmgMetiny() + dmg);
-
-
         rpgcore.getServer().getScheduler().runTaskAsynchronously(rpgcore, () -> rpgcore.getNmsManager().sendTitleAndSubTitle(player, rpgcore.getNmsManager().makeTitle("&fWitaj na &4Hell&8RPG&f!", 5, 20, 5), rpgcore.getNmsManager().makeSubTitle("", 5, 20, 5)));
         if (!player.hasPlayedBefore()) {
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> {
@@ -206,13 +168,34 @@ public class PlayerJoinListener implements Listener {
         TabManager.update(player.getUniqueId());
         ArmorEffectsHelper.addEffectsArmor(player);
 
-
         final Pet pet = rpgcore.getPetyManager().findActivePet(uuid).getPet();
 
         if (pet.getItem() != null) {
             EntityTypes.spawnEntity(new PetArmorStand(((CraftWorld) player.getLocation().getWorld()).getHandle(), player), player.getUniqueId(), player.getLocation(), pet.getItem().clone().getItemMeta().getDisplayName()); //.substring(0, item.clone().getItemMeta().getDisplayName().indexOf(" "))
             rpgcore.getServer().getScheduler().runTaskLater(rpgcore, () -> EntityTypes.addEquipment(EntityTypes.getEntity(player.getUniqueId()), pet.getItem().clone()), 20L);
         }
+
+        if (user.getRankPlayerUser().getRankType() != RankTypePlayer.GRACZ) {
+            if (user.getRankPlayerUser().getTime() <= System.currentTimeMillis()) {
+                user.getRankPlayerUser().setRank(RankTypePlayer.GRACZ);
+                user.getRankPlayerUser().setTime(0L);
+                if (user.isTworca()) {
+                    user.getRankPlayerUser().setRank(RankTypePlayer.TWORCA);
+                    user.getRankPlayerUser().setTime(-1L);
+                }
+                RPGCORE.getInstance().getNmsManager().sendTitleAndSubTitle(player, RPGCORE.getInstance().getNmsManager().makeTitle("&8&l[&4&l!&8&l]", 5, 20, 5), RPGCORE.getInstance().getNmsManager().makeSubTitle("&cTwoja ranga wlasnie wygasla!", 5, 20, 5));
+                RPGCORE.getInstance().getServer().getScheduler().runTaskAsynchronously(RPGCORE.getInstance(), () -> RPGCORE.getInstance().getMongoManager().saveDataUser(user.getId(), user));
+            } else {
+                player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Twoja ranga: " + user.getRankPlayerUser().getRankType().getPrefix()));
+                if (user.getRankPlayerUser().getTime() == -1) {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Pozostaly czas: &6LifeTime"));
+                } else {
+                    player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Pozostaly czas: &6" + Utils.durationToString(user.getRankPlayerUser().getTime(), false)));
+                }
+            }
+        }
+
+
     }
 
 

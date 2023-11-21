@@ -194,7 +194,7 @@ public class AdminPanelInventoryClick implements Listener {
             }
         }
         if (title.equals("Rybak - ADMINISTRACJA")) {
-            if (slot == 17) {
+            if (slot == 53) {
                 e.setCancelled(true);
                 rpgcore.getAdminPanelManager().openAdminPanelGUI(player);
                 return;

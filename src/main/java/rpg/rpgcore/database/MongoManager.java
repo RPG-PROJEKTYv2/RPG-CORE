@@ -450,14 +450,15 @@ public class MongoManager {
             }
             if (pool.getHeadHuntEvent().find(new Document("_id", uuid.toString())).first() == null) {
                 final HeadHuntUser user = new HeadHuntUser(uuid);
+                rpgcore.getEventManager().getHeadHuntManager().add(user);
 
                 final Location glowka1 = rpgcore.getEventManager().getHeadHuntManager().getRandom(uuid, 1);
                 user.setGlowka1(glowka1);
                 user.getGlowka1PrevLocations().add(glowka1);
-
                 //...
 
-                addDataHeadHuntEvent(user);
+                this.addDataHeadHuntEvent(user);
+                rpgcore.getEventManager().getHeadHuntManager().remove(user.getUuid());
                 rpgcore.getEventManager().getHeadHuntManager().add(user);
             }
         }
@@ -604,15 +605,17 @@ public class MongoManager {
         rpgcore.getNereusNPC().add(nereusUser);
 
         final HeadHuntUser headHuntUser = new HeadHuntUser(uuid);
+        rpgcore.getEventManager().getHeadHuntManager().add(headHuntUser);
 
         final Location glowka1 = rpgcore.getEventManager().getHeadHuntManager().getRandom(uuid, 1);
         headHuntUser.setGlowka1(glowka1);
         headHuntUser.getGlowka1PrevLocations().add(glowka1);
+        rpgcore.getEventManager().getHeadHuntManager().remove(headHuntUser.getUuid());
+        rpgcore.getEventManager().getHeadHuntManager().add(headHuntUser);
 
         //...
 
         this.addDataHeadHuntEvent(headHuntUser);
-        rpgcore.getEventManager().getHeadHuntManager().add(headHuntUser);
 
 
         // TUTAJ TWORZYSZ USERA JAK NOWY GRACZ WEJDZIE NA SERWER

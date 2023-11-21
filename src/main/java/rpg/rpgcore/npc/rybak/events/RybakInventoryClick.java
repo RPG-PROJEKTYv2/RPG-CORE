@@ -56,7 +56,8 @@ public class RybakInventoryClick implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
-            if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE) return;
+            if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE)
+                return;
 
             final StaruszekUser user = rpgcore.getRybakNPC().find(player.getUniqueId()).getStaruszekUser();
 
@@ -103,7 +104,8 @@ public class RybakInventoryClick implements Listener {
             }
 
             if (item.getType().equals(Material.BOOK) && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
-                if (!(user.getMission() == 20 || user.getMission() == 21 || user.getMission() == 22 || user.getMission() == 23 || user.getMission() == 24)) return;
+                if (!(user.getMission() == 20 || user.getMission() == 21 || user.getMission() == 22 || user.getMission() == 23 || user.getMission() == 24))
+                    return;
 
                 final String itemName = Utils.getTagString(item, "itemName");
                 if (itemName.isEmpty()) return;
@@ -118,11 +120,13 @@ public class RybakInventoryClick implements Listener {
 
                 int amount = 0;
                 for (ItemStack items : player.getInventory().getContents()) {
-                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName()) continue;
+                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName())
+                        continue;
                     if (items.isSimilar(reqItem)) amount += items.getAmount();
                 }
 
-                if (user.getProgress() + amount > Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount()) amount -= user.getProgress() + amount - Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount();
+                if (user.getProgress() + amount > Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount())
+                    amount -= user.getProgress() + amount - Objects.requireNonNull(StaruszekMissions.getMissionById(user.getMission())).getReqAmount();
 
                 player.getInventory().removeItem(new ItemBuilder(reqItem.clone()).setAmount(amount).toItemStack());
                 user.setProgress(user.getProgress() + amount);
@@ -234,14 +238,14 @@ public class RybakInventoryClick implements Listener {
         }
 
 
-
         //                                          MLODSZY RYBAK (WYSPA 2)                            //
 
         if (title.equals("Mlodszy Rybak")) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
-            if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE) return;
+            if (item == null || item.getType() == Material.BARRIER || item.getType() == Material.STAINED_GLASS_PANE)
+                return;
 
             final MlodszyRybakUser user = rpgcore.getRybakNPC().find(player.getUniqueId()).getMlodszyRybakUser();
 
@@ -303,7 +307,8 @@ public class RybakInventoryClick implements Listener {
 
                 int amount = 0;
                 for (ItemStack items : player.getInventory().getContents()) {
-                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName()) continue;
+                    if (items == null || items.getType() == Material.AIR || !items.hasItemMeta() || !items.getItemMeta().hasDisplayName())
+                        continue;
                     if (items.isSimilar(reqItem)) amount += items.getAmount();
                 }
 
@@ -352,7 +357,8 @@ public class RybakInventoryClick implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
 
-            if (item == null || item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.IRON_FENCE) return;
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.IRON_FENCE)
+                return;
 
             if (e.getSlot() != 2) return;
 
@@ -368,7 +374,8 @@ public class RybakInventoryClick implements Listener {
         }
 
         if (Utils.removeColor(player.getOpenInventory().getTopInventory().getTitle()).equals("Stol Rybacki") && e.getClickedInventory().getType() == InventoryType.PLAYER) {
-            if (item == null || item.getType() != Material.INK_SACK || Utils.getTagDouble(item, "krysztalValue") == 0) return;
+            if (item == null || item.getType() != Material.INK_SACK || Utils.getTagDouble(item, "krysztalValue") == 0)
+                return;
             final ItemStack wedka = player.getItemInHand();
 
             final String krysztal = Utils.getTagString(wedka, "krysztal");
@@ -380,6 +387,87 @@ public class RybakInventoryClick implements Listener {
             RybakHelper.addKrysztal(wedka, item);
             player.getInventory().setItem(e.getSlot(), null);
             player.closeInventory();
+            return;
+        }
+
+        if (title.equals("Przyjaciel (Stara Fabryka)")) {
+            e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+
+            if (item == null || item.getType() == Material.STAINED_GLASS_PANE) return;
+
+            switch (e.getSlot()) {
+                case 1:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I15.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I15_1.getItemStack().clone());
+                    return;
+                case 10:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I15_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I15_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I15.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 2:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I16.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I16.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I16_1.getItemStack().clone());
+                    return;
+                case 11:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I16_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I16_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I16.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 3:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I17.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I17.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I17_1.getItemStack().clone());
+                    return;
+                case 12:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I17_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I17_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I17.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 4:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I18.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I18.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I18_1.getItemStack().clone());
+                    return;
+                case 13:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I18_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I18_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I18.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 5:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I19.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I19_1.getItemStack().clone());
+                    return;
+                case 14:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I19_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I19_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I19.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 6:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I20.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I20.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I20_1.getItemStack().clone());
+                    return;
+                case 15:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I20_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I20_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I20.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+                case 7:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I21.getItemStack(), 64)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I21.getItemStack().clone()).setAmount(64).toItemStack());
+                    player.getInventory().addItem(RybakItems.I21_1.getItemStack().clone());
+                    return;
+                case 16:
+                    if (!player.getInventory().containsAtLeast(RybakItems.I21_1.getItemStack(), 1)) return;
+                    player.getInventory().removeItem(new ItemBuilder(RybakItems.I21_1.getItemStack().clone()).setAmount(1).toItemStack());
+                    player.getInventory().addItem(new ItemBuilder(RybakItems.I21.getItemStack().clone()).setAmount(64).toItemStack());
+                    return;
+            }
             return;
         }
 

@@ -38,7 +38,6 @@ public class DamageManager {
     public void sendDamagePacket(final String prefix, final double dmg, final Entity entity, final Player p) {
         final Vector inverseDirectionVec = entity.getLocation().getDirection().normalize().multiply(-1);
         final Location entityLocation = entity.getLocation().add(inverseDirectionVec);
-        // TODO Przetestować czy działa (ma sie respic ZA graczem/mobem)
         final double randomx = ChanceHelper.getRandDouble(-0.2, 0.2);
         final double randomz = ChanceHelper.getRandDouble(-0.2, 0.2);
 
@@ -415,6 +414,11 @@ public class DamageManager {
             if (weapon != null && weapon.getType() != Material.AIR && weapon.hasItemMeta() && Utils.removeColor(weapon.getItemMeta().getDisplayName()).contains("Przekleta Smocza Skora")) {
                 dmg = dmg * 1.25;
             }
+        }
+
+        if (rpgcore.getDodatkiManager().find(attacker.getUniqueId()).getAkcesoriaDodatkowe().getEnergia().getType() == Material.AIR) {
+            attacker.sendMessage(Utils.format("&8[&c✘&8] &cPosiadasz zalozona energie. Twoje obrazenia w potwory zostaly zredukowane o 75%!"));
+            dmg = dmg * 0.25;
         }
 
 

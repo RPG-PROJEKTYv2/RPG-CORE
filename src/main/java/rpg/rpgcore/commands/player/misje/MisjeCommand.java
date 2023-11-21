@@ -17,6 +17,7 @@ import rpg.rpgcore.npc.lowca.objects.LowcaUser;
 import rpg.rpgcore.npc.magazynier.enums.MagazynierMissions;
 import rpg.rpgcore.npc.magazynier.objects.MagazynierUser;
 import rpg.rpgcore.npc.metinolog.objects.MetinologUser;
+import rpg.rpgcore.npc.rybak.enums.MlodszyRybakMissions;
 import rpg.rpgcore.npc.rybak.enums.StaruszekMissions;
 import rpg.rpgcore.npc.rybak.objects.MlodszyRybakUser;
 import rpg.rpgcore.npc.wyslannik.enums.WyslannikMissionKillBoss;
@@ -171,7 +172,7 @@ public class MisjeCommand extends CommandAPI {
                 if (mlodszyRybakUser.getMission() > 26) {
                     gui.setItem(34, new ItemBuilder(Material.BARRIER).setName("&6&lRybak").setLore(Arrays.asList("&a&lUKONCZONO!")).toItemStack());
                 } else {
-                    gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(mlodszyRybakUser.getMission())).getMissionItem(mlodszyRybakUser.getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
+                    gui.setItem(34, new ItemBuilder(Objects.requireNonNull(MlodszyRybakMissions.getMissionById(mlodszyRybakUser.getMission())).getMissionItem(mlodszyRybakUser.getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());
                 }
             } else {
                 gui.setItem(34, new ItemBuilder(Objects.requireNonNull(StaruszekMissions.getMissionById(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getMission())).getMissionItem(rpgcore.getRybakNPC().find(targetUUID).getStaruszekUser().getProgress()).clone()).setType(Material.FISHING_ROD).toItemStack().clone());

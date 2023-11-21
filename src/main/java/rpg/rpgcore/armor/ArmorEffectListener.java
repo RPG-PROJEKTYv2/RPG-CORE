@@ -39,7 +39,7 @@ public class ArmorEffectListener implements Listener {
 
         if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
             final Player player = (Player) e.getWhoClicked();
-            if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin()) {
+            if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !rpgcore.getChatManager().find(player.getUniqueId()).getHellcodeUser().isInventoryInteract()) {
                 e.setCancelled(true);
                 player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Przed zrobieniem tego zaloguj sie swoim HellCode. Uzyj: &c/hellcode <kod>"));
             }

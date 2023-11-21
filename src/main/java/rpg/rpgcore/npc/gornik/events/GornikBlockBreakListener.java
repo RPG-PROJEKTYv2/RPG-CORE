@@ -60,6 +60,17 @@ public class GornikBlockBreakListener implements Listener {
         if (rpgcore.getOreManager().find(location) == null) return;
         if (e.getBlock().getType().equals(Material.BEDROCK)) return;
 
+        if (!Utils.getTagBoolean(player.getItemInHand(), "fix1") && (player.getItemInHand().getType() == Material.IRON_PICKAXE || player.getItemInHand().getType() == Material.GOLD_PICKAXE)) {
+            player.sendMessage(Utils.format("&6&lGornik &8» &7Widze, ze posiadasz moj stary kilof."));
+            player.sendMessage(Utils.format("&6&lGornik &8» &7Pozwol mi go naprawic!"));
+            if (player.getItemInHand().getType() == Material.IRON_PICKAXE) player.getItemInHand().setType(Material.GOLD_PICKAXE);
+            else player.getItemInHand().setType(Material.IRON_PICKAXE);
+            Utils.setTagBoolean(player.getItemInHand(), "fix1", true);
+            return;
+        }
+
+
+
         final Ore ore = rpgcore.getOreManager().find(location);
         final Ores info = Ores.getOre(ore.getType());
         final int priority = PickaxePriority.getPickaxePriority(player.getItemInHand().getType());

@@ -1,5 +1,6 @@
 package rpg.rpgcore.listeners.player;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -17,6 +18,7 @@ import rpg.rpgcore.npc.sezonowiec.SezonowiecNPC;
 import rpg.rpgcore.user.User;
 import rpg.rpgcore.utils.Utils;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class PlayerInteractEntityListener implements Listener {
@@ -43,7 +45,9 @@ public class PlayerInteractEntityListener implements Listener {
 
         if (Utils.customDungeonWorlds.contains(e.getRightClicked().getWorld())) return;
 
-        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin() && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")
+        if (!rpgcore.getUserManager().find(player.getUniqueId()).isHellCodeLogin()
+                && !Utils.removeColor(e.getRightClicked().getName()).equals("TELEPORTER")
+                && (Utils.removeColor(e.getRightClicked().getName()).equals("Magazynier") && !rpgcore.getChatManager().find(player.getUniqueId()).getHellcodeUser().isMagazyn())
                 && !rpgcore.getChatManager().find(player.getUniqueId()).getHellcodeUser().isEntityInteract()) {
             e.setCancelled(true);
             player.sendMessage(Utils.format(Utils.SERVERNAME + "&7Zaloguj sie przy uzyciu swojego &chellcodu &7zeby wykonac te czynnosc!"));
@@ -208,7 +212,15 @@ public class PlayerInteractEntityListener implements Listener {
                 return;
             }
             if (entityName.equalsIgnoreCase("Przyjaciel")) {
-                rpgcore.getRybakNPC().onClickPrzyjaciel(player);
+                final Set<ProtectedRegion> playerRegion = RPGCORE.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).getRegions();
+                if (playerRegion == null || playerRegion.isEmpty()) {
+                    e.setCancelled(true);
+                    player.sendMessage(Utils.format("&8[&c✘&8] &cCos poszlo nie tak!"));
+                    return;
+                }
+                final String regionId = playerRegion.stream().findFirst().get().getId();
+                if (regionId.equals("rybak-wyspa2")) rpgcore.getRybakNPC().onClickPrzyjacielWyspa2(player);
+                else rpgcore.getRybakNPC().onClickPrzyjaciel(player);
                 return;
             }
             if (entityName.equalsIgnoreCase("Straganiarz")) {

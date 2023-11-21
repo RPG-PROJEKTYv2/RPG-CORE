@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import rpg.rpgcore.RPGCORE;
-import rpg.rpgcore.bonuses.Bonuses;
 import rpg.rpgcore.chests.Items;
 import rpg.rpgcore.npc.gornik.enums.GornikLevels;
 import rpg.rpgcore.npc.gornik.enums.GornikMissions;
@@ -352,7 +351,7 @@ public class GornikNPC {
 
         //ULEPSZENIA KILOFA
         final ItemStack playerPickaxe = GornikItems.getKilof(player.getUniqueId()).clone();
-        gui.setItem(15, new ItemBuilder(playerPickaxe.clone()).setType(Material.IRON_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(15, new ItemBuilder(playerPickaxe.clone()).setType(Material.GOLD_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
                 "&8- &6Kilof Gornika &8&l(&7&lKamienny&8&l) &7min Lvl. &e10",
@@ -365,10 +364,10 @@ public class GornikNPC {
                 "&cPoziom oraz exp zostana zachowane!",
                 "&4&lUWAGA!"
         )).hideFlag().toItemStack().clone());
-        gui.setItem(24, new ItemBuilder(playerPickaxe.clone()).setType(Material.GOLD_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
+        gui.setItem(24, new ItemBuilder(playerPickaxe.clone()).setType(Material.IRON_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &6Kilof Gornika &8&l(&f&lZelazny&8&l) &7min Lvl. &e17",
+                "&8- &6Kilof Gornika &8&l(&6&lZloty&8&l) &7min Lvl. &e17",
                 "&8- &8Ruda Wegla &8&l(x64) &7x10",
                 "&8- &7Ruda Zelaza &8&l(x64) &7x10",
                 "&8- &eRuda Topazu &8&l(x64) &7x5",
@@ -383,7 +382,7 @@ public class GornikNPC {
         gui.setItem(16, new ItemBuilder(playerPickaxe.clone()).setType(Material.DIAMOND_PICKAXE).setLoreCrafting(playerPickaxe.clone().getItemMeta().getLore(), Arrays.asList(
                 " ",
                 "&7Potrzebne przedmioty:",
-                "&8- &6Kilof Gornika &8&l(&6&lZloty&8&l) &7min Lvl. &e25",
+                "&8- &6Kilof Gornika &8&l(&f&lZelazny&8&l) &7min Lvl. &e25",
                 "&8- &8Ruda Wegla &8&l(x64) &7x20",
                 "&8- &7Ruda Zelaza &8&l(x64) &7x20",
                 "&8- &eRuda Topazu &8&l(x64) &7x10",

@@ -18,11 +18,9 @@ import java.util.UUID;
 
 public class NereusNPC {
 
-    private final RPGCORE rpgcore;
     private final Map<UUID, NereusUser> userMap;
 
     public NereusNPC(final RPGCORE rpgcore) {
-        this.rpgcore = rpgcore;
         this.userMap = rpgcore.getMongoManager().loadAllNereus();
     }
 
@@ -38,7 +36,13 @@ public class NereusNPC {
         gui.setItem(22, new ItemBuilder(Material.WORKBENCH).setName("&eWytworz Losowy Relikt").setLore(Arrays.asList(
                 "&f&lWymagane Przedmioty",
                 " &8- &bFragment Reliktu &7x12 &8(" + Utils.getPlayerInventoryItemCount(player, NereusItems.I1.getItemStack()) + "&8/12)",
-                " &8- &620 000 000&2$"
+                " &8- &620 000 000&2$",
+                "",
+                "&f&lMaksymalne Wartosci Reliktow",
+                "&8 - &4&lRelikt Potegi &71-15%",
+                "&8 - &2&lRelikt Wiecznosci &71-20HP",
+                "&8 - &6&lRelikt Starozytnosci &71-25%",
+                "&8 - &a&lRelikt Przodkow &71-15%"
         )).toItemStack().clone());
         gui.setItem(4, (user.getPotegi().getType().equals(Material.AIR) ? getMiejsceNa("Potęgi") : user.getPotegi().clone()));
         gui.setItem(19, (user.getStarozytnosci().getType().equals(Material.AIR) ? getMiejsceNa("Starozytnosci") : user.getStarozytnosci().clone()));

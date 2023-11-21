@@ -252,6 +252,11 @@ public class ChatManager {
         } else {
             gui.setItem(24, new ItemBuilder(Material.FIREBALL).setName("&cInformacje o Bossie 40-50").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
         }
+        if (user.isBao()) {
+            gui.setItem(25, new ItemBuilder(Material.ENCHANTMENT_TABLE).setName("&cInformacje o zmianie &5&lStolu Magii").setLore(Arrays.asList(" ", "&8* &9Status: &a&lWLACZONE")).addGlowing().toItemStack().clone());
+        } else {
+            gui.setItem(25, new ItemBuilder(Material.ENCHANTMENT_TABLE).setName("&cInformacje o zmianie &5&lStolu Magii").setLore(Arrays.asList(" ", "&8* &9Status: &c&lWYLACZONE")).toItemStack().clone());
+        }
 
         final User mainUser = rpgcore.getUserManager().find(player.getUniqueId());
 

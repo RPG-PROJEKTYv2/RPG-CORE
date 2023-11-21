@@ -22,6 +22,7 @@ public class DuszologInteractListener implements Listener {
 
 
             if (!as.getCustomName().contains(player.getName())) {
+                player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Ta dusza nalezy chyba do kogos innego, prawda?"));
                 return;
             }
 
@@ -30,10 +31,6 @@ public class DuszologInteractListener implements Listener {
                 return;
             }
 
-            if (!as.getCustomName().contains(e.getPlayer().getName())) {
-                player.sendMessage(Utils.format("&5&lDuszolog &8>> &7Ta dusza nalezy chyba do kogos innego, prawda?"));
-                return;
-            }
             final String entityName = as.getCustomName().substring(0, as.getCustomName().indexOf('-') - 1);
             final DuszologUser user = RPGCORE.getInstance().getDuszologNPC().find(player.getUniqueId());
             user.incrementProgress(Utils.removeColor(entityName));
